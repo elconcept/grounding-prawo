@@ -1,0 +1,219 @@
+{
+  "lastUpdated": 1789097219632,
+  "plugins": [
+    {
+      "pluginId": "plugin_01QHj7UhQWUDpCaDGLU3JysK",
+      "name": "disk-cleanup",
+      "description": "Scan and clean macOS caches, package-manager data, crash dumps, and app caches to reclaim disk space. Deterministic — a config registry (targets.json) plus survey.py (read-only) and clean.py (executor) do all measuring and deleting. Use for: freeing disk space, \"disk is full\", \"clean up my Mac\", \"what's eating my disk\".",
+      "version": "0001",
+      "updatedAt": "2026-09-06T14:57:06.056721Z",
+      "marketplaceName": "claude-skills",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01NcuA7BRyurze8VHB758wL9",
+      "name": "doctorg",
+      "description": "Evidence-based health research using tiered trusted sources with GRADE-inspired evidence ratings. Integrates Apple Healt",
+      "version": "0001",
+      "updatedAt": "2026-09-06T14:57:05.963499Z",
+      "marketplaceName": "claude-skills",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01PBREiWDs2pSyoKFvBHBFci",
+      "name": "pdf-generation",
+      "description": "Professional PDF generation from markdown using Pandoc with Eisvogel template and EB Garamond fonts. Use when converting",
+      "version": "0001",
+      "updatedAt": "2026-09-06T14:57:05.075134Z",
+      "marketplaceName": "claude-skills",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_011DATEXp8RJSYHZqW8Dqw1X",
+      "name": "balanced",
+      "description": "Constructive, evidence-based dialogue mode that avoids sycophancy. This skill should be used when the user wants balance",
+      "version": "0001",
+      "updatedAt": "2026-09-06T14:57:06.572709Z",
+      "marketplaceName": "claude-skills",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01VKgvatEREqQRrh17rBW4WE",
+      "name": "youtube-transcript",
+      "description": "\"Extract YouTube video transcripts with metadata and save as Markdown to Obsidian vault. Use this skill when the user re",
+      "version": "0001",
+      "updatedAt": "2026-09-06T14:57:04.367508Z",
+      "marketplaceName": "claude-skills",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01MBehojNdsrCXJQd9Zn8MbD",
+      "name": "feature-dev",
+      "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+      "version": "0003",
+      "updatedAt": "2026-09-10T16:58:05.455628Z",
+      "marketplaceName": "claude-code",
+      "installationPreference": "available",
+      "generation": 2
+    },
+    {
+      "pluginId": "plugin_01P1CzNxTza6rrxjUhP9g7zx",
+      "name": "commit-commands",
+      "description": "Commands for git commit workflows including commit, push, and PR creation",
+      "version": "0003",
+      "updatedAt": "2026-09-10T16:58:05.377636Z",
+      "marketplaceName": "claude-code",
+      "installationPreference": "available",
+      "generation": 2
+    },
+    {
+      "pluginId": "plugin_01Ji46e4Ujf6aQcTBUdBmbqQ",
+      "name": "ralph-wiggum",
+      "description": "Interactive self-referential AI loops for iterative development. Claude works on the same task repeatedly, seeing its previous work, until completion.",
+      "version": "0003",
+      "updatedAt": "2026-09-10T16:58:05.886147Z",
+      "marketplaceName": "claude-code",
+      "installationPreference": "available",
+      "generation": 2
+    },
+    {
+      "pluginId": "plugin_01Jw4qJLsVEoyFFYzbHFzzgm",
+      "name": "fundament-weryfikacyjny",
+      "description": "Rdzen weryfikacyjny instaluj-zawsze (11 skilli): routing zadania, ocena wejscia, grounding cytatu, ekstrakcja cytatow, sylogizm/subsumpcja, czerwony zespol, jednoprzebiegowy atak przeciwnika, test zimnego czytelnika (pierwsze wrazenie sedziego), wiernosc deliverable, ocena outputu, paczka audytowa AI Act art. 12. Neutralny jurysdykcyjnie, bez konektorow, bez wlasnych polaczen wychodzacych.",
+      "version": "0001",
+      "updatedAt": "2026-08-12T10:36:52.453180Z",
+      "marketplaceName": "awesome-matematic-skills-pl",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01JxY3V2DLSkUaQw1gPBd3Qx",
+      "name": "governance-kancelarii",
+      "description": "Governance AI dla kancelarii (5 skilli): Konstytucja AI, triage AI Act (klasyfikacja + rola + mapa obowiazkow, teraz z deterministycznymi skryptami: klasyfikator ryzyka art. 5/6/50, plan oceny zgodnosci art. 43 + checklista zalacznika IV, tracker obowiazkow wg fazowania art. 113), preflight tajemnicy zawodowej przed wyslaniem tresci do zewnetrznego AI, warsztat decyzyjny Expert Panel, szyfrowany backup Google Workspace (RODO art. 32). Generatory dokumentow, bez konektorow.",
+      "version": "0001",
+      "updatedAt": "2026-08-12T10:36:52.447884Z",
+      "marketplaceName": "awesome-matematic-skills-pl",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01QBm2fTZ81gK1pA6RXE6WWQ",
+      "name": "orzecznictwo-zrodla",
+      "description": "Wyszukiwanie i pobieranie zrodel prawa PL/UE (8 skilli): SAOS, EUR-Lex, katalog zrodel krajowych, hierarchia zrodel (routing autorytetu przed odpowiedzia), struktura wyroku (streszczenie ekstraktywne), grounding cytatu decyzji UODO (uodo-grounding-pl), webwright (orzeczenia spoza MCP przez Playwright). Niesie konektory MCP saos/krs/eu-sparql (read-only, publiczne API). Wymaga node/npx.",
+      "version": "0001",
+      "updatedAt": "2026-08-12T10:36:52.562508Z",
+      "marketplaceName": "awesome-matematic-skills-pl",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01LihfTjqchrG7Jv4MYoSx2H",
+      "name": "jakosc-tresci",
+      "description": "Narzedzia jakosci tekstu polskiego (2 skille): humanizer-pl (usuwa wzorce AI-slop, w tym sygnatury statystyczne wykrywane przez detektory) i marko-pl-content (zrzedliwy senior redaktor, werdykt + zarzuty z plik:linia). Zmienia slowa, nigdy faktow. Bez konektorow, bez wlasnych polaczen wychodzacych.",
+      "version": "0001",
+      "updatedAt": "2026-08-12T10:36:52.421264Z",
+      "marketplaceName": "awesome-matematic-skills-pl",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01TomEJaBGaHXwtyfZ7evNiX",
+      "name": "dokumenty",
+      "description": "Operacje na dokumentach (10 skilli): konwersja PDF/Office->Markdown (markitdown, opendataloader-pdf), redlining .docx z Track Changes (redline-docx-pl), anonimizacja i pseudonimizacja PII (let-it-be), metodyka terminow procesowych z bramka czlowieka (terminy-procesowe-pl), lista kontrolna klauzul umownych (klauzule-kontraktowe-pl), cztery kalkulatory procesowe z zywymi parametrami (kalkulatory-procesowe-pl), groundowana ekstrakcja konceptow prawnych warstwa LLM z zakotwiczeniem cytatu do zdania zrodlowego (doc-intel-llm-tier-pl, wymaga contextgem + modelu lokalnego/EOG; backend chmurowy tylko za jawna flaga), audytowalny kontrakt wyjscia OCR {block_type,bbox,text,confidence} z confidence-gatingiem human-in-the-loop, flagami PII pod redakcje i prompt-kontraktem vlm-html dla dowolnego VLM (doc-intel-contract-pl, zero-dep stdlib). walidacja podpisu elektronicznego w PRZYCHODZACYM PDF - czy plik zmieniono po podpisaniu, kto podpisal, czy podpis obejmuje caly dokument (waliduj-podpis-pdf-pl, pyHanko, wylacznie odczyt - nie podpisuje). Rdzen bez konektorow; doc-intel domyslnie lokalny (Ollama).",
+      "version": "0001",
+      "updatedAt": "2026-08-12T10:36:52.956364Z",
+      "marketplaceName": "awesome-matematic-skills-pl",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01LkjAamUrT1PVwy7VMEyJEn",
+      "name": "ochrona-danych",
+      "description": "Operacje RODO i cyber dla kancelarii i IOD (5 skilli): ocena skutkow DPIA (art. 35-36), obsluga naruszenia w 72h (art. 33-34), zadania osob DSAR (art. 12, 15-22), rejestr czynnosci RoPA i przeglad umow powierzenia DPA (art. 30, 28), triage NIS2/KSC (zakres, 10 srodkow art. 21, zegar raportowania). Grounding cytatu decyzji UODO zyje w orzecznictwo-zrodla (uodo-grounding-pl). Ugruntowane w artykulach RODO/NIS2 i wytycznych EROD/UODO. Bez konektorow, bez wlasnych polaczen wychodzacych.",
+      "version": "0001",
+      "updatedAt": "2026-08-12T10:36:52.420386Z",
+      "marketplaceName": "awesome-matematic-skills-pl",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_017mWF3qGhuFxsrk1YCK7A3q",
+      "name": "dev-mcp",
+      "description": "Narzedzia deweloperskie MateMatic (4 skille, advanced): spec-driven development, kanon budowy MCP serverow, recenzent PR dla LegalTech AI, generator instalatora marketplace. Bez konektorow.",
+      "version": "0001",
+      "updatedAt": "2026-08-12T10:36:52.420077Z",
+      "marketplaceName": "awesome-matematic-skills-pl",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01GRf7Yfz7smNfmr58PdrKJk",
+      "name": "iura-pl",
+      "description": "Plugin IURA dla polskich zespołów prawnych. Przegląd umów, triaż NDA, generowanie NDA, masowy przegląd dokumentów — z integracją IURA MCP (orzecznictwo, Dziennik Ustaw, interpretacje podatkowe).",
+      "version": "0001",
+      "updatedAt": "2026-08-05T16:18:04.523832Z",
+      "marketplaceName": "IURA-Plugins",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01KLp4ii88NjDZBW4cA3dKMY",
+      "name": "iura-eu",
+      "description": "IURA plugin for EU law practitioners. Drafts objective legal memos grounded in EU treaties, regulations, directives, and CJEU / ECtHR case-law — with IURA MCP integration for European legal sources.",
+      "version": "0001",
+      "updatedAt": "2026-08-05T16:18:04.513333Z",
+      "marketplaceName": "IURA-Plugins",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_01FWGx9cc7sCNN5aMZkuU63t",
+      "name": "exa",
+      "description": "Exa AI web search, deep research, and content extraction. Provides MCP tools and research skills for comprehensive web search, people discovery, company research, academic papers, and more.",
+      "version": "0035",
+      "updatedAt": "2026-09-10T20:23:06.835025Z",
+      "marketplaceName": "knowledge-work-plugins",
+      "installationPreference": "available",
+      "generation": 2
+    },
+    {
+      "pluginId": "plugin_01S1HcuzG4CPx8bTxZDQAguG",
+      "name": "desktop-commander",
+      "description": "MCP server for terminal commands, process management, and file operations across text, code, PDF, DOCX, Excel, images, and structured data.",
+      "version": "0018",
+      "updatedAt": "2026-09-10T20:23:08.302702Z",
+      "marketplaceName": "knowledge-work-plugins",
+      "installationPreference": "available",
+      "generation": 2
+    },
+    {
+      "pluginId": "plugin_012ABz1xjgtJYWKrcJkXW6ad",
+      "name": "legal",
+      "description": "Speed up contract review, NDA triage, and compliance workflows for in-house legal teams. Draft legal briefs, organize precedent research, and manage institutional knowledge.",
+      "version": "0036",
+      "updatedAt": "2026-09-10T20:23:13.465800Z",
+      "marketplaceName": "knowledge-work-plugins",
+      "installationPreference": "available",
+      "generation": 2
+    },
+    {
+      "pluginId": "plugin_0155zZVATbJU3jHUmPP9NvMC",
+      "name": "cowork-plugin-management",
+      "description": "Create, customize, and manage plugins tailored to your organization's tools and workflows. Configure MCP servers, adjust plugin behavior, and adapt templates to match how your team works.",
+      "version": "0036",
+      "updatedAt": "2026-09-10T20:23:13.753770Z",
+      "marketplaceName": "knowledge-work-plugins",
+      "installationPreference": "available",
+      "generation": 2
+    },
+    {
+      "pluginId": "plugin_01RUaMDxHMbYGRqVnztTkUhr",
+      "name": "tufte-report",
+      "description": "Create Tufte-inspired data reports and infographic dashboards as standalone HTML files. Uses EB Garamond for text, Monas",
+      "version": "0001",
+      "updatedAt": "2026-09-06T14:57:04.422508Z",
+      "marketplaceName": "claude-skills",
+      "installationPreference": "available"
+    },
+    {
+      "pluginId": "plugin_011v5h6QUzBZvas64y44XLhy",
+      "name": "pdf-viewer",
+      "description": "View, annotate, and sign PDFs in a live interactive viewer. Mark up contracts, fill forms with visual feedback, stamp approvals, and place signatures — then download the annotated copy.",
+      "version": "0035",
+      "updatedAt": "2026-09-10T20:23:09.064664Z",
+      "marketplaceName": "knowledge-work-plugins",
+      "installationPreference": "available"
+    }
+  ]
+}
