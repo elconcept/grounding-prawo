@@ -73,7 +73,7 @@
     "tsx": "^4.7.0",
     "typescript": "^5.9.3",
     "vercel": "^37.0.0",
-    "vitest": "4.1.5"
+    "vitest": "4.1.11"
   },
   "engines": {
     "node": ">=20.0.0"
