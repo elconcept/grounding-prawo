@@ -1,0 +1,21 @@
+{
+    "name": "Prawo UE i TSUE",
+    "slug": "eu-sparql-search",
+    "entitlement": "free",
+    "vertical": "legal-eu",
+    "version": null,
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/eu-sparql-search.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "bb1d3cb2ff44c4b26a7c34ebf887193fce497c0cc49f033322a5b344a416b384"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Integralnosc: SHA256 (CHECKSUMS.txt). Podpis Ed25519 = tier zweryfikowany, w przygotowaniu. Instalacja: rozpakuj do ~/.claude/skills/eu-sparql-search/",
+    "generated": "2026-06-25",
+    "files": [
+        "references/resource-types.md",
+        "SKILL.md"
+    ]
+}

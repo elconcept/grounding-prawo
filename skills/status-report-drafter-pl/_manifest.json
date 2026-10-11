@@ -1,0 +1,21 @@
+{
+    "name": "Status sprawy",
+    "slug": "status-report-drafter-pl",
+    "entitlement": "free",
+    "vertical": "legal-pl",
+    "version": null,
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/status-report-drafter-pl.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "966372fdcab88d9c31a5b10a3c6e08ec32e29e39e1bca35cb6a7226d5239c471"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Integralnosc: SHA256 (CHECKSUMS.txt). Podpis Ed25519 = tier zweryfikowany, w przygotowaniu. Instalacja: rozpakuj do ~/.claude/skills/status-report-drafter-pl/",
+    "generated": "2026-06-25",
+    "files": [
+        "templates/status_report_template.md",
+        "SKILL.md"
+    ]
+}

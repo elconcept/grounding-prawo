@@ -17,3 +17,8 @@ __pycache__/
 
 # --- archiwum przebiegu importu (identyczne z rozpakowaną zawartością obok) ---
 TEMP/_pluginy-cowork/cowork-plugins-prawne.tar.gz
+
+# --- zaleznosci i metadane Synology ---
+node_modules/
+.venv/
+@eaDir/

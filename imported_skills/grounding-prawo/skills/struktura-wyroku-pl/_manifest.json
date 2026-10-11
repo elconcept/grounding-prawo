@@ -1,0 +1,18 @@
+{
+    "name": "Struktura wyroku",
+    "slug": "struktura-wyroku-pl",
+    "entitlement": "free",
+    "vertical": "legal-pl",
+    "version": "1.0.0",
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/struktura-wyroku-pl.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "5d9f3f06db8c5a869ede5dba7f139aafec820da59afbc1553e6fa965b85933ac"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Metoda zainspirowana OpenNyAI (Legal-NLP-EkStep, MIT). Integralnosc: SHA256 (CHECKSUMS.txt). Instalacja: rozpakuj do ~/.claude/skills/struktura-wyroku-pl/",
+    "generated": "2026-06-25",
+    "files": "SKILL.md"
+}

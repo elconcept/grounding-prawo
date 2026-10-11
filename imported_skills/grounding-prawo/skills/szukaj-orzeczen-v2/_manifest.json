@@ -1,0 +1,27 @@
+﻿{
+    "name":  "Szukaj orzeczen",
+    "slug":  "szukaj-orzeczen-v2",
+    "entitlement":  "free",
+    "vertical":  "legal-pl",
+    "version":  null,
+    "publisher":  "MateMatic Solutions sp. z o.o.",
+    "homepage":  "https://matematicsolutions.com/boutique",
+    "source":  "https://matematicsolutions.com/downloads/skille/szukaj-orzeczen-v2.zip",
+    "integrity":  {
+                      "algo":  "sha256",
+                      "skill_md":  "aabe4585db2b6b8d6dbd27b77b17f7951c8cef3707c9b1c062be435982bb6d02"
+                  },
+    "signed":  false,
+    "note":  "Darmowy skill MateMatic. Integralnosc: SHA256 (CHECKSUMS.txt). Podpis Ed25519 = tier zweryfikowany, w przygotowaniu. Instalacja: rozpakuj do ~/.claude/skills/szukaj-orzeczen-v2/",
+    "generated":  "2026-06-22",
+    "files":  [
+                  "references/api-saos.md",
+                  "references/json-schemat.md",
+                  "references/raport-tematyczny.md",
+                  "references/tryb-wyszukiwanie.md",
+                  "scripts/raport_tematyczny.py",
+                  "scripts/saos_fetch.py",
+                  "scripts/szukaj_orzeczen.py",
+                  "SKILL.md"
+              ]
+}

@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "szturm-na-draft-pl/schemat-ustalenia",
+  "title": "Ustalenie soczewki szturmu (E1-E4) - wejscie do synteza.py",
+  "description": "Kazda soczewka zwraca liste takich obiektow (plik ustalenia/<nr>_<soczewka>.json). Nie osobny raport. Pola z '_' na poczatku sa ignorowane.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "dokument",
+      "kotwica",
+      "klasa",
+      "waga",
+      "naprawa"
+    ],
+    "anyOf": [
+      {
+        "required": [
+          "soczewki"
+        ]
+      },
+      {
+        "required": [
+          "soczewka"
+        ]
+      }
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Nadaje synteza.py (S-NNN). Soczewka zostawia puste."
+      },
+      "dokument": {
+        "type": "string",
+        "description": "Krotki kod dokumentu z E0, np. PISMO, EKSP, ZAL5. Ten sam kod w --md synteza.py."
+      },
+      "kotwica": {
+        "type": "string",
+        "description": "plik:linia w <nazwa>.clean.md (numery z <nazwa>.clean.nl.txt). Klucz deduplikacji."
+      },
+      "akapit_docx": {
+        "type": "integer",
+        "description": "Opcjonalnie: numer akapitu z fix_format.py / skan_placeholder.py."
+      },
+      "klasa": {
+        "enum": [
+          "CYTAT",
+          "SYGNATURA",
+          "PRZEPIS",
+          "FAKT_BEZ_ZRODLA",
+          "SPRZECZNOSC",
+          "LOGIKA",
+          "STRATEGIA",
+          "KOMPLETNOSC",
+          "STYL",
+          "FORMAT"
+        ]
+      },
+      "waga": {
+        "enum": [
+          "🔴",
+          "🟠",
+          "🟡",
+          "🟢"
+        ],
+        "description": "Ze skutku, nie z liczby soczewek. 🔴 = teza albo wiarygodnosc pisma pada; 🟠 = oslabia; 🟡 = do poprawy; 🟢 = kosmetyka."
+      },
+      "soczewki": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Nazwy skilli/modulow, ktore zglosily. Deterministyczne E1: citation-grounding-pl, patron-weryfikacja-cytatow, ekstraktor-cytatow-pl, iura, saos-orzecznictwo, lexcache, patron-identyfikatory-pl."
+      },
+      "soczewka": {
+        "type": "string",
+        "description": "Skrot dla jednej soczewki."
+      },
+      "dowod": {
+        "type": "string",
+        "description": "Co i gdzie sprawdzono: 'k.3 nie zawiera frazy', 'SAOS id 12345 tresc: data 12.03.2024 (cache 25.09)', 'pomiar pomiary.txt:41'. Bez dowodu nie ma AUTO ani nowej liczby."
+      },
+      "naprawa": {
+        "enum": [
+          "AUTO",
+          "REDAKCJA",
+          "DECYZJA_AUTORA",
+          "DOWOD"
+        ],
+        "description": "Propozycja soczewki. synteza.py moze ja tylko obnizyc."
+      },
+      "target_text": {
+        "type": "string",
+        "description": "Doslowny fragment JEDNEGO akapitu z <nazwa>.clean.md. Bez markdownu (skrypt i tak go zdejmie). Tyle kontekstu, by wystepowal raz."
+      },
+      "new_text": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Brzmienie po zmianie. Kazda nowa liczba wymaga 'dowod'. null/brak = ustalenie bez edycji (DOWOD)."
+      },
+      "komentarz": {
+        "type": "string",
+        "description": "Jedno-dwa zdania dla autora: co jest zle i dlaczego. Trafia do komentarza Worda."
+      },
+      "edycje": {
+        "type": "array",
+        "description": "Jedno ustalenie naprawiane w kilku miejscach (także w innym dokumencie). Każdy element: {target_text, new_text, [kotwica], [dokument]}. Każda edycja przechodzi bramki osobno; raport ma jedną linię na ustalenie, a komentarze w Wordzie niosą to samo ID. Zamiast target_text/new_text na poziomie ustalenia.",
+        "items": {
+          "type": "object",
+          "required": [
+            "target_text",
+            "new_text"
+          ],
+          "properties": {
+            "target_text": {
+              "type": "string"
+            },
+            "new_text": {
+              "type": "string"
+            },
+            "kotwica": {
+              "type": "string"
+            },
+            "dokument": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    [
+      {
+        "dokument": "PISMO",
+        "kotwica": "pismo.clean.md:57",
+        "klasa": "SYGNATURA",
+        "waga": "🔴",
+        "soczewka": "iura",
+        "dowod": "SAOS id 123456, tresc wyroku: 'dnia 14 marca 2024 r.' (metadane SAOS: 2024-03-15)",
+        "naprawa": "AUTO",
+        "target_text": "wyrok z dnia 15 marca 2024 r., sygn. II K 000/23",
+        "new_text": "wyrok z dnia 14 marca 2024 r., sygn. II K 000/23",
+        "komentarz": "Data z tresci orzeczenia, nie z metadanych SAOS."
+      },
+      {
+        "dokument": "EKSP",
+        "kotwica": "ekspertyza.clean.md:212",
+        "klasa": "SPRZECZNOSC",
+        "waga": "🟠",
+        "soczewki": [
+          "analizator-dowodow-v3",
+          "deliverable-fidelity-pl"
+        ],
+        "dowod": "pismo.clean.md:88 twierdzi odwrotnie",
+        "naprawa": "DECYZJA_AUTORA",
+        "target_text": "…",
+        "new_text": "…",
+        "komentarz": "Ekspertyza i pismo opisuja ten sam fakt inaczej."
+      }
+    ]
+  ]
+}

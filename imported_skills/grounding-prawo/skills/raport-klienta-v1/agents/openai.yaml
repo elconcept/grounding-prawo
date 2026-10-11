@@ -1,0 +1,9 @@
+interface:
+  display_name: raport klienta v1
+  short_description: 'Raport dla klienta: przekłada analizę prawną na zrozumiały stan
+    sprawy, ryzyka, warianty działania, priorytety i następne kroki bez utraty podstaw
+    źródłowych.'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: true

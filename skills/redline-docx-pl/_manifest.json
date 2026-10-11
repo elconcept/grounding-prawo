@@ -1,0 +1,22 @@
+{
+    "name": "Redline w Wordzie",
+    "slug": "redline-docx-pl",
+    "entitlement": "free",
+    "vertical": "legal-pl",
+    "version": "2026.05.27",
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/redline-docx-pl.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "abc0919d7aa469fcbc567bc8e37d7aab918a51c5120ea7b3b9bed9feefc9e9f5"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Integralnosc: SHA256 (CHECKSUMS.txt). Podpis Ed25519 = tier zweryfikowany, w przygotowaniu. Instalacja: rozpakuj do ~/.claude/skills/redline-docx-pl/",
+    "generated": "2026-06-25",
+    "files": [
+        "CHANGELOG.md",
+        "THIRD_PARTY_INSPIRATIONS.md",
+        "SKILL.md"
+    ]
+}

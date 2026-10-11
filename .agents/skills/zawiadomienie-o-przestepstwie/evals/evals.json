@@ -1,0 +1,44 @@
+{
+  "skill_name": "zawiadomienie-o-przestepstwie",
+  "version": "0.2",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Wczoraj wieczorem sąsiad z dołu znowu wszedł mi na podwórko, darł się że mnie załatwi, potem kopnął mi w drzwi auta, a jak wyszłam to mnie szarpnął za kurtkę i chyba telefonem nagrywał, nie wiem. Wcześniej też były akcje z kamerą skierowaną na moje okna. Policja przyjechała ale napisali że to konflikt sąsiedzki. Nie mam nagrania. Chcę to zgłosić do prokuratury.",
+      "expected_output": "Skill nie pisze od razu pisma. Prowadzi wywiad epizod po epizodzie (przed/w trakcie/po, dosłowne słowa, świadkowie, skutki), przechodzi lejek krzywd (groźby, nietykalność, zniszczenie mienia, mir domowy, nagrywanie, wcześniejsze zdarzenia z kamerą, działanie policji). Nie zniechęca brakiem nagrania. Po odpowiedziach: pismo w pierwszej osobie, wszystkie wątki obecne, rozbieżność z notatką policji nazwana wprost.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Przygotuj wersję do złożenia zawiadomienia o pobiciu z nocy 27.08.2025. Pamiętam teraz, że uderzył mnie dwa razy, a nie raz, i że przy wejściu stał drugi mężczyzna.",
+      "expected_output": "Skill uruchamia HARDGATE: rejestr relacji autora (skrypt + pytanie), porównanie z protokołem przesłuchania. Drugi mężczyzna = uzupełnienie (dozwolone). Liczba uderzeń, jeśli protokół mówi inaczej = rozbieżność do rozstrzygnięcia przez autora; po decyzji pismo wprost odnosi się do protokołu. Raport bramki w odpowiedzi.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Policjanci w notatce napisali, że byłem agresywny i sam się przewróciłem. To nieprawda, skuli mnie i jeden przycisnął mi kolano do karku. Nikt tego nie nagrał, świadków nie było poza nimi. Napisz zawiadomienie.",
+      "expected_output": "Skill traktuje relację jako prawdziwą (K1), nie pomija krzywdy z braku dowodów (K2), dopytuje (czas, miejsce, słowa, obrażenia, lekarz, kamery w radiowozie/na komisariacie), w lejku pyta o nieprawdziwą notatkę jako odrębny epizod. Pismo nazywa rozbieżność z notatką i stanowczo przedstawia wersję autora. Brak żargonu, brak listy wnioskowanych czynności, brak straszenia odpowiedzialnością za fałszywe zawiadomienie.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Przygotuj wersję do złożenia zawiadomienia N.C. o zdarzeniach z udziałem T.K. W zawiadomieniu N.C. pisze o T.K. jako o partnerze i o wspólnym mieszkaniu. W sądzie, zapytana o stosunek do strony, odpowiedziała, że T.K. jest dla niej osobą obcą.",
+      "expected_output": "HARDGATE stosuje test pozornej sprzeczności: 'partner' (potocznie) vs 'osoba obca' w odpowiedzi na pytanie o stosunek prawny (art. 115 § 11 k.k.: wspólne pożycie wymaga łącznie więzi duchowej, gospodarczej i fizycznej). Klasa: rozbieżność pozorna, bez blokady, bez strofowania, bez 'korygowania' relacji. Najwyżej propozycja jednego zdania wyjaśnienia, jeśli autorka chce.",
+      "files": []
+    }
+  ],
+  "assertions_draft": [
+    "Narracja pisma nie zawiera: 'dopuścił się', 'znamion', 'w zw. z art.', 'wnoszę o przeprowadzenie', 'z ostrożności procesowej', 'niniejszym', 'przedmiotow'.",
+    "Każda krzywda z mapy wewnętrznej występuje w piśmie.",
+    "Pismo nie zawiera faktów, których użytkownik nie podał.",
+    "Hipotezy autora są oznaczone językiem ('podejrzewam', 'uważam'), fakty podane stanowczo.",
+    "Wersja do złożenia ma raport HARDGATE; draft ma dopisek o nieuruchomionej bramce.",
+    "Skill nie ocenia wiarygodności relacji i nie zniechęca brakiem dowodów.",
+    "Otwarcie: 'Zawiadamiam o popełnieniu ... i wnoszę o wszczęcie postępowania' - bez 'podejrzenia'/'możliwości popełnienia'.",
+    "Wniosek o ściganie obecny w każdym piśmie.",
+    "Lista przepisów na końcu, tylko z katalogu mapa-krzywd.md lub ze śladem weryfikacji; w narracji brak 'art.'.",
+    "Każda informacja od innej osoby ma wskazane źródło (kto, kiedy).",
+    "Brak zdań strofujących autora za rozbieżności pozorne."
+  ],
+  "baseline": "Ten sam prompt bez skilla; dodatkowo istniejące drafty 00_sprawy/biuro_spraw_wewnetrznych_policji/drafty/NC_zawiadomienie_*."
+}

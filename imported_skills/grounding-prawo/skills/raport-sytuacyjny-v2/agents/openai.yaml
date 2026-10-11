@@ -1,0 +1,9 @@
+interface:
+  display_name: raport sytuacyjny v2
+  short_description: 'Raport sytuacyjny sprawy: syntetyzuje fakty, ryzyka, dowody,
+    terminy, warianty i priorytety; może generować interaktywny widok sytuacji i eksport
+    danych.'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: true

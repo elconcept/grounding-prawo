@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "isap": {"command": "node", "args": ["./mcp/gp-cache.mjs", "isap"], "cwd": "."},
+    "saos": {"command": "node", "args": ["./mcp/gp-cache.mjs", "saos"], "cwd": "."},
+    "nsa": {"command": "node", "args": ["./mcp/gp-cache.mjs", "nsa"], "cwd": "."},
+    "krs": {"command": "node", "args": ["./mcp/gp-cache.mjs", "krs"], "cwd": "."},
+    "eu-sparql": {"command": "node", "args": ["./mcp/gp-cache.mjs", "eu-sparql"], "cwd": "."},
+    "eu-compliance": {"command": "node", "args": ["./mcp/gp-cache.mjs", "eu-compliance"], "cwd": "."},
+    "eureka": {"command": "node", "args": ["./mcp/gp-cache.mjs", "eureka"], "cwd": "."},
+    "de-eli": {"command": "uvx", "args": ["de-eli-mcp"]},
+    "at-eli": {"command": "uvx", "args": ["at-eli-mcp"]},
+    "es-eli": {"command": "uvx", "args": ["es-eli-mcp"]},
+    "fi-eli": {"command": "uvx", "args": ["fi-eli-mcp"]},
+    "ie-eli": {"command": "uvx", "args": ["ie-eli-mcp"]},
+    "nl-eli": {"command": "uvx", "args": ["nl-eli-mcp"]},
+    "se-eli": {"command": "uvx", "args": ["se-eli-mcp"]},
+    "fr-eli": {"command": "uvx", "args": ["fr-eli-mcp"]},
+    "lu-eli": {"command": "uvx", "args": ["lu-eli-mcp"]}
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "teza_nadrzedna": "Zapis nie jest ciągłym nagraniem z kamery (fikcyjna sprawa testowa).",
+  "stawka": "S",
+  "fakty_potwierdzone": [
+    {"id": "F1", "tekst": "Obwiniony widział zapis z tej kamery z dźwiękiem", "zrodlo": "wyjaśnienia (fikcyjne)",
+     "z_akt": false, "wyklucza": ["wyłączony mikrofon"]}
+  ],
+  "decyzje_autora": []
+}

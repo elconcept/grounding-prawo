@@ -1,0 +1,21 @@
+{
+    "name": "Lowca zrodel",
+    "slug": "legal-data-hunter-pl",
+    "entitlement": "free",
+    "vertical": "legal-pl",
+    "version": null,
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/legal-data-hunter-pl.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "dfa092b6235084407b90b63391df96ec979e4d7f2bf6b4e6bbfe8bf7ef406f72"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Integralnosc: SHA256 (CHECKSUMS.txt). Podpis Ed25519 = tier zweryfikowany, w przygotowaniu. Instalacja: rozpakuj do ~/.claude/skills/legal-data-hunter-pl/",
+    "generated": "2026-06-25",
+    "files": [
+        "references/coverage-pl.md",
+        "SKILL.md"
+    ]
+}

@@ -1,0 +1,145 @@
+[
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:5",
+    "klasa": "SYGNATURA",
+    "waga": "🔴",
+    "soczewka": "iura",
+    "dowod": "treść orzeczenia (fikcyjna): 'dnia 14 marca 2024 r.'",
+    "naprawa": "AUTO",
+    "target_text": "wyrok z dnia 15 marca 2024 r., sygn. II K 000/23",
+    "new_text": "wyrok z dnia 14 marca 2024 r., sygn. II K 000/23",
+    "komentarz": "Data z treści orzeczenia, nie z metadanych."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:5",
+    "klasa": "SYGNATURA",
+    "waga": "🟠",
+    "soczewka": "saos-orzecznictwo",
+    "dowod": "SAOS (fikcyjnie): treść 14.03.2024",
+    "naprawa": "AUTO",
+    "target_text": "wyrok z dnia 15 marca 2024 r., sygn. II K 000/23",
+    "new_text": "wyrok z dnia 14 marca 2024 r., sygn. II K 000/23"
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:7",
+    "klasa": "SPRZECZNOSC",
+    "waga": "🟠",
+    "soczewka": "analizator-dowodow-v3",
+    "dowod": "brak w aktach",
+    "naprawa": "REDAKCJA",
+    "target_text": "Obwiniony widział zapis z tej kamery z dźwiękiem",
+    "new_text": "Obwiniony twierdzi, że mógł widzieć zapis z tej kamery",
+    "komentarz": "Twierdzenie bez dokumentu."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:9",
+    "klasa": "LOGIKA",
+    "waga": "🟠",
+    "soczewka": "atak-przeciwnika-pl",
+    "naprawa": "REDAKCJA",
+    "target_text": "zawiera sygnał o poziomie szczytowym zmierzonym w pliku",
+    "new_text": "zawiera sygnał o poziomie szczytowym zmierzonym w pliku, choć mógł to być wyłączony mikrofon",
+    "komentarz": "Przeciwnik powie, że mikrofon był wyłączony."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:11",
+    "klasa": "FAKT_BEZ_ZRODLA",
+    "waga": "🟠",
+    "soczewka": "MOD-ATAK-NA-DRAFT",
+    "naprawa": "REDAKCJA",
+    "target_text": "Z 1000 próbek większość ma wartość zero.",
+    "new_text": "Z 1000 próbek 977 (97,7%) ma wartość zero.",
+    "komentarz": "Doprecyzowanie liczby."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:13",
+    "klasa": "STRATEGIA",
+    "waga": "🟠",
+    "soczewka": "pierwsze-wrazenie-sedziego-pl",
+    "naprawa": "REDAKCJA",
+    "target_text": "Obrona opiera się na braku dowodu skutku.",
+    "new_text": "Obrona i strategię obrony opiera się na braku dowodu skutku oraz na wadach samego zapisu.",
+    "komentarz": "Teza powinna od razu mówić o zapisie."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:15",
+    "klasa": "STYL",
+    "waga": "🟢",
+    "soczewka": "marko-pl-content",
+    "naprawa": "AUTO",
+    "komentarz": "Klamra #34.",
+    "edycje": [
+      {
+        "target_text": "Nadto zapis nie zawiera",
+        "new_text": "Zapis nie zawiera"
+      },
+      {
+        "kotwica": "PISMO_v1.clean.md:25",
+        "target_text": "Co więcej, wniosek",
+        "new_text": "Wniosek"
+      }
+    ]
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:7",
+    "klasa": "LOGIKA",
+    "waga": "🟠",
+    "soczewka": "pierwsze-wrazenie-sedziego-pl",
+    "naprawa": "REDAKCJA",
+    "target_text": "z dźwiękiem w dniu 1 sierpnia 2025 r.",
+    "new_text": "w dniu 1 sierpnia 2025 r.",
+    "komentarz": "Skrócenie zdania."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:21",
+    "klasa": "LOGIKA",
+    "waga": "🟠",
+    "soczewka": "zarzuty-do-opinii-bieglego",
+    "naprawa": "REDAKCJA",
+    "target_text": "Nagranie zawiera wyraźny sygnał mowy w końcowym odcinku.",
+    "new_text": "Nagranie zawiera wyraźny sygnał mowy w końcowym odcinku, choć mikrofon mógł być wyłączony.",
+    "komentarz": "Uprzedzenie zarzutu."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:23",
+    "klasa": "FAKT_BEZ_ZRODLA",
+    "waga": "🟠",
+    "soczewka": "analizator-dowodow-v3",
+    "naprawa": "REDAKCJA",
+    "dowod": "k. 12",
+    "target_text": "Protokół oględzin nie odnotowuje zniszczenia kamery.",
+    "new_text": "Protokół oględzin (k. 12) nie odnotowuje zniszczenia kamery.",
+    "komentarz": "Dopisanie źródła."
+  },
+  {
+    "dokument": "PISMO",
+    "kotwica": "PISMO_v1.clean.md:19",
+    "klasa": "STYL",
+    "waga": "🟢",
+    "soczewka": "regresja-edycje-ta-sama-kotwica",
+    "naprawa": "AUTO",
+    "komentarz": "Dwie edycje jednego ustalenia w tym samym akapicie z jawna, wspolna kotwica - obie musza przejsc (regresja 30.09.2026).",
+    "edycje": [
+      {
+        "kotwica": "PISMO_v1.clean.md:19",
+        "target_text": "Wniosek dowodowy dotyczy",
+        "new_text": "Wniosek dowodowy obejmuje"
+      },
+      {
+        "kotwica": "PISMO_v1.clean.md:19",
+        "target_text": "nagrania porównawczego",
+        "new_text": "porównawczego nagrania"
+      }
+    ]
+  }
+]

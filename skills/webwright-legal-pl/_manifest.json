@@ -1,0 +1,25 @@
+{
+    "name": "Orzeczenia spoza MCP",
+    "slug": "webwright-legal-pl",
+    "entitlement": "free",
+    "vertical": "legal-pl",
+    "version": null,
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/webwright-legal-pl.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "41917d21c62d78823b37dffd3ac105247c94c647ca6f421f6fbfedc14db55270"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Integralnosc: SHA256 (CHECKSUMS.txt). Podpis Ed25519 = tier zweryfikowany, w przygotowaniu. Instalacja: rozpakuj do ~/.claude/skills/webwright-legal-pl/",
+    "generated": "2026-06-25",
+    "files": [
+        "commands/eurlex.md",
+        "commands/orzeczenie.md",
+        "commands/szukaj.md",
+        "scripts/fetch_eurlex.py",
+        "scripts/fetch_orzeczenie.py",
+        "SKILL.md"
+    ]
+}

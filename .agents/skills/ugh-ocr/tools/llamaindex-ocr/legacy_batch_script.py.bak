@@ -1,0 +1,442 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import sys
+import re
+import glob
+import json
+import logging
+import argparse
+import traceback
+from pathlib import Path
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+try:
+    from llama_cloud import LlamaCloud
+except ImportError as e1:
+    try:
+        from llama_cloud.client import LlamaCloud
+    except ImportError as e2:
+        print("Nie udało się zaimportować LlamaCloud SDK.")
+        print(f"Python: {sys.executable}")
+        print(f"Uruchom:\n{sys.executable} -m pip install --upgrade --no-cache-dir llama-cloud")
+        print("Pierwotny błąd importu:", repr(e1))
+        print("Fallback błąd importu:", repr(e2))
+        sys.exit(1)
+
+DEFAULT_LLAMA_CLOUD_API_KEY = "llx-kkl4x7fO8cIyuL6ZDKgX3EVZcWNsXi30tu7jfvs8MjVLLPbY"
+LLAMA_CLOUD_API_KEY = "llx-kkl4x7fO8cIyuL6ZDKgX3EVZcWNsXi30tu7jfvs8MjVLLPbY"
+
+DEFAULT_CUSTOM_PROMPT = """Document parsing and transcription:
+- These are Polish legal-medical documents. Preserve document structure and visual hierarchy.
+- Distinguish explicitly between printed system text, handwriting, stamps/seals, signatures, checkboxes, handwritten marks, and OCR uncertainty.
+- Pay special attention to table structure: preserve rows, columns, headers, merged cells, field labels, empty cells, and the relationship between values and their labels.
+- Do not flatten tables into ordinary prose unless explicitly asked. If a table is partially unreadable, preserve its structure and mark uncertain cells.
+- Pay special attention to checkbox state. Explicitly distinguish between checked, unchecked/empty, unclear, crossed-out, handwritten-marked, and OCR-uncertain boxes.
+- Do not infer checkbox state from surrounding text. If the visual mark is unclear, label it as [checkbox niepewny] rather than treating it as checked or empty.
+- Do not merge visually separate fields or documents into one continuous narrative.
+- Preserve original wording, spelling, dates, times, names, units, dosages, lab values, abbreviations, and line/field relationships as far as possible.
+- Use labels such as [druk], [odręczne], [pieczęć], [podpis], [checkbox pusty], [checkbox zaznaczony], [checkbox niepewny], [przekreślone], [nieczytelne], [OCR niepewny].
+- Do not infer missing text from context unless clearly marked as interpretation.
+"""
+
+
+def now_str() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def sanitize_md_cell(value: Any) -> str:
+    text = str(value) if value is not None else "-"
+    return text.replace("\n", " ").replace("\r", " ").replace("|", "\\|")
+
+
+def yaml_scalar(value: Any) -> str:
+    if value is None or value == "":
+        return "null"
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, (int, float)):
+        return str(value)
+    s = str(value).replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{s}"'
+
+
+def write_yaml_key(f, key: str, value: Any) -> None:
+    if isinstance(value, list):
+        f.write(f"{key}:\n")
+        if not value:
+            f.write("  []\n")
+            return
+        for item in value:
+            f.write(f"  - {yaml_scalar(item)}\n")
+    else:
+        f.write(f"{key}: {yaml_scalar(value)}\n")
+
+
+def ensure_api_key() -> None:
+    if not LLAMA_CLOUD_API_KEY or LLAMA_CLOUD_API_KEY == "LLAMA_CLOUD_API_KEY_HERE":
+        raise RuntimeError(
+            "Brak klucza LlamaCloud. Ustaw zmienną środowiskową LLAMA_CLOUD_API_KEY "
+            "albo wpisz klucz w DEFAULT_LLAMA_CLOUD_API_KEY."
+        )
+
+
+def obj_to_plain(value: Any) -> Any:
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, list):
+        return [obj_to_plain(v) for v in value]
+    if isinstance(value, tuple):
+        return [obj_to_plain(v) for v in value]
+    if isinstance(value, dict):
+        return {str(k): obj_to_plain(v) for k, v in value.items()}
+    if hasattr(value, "model_dump"):
+        try:
+            return obj_to_plain(value.model_dump())
+        except Exception:
+            pass
+    if hasattr(value, "dict"):
+        try:
+            return obj_to_plain(value.dict())
+        except Exception:
+            pass
+    if hasattr(value, "__dict__"):
+        try:
+            return obj_to_plain(vars(value))
+        except Exception:
+            pass
+    return str(value)
+
+
+def normalize_version_from_final_paren(value: Optional[str]) -> Optional[str]:
+    if not value:
+        return None
+    v = value.strip()
+
+    # Projektowa konwencja: końcowe "(01v2)" => "012026v2".
+    # Jeśli końcowy nawias ma już pełną wartość, np. "012026v2", zostaje bez zmian.
+    m_short = re.fullmatch(r"(\d{2})v(.+)", v, flags=re.IGNORECASE)
+    if m_short:
+        return f"{m_short.group(1)}2026v{m_short.group(2)}"
+
+    return v
+
+
+def extract_evidence_id(pdf_path: str) -> Optional[str]:
+    filename = os.path.basename(pdf_path)
+    stem = os.path.splitext(filename)[0]
+    m_id = re.search(r"\(([^)]+)\)", stem)
+    if not m_id:
+        return None
+    return m_id.group(1).strip()
+
+
+def output_base_from_id(evidence_id: str) -> str:
+    return f"({evidence_id})"
+
+
+def extract_filename_fields(pdf_path: str) -> Dict[str, Any]:
+    filename = os.path.basename(pdf_path)
+    stem = os.path.splitext(filename)[0]
+
+    evidence_id = extract_evidence_id(pdf_path)
+
+    doc_date = None
+    m_date = re.search(r"\b(\d{4}-\d{2}-\d{2})\b", stem)
+    if m_date:
+        doc_date = m_date.group(1)
+
+    version = None
+    m_id = re.search(r"\(([^)]+)\)", stem)
+    m_final_paren = re.search(r"\(([^()]*)\)\s*$", stem)
+    if m_final_paren:
+        final_value = m_final_paren.group(1).strip()
+        # Nie traktujemy początkowego ID dowodu jako wersji, jeśli to jedyny nawias w nazwie.
+        if not (m_id and m_id.start() == m_final_paren.start()):
+            version = normalize_version_from_final_paren(final_value)
+
+    title = stem
+    title = re.sub(r"^\s*\([^)]+\)\s*", "", title)
+    title = re.sub(r"\b\d{4}-\d{2}-\d{2}\b", "", title, count=1)
+    if m_final_paren and version:
+        title = re.sub(r"\s*\([^()]*\)\s*$", "", title)
+    title = re.sub(r"[_\-]+", " ", title)
+    title = re.sub(r"\s+", " ", title).strip(" -_") or None
+
+    return {
+        "id": evidence_id,
+        "date": doc_date,
+        "filename": filename,
+        "title": title,
+        "version": version,
+        "verified": False,
+    }
+
+
+def extract_metadata_frontmatter(raw: Any) -> Dict[str, Any]:
+    plain = obj_to_plain(raw)
+    metadata = plain.get("metadata") if isinstance(plain, dict) else None
+    pages = metadata.get("pages") if isinstance(metadata, dict) else None
+
+    if not isinstance(pages, list) or not pages:
+        return {"notes": None, "page": None, "confidence": None}
+
+    notes_values: List[Any] = []
+    page_values: List[Any] = []
+    confidence_values: List[Any] = []
+
+    for p in pages:
+        if not isinstance(p, dict):
+            continue
+        notes_values.append(p.get("speaker_notes"))
+        page_values.append(p.get("printed_page_number"))
+        confidence_values.append(p.get("confidence"))
+
+    def compact(values: List[Any]) -> Any:
+        cleaned = [v for v in values if v is not None and v != ""]
+        if not cleaned:
+            return None
+        if len(values) == 1:
+            return values[0]
+        return values
+
+    return {
+        "notes": compact(notes_values),
+        "page": compact(page_values),
+        "confidence": compact(confidence_values),
+    }
+
+
+def parse_tier(args: argparse.Namespace) -> str:
+    if args.plus:
+        return "agentic_plus"
+    if args.eco:
+        return "cost_effective"
+    return "agentic"
+
+
+def parse_with_llama_sdk(pdf_path: str, args: argparse.Namespace) -> Tuple[str, Any]:
+    ensure_api_key()
+    client = LlamaCloud(api_key=LLAMA_CLOUD_API_KEY)
+    tier = parse_tier(args)
+
+    file_obj = client.files.create(file=pdf_path, purpose="parse")
+
+    result = client.parsing.parse(
+        file_id=file_obj.id,
+        tier=tier,
+        version="latest",
+        agentic_options={"custom_prompt": args.custom_prompt},
+        disable_cache=True,
+        output_options={"tables_as_spreadsheet": {"guess_sheet_name": True}},
+        expand=["markdown_full", "metadata"],
+        polling_interval=args.polling_interval,
+        timeout=args.timeout,
+    )
+
+    markdown = getattr(result, "markdown_full", None) or getattr(result, "markdown", None) or ""
+    raw = obj_to_plain(result)
+    return str(markdown or ""), raw
+
+
+def write_markdown(out_md: str, pdf_path: str, markdown: str, raw: Any) -> None:
+    fields = extract_filename_fields(pdf_path)
+    meta = extract_metadata_frontmatter(raw)
+
+    with open(out_md, "w", encoding="utf-8") as f:
+        f.write("---\n")
+        for key in ("id", "date", "filename", "title", "version", "verified"):
+            write_yaml_key(f, key, fields.get(key))
+        write_yaml_key(f, "notes", meta.get("notes"))
+        write_yaml_key(f, "page", meta.get("page"))
+        write_yaml_key(f, "confidence", meta.get("confidence"))
+        f.write("---\n\n")
+        f.write("## Markdown z parsera\n\n")
+        f.write((markdown or "").rstrip())
+        f.write("\n\n---\n\n")
+        f.write("**Uwagi i przypisy:**\n\n")
+        f.write("- Zawartość sparsowana przez Llama Parser; usunąć ten wpis po ręcznej weryfikacji ze źródłem.\n")
+
+
+def pdf_overlay_stub(pdf_path: str, args: argparse.Namespace) -> Dict[str, Any]:
+    # Celowo puste miejsce na przyszłość. Searchable PDF robi osobny pipeline Swift/Apple Vision.
+    # Domyślnie przyszły tryb overlay powinien nadpisywać PDF; --keep ma zachować oryginał.
+    return {
+        "status": "pdf_overlay_stub",
+        "reason": "PDF overlay nie jest zaimplementowany w tym skrypcie; użyj pipeline Swift/Apple Vision.",
+        "pages": "-",
+        "items": "-",
+    }
+
+
+def output_paths_for_pdf(pdf_path: str) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[str]]:
+    evidence_id = extract_evidence_id(pdf_path)
+    if not evidence_id:
+        return None, None, None, None
+    base = output_base_from_id(evidence_id)
+    return evidence_id, f"{base}.md", f"{base}.txt", f"{base}.parser.json"
+
+
+def process_pdf(pdf_path: str, args: argparse.Namespace) -> Dict[str, Any]:
+    if not os.path.exists(pdf_path):
+        return {"status": "error", "reason": "Plik zniknął w trakcie operacji."}
+
+    evidence_id, out_md, out_txt, out_json = output_paths_for_pdf(pdf_path)
+    if not evidence_id or not out_md:
+        return {"status": "error", "reason": "Brak ID dowodu w nazwie pliku; oczekiwany format z nawiasem, np. (K.6) ... .pdf"}
+
+    # Twarda reguła: jeśli canonical .md po ID istnieje, nie parsujemy tego PDF-a ponownie.
+    # Rename, korekta daty albo opisu w nazwie PDF nie uruchamiają ponownego parsera.
+    if os.path.exists(out_md):
+        return {"status": "skipped", "reason": f"Markdown dla ID {evidence_id} już istnieje: {out_md}; plik nie został ponownie przetworzony"}
+
+    try:
+        markdown, raw = parse_with_llama_sdk(pdf_path, args)
+        write_markdown(out_md, pdf_path, markdown, raw)
+
+        if args.keep_text and out_txt:
+            Path(out_txt).write_text(markdown or "", encoding="utf-8")
+
+        if args.keep_json and out_json:
+            with open(out_json, "w", encoding="utf-8") as f:
+                json.dump(raw, f, ensure_ascii=False, indent=2)
+
+        if args.pdf_overlay:
+            return pdf_overlay_stub(pdf_path, args)
+
+        return {
+            "status": "ok",
+            "reason": f"Zapisano {out_md}; tier={parse_tier(args)}; PDF overlay wyłączony",
+            "pages": "-",
+            "items": "-",
+        }
+
+    except Exception as e:
+        return {"status": "error", "reason": str(e), "traceback": traceback.format_exc()}
+
+
+def is_generated_pdf(path: str) -> bool:
+    name = os.path.basename(path)
+    suffixes = (
+        ".searchable.pdf",
+        ".tmp.pdf",
+        ".tmp.searchable.pdf",
+        ".flattened-image-only.tmp.pdf",
+        ".bak.pdf",
+        ".pre-searchable.bak.pdf",
+        ".ocr.pdf",
+    )
+    return any(name.endswith(s) for s in suffixes)
+
+
+def print_destructive_notice_and_confirm(args: argparse.Namespace, target_pdfs: List[str]) -> None:
+    print()
+    print("UWAGA: domyślnie działania skryptu są traktowane jako DESTRUCTIBLE dla katalogu roboczego.")
+    print()
+    print("Co zrobi ten przebieg:")
+    print("- utworzy pliki Markdown po kanonicznym ID dowodu, np. `(K.6).md`, ignorując datę i opis z nazwy PDF;")
+    print("- jeśli `(ID).md` już istnieje, PDF o tym ID zostanie pominięty i parser się dla niego nie uruchomi;")
+    print("- przy `--keep-text` utworzy/uzupełni `(ID).txt`;")
+    print("- przy `--keep-json` utworzy/uzupełni `(ID).parser.json`;")
+    print("- domyślnie NIE tworzy searchable PDF i NIE pobiera `items` ani `text_full`;")
+    print("- ewentualny `--pdf-overlay` jest tylko pustym placeholderem na przyszłość.")
+    print()
+    print("Flagi:")
+    print("  --keep-json           zapisuje surowy wynik `(ID).parser.json`")
+    print("  --keep-text           zapisuje `(ID).txt` z markdown_full")
+    print("  --include-generated   przetwarza również techniczne/wygenerowane PDF-y")
+    print("  --verbose             bardziej szczegółowe logowanie")
+    print("  --plus                tier agentic_plus zamiast domyślnego agentic")
+    print("  --eco                 tier cost_effective zamiast domyślnego agentic")
+    print("  --polling-interval N  interwał polling SDK")
+    print("  --timeout N           timeout SDK parse")
+    print("  --custom-prompt-file  własny prompt z pliku")
+    print("  --pdf-overlay         placeholder; overlay PDF nie jest tu zaimplementowany")
+    print("  --keep                placeholder pod przyszły overlay; obecnie PDF nie jest modyfikowany")
+    print()
+    print(f"Liczba PDF-ów w batchu: {len(target_pdfs)}")
+    print(f"Tier: {parse_tier(args)}")
+    print()
+
+    answer = input("Kontynuować? [y/N]: ").strip().lower()
+    if answer not in ("y", "yes", "t", "tak"):
+        print("Przerwano. Nie wykonano batcha.")
+        sys.exit(1)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="LlamaCloud PDF -> Markdown/TXT/JSON; PDF overlay robi osobny Swift/Apple Vision")
+
+    parser.add_argument("--keep", action="store_true", help="Placeholder pod przyszły tryb PDF overlay; obecnie PDF nie jest modyfikowany")
+    parser.add_argument("--pdf-overlay", action="store_true", help="Opcjonalny placeholder pod przyszły overlay PDF; obecnie nie implementuje searchable PDF")
+    parser.add_argument("--keep-json", action="store_true", help="Zapisuje surowy wynik `(ID).parser.json`")
+    parser.add_argument("--keep-text", action="store_true", help="Zapisuje `(ID).txt` z markdown_full")
+    parser.add_argument("--include-generated", action="store_true", help="Przetwarza również PDF-y techniczne")
+    parser.add_argument("--verbose", action="store_true", help="Więcej logowania")
+    parser.add_argument("--plus", action="store_true", help="Używa tieru agentic_plus zamiast domyślnego agentic")
+    parser.add_argument("--eco", action="store_true", help="Używa tieru cost_effective zamiast domyślnego agentic")
+    parser.add_argument("--polling-interval", type=float, default=3.0, help="Interwał polling SDK")
+    parser.add_argument("--timeout", type=int, default=1800, help="Timeout SDK parse")
+    parser.add_argument("--custom-prompt-file", default=None, help="Plik TXT/MD z własnym promptem parsera")
+    args = parser.parse_args()
+
+    if args.plus and args.eco:
+        print("Nie można jednocześnie użyć --plus i --eco.")
+        sys.exit(2)
+
+    if args.custom_prompt_file:
+        args.custom_prompt = Path(args.custom_prompt_file).read_text(encoding="utf-8")
+    else:
+        args.custom_prompt = DEFAULT_CUSTOM_PROMPT
+
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+
+    all_pdfs = sorted(glob.glob("*.pdf"))
+    target_pdfs = all_pdfs if args.include_generated else [p for p in all_pdfs if not is_generated_pdf(p)]
+
+    print_destructive_notice_and_confirm(args, target_pdfs)
+
+    log_file = "_llama_markdown_batch_log.md"
+    with open(log_file, "w", encoding="utf-8") as lf:
+        lf.write(f"# Log wygenerowany - {now_str()}\n\n")
+        lf.write(f"- Katalog roboczy: `{os.getcwd()}`\n")
+        lf.write(f"- Liczba plików PDF do przetworzenia: {len(target_pdfs)}\n")
+        lf.write(f"- Tier: `{parse_tier(args)}`\n")
+        lf.write(f"- PDF overlay: `{args.pdf_overlay}`\n")
+        lf.write(f"- Output naming: canonical `(ID).md` / `(ID).txt` / `(ID).parser.json`\n\n")
+        lf.write("| Plik | Status | Strony | Elementy tekstowe | Uwagi |\n")
+        lf.write("|---|---:|---:|---:|---|\n")
+
+    if not target_pdfs:
+        with open(log_file, "a", encoding="utf-8") as lf:
+            lf.write(f"\n- Zakończono paczkę: {now_str()}\n")
+        print("Brak PDF-ów do przetworzenia.")
+        print(f"Log zapisany do: {log_file}")
+        return
+
+    for idx, pdf_path in enumerate(target_pdfs, start=1):
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] ({idx}/{len(target_pdfs)}) Przetwarzanie: {pdf_path}")
+        result = process_pdf(pdf_path, args)
+
+        with open(log_file, "a", encoding="utf-8") as lf:
+            lf.write(
+                f"| `{sanitize_md_cell(pdf_path)}` | "
+                f"{sanitize_md_cell(result.get('status', 'unknown'))} | "
+                f"{sanitize_md_cell(result.get('pages', '-'))} | "
+                f"{sanitize_md_cell(result.get('items', '-'))} | "
+                f"{sanitize_md_cell(result.get('reason', '-'))} |\n"
+            )
+
+        if result.get("status") == "error" and "traceback" in result:
+            print(f"!!! Błąd wewnętrzny ({pdf_path}):\n{result['traceback']}")
+
+    with open(log_file, "a", encoding="utf-8") as lf:
+        lf.write(f"\n- Zakończono paczkę: {now_str()}\n")
+
+    print(f"\nZakończono paczkę. Log zapisany do: {log_file}")
+
+
+if __name__ == "__main__":
+    main()

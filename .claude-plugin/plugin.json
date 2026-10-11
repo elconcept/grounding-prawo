@@ -1,0 +1,17 @@
+{
+  "name": "grounding-prawo",
+  "description": "Prawo polskie z asystentem AI: silnik Lex Machina (router, 16 modułów DR), rodzina IURA na SAOS + ISAP, weryfikacja i jakość MateMatic, skille z Patrona, OCR the-ocr, lexcache i 16 konektorów MCP z cache w bazie GROUNDING-PRAWO.",
+  "version": "2026.09.13-1506",
+  "author": {
+    "name": "GROUNDING-PRAWO"
+  },
+  "keywords": [
+    "prawo-polskie",
+    "grounding",
+    "lex-machina",
+    "matematic",
+    "patron",
+    "mcp",
+    "cache"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "grounding-prawo",
+  "owner": { "name": "elconcept" },
+  "metadata": {
+    "description": "Prywatny marketplace pluginu grounding-prawo: prawo polskie z weryfikacja zrodel (ISAP, SAOS, NSA, KRS, EUR-Lex) i cache lexcache."
+  },
+  "plugins": [
+    {
+      "name": "grounding-prawo",
+      "source": "./",
+      "description": "Lex Machina (router + DR-01..DR-16), IURA na SAOS + ISAP, weryfikacja MateMatic, skille z Patrona, OCR the-ocr, lexcache i konektory MCP z cache.",
+      "category": "legal"
+    }
+  ]
+}

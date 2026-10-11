@@ -1,0 +1,166 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- Polski dokument prawny, pismo procesowe do sadu / prokuratury / organu ---
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{polish}
+
+% Lancuch fontow: Baskerville -> Georgia -> Times New Roman (fallback).
+% Baskerville/Georgia licza sie jako "10pt", fallback TNR jako "12pt" -- patrz
+% \pismoBaseSize nizej, uzywane wszedzie tam gdzie tekst ma wracac do
+% "normalnego" rozmiaru (np. adres po pogrubionej/powiekszonej nazwie).
+\newlength{\pismoBaseSize}
+\newlength{\pismoBaseSkip}
+\IfFontExistsTF{Baskerville}{%
+  \setmainfont{Baskerville}%
+  \setlength{\pismoBaseSize}{10pt}\setlength{\pismoBaseSkip}{13pt}%
+}{%
+  \IfFontExistsTF{Georgia}{%
+    \setmainfont{Georgia}%
+    \setlength{\pismoBaseSize}{10pt}\setlength{\pismoBaseSkip}{13pt}%
+  }{%
+    \setmainfont{Times New Roman}%
+    \setlength{\pismoBaseSize}{12pt}\setlength{\pismoBaseSkip}{15pt}%
+  }%
+}%
+
+\usepackage[a4paper,left=3.5cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.3\baselineskip}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+$if(sygnatura_akt)$
+\fancyhead[R]{\small sygn.\ $sygnatura_akt$}
+$else$
+$if(sygnatura)$
+\fancyhead[R]{\small sygn.\ $sygnatura$}
+$else$
+$if(sygn)$
+\fancyhead[R]{\small sygn.\ $sygn$}
+$endif$
+$endif$
+$endif$
+$if(bez_numeracji_stron)$
+$else$
+\fancyfoot[C]{\small\thepage}
+$endif$
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\usepackage{enumitem}
+\setlist{topsep=0.3\baselineskip, itemsep=0.15\baselineskip}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% `#` w tresci markdown jest CALKOWICIE ignorowany -- usuwany juz na poziomie
+% markdown przez preprocesor (pismo-procesowe_pre.py), wiec \section nigdy
+% nie jest generowany przez pandoc dla tego szablonu. Tytul pisma pochodzi
+% wylacznie z frontmatteru (pismo_tytul/tytul/dokument/typ_dokumentu/
+% rodzaj_dokumentu/pismo), patrz blok tytulu ponizej.
+
+% `##` i `###` -- WERSALIKI, bez pogrubienia, bez numeracji.
+\usepackage{titlesec}
+\setcounter{secnumdepth}{0}
+\titleformat{\subsection}{\normalfont}{}{0pt}{\MakeUppercase}
+\titlespacing*{\subsection}{0pt}{0.6\baselineskip}{0.4\baselineskip}
+\titleformat{\subsubsection}{\normalfont}{}{0pt}{\MakeUppercase}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.4\baselineskip}
+
+\begin{document}
+\fontsize{\pismoBaseSize}{\pismoBaseSkip}\selectfont
+
+% --- Miejscowosc (hardcoded Krakow, chyba ze frontmatter nadpisuje) i data ---
+\begin{flushright}
+$if(miejscowosc)$$miejscowosc$$else$Kraków$endif$%
+$if(data)$, dnia $data$ r.$else$$if(data_dokumentu)$, dnia $data_dokumentu$ r.$else$$if(data_pisma)$, dnia $data_pisma$ r.$endif$$endif$$endif$
+\end{flushright}
+
+% --- Blok nadawcy (strona postepowania); domyslne dane gdy brak w frontmatterze ---
+$if(nadawca_nazwa)$
+\noindent {\fontsize{14pt}{16pt}\selectfont $nadawca_nazwa$}\\
+$for(nadawca_adres)$$nadawca_adres$\\
+$endfor$
+$if(nadawca_rola)$\textit{$nadawca_rola$}\\$endif$
+$else$
+\noindent {\fontsize{14pt}{16pt}\selectfont Tomasz Kaczmarczyk}\\
+os. Teatralne 6/8, 31-945 Kraków\\
+tel: 515-113-190, mail: tomek.kaczmarczyk@gmail.com\\
+$endif$
+
+% --- Blok odbiorcy (sad / prokuratura / organ); wynik preprocesora _pre.py ---
+$if(odbiorca_glowny_nazwa)$
+\par\noindent\hspace*{\fill}\begin{minipage}[t]{9.5cm}
+\raggedleft
+{\fontsize{14pt}{16pt}\selectfont $odbiorca_glowny_nazwa$}\\
+$for(odbiorca_glowny_adres)$$odbiorca_glowny_adres$\\
+$endfor$
+\end{minipage}\par
+$if(odbiorca_dw)$
+\vspace{0.6\baselineskip}
+\par\noindent\hspace*{\fill}\begin{minipage}[t]{9.5cm}
+\raggedleft
+\textit{Do wiadomości:}\\[0.3\baselineskip]
+$for(odbiorca_dw)$
+{\fontsize{14pt}{16pt}\selectfont $odbiorca_dw.nazwa$}\\
+$for(odbiorca_dw.adres)$$odbiorca_dw.adres$\\
+$endfor$
+$sep$\vspace{0.4\baselineskip}
+$endfor$
+\end{minipage}\par
+$endif$
+$endif$
+
+\vspace{0.6\baselineskip}
+
+% --- Wartosc przedmiotu sporu ---
+$if(wartosc_przedmiotu_sporu)$
+\noindent Wartość przedmiotu sporu: $wartosc_przedmiotu_sporu$\\
+$endif$
+
+\vspace{1.2\baselineskip}
+
+% --- Tytul pisma: pismo_tytul / tytul / dokument / typ_dokumentu / rodzaj_dokumentu / pismo ---
+$if(pismo_tytul)$
+\begin{center}{\fontsize{14pt}{16pt}\selectfont\bfseries \MakeUppercase{$pismo_tytul$}}\end{center}
+$else$$if(tytul)$
+\begin{center}{\fontsize{14pt}{16pt}\selectfont\bfseries \MakeUppercase{$tytul$}}\end{center}
+$else$$if(dokument)$
+\begin{center}{\fontsize{14pt}{16pt}\selectfont\bfseries \MakeUppercase{$dokument$}}\end{center}
+$else$$if(typ_dokumentu)$
+\begin{center}{\fontsize{14pt}{16pt}\selectfont\bfseries \MakeUppercase{$typ_dokumentu$}}\end{center}
+$else$$if(rodzaj_dokumentu)$
+\begin{center}{\fontsize{14pt}{16pt}\selectfont\bfseries \MakeUppercase{$rodzaj_dokumentu$}}\end{center}
+$else$$if(pismo)$
+\begin{center}{\fontsize{14pt}{16pt}\selectfont\bfseries \MakeUppercase{$pismo$}}\end{center}
+$endif$$endif$$endif$$endif$$endif$$endif$
+\vspace{0.6\baselineskip}
+
+$body$
+
+% --- Podpis ---
+\vspace{2\baselineskip}
+$if(skladajacy)$
+\begin{flushright}
+$skladajacy$
+\end{flushright}
+$endif$
+
+% --- Zalaczniki: bez pogrubienia, 9pt ---
+$if(zalaczniki)$
+\vspace{1\baselineskip}
+{\fontsize{9pt}{11pt}\selectfont
+\noindent Załączniki:
+\begin{enumerate}[label=\arabic*.,leftmargin=1.5em]
+$for(zalaczniki)$\item $zalaczniki$
+$endfor$
+\end{enumerate}
+}
+$endif$
+
+\end{document}

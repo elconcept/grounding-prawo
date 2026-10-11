@@ -1,0 +1,9 @@
+interface:
+  display_name: dr 01 ustroj konstytucyjny i zrodla prawa
+  short_description: 'Prawo konstytucyjne i ustrojowe: Konstytucja, organy państwa,
+    TK, źródła prawa, legislacja i skarga konstytucyjna; analiza z aktualną weryfikacją
+    źródeł.'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: true

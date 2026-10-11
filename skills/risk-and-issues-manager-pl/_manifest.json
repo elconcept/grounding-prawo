@@ -1,0 +1,21 @@
+{
+    "name": "Rejestr ryzyk RAID",
+    "slug": "risk-and-issues-manager-pl",
+    "entitlement": "free",
+    "vertical": "legal-pl",
+    "version": null,
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/risk-and-issues-manager-pl.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "6d8aeebfc73a5bf089fec7cf24dec7a21e25af4d1761e8d89251fac580dcea4b"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Integralnosc: SHA256 (CHECKSUMS.txt). Podpis Ed25519 = tier zweryfikowany, w przygotowaniu. Instalacja: rozpakuj do ~/.claude/skills/risk-and-issues-manager-pl/",
+    "generated": "2026-06-25",
+    "files": [
+        "templates/raid_register_template.md",
+        "SKILL.md"
+    ]
+}

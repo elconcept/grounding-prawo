@@ -1,0 +1,71 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- Polski dokument prawny, pismo procesowe / oswiadczenie ---
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{polyglossia}
+\setdefaultlanguage{polish}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+\setlength{\parskip}{0.6\baselineskip}
+\setlength{\parindent}{0pt}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+$if(sygnatura_akt)$
+\fancyhead[R]{\small Sygn. akt: $sygnatura_akt$}
+$endif$
+$if(sygnatura_rsow)$
+\fancyhead[L]{\small Sygn. RSOW: $sygnatura_rsow$}
+$endif$
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\usepackage{enumitem}
+\setlist{topsep=0.3\baselineskip, itemsep=0.15\baselineskip}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% naglowki markdown (#) w tresci oswiadczenia to podtytul, nie kolejny
+% numerowany rozdzial — tytul "OSWIADCZENIE" juz jest wyzej
+\usepackage{titlesec}
+\setcounter{secnumdepth}{0}
+\titleformat{\section}{\normalsize\itshape\centering}{}{0em}{}
+\titlespacing*{\section}{0pt}{0.3\baselineskip}{0.8\baselineskip}
+
+\begin{document}
+
+$if(data_dokumentu)$
+\begin{flushright}
+Dnia $data_dokumentu$ r.
+\end{flushright}
+$endif$
+
+\begin{center}
+{\Large\bfseries OŚWIADCZENIE}
+\end{center}
+\vspace{0.5\baselineskip}
+
+$body$
+
+\vspace{2\baselineskip}
+
+$if(skladajacy)$
+\begin{flushright}
+\begin{minipage}{6.5cm}
+\centering
+\rule{\linewidth}{0.4pt}\\[0.2\baselineskip]
+{\small $skladajacy$}\\
+{\footnotesize (podpis kwalifikowany lub podpis zaufany ePUAP)}
+\end{minipage}
+\end{flushright}
+$endif$
+
+\end{document}

@@ -1,0 +1,18 @@
+{
+    "name": "Klauzule pod lupa",
+    "slug": "klauzule-kontraktowe-pl",
+    "entitlement": "free",
+    "vertical": "legal-pl",
+    "version": "1.0.0",
+    "publisher": "MateMatic Solutions sp. z o.o.",
+    "homepage": "https://matematicsolutions.com/boutique",
+    "source": "https://matematicsolutions.com/downloads/skille/klauzule-kontraktowe-pl.zip",
+    "integrity": {
+        "algo": "sha256",
+        "skill_md": "44d696eade4a6823816bfd3d6c24e171dc488249e749dabcf9b0eb6169f5376e"
+    },
+    "signed": false,
+    "note": "Darmowy skill MateMatic. Taksonomia oparta na CUAD (The Atticus Project, CC BY 4.0). Integralnosc: SHA256 (CHECKSUMS.txt). Instalacja: rozpakuj do ~/.claude/skills/klauzule-kontraktowe-pl/",
+    "generated": "2026-06-25",
+    "files": "SKILL.md"
+}
