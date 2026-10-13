@@ -1,0 +1,20 @@
+{
+  "name": "grounding-prawo",
+  "interface": {
+    "displayName": "Grounding Prawo"
+  },
+  "plugins": [
+    {
+      "name": "grounding-prawo",
+      "source": {
+        "source": "local",
+        "path": "./plugins/grounding-prawo"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Legal"
+    }
+  ]
+}

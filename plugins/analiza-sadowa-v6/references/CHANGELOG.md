@@ -1,41 +1,24 @@
-# CHANGELOG — Analiza sądowa v6
+# CHANGELOG — analiza-sadowa-v6
 
-> Pełna historia zmian tego skilla. **Jedyna lokalizacja kanoniczna** — w SKILL.md
-> historii nie ma; jest tam wyłącznie krótki skrót w polu `changelog:` frontmatteru.
-> Standard ujednolicony 2026-08-20z4 dla całego systemu: plik `references/CHANGELOG.md`,
-> nigdy sekcja w korpusie SKILL.md ani pełna lista w YAML.
-> Wczytuj TYLKO gdy potrzebujesz historii konkretnej naprawy — przy audycie, przy
-> pytaniu „dlaczego to tak działa", przy regresji. W normalnym toku pracy zbędny.
+- 6.7 (2026-09-12, O-11 c.d.): references/koszty-terminy: sekcje kosztowe przebudowane z ODCZYTU TRESCI. OBALONE i usuniete: "sprawy gospodarcze 5% max 20 000 zl (art. 13 ust. 1a KSCU)" - jednostka art. 13 ust. 1a NIE ISTNIEJE; "sprawy pracownicze 5% WPS min 30 max 1000 zl" - normy brak w tekscie; wpis WSA 200/500/1000/2000 - wpis stosunkowy to 4/3/2/1% z podlogami 100/400/1500/2000 i capem 100 000 zl (rozp. RM t.j. Dz.U. 2021 poz. 535, par. 1), a wpis staly zalezy od RODZAJU aktu (par. 2); stawka pracownicza 180/120/240 zl - jest 360 zl (par. 9 ust. 1 pkt 1), a 120/240 to PODLOGI z par. 10; apelacja karna 420 zl - jest 840 zl przed SO i 1200 zl przed SA (par. 11 ust. 2 pkt 4-5); tabela par. 2 gubila prog 5 000 000 zl i stawke 25 000 zl. Dopisane: KROK 0 z art. 104a (brak zwolnien na wniosek w EPU i S24), rozwod i sprawy rodzinne z art. 26-38 wraz ze zwrotem z art. 79, oplaty karne (Dz.U. 2023 poz. 123), par. 9/10/11/17 obu taks, sekcja ryzyka kosztowego z KPC (art. 98-103, 520) z ostrzezeniem art. 102 KPC != art. 102 KSCU. NAPRAWA TERMINU: "zarzuty od nakazu 14 dni, art. 493 par. 1 KPC" - art. 493 par. 1 nie zawiera terminu; art. 480[2] par. 2 KPC: miesiac (nakazowy, doreczenie w UE), 2 tygodnie (upominawczy, w kraju), 3 miesiace (poza UE)
+- 6.6 (2026-09-10x, O-11): references/koszty-terminy: sekcja KOSZTY SADOWE opatrzona KROKIEM 0 i odeslaniem do tabeli ustanawiajacej; kwoty w module sa orientacyjne
+- 6.5 (2026-08-24, sesja audytowa audyt-systemu-v4, flaga **F-129**): pole `changelog:` w YAML liczyło 39 linii, czyli pełną historię zamiast skrótu — T12 zgłaszał to jako ⚠️. Wyniesione 1:1 do tego pliku, w YAML został 7-linijkowy skrót z odesłaniem. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-08-24b.
 
----
+- 6.4 (2026-08-23i, sesja audytowa audyt-systemu-v4, flaga F-115): self-check ANTY-FASADA podłączony jako WYWOŁANIE modułu kanonicznego `shared/SELF-CHECK-ANTY-FASADA.md`, kopia treści zastąpiona wywołaniem. Powód modułu zamiast kopii: gdy F-117 dodała regułę AF-6 i drugą pozycję listy do `shared/PRAWO-HARDGATE.md`, żadna z 7 istniejących kopii nie została zaktualizowana — źródło miało 2 pozycje, kopie 1. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-08-23i.
 
-## 6.4 (2026-08-20z4) — ujednolicenie standardu: historia zmian wyłącznie w tym pliku
-
-Pole `changelog:` w YAML (39 linii) wyniesione 1:1 do nowo utworzonego
-`references/CHANGELOG.md`.
-
-**Standard systemowy wprowadzony tego dnia:** pełna historia zmian każdego skilla
-mieszka w `references/CHANGELOG.md` — nigdy w sekcji `## CHANGELOG` korpusu SKILL.md
-i nigdy jako pełna lista wpisów w polu `changelog:` frontmatteru. W SKILL.md zostaje
-wyłącznie kilkulinijkowy skrót bieżącej wersji z odesłaniem do tego pliku.
-
-**Dlaczego to nie jest kosmetyka:** rozproszenie historii między trzy lokalizacje było
-BEZPOŚREDNIĄ przyczyną fałszywych wyników testu T12 w sesji 2026-08-20z3 — test szukał
-wpisów w `references/`, nie znajdował ich (bo leżały w SKILL.md) i raportował luki,
-których nie było. Jedna lokalizacja kanoniczna usuwa całą tę klasę błędu.
-Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis `AUDYT-2026-08-20z4`.
+> Lokalizacja kanoniczna historii wersji (ZASADA 15). Plik założony 2026-08-23i;
+> wersje wcześniejsze nieodtworzone — ślad w audyt-systemu-v4/references/AUDIT-JOURNAL.md.
 
 ---
 
-## HISTORIA PRZENIESIONA Z SKILL.md (2026-08-20z4, ujednolicenie standardu)
+## Wpisy przeniesione z pola `changelog:` YAML (F-129, 2026-08-24)
 
-> Poniższa treść pochodzi z pola `changelog:` we frontmatterze SKILL.md. Przeniesiona **1:1, bez zmiany ani jednego
-> zdania**. Powód: historia zmian ma mieszkać w jednym miejscu — w tym pliku —
-> a nie być rozproszona między korpusem SKILL.md, frontmatterem i `references/`.
-> Rozproszenie było źródłem rozjazdów wykrytych flagami F-101 i F-102: test T12
-> szukał historii w `references/` i raportował fałszywe luki tam, gdzie wpisy
-> istniały, tylko w SKILL.md.
+> T12 zgłaszał to pole jako ⚠️ — 39 linii to pełna historia, nie skrót
+> (ZASADA 15 dopuszcza w YAML skrót do ~15 linii). Tekst poniżej przeniesiony
+> 1:1, w oryginalnej składni listy YAML, bez przeredagowania i bez odtwarzania
+> czegokolwiek z pamięci.
 
+```yaml
 changelog:
   - "6.2 (2026-07-12): ZAMKNIĘTE — WARN 'średni priorytet: 13 plików w
     references/ bez odwołań do shared/' (otwarty w sesji 6.1). Sprawdzono
@@ -76,3 +59,4 @@ changelog:
     duplikacji jak w terminy/orzecznictwo; wymaga osobnej sesji per plik,
     nie zgadywania). Zarejestrować w CHECKLIST-DEDUP.md i zamknąć
     odpowiednią pozycję w WARN-OTWARTE.md."
+```

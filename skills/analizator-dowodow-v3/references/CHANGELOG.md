@@ -1,36 +1,12 @@
 # CHANGELOG — analizator-dowodow-v3
 
-> Pełna historia napraw i zmian wersji (wpisy 4.0.0...5.16.3; 5.16.0-5.16.2 odtworzone wtórnie 2026-08-31, F-140).
+> Pełna historia napraw i zmian wersji (25 wpisów, 4.0.0...5.15.0).
 > Wyniesiona z SKILL.md 2026-07-12 (runda 2 — redukcja kosztu kontekstu),
 > ZAKTUALIZOWANA 2026-08-20 (F-78, porządkowanie SKILL.md >1000 linii —
 > dopisano wpisy 5.14.2-5.15.0, które od poprzedniej redukcji ponownie
 > trafiały bezpośrednio do pola YAML `changelog` w SKILL.md zamiast
 > tutaj). Wczytuj TYLKO gdy potrzebujesz historii konkretnej naprawy
 > (SKILL.md trzyma tylko krótkie podsumowanie bieżącej wersji).
-
-- 5.16.6 (2026-09-12, O-11 c.d.): MP10-koszty. NAPRAWA PODSTAWY: zwolnienie pracownika przypisywane bylo do art. 35 KSCU - jest art. 96 ust. 1 pkt 4 i dziala NIEZALEZNIE OD WPS; art. 35 ust. 1 reguluje oplate podstawowa 30 zl od pracodawcy, a jego zd. 2 uruchamia przy WPS ponad 50 000 zl oplate OD APELACJI (dotyczy tego ALERT-F5). Dopisana WARSTWA CZWARTA zwolnien: art. 104a KSCU - w EPU i S24 NIE STOSUJE SIE art. 100-103, 104 ust. 2 i 105, wiec zwolnienie na wniosek nie przysluguje (nowy ALERT-F6). Dopisane czwarte pytanie kosztowe - ZWROT oplaty z art. 79 KSCU (nowy ALERT-F7) oraz art. 102 KPC jako zasada slusznosci w prognozie ryzyka, z ostrzezeniem ze to NIE jest art. 102 KSCU (nowy ALERT-F8). Wypelnione placeholdery [do weryfikacji]: oplaty dodatkowe (art. 18 ust. 2, 19 ust. 3-4, 20, 25 ust. 1, 25b, 68 pkt 1, 69 ust. 1 KSCU), sekcja karna (ustawa z 23.06.1973 Dz.U. 2023 poz. 123 - art. 2, 3, 7, 8-11, 13, 14, 15, 16, 17, 19, 21), sekcja sadowoadministracyjna (rozp. RM t.j. Dz.U. 2021 poz. 535 par. 1-2 + prawo pomocy art. 243-262 PPSA jako inny rezim), egzekucja (akt to ustawa z 28.02.2018 o kosztach komorniczych, nie ustawa o komornikach). Dopisane wyjatki od art. 98 KPC: art. 100, 101, 102, 103 i 520 KPC
-- 5.16.5 (2026-09-10w, O-11): MP10-koszty: PIERWSZE PYTANIE W KAZDEJ SPRAWIE to czy strona w ogole placi - trzy niezalezne warstwy zwolnien (podmiotowe art. 96 ust. 1, przedmiotowe art. 95, na wniosek art. 100-103). Dotad modul wskazywal wylacznie zwolnienie alimentacyjne
-- 5.16.4 (2026-09-10t, O-11): MP10-koszty oznaczony jako WARSTWA DRUGA: rozpoznaje rodzaj oplaty i za co, NIE jest zrodlem liczby. Podpiete shared/TABELE-OPLAT.md; dopisana pulapka art. 13 ust. 2 KSCU (cap 100 000 zl od 23.09.2025, nie 200 000) i zwolnienie alimentacyjne z art. 96 ust. 1 pkt 2
-- 5.16.3 (2026-08-31): F-140 — naprawa regresji dyskowej. Przywrócono `version` 5.16.1 → 5.16.3 i odtworzono brakujące wpisy 5.16.0–5.16.2 z `audyt-systemu-v4/references/AUDIT-JOURNAL.md`. Ponownie naprawiono `modules/MD5-terminy.md`: "art. 328¹ KPC" → **art. 328 § 1 KPC** oraz termin doprowadzony do brzmienia ustawowego ("tydzień"); zweryfikowane niezależnie w tej sesji (arslege.pl + lexlege.pl + standardyprawa.pl + przepisy.gofin.pl, t.j. Dz.U. 2026 poz. 468). Nagłówek H1 sprowadzony do samego MAJOR zgodnie z decyzją generalną F-102(C). Pole `changelog:` zsynchronizowane.
-
-- 5.16.2 (2026-08-04): FAZA 3E — naprawa CRIT w `modules/MD5-terminy.md`: błędny cytat "art. 328¹ KPC" (zbędny indeks górny) dla terminu wniosku o uzasadnienie wyroku → art. 328 KPC. Sprawdzono również MD3b-walidacja-prawna.md i MP2-katalog.md — zgodne z resztą systemu.
-  *(Wpis WTÓRNY, odtworzony 2026-08-31 z AUDIT-JOURNAL.md, sesja AUDYT-2026-08-04i. Ta sama naprawa była wykonywana DWUKROTNIE — patrz nota o regresji na końcu tego wpisu.)*
-
-- 5.16.1 (2026-08-04): rejestracja w toku FAZY 3E; dziennik odnotowuje podbicie 5.16.0 → 5.16.1, nie wyszczególniając zakresu zmian w tym pliku.
-  *(Wpis WTÓRNY, odtworzony 2026-08-31 z AUDIT-JOURNAL.md. ⚠️ ZAKRES NIEUSTALONY — dziennik podaje sam fakt podbicia wersji.)*
-
-- 5.16.0 (2026-07): dodano cross-referencję w sekcji ZASADY STYLU (powiązanie z Zasadą 2B `orzeczenia-sadowe-v2` — surowszy standard cytowania dla orzeczeń i interpretacji ZEWNĘTRZNYCH, odrębny od standardu dla dokumentów własnych sprawy); punkt checklisty dodany w `modules/MP9-jakosc.md` i `checklists/kontrola-jakosci.md`.
-  *(Wpis WTÓRNY, odtworzony 2026-08-31 z AUDIT-JOURNAL.md, tabela "NAPRAWA — ZMIANY W PLIKACH".)*
-
-> ⛔ **NOTA O REGRESJI DYSKOWEJ (F-140, 2026-08-31).** Stan na dysku był STARSZY
-> niż stan odnotowany w dzienniku: `version` wynosił 5.16.1, changelog kończył się
-> na 5.15.0, a naprawiony błąd `art. 328¹` ZNÓW występował w MD5-terminy.md.
-> To **trzecie** wystąpienie tego samego wzorca dla tego pliku — dziennik
-> (AUDYT-2026-08-08a/m oraz wpis przy drugim podbiciu na 5.16.2) opisuje
-> wcześniejszy incydent: nieaktualne archiwum przywrócone po resecie kontenera
-> nadpisało nowszą pracę. Wniosek: naprawa treści nie jest trwała, dopóki
-> dostawa nie jest weryfikowana wobec stanu dysku, a nie tylko wobec archiwum.
-> Wpisy wtórne oznaczone powyżej; przy rozbieżności rozstrzyga dziennik.
 
 - 5.15.0 (2026-07-15, F-7 / ZASADA 11 — audyt proceduralny): dodano BLOK D0 TEZA-GATE, obowiązkowy przed BLOK D (D1-D6) — rekonstrukcja jednym zdaniem tezy centralnej per strona z materiału, zanim ocenione zostaną mocne/słabe strony (D2), ocena prawna (D4) lub raport końcowy (D5). Przyczyna: skill nie miał NIGDZIE (grep 0 wyników) mechanizmu rekonstrukcji tezy — analogiczny wzorzec braku jak w przesluchanie-swiadkow-v2-min90 przed naprawą 3.6 (IMPORTED-QUESTIONS-GATE). Pozostałe 3 wzorce z ZASADY 11 (bramki reaktywne, skan dokumentów, milczące przyjmowanie ustaleń) już były pokryte: KROK 0b SD-VER (HARD GATE od startu), KROK 0c ST-INIT (jawne zgłaszanie pominięć). Pełny opis: audyt-systemu-v4/AUDIT-JOURNAL.md, AUDYT-2026-07-15e.
 

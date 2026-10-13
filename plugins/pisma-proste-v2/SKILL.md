@@ -1,23 +1,30 @@
 ---
 name: pisma-proste-v2
-version: 2.10
+version: "2.13"
 type: executive-pisma
 status: production
-description: |
-  Redagowanie pism procesowych o niskim stopniu złożoności, jeden wątek
-  prawny. Stosuj dla: klauzuli wykonalności, sprzeciwu/zarzutów od
-  nakazu zapłaty, wszczęcia egzekucji, zabezpieczenia roszczenia,
-  zwolnienia od kosztów, zawezwania do ugody, przywrócenia terminu,
-  wglądu do akt, wezwania do zapłaty, uzasadnienia wyroku, doręczenia
-  przez komornika, sprzeciwu od referendarza, interpretacji ZUS, skargi
-  do UODO, oświadczenia o skorzystaniu z sankcji kredytu darmowego (SKD,
-  art. 45 u.k.k.). NIE stosuj do pism wielowątkowych (apelacje, pozwy
-  złożone, w tym pozew o zwrot nadpłaty po SKD) — użyj pisma-procesowe-v3.
-compatibility:
-  tools:
-    - web_search
-    - web_fetch
+description: "Proste pisma prawne i urzędowe: wezwania, wnioski, odpowiedzi i krótsze dokumenty; kompletność danych, aktualna weryfikacja prawa i walidacja przed wygenerowaniem pliku."
+compatibility: "live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui"
 ---
+
+> **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.
+
+
+## ADAPTER RUNTIME — PORTABILITY (ChatGPT / Claude / inne hosty)
+
+Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Metodologia merytoryczna, routing, hard gate’y, checklisty, schematy danych i kryteria finalizacji tego skilla pozostają bez zmian.
+
+1. `view pisma-proste-v2/<plik>` oraz względne `view modules/...`, `view references/...`, `view assets/...` oznaczają świeży odczyt lokalnego zasobu tego skilla. Literalny katalog `/mnt/skills/user` nie jest wymagany.
+2. `view shared/<plik>` oznacza odczyt z osobnego, kanonicznego skilla `shared`. NIE kopiuj `shared` do tej paczki. Brak obowiązkowego zasobu = fail-closed.
+3. `view <inny-skill>/<plik>` oznacza aktywację/odczyt osobnego skilla. Nie vendoryzuj innych skilli.
+4. `web_search` / `web_fetch` oznaczają świeże wyszukanie i odczyt źródła przez równoważną funkcję hosta; zachowaj istniejące wymogi źródeł oficjalnych i statusów weryfikacji.
+5. `present_files`, `create_file` i odwołania do `HOST_CAPABILITY[document_generation]` / generatorów PDF oznaczają użycie natywnej funkcji dokumentowej bieżącego hosta. Brak literalnej nazwy narzędzia nie zwalnia z HYBRID-VALIDATION, POST-VALIDATION, STEP-TRACKER ani innych bramek.
+6. `show_widget`, `visualize:read_me`, `.jsx` i HTML są legacy/natywnymi wariantami UI. Jeśli host ma własny renderer interaktywny, użyj równoważnego widoku zachowującego ten sam model danych i funkcje; jeśli nie, zastosuj pełny fallback tekstowy/plikowy.
+7. `/mnt/user-data/...` oznacza rzeczywiste pliki użytkownika dostępne w hoście; wymagany ponowny odczyt musi być faktycznym odczytem pliku.
+8. Shell/Python/Cowork i podobne operacje traktuj jako techniki pomocnicze. Jeżeli host ich nie udostępnia, użyj natywnej funkcji równoważnej, bez fikcyjnego raportowania wykonania.
+
+**Zasada nadrzędna:** jeśli instrukcja jest już zrozumiała i wykonalna w bieżącym hoście, wykonaj ją bez konwersji. Adapter działa tylko na granicy runtime.
+
 
 # Skill: Pisma Proste v2 — Architektura Modułowa
 
@@ -36,8 +43,8 @@ jest skrócona do potwierdzenia aktualności przepisu i ewentualnej opłaty.
 ## ⛔ HARD GATE — ZAKAZ CYTOWANIA PRAWA I ORZECZEŃ Z PAMIĘCI
 
 > Przed podaniem jakiegokolwiek artykułu, terminu, opłaty lub sygnatury:
-> `view ./shared/NAZEWNICTWO-STRON.md  ← tabele T1-T10, wzory N1-N7
-view ./shared/PRAWO-HARDGATE.md`
+> `view shared/NAZEWNICTWO-STRON.md  ← tabele T1-T10, wzory N1-N7
+view shared/PRAWO-HARDGATE.md`
 > Jeśli źródło niedostępne → oznacz `⚠️ [NIEWERYFIKOWANE]`.
 
 ---
@@ -53,8 +60,16 @@ Każdy przywołany artykuł weryfikuj na `isap.sejm.gov.pl` lub `prawo.sejm.gov.
 Podaj pełne oznaczenie przy pierwszym użyciu.
 
 **Zasada 3 — Opłata sądowa zawsze:**
-Przy każdym piśmie wszczynającym postępowanie lub wymagającym opłaty —
-podaj wysokość opłaty i podstawę jej obliczenia.
+⛔ **KROK 0 — najpierw: CZY STRONA W OGÓLE PŁACI.** Zwolnienia mają trzy warstwy:
+podmiotowe z mocy ustawy (art. 96 ust. 1 KSCU — 18 kategorii, m.in. alimenty,
+ustalenie ojcostwa, **pracownik**, **osoba doznająca przemocy domowej**),
+przedmiotowe (art. 95 — m.in. zażalenia dotyczące **samych kosztów**) i na
+wniosek (art. 100–103). Podanie kwoty stronie zwolnionej z mocy ustawy
+zniechęca do wniesienia pisma, które nic nie kosztuje.
+
+Dopiero potem: podaj wysokość opłaty i podstawę jej obliczenia.
+⛔ Kwotę bierz z `shared/TABELE-OPLAT.md` (tabela ustanawiająca), nigdy z pamięci
+ani z bazy katalogującej.
 
 **Zasada 4 — Termin zawity najpierw:**
 Jeśli pismo dotyczy czynności z terminem zawitym (sprzeciw, zarzuty,
@@ -75,7 +90,7 @@ Nie cytuj przepisów ani orzeczeń z pamięci bez weryfikacji online.
 | **M2 — Intake i identyfikacja** | `references/M2-intake.md` | ZAWSZE na początku — zbieranie danych |
 | **M3 — Weryfikacja online** | `references/M3-weryfikacja.md` | Gdy pismo zawiera kwotę, opłatę lub nowelizowany przepis |
 | **M4 — Struktura i nagłówek** | `references/M4-struktura.md` | ZAWSZE przy redagowaniu pisma |
-| **M5 — Terminy zawite** | view ./shared/terminy.md | Gdy pismo ma termin zawity (sprzeciw, zarzuty, uzasadnienie, apelacja) |
+| **M5 — Terminy zawite** | view shared/terminy.md | Gdy pismo ma termin zawity (sprzeciw, zarzuty, uzasadnienie, apelacja) |
 | **M6 — Opłaty sądowe** | `references/M6-oplaty.md` | Gdy pismo wymaga opłaty lub pytasz o jej wysokość |
 | **M7 — Eskalacja i orzecznictwo** | `references/M7-eskalacja.md` | Gdy sprawa może wymagać pisma-procesowe-v3 lub orzecznictwa |
 | **M8 — Lista kontrolna** | `references/M8-checklista.md` | ZAWSZE przed wydaniem gotowego pisma |
@@ -109,8 +124,8 @@ Nie cytuj przepisów ani orzeczeń z pamięci bez weryfikacji online.
 KROK 1  → Wczytaj references/M1-zasady.md             [zawsze]
 KROK 2  → Wczytaj references/M2-intake.md             [zawsze — ustal typ pisma i dane]
 KROK 3  → Wczytaj:
-           view ./shared/terminy.md            [jeśli pismo ma termin zawity]
-KROK 4  → Wczytaj właściwy schemat SPA–SPM albo SPE-O [na podstawie wyniku M2; dla wezwania ostatecznego: references/SPE-ostateczne.md; dla SPM wczytaj NAJPIERW dr-02/modules/mod-ustawa-kredyt-konsumencki-SKD.md]
+           view shared/terminy.md            [jeśli pismo ma termin zawity]
+KROK 4  → Wczytaj właściwy schemat SPA–SPM albo SPE-O [na podstawie wyniku M2; dla wezwania ostatecznego: references/SPE-ostateczne.md; dla SPM wczytaj NAJPIERW dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-ustawa-kredyt-konsumencki-SKD.md]
 KROK 5  → Wczytaj references/M6-oplaty.md             [jeśli pismo wymaga opłaty]
 KROK 6  → Wczytaj references/M3-weryfikacja.md        [jeśli kwota/przepis wymaga weryfikacji]
 KROK 7  → Wczytaj references/M7-eskalacja.md          [jeśli sprawa może być złożona lub wymaga orzecznictwa]
@@ -120,7 +135,7 @@ KROK 9b → WERYFIKACJA FAKTYCZNA (M-FAKTY)             [zawsze gdy pismo z dost
            Porównaj każde twierdzenie faktyczne z materiałem źródłowym.
            Wyświetl Raport MOD-FAKTY przed oddaniem pisma. (patrz sekcja poniżej)
 KROK 9c → Wczytaj:
-           view ./shared/HYBRID-VALIDATION.md    [zawsze — auto-raport braków]
+           view shared/HYBRID-VALIDATION.md    [zawsze — auto-raport braków]
 KROK 10 → Wczytaj references/M9-format.md             [zawsze — prezentacja odpowiedzi]
 ```
 
@@ -137,7 +152,7 @@ Np. proste wezwanie do zapłaty bez terminu zawitego → pomijasz M5 i M7.
 **Skan kompletności dokumentów (naprawa F-7/ZASADA 11, 2026-07-15)** — jeśli
 użytkownik dostarczył JAKIKOLWIEK dokument (nakaz, tytuł wykonawczy, wyrok,
 umowa, korespondencja), wykonaj PRZED weryfikacją twierdzeń poniżej:
-> `view ./shared/MOD-SKAN-DOWODOW-KOMPLETNY.md` — zastosuj
+> `view shared/MOD-SKAN-DOWODOW-KOMPLETNY.md` — zastosuj
 > FAZA 1-3 w pełni (SD-GATE-TRUNC, SD-GATE-PORCJA, SD-VER), nawet dla
 > jednego krótkiego dokumentu. Przyczyna: pismo proste bazuje zwykle na
 > 1 dokumencie źródłowym — błąd w jego odczycie (obcięcie przez `view`,
@@ -145,11 +160,11 @@ umowa, korespondencja), wykonaj PRZED weryfikacją twierdzeń poniżej:
 > drugiej szansy na wykrycie w wielodokumentowej korelacji krzyżowej.
 
 **Weryfikacja twierdzeń strony** — wykonaj przed redagowaniem:
-> `view ./shared/CLAIM-VALIDATION.md`
+> `view shared/CLAIM-VALIDATION.md`
 > Twierdzenie sprzeczne z materiałem → zastąp tym co wynika z dokumentów; poinformuj użytkownika.
 > Twierdzenie bez oparcia → oznacz jako lukę; nie umieszczaj w piśmie.
 
-Gdy brakuje danych faktycznych — wczytaj: view ./shared/INTAKE-GAP.md:
+Gdy brakuje danych faktycznych — wczytaj: view shared/INTAKE-GAP.md:
 - **Dane krytyczne** (strony, typ, istota): jedno pytanie zbiorcze
 - **Dane uzupełniające**: wstaw `⬛ [UZUPEŁNIJ: opis]` w treść
 - **Na żądanie wzoru**: pismo ze wszystkimi polami jako ⬛
@@ -180,7 +195,7 @@ Przed redagowaniem ustal (patrz references/M2-intake.md — szczegóły):
   → web_search "[nazwa spółki] KRS NIP adres"
   → Potwierdź: firma rejestrowa + KRS + NIP + REGON + adres siedziby + status
   → Gdy rozbieżność identyfikatorów:
-    view ./shared/MOD-IDENTYFIKACJA-STRONY-UMOWY.md → ISU-1→ISU-5
+    view shared/MOD-IDENTYFIKACJA-STRONY-UMOWY.md → ISU-1→ISU-5
   ✅ [VER: URL, data] lub ⚠️ [ROZBIEŻNOŚĆ: opis]
 ```
 
@@ -195,20 +210,20 @@ Jeśli użytkownik nie podał wszystkich danych — zapytaj o brakujące
 |-----------|---------------|--------|---------|
 | Sprzeciw od nakazu zapłaty (EPU/zwykły) | **14 dni** od doręczenia | brak | SPA |
 | Zarzuty od nakazu (postęp. nakazowe) | **7 dni** od doręczenia | 3/4 wpisu (art. 19 §3 KSCU) | SPB |
-| Wniosek o nadanie klauzuli | brak | 6 zł / 50 zł (art. 71 KSCU) | SPC |
+| Wniosek o nadanie klauzuli | brak | 50 zł (art. 71 pkt 1–6 KSCU) | SPC |
 | Wniosek o wszczęcie egzekucji | brak | brak | SPD |
 | Wezwanie przedsądowe do zapłaty | brak | brak | SPE |
 | Ostateczne przedsądowe wezwanie do zapłaty | 3–5 dni roboczych wg danych sprawy | brak | SPE-O |
 | Wniosek o uzasadnienie wyroku | **7 dni** od ogłoszenia | 100 zł (art. 25b KSCU) | SPF |
-| Wniosek o zabezpieczenie | brak | 100 zł (art. 69 §1 KSCU) | SPG |
+| Wniosek o zabezpieczenie | brak | 100 zł (art. 68 pkt 1 KSCU); przed wniesieniem pozwu o roszczenie pieniężne — 1/4 opłaty od pozwu (art. 69 ust. 1 KSCU) | SPG |
 | Zwolnienie od kosztów / przywrócenie terminu / inne | patrz M5 | patrz M6 | SPH |
 | Odpowiedź na zawezwanie do próby ugodowej | **tydzień przed posiedzeniem** | brak | SPI |
 
 ---
 
-## TERMINY ZAWITE — CZERWONA LINIA (szczegóły: view ./shared/terminy.md)
+## TERMINY ZAWITE — CZERWONA LINIA (szczegóły: view shared/terminy.md)
 
-**Przy każdym piśmie z terminem zawitym (→ view ./shared/terminy.md):**
+**Przy każdym piśmie z terminem zawitym (→ view shared/terminy.md):**
 1. Podaj termin **BOLD** na początku odpowiedzi
 2. Oblicz datę graniczną od podanej daty doręczenia
 3. Podaj liczbę pozostałych dni
@@ -228,32 +243,57 @@ Jeśli użytkownik nie podał wszystkich danych — zapytaj o brakujące
 | Odwołanie od wypowiedzenia (KP) | 21 dni od doręczenia | Utrata roszczenia |
 | Przywrócenie terminu | 7 dni od ustania przeszkody | Niedopuszczalność |
 
-*Terminy zawite — pełna tabela z podstawami prawnymi: view ./shared/terminy.md*
+*Terminy zawite — pełna tabela z podstawami prawnymi: view shared/terminy.md*
 
 ---
 
 ## OPŁATY SĄDOWE — SKRÓCONA (szczegóły w references/M6-oplaty.md)
 
+⛔ **KROK 0 przed jakąkolwiek kwotą: `view shared/TABELE-OPLAT.md`** — tabela
+ustanawiająca i pełny katalog zwolnień (art. 94–103 KSCU). Poniższa tabela jest
+wyciągiem roboczym; w razie rozbieżności wiąże plik kanoniczny, a nad nim treść
+przepisu.
+
+✅ [VER] RZĄD 1 2026-09-12 — odczyt treści KSCU `Dz.U. 2025 poz. 1228`.
+
 | Czynność | Opłata | Podstawa |
 |----------|--------|----------|
+| Pozew — WPS do 500 zł | 30 zł | art. 13 ust. 1 pkt 1 KSCU |
+| Pozew — WPS ponad 500 do 1 500 zł | 100 zł | art. 13 ust. 1 pkt 2 KSCU |
+| Pozew — WPS ponad 1 500 do 4 000 zł | 200 zł | art. 13 ust. 1 pkt 3 KSCU |
+| Pozew — WPS ponad 4 000 do 7 500 zł | 400 zł | art. 13 ust. 1 pkt 4 KSCU |
+| Pozew — WPS ponad 7 500 do 10 000 zł | 500 zł | art. 13 ust. 1 pkt 5 KSCU |
+| Pozew — WPS ponad 10 000 do 15 000 zł | 750 zł | art. 13 ust. 1 pkt 6 KSCU |
+| Pozew — WPS ponad 15 000 do 20 000 zł | 1 000 zł | art. 13 ust. 1 pkt 7 KSCU |
+| Pozew — WPS ponad 20 000 zł | 5 % WPS, max **100 000 zł** | art. 13 ust. 2 KSCU |
+| Apelacja i inne środki z katalogu | wg tabeli od pozwu, od wartości przedmiotu **zaskarżenia** | art. 18 ust. 2 KSCU |
 | Sprzeciw od nakazu (w terminie) | brak | art. 503 KPC |
-| Zarzuty od nakazu | 3/4 wpisu | art. 19 §3 KSCU |
+| Zarzuty od nakazu nakazowego | 3/4 opłaty; konsument — max 750 zł | art. 19 ust. 4 KSCU |
+| Pozew w EPU | 1/4 opłaty, nie mniej niż 30 zł | art. 19 ust. 2 pkt 2 i art. 20 ust. 1 KSCU |
+| Zażalenie | 1/5 opłaty, o ile przepis szczególny nie stanowi inaczej | art. 19 ust. 3 pkt 2 KSCU |
 | Wniosek o wszczęcie egzekucji | brak | art. 797 KPC |
-| Wniosek o zabezpieczenie | 100 zł | art. 69 §1 KSCU |
-| Wniosek o uzasadnienie wyroku | 100 zł | art. 25b KSCU |
-| Wniosek o doręczenie przez komornika | 60 zł | Rozporządzenie MS |\n| Pozew / apelacja do 500 zł | 30 zł | art. 27 pkt 1 KSCU |
-| Pozew / apelacja do 1 500 zł | 100 zł | art. 27 pkt 2 KSCU |
-| Pozew / apelacja do 4 000 zł | 200 zł | art. 27 pkt 3 KSCU |
-| Pozew / apelacja do 7 500 zł | 400 zł | art. 27 pkt 4 KSCU |
-| Pozew / apelacja do 15 000 zł | 500 zł | art. 27 pkt 5 KSCU |
-| Pozew / apelacja do 20 000 zł | 750 zł | art. 27 pkt 6 KSCU |
-| Pozew / apelacja powyżej 20 000 zł | 5% WP, max 100 000 zł (⚠️ POPRAWKA 2026-07-27: było błędnie "200 000 zł", obniżone reformą z 25.07.2025) | art. 13 §2 KSCU |
-| EPU — nakaz zapłaty | 1,25% WP (min. 30 zł) | art. 19 §2b KSCU |
+| Wniosek o zabezpieczenie roszczenia | 100 zł | **art. 68 pkt 1 KSCU** |
+| Wniosek o uzasadnienie wyroku / postanowienia co do istoty | 100 zł | art. 25b ust. 1 KSCU |
+| Wniosek o uzasadnienie innego postanowienia lub zarządzenia | 30 zł | art. 25b ust. 2 KSCU |
+| Skarga na czynności komornika | **50 zł** | art. 25 ust. 1 KSCU |
+| Wniosek o klauzulę wykonalności (tytuł pozasądowy, małżonek, następca, wspólnik) | 50 zł | art. 71 pkt 1–6 KSCU |
+| Odpis / wypis / zaświadczenie z akt | 20 zł za każde rozpoczęte 10 stron | art. 77 ust. 1 KSCU |
+| Opłata podstawowa (brak stałej, stosunkowej, tymczasowej) | 30 zł | art. 14 ust. 1 i 3 KSCU |
+| **Pozew o rozwód** | 600 zł | art. 26 ust. 1 pkt 1 KSCU |
+| Separacja na zgodne żądanie / zniesienie separacji | 100 zł | art. 37 pkt 3 i 4 KSCU |
+| Podział majątku wspólnego (zgodny projekt) | 1000 zł (300 zł) | art. 38 ust. 1 i 2 KSCU |
+| Pozew pracownika | brak — zwolnienie ustawowe | art. 96 ust. 1 pkt 4 KSCU |
+| Apelacja w sprawie pracowniczej, WPS ponad 50 000 zł | wg art. 13 od **nadwyżki** ponad 50 000 zł | art. 35 ust. 1 zd. 2 KSCU |
+| Pozew alimentacyjny | brak — zwolnienie ustawowe | art. 96 ust. 1 pkt 2 KSCU |
 | Odpowiedź na zawezwanie | brak | — |
 
-*Aktualizuj stawki przez weryfikację na isap.sejm.gov.pl — mogą ulec zmianie.*
-
----
+⛔ **Naprawione 2026-09-12 (cztery pozycje):** progi WPS opisane były jako
+„art. 27 pkt 1–6 KSCU" — art. 27 ustanawia opłatę stałą 200 zł od enumerowanych
+pozwów i nie zna progów; dwa progi były przesunięte o wiersz; wniosek
+o zabezpieczenie miał podstawę art. 69 zamiast art. 68 pkt 1; wiersz
+„doręczenie przez komornika 60 zł | Rozporządzenie MS" nie miał podstawy
+i sklejał się z następnym wierszem przez dosłownie zapisany escape nowej linii
+(`\n` w treści), przez co tabela rozpadała się przy renderowaniu.
 
 ## ORZECZNICTWO I ESKALACJA (szczegóły w references/M7-eskalacja.md)
 
@@ -315,7 +355,7 @@ SYTUACJA C — niestandardowy stan faktyczny
 📅 CO DALEJ
    [następny krok po złożeniu pisma]
 
-📋 HYBRID-VALIDATION (zawsze — wczytaj view ./shared/HYBRID-VALIDATION.md)
+📋 HYBRID-VALIDATION (zawsze — wczytaj view shared/HYBRID-VALIDATION.md)
    Auto-raport braków 🔴/🟡/🔵. Użytkownik uzupełnia wybrane → wstaw do pisma.
    Licznik: "Pismo zawiera ⬛ [X] pól do uzupełnienia."
 ```
@@ -340,7 +380,31 @@ CHECKLISTA FINALNA (pisma proste)
                     Czy pismo powstało z dostarczonych dokumentów? → OBOWIĄZKOWE.
                     Żadna fikcja faktyczna w treści pisma (⛔ = błąd krytyczny)?
 □ HYBRID-VALIDATION Uruchomiony? Raport braków wyświetlony? Licznik ⬛ podany?
+□ [ANTY-FASADA + AF-6] Wykonaj self-check antyfasadowy z modułu kanonicznego:
+    view shared/SELF-CHECK-ANTY-FASADA.md
+  ⛔ Treść listy NIE jest tu kopiowana (F-115, 2026-08-23i). Poprzednia kopia
+    miała 1 z 2 pozycji: gdy F-117 dodała AF-6 do źródła, kopie nie zostały
+    zaktualizowane. Jedno miejsce prawdy = jedno miejsce aktualizacji.
+□ [DOMAIN-LOCK] Odpowiedź/pismo zawiera przepis SPOZA dziedziny wiodącej
+  (KK/KKS/KW/KPK/KPW przy torze cywilnym, pracowniczym lub administracyjnym —
+  albo odwrotnie)? NIE → OK. TAK → (a) konkretny FAKT wypełniający znamię,
+  nie skojarzenie tematyczne? (b) właściwy DR wczytany w TEJ odpowiedzi?
+  (c) przepis przeszedł PRAWO-HARDGATE w TEJ odpowiedzi? Którekolwiek NIE →
+  ⛔ USUŃ powołanie.  → `view shared/DOMAIN-LOCK.md`
+□ [RATE-COMPLETENESS] Występują odsetki / waloryzacja / wskaźnik zmienny
+  w czasie? NIE → OK. TAK → przedział zapisany + reżim rozstrzygnięty
+  (KC vs transakcje handlowe) + szereg podokresów BEZ LUK + znacznik na
+  KAŻDYM wierszu? NIE → nie podawaj kwoty łącznej, pokaż tabelę z ⬛.
+  → `view shared/RATE-COMPLETENESS.md`
+□ [STATUSY] Każdy przepis ma znacznik z ZAMKNIĘTEJ hierarchii czterech:
+  ✅ [VER] · 🟨 [KOTWICA-URZĘDOWA] · ⚠️ [NIEWERYFIKOWANE] · ⬛ [DO UZUPEŁNIENIA]?
+  Etykieta spoza tej listy = naruszenie hard gate (PRAWO-HARDGATE v2.5).
 ```
+
+> ⛔ Trzy ostatnie pozycje dodane 2026-08-23 (F-109). Obowiązują NIEZALEŻNIE
+> od tego, czy skill został wywołany przez `prawny-router-v3` — pismo proste
+> bywa redagowane bez przejścia przez router, a bramki żyły dotąd wyłącznie
+> w jego SELF-CHECK.
 
 Nie wydawaj pisma jeśli którykolwiek element checklisty nie jest spełniony.
 
@@ -350,7 +414,7 @@ Nie wydawaj pisma jeśli którykolwiek element checklisty nie jest spełniony.
 
 **Plik kanoniczny — wczytaj zawsze:**
 ```
-view ./shared/FAKTY_v2.md
+view shared/FAKTY_v2.md
 ```
 
 Uruchamiaj zawsze gdy pismo powstaje z dostarczonych przez użytkownika dokumentów,
@@ -394,32 +458,32 @@ Procedura, klasyfikacja błędów, format raportu i nakazy bezwzględne są w FA
 Przed oddaniem jakiegokolwiek pisma, nawet prostego, wczytaj i zastosuj:
 
 ```text
-view ./shared/TRYBY-PROCESOWE.md
-view ./shared/FORMAL-CHECK.md
-view ./shared/BRAKI-FORMALNE.md
-view ./shared/WARUNKI-SKUTECZNOSCI.md
-view ./shared/RISK-ASSESSMENT.md
-view ./shared/QUALITY-CHECK.md
+view shared/TRYBY-PROCESOWE.md
+view shared/FORMAL-CHECK.md
+view shared/BRAKI-FORMALNE.md
+view shared/WARUNKI-SKUTECZNOSCI.md
+view shared/RISK-ASSESSMENT.md
+view shared/QUALITY-CHECK.md
 ```
 
 Jeżeli pismo dotyczy terminu, sprzeciwu, zarzutów, uzasadnienia, apelacji, zażalenia albo przywrócenia terminu, dołącz:
 
 ```text
-view ./shared/TERM-CALC.md
+view shared/TERM-CALC.md
 ```
 
 Jeżeli pismo dotyczy JAKIEGOKOLWIEK środka zaskarżenia (zażalenie, odwołanie,
 sprzeciw, zarzuty, skarga) — obowiązkowo dołącz, ZANIM wskażesz adresata w piśmie:
 
 ```text
-view ./shared/ZAZALENIE-ADRESAT-GATE.md
+view shared/ZAZALENIE-ADRESAT-GATE.md
 ```
 
 Jeżeli pismo zawiera dowody lub zarzuty faktyczne, dołącz:
 
 ```text
-view ./shared/DOWODY-METODOLOGIA.md
-view ./shared/PREKLUZJA-DOWODOWA.md
+view shared/DOWODY-METODOLOGIA.md
+view shared/PREKLUZJA-DOWODOWA.md
 ```
 
 Pismo proste nie może ominąć walidacji tylko dlatego, że jest krótkie.

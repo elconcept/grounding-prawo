@@ -4,6 +4,18 @@ Jeden plugin do praktyki prawa polskiego: silnik Lex Machina (router i moduły D
 rodzina IURA na SAOS + ISAP, skille weryfikacji i jakości MateMatic, skille z Patrona, OCR
 the-ocr, `lexcache` i 16 konektorów MCP z cache w bazie GROUNDING-PRAWO.
 
+## Model dowodowy
+
+Plugin działa w polskim modelu swobodnej oceny dowodów. Nie stosuje chain of custody jako
+warunku wejścia, prawa precedensu ani automatycznych wyłączeń za jakość kopii, skanu, sposób
+pozyskania lub naruszenie prawa przy pozyskaniu. Takie okoliczności nie obniżają same przez
+się wartości dowodu. Dowód traktuj jako autentyczny, dopóki druga strona nie podniesie
+uzasadnionej, merytorycznej wątpliwości dotyczącej jego istoty. Nie wymagaj domyślnie hashy
+każdego zdjęcia ani poświadczenia każdej kopii.
+
+To nie zwalnia z opisu źródła, daty pobrania, statusu aktu i ograniczeń pokrycia. Te metadane
+służą aktualności i sprawdzalności cytatu, nie tworzą dodatkowego testu dopuszczalności dowodu.
+
 ## Zasada naczelna
 Brak numeru artykułu jest lepszy niż błędny numer artykułu; brak sygnatury jest lepszy niż
 sygnatura niezweryfikowana. Źródłem tezy o przepisie lub orzeczeniu jest baza, konektor albo

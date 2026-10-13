@@ -4,12 +4,9 @@
 [submodule "vendor/commercial-legal-pl"]
 	path = vendor/commercial-legal-pl
 	url = https://github.com/apiotrowski-afk/commercial-legal-pl.git
-[submodule "vendor/legal-cite-pl"]
-	path = vendor/legal-cite-pl
-	url = https://github.com/apiotrowski-afk/legal-cite-pl.git
 [submodule "vendor/Lex-Machina"]
 	path = vendor/Lex-Machina
-	url = https://github.com/michaleiatrak-star/Lex-Machina.git
+	url = https://github.com/elconcept/LexMachina.git
 [submodule "vendor/matematic-legal-verify-pl"]
 	path = vendor/matematic-legal-verify-pl
 	url = https://github.com/matematicsolutions/matematic-legal-verify-pl.git

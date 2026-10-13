@@ -66,7 +66,9 @@ Pozwany:  [Imię Nazwisko / Nazwa spółki]
 Wartość przedmiotu sporu: [kwota cyframi] zł
 (słownie: [kwota słownie] złotych)
 
-Opłata sądowa: [kwota] zł (art. 13 §2 lub art. 27 KSCU)
+Opłata sądowa: [kwota] zł — ⛔ najpierw sprawdź ZWOLNIENIA (art. 94–103 KSCU),
+  potem kwotę z `shared/TABELE-OPLAT.md`; cap opłaty stosunkowej z art. 13 ust. 2
+  to 100 000 zł od 23.09.2025, nie 200 000 zł
                / wniosek o zwolnienie od kosztów w odrębnym piśmie
 
                               P O Z E W
@@ -201,7 +203,7 @@ Powód (Pracownik): [Imię Nazwisko], [Adres], PESEL: [nr]
 Pozwany (Pracodawca): [Pełna nazwa], [Adres], NIP: [nr]
 
 Wartość przedmiotu sporu: [kwota] zł
-(Sprawy pracownicze — zwolnienie z opłaty do WPS 50 000 zł, art. 96 §1 pkt 4 KSCU)
+(Sprawy pracownicze — pracownik zwolniony z kosztów sądowych **niezależnie od WPS**, art. 96 ust. 1 pkt 4 KSCU; próg 50 000 zł z art. 35 ust. 1 zd. 2 KSCU uruchamia opłatę dopiero od **apelacji**, nie od pozwu)
 
                               P O Z E W
 o [przywrócenie do pracy / odszkodowanie / zapłatę wynagrodzenia /
@@ -340,14 +342,14 @@ Teza 2: [...]
 
 ```
 Przed redakcją (W2.1) wczytaj DODATKOWO:
-  view ./shared/MOD-BUDOWA-ARGUMENTU.md     (schemat 7-el.)
-  view ./shared/MOD-KOSZT-ODPOWIEDZI.md     (KO-2/KO-6 inline)
-  view ./shared/MOD-SKUTEK-PROCESOWY.md     (SP-1 — nowe)
-  view ./shared/MOD-MIKROPODSUMOWANIA.md    (MK-1 — nowe)
-  view ./shared/STRATEGIA-PROCESOWA.md
+  view shared/MOD-BUDOWA-ARGUMENTU.md     (schemat 7-el.)
+  view shared/MOD-KOSZT-ODPOWIEDZI.md     (KO-2/KO-6 inline)
+  view shared/MOD-SKUTEK-PROCESOWY.md     (SP-1 — nowe)
+  view shared/MOD-MIKROPODSUMOWANIA.md    (MK-1 — nowe)
+  view shared/STRATEGIA-PROCESOWA.md
 
 Po W2 (przed W3):
-  view ./shared/MOD-STRESS-TEST.md          (ST-1 — OBOWIĄZKOWY)
+  view shared/MOD-STRESS-TEST.md          (ST-1 — OBOWIĄZKOWY)
   → Wykonaj ST-1. Wyświetl raport ST-2 użytkownikowi.
   → STATUS PASS → kontynuuj do W3/AUDYT-KOŃCOWY
   → STATUS FAIL → wróć do W2.2 + ST-FIX + ponów ST-1

@@ -1,62 +1,9 @@
-# CHANGELOG — Pisma proste v2
+# CHANGELOG — pisma-proste-v2
 
-> Pełna historia zmian tego skilla. **Jedyna lokalizacja kanoniczna** — w SKILL.md
-> historii nie ma; jest tam wyłącznie krótki skrót w polu `changelog:` frontmatteru.
-> Standard ujednolicony 2026-08-20z4 dla całego systemu: plik `references/CHANGELOG.md`,
-> nigdy sekcja w korpusie SKILL.md ani pełna lista w YAML.
-> Wczytuj TYLKO gdy potrzebujesz historii konkretnej naprawy — przy audycie, przy
-> pytaniu „dlaczego to tak działa", przy regresji. W normalnym toku pracy zbędny.
+- 2.13 (2026-09-12, O-11 c.d.): NAPRAWA TABEL OPLAT. M6-oplaty.md i tabela w SKILL.md przypisywaly progi WPS do "art. 27 pkt 1-6 KSCU" - art. 27 ustanawia oplate stala 200 zl od enumerowanych pozwow i NIE ZNA progow wartosciowych; dwa progi byly dodatkowo przesuniete o wiersz (10-15 tys. = 750 zl, 15-20 tys. = 1000 zl wg art. 13 ust. 1 pkt 6-7). Poprawione takze: skarga na czynnosci komornika 100 -> 50 zl (art. 25 ust. 1), zabezpieczenie art. 69 -> art. 68 pkt 1, klauzula "6 zl / 50 zl" -> 50 zl (art. 71 pkt 1-6), oplata kancelaryjna 6 zl/strona -> 20 zl/10 stron (art. 77 ust. 1; 6 zl/strona to oplata KARNA z art. 19 ustawy z 23.06.1973), EPU "1,25% WP" -> 1/4 oplaty (art. 19 ust. 2 pkt 2 + art. 20 ust. 1), zarzuty od nakazu art. 19 "par. 3" -> art. 19 ust. 4 z konsumenckim capem 750 zl, pozew pracowniczy "5% nadwyzki" -> art. 35 ust. 1 zd. 2 dotyczy APELACJI, nie pozwu. Dopisane z odczytu tresci: rozwod 600 zl (art. 26 ust. 1 pkt 1) z pulapka art. 26 ust. 2, sprawy rodzinne (art. 27, 37, 38), praca i ubezpieczenia (art. 35, 36), oplaty karne (Dz.U. 2023 poz. 123) i wpis sadowoadministracyjny (Dz.U. 2021 poz. 535). Usuniety doslownie zapisany escape nowej linii rozbijajacy tabele w SKILL.md. Wszystkie kwoty ✅ [VER] RZAD 1 2026-09-12, odczyt tresci KSCU Dz.U. 2025 poz. 1228
+- 2.12 (2026-09-10x, O-11): Zasada 3 (oplata sadowa zawsze) poprzedzona KROKIEM 0: czy strona w ogole placi - trzy warstwy zwolnien. Kwota z tabeli ustanawiajacej, nie z pamieci
+- 2.11 (2026-08-23i, sesja audytowa audyt-systemu-v4, flaga F-115): self-check ANTY-FASADA podłączony jako WYWOŁANIE modułu kanonicznego `shared/SELF-CHECK-ANTY-FASADA.md`, kopia treści zastąpiona wywołaniem. Powód modułu zamiast kopii: gdy F-117 dodała regułę AF-6 i drugą pozycję listy do `shared/PRAWO-HARDGATE.md`, żadna z 7 istniejących kopii nie została zaktualizowana — źródło miało 2 pozycje, kopie 1. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-08-23i.
 
----
+> Lokalizacja kanoniczna historii wersji (ZASADA 15). Plik założony 2026-08-23i;
+> wersje wcześniejsze nieodtworzone — ślad w audyt-systemu-v4/references/AUDIT-JOURNAL.md.
 
-## 2.11 (2026-08-20z4) — ujednolicenie standardu: historia zmian wyłącznie w tym pliku
-
-Historia wyniesiona z korpusu SKILL.md do nowo utworzonego `references/CHANGELOG.md`.
-
-**Standard systemowy wprowadzony tego dnia:** pełna historia zmian każdego skilla
-mieszka w `references/CHANGELOG.md` — nigdy w sekcji `## CHANGELOG` korpusu SKILL.md
-i nigdy jako pełna lista wpisów w polu `changelog:` frontmatteru. W SKILL.md zostaje
-wyłącznie kilkulinijkowy skrót bieżącej wersji z odesłaniem do tego pliku.
-
-**Dlaczego to nie jest kosmetyka:** rozproszenie historii między trzy lokalizacje było
-BEZPOŚREDNIĄ przyczyną fałszywych wyników testu T12 w sesji 2026-08-20z3 — test szukał
-wpisów w `references/`, nie znajdował ich (bo leżały w SKILL.md) i raportował luki,
-których nie było. Jedna lokalizacja kanoniczna usuwa całą tę klasę błędu.
-Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis `AUDYT-2026-08-20z4`.
-
----
-
-## HISTORIA PRZENIESIONA Z SKILL.md (2026-08-20z4, ujednolicenie standardu)
-
-> Poniższa treść pochodzi z sekcji `## CHANGELOG` w korpusie SKILL.md. Przeniesiona **1:1, bez zmiany ani jednego
-> zdania**. Powód: historia zmian ma mieszkać w jednym miejscu — w tym pliku —
-> a nie być rozproszona między korpusem SKILL.md, frontmatterem i `references/`.
-> Rozproszenie było źródłem rozjazdów wykrytych flagami F-101 i F-102: test T12
-> szukał historii w `references/` i raportował fałszywe luki tam, gdzie wpisy
-> istniały, tylko w SKILL.md.
-
-- **2026-07-25 (v2.6):** Zarejestrowano `shared/ZAZALENIE-ADRESAT-GATE.md`
-  jako obowiązkową bramkę w KROK 9d — systemowe rozwiązanie luki
-  "zażalenie wymienione, ale bez adresata", potwierdzonej w 69 plikach
-  całego systemu (patrz AUDIT-JOURNAL.md, AUDYT-2026-07-25c/d).
-
-- **2026-07-25 (v2.5):** Dodano nowy schemat **SPL — Skarga na czynności
-  komornika** (`references/SPL-skarga-komornik.md`, art. 767 KPC) — na
-  żądanie użytkownika, w ramach rozszerzenia o "wnioski i pozostałe
-  dokumenty kierowane do sądu". Zarejestrowano w tabeli schematów, KROK 4
-  ścieżki wykonania i M6-oplaty.md (100 zł). Adresat opisany od razu
-  poprawnie (do komornika, nie bezpośrednio do sądu — art. 767 §5 KPC),
-  zgodnie z wnioskiem z audytu adresatów zażalenia tego samego dnia.
-
-- **2026-07-25 (v2.4):** CRIT-TREŚĆ — `references/SPH-inne.md`: poprawiono
-  błędny adresat/podstawę zażalenia w SPH-A (odmowa zwolnienia od kosztów
-  sądowych) — było art. 394 §1 KPC (sąd II instancji), jest art. 394¹ᵃ §1
-  pkt 1 KPC (zażalenie poziome, inny skład tego samego sądu). Oznaczono jako
-  sporne/do weryfikacji podstawę zażalenia w SPH-B (odmowa przywrócenia
-  terminu) — poprzedni cytat (art. 394 §1 pkt 2 KPC) treściowo nie pasował.
-  Zweryfikowano online (ISAP, arslege.pl, lexlege.pl). Zob.
-  audyt-systemu-v4/references/AUDIT-JOURNAL.md, wpis 2026-07-25.
-*Dla pism wielowątkowych → pisma-procesowe-v3*
-*Dla analizy dowodów → analizator-dowodow-v3 · Dla orzecznictwa → orzeczenia-sadowe-v2*
-
----
