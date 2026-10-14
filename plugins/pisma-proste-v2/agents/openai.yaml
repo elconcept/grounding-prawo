@@ -1,9 +1,0 @@
-interface:
-  display_name: pisma proste v2
-  short_description: 'Proste pisma prawne i urzędowe: wezwania, wnioski, odpowiedzi
-    i krótsze dokumenty; kompletność danych, aktualna weryfikacja prawa i walidacja
-    przed wygenerowaniem pliku.'
-  icon_small: assets/icon.svg
-  icon_large: assets/icon.svg
-policy:
-  allow_implicit_invocation: true

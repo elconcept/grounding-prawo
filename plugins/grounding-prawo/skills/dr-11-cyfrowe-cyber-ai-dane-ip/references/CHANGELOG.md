@@ -1,0 +1,29 @@
+# CHANGELOG — dr-11-cyfrowe-cyber-ai-dane-ip
+
+- 3.28 (2026-10-12b, AUDYT-2026-10-12b): KSC: zmiany po t.j. 2026/20 (252, 815, 1003, 1206) i dosłowne zmiany z art. 20 ustawy 2026/815 (było „brak dalszych nowelizacji”); PKE: art. 42 uchylony przez 2026/815 (od 4.07.2026); MAPA-AKTOW. ELI 2026-10-12.
+
+- 3.27 (2026-10-09h, AUDYT-2026-10-09h): mod-ustawa-informatyzacja: zapytanie weryfikacyjne na t.j. 2026/1241 (było wygasłe 2025/1703).
+
+- 3.26 (2026-10-09g, AUDYT-2026-10-09g): ⛔ SKILL.md: Prawo komunikacji elektronicznej Dz.U. 2024 poz. 1221 (było 1220 — rozp. MF); ustawa o ochronie danych osobowych t.j. 2019/1781 — nowelizacje po t.j. 2026/252 art. 16, 2026/548 art. 38. ELI 2026-10-09.
+
+- 3.25 (2026-10-09c, AUDYT-2026-10-09c): mod-KSC-NIS2: linia „Hasła spraw” (ransomware, atak hakerski, incydent, CSIRT). Treść prawna bez zmian.
+
+- 3.24 (2026-10-09, AUDYT-2026-10-09): informatyzacja — t.j. Dz.U. 2026 poz. 1241; KP w RODO — t.j. 2026/1245 (ELI 2026-10-09).
+
+- 3.23 (2026-10-05m, AUDYT-2026-10-05m): mod-RODO-DSAR: „Hasła spraw” zawężone do terminów żądań osób (bez ogólnych słów, które dawały fałszywe trafienia). Treść prawna bez zmian.
+
+- 3.22 (2026-10-05l, AUDYT-2026-10-05l): Linie „Hasła spraw” w modułach RODO (DSAR, RCP/DPA, DPIA), UODO, usług elektronicznych, prawa autorskiego (IP, media/wizerunek) i DSA — sprawy RODO trafiają do właściwego modułu. Treść prawna bez zmian.
+
+- 3.21 (2026-10-04c, AUDYT-2026-10-04c): **F-227 (zamknięta).** SKILL.md nie wczytywał `MAPA-POKRYCIA.md`, choć `prawny-router-v3/references/pokrycie-dziedzinowe.md` nazywa lokalną mapę jedynym bieżącym źródłem statusu pokrycia — dodana sekcja „Mapa pokrycia treściowego” z `view`, wzorem DR-02…DR-06 i DR-16. Treść prawa bez zmian. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, AUDYT-2026-10-04c.
+
+- 3.20 (2026-09-27e, AUDYT-2026-09-27e): claude.ai po dodaniu marketplace instalował wyłącznie 4 z 32 pluginów (shared, prawny-router-v3, analizator-dowodow-v3, przesluchanie-swiadkow-v2-min90); jedyna cecha wspólna tych 4, nieobecna w żadnym z 28 pozostałych, to klucz `dependencies` we frontmatterze SKILL.md. Dodano go (`requires: [shared]` — zgodnie ze stanem faktycznym) oraz jawny manifest pluginu (name, description = description z SKILL.md, author, repository, license) — host nie musi niczego wnioskować z SKILL.md. `version` w manifeście = `version:` z SKILL.md (pilnuje T38 w audyt-systemu-v4) — host rozpoznaje aktualizację po podbiciu wersji. Treść skilla bez zmian.
+- 3.19 (2026-09-27, AUDYT-2026-09-27, F-205 ZAMKNIĘTA — 1 z 3 jednostek FAZY 3E, dot. tego skilla): `modules/mod-AI-Act-framework.md` 1.1→1.2 — dodano art. 25 (odpowiedzialność w łańcuchu wartości AI: kiedy dystrybutor/importer/podmiot stosujący staje się "dostawcą"), art. 6 ust. 3 (wyjątek od klasyfikacji zał. III + wyłączenie z wyjątku przy profilowaniu osób fizycznych — zawsze wysokie ryzyko), pełną treść art. 13 ust. 3 lit. a)–f) (dotąd gołe odesłanie). ⛔ Przy okazji naprawiono BŁĘDNĄ listę kategorii zał. III: brakowało pkt 1 (Biometria), numeracja pkt 2–7 była przesunięta o jeden, a pkt 8 błędnie podawał "Urządzenia medyczne" — kategorii o tej nazwie zał. III nie zawiera (urządzenia medyczne są wysokiego ryzyka na innej podstawie: art. 6 ust. 1 + zał. I). Błąd współistniał w tym samym pliku ze sprzecznym, poprawnym cytowaniem "zał. III pkt 8" w sekcji o wymiarze sprawiedliwości. Wszystko ✅ [VER: EUR-Lex, CELEX 32024R1689, pobranie bezpośrednie 2026-09-27]. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-09-27.
+- 3.18 (2026-09-23, AUDYT-2026-09-23b): kanon E-1…E-5 (`shared/HIERARCHIA-ZRODEL.md` 1.10): instrukcje weryfikacji „w ISAP” / „isap.sejm.gov.pl →” zamienione na „w ELI (RZĄD 1)” (9 plików); ISAP pozostaje adresem dla człowieka; wpisy historyczne („zweryfikowano w ISAP …”) bez zmian.
+- 3.17 (2026-09-16, F-189): mod-RODO-szczegolowy i mod-RODO-GDPR-2016-679 — art. 33 ust. 1 według brzmienia: 72 h po STWIERDZENIU naruszenia, brak obowiązku przy mało prawdopodobnym ryzyku, wyjaśnienie opóźnienia, podmiot przetwarzający bez terminu godzinowego (F-135, RZĄD 1 — EUR-Lex).
+- 3.16 (2026-09-16, F-189): F-135 (RZĄD 1 — u.o.d.o. 2019/1781, KPA 2025/1691): mod-UODO-postepowanie-ochrona-danych §9.4 — termin z art. 35 § 3 KPA w zw. z art. 7 ust. 1 u.o.d.o. (⛔ nie art. 237 § 2 KPA); jednoinstancyjność i skarga do sądu administracyjnego (art. 7 ust. 2–4); środek tymczasowy, zapłata kary, dane do kary, kary dla sektora publicznego; SKILL.md — „odwołanie WSA” → skarga do sądu administracyjnego.
+- 3.15 (2026-09-16, F-189): mod-KSC-NIS2-cyberbezpieczenstwo-telekom (F-135; RZĄD 1 — 2026/252 na tle t.j. 2026/20): terminy zgłaszania incydentów (24 h / 72 h / miesiąc, art. 12b, dostawca usług zaufania); ⛔ terminy przejściowe przypisane art. 33 ustawy zmieniającej (nie „art. 16 KSC”), w tym 3.10.2026 dla byłych operatorów usług kluczowych; kary z art. 73 ust. 3–4 według brzmienia (przychody, minima, podstawa 500 000 EUR; klauzula „kwota wyższa” tylko w ust. 3); data wejścia ustawy o certyfikacji (28.08.2025).
+- 3.14 (2026-09-16, F-189): ODTWORZENIE utraconego wydania 3.13 (F-189): usługi drogą elektroniczną — wygasły t.j. Dz.U. 2020 poz. 344 → Dz.U. 2024 poz. 1513 (obowiązujący, RZĄD 1) w module i SKILL.md.
+- 3.13 — LUKA JAWNA: wydanie AUDYT-2026-09-10l nieobecne na dysku — odtworzone w 3.14
+- 3.12 (2026-08-26): poprawiono metryki aktów cyfrowych i zastąpiono fasadowy
+  moduł certyfikacji cyberbezpieczeństwa pełnym opracowaniem ustawy z
+  Dz.U. 2025 poz. 1017.

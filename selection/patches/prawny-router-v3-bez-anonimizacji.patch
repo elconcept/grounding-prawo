@@ -1,0 +1,1488 @@
+diff -ruN a/prawny-router-v3/anonimizer/anonimizer-skill.md b/prawny-router-v3/anonimizer/anonimizer-skill.md
+--- a/prawny-router-v3/anonimizer/anonimizer-skill.md	2026-10-14 18:18:12.404056520 +0200
++++ b/prawny-router-v3/anonimizer/anonimizer-skill.md	1970-01-01 01:00:00.000000000 +0100
+@@ -1,198 +0,0 @@
+----
+-name: anonimizer-v3-jsx
+-parent: prawny-router-v3
+-description: |
+-  Anonimizer dokumentów prawnych v3.2 — domyślny krok wstępny routera.
+-  Obsługuje PDF, DOCX, DOC, XLSX, TXT/MD.
+-  Tryb domyślny: TEKSTOWY z listą wyboru kategorii do usunięcia.
+-  Tryb plikowy: przeciągnij-i-upuść lub kliknij. AI (Anthropic API) odczytuje i anonimizuje PDF/DOCX/XLSX.
+-  Eksportuje tekst do czatu przez sendPrompt z zachowaniem znaczników routera.
+-compatibility: "html-vanilla, sendPrompt"
+-version: "3.2"
+-default_renderer: "prawny-router-v3/anonimizer/assets/AnonimizerPrawny.jsx"
+-rules: "prawny-router-v3/anonimizer/references/REGULY-ANONIMIZACJI.md"
+-legacy_renderer: "prawny-router-v3/anonimizer/assets/anonimizer-widget.legacy.html"
+----
+-
+-# Anonimizer v3.2 — KROK 0A Routera Prawnego
+-
+-## Status modułu
+-
+-Domyślny tryb pracy: **HTML vanilla JS** renderowany przez show_widget.
+-
+-Plik `AnonimizerPrawny.jsx` zawiera kompletny kod HTML (nie JSX) — renderuj go przez show_widget, nie przez present_files.
+-
+-Stary widget HTML pozostaje wyłącznie jako zapas archiwalny:
+-`assets/anonimizer-widget.legacy.html`.
+-
+----
+-
+-## Co nowego w v3.2
+-
+-- **Domyślny tryb tekstowy** z listą wyboru kategorii (checkboxy-przyciski)
+-- **Przeciąganie pliku** (drag & drop) do strefy upuszczania w zakładce Plik
+-- **Odczyt PDF przez Anthropic API** — ekstrakcja tekstu z zachowaniem układu, działa też dla skanów (AI widzi obraz)
+-- **Odczyt DOCX przez Anthropic API** — pełna ekstrakcja z formatowaniem
+-- **Odczyt XLSX przez Anthropic API** — ekstrakcja danych tabelarycznych
+-- **Pięć trybów zastępowania**: etykieta opisowa / czarne bloki / gwiazdki / usuń / fikcyjne dane AI
+-- **Własne frazy** do usunięcia (dowolny tekst)
+-- **Własne wzorce regex** w zakładce Ustawienia
+-- **Przycisk „Wyślij do analizy prawnej ↗"** — wywołuje sendPrompt ze znacznikami ##ANON_START##
+-- Pasek postępu dla operacji na plikach
+-
+----
+-
+-## Integracja z routerem
+-
+-Anonimizer działa jako **KROK 0A** — przed detekcją trybu prawnego.
+-
+-```
+-KROK 0A → anonimizacja / decyzja użytkownika
+-KROK 1  → detekcja trybu prawnego
+-KROK 1B → walidacja dziedzinowa + źródła prawa
+-```
+-
+----
+-
+-## Kiedy uruchomić anonimizator
+-
+-### Tryb A — automatyczna detekcja danych
+-Przeskanuj wejście użytkownika przed analizą.
+-
+-Próg uruchomienia pytania anonimizacyjnego:
+-- co najmniej 1 sygnał wysokiego ryzyka, albo
+-- co najmniej 2 sygnały średniego ryzyka.
+-
+-Sygnały wysokiego ryzyka:
+-- PESEL,
+-- NIP,
+-- REGON,
+-- numer rachunku bankowego,
+-- pełny adres,
+-- imię i nazwisko w dokumencie prywatnym.
+-
+-Sygnały średniego ryzyka:
+-- telefon,
+-- e-mail,
+-- data urodzenia,
+-- nazwa firmy w kontekście osoby fizycznej lub sporu.
+-
+-### Tryb B — na żądanie
+-Gdy użytkownik wpisuje jedną z fraz:
+-- `zanonimizuj`,
+-- `anonimizuj`,
+-- `anonimizacja`,
+-- `usuń dane osobowe`,
+-- `ukryj dane`,
+-- `usuń nazwiska`,
+-- `usuń adresy`,
+-- `RODO`,
+-- `chcę zanonimizować`.
+-
+-Wtedy uruchom anonimizator bez pytania wstępnego.
+-
+----
+-
+-## Pytanie anonimizacyjne
+-
+-Jeżeli wykryto dane osobowe, ale użytkownik nie zażądał anonimizacji wprost, zadaj:
+-
+-```
+-W przesłanym dokumencie wykryto możliwe dane osobowe lub identyfikacyjne.
+-
+-Czy chcesz je zanonimizować przed analizą?
+-a) Tak — uruchom narzędzie anonimizacji.
+-b) Nie — analizuj dokument bez zmian.
+-
+-Anonimizacja zastąpi dane znacznikami typu [PESEL], [ADRES], [E-MAIL] albo inicjałami.
+-```
+-
+-- `a` / `tak` → uruchom JSX.
+-- `b` / `nie` → przejdź do KROK 1 z oryginalnym tekstem i oznacz decyzję sesyjną jako `raw`.
+-
+----
+-
+-## Domyślne uruchomienie JSX
+-
+-```
+-1. view prawny-router-v3/anonimizer/references/BLUEPRINT-SCHEMA.md
+-2. view prawny-router-v3/anonimizer/references/REGULY-ANONIMIZACJI.md
+-3. view prawny-router-v3/anonimizer/assets/AnonimizerPrawny.jsx
+-4. show_widget z HTML vanilla JS — jedyna metoda renderowania inline w claude.ai (NIE present_files z .jsx)
+-```
+-
+-Komunikat do użytkownika:
+-
+-```
+-Otwieram narzędzie anonimizacji. Wgraj plik (PDF/DOCX/DOC/TXT) lub wklej tekst.
+-Treść pliku nie będzie wyświetlana — anonimizacja odbywa się lokalnie w tle.
+-Po zakończeniu wybierz „Anonimizuj i wyślij" — wynik wróci do czatu ze znacznikami routera.
+-```
+-
+----
+-
+-## Obsługiwane formaty plików
+-
+-| Format | Biblioteka | Uwagi |
+-|--------|-----------|-------|
+-| PDF    | PDF.js 3.11.174 (CDN) | Ekstrakcja tekstu strona po stronie; nie obsługuje PDF skanowanych (OCR) |
+-| DOCX   | Mammoth 1.6.0 (CDN) | Pełna ekstrakcja tekstu |
+-| DOC    | Mammoth 1.6.0 (CDN) | Fallback tekstowy dla Word 97–2003; zalecane zapisanie jako DOCX |
+-| TXT/MD | natywny TextDecoder | Bez zależności CDN |
+-
+----
+-
+-## Ograniczenia
+-
+-- Automatyczna anonimizacja działa heurystycznie.
+-- Wynik wymaga kontroli człowieka.
+-- PDF skanowane (graficzne) nie zawierają warstwy tekstowej — ekstrakcja zwróci pusty wynik.
+-- Stare pliki .doc (Word 97–2003) mogą być nieczytelne — zalecane DOCX.
+-- Moduł nie usuwa metadanych binarnych z plików PDF/DOCX.
+-- Nie wolno traktować wyniku jako gwarancji pełnej zgodności z RODO.
+-
+----
+-
+-## Znaczniki zwrotne
+-
+-### Tekst zanonimizowany
+-```
+-##ANON_START##
+-Źródło: [nazwa pliku albo "(wklejony tekst)"]
+-Anonimizacja: TAK | Usuniętych danych: N (...)
+-##ANON_END##
+-
+-Oto zanonimizowany dokument do analizy prawnej:
+-
+-[treść dokumentu]
+-```
+-
+-### Tekst oryginalny za zgodą użytkownika
+-```
+-##PLIK_ORYGINALNY##
+-Źródło: [nazwa pliku albo "(wklejony tekst)"]
+-Anonimizacja: NIE — użytkownik wyraził zgodę na przetwarzanie danych oryginalnych w tej sesji.
+-##PLIK_ORYGINALNY_END##
+-
+-Oto dokument oryginalny (bez anonimizacji) do analizy prawnej:
+-
+-[treść dokumentu]
+-```
+-
+----
+-
+-## Reakcja routera
+-
+-Jeżeli wiadomość zawiera `##ANON_START##`:
+-- pomiń KROK 0A,
+-- ustaw `decyzja_sesji = anon`,
+-- przejdź do KROK 1.
+-
+-Jeżeli wiadomość zawiera `##PLIK_ORYGINALNY##`:
+-- pomiń KROK 0A,
+-- ustaw `decyzja_sesji = raw`,
+-- przejdź do KROK 1.
+-
+----
+-
+-*Anonimizer v3.1 JSX · prawny-router-v3 · PDF + DOCX + DOC + TXT · bez podglądu treści*
+diff -ruN a/prawny-router-v3/anonimizer/assets/AnonimizerPrawny.jsx b/prawny-router-v3/anonimizer/assets/AnonimizerPrawny.jsx
+--- a/prawny-router-v3/anonimizer/assets/AnonimizerPrawny.jsx	2026-10-14 18:18:12.404056520 +0200
++++ b/prawny-router-v3/anonimizer/assets/AnonimizerPrawny.jsx	1970-01-01 01:00:00.000000000 +0100
+@@ -1,411 +0,0 @@
+-
+-const universalExternalAIRequest = async () => {
+-  throw new Error(
+-    'Tryb zewnętrznego AI jest wyłączony w uniwersalnym artefakcie. ' +
+-    'Użyj lokalnej anonimizacji albo wykonaj operację przez natywną funkcję hosta po jawnej zgodzie użytkownika.'
+-  );
+-};
+-
+-<!DOCTYPE html>
+-<html lang="pl">
+-<head>
+-<meta charset="UTF-8">
+-<style>
+-*{box-sizing:border-box;margin:0;padding:0}
+-body{font-family:var(--font-sans,'system-ui');font-size:15px;color:var(--color-text-primary,#1a1a1a);background:transparent;line-height:1.6}
+-h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+-.wrap{padding:1rem 0}
+-.tabs{display:flex;gap:6px;margin-bottom:1.25rem;border-bottom:0.5px solid var(--color-border-tertiary,#e0e0e0);padding-bottom:0}
+-.tab{padding:8px 18px;border:none;background:none;cursor:pointer;font-size:14px;color:var(--color-text-secondary,#666);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+-.tab.active{color:var(--color-text-primary,#111);border-bottom-color:var(--color-text-primary,#111);font-weight:500}
+-.tab:hover:not(.active){color:var(--color-text-primary,#111)}
+-.panel{display:none}.panel.active{display:block}
+-.card{background:var(--color-background-primary,#fff);border:0.5px solid var(--color-border-tertiary,#e0e0e0);border-radius:var(--border-radius-lg,12px);padding:1.25rem 1.5rem;margin-bottom:1rem}
+-.drop-zone{border:1.5px dashed var(--color-border-secondary,#bbb);border-radius:var(--border-radius-lg,12px);padding:2rem 1.5rem;text-align:center;transition:all .2s;background:var(--color-background-secondary,#f8f8f8)}
+-.drop-zone.over{border-color:#5DCAA5;background:rgba(93,202,165,.07)}
+-.drop-zone p{color:var(--color-text-secondary,#888);font-size:14px;margin-bottom:1rem}
+-.drop-zone .filename{color:var(--color-text-primary,#111);font-weight:500;font-size:14px;margin-top:6px}
+-textarea{width:100%;min-height:220px;border:0.5px solid var(--color-border-tertiary,#e0e0e0);border-radius:var(--border-radius-md,8px);padding:.75rem 1rem;font-size:14px;font-family:inherit;resize:vertical;color:var(--color-text-primary,#111);background:var(--color-background-primary,#fff);line-height:1.6}
+-textarea:focus{outline:none;border-color:var(--color-border-secondary,#aaa)}
+-.options-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem}
+-.opt-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border:0.5px solid var(--color-border-secondary,#bbb);border-radius:20px;cursor:pointer;font-size:13px;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#111);transition:all .15s;user-select:none}
+-.opt-btn.sel{background:#E1F5EE;border-color:#1D9E75;color:#0F6E56}
+-select{width:100%;padding:8px 12px;border:0.5px solid var(--color-border-tertiary,#e0e0e0);border-radius:var(--border-radius-md,8px);font-size:14px;font-family:inherit;color:var(--color-text-primary,#111);background:var(--color-background-primary,#fff);cursor:pointer;margin-bottom:1rem}
+-select:focus{outline:none;border-color:var(--color-border-secondary,#aaa)}
+-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border:0.5px solid var(--color-border-secondary,#bbb);border-radius:var(--border-radius-md,8px);cursor:pointer;font-size:14px;font-weight:500;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#111);transition:all .15s}
+-.btn:hover{background:var(--color-background-secondary,#f5f5f5)}
+-.btn:active{transform:scale(.98)}
+-.btn.primary{background:#1D9E75;color:#fff;border-color:#1D9E75}
+-.btn.primary:hover{background:#0F6E56;border-color:#0F6E56}
+-.btn.primary:disabled{opacity:.5;cursor:not-allowed}
+-.btn.send{background:#185FA5;color:#fff;border-color:#185FA5}
+-.btn.send:hover{background:#0C447C;border-color:#0C447C}
+-.btn-pick{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border:0.5px solid var(--color-border-secondary,#bbb);border-radius:var(--border-radius-md,8px);cursor:pointer;font-size:14px;font-weight:500;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#111);transition:all .15s}
+-.btn-pick:hover{background:var(--color-background-secondary,#f5f5f5)}
+-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+-.label{font-size:13px;font-weight:500;color:var(--color-text-secondary,#666);margin-bottom:6px;display:block}
+-.result-box{border:0.5px solid var(--color-border-tertiary,#e0e0e0);border-radius:var(--border-radius-md,8px);padding:1rem;background:var(--color-background-secondary,#f8f8f8);min-height:80px;font-size:14px;line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto}
+-.status{padding:8px 14px;border-radius:var(--border-radius-md,8px);font-size:13px;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+-.status.info{background:#E6F1FB;color:#185FA5}
+-.status.ok{background:#E1F5EE;color:#0F6E56}
+-.status.err{background:#FCEBEB;color:#A32D2D}
+-.spinner{width:16px;height:16px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+-@keyframes spin{to{transform:rotate(360deg)}}
+-.progress-bar{height:4px;background:var(--color-border-tertiary,#e0e0e0);border-radius:2px;overflow:hidden;margin-bottom:1rem}
+-.progress-fill{height:100%;background:#1D9E75;transition:width .3s;border-radius:2px}
+-.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:12px;background:#E1F5EE;color:#0F6E56;font-weight:500}
+-.section-title{font-size:14px;font-weight:500;margin-bottom:10px;color:var(--color-text-primary,#111)}
+-.divider{height:0.5px;background:var(--color-border-tertiary,#e0e0e0);margin:1rem 0}
+-.custom-input{display:flex;gap:8px;margin-bottom:.5rem}
+-.custom-input input{flex:1;padding:7px 12px;border:0.5px solid var(--color-border-tertiary,#e0e0e0);border-radius:var(--border-radius-md,8px);font-size:14px;font-family:inherit;color:var(--color-text-primary,#111);background:var(--color-background-primary,#fff)}
+-.custom-input input:focus{outline:none;border-color:var(--color-border-secondary,#aaa)}
+-.chip-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem}
+-.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:14px;font-size:12px;background:var(--color-background-secondary,#f0f0f0);color:var(--color-text-secondary,#666);cursor:pointer}
+-.chip:hover{background:#FCEBEB;color:#A32D2D}
+-.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+-</style>
+-</head>
+-<body>
+-<h2 class="sr-only">Anonimizer dokumentów prawnych v3.3 — tryb tekstowy i plikowy z AI</h2>
+-<div class="wrap">
+-
+-<div class="tabs">
+-  <button class="tab active" onclick="switchTab('text')">Tekst</button>
+-  <button class="tab" onclick="switchTab('file')">Plik (PDF/DOCX/XLSX)</button>
+-  <button class="tab" onclick="switchTab('settings')">Ustawienia</button>
+-</div>
+-
+-<!-- TAB: TEKST -->
+-<div id="panel-text" class="panel active">
+-  <div class="card">
+-    <span class="label">Co usunąć / anonimizować:</span>
+-    <div class="options-grid" id="opt-grid"></div>
+-    <div class="custom-input">
+-      <input type="text" id="custom-phrase" placeholder="Dodaj własną frazę do usunięcia…">
+-      <button class="btn" onclick="addCustomPhrase()">+ Dodaj</button>
+-    </div>
+-    <div class="chip-list" id="custom-chips"></div>
+-    <span class="label">Tryb zastępowania:</span>
+-    <select id="replace-mode">
+-      <option value="label">Etykieta opisowa (np. [IMIĘ], [PESEL])</option>
+-      <option value="black">Czarne bloki ████</option>
+-      <option value="star">Gwiazdki ****</option>
+-      <option value="remove">Usuń całkowicie</option>
+-      <option value="generic">Fikcyjne dane (AI generuje)</option>
+-    </select>
+-    <span class="label">Wklej tekst do anonimizacji:</span>
+-    <textarea id="input-text" placeholder="Wklej tutaj treść dokumentu, pisma procesowego, umowy…"></textarea>
+-    <div style="margin-top:1rem" class="row">
+-      <button class="btn primary" onclick="anonymizeText()" id="btn-anon">Anonimizuj</button>
+-      <button class="btn" onclick="clearText()">Wyczyść</button>
+-    </div>
+-  </div>
+-  <div id="text-status"></div>
+-  <div id="text-result" style="display:none">
+-    <div class="card">
+-      <div class="preview-header">
+-        <span class="section-title">Wynik anonimizacji</span>
+-        <div class="row">
+-          <span id="stats-tag" class="tag"></span>
+-          <button class="btn" onclick="copyResult()">Kopiuj</button>
+-        </div>
+-      </div>
+-      <div class="result-box" id="output-text"></div>
+-      <div style="margin-top:1rem" class="row">
+-        <button class="btn send" onclick="sendToRouter()">Wyślij do analizy prawnej ↗</button>
+-      </div>
+-    </div>
+-    <div class="card" id="report-card" style="display:none">
+-      <span class="section-title">Raport — co zostało wykryte</span>
+-      <div id="report-body" style="font-size:13px;color:var(--color-text-secondary,#666);line-height:1.8"></div>
+-    </div>
+-  </div>
+-</div>
+-
+-<!-- TAB: PLIK -->
+-<div id="panel-file" class="panel">
+-  <div class="card">
+-    <input type="file" id="file-input" accept=".pdf,.docx,.xlsx,.xls,.txt,.doc" style="display:none" onchange="handleFileSelect(event)">
+-    <div class="drop-zone" id="drop-zone"
+-      ondrop="handleDrop(event)"
+-      ondragover="handleDragOver(event)"
+-      ondragleave="handleDragLeave(event)"
+-      onclick="document.getElementById('file-input').click()"
+-      style="cursor:pointer">
+-      <span style="font-size:32px;display:block;margin-bottom:10px">📂</span>
+-      <p>Przeciągnij plik tutaj</p>
+-      <div style="margin:10px 0;font-size:13px;color:var(--color-text-secondary,#aaa)">— lub —</div>
+-      <button class="btn-pick" onclick="event.stopPropagation();document.getElementById('file-input').click()">
+-        Wybierz plik z dysku
+-      </button>
+-      <div class="filename" id="file-name" style="margin-top:10px"></div>
+-    </div>
+-    <div id="file-options" style="display:none;margin-top:1.25rem">
+-      <div class="divider"></div>
+-      <span class="label">Co usunąć:</span>
+-      <div class="options-grid" id="opt-grid-file"></div>
+-      <span class="label">Tryb zastępowania:</span>
+-      <select id="replace-mode-file">
+-        <option value="label">Etykieta opisowa (np. [IMIĘ], [PESEL])</option>
+-        <option value="black">Czarne bloki ████</option>
+-        <option value="star">Gwiazdki ****</option>
+-        <option value="remove">Usuń całkowicie</option>
+-        <option value="generic">Fikcyjne dane (AI generuje)</option>
+-      </select>
+-      <div class="row">
+-        <button class="btn primary" onclick="anonymizeFile()" id="btn-file-anon">Anonimizuj plik</button>
+-        <button class="btn" onclick="resetFile()">Inny plik</button>
+-      </div>
+-    </div>
+-  </div>
+-  <div id="file-status"></div>
+-  <div id="file-progress" style="display:none">
+-    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+-  </div>
+-  <div id="file-result" style="display:none">
+-    <div class="card">
+-      <div class="preview-header">
+-        <span class="section-title">Podgląd zanonimizowanego tekstu</span>
+-        <span id="file-stats-tag" class="tag"></span>
+-      </div>
+-      <div class="result-box" id="file-output"></div>
+-      <div style="margin-top:1rem" class="row">
+-        <button class="btn send" onclick="sendFileToRouter()">Wyślij do analizy prawnej ↗</button>
+-        <button class="btn primary" onclick="downloadResult()">Pobierz plik</button>
+-        <button class="btn" onclick="copyFileResult()">Kopiuj tekst</button>
+-      </div>
+-    </div>
+-  </div>
+-</div>
+-
+-<!-- TAB: USTAWIENIA -->
+-<div id="panel-settings" class="panel">
+-  <div class="card">
+-    <span class="section-title">Własne wzorce (regex)</span>
+-    <p style="font-size:13px;color:var(--color-text-secondary,#666);margin-bottom:1rem">Dodaj wyrażenia regularne do wykrywania niestandardowych danych.</p>
+-    <div class="custom-input">
+-      <input type="text" id="regex-name" placeholder="Nazwa (np. Nr klienta)">
+-      <input type="text" id="regex-pattern" placeholder="Wzorzec regex (np. KL-\d{6})">
+-      <button class="btn" onclick="addRegex()">+ Dodaj</button>
+-    </div>
+-    <div id="regex-list" class="chip-list"></div>
+-    <div class="divider"></div>
+-    <span class="section-title">Asystent AI</span>
+-    <p style="font-size:13px;color:var(--color-text-secondary,#666);margin-bottom:.75rem">AI wykrywa dodatkowe dane osobowe nieujęte w predefiniowanych kategoriach.</p>
+-    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px">
+-      <input type="checkbox" id="ai-assist" checked style="width:16px;height:16px">
+-      Włącz asystenta AI do wykrywania danych osobowych
+-    </label>
+-    <div class="divider"></div>
+-    <span class="section-title">Język dokumentu</span>
+-    <select id="doc-lang" style="margin-top:8px">
+-      <option value="pl">Polski</option>
+-      <option value="en">Angielski</option>
+-      <option value="de">Niemiecki</option>
+-      <option value="mixed">Mieszany</option>
+-    </select>
+-  </div>
+-</div>
+-
+-</div>
+-<script>
+-const CATS=[
+-  {id:'names',label:'Imiona i nazwiska',pat:[/\b([A-ZŁÓŚŻŹĆĄĘŃ][a-złóśżźćąęń]+)\s+([A-ZŁÓŚŻŹĆĄĘŃ][a-złóśżźćąęń]+(?:\s+[A-ZŁÓŚŻŹĆĄĘŃ][a-złóśżźćąęń]+)?)\b/g],replace:'[IMIĘ NAZWISKO]'},
+-  {id:'pesel',label:'PESEL',pat:[/\b\d{11}\b/g],replace:'[PESEL]'},
+-  {id:'nip',label:'NIP',pat:[/\b\d{3}[-]?\d{3}[-]?\d{2}[-]?\d{2}\b|\bNIP\s*:?\s*\d[\d\s-]{9,}\d\b/gi],replace:'[NIP]'},
+-  {id:'regon',label:'REGON',pat:[/\b\d{9}\b|\b\d{14}\b/g],replace:'[REGON]'},
+-  {id:'dates',label:'Daty',pat:[/\b\d{1,2}[./\-]\d{1,2}[./\-]\d{2,4}\b/g],replace:'[DATA]'},
+-  {id:'address',label:'Adresy',pat:[/\b(ul\.|al\.|pl\.|os\.)\s*[A-ZŁÓŚŻŹĆĄĘŃ][^\n,]{2,40},?\s*\d{2}-\d{3}\s+[A-ZŁÓŚŻŹĆĄĘŃ][a-złóśżźćąęń]+\b/gi],replace:'[ADRES]'},
+-  {id:'phone',label:'Telefony',pat:[/(\+48\s?)?(\d{3}[\s\-]?\d{3}[\s\-]?\d{3})\b/g],replace:'[TELEFON]'},
+-  {id:'email',label:'E-mail',pat:[/\b[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}\b/g],replace:'[E-MAIL]'},
+-  {id:'krs',label:'KRS',pat:[/\bKRS\s*:?\s*\d{10}\b/gi],replace:'[KRS]'},
+-  {id:'accounts',label:'Nr rachunków',pat:[/\b\d{2}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\b/g],replace:'[NR KONTA]'},
+-  {id:'passport',label:'Nr dokumentów',pat:[/\b[A-Z]{3}\d{6}\b|\b[A-Z]{2}\d{7}\b/g],replace:'[NR DOKUMENTU]'},
+-  {id:'salary',label:'Kwoty',pat:[/\b\d[\d\s]*(?:\.\d{2})?\s*(?:zł|PLN|złotych)\b/gi],replace:'[KWOTA]'},
+-];
+-let selCats=new Set(['names','pesel','email','phone','address']);
+-let customPhrases=[];
+-let customRegexes=[];
+-let fileData=null,fileType='',anonymizedText='',fileAnonymizedText='',originalFilename='',currentSource='(tekst wklejony)';
+-
+-function buildOptGrid(id){
+-  const g=document.getElementById(id);g.innerHTML='';
+-  CATS.forEach(c=>{
+-    const b=document.createElement('button');
+-    b.className='opt-btn'+(selCats.has(c.id)?' sel':'');
+-    b.textContent=c.label;
+-    b.onclick=()=>{
+-      if(selCats.has(c.id))selCats.delete(c.id);else selCats.add(c.id);
+-      document.querySelectorAll('#opt-grid .opt-btn, #opt-grid-file .opt-btn').forEach((el,i)=>{
+-        const cat=CATS[i%CATS.length];
+-        if(cat)el.className='opt-btn'+(selCats.has(cat.id)?' sel':'');
+-      });
+-    };
+-    g.appendChild(b);
+-  });
+-}
+-buildOptGrid('opt-grid');
+-buildOptGrid('opt-grid-file');
+-
+-function switchTab(t){
+-  document.querySelectorAll('.tab').forEach((b,i)=>b.className='tab'+((['text','file','settings'][i]===t)?' active':''));
+-  document.querySelectorAll('.panel').forEach(p=>p.className='panel');
+-  document.getElementById('panel-'+t).className='panel active';
+-}
+-function addCustomPhrase(){const inp=document.getElementById('custom-phrase');const v=inp.value.trim();if(!v)return;customPhrases.push(v);renderChips();inp.value='';}
+-function renderChips(){document.getElementById('custom-chips').innerHTML=customPhrases.map((p,i)=>`<span class="chip" onclick="removePhrase(${i})">✕ ${p}</span>`).join('');}
+-function removePhrase(i){customPhrases.splice(i,1);renderChips();}
+-function addRegex(){const n=document.getElementById('regex-name').value.trim();const p=document.getElementById('regex-pattern').value.trim();if(!n||!p)return;customRegexes.push({name:n,pattern:p});renderRegexList();document.getElementById('regex-name').value='';document.getElementById('regex-pattern').value='';}
+-function renderRegexList(){document.getElementById('regex-list').innerHTML=customRegexes.map((r,i)=>`<span class="chip" onclick="removeRegex(${i})">✕ ${r.name}: ${r.pattern}</span>`).join('');}
+-function removeRegex(i){customRegexes.splice(i,1);renderRegexList();}
+-
+-function applyPatterns(text,mode){
+-  let result=text,count=0,found={};
+-  CATS.filter(c=>selCats.has(c.id)).forEach(cat=>{
+-    cat.pat.forEach(pat=>{
+-      const re=new RegExp(pat.source,pat.flags);
+-      result=result.replace(re,m=>{count++;found[cat.label]=(found[cat.label]||0)+1;if(mode==='black')return'████████';if(mode==='star')return'****';if(mode==='remove')return'';return cat.replace;});
+-    });
+-  });
+-  customPhrases.forEach(ph=>{const re=new RegExp(ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');result=result.replace(re,m=>{count++;found['Własna: '+ph]=(found['Własna: '+ph]||0)+1;return mode==='black'?'████████':mode==='star'?'****':mode==='remove'?'':'[USUNIĘTO]';});});
+-  customRegexes.forEach(r=>{try{const re=new RegExp(r.pattern,'gi');result=result.replace(re,m=>{count++;found[r.name]=(found[r.name]||0)+1;return mode==='black'?'████████':mode==='star'?'****':mode==='remove'?'':'['+r.name.toUpperCase()+']';});}catch(e){}});
+-  return{text:result,count,found};
+-}
+-function setStatus(id,type,msg,spin=false){const el=document.getElementById(id);if(!msg){el.innerHTML='';return;}el.innerHTML=`<div class="status ${type}">${spin?'<div class="spinner"></div>':'ℹ️'} ${msg}</div>`;}
+-
+-async function anonymizeText(){
+-  const text=document.getElementById('input-text').value.trim();
+-  if(!text){setStatus('text-status','err','Wklej tekst do anonimizacji.');return;}
+-  const mode=document.getElementById('replace-mode').value;
+-  const useAI=document.getElementById('ai-assist').checked;
+-  const btn=document.getElementById('btn-anon');
+-  btn.disabled=true;setStatus('text-status','info','Anonimizuję…',true);
+-  document.getElementById('text-result').style.display='none';
+-  currentSource='(tekst wklejony)';
+-  let workText=text;
+-  if(mode==='generic'){
+-    try{
+-      const selC=CATS.filter(c=>selCats.has(c.id)).map(c=>c.label).join(', ');
+-      const lang=document.getElementById('doc-lang').value;
+-      const resp=await universalExternalAIRequest({method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:`Zanonimizuj poniższy tekst zastępując dane z kategorii: ${selC} FIKCYJNYMI ale realistycznie brzmiącymi danymi (język: ${lang}). Zachowaj pełny sens i strukturę. Zwróć WYŁĄCZNIE zanonimizowany tekst bez żadnych komentarzy.\n\nTekst:\n${text.substring(0,6000)}`}]})});
+-      const data=await resp.json();
+-      workText=data.content?.map(b=>b.text||'').join('')||workText;
+-      anonymizedText=workText;
+-      document.getElementById('output-text').textContent=workText;
+-      document.getElementById('stats-tag').textContent='AI – dane fikcyjne';
+-      document.getElementById('report-card').style.display='none';
+-      document.getElementById('text-result').style.display='block';
+-      setStatus('text-status','ok','Anonimizacja zakończona (fikcyjne dane AI).');
+-    }catch(e){setStatus('text-status','err','Błąd AI: '+e.message);}
+-    btn.disabled=false;return;
+-  }
+-  if(useAI){
+-    try{
+-      const selC=CATS.filter(c=>selCats.has(c.id)).map(c=>c.label).join(', ');
+-      const lang=document.getElementById('doc-lang').value;
+-      const resp=await universalExternalAIRequest({method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Przeanalizuj tekst i znajdź TYLKO dane osobowe z kategorii: ${selC}. Odpowiedz WYŁĄCZNIE w JSON bez żadnych innych słów:\n{"found":[{"original":"wykryta_fraza","category":"kategoria","replace":"zastąp_czym"}]}\nTekst (język: ${lang}):\n${text.substring(0,3000)}`}]})});
+-      const data=await resp.json();
+-      const raw=data.content?.map(b=>b.text||'').join('');
+-      const cleaned=raw.replace(/```json|```/g,'').trim();
+-      const parsed=JSON.parse(cleaned);
+-      if(parsed.found?.length){
+-        const modeMap={label:r=>r.replace,black:()=>'████████',star:()=>'****',remove:()=>''};
+-        parsed.found.forEach(item=>{const rep=modeMap[mode]?.(item)??item.replace;workText=workText.replace(new RegExp(item.original.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),rep);});
+-      }
+-    }catch(e){}
+-  }
+-  const{text:final,count,found}=applyPatterns(workText,mode);
+-  anonymizedText=final;
+-  document.getElementById('output-text').textContent=final;
+-  document.getElementById('stats-tag').textContent=`Wykryto: ${count} danych`;
+-  const reportEl=document.getElementById('report-body');
+-  if(Object.keys(found).length){reportEl.innerHTML=Object.entries(found).map(([k,v])=>`<b>${k}:</b> ${v} wystąpień`).join('<br>');document.getElementById('report-card').style.display='block';}
+-  else{document.getElementById('report-card').style.display='none';}
+-  document.getElementById('text-result').style.display='block';
+-  setStatus('text-status','ok',`Zakończono. Zastąpiono ${count} danych osobowych.`);
+-  btn.disabled=false;
+-}
+-function clearText(){document.getElementById('input-text').value='';document.getElementById('text-result').style.display='none';setStatus('text-status','','');}
+-function copyResult(){navigator.clipboard.writeText(anonymizedText).then(()=>{setStatus('text-status','ok','Skopiowano!');setTimeout(()=>setStatus('text-status','',''),2000);});}
+-function sendToRouter(){
+-  if(!anonymizedText)return;
+-  const countMatch=document.getElementById('stats-tag').textContent.match(/\d+/);
+-  const count=countMatch?countMatch[0]:'?';
+-  const msg=`##ANON_START##\nŹródło: ${currentSource}\nAnonimizacja: TAK | Usuniętych danych: ${count}\n##ANON_END##\n\nOto zanonimizowany dokument do analizy prawnej:\n\n${anonymizedText}`;
+-  if(typeof sendPrompt==='function')sendPrompt(msg);
+-  else{navigator.clipboard.writeText(msg);setStatus('text-status','ok','Skopiowano do schowka — wklej do czatu ↗');}
+-}
+-function sendFileToRouter(){
+-  if(!fileAnonymizedText)return;
+-  const countMatch=document.getElementById('file-stats-tag').textContent.match(/\d+/);
+-  const count=countMatch?countMatch[0]:'?';
+-  const msg=`##ANON_START##\nŹródło: ${originalFilename||'plik'}\nAnonimizacja: TAK | Usuniętych danych: ${count}\n##ANON_END##\n\nOto zanonimizowany dokument do analizy prawnej:\n\n${fileAnonymizedText}`;
+-  if(typeof sendPrompt==='function')sendPrompt(msg);
+-  else{navigator.clipboard.writeText(msg);setStatus('file-status','ok','Skopiowano do schowka — wklej do czatu ↗');}
+-}
+-function handleDragOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('over');}
+-function handleDragLeave(e){document.getElementById('drop-zone').classList.remove('over');}
+-function handleDrop(e){e.preventDefault();document.getElementById('drop-zone').classList.remove('over');const f=e.dataTransfer.files[0];if(f)processFile(f);}
+-function handleFileSelect(e){const f=e.target.files[0];if(f)processFile(f);}
+-function processFile(f){
+-  originalFilename=f.name;fileType=f.name.split('.').pop().toLowerCase();
+-  document.getElementById('file-name').textContent='📄 '+f.name+' ('+(f.size/1024).toFixed(1)+' KB)';
+-  document.getElementById('file-options').style.display='block';
+-  document.getElementById('file-result').style.display='none';
+-  setStatus('file-status','ok',`Plik wczytany: ${f.name}`);
+-  const reader=new FileReader();
+-  if(fileType==='txt'){reader.onload=e2=>{fileData=e2.target.result;};reader.readAsText(f);}
+-  else{reader.onload=e2=>{fileData=e2.target.result;};reader.readAsDataURL(f);}
+-}
+-function resetFile(){fileData=null;fileType='';originalFilename='';document.getElementById('file-name').textContent='';document.getElementById('file-options').style.display='none';document.getElementById('file-result').style.display='none';document.getElementById('file-input').value='';setStatus('file-status','','');}
+-function setProgress(pct){document.getElementById('file-progress').style.display=pct>=100||pct<=0?'none':'block';document.getElementById('prog-fill').style.width=pct+'%';}
+-async function anonymizeFile(){
+-  if(!fileData){setStatus('file-status','err','Najpierw wybierz plik.');return;}
+-  const mode=document.getElementById('replace-mode-file').value;
+-  const btn=document.getElementById('btn-file-anon');
+-  btn.disabled=true;setProgress(20);
+-  let extractedText='';
+-  if(fileType==='txt'){extractedText=fileData;setProgress(40);}
+-  else{
+-    setStatus('file-status','info','Wysyłam plik do AI w celu ekstrakcji i anonimizacji…',true);
+-    try{
+-      const base64=fileData.split(',')[1];
+-      const mediaTypeMap={pdf:'application/pdf',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',doc:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',xls:'application/vnd.ms-excel'};
+-      const mediaType=mediaTypeMap[fileType]||'application/octet-stream';
+-      const selC=CATS.filter(c=>selCats.has(c.id)).map(c=>c.label).join(', ');
+-      const lang=document.getElementById('doc-lang').value;
+-      const useAI=document.getElementById('ai-assist').checked;
+-      const modeDesc={label:'etykietami opisowymi (np. [IMIĘ NAZWISKO], [PESEL], [ADRES])',black:'czarnymi blokami ████████',star:'gwiazdkami ****',remove:'(usuń całkowicie, bez zastępnika)',generic:'fikcyjnymi ale realistycznymi polskimi danymi'}[mode];
+-      setProgress(40);
+-      const resp=await universalExternalAIRequest({method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:8000,messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:mediaType,data:base64}},{type:'text',text:`Wykonaj dwie rzeczy jednocześnie:\n1. Wyodrębnij PEŁNY tekst dokumentu zachowując układ, wcięcia, akapity i formatowanie jak najdokładniej.\n2. Zanonimizuj go zastępując dane z kategorii: ${selC} — ${modeDesc}.\nJęzyk dokumentu: ${lang}.\n${useAI?'Wykryj też inne dane osobowe niewidoczne w typowych wzorcach regex.':''}\nZwróć WYŁĄCZNIE zanonimizowany tekst bez żadnych komentarzy, wyjaśnień ani znaczników markdown.`}]}]})});
+-      setProgress(80);
+-      const data=await resp.json();
+-      if(data.error)throw new Error(data.error.message);
+-      extractedText=data.content?.map(b=>b.text||'').join('')||'';
+-      if(!extractedText.trim())throw new Error('Nie udało się odczytać treści pliku.');
+-    }catch(err){setStatus('file-status','err','Błąd odczytu pliku: '+err.message);btn.disabled=false;setProgress(0);return;}
+-  }
+-  setProgress(90);
+-  const{text:final,count,found}=applyPatterns(extractedText,mode);
+-  fileAnonymizedText=final;
+-  document.getElementById('file-output').textContent=final;
+-  document.getElementById('file-stats-tag').textContent=`Wykryto: ${count} danych`;
+-  document.getElementById('file-result').style.display='block';
+-  setProgress(0);
+-  setStatus('file-status','ok',`Anonimizacja zakończona. Zastąpiono ${count} danych osobowych.`);
+-  btn.disabled=false;
+-}
+-function copyFileResult(){navigator.clipboard.writeText(fileAnonymizedText).then(()=>{setStatus('file-status','ok','Skopiowano!');setTimeout(()=>setStatus('file-status','',''),2000);});}
+-function downloadResult(){
+-  if(!fileAnonymizedText)return;
+-  const base=originalFilename.replace(/\.[^.]+$/,'')||'dokument';
+-  const blob=new Blob([fileAnonymizedText],{type:'text/plain;charset=utf-8'});
+-  const url=URL.createObjectURL(blob);
+-  const a=document.createElement('a');
+-  a.href=url;a.download=base+'_zanonimizowany.txt';
+-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+-  setStatus('file-status','ok','Plik pobrany!');
+-}
+-</script>
+-</body>
+-</html>
+diff -ruN a/prawny-router-v3/anonimizer/assets/anonimizer-widget.legacy.html b/prawny-router-v3/anonimizer/assets/anonimizer-widget.legacy.html
+--- a/prawny-router-v3/anonimizer/assets/anonimizer-widget.legacy.html	2026-10-14 18:18:12.404056520 +0200
++++ b/prawny-router-v3/anonimizer/assets/anonimizer-widget.legacy.html	1970-01-01 01:00:00.000000000 +0100
+@@ -1,526 +0,0 @@
+-<!--
+-  Anonimizer dokumentów prawnych v2
+-  Asset widgetu dla prawny-router-v3/anonimizer
+-  v2: sendPrompt bezpośredni eksport · oznaczanie plików · decyzja sesyjna
+--->
+-<h2 class="sr-only">Anonimizer dokumentów prawnych — wklej tekst lub wgraj plik aby usunąć dane osobowe</h2>
+-<style>
+-*{box-sizing:border-box;margin:0;padding:0}
+-.wrap{padding:1.5rem 0}
+-.header{margin-bottom:1rem}
+-.header h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+-.header p{font-size:13px;color:var(--color-text-secondary);line-height:1.5}
+-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info)}
+-.notice{background:var(--color-background-warning);border-radius:var(--border-radius-md);padding:10px 14px;font-size:13px;color:var(--color-text-warning);display:flex;gap:8px;align-items:flex-start;margin-bottom:1rem;line-height:1.5}
+-.notice i{margin-top:1px;flex-shrink:0;font-size:16px}
+-.notice strong{font-weight:500}
+-.info-box{background:var(--color-background-info);border-radius:var(--border-radius-md);padding:10px 14px;font-size:13px;color:var(--color-text-info);display:flex;gap:8px;align-items:flex-start;margin-bottom:1rem;line-height:1.5}
+-.panel{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+-.panel-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+-.panel-head span{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+-.panel-body{padding:12px 16px}
+-.steps{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+-.step{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)}
+-.step-n{width:20px;height:20px;border-radius:50%;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--color-text-primary);flex-shrink:0}
+-.step-arr{color:var(--color-text-tertiary);font-size:11px}
+-.zone{border:1.5px dashed var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;text-align:center;cursor:pointer;transition:border-color 0.15s,background 0.15s;margin-bottom:10px}
+-.zone:hover,.zone.over{border-color:var(--color-border-primary);background:var(--color-background-secondary)}
+-.zone-icon{font-size:28px;color:var(--color-text-secondary);margin-bottom:6px;display:block}
+-.zone p{font-size:13px;color:var(--color-text-secondary);margin-bottom:2px}
+-.zone small{font-size:11px;color:var(--color-text-tertiary)}
+-.or-sep{text-align:center;font-size:12px;color:var(--color-text-tertiary);margin:6px 0;position:relative}
+-.or-sep::before,.or-sep::after{content:'';position:absolute;top:50%;width:42%;height:0.5px;background:var(--color-border-tertiary)}
+-.or-sep::before{left:0}.or-sep::after{right:0}
+-textarea{width:100%;font-size:13px;line-height:1.6;font-family:var(--font-mono,monospace);resize:vertical;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);padding:10px 12px}
+-textarea:focus{outline:none;border-color:var(--color-border-primary)}
+-.char-count{font-size:11px;color:var(--color-text-tertiary);text-align:right;margin-top:3px}
+-.options{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:4px}
+-.opt{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--color-text-primary);cursor:pointer;padding:5px 10px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);transition:border-color 0.12s,background 0.12s;user-select:none}
+-.opt input[type=checkbox]{accent-color:var(--color-text-info);width:14px;height:14px;cursor:pointer}
+-.opt:has(input:checked){border-color:var(--color-border-info);background:var(--color-background-info)}
+-.file-list{list-style:none;margin-top:6px}
+-.file-item{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+-.file-item:last-child{border-bottom:none}
+-.file-name{font-weight:500;color:var(--color-text-primary)}
+-.file-meta{color:var(--color-text-secondary);font-size:12px}
+-.rm{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:15px;padding:2px 4px}
+-.rm:hover{color:var(--color-text-primary)}
+-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin-bottom:1rem}
+-.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;text-align:center}
+-.stat-n{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+-.stat-l{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+-.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem}
+-.btn-send{background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:var(--border-radius-md);padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 0.12s;display:flex;align-items:center;gap:7px;flex:1;justify-content:center;min-width:180px}
+-.btn-send:hover{opacity:0.85}
+-.btn-send-raw{background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px 16px;font-size:13px;cursor:pointer;transition:background 0.12s;display:flex;align-items:center;gap:6px}
+-.btn-send-raw:hover{background:var(--color-background-secondary)}
+-button.secondary{background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:9px 18px;font-size:14px;cursor:pointer;transition:background 0.12s;display:flex;align-items:center;gap:6px}
+-button.secondary:hover{background:var(--color-background-secondary)}
+-.tabs{display:flex;gap:4px;margin-bottom:1rem}
+-.tab{font-size:13px;padding:6px 14px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all 0.1s}
+-.tab.active{background:var(--color-background-primary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+-.diff-view{font-size:12px;font-family:var(--font-mono,monospace);line-height:1.8;max-height:280px;overflow-y:auto;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px;background:var(--color-background-secondary);color:var(--color-text-primary);white-space:pre-wrap;word-break:break-all}
+-.del{color:#b91c1c;text-decoration:line-through}
+-.ins{color:#15803d;font-weight:500}
+-.detect-banner{background:var(--color-background-success,#f0fdf4);border:0.5px solid #bbf7d0;border-radius:var(--border-radius-md);padding:10px 14px;font-size:13px;color:#15803d;display:flex;gap:8px;align-items:flex-start;margin-bottom:1rem;line-height:1.5}
+-.detect-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+-.detect-tag{font-size:11px;padding:2px 7px;border-radius:99px;background:rgba(21,128,61,0.12);color:#15803d;font-weight:500}
+-.send-confirm{background:var(--color-background-success,#f0fdf4);border:0.5px solid #bbf7d0;border-radius:var(--border-radius-md);padding:12px 16px;font-size:13px;color:#15803d;display:none;gap:8px;align-items:center;margin-top:10px;font-weight:500}
+-.send-confirm i{font-size:18px}
+-.session-bar{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:var(--color-text-secondary);display:flex;align-items:center;gap:6px;margin-bottom:1rem}
+-.session-dot{width:8px;height:8px;border-radius:50%;background:#15803d;flex-shrink:0}
+-.session-dot.red{background:#b91c1c}
+-</style>
+-
+-<div class="wrap">
+-  <div class="header">
+-    <h1>
+-      <i class="ti ti-shield-lock" style="font-size:20px" aria-hidden="true"></i>
+-      Anonimizer dokumentów
+-      <span class="badge"><i class="ti ti-scale" style="font-size:10px" aria-hidden="true"></i> RODO</span>
+-    </h1>
+-    <p>Usuwa dane osobowe przed analizą prawną. Działa lokalnie — treść nie opuszcza przeglądarki.</p>
+-  </div>
+-
+-  <!-- pasek sesji — pokazuje zapamiętaną decyzję -->
+-  <div class="session-bar" id="session-bar" style="display:none">
+-    <div class="session-dot" id="session-dot"></div>
+-    <span id="session-label"></span>
+-    <button onclick="resetSession()" style="margin-left:auto;background:none;border:none;font-size:12px;color:var(--color-text-secondary);cursor:pointer;text-decoration:underline">zmień</button>
+-  </div>
+-
+-  <div class="notice">
+-    <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+-    <div><strong>Ważne:</strong> pliki wgrane w wiadomości do Clauda nie są tu widoczne — sandbox jest izolowany. <strong>Wgraj plik ponownie</strong> lub <strong>wklej tekst</strong> poniżej. Po wysłaniu tekst trafi bezpośrednio do czatu.</div>
+-  </div>
+-
+-  <div id="detect-banner" style="display:none" class="detect-banner">
+-    <i class="ti ti-scan" aria-hidden="true"></i>
+-    <div>
+-      <strong>Wykryto dane osobowe</strong> — zalecana anonimizacja przed analizą:
+-      <div class="detect-tags" id="detect-tags"></div>
+-    </div>
+-  </div>
+-
+-  <div class="panel">
+-    <div class="panel-head">
+-      <span><i class="ti ti-file-upload" style="font-size:14px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>Wgraj lub wklej dokument</span>
+-      <span id="file-count" style="font-size:12px;color:var(--color-text-secondary)"></span>
+-    </div>
+-    <div class="panel-body">
+-      <div class="steps">
+-        <div class="step"><div class="step-n">1</div><span>Wgraj plik lub wklej tekst</span></div>
+-        <div class="step-arr">→</div>
+-        <div class="step"><div class="step-n">2</div><span>Wybierz opcje</span></div>
+-        <div class="step-arr">→</div>
+-        <div class="step"><div class="step-n">3</div><span>Wyślij do czatu</span></div>
+-      </div>
+-      <div class="zone" id="drop-zone" role="button" tabindex="0" aria-label="Kliknij lub przeciągnij plik">
+-        <span class="zone-icon"><i class="ti ti-upload" aria-hidden="true"></i></span>
+-        <p>Przeciągnij plik lub <strong>kliknij aby wybrać</strong></p>
+-        <small>.txt · .md · .rtf — pliki tekstowe &nbsp;|&nbsp; .docx/.pdf → skopiuj treść i wklej</small>
+-      </div>
+-      <input type="file" id="file-input" multiple accept=".txt,.md,.rtf,.csv,.xml,.json,.log" style="display:none">
+-      <ul class="file-list" id="file-list"></ul>
+-      <div class="or-sep">lub wklej tekst bezpośrednio</div>
+-      <textarea id="paste-area" placeholder="Wklej treść dokumentu tutaj (Ctrl+V)..." style="min-height:160px" oninput="updateCharCount();scheduleDetect()" aria-label="Pole tekstowe dokumentu"></textarea>
+-      <div class="char-count" id="char-count">0 znaków</div>
+-    </div>
+-  </div>
+-
+-  <div class="panel">
+-    <div class="panel-head"><span><i class="ti ti-adjustments-horizontal" style="font-size:14px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>Opcje anonimizacji</span></div>
+-    <div class="panel-body">
+-      <div class="options">
+-        <label class="opt"><input type="checkbox" id="opt-names" checked> <i class="ti ti-user" style="font-size:13px" aria-hidden="true"></i> Imiona i nazwiska → inicjały</label>
+-        <label class="opt"><input type="checkbox" id="opt-addr" checked> <i class="ti ti-map-pin" style="font-size:13px" aria-hidden="true"></i> Adresy zamieszkania</label>
+-        <label class="opt"><input type="checkbox" id="opt-pesel" checked> <i class="ti ti-id-badge" style="font-size:13px" aria-hidden="true"></i> PESEL / NIP / REGON</label>
+-        <label class="opt"><input type="checkbox" id="opt-phone" checked> <i class="ti ti-phone" style="font-size:13px" aria-hidden="true"></i> Numery telefonów</label>
+-        <label class="opt"><input type="checkbox" id="opt-email" checked> <i class="ti ti-mail" style="font-size:13px" aria-hidden="true"></i> Adresy e-mail</label>
+-        <label class="opt"><input type="checkbox" id="opt-bank" checked> <i class="ti ti-credit-card" style="font-size:13px" aria-hidden="true"></i> Numery kont bankowych</label>
+-        <label class="opt"><input type="checkbox" id="opt-date" checked> <i class="ti ti-calendar" style="font-size:13px" aria-hidden="true"></i> Daty urodzenia</label>
+-        <label class="opt"><input type="checkbox" id="opt-company" checked> <i class="ti ti-building" style="font-size:13px" aria-hidden="true"></i> Nazwy firm stron</label>
+-      </div>
+-    </div>
+-  </div>
+-
+-  <div class="btn-row" style="margin-bottom:0.5rem">
+-    <button class="btn-send" onclick="runAnonymizeAndSend()">
+-      <i class="ti ti-shield-check" aria-hidden="true"></i> Anonimizuj i wyślij do czatu
+-    </button>
+-  </div>
+-  <div class="btn-row">
+-    <button class="btn-send-raw" onclick="sendRaw()" title="Wyślij tekst bez anonimizacji — tylko za zgodą sesyjną">
+-      <i class="ti ti-arrow-right" style="font-size:13px" aria-hidden="true"></i> Wyślij bez anonimizacji
+-    </button>
+-    <button class="secondary" onclick="clearAll()"><i class="ti ti-trash" aria-hidden="true"></i> Wyczyść</button>
+-  </div>
+-
+-  <!-- potwierdzenie wysłania -->
+-  <div class="send-confirm" id="send-confirm">
+-    <i class="ti ti-circle-check" aria-hidden="true"></i>
+-    <span id="send-confirm-msg"></span>
+-  </div>
+-
+-  <div id="results" style="display:none;margin-top:1.5rem">
+-    <div class="panel">
+-      <div class="panel-head"><span><i class="ti ti-report" style="font-size:14px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>Podgląd przed wysłaniem</span></div>
+-      <div class="panel-body">
+-        <div class="stats" id="stats-grid"></div>
+-        <div class="tabs">
+-          <button class="tab active" onclick="switchTab('clean',this)">Tekst anonimowy</button>
+-          <button class="tab" onclick="switchTab('diff',this)">Podgląd zmian</button>
+-        </div>
+-        <div id="tab-clean">
+-          <textarea id="result-area" style="min-height:200px" readonly aria-label="Zanonimizowany tekst"></textarea>
+-          <div class="btn-row">
+-            <button class="btn-send" onclick="doSendAnon()">
+-              <i class="ti ti-send" aria-hidden="true"></i> Wyślij do czatu ↗
+-            </button>
+-            <button class="secondary" onclick="copyResult()"><i class="ti ti-copy" aria-hidden="true"></i> Kopiuj</button>
+-            <button class="secondary" onclick="downloadResult()"><i class="ti ti-download" aria-hidden="true"></i> Pobierz .txt</button>
+-          </div>
+-        </div>
+-        <div id="tab-diff" style="display:none">
+-          <div class="diff-view" id="diff-view"></div>
+-          <div class="btn-row">
+-            <button class="btn-send" onclick="doSendAnon()">
+-              <i class="ti ti-send" aria-hidden="true"></i> Wyślij do czatu ↗
+-            </button>
+-          </div>
+-        </div>
+-      </div>
+-    </div>
+-  </div>
+-</div>
+-
+-<script>
+-/* ── stan sesji ── */
+-var SESSION = {
+-  decision: null,   // 'anon' | 'raw' | null
+-  decidedAt: null
+-};
+-
+-var files=[], origText='', anonText='', detectTimer=null;
+-
+-/* ── inicjalizacja sesji z czatu ──
+-   Router może wstrzyknąć decyzję przez URL hash: #decision=anon lub #decision=raw
+-   Albo widget odczytuje ją z window.name (persystencja w iframe) */
+-(function initSession(){
+-  try{
+-    var stored=window.name?JSON.parse(window.name):{};
+-    if(stored.decision){SESSION.decision=stored.decision;SESSION.decidedAt=stored.decidedAt;}
+-  }catch(e){}
+-  renderSessionBar();
+-})();
+-
+-function saveSession(){
+-  try{window.name=JSON.stringify({decision:SESSION.decision,decidedAt:SESSION.decidedAt});}catch(e){}
+-}
+-
+-function resetSession(){
+-  SESSION.decision=null;SESSION.decidedAt=null;
+-  try{window.name='';}catch(e){}
+-  renderSessionBar();
+-}
+-
+-function renderSessionBar(){
+-  var bar=document.getElementById('session-bar');
+-  if(!SESSION.decision){bar.style.display='none';return;}
+-  bar.style.display='flex';
+-  var dot=document.getElementById('session-dot');
+-  var lbl=document.getElementById('session-label');
+-  if(SESSION.decision==='anon'){
+-    dot.className='session-dot';
+-    lbl.textContent='Sesja: anonimizacja włączona — pliki będą anonimizowane automatycznie';
+-  } else {
+-    dot.className='session-dot red';
+-    lbl.textContent='Sesja: wysyłanie bez anonimizacji (dane oryginalne)';
+-  }
+-}
+-
+-/* ── upload / drag-drop ── */
+-var dz=document.getElementById('drop-zone');
+-var fi=document.getElementById('file-input');
+-dz.addEventListener('click',function(){fi.click();});
+-dz.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')fi.click();});
+-dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('over');});
+-dz.addEventListener('dragleave',function(){dz.classList.remove('over');});
+-dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('over');handleFiles(e.dataTransfer.files);});
+-fi.addEventListener('change',function(){handleFiles(this.files);this.value='';});
+-
+-function handleFiles(list){
+-  for(var i=0;i<list.length;i++){
+-    var f=list[i];
+-    if(f.size>5*1024*1024){alert('Plik "'+f.name+'" jest za duży (max 5 MB). Skopiuj jego treść ręcznie.');continue;}
+-    files.push(f);
+-    (function(file){
+-      var r=new FileReader();
+-      r.onload=function(e){
+-        var ta=document.getElementById('paste-area');
+-        ta.value+=(ta.value?'\n\n--- '+file.name+' ---\n\n':'')+e.target.result;
+-        updateCharCount();scheduleDetect();
+-      };
+-      r.onerror=function(){alert('Nie udało się odczytać pliku "'+file.name+'". Skopiuj treść ręcznie.');};
+-      r.readAsText(file,'UTF-8');
+-    })(f);
+-  }
+-  renderFileList();
+-}
+-
+-function renderFileList(){
+-  var ul=document.getElementById('file-list');
+-  ul.innerHTML='';
+-  files.forEach(function(f,i){
+-    var li=document.createElement('li');li.className='file-item';
+-    li.innerHTML='<div style="display:flex;align-items:center;gap:8px">'
+-      +'<i class="ti ti-file-text" style="font-size:15px;color:var(--color-text-secondary)" aria-hidden="true"></i>'
+-      +'<span class="file-name">'+esc(f.name)+'</span></div>'
+-      +'<div style="display:flex;align-items:center;gap:8px">'
+-      +'<span class="file-meta">'+fmtSize(f.size)+'</span>'
+-      +'<button class="rm" onclick="removeFile('+i+')" aria-label="Usuń plik '+esc(f.name)+'">'
+-      +'<i class="ti ti-x" aria-hidden="true"></i></button></div>';
+-    ul.appendChild(li);
+-  });
+-  document.getElementById('file-count').textContent=files.length?files.length+' '+(files.length===1?'plik':files.length<5?'pliki':'plików'):'';
+-}
+-
+-function removeFile(i){files.splice(i,1);renderFileList();}
+-function fmtSize(b){return b<1024?b+' B':b<1048576?Math.round(b/1024)+' KB':Math.round(b/1048576)+' MB';}
+-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+-function updateCharCount(){var v=document.getElementById('paste-area').value;document.getElementById('char-count').textContent=v.length.toLocaleString('pl')+' znaków';}
+-
+-/* ── auto-detect ── */
+-function scheduleDetect(){
+-  if(detectTimer)clearTimeout(detectTimer);
+-  detectTimer=setTimeout(detectPersonalData,700);
+-}
+-
+-function detectPersonalData(){
+-  var t=document.getElementById('paste-area').value;
+-  if(!t.trim()){document.getElementById('detect-banner').style.display='none';return;}
+-  var found=[];
+-  if(/\b[A-ZŁŚĆŹŻÓĄĘ][a-złśćźżóąę]{1,25}\s+[A-ZŁŚĆŹŻÓĄĘ][a-złśćźżóąę]{1,25}\b/.test(t))found.push('Imię i nazwisko');
+-  if(/\b\d{11}\b/.test(t))found.push('PESEL');
+-  if(/\b\d{3}-\d{3}-\d{2}-\d{2}\b|\b\d{10}\b/.test(t))found.push('NIP');
+-  if(/\b(?:ul\.|al\.|pl\.|ulica|aleja)\s+[A-ZŁŚĆŹŻÓĄĘ]/i.test(t))found.push('Adres');
+-  if(/\b\d{2}-\d{3}\s+[A-ZŁŚĆŹŻÓĄĘ]/.test(t))found.push('Kod pocztowy');
+-  if(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/.test(t))found.push('E-mail');
+-  if(/(?:\+48[\s\-]?)?\d{3}[\s\-]\d{3}[\s\-]\d{3}/.test(t))found.push('Telefon');
+-  if(/\bPL\d{2}[\s]?(?:\d{4}[\s]?){6}\b/.test(t))found.push('Konto bankowe');
+-  var banner=document.getElementById('detect-banner');
+-  if(found.length){
+-    document.getElementById('detect-tags').innerHTML=found.map(function(f){return '<span class="detect-tag">'+esc(f)+'</span>';}).join('');
+-    banner.style.display='flex';
+-  } else {
+-    banner.style.display='none';
+-  }
+-}
+-
+-/* ── anonimizacja ── */
+-function anonymize(text){
+-  var c={names:0,addr:0,pesel:0,phone:0,email:0,bank:0,date:0,company:0};
+-  if(document.getElementById('opt-email').checked)
+-    text=text.replace(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g,function(){c.email++;return '[E-MAIL]';});
+-  if(document.getElementById('opt-bank').checked)
+-    text=text.replace(/\bPL\d{2}[\s]?(?:\d{4}[\s]?){6}\b|\b\d{2}[\s]?(?:\d{4}[\s]?){6}\b/g,function(){c.bank++;return '[KONTO]';});
+-  if(document.getElementById('opt-pesel').checked){
+-    text=text.replace(/\b\d{11}\b/g,function(){c.pesel++;return '[PESEL]';});
+-    text=text.replace(/\b\d{3}-\d{3}-\d{2}-\d{2}\b/g,function(){c.pesel++;return '[NIP]';});
+-    text=text.replace(/\bNIP[:\s]+\d[\d\s\-]{8,}\d\b/gi,function(){c.pesel++;return 'NIP: [NIP]';});
+-    text=text.replace(/\bREGON[:\s]+\d{9,14}\b/gi,function(){c.pesel++;return 'REGON: [REGON]';});
+-    text=text.replace(/\b\d{10}\b/g,function(){c.pesel++;return '[NIP]';});
+-  }
+-  if(document.getElementById('opt-phone').checked)
+-    text=text.replace(/(?:\+48[\s\-]?)?\b(?:\d{3}[\s\-]\d{3}[\s\-]\d{3}|\d{2}[\s\-]\d{3}[\s\-]\d{2}[\s\-]\d{2}|\d{9})\b/g,function(){c.phone++;return '[TEL]';});
+-  if(document.getElementById('opt-date').checked)
+-    text=text.replace(/\b(?:ur(?:odzony|odzona|odzon[aey])?\.?\s*)?(\d{1,2}[.\/-]\d{1,2}[.\/-]\d{4}|\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2})\b/gi,function(){c.date++;return '[DATA-UR]';});
+-  if(document.getElementById('opt-addr').checked){
+-    text=text.replace(/\b(?:ul\.|al\.|pl\.|os\.|aleja|ulica|plac)\s+[A-ZŁŚĆŹŻÓĄĘ][\wążśźćęóńłĄŻŚŹĆĘÓŃŁ\s\-\.]{1,50}\d+[a-zA-Z]?(?:\/\d+[a-zA-Z]?)?(?:[,\s]+(?:lok\.|m\.|mieszk\.)?\s*\d+[a-zA-Z]?)?(?:[,\s]+\d{2}-\d{3}[,\s]+[\wążśźćęóńłĄŻŚŹĆĘÓŃŁ\s]+)?/gi,function(){c.addr++;return '[ADRES]';});
+-    text=text.replace(/\b\d{2}-\d{3}\s+[A-ZŁŚĆŹŻÓĄĘ][\wążśźćęóńłĄŻŚŹĆĘÓŃŁ\-\s]{2,30}\b/g,function(){c.addr++;return '[MIEJSCOWOŚĆ]';});
+-  }
+-  if(document.getElementById('opt-company').checked)
+-    text=text.replace(/[A-ZŁŚĆŹŻÓĄĘ][\wążśźćęóńłĄŻŚŹĆĘÓŃŁ\s\-\"„"\(\)]{2,60}(?:sp\.\s*z\s*o\.o\.|S\.A\.|sp\.\s*j\.|sp\.\s*k\.|S\.K\.A\.|Sp\.\s*p\.|spółka\s+z\s+ograniczoną\s+odpowiedzialnością|spółka\s+akcyjna)/g,function(){c.company++;return '[FIRMA]';});
+-  if(document.getElementById('opt-names').checked){
+-    var SKIP=/^(?:Sąd|Sędzia|Prokuratura|Urząd|Zakład|Ministerstwo|Instytut|Gmina|Miasto|Powiat|Województwo|Rejon|Oddział|Wydział|Sekcja|Pan|Pani|Pozwany|Powód|Oskarżony|Świadek|Biegły|Pełnomocnik|Wnioskodawca|Wnioskodawczyni|Prezes|Dyrektor|Minister|Skarb|Polska|Rzeczpospolita|Komisja|Trybunał|Naczelny|Najwyższy)$/i;
+-    text=text.replace(/\b([A-ZŁŚĆŹŻÓĄĘ][a-złśćźżóąę]{1,25})\s+([A-ZŁŚĆŹŻÓĄĘ][a-złśćźżóąę]{1,25})(?:\s+([A-ZŁŚĆŹŻÓĄĘ][a-złśćźżóąę]{1,25}))?\b/g,function(m,f,l,s){
+-      if(SKIP.test(f)||SKIP.test(l))return m;
+-      c.names++;
+-      return f[0]+'.'+l[0]+'.'+(s?s[0]+'.':'');
+-    });
+-  }
+-  return {text:text,counts:c};
+-}
+-
+-function totalCount(c){return Object.values(c).reduce(function(a,b){return a+b;},0);}
+-
+-function buildStats(c){
+-  return [
+-    ['Łącznie',totalCount(c),'ti-shield'],
+-    ['Osoby',c.names,'ti-user'],
+-    ['Adresy',c.addr,'ti-map-pin'],
+-    ['PESEL/NIP',c.pesel,'ti-id-badge'],
+-    ['Telefony',c.phone,'ti-phone'],
+-    ['E-maile',c.email,'ti-mail'],
+-    ['Konta',c.bank,'ti-credit-card'],
+-    ['Firmy',c.company,'ti-building']
+-  ].map(function(d){
+-    return '<div class="stat"><div class="stat-n">'+d[1]+'</div>'
+-      +'<div class="stat-l"><i class="ti '+d[2]+'" style="font-size:12px;vertical-align:-1px;margin-right:3px" aria-hidden="true"></i>'+d[0]+'</div></div>';
+-  }).join('');
+-}
+-
+-/* ── budowanie znacznika dla routera ── */
+-function buildAnonHeader(c,fileNames){
+-  var fn=fileNames&&fileNames.length?fileNames.join(', '):'(wklejony tekst)';
+-  var total=totalCount(c);
+-  var parts=[];
+-  if(c.names)parts.push(c.names+' nazw osobowych → inicjały');
+-  if(c.addr)parts.push(c.addr+' adresów');
+-  if(c.pesel)parts.push(c.pesel+' identyfikatorów (PESEL/NIP/REGON)');
+-  if(c.phone)parts.push(c.phone+' telefonów');
+-  if(c.email)parts.push(c.email+' e-maili');
+-  if(c.bank)parts.push(c.bank+' numerów kont');
+-  if(c.date)parts.push(c.date+' dat urodzenia');
+-  if(c.company)parts.push(c.company+' nazw firm');
+-  return '##ANON_START##\n'
+-    +'Źródło: '+fn+'\n'
+-    +'Anonimizacja: TAK | Usuniętych danych: '+total+(parts.length?' ('+parts.join('; ')+')\n':'\n')
+-    +'##ANON_END##\n\n';
+-}
+-
+-function buildRawHeader(fileNames){
+-  var fn=fileNames&&fileNames.length?fileNames.join(', '):'(wklejony tekst)';
+-  return '##PLIK_ORYGINALNY##\n'
+-    +'Źródło: '+fn+'\n'
+-    +'Anonimizacja: NIE — użytkownik wyraził zgodę na przetwarzanie danych oryginalnych w tej sesji.\n'
+-    +'##PLIK_ORYGINALNY_END##\n\n';
+-}
+-
+-/* ── główne akcje ── */
+-
+-// Klik "Anonimizuj i wyślij" — jeśli sesja=anon, wyślij od razu; jeśli nie, najpierw podgląd
+-function runAnonymizeAndSend(){
+-  origText=document.getElementById('paste-area').value.trim();
+-  if(!origText){alert('Brak tekstu. Wgraj plik lub wklej tekst.');return;}
+-  var result=anonymize(origText);
+-  anonText=result.text;
+-  var c=result.counts;
+-  // pokaż podgląd
+-  document.getElementById('stats-grid').innerHTML=buildStats(c);
+-  document.getElementById('result-area').value=anonText;
+-  buildDiff(origText,anonText);
+-  document.getElementById('results').style.display='block';
+-  document.getElementById('detect-banner').style.display='none';
+-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+-  // jeśli sesja już ma decyzję anon — od razu wyślij
+-  if(SESSION.decision==='anon'){doSendAnon();}
+-}
+-
+-// Faktyczne wysłanie zanonimizowanego tekstu do czatu
+-function doSendAnon(){
+-  var origText2=document.getElementById('paste-area').value.trim();
+-  if(!anonText&&origText2){var r=anonymize(origText2);anonText=r.text;}
+-  if(!anonText){alert('Najpierw wklej lub wgraj tekst.');return;}
+-  var fileNames=files.map(function(f){return f.name;});
+-  var result2=anonymize(document.getElementById('paste-area').value.trim());
+-  var header=buildAnonHeader(result2.counts,fileNames);
+-  var msg=header+'Oto zanonimizowany dokument do analizy prawnej:\n\n'+anonText;
+-  SESSION.decision='anon';SESSION.decidedAt=new Date().toISOString();saveSession();renderSessionBar();
+-  doSend(msg,'Zanonimizowany tekst wysłany do czatu — Claude przystąpi do analizy.');
+-}
+-
+-// Wyślij oryginalny tekst (bez anonimizacji) — z potwierdzeniem sesyjnym
+-function sendRaw(){
+-  origText=document.getElementById('paste-area').value.trim();
+-  if(!origText){alert('Brak tekstu. Wgraj plik lub wklej tekst.');return;}
+-  if(SESSION.decision==='raw'){
+-    // sesja już pozwala — wyślij od razu
+-    _doSendRaw();return;
+-  }
+-  // poproś o potwierdzenie
+-  var ok=confirm(
+-    'Wysyłasz dokument BEZ anonimizacji.\n\n'
+-    +'Dane osobowe (imiona, adresy, PESEL itp.) będą widoczne w czacie.\n\n'
+-    +'Czy wyrażasz zgodę na przetwarzanie danych oryginalnych w tej sesji?\n\n'
+-    +'(Decyzja zostanie zapamiętana do końca tej sesji — nie będziesz pytany ponownie.)'
+-  );
+-  if(ok){
+-    SESSION.decision='raw';SESSION.decidedAt=new Date().toISOString();saveSession();renderSessionBar();
+-    _doSendRaw();
+-  }
+-}
+-
+-function _doSendRaw(){
+-  var fileNames=files.map(function(f){return f.name;});
+-  var header=buildRawHeader(fileNames);
+-  var msg=header+'Oto dokument oryginalny (bez anonimizacji) do analizy prawnej:\n\n'+origText;
+-  doSend(msg,'Dokument oryginalny wysłany do czatu — Claude przystąpi do analizy.');
+-}
+-
+-function doSend(msg,confirmMsg){
+-  if(typeof sendPrompt==='function'){
+-    sendPrompt(msg);
+-    showConfirm(confirmMsg);
+-  } else {
+-    // fallback: kopiuj do schowka
+-    navigator.clipboard.writeText(msg).then(function(){
+-      showConfirm('Skopiowano do schowka — wklej (Ctrl+V) w oknie czatu.');
+-    }).catch(function(){
+-      var ta=document.createElement('textarea');
+-      ta.value=msg;document.body.appendChild(ta);ta.select();document.execCommand('copy');
+-      document.body.removeChild(ta);
+-      showConfirm('Skopiowano do schowka — wklej (Ctrl+V) w oknie czatu.');
+-    });
+-  }
+-}
+-
+-function showConfirm(msg){
+-  var el=document.getElementById('send-confirm');
+-  document.getElementById('send-confirm-msg').textContent=msg;
+-  el.style.display='flex';
+-  setTimeout(function(){el.style.display='none';},4000);
+-}
+-
+-function buildDiff(orig,anon){
+-  var o=orig.split('\n'),a=anon.split('\n'),html='';
+-  for(var i=0;i<Math.max(o.length,a.length);i++){
+-    var oi=o[i]||'',ai=a[i]||'';
+-    if(oi===ai){html+=esc(oi)+'\n';}
+-    else{html+='<span class="del">'+esc(oi)+'</span>\n<span class="ins">'+esc(ai)+'</span>\n';}
+-  }
+-  document.getElementById('diff-view').innerHTML=html;
+-}
+-
+-function switchTab(tab,el){
+-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+-  el.classList.add('active');
+-  document.getElementById('tab-clean').style.display=tab==='clean'?'':'none';
+-  document.getElementById('tab-diff').style.display=tab==='diff'?'':'none';
+-}
+-
+-function copyResult(){
+-  var txt=document.getElementById('result-area').value;
+-  navigator.clipboard.writeText(txt).then(function(){
+-    var btn=event.target.closest('button'),orig=btn.innerHTML;
+-    btn.innerHTML='<i class="ti ti-check" aria-hidden="true"></i> Skopiowano';
+-    setTimeout(function(){btn.innerHTML=orig;},1500);
+-  }).catch(function(){document.getElementById('result-area').select();document.execCommand('copy');});
+-}
+-
+-function downloadResult(){
+-  var blob=new Blob([document.getElementById('result-area').value],{type:'text/plain;charset=utf-8'});
+-  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dokument_anonimowy.txt';a.click();URL.revokeObjectURL(a.href);
+-}
+-
+-function clearAll(){
+-  files=[];origText='';anonText='';
+-  document.getElementById('paste-area').value='';
+-  document.getElementById('file-list').innerHTML='';
+-  document.getElementById('file-count').textContent='';
+-  document.getElementById('char-count').textContent='0 znaków';
+-  document.getElementById('results').style.display='none';
+-  document.getElementById('detect-banner').style.display='none';
+-  document.getElementById('send-confirm').style.display='none';
+-}
+-</script>
+diff -ruN a/prawny-router-v3/anonimizer/references/BLUEPRINT-SCHEMA.md b/prawny-router-v3/anonimizer/references/BLUEPRINT-SCHEMA.md
+--- a/prawny-router-v3/anonimizer/references/BLUEPRINT-SCHEMA.md	2026-10-14 18:18:12.405056529 +0200
++++ b/prawny-router-v3/anonimizer/references/BLUEPRINT-SCHEMA.md	1970-01-01 01:00:00.000000000 +0100
+@@ -1,53 +0,0 @@
+-# BLUEPRINT-SCHEMA — Anonimizer Prawny JSX
+-
+-## Cel
+-Moduł anonimizuje dokumenty przed analizą prawną i przekazuje wynik do routera za pomocą znaczników sesyjnych.
+-
+-## Domyślny renderer
+-`assets/AnonimizerPrawny.jsx`
+-
+-## Wejście
+-- tekst wklejony przez użytkownika,
+-- plik tekstowy wczytany w komponencie,
+-- opcje zakresu anonimizacji.
+-
+-## Wyjście
+-### Dokument zanonimizowany
+-```
+-##ANON_START##
+-Źródło: ...
+-Anonimizacja: TAK | Usuniętych danych: N (...)
+-##ANON_END##
+-
+-Oto zanonimizowany dokument do analizy prawnej:
+-
+-...
+-```
+-
+-### Dokument oryginalny za zgodą użytkownika
+-```
+-##PLIK_ORYGINALNY##
+-Źródło: ...
+-Anonimizacja: NIE — użytkownik wyraził zgodę na przetwarzanie danych oryginalnych w tej sesji.
+-##PLIK_ORYGINALNY_END##
+-
+-Oto dokument oryginalny (bez anonimizacji) do analizy prawnej:
+-
+-...
+-```
+-
+-## Kategorie anonimizacji
+-1. imiona i nazwiska,
+-2. adresy,
+-3. PESEL/NIP/REGON,
+-4. telefony,
+-5. e-maile,
+-6. konta bankowe,
+-7. daty urodzenia / daty w kontekście osobowym,
+-8. nazwy firm.
+-
+-## Reguły projektowe
+-- JSX jest domyślnym interfejsem.
+-- HTML legacy może istnieć tylko jako zapas archiwalny.
+-- Komponent nie rozstrzyga prawnie dokumentu; wykonuje wyłącznie przygotowanie danych.
+-- Wynik zawsze wymaga kontroli człowieka, bo regex może dać wyniki fałszywie dodatnie albo fałszywie ujemne.
+diff -ruN a/prawny-router-v3/anonimizer/references/REGULY-ANONIMIZACJI.md b/prawny-router-v3/anonimizer/references/REGULY-ANONIMIZACJI.md
+--- a/prawny-router-v3/anonimizer/references/REGULY-ANONIMIZACJI.md	2026-10-14 18:18:12.405056529 +0200
++++ b/prawny-router-v3/anonimizer/references/REGULY-ANONIMIZACJI.md	1970-01-01 01:00:00.000000000 +0100
+@@ -1,53 +0,0 @@
+-# REGUŁY ANONIMIZACJI — warstwa tekstowa
+-
+-## Zasada podstawowa
+-Anonimizacja ma chronić dane osobowe i identyfikacyjne, ale nie może zniszczyć sensu dowodowego dokumentu. Zachowuj:
+-- role procesowe,
+-- chronologię,
+-- nazwy organów publicznych,
+-- konstrukcję twierdzeń,
+-- relacje między podmiotami.
+-
+-## Kolejność operacji
+-1. e-mail,
+-2. rachunki bankowe,
+-3. PESEL/NIP/REGON,
+-4. telefon,
+-5. daty,
+-6. adresy,
+-7. firmy,
+-8. imiona i nazwiska.
+-
+-Taka kolejność ogranicza kolizje, np. numeru konta z numerami identyfikacyjnymi.
+-
+-## Oznaczenia
+-- `[E-MAIL]`
+-- `[KONTO]`
+-- `[PESEL]`
+-- `[NIP]`
+-- `[REGON]`
+-- `[TEL]`
+-- `[DATA-UR]`
+-- `[ADRES]`
+-- `[MIEJSCOWOŚĆ]`
+-- `[FIRMA]`
+-- inicjały osoby: `J.K.`
+-
+-## Wyjątki
+-Nie anonimizuj automatycznie nazw organów i funkcji procesowych, gdy są potrzebne do analizy:
+-- Sąd,
+-- Prokuratura,
+-- Urząd,
+-- Wydział,
+-- Powód,
+-- Pozwany,
+-- Świadek,
+-- Biegły,
+-- Pełnomocnik.
+-
+-## Kontrola jakości
+-Po anonimizacji sprawdź, czy:
+-- nie pozostał PESEL, e-mail, telefon albo adres,
+-- nie usunięto elementów koniecznych dla oceny prawnej,
+-- role procesowe nadal są zrozumiałe,
+-- dokument zachował chronologię.
+diff -ruN a/prawny-router-v3/references/KROK0A-anonimizer.md b/prawny-router-v3/references/KROK0A-anonimizer.md
+--- a/prawny-router-v3/references/KROK0A-anonimizer.md	2026-10-14 18:18:12.406056538 +0200
++++ b/prawny-router-v3/references/KROK0A-anonimizer.md	2026-10-14 18:18:12.421056671 +0200
+@@ -1,171 +1,23 @@
+-<!-- lex:wykonuje-aplikacja: ANONIMIZACJA -->
+-# KROK 0A — Anonimizer (Bramka Twarda RODO)
++# KROK 0A — zamknięty na stałe (polityka właściciela: BEZ anonimizacji i pseudonimizacji)
+ 
+-> Plik wydzielony z prawny-router-v3/SKILL.md (R1).
+-> Wczytaj gdy: router uruchamia KROK 0A.
+-> Wywołanie: `view prawny-router-v3/references/KROK0A-anonimizer.md`
++> Lokalna zmiana grounding-prawo. Oryginał upstream wymuszał pytanie anonimizacyjne (a/b),
++> widżet i skrypt anonimizujący. Tu nic z tego nie obowiązuje.
+ 
+----
++## ZASADA
+ 
+-## ZASADA BEZWZGLĘDNA
++Dokumenty sprawy są przetwarzane w oryginale. Nie anonimizuj, nie pseudonimizuj, nie
++zastępuj danych znacznikami ([ADRES], [PESEL], inicjały), nie twórz zanonimizowanych kopii
++roboczych i nie pytaj o to użytkownika, w żadnym trybie (LAIK, PRAWNIK, ścieżka folderu).
+ 
+-> ⛔ HARD STOP — KROK 0A wykonuje się ZAWSZE jako PIERWSZY, przed detekcją trybu,
+-> przed analizą, przed jakimkolwiek innym krokiem.
+-> ZAKAZ przechodzenia do KROK 1 bez zakończenia KROK 0A.
+-> Jedyny wyjątek: wiadomość zawiera ##ANON_START## lub ##PLIK_ORYGINALNY##.
+-
+-> ⛔ ZAKAZ POMIJANIA 0A DLA TRYBU PRAWNIK
+-> Tryb PRAWNIK NIE zwalnia z KROK 0A. Świadome przesłanie danych przez użytkownika
+-> NIE jest decyzją anonimizacyjną. Jedyną ważną decyzją jest odpowiedź a/b
+-> na pytanie anonimizacyjne LUB znacznik ##ANON_START## / ##PLIK_ORYGINALNY##.
+-> Argumenty "użytkownik jest prawnikiem" / "dane są publiczne" / "sprawa jest procesowa"
+-> NIE są wyjątkami.
+-
+----
+-
+-## SEKWENCJA OBOWIĄZKOWA
+-
+-```
+-KROK 0A.1 → Sprawdź znaczniki sesji (skanuj ostatnie 10 wiadomości, nie tylko poprzednią):
+-  ##ANON_START## w wiadomości?      → decyzja_sesji='anon', POMIŃ 0A, idź KROK 1
+-  ##PLIK_ORYGINALNY## w wiadomości? → decyzja_sesji='raw',  POMIŃ 0A, idź KROK 1
+-  decyzja_sesji z poprzednich wiadomości?
+-    'anon' → widget automatycznie bez pytania
+-    'raw'  → przejdź do KROK 1 bez pytania
+-    null   → wykonaj KROK 0A.2
+-
+-KROK 0A.2 → Przeskanuj wejście pod kątem sygnałów danych osobowych
+-             (dotyczy KAŻDEGO trybu: LAIK i PRAWNIK bez wyjątku)
+-
+-KROK 0A.3 → Oceń próg reakcji
+-
+-KROK 0A.4 → Jeśli próg przekroczony: ZATRZYMAJ SIĘ i zadaj pytanie anonimizacyjne
+-             ⛔ NIE analizuj, NIE klasyfikuj, NIE wczytuj skilla dziedzinowego
+-             ⛔ NIE zakładaj decyzji na podstawie trybu ani kontekstu
+-             ⛔ Czekaj na odpowiedź (a/b) jako następną wiadomość
+-
+-KROK 0A.5 → Dopiero po odpowiedzi (lub znaczniku sesji) → przejdź do KROK 1
+-```
+-
+----
+-
+-## TABELA SYGNAŁÓW DANYCH OSOBOWYCH
+-
+-| Sygnał | Przykład | Priorytet |
+-|---|---|---|
+-| Imię + Nazwisko | "Jan Kowalski" | WYSOKI |
+-| PESEL (11 cyfr) | "YYMMDDSSSSC" | WYSOKI |
+-| NIP | "123-456-78-90" | WYSOKI |
+-| Adres z ulicą | "ul. Lipowa 5/3, 00-001 Warszawa" | WYSOKI |
+-| Numer konta | "PL61 1090 1014..." | WYSOKI |
+-| Numer identyfikacyjny (dowolny format krajowy) | "1199780106558236" | WYSOKI |
+-| Telefon | "+48 123 456 789" | ŚREDNI |
+-| E-mail | "jan@domena.pl" | ŚREDNI |
+-| Data urodzenia w kontekście | "ur. 12.03.1985" | ŚREDNI |
+-
+-**Próg reakcji:** ≥1 WYSOKI lub ≥2 ŚREDNIE → pytanie anonimizacyjne
+-
+----
+-
+-## PYTANIE ANONIMIZACYJNE (zadaj DOSŁOWNIE, zakończ odpowiedź)
+-
+-```
+-📋 W przesłanym materiale wykryto dane osobowe (imiona, adresy, numery identyfikacyjne).
+-
+-Czy chcesz je zanonimizować przed analizą?
+-a) Tak — uruchom narzędzie anonimizacji (zalecane ze względów RODO)
+-b) Nie — analizuj dokument bez zmian
+-
+-Anonimizacja zastąpi dane inicjałami i znacznikami [ADRES], [PESEL] itp.
+-Zanonimizowany dokument trafi automatycznie do analizy.
+-```
+-
+-> ⛔ Po zadaniu pytania: ZAKOŃCZ odpowiedź. Zero analizy, zero wstępnych wniosków,
+-> zero kwalifikacji — nawet "na razie". Czekaj na a/b.
+-
+-"a"/tak → widget | "b"/nie → decyzja_sesji='raw' → KROK 1
+-
+----
+-
+-## ŚCIEŻKA FOLDER / DYSK (Cowork, folder kontekstu, >3 pliki) — od routera 3.54
+-
+-Widżet nie widzi plików z dysku, więc przy materiałach z folderu pytanie
+-brzmi (zamiast wersji powyżej, DOSŁOWNIE, zakończ odpowiedź):
+-
+-```
+-📋 W materiałach sprawy wykryto dane osobowe (imiona i nazwiska, adresy, dane
+-finansowe, dokumentacja medyczna). Widżet anonimizacji nie odczyta plików
+-z dysku, dlatego do wyboru są:
+-a) Anonimizacja skryptem — kopie robocze z danymi zastąpionymi znacznikami;
+-   analiza wyłącznie na kopiach, oryginały bez zmian
+-b) Analiza bez anonimizacji — dane pozostają w plikach na dysku,
+-   w raportach stosowane są inicjały
+-c) Samodzielna anonimizacja — przygotujesz zanonimizowane pliki i wskażesz folder
+-```
+-
+-Wykrycie sygnałów (0A.2) w tej ścieżce ogranicza się do nazw plików, metadanych
+-i skanu automatycznego skryptem — **nie** do czytania treści przez model.
+-
+-„a” → skrypt (regex + słownik nazw z metadanych/nagłówków) tworzy kopie w
+-katalogu roboczym; model odczytuje **wyłącznie kopie**. Skrypt drukuje tylko
+-statystykę zamian, nie treść. decyzja_sesji='anon'.
+-⛔ Zakaz odczytu oryginałów przez model przed zamknięciem 0A „dla przygotowania
+-anonimizacji”. Jeżeli odczyt był konieczny, zgłoś to PRZED analizą, jako
+-naruszenie bramki, a nie jako informację po fakcie.
+-
+----
+-
+-## TRYB B — NA ŻĄDANIE (frazy → widget natychmiast, bez pytania)
+-
+-"zanonimizuj" / "anonimizuj" / "anonimizacja" / "anonymize" / "usuń dane osobowe"
+-/ "ukryj dane" / "usuń nazwiska" / "usuń adresy" / "inicjały zamiast nazwisk"
+-/ "RODO" (w kontekście usunięcia) / "chcę zanonimizować"
+-
+----
+-
+-## WIDGET CALL
+-
+-```
+-1. visualize:read_me  modules=["interactive"]
+-2. view prawny-router-v3/anonimizer/assets/AnonimizerPrawny.jsx
+-3. visualize:show_widget
+-     title="anonimizer_prawny"
+-     widget_code → [zawartość z kroku 2]
+-     loading_messages=["Ładowanie anonimizera...", "Przygotowywanie reguł RODO..."]
+-4. "Otworzę narzędzie anonimizacji. Wgraj w nim plik ponownie lub wklej jego treść —
+-   widżet działa niezależnie od czatu i nie widzi plików z wiadomości.
+-   Po anonimizacji kliknij 'Wyślij do analizy ↗'."
+-```
+-
+----
+-
+-## ODBIÓR PO ANONIMIZACJI
+-
+-```
+-##ANON_START##      → pomiń 0A, decyzja_sesji='anon',
+-                      "✅ Otrzymałem zanonimizowany dokument. Analizuję..." → KROK 1
+-##PLIK_ORYGINALNY## → pomiń 0A, decyzja_sesji='raw' → KROK 1
+-```
+-
+----
+-
+-## PAMIĘĆ SESYJNA
++## WYKONANIE
+ 
+ ```
+-decyzja_sesji = null | 'anon' | 'raw'
+-'anon' → każdy kolejny plik: widget auto
+-'raw'  → każdy kolejny plik: bez pytania
+-null   → detekcja od nowa (KROK 0A)
+-Reset: "zmień anonimizację" / "reset sesji"
+-
+-intent_docx = false | true
+-Ustaw true gdy: "napisz pozew" / "przygotuj pismo" / "wygeneruj sprzeciw" / "stwórz wniosek"
+-Zachowaj true przez całą sesję.
+-Efekt: po pisma-procesowe-v3 / pisma-proste-v2 → wywołaj docx-skill i present_files auto.
+-
+-STABILIZACJA STANU: Przy każdym KROK 0A.1 — skanuj ostatnie 10 wiadomości (nie tylko poprzednią).
+-Jeśli brak ##ANON_START## / ##PLIK_ORYGINALNY## w oknie 10 wiadomości
+-i brak wyraźnej decyzji z poprzedniego kroku → traktuj decyzja_sesji=null → KROK 0A.2.
++KROK 0A.1 → decyzja_sesji = 'raw'   (stała; nie zależy od znaczników ani od sygnałów danych osobowych)
++KROK 0A.2 → bramka 0A jest zamknięta (decyzja_sesji ≠ null) → przejdź od razu do KROK 1
+ ```
+ 
+-Szczegóły: `view prawny-router-v3/anonimizer/anonimizer-skill.md`
++- Nie skanuj wejścia pod kątem danych osobowych w celu wyzwolenia pytania.
++- Znaczniki `##ANON_START##` i `##PLIK_ORYGINALNY##` są ignorowane; obowiązuje 'raw'.
++- Gdy użytkownik wprost poprosi o anonimizację ("zanonimizuj", "ukryj dane"): odpowiedz, że ten
++  plugin jej nie wykonuje, i kontynuuj na oryginale. Nie uruchamiaj żadnego widżetu.
++- Katalog `anonimizer/` został usunięty z pluginu.
+diff -ruN a/prawny-router-v3/references/SELF-CHECK.md b/prawny-router-v3/references/SELF-CHECK.md
+--- a/prawny-router-v3/references/SELF-CHECK.md	2026-10-14 18:18:12.406056538 +0200
++++ b/prawny-router-v3/references/SELF-CHECK.md	2026-10-14 18:18:12.470057106 +0200
+@@ -6,18 +6,8 @@
+ ---
+ 
+ ```
+-⛔ BLOK 0A — BRAMKA ANONIMIZERA (wykonaj PRZED wszystkim innym)
+-□ [0A-1] ##ANON_START## w wiadomości? → decyzja_sesji='anon', pomiń 0A, idź BLOK 1
+-□ [0A-2] ##PLIK_ORYGINALNY## w wiadomości? → decyzja_sesji='raw', pomiń 0A, idź BLOK 1
+-□ [0A-3] decyzja_sesji='anon'? → widget auto, idź BLOK 1
+-□ [0A-4] decyzja_sesji='raw'?  → idź BLOK 1 bez pytania
+-□ [0A-5] decyzja_sesji=null → skan ostatnich 10 wiadomości:
+-         ##ANON_START## → 'anon' · ##PLIK_ORYGINALNY## → 'raw'
+-         Brak → skan bieżącej: ≥1 WYSOKI lub ≥2 ŚREDNIE?
+-         TAK → ⛔ STOP. Zadaj pytanie anonimizacyjne. ZAKOŃCZ. Czekaj na a/b.
+-         NIE → decyzja_sesji='raw', idź BLOK 1
+-□ [ANON-B] fraza żądania anonimizacji? → widget natychmiast
+-JEŚLI BLOK 0A nie zamknięty → STOP. Żaden punkt poniżej nie jest wykonywany.
++⛔ BLOK 0A — ZAMKNIĘTY NA STAŁE (bez anonimizacji; decyzja_sesji='raw')
++□ [0A-1] decyzja_sesji='raw' — nie pytam o anonimizację, nie anonimizuję, nie pseudonimizuję
+ 
+ ⛔ BLOK OC — OCENA PRACY (od routera 3.54)
+ □ [OC-1] Prośba o ocenę pracy / „jak ci poszło” → ocena liczbowa w skali
+diff -ruN a/prawny-router-v3/SKILL.md b/prawny-router-v3/SKILL.md
+--- a/prawny-router-v3/SKILL.md	2026-10-14 18:18:12.404056520 +0200
++++ b/prawny-router-v3/SKILL.md	2026-10-14 18:18:12.471057115 +0200
+@@ -603,8 +603,7 @@
+ > Jedyna poprawna metoda inline: `show_widget` z HTML (vanilla JS).
+ > Pliki .docx / .pdf → present_files (dokumenty do pobrania — tu zasada nie dotyczy).
+ 
+-**Anonimizer — aktualny standard:**
+-`view prawny-router-v3/anonimizer/anonimizer-skill.md`
++**Anonimizacja:** wyłączona w tym pluginie (KROK 0A zamknięty, decyzja_sesji='raw').
+ 
+ ---
+ 

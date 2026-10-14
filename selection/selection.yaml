@@ -1,0 +1,154 @@
+# Selekcja skilli pluginu grounding-prawo. Źródło prawdy dla scripts/build.py.
+# Własna analiza (14.10.2026). Analizy GPT i Sonnet użyte jako doradcy, nie jako polecenie.
+# from: lex = vendor/LexMachina/"Wersja rozwojowa rozpakowana"; awe:<pakiet> = vendor/awesome-matematic-skills-pl;
+#       own = own-skills/ (skille własne, bez upstreamu); vendor:<katalog> = vendor/<katalog>.
+# transitional: true = zależność szturm-na-draft-pl; ocenić ponownie po jego przebudowie.
+# internal: true = build dodaje disable-model-invocation (opis nie trafia do listy skilli; router czyta plik przez view).
+# Zasada: LexMachina jest spleciona (shared odwołuje się do audyt-systemu 33x, do DR-04..15 16x),
+# więc jest zachowana jako zamknięty silnik; wycinamy tylko moduły, które da się odciąć patchem.
+keep:
+  # --- silnik: LexMachina (wersja rozwojowa, przypięta do commita w submodule) ---
+  - {name: prawny-router-v3, from: lex, why: "jedyny router; patch: KROK 0A zamknięty na stałe bez anonimizacji, requires przycięte"}
+  - {name: shared, internal: true, from: lex, why: "biblioteka hard-gate'ów, wymagana przez wszystkie skille silnika; nie jest agentem"}
+  - {name: prawo-polskie-v2, from: lex, why: "kwalifikacja postępowań, ROUTING-MAP do DR"}
+  - {name: analiza-sadowa-v6, from: lex, why: "wieloprzebiegowy audyt sądowy"}
+  - {name: analizator-dowodow-v3, from: lex, why: "sprzeczne zeznania, dokumentacja medyczna, nagrania, działania Policji"}
+  - {name: analizator-przepisow-v2, from: lex, why: "przesłanki, wyjątki, brzmienie obowiązujące"}
+  - {name: analizator-umow-v1, from: lex, why: "umowa najmu i kaucja; 13 odwołań z DR-02, więc odcięcie zepsułoby routing"}
+  - {name: chronologia-sprawy-v1, from: lex, why: "oś zdarzeń i niespójności między postępowaniami"}
+  - {name: orzeczenia-sadowe-v2, from: lex, why: "ocena tez orzeczeń"}
+  - {name: pisma-procesowe-v3, from: lex, why: "główny generator pism"}
+  - {name: pisma-proste-v2, from: lex, why: "21 odwołań z shared; zostaje jako część silnika, ale profil MAX wymusza pełną kontrolę (patrz profil-postepowan-wlasnych)"}
+  - {name: przesluchanie-swiadkow-v2-min90, from: lex, why: "pytania do świadków, sprzeczności"}
+  - {name: raport-sytuacyjny-v2, from: lex, why: "status wielu spraw"}
+  - {name: audyt-systemu-v4, internal: true, from: lex, why: "shared odwołuje się do niego 33x; zostaje jako biblioteka (9 MB, głównie references i mcp-servers)"}
+  - {name: przewodnik-prawny-v2, internal: true, from: lex, why: "FALLBACK routera w 5 ścieżkach; odcięcie wymagałoby przepisania routera"}
+  - {name: dr-01-ustroj-konstytucyjny-i-zrodla-prawa, internal: true, from: lex, why: "gwarancje konstytucyjne, kontrola działań państwa"}
+  - {name: dr-02-prawo-cywilne-rodzinne-gospodarcze, internal: true, from: lex, why: "pozew przeciw szpitalowi, kaucja, odszkodowania"}
+  - {name: dr-03-prawo-karne-wykroczenia-egzekucja, internal: true, from: lex, why: "sprawy karne i wykroczeniowe, zatrzymania, zażalenia"}
+  - {name: dr-05-prawo-administracyjne-sadowoadministracyjne, internal: true, from: lex, why: "skargi, UODO, WSA"}
+  - {name: dr-10-zdrowie-farmacja-zywnosc-rolnictwo, internal: true, from: lex, why: "prawa pacjenta, dokumentacja medyczna, UoOZP"}
+  - {name: dr-11-cyfrowe-cyber-ai-dane-ip, internal: true, from: lex, why: "RODO, monitoring, dowody cyfrowe"}
+  - {name: dr-12-sadownictwo-prokuratura-zawody-prawnicze, internal: true, from: lex, why: "postępowanie sądowe, prokuratura"}
+  - {name: dr-13-sluzby-bezpieczenstwo-informacje-niejawne, internal: true, from: lex, why: "Policja, uprawnienia funkcjonariuszy"}
+  - {name: dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka, internal: true, from: lex, why: "EKPC, TSUE"}
+  - {name: dr-16-pisma-strategia-dowody-orzecznictwo, internal: true, from: lex, why: "żądania, dowody, strategia"}
+  - {name: dr-04-prawo-pracy-zus-swiadczenia, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
+  - {name: dr-06-podatki-finanse-publiczne-aml, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
+  - {name: dr-07-zamowienia-publiczne-fundusze-ue, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
+  - {name: dr-08-samorzad-terytorialny-prawo-lokalne, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
+  - {name: dr-09-budownictwo-srodowisko-energia-transport, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
+  - {name: dr-15-compliance-iso-governance-audyt, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
+  - {name: raport-klienta-v1, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
+  # --- weryfikacja: awesome-matematic ---
+  - {name: citation-grounding-pl, from: "awe:fundament-weryfikacyjny", why: "kontrola treści cytatu (ISTNIENIE/TREŚĆ/FRAGMENT); LexMachina tego nie sprawdza"}
+  - {name: ekstraktor-cytatow-pl, from: "awe:fundament-weryfikacyjny", why: "znajduje wszystkie powołania przed weryfikacją; sprawdzić, czy ma działający kod"}
+  - {name: adversarial-legal-review-pl, from: "awe:fundament-weryfikacyjny", why: "debata czterech ról; bramka kosztu do wyłączenia patchem"}
+  - {name: atak-przeciwnika-pl, from: "awe:fundament-weryfikacyjny", why: "osobny przebieg ataku"}
+  - {name: pierwsze-wrazenie-sedziego-pl, from: "awe:fundament-weryfikacyjny", why: "zimna lektura"}
+  - {name: subsumpcja-pl, from: "awe:fundament-weryfikacyjny", why: "pokrycie przesłanek faktami"}
+  - {name: deliverable-fidelity-pl, from: "awe:fundament-weryfikacyjny", why: "czy ustalenia RED trafiły do pisma; check słowny traktować jako sito"}
+  - {name: struktura-wyroku-pl, from: "awe:orzecznictwo-zrodla", why: "rozdziela sentencję, ratio, votum separatum"}
+  - {name: uodo-grounding-pl, from: "awe:orzecznictwo-zrodla", why: "decyzje UODO, sprawa RODO"}
+  - {name: webwright-legal-pl, from: "awe:orzecznictwo-zrodla", why: "orzeczenia z ms.gov.pl, sn.pl, TK bez MCP; wymaga Playwrighta"}
+  - {name: terminy-procesowe-pl, from: "awe:dokumenty", why: "terminy; liczy wg KC, dla KPK/KPW wynik oznaczać do sprawdzenia"}
+  - {name: kalkulatory-procesowe-pl, from: "awe:dokumenty", why: "opłata, WPS, odsetki, przedawnienie w pozwach cywilnych"}
+  - {name: waliduj-podpis-pdf-pl, from: "awe:dokumenty", why: "integralność podpisanych PDF od szpitali, sądów, prokuratury; tylko odczyt"}
+  - {name: akta-przeszukiwalne-pl, from: "awe:dokumenty", why: "niezależny drugi odczyt akt, duplikaty, strony nieczytelne"}
+  - {name: chronologia-stanowiska-pl, from: "awe:dokumenty", why: "mechaniczna kontrola chronologii i stanowisk wobec cytatu i strony"}
+  - {name: opendataloader-pdf, from: "awe:dokumenty", why: "tabele i układ w dokumentacji szpitalnej"}
+  - {name: redline-docx-pl, from: "awe:dokumenty", why: "Track Changes; sanitize metadanych jest jawną komendą, nie domyślną operacją"}
+  - {name: klauzule-kontraktowe-pl, from: "awe:dokumenty", why: "umowa zarządzania najmem"}
+  - {name: rodo-dsar-pl, from: "awe:ochrona-danych", why: "żądania dostępu, sprostowania, usunięcia własnych danych"}
+  - {name: humanizer-pl, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: marko-pl-content, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: ocena-outputu-pl, from: "awe:fundament-weryfikacyjny", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: legal-ai-audit-bundle, from: "awe:fundament-weryfikacyjny", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: saos-orzecznictwo, from: "awe:orzecznictwo-zrodla", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: iura, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: patron-weryfikacja-cytatow, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: patron-pisz-po-ludzku, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: doc-intel-contract-pl, from: "awe:dokumenty", internal: true, transitional: true, why: "jedyny dom tablicy prawdy normalizacji, którą testuje citation-grounding-pl (test-grounding.mjs 34/34). Ma mechanizmy maskowania - nieużywane, skill niewidoczny dla modelu"}
+  # --- źródła zewnętrzne ---
+  - {name: naturalne-pisanie, from: "vendor:naturalne-pisanie", why: "jedyny edytor stylu (ma warstwę prawniczą); zastępuje humanizer-pl i patron-pisz-po-ludzku"}
+  - {name: the-ocr, from: own, why: "własny OCR (Datalab/Azure DI/Google Vision); kopia skilla z aplikacją w środku, źródło: agents/skills/the-ocr"}
+  # --- skille własne, bez upstreamu (own-skills/) ---
+  - {name: szturm-na-draft-pl, from: own, why: "główny mechanizm wielokrotnej kontroli pisma; WYMAGA przebudowy (profil S/M/L i limit rund) - propozycja diffu, nie zastosowana"}
+  - {name: case-risk, from: own, why: "ryzyka dowodowe, medyczne, UoOZP, art. 192 kk; skrojony pod Twoje sprawy"}
+  - {name: medical-consent, from: own, why: "zgoda na czynność medyczną, art. 192 kk"}
+  - {name: uoozp-compliance, from: own, why: "kontrola hospitalizacji psychiatrycznej"}
+  - {name: patron-analiza-akt-karnych, from: own, why: "analiza akt karnych"}
+  - {name: patron-skan-dokumentu, from: own, why: "deterministyczny skan przychodzących dokumentów pod kątem prompt injection"}
+  - {name: patron-identyfikatory-pl, from: own, why: "walidacja PESEL/NIP/KRS, ekstrakcja sygnatur"}
+  - {name: patron-prawo-pl-zrodla, from: own, why: "kolejność źródeł i konektorów MCP"}
+  - {name: lexcache, from: own, why: "cache źródeł; DO WERYFIKACJI: zakłada bazę GROUNDING-PRAWO na OneDrive/SMB, może być artefaktem starego systemu"}
+  - {name: pozew-cywilny, from: own, why: "pozew cywilny"}
+  - {name: odpowiedz-na-pozew, from: own, why: "odpowiedź na pozew"}
+  - {name: apelacja-karna, from: own, why: "apelacja karna"}
+  - {name: zazalenie-na-postanowienie-prokuratora, from: own, why: "zażalenia na postanowienia prokuratora"}
+  - {name: zawiadomienie-o-przestepstwie, from: own, why: "pisane przez pokrzywdzonego obywatela"}
+  - {name: wniosek-o-rozprawe-zdalna, from: own, why: "wniosek o rozprawę zdalną"}
+  - {name: zarzuty-do-opinii-bieglego, from: own, why: "zarzuty do opinii biegłych (psychiatria)"}
+  - {name: profil-postepowan-wlasnych, from: own, why: "NOWY, mały skill nadrzędny (szkic do akceptacji): pełna ścieżka kontroli, brak anonimizacji, osobne przebiegi soczewek"}
+drop:
+  # LexMachina
+  # awesome
+  - {name: let-it-be, why: "anonimizacja/pseudonimizacja, sprzeczne z polityką właściciela"}
+  - {name: legal-request-router-pl, why: "drugi router, bramka kosztu, ścieżka bez kontroli"}
+  - {name: intake-sufficiency-pl, why: "pokrywa shared/INTAKE-GAP i CLAIM-VALIDATION"}
+  - {name: eu-sparql-search, why: "zastąpiony przez MCP mcp-eu-sparql"}
+  - {name: legal-data-hunter-pl, why: "hurtowy korpus, nie praca nad sprawą"}
+  - {name: hierarchia-zrodel-pl, why: "duplikat shared/HIERARCHIA-ZRODEL.md"}
+  - {name: markitdown, why: "jednoplikowy adapter, host czyta pliki sam"}
+  - {name: doc-intel-llm-tier-pl, why: "wymaga contextgem i modelu lokalnego"}
+  - {name: rodo-dpia-pl, why: "strona administratora; pokrywa DR-11 + mcp-eu-compliance"}
+  - {name: rodo-naruszenie-72h-pl, why: "strona administratora"}
+  - {name: rodo-ropa-dpa-pl, why: "strona administratora"}
+  - {name: nis2-ksc-pl, why: "governance"}
+  - {name: ai-act-triage-pl, why: "governance"}
+  - {name: kyc-kancelaria-pl, why: "kancelaria"}
+  - {name: matematic-expert-panel, why: "governance"}
+  - {name: matematic-konstytucja-ai, why: "governance"}
+  - {name: matematic-workspace-backup, why: "governance"}
+  - {name: tajemnica-preflight-pl, why: "redagowanie promptów, sprzeczne z pracą na oryginałach"}
+  - {name: matematic-marketplace-installer, why: "narzędzie developerskie"}
+  - {name: matematic-mcp-fastmcp-instructions-pl, why: "narzędzie developerskie"}
+  - {name: matematic-patron-pr-review-pl, why: "narzędzie developerskie"}
+  - {name: matematic-spec-driven, why: "narzędzie developerskie"}
+  # LexMachina dev tools (tools/claude-dev-config)
+  - {name: gemini-agent, why: "narzędzie developerskie"}
+  - {name: generate-goal, why: "narzędzie developerskie"}
+  - {name: git-worktree-prune, why: "narzędzie developerskie"}
+  - {name: root-cause-tracing, why: "narzędzie developerskie"}
+  - {name: skill-creator, why: "narzędzie developerskie"}
+  # lokalne, bez upstreamu -> archive/ (płasko)
+  - {name: decyzja-procesowa-prokuratora, why: "pisanie decyzji prokuratora", archive: true}
+  - {name: cofniecie-pozwu-ze-zrzeczeniem-roszczenia, why: "poza profilem, drugi generator pism", archive: true}
+  - {name: patron-obrona-pisma, why: "duplikat szturm-na-draft-pl", archive: true}
+  - {name: patron-pismo-procesowe-pl, why: "duplikat pisma-procesowe-v3", archive: true}
+  - {name: patron-przeglad-tabelaryczny, why: "kancelaria, bulk-review umów", archive: true}
+  - {name: patron-streszczenia-umow, why: "kancelaria", archive: true}
+  - {name: patron-streszczenie-dla-klienta, why: "kancelaria", archive: true}
+  - {name: przeglad-tabelaryczny, why: "kancelaria", archive: true}
+  - {name: przeglad-umow, why: "kancelaria", archive: true}
+  - {name: contract-review-pl, why: "kancelaria, pseudonimizacja", archive: true}
+  - {name: notatka-prawna, why: "pokrywa analiza-sadowa-v6", archive: true}
+  - {name: eu-legal-memo, why: "pokrywa analiza-sadowa-v6 + dr-14", archive: true}
+  - {name: pomoc-prawna-konfiguracja, why: "NGO/kliniki prawa", archive: true}
+  - {name: pomoc-prawna-kwalifikacja, why: "NGO/kliniki prawa", archive: true}
+  - {name: pomoc-prawna-memo, why: "NGO/kliniki prawa", archive: true}
+  - {name: pomoc-prawna-projekt-pisma, why: "NGO/kliniki prawa", archive: true}
+  - {name: pomoc-prawna-wywiad, why: "NGO/kliniki prawa", archive: true}
+  - {name: risk-and-issues-manager-pl, why: "zarządzanie kancelarią", archive: true}
+  - {name: status-report-drafter-pl, why: "zarządzanie kancelarią", archive: true}
+  - {name: scope-change-controller-pl, why: "zarządzanie kancelarią", archive: true}
+  - {name: ugh-ocr, why: "stary pipeline OCR, zastąpiony the-ocr", archive: true}
+  - {name: mac-ocr, why: "macOS-only", archive: true}
+  - {name: przesluchanie-swiadkow-v2-min90-v35, why: "starsza linia tego samego skilla", archive: true}
+  - {name: dr-09-out, internal: true, why: "artefakt wyjścia", archive: true}
+  - {name: document-analysis-classification, why: "brak opisu, nieznane przeznaczenie", archive: true}
+  - {name: find-skills, why: "narzędzie developerskie", archive: true}
+  - {name: frontmatter, why: "legenda do pdf-generation", archive: true}
+  - {name: pdf-generation, why: "host ma własny skill pdf", archive: true}
+  - {name: szukaj-orzeczen-v2, why: "zastąpiony przez MCP", archive: true}
+  - {name: commercial-legal-pl, why: "umowy B2B/IT, poza profilem (submoduł vendor zostaje jako źródło)"}

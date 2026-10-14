@@ -1,0 +1,26 @@
+# CHANGELOG — chronologia-sprawy-v1
+
+- 1.17 (2026-10-05o, AUDYT-2026-10-05o): graf i oś czasu: escapowanie, wartości domyślne, brakujące pola widoczne (F-232)
+
+- 1.16 (2026-10-05d, AUDYT-2026-10-05d): Szablony `assets/widget-timeline.html` (SAMPLE_DATA) i `assets/widget-graf-przyczynowy.html` (GRAF): literał danych poprzedzony komentarzem `lex:dane`. Host obsługujący show_widget z polem `data` (Lex Machina) wstawia dane sam i dokłada pasek eksportu (oś czasu; graf zachowuje własny pasek MOD-WIDGET-IO), więc model przekazuje tylko dane zamiast przepisywać szablon. Na innych hostach bez zmian.
+
+- 1.15 (2026-10-04n, AUDYT-2026-10-04n): Historia zmian SKILL.md i modułów przeniesiona z plików roboczych do `references/HISTORIA-ZMIAN-PLIKOW.md` (plik historyczny, niewczytywany przez model). Treść robocza bez zmian.
+
+- 1.14 (2026-10-04m, AUDYT-2026-10-04m): Sekcja „Historia wersji” oznaczona `<!-- lex:wykonuje-aplikacja: HISTORIA -->` (metadane pomijane w prompcie aplikacji). Treść bez zmian. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, AUDYT-2026-10-04m.
+
+- 1.13 (2026-10-01b, AUDYT-2026-10-01b): **TRYB C — graf przyczynowy.** Zdarzenie ma `id` (Z-nnn — wspólny z MP13 i grafem) i opcjonalne `przyczyny` (tylko przy dowodzie mechanizmu; kolejność dat ≠ przyczyna). TRYB C: `shared/MOD-GRAF-PRZYCZYNOWY.md` + widget `assets/widget-graf-przyczynowy.html` (SVG, scenariusze obalony/udowodniony z przeliczeniem, pasek MOD-WIDGET-IO JSON/MD; silnik 1:1 z Pythonem — T42). `widget-timeline.html`: dane osób trzecich z prawdziwej sprawy (nazwisko, numer telefonu, firma) zastąpione znacznikami.
+
+- 1.12 (2026-09-27e, AUDYT-2026-09-27e): claude.ai po dodaniu marketplace instalował wyłącznie 4 z 32 pluginów (shared, prawny-router-v3, analizator-dowodow-v3, przesluchanie-swiadkow-v2-min90); jedyna cecha wspólna tych 4, nieobecna w żadnym z 28 pozostałych, to klucz `dependencies` we frontmatterze SKILL.md. Dodano go (`requires: [shared]` — zgodnie ze stanem faktycznym) oraz jawny manifest pluginu (name, description = description z SKILL.md, author, repository, license) — host nie musi niczego wnioskować z SKILL.md. `version` w manifeście = `version:` z SKILL.md (pilnuje T38 w audyt-systemu-v4) — host rozpoznaje aktualizację po podbiciu wersji. Treść skilla bez zmian.
+- 1.11 (2026-09-27d, AUDYT-2026-09-27d, F-207): **odtworzone** wywołanie `shared/MOD-WEJSCIE-DOKUMENTU.md` (bramka WD-1…WD-3, F-200) — jedyna zmiana tego skilla z wydania 1.10, które nie dotarło do repozytorium. Treść reguł nie jest kopiowana; obecność wywołania pilnuje T35.
+- 1.10 — WYDANIE NIEDOSTARCZONE (F-207): odnotowane w AUDIT-JOURNAL, AUDYT-2026-09-26 §7 (wywołanie WD, F-200), nieobecne na żadnej gałęzi `michaleiatrak-star/Lex-Machina`. Zakres odtworzony w 1.11; numer 1.10 nie jest używany ponownie.
+
+- 1.9 (2026-09-23, AUDYT-2026-09-23b): kanon E-1…E-5 (`shared/HIERARCHIA-ZRODEL.md` 1.10): instrukcje weryfikacji „w ISAP” / „isap.sejm.gov.pl →” zamienione na „w ELI (RZĄD 1)” (3 plików); ISAP pozostaje adresem dla człowieka; wpisy historyczne („zweryfikowano w ISAP …”) bez zmian.
+- 1.8 (2026-08-31, flaga **F-142**, na polecenie użytkownika): wpięcie nowego modułu kanonicznego `shared/MOD-OS-CZASU-PRZESLANEK.md` (OŚ-GATE) jako sekcji przed FAZĄ EKSTRAKCJI ZDARZEŃ. Dodano tabelę rozgraniczającą oba narzędzia (OŚ-GATE liczy interwały i ustala chwile oceny przesłanek; ten skill buduje oś czasu z klasami pewności i proweniencją) oraz kolejność wykonania: OŚ-1 korzysta z wyników ekstrakcji, OŚ-2…OŚ-4 wykonuje się przed formatowaniem raportu. Sprzeczności dat z OŚ-1 przekazywane do `references/sprzecznosci-dat.md` (KATEGORIA A). Powód: bramka chronologiczna routera wyzwalała się na „≥2 dokumenty wieloetapowe", więc kazus zapisany w pięciu zdaniach — z czterema datami i pełnym problemem temporalnym — nie uruchamiał jej wcale. Zaktualizowano `CHECKSUMS.sha256`. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-08-31b.
+
+- 1.7 (2026-08-24, sesja audytowa audyt-systemu-v4, flaga **F-127**): NAPRAWA wstawki F-115 z sesji 08-23i — blok `SELF-CHECK ANTY-FASADA` był wstawiony WEWNĄTRZ bloku ``` sekcji ARCHITEKTURA SKILLA, przez co rozbijał drzewo katalogu i sam nie renderował się jako bramka. Blok przeniesiony pod blok HARD GATE odsyłający do `shared/PRAWO-HARDGATE.md`. Klasa błędu: REGUŁA 5 bloku HARDGATE-AUDYT (`audyt-systemu-v4/references/WARN-OTWARTE.md`) — wstawianie treści bez kontroli struktury docelowej. Kontrola po naprawie: parzystość znaczników ``` zachowana, spis nagłówków identyczny przed/po. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-08-24.
+
+- 1.6 (2026-08-23i, sesja audytowa audyt-systemu-v4, flaga F-115): self-check ANTY-FASADA podłączony jako WYWOŁANIE modułu kanonicznego `shared/SELF-CHECK-ANTY-FASADA.md`, bramka dodana (P2). Powód modułu zamiast kopii: gdy F-117 dodała regułę AF-6 i drugą pozycję listy do `shared/PRAWO-HARDGATE.md`, żadna z 7 istniejących kopii nie została zaktualizowana — źródło miało 2 pozycje, kopie 1. Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-08-23i.
+
+> Lokalizacja kanoniczna historii wersji (ZASADA 15). Plik założony 2026-08-23i;
+> wersje wcześniejsze nieodtworzone — ślad w audyt-systemu-v4/references/AUDIT-JOURNAL.md.
+
