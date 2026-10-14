@@ -1,0 +1,60 @@
+diff -ruN a/adversarial-legal-review-pl/SKILL.md b/adversarial-legal-review-pl/SKILL.md
+--- a/adversarial-legal-review-pl/SKILL.md	2026-10-14 21:17:25.572659727 +0200
++++ b/adversarial-legal-review-pl/SKILL.md	2026-10-14 21:17:25.608660043 +0200
+@@ -6,8 +6,7 @@
+   kontradyktoryjną debatę: builder buduje najmocniejszą wersję tezy, attacker ją
+   atakuje kontrargumentami i kontr-orzecznictwem, synthesizer godzi, verifier robi
+   kontrolę końcową. Cel: wyłapać słabość ZANIM zrobi to przeciwnik, sąd albo klient.
+-  Z bramką kosztu - tylko dla spraw wysokiej stawki, nie dla każdego zapytania (drogie
+-  tokenowo). Używaj gdy: "przeatakuj tę opinię", "czerwony zespół", "adwokat diabła
++  Bez bramki kosztu - w profilu właściciela każde pismo jest sprawą wysokiej stawki. Używaj gdy: "przeatakuj tę opinię", "czerwony zespół", "adwokat diabła
+   dla tego pisma", "znajdź słabości", "red team", "stress-test argumentacji",
+   "co powie druga strona", "pre-mortem opinii", "obroń tę tezę", "kontradyktoryjna
+   weryfikacja", "devil's advocate", weryfikacja high-stakes deliverable przed wysłaniem.
+@@ -51,20 +50,10 @@
+ 
+ To NIE jest pisanie deliverable od zera. To stress-test gotowego deliverable.
+ 
+-## Bramka kosztu (czytaj PRZED uruchomieniem)
++## Profil właściciela: bez bramki kosztu
+ 
+-Pełny cykl jest drogi tokenowo. Uruchamiaj **tylko dla wysokiej stawki**:
+-
+-| Uruchom (high-stakes) | NIE uruchamiaj (zwykłe) |
+-|---|---|
+-| Opinia prawna do klienta | Notatka wewnętrzna |
+-| Due diligence / memo M&A | Streszczenie orzeczenia |
+-| Pismo procesowe przed terminem | Robocza analiza, draft |
+-| Rekomendacja do zarządu kancelarii | FAQ, content marketingowy |
+-| Stanowisko niosące istotne ryzyko finansowe lub reputacyjne | Zapytanie rutynowe |
+-
+-Jeśli sprawa nie jest high-stakes - powiedz to wprost i zaproponuj zwykły jednoprzebiegowy
+-review zamiast pełnej debaty. Nie pal tokenów na rutynę.
++Każde pismo, zawiadomienie, pozew, zażalenie i istotne stanowisko jest sprawą wysokiej stawki. Uruchamiaj pełny cykl zawsze;
++nie proponuj lżejszego przeglądu i nie oceniaj, czy sprawa „zasługuje" na debatę.
+ 
+ ## Workflow (4 role + weryfikacja)
+ 
+@@ -87,7 +76,7 @@
+ 
+ W trybie jednego modelu grającego wszystkie role izolacja jest **dyscypliną promptu**, nie
+ sandboxem - roli IZOLOWANEJ wprost zabroń sięgania po źródła. Twarda izolacja przez osobne
+-przebiegi to opcja premium (bramka kosztu, sekcja wyżej).
++przebiegi jest domyślna.
+ 
+ ### 0. Bramka high-stakes
+ Oceń, czy sprawa kwalifikuje (tabela wyżej). Jeśli nie - stop, zaproponuj zwykły review.
+@@ -227,12 +216,7 @@
+ błędu - interpretację, którą jeden przebieg uznaje za oczywistą, a która wcale
+ oczywista nie jest.
+ 
+-**Kiedy (bramka kosztu, jawna).** Tylko dla klauzul i tez NOŚNYCH: takich, od
+-których zależy wynik sprawy, przy stawce już zakwalifikowanej jako wysoka
+-(sekcja 0). Każda niezależna ocena to osobny pełny przebieg, więc domyślnie
+-panel dostaje 0 pytań; wskaż maksymalnie 1-2 filary, dla których rozbieżność
+-interpretacji realnie zmienia werdykt. Jeśli żaden filar nie spełnia tego
+-progu - nie uruchamiaj panelu i napisz to wprost w raporcie.
++**Kiedy.** Panel jest włączony zawsze. Dla każdego filara NOŚNEGO (od którego zależy wynik sprawy) zleć niezależną ocenę w osobnym przebiegu. Koszt nie ogranicza liczby filarów.
+ 
+ **Protokół.**
+ 
