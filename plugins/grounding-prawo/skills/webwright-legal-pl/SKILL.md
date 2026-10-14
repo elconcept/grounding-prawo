@@ -117,7 +117,6 @@ Przeglądarka: Firefox (`playwright.firefox.launch(headless=True)`).
 ## Uwagi RODO
 
 - Dane klientów NIGDY nie trafiają do URL ani formularzy zewnętrznych serwisów
-- Pobieramy tylko publiczne orzeczenia (anonimizowane przez sądy)
 - Screenshots lądują lokalnie w `outputs/` - nie wysyłaj ich dalej bez sanityzacji
 - Pliki `outputs/` NIE idą do git
 

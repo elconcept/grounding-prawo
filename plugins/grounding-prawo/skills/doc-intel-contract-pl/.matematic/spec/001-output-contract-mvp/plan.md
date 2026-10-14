@@ -58,4 +58,3 @@ doc-intel-contract-pl/
 ## Research notes
 - Kontrakt = nadzbior pol Mistral OCR 4 (block_type, bbox, page/word confidence, dual-mode).
 - Wzorzec pakietu (zero-dep Python CLI + testy + exit codes) skopiowany z matematic-prompt-defense-pl v1.1.1.
-- opendataloader-pdf zwraca JSON z reading order + blokami + tabelami -> najbogatszy darmowy adapter na MVP.

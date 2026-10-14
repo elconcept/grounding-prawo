@@ -264,7 +264,6 @@ Dozwolone specjalne tagi:
 | `src/the_ocr/pdf/source_pdf.py` | stripping starego OCR i obraz do PDF |
 | `src/the_ocr/pdf/text_layer.py` | nieosadzana, liniowa warstwa OCR i optymalizacja PDF |
 | `src/the_ocr/visual/scale_a4.py` | wektorowe dopasowanie do A4 |
-| `src/the_ocr/frontmatter.py` | minimalny frontmatter i dokument Markdown |
 | `scripts/build_release_windows.ps1` | natywny build Windows |
 | `scripts/build_release_macos.sh` | natywny build macOS |
 | `.opencode/skills/the-ocr/SKILL.md` | instrukcja obsługi dla LLM |

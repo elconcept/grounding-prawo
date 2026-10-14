@@ -162,25 +162,6 @@ PROCEDURA (KROK B — pełna):
   6. Wrażliwość: wskaż DOWODY KRYTYCZNE — te, których podważenie (fałsz, antydatowanie, niewiarygodny świadek)
      zmienia zwycięską hipotezę; to cele ataku przeciwnika i miejsca na wnioski dowodowe.
   7. Raport: względna siła WSZYSTKICH hipotez, nie tylko zwycięskiej.
-  8. Kamienie milowe: jakie przyszłe dowody (np. opinia biegłego, dokument w posiadaniu przeciwnika lub osoby trzeciej) zmieniłyby
-     wynik → lista wniosków dowodowych.
-NAKŁADKA PROCESOWA (obowiązkowa, brzmienia z ELI 2026-10-02):
-  • sprawa cywilna: ciężar udowodnienia faktu „spoczywa na osobie, która z faktu tego wywodzi skutki prawne”
-    (art. 6 KC); strony wskazują dowody (art. 232 KPC) — nierozstrzygnięta macierz działa przeciw tej stronie;
-  • sprawa karna: „niedające się usunąć wątpliwości rozstrzyga się na korzyść oskarżonego” (art. 5 § 2 KPK) —
-    hipoteza korzystna dla oskarżonego, NIEwykluczona dowodem klasy A/B, blokuje przyjęcie wersji oskarżenia.
-WYNIK:       Macierz + ranking po ważonej niespójności + dowody niediagnostyczne + dowody krytyczne + hipotezy
-             wykluczone + flagi procesowe. Silnik: `python3 shared/tools/graf_przyczynowy.py plik.json --ach`.
-POWIĄZANIE Z GRAFEM: hipotezy o PRZYCZYNIE skutku = węzły alternatywne w MOD-GRAF-PRZYCZYNOWY (§5a); wykluczona
-             dowodem A/B → niskie p węzła; niewykluczona → krawędź OSLABIA o sile z materiału.
-KRYTERIUM AUTO-DOBORU:
-             ≥2 wzajemnie wykluczające się wersje zdarzenia tego samego faktu ORAZ brak dowodu kategorii A
-             rozstrzygającego jednoznacznie → auto-aktywacja; także: graf zgłasza „WYKLUCZENIE” (§5a).
-INTEGRACJA:  Wejście: MD3c (sprzeczności między dokumentami) z analizator-dowodow-v3; węzły alternatywne grafu.
-             Wyjście: §I.3 (Sprzeczności) w raport-sytuacyjny-v2, argumentacja „obalanie” w MOD-WARIANTY-POZWU,
-             `p` węzłów alternatywnych w MOD-GRAF-PRZYCZYNOWY.
-MODEL WYKONANIA: DWUETAPOWY (§1a).
-PROCEDURA SZKICU (KROK A):
              1. Fakt sporny + wszystkie rozsądne hipotezy (nie tylko wersje stron).
              2. Wskaż 1 dowód kategorii A (choćby częściowo rozstrzygający) lub stwierdź jego brak.
              3. Pełna macierz — dopiero KROK B.

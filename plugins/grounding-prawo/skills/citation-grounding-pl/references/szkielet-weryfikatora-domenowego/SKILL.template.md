@@ -13,7 +13,7 @@ metadata:
   inspiration: >
     Gradient i kalibracja - citation-grounding-pl (MateMatic) / Existence-Content-Paragraph
     Jeanne Sulzer (CC BY 4.0). Silnik współdzielony z citation-grounding-pl.
-  companion_skills: <resolver-kotwicy np. saos-orzecznictwo / eu-sparql-search>, legal-ai-audit-bundle
+  companion_skills: <resolver-kotwicy np. saos-orzecznictwo / eu-sparql-search>
   shared_engine: citation-grounding-pl/scripts/ground-citations.mjs
 ---
 
@@ -49,7 +49,6 @@ doktryna gradientu: `../citation-grounding-pl/references/gradient-weryfikacji.md
 1. Brak cytatu/parafrazy z pamięci - weryfikuj w rozmowie wobec <źródła autorytatywnego>.
 2. Output nie twierdzi mocniej, niż sięga weryfikacja (kalibracja).
 3. <reguła domenowa 1 - np. wersja językowa / stan prawny na datę / wersja redakcyjna>.
-4. Materiały objęte tajemnicą: pseudonimizuj przez `let-it-be` przed weryfikacją.
 5. Awaria bezpośredniego fetcha = pracuj drabinkę, nie porzucaj realnego cytatu.
 
 ## Atrybucja

@@ -18,7 +18,7 @@ pii-egress: none
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.3.0
-  companion_skills: uodo-grounding-pl, rodo-ropa-dpa-pl, gaius-api-anonymization
+  companion_skills: uodo-grounding-pl, gaius-api-anonymization
   parity: gdpr-dsar-en
 ---
 

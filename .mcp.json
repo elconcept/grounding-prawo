@@ -1,73 +1,8 @@
 {
   "mcpServers": {
-    "isap": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/gp-cache.mjs",
-        "isap"
-      ]
-    },
-    "saos": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/gp-cache.mjs",
-        "saos"
-      ]
-    },
-    "nsa": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/gp-cache.mjs",
-        "nsa"
-      ]
-    },
-    "krs": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/gp-cache.mjs",
-        "krs"
-      ]
-    },
-    "eu-sparql": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/gp-cache.mjs",
-        "eu-sparql"
-      ]
-    },
-    "eu-compliance": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/gp-cache.mjs",
-        "eu-compliance"
-      ]
-    },
-    "eureka": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/gp-cache.mjs",
-        "eureka"
-      ]
-    },
-    "repertorium": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/mcp/servers/repertorium.mjs"
-      ]
-    },
-    "prawo-pl": {
-      "command": "uvx",
-      "args": [
-        "prawo-pl-mcp"
-      ]
-    },
-    "kio": {
-      "command": "uvx",
-      "args": [
-        "--with",
-        "selectolax<1",
-        "kio-orzeczenia-mcp"
-      ]
+    "lex": {
+      "type": "http",
+      "url": "https://lex.xlap.pl/mcp"
     }
   }
 }

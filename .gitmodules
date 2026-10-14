@@ -49,42 +49,6 @@
 [submodule "vendor/matematic-legal-verify-pl"]
 	path = vendor/matematic-legal-verify-pl
 	url = https://github.com/matematicsolutions/matematic-legal-verify-pl.git
-[submodule "vendor/mcp-cite"]
-	path = vendor/mcp-cite
-	url = https://github.com/elconcept/mcp-cite.git
-[submodule "vendor/mcp-eu-compliance"]
-	path = vendor/mcp-eu-compliance
-	url = https://github.com/elconcept/mcp-eu-compliance.git
-[submodule "vendor/mcp-eu-sparql"]
-	path = vendor/mcp-eu-sparql
-	url = https://github.com/matematicsolutions/mcp-eu-sparql.git
-[submodule "vendor/mcp-eureka"]
-	path = vendor/mcp-eureka
-	url = https://github.com/elconcept/mcp-eureka.git
-[submodule "vendor/mcp-ip-rotator"]
-	path = vendor/mcp-ip-rotator
-	url = https://github.com/elconcept/mcp-ip-rotator.git
-[submodule "vendor/mcp-isap"]
-	path = vendor/mcp-isap
-	url = https://github.com/elconcept/mcp-isap.git
-[submodule "vendor/mcp-krs"]
-	path = vendor/mcp-krs
-	url = https://github.com/elconcept/mcp-krs.git
-[submodule "vendor/mcp-legalize"]
-	path = vendor/mcp-legalize
-	url = https://github.com/elconcept/mcp-legalize.git
-[submodule "vendor/mcp-nsa"]
-	path = vendor/mcp-nsa
-	url = https://github.com/elconcept/mcp-nsa.git
-[submodule "vendor/mcp-repertorium"]
-	path = vendor/mcp-repertorium
-	url = https://github.com/elconcept/mcp-repertorium.git
-[submodule "vendor/mcp-saos"]
-	path = vendor/mcp-saos
-	url = https://github.com/elconcept/mcp-saos.git
-[submodule "vendor/mcp-uodo"]
-	path = vendor/mcp-uodo
-	url = https://github.com/elconcept/mcp-uodo.git
 [submodule "vendor/md-to-docx"]
 	path = vendor/md-to-docx
 	url = https://github.com/elconcept/md-to-docx.git
@@ -97,45 +61,6 @@
 [submodule "vendor/the-ocr"]
 	path = vendor/the-ocr
 	url = https://github.com/elconcept/the-ocr.git
-[submodule "mcp/api-rotator-mcp"]
-	path = mcp/api-rotator-mcp
-	url = https://github.com/elconcept/api-rotator-mcp.git
-[submodule "mcp/gp-cache"]
-	path = mcp/gp-cache
-	url = https://github.com/elconcept/gp-cache.git
-[submodule "mcp/kio-orzeczenia-mcp"]
-	path = mcp/kio-orzeczenia-mcp
-	url = https://github.com/matematicsolutions/kio-orzeczenia-mcp.git
-[submodule "mcp/legalize-mcp"]
-	path = mcp/legalize-mcp
-	url = https://github.com/elconcept/legalize-mcp.git
-[submodule "mcp/mcp-eu-compliance"]
-	path = mcp/mcp-eu-compliance
-	url = https://github.com/elconcept/mcp-eu-compliance.git
-[submodule "mcp/mcp-eureka"]
-	path = mcp/mcp-eureka
-	url = https://github.com/elconcept/mcp-eureka.git
-[submodule "mcp/mcp-eu-sparql"]
-	path = mcp/mcp-eu-sparql
-	url = https://github.com/matematicsolutions/mcp-eu-sparql.git
-[submodule "mcp/mcp-isap"]
-	path = mcp/mcp-isap
-	url = https://github.com/elconcept/mcp-isap.git
-[submodule "mcp/mcp-krs"]
-	path = mcp/mcp-krs
-	url = https://github.com/elconcept/mcp-krs.git
-[submodule "mcp/mcp-nsa"]
-	path = mcp/mcp-nsa
-	url = https://github.com/elconcept/mcp-nsa.git
-[submodule "mcp/mcp-saos"]
-	path = mcp/mcp-saos
-	url = https://github.com/elconcept/mcp-saos.git
-[submodule "mcp/prawo-pl-mcp"]
-	path = mcp/prawo-pl-mcp
-	url = https://github.com/matematicsolutions/prawo-pl-mcp.git
-[submodule "mcp/repertorium-mcp"]
-	path = mcp/repertorium-mcp
-	url = https://github.com/elconcept/repertorium-mcp.git
 [submodule "vendor/LexMachina"]
 	path = vendor/LexMachina
 	url = https://github.com/elconcept/LexMachina.git

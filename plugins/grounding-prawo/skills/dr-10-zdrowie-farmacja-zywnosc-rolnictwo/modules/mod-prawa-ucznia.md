@@ -146,8 +146,6 @@ szkolnym.
 | Sytuacja | Moduł |
 |---|---|
 | Szerszy kontekst administracyjny oświaty, kuratorium | `mod-ustawa-oswiata-szkolnictwo-wyzsze.md` (ta sama domena) |
-| Awans/dyscyplinarka NAUCZYCIELA (nie ucznia) | `dr-15-compliance-iso-governance-audyt/modules/mod-ustawa-nauczyciele-uczelnie.md` |
-| Karta Nauczyciela — pracownicze aspekty | `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-karta-nauczyciela-pracownicze.md` |
 | Prawa DZIECKA jako takiego (szerzej niż tylko uczeń) | `dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-ustawa-RPD.md` |
 | Decyzja administracyjna, odwołanie (KPA ogólnie) | `dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-KPA-postepowanie-administracyjne.md` |
 | Edukacja specjalna, dostępność dla uczniów z niepełnosprawnościami | `mod-ustawa-edukacja-specjalna-dostepnosc.md` |

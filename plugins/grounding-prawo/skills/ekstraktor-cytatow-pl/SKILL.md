@@ -27,7 +27,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
-  companion_skills: citation-grounding-pl, saos-orzecznictwo, eu-sparql-search, legal-ai-audit-bundle
+  companion_skills: citation-grounding-pl
 ---
 
 # Ekstraktor cytatów PL - znajdź każdy cytat, zanim go zweryfikujesz

@@ -23,7 +23,6 @@ dependencies:
   optional:
     - chronologia-sprawy-v1
     - analiza-sadowa-v6
-    - raport-sytuacyjny-v2
     - MOD-KONTEKST-SESJI
     - MOD-PRIORYTETY-ASPEKTOW
     - MOD-SELEKCJA-DOWODOW
@@ -1772,7 +1771,6 @@ Nie wolno domyślnie:
 | `analizator-dowodow-v3` | przed W2 jeśli dostępne obszerne akta (uzupełniająco — nie zastępuje bezpośredniego SD-VER z PRE-W1a) |
 | `chronologia-sprawy-v1` | jeśli zdarzenia mają złożoną oś czasu |
 | `analiza-sadowa-v6` | jeśli potrzebna ocena szans sprawy przed doborem strategii |
-| `raport-sytuacyjny-v2` | po W3 na żądanie użytkownika |
 | `shared/DOWODY-METODOLOGIA.md` | przy ocenie wartości dowodowej zeznań |
 | `shared/STRATEGIA-PROCESOWA.md` | przy doborze modelu przesłuchania |
 

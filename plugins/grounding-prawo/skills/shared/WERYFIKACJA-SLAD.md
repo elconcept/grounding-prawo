@@ -1,20 +1,5 @@
 # WERYFIKACJA-ŚLAD — Moduł Audytu Śladu Weryfikacji
 
-> **Plik:** `shared/WERYFIKACJA-SLAD.md`
-> **Wersja:** 1.8 (2026-09-22) — F-194: drugi precedens NSA (I OSK 590/26, 🟨 bez awansu), GRAD-3b-SYM (flaga symbolu CBOSA) i KALIBRACJA-PRZECIWNIK (wadliwe powołania przeciwnika ≠ argument merytoryczny).
-> **Wersja:** 1.4 (2026-07-15b) — dodano obowiązkową kategoryzację RZĄD
->              (odesłanie do `shared/HIERARCHIA-ZRODEL.md`) przy każdej
->              kotwicy tekstowej i w tabeli śladu — zgłoszone przez
->              użytkownika po incydencie: link 🔗 podany bez kategoryzacji
->              źródła (patrz CHANGELOG)
-> **Wersja 1.2** (2026-07-05b) — naprawa luki "cytat na poparcie tezy bez
->              parafrazy" (NSA I FZ 104/26) + GUARD INSTYTUCJA/PRZEDMIOT dla
->              orzeczeń anonimizowanych (adm./karne)
-> **Wersja 1.1** (2026-07-05a) — GRADIENT ISTNIENIE/TREŚĆ/FRAGMENT
->              + guard STRON; wzorzec citation-grounding-pl v2.1
-> **Status:** AKTYWNY — naprawa BLOKER-3, rozszerzenie po AUDYT-2026-07-05b,
->              rozszerzenie 1.3 po teście KOTWICA-TEKSTOWA (2026-07-15),
->              rozszerzenie 1.4 po dodaniu kategoryzacji RZĄD (2026-07-15b)
 
 ---
 
@@ -126,20 +111,6 @@ Termin: 2 tygodnie na sprzeciw od nakazu zapłaty (art. 502 §1 KPC) ✅ [VER: i
 > dotychczasowy ślad ✅ [VER] potwierdzał ISTNIENIE przepisu/sygnatury,
 > ale nie sprawdzał, czy PARAFRAZA oddaje faktyczną treść źródła.
 
-> ⚠️ **Case study zamknięty przez v1.2 (2026-07-05b):** postanowienie NSA z
-> 23.06.2026, sygn. **I FZ 104/26** — pełnomocnik powołał w zażaleniu
-> postanowienia NSA jako rzekome poparcie tezy o przesłankach wstrzymania
-> wykonania decyzji (art. 61 § 3 p.p.s.a.). NSA ustalił, że: (1) powołane
-> postanowienia zapadły w innych datach niż podane, (2) żadne z nich w
-> ogóle nie dotyczyło instytucji wstrzymania wykonania, (3) teza pisma
-> była sprzeczna z ugruntowaną linią orzeczniczą co do ciężaru dowodu.
-> NSA nazwał to wprost "bezrefleksyjnym korzystaniem z AI" i brakiem
-> profesjonalizmu pełnomocnika. Luka w v1.1: GRAD-1 klasyfikował "gołe"
-> powołanie (bez cudzysłowu, bez wprost sformułowanej parafrazy) jako
-> wymagające tylko ISTNIENIA — a to za mało, gdy powołanie ma poprzeć
-> konkretną tezę. v1.2 zamyka to w GRAD-1 (poniżej) i dodaje GUARD
-> INSTYTUCJA dla spraw, gdzie strony są anonimizowane (adm./karne) i
-> GUARD STRON nie ma czego porównać.
 
 > 🟨 **Drugi precedens (dodano 2026-09-22, F-194) — wyrok NSA z 31.08.2026,
 > sygn. I OSK 590/26** (Izba Ogólnoadministracyjna; sprawa zasiłku stałego —
@@ -535,40 +506,6 @@ Tryb awaryjny NIE oznacza pominięcia disclaimera — DISCLAIMER.md stosuje się
 
 ### Dodaj do SELF-CHECK:
 
-```
-□ [WERYFIKACJA-ŚLAD] Każdy artykuł / termin / orzeczenie ma znacznik VER lub NIEWERYFIKOWANE?
-□ [WERYFIKACJA-ŚLAD] Użyłem narzędzia (web_search/web_fetch) dla każdego VER?
-□ [WERYFIKACJA-ŚLAD] ≥3 błędy sieci → komunikat użytkownikowi wyświetlony?
-□ [WERYFIKACJA-ŚLAD] Analiza ≥4 przepisów → tabela śladu na końcu odpowiedzi?
-□ [GRADIENT] Każdy cytat w cudzysłowie / pinpoint ma 🟢 [VER-FRAGMENT]?
-□ [GRADIENT] Każda parafraza ("SN przyjął, że…") zweryfikowana na poziomie TREŚĆ,
-             nie tylko ISTNIENIE?
-□ [GRADIENT] Każde "gołe" powołanie użyte na poparcie tezy (bez cudzysłowu,
-             bez parafrazy) TEŻ zweryfikowane na poziomie TREŚĆ (reguła
-             I FZ 104/26) — nie potraktowane jako sama ISTNIENIE?
-□ [GRADIENT] Dla orzeczeń bez możliwości porównania stron (anonimizacja
-             adm./karna) — wykonany GUARD INSTYTUCJA/PRZEDMIOT (GRAD-3b)?
-□ [GRADIENT] Twierdzenia z poziomem osiągniętym < wymaganym → skalibrowane (🟠)
-             lub usunięte (🔴)?
-□ [KOTWICA-TEKSTOWA] Każdy cytat na poziomie FRAGMENT / każde orzeczenie
-             ma dołączony link z Text Fragment (🔗), skonstruowany w TEJ
-             odpowiedzi z treści właśnie zwróconej przez narzędzie?
-□ [KOTWICA-TEKSTOWA] Czy przy każdym 🔗 podano zastrzeżenie (a)/(b)/(c)
-             z shared/PRAWO-HARDGATE.md KROK 5A, zamiast przedstawiać link jako
-             gwarantowany?
-□ [RZĄD] Czy KAŻDY link/URL w odpowiedzi (nie tylko 🔗) ma przypisaną
-             kategorię RZĄD 1/2A/2B/3 wg `shared/HIERARCHIA-ZRODEL.md`?
-□ [RZĄD] Czy źródła Rządu 3 mają sprawdzoną datę (>24 mies. → ostrzeżenie)
-             i są skrzyżowane z Rzędem 1/2A przed użyciem jako poparcia tezy?
-□ [RPW] Odpowiedź zawiera ≥8 odrębnych powołań? → sporządzony RPW-INIT
-             PRZED weryfikacją i wypisany RPW-CHECKPOINT na końcu, przed
-             disclaimerem?
-□ [RPW] Liczba pozycji w RPW-CHECKPOINT (Y) zgadza się z liczbą odrębnych
-             powołań faktycznie użytych w tekście odpowiedzi (żadne nie
-             pominięte przy liczeniu MIANOWNIKA)?
-□ [RPW] Jeśli X < Y (niepełne pokrycie) — pozycje N+1…Y wypisane wprost
-             jako ⬛ [DO WERYFIKACJI], a nie po prostu nieobecne w tekście?
-```
 
 ### Dodaj do REGUŁ NADRZĘDNYCH routera (punkt 14):
 

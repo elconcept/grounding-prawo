@@ -39,7 +39,6 @@ Następujące pliki były martwymi stubami (nie wywoływanymi przez żaden `view
 | `pisma-proste-v2/references/POST-VALIDATION.md` | `shared/POST-VALIDATION.md` | Martwy — nie wywoływany przez view |
 | `pisma-proste-v2/references/terminy.md` | `shared/terminy.md` | Martwy — nie wywoływany przez view |
 | `pisma-proste-v2/references/M5-terminy.md` | `shared/terminy.md` | Martwy — nie wywoływany przez view; `pisma-proste-v2/references/M1-zasady.md` (ZASADA 6) zaktualizowany na bezpośrednie odwołanie |
-| `raport-sytuacyjny-v2/references/HYBRID-VALIDATION.md` | `shared/HYBRID-VALIDATION.md` | Martwy — SKILL.md wywołuje bezpośrednio shared/ (faktycznie usunięty już 2026-06-13) |
 
 ## Duplikaty bajtowe scalone 2026-07-12 (audyt komercyjny, wykryte przez ci_check_shared.py)
 

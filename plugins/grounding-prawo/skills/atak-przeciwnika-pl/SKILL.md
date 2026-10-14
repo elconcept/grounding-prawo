@@ -28,7 +28,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  companion_skills: adversarial-legal-review-pl, citation-grounding-pl, legal-request-router-pl
+  companion_skills: adversarial-legal-review-pl, citation-grounding-pl
 ---
 
 # Atak przeciwnika PL - jednoprzebiegowy sparing procesowy
@@ -94,8 +94,6 @@ a potem oceń, czy to robi.
 
 ## Workflow
 
-1. **Wejście.** Jeśli materiał zawiera dane objęte tajemnicą zawodową - pseudonimizuj
-   przez `let-it-be` przed analizą.
 2. **Ustal ciężar.** Kto z jakiego faktu wywodzi skutki prawne, ten go dowodzi
    (kodeks cywilny art. 6). Zmapuj, które twierdzenia pisma są poparte dowodem,
    a które wiszą na asercji.
@@ -190,13 +188,10 @@ przeciwnika bez przeglądu i zatwierdzenia przez pełnomocnika.
 
 ## Companion skills
 
-- `legal-request-router-pl` - decyduje, czy zapytanie dostaje ten skill, pełną debatę,
-  czy zwykłą odpowiedź
 - `adversarial-legal-review-pl` - wyższy szczebel: pełna debata builder/attacker/
   synthesizer/verifier dla spraw wysokiej stawki
 - `citation-grounding-pl` - mechaniczna weryfikacja cytatów i sygnatur wskazanych
   w ataku jako wątpliwe
-- `let-it-be` - pseudonimizacja wejścia objętego tajemnicą zawodową
 
 ## Atrybucja
 

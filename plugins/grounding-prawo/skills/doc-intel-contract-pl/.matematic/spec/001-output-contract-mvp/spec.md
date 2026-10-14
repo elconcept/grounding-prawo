@@ -20,7 +20,6 @@ przez jedna funkcje i dostac kontrakt JSON `{blocks[], gating}` **zeby** od razu
 wiedziec, ktore bloki ida do czlowieka, a ktore auto-approve.
 
 **Acceptance Criteria:**
-- [ ] AC1.1: Adapter mapuje wyjscie **opendataloader-pdf** (JSON) -> kontrakt.
 - [ ] AC1.2: Adapter mapuje **pdftotext** (plain) -> kontrakt (bbox=null, flaga `partial`).
 - [ ] AC1.3: Kontrakt zawiera per blok: `id, page, bbox, block_type, text, confidence, flags`.
 - [ ] AC1.4: Confidence-gating: prog (domyslnie 0.85) -> `review_required[]` + `auto_approved[]`.

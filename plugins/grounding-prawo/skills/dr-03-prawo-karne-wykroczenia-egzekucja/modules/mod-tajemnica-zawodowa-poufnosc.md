@@ -100,8 +100,6 @@ ODPOWIEDZIALNOŚĆ PODMIOTU ZBIOROWEGO: jeśli sprawcą był ktoś działający
 | Tajemnica radcy prawnego | ustawa o radcach prawnych | dr-12-sadownictwo-prokuratura-zawody-prawnicze/modules/mod-ustawa-radcowie-prawni.md | jw. |
 | Tajemnica lekarska | ustawa o zawodach lekarza i lekarza dentysty | dr-10-zdrowie-farmacja-zywnosc-rolnictwo/modules/mod-ustawa-zawod-lekarza.md | jw. + możliwa odpowiedzialność zawodowa przed OSL/NSL |
 | Tajemnica bankowa | Prawo bankowe | dr-06 (sprawdź istniejący moduł) | odrębna sankcja w Prawie bankowym + możliwy zbieg z art. 266 KK |
-| Tajemnica biegłego rewidenta | ustawa o biegłych rewidentach | dr-06-podatki-finanse-publiczne-aml/modules/mod-ustawa-biegli-rewidenci-zawod.md | jw. |
-| Tajemnica skarbowa/podatkowa | Ordynacja podatkowa | dr-06-podatki-finanse-publiczne-aml/modules/mod-OP-ordynacja-podatkowa.md | odrębna sankcja w Ordynacji + zbieg z art. 266 §2 KK (funkcjonariusze) |
 | Informacje niejawne (tajne/ściśle tajne) | ustawa o ochronie informacji niejawnych | dr-13 | odrębny reżim karny, SUROWSZY niż art. 266 §2 — NIE korzystaj z art. 266 dla tych klauzul |
 | Tajemnica przedsiębiorcy regulowanego (UOKiK/URE/UKE/KNF) | ustawy sektorowe | dr-12-sadownictwo-prokuratura-zawody-prawnicze/modules/mod-ustawa-regulatorzy-UOKiK-URE-UKE-KNF.md | sankcje administracyjne + możliwy zbieg z art. 266 KK |
 | Dane osobowe (RODO) | RODO + ustawa o ochronie danych osobowych | dr-11 | odrębny reżim administracyjny (kary UODO) — NIE jest tożsame z art. 266 KK, ale może współwystępować przy tym samym czynie |

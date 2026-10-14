@@ -1,0 +1,66 @@
+name: build-plugin
+
+# Przebudowuje plugins/grounding-prawo z selection/selection.yaml, own-skills/ i submodułów vendor/.
+# - push zmieniający selekcję, skille własne, patche lub skrypt: przebudowa i commit wyniku na main
+# - tygodniowo: podbicie przypiętych commitów upstreamu na osobnej gałęzi i PR (patche mogą się nie nałożyć,
+#   więc zmiana upstreamu nigdy nie trafia na main bez przeglądu)
+on:
+  push:
+    branches: [main]
+    paths: ["selection/**", "own-skills/**", "scripts/build.py", ".gitmodules"]
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Submoduły źródłowe (tylko dwa potrzebne do budowy)
+        run: git submodule update --init --depth 1 vendor/LexMachina vendor/awesome-matematic-skills-pl
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pyyaml
+      - name: Build
+        run: python3 -I scripts/build.py
+      - name: Test grounding (Node)
+        uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
+      - name: Commit wyniku
+        run: |
+          git config user.name "build-plugin"
+          git config user.email "actions@users.noreply.github.com"
+          git add plugins .agents
+          git diff --cached --quiet || (git commit -m "build: przebudowa pluginu z selekcji" && git push)
+
+  upstream-bump:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: git submodule update --init --depth 1 vendor/LexMachina vendor/awesome-matematic-skills-pl
+      - run: git submodule update --remote --depth 1 vendor/LexMachina vendor/awesome-matematic-skills-pl
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pyyaml
+      - name: Build na nowym upstreamie
+        run: python3 -I scripts/build.py
+      - name: PR
+        run: |
+          git diff --quiet && git diff --cached --quiet && exit 0
+          B="upstream-bump-$(date +%Y%m%d)"
+          git config user.name "build-plugin"; git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$B"
+          git add -A vendor plugins .agents
+          git commit -m "upstream: podbicie LexMachina i awesome-matematic-skills-pl"
+          git push origin "$B"
+          gh pr create --title "Upstream: nowe wersje skilli" --body "Automatyczne podbicie submodułów i przebudowa pluginu. Sprawdź diff plugins/ i patche."

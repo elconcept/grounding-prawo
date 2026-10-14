@@ -131,7 +131,6 @@ WYŁĄCZNIE sprawcy czynu z §1 lub §2.
 | Sytuacja | Właściwy przepis/tryb | Moduł |
 |---|---|---|
 | Odszkodowanie za szkodę wyrządzoną zmową (droga cywilna, niezależnie od odpowiedzialności karnej) | art. 305 KC (odrębny przepis o tym samym numerze co w KK — UWAGA na pomyłkę między kodeksami!) | `dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-KC-cywilne-zobowiazania-odpowiedzialnosc.md` |
-| Wykluczenie wykonawcy z postępowania o zamówienie publiczne za zmowę | Prawo zamówień publicznych, przesłanki wykluczenia | `dr-07-zamowienia-publiczne-fundusze-ue/modules/mod-PZP-zamowienia-publiczne-KIO.md` |
 | Naruszenie zakazu porozumień ograniczających konkurencję (prawo antymonopolowe, niezależnie od odpowiedzialności karnej konkretnej osoby) | ustawa o ochronie konkurencji i konsumentów, UOKiK | poza zakresem dr-03 — kandydat do dr-02/dr-16 |
 | Łapówka wręczona urzędnikowi prowadzącemu przetarg (a nie konkurentowi) | art. 228/229/230 KK | `mod-KK-art228-231-korupcja-urzednicza.md` |
 | Eskalacja zbrodniowa przy bardzo dużych kwotach mienia | art. 306b KK (>5 mln zł: 3-20 lat; >10 mln zł: 5-25 lat) — ⚠️ WERYFIKUJ, czy art. 305 jest objęty listą 306b (NIE potwierdzono wprost w tej sesji — 306b w wersji zweryfikowanej dla art. 296/296a/299/303 NIE wymieniał art. 305; nie zakładaj bez potwierdzenia) | `mod-KK-art296-naduzycie-zaufania.md` (opis mechanizmu 306b) |

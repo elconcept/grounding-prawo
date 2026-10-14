@@ -73,6 +73,5 @@ nakazowy po wyroku, ochrona cywilna (art. 24 KC — naruszenie dóbr osobistych)
 |---|---|
 | Zawiadomienie o przestępstwie (stalking) | `pisma-procesowe-v3` |
 | Analiza i wycena dowodów (logi, SMS) | `analizator-dowodow-v3` |
-| Stalking w miejscu pracy / mobbing | `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-mobbing-dyskryminacja.md` |
 | Sprawa karna — obrona / szanse | `analiza-sadowa-v6` |
 | Naruszenie dóbr osobistych — pozew cywilny | `dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-KC-cywilne-zobowiazania-odpowiedzialnosc.md` |

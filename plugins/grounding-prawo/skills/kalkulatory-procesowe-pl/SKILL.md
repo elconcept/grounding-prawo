@@ -29,7 +29,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  companion_skills: terminy-procesowe-pl, sejm-eli-mcp (konektor), hierarchia-zrodel-pl, intake-sufficiency-pl, legal-request-router-pl
+  companion_skills: terminy-procesowe-pl, sejm-eli-mcp (konektor)
 ---
 
 # Kalkulatory procesowe PL - żywe parametry, nigdy sama liczba
@@ -143,12 +143,6 @@ skilla bez rachunku i podstaw prawnych.
   procesowego rób tamtym skillem.
 - **sejm-eli-mcp (konektor)** - preferowana droga pobrania aktualnego
   brzmienia UKSC/KC/KPC (krok 1 protokołu parametrów).
-- **hierarchia-zrodel-pl** - gdy przepis szczególny (np. ustawa o
-  transakcjach handlowych) zderza się z KC: która norma rządzi rachunkiem.
-- **intake-sufficiency-pl** - gdy wejście jest dziurawe (brak daty
-  wymagalności, brak kwoty głównej): jakie pytania zadać przed liczeniem.
-- **legal-request-router-pl** - triage na wejściu; rachunek pod pismo
-  procesowe klasyfikuj jako high-stakes.
 
 ## Weryfikacja źródeł
 
@@ -172,13 +166,11 @@ Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimiza
 
 ### Ochrona danych
 
-- **Anonimizacja przed wysyłką** - gdy dokument zawiera dane osobowe, oczyść je lokalnie (skill `let-it-be`), zanim treść trafi do modelu. Dane osobowe nie powinny wychodzić do API. To zasada minimalizacji (RODO).
 - **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
 - **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
 
 ### Operacje nieodwracalne
 
-Niektóre operacje są nieodwracalne (anonimizacja w trybie nieodwracalnym, zaakceptowanie wszystkich zmian w .docx). Skille oznaczają je jawnie - wykonuj je dopiero po potwierdzeniu przez człowieka.
 
 ### Bramka człowieka
 

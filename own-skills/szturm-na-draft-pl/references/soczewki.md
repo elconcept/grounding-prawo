@@ -23,22 +23,22 @@ Jeżeli środowisko ma subagentów, soczewki E3 uruchamiaj równolegle, każdą 
 
 ---
 
-## E1 - warstwa obiektywna (deterministyczna, zawsze, każda stawka)
+## E1 - warstwa obiektywna (deterministyczna, zawsze)
 
 | Soczewka | Wejście | Sprawdza | Klasa | Uwagi |
 |---|---|---|---|---|
 | `ekstraktor-cytatow-pl` | `.clean.md` | wszystkie sygnatury, ECLI, Dz.U., ELI, przepisy, odwołania skrótowe | - | front-end: lista do sprawdzenia, sam nie zgłasza ustaleń |
 | `citation-grounding-pl` (`node <skille>/citation-grounding-pl/scripts/ground-citations.mjs`) | cytaty + źródła z akt | cytat istnieje dosłownie (ISTNIENIE/TREŚĆ/FRAGMENT) | CYTAT | 🔴 gdy cytat przypisany karcie, na której go nie ma |
 | `patron-weryfikacja-cytatow` (`python3 <skille>/patron-weryfikacja-cytatow/scripts/verify_citations.py`) | pismo + `--source` karty akt `.md` | cytaty z akt i załączników, liczby narzędzi | CYTAT, FAKT_BEZ_ZRODLA | liczby „z raportu narzędzia” muszą być w załączniku |
-| `iura` / `saos-orzecznictwo` / cache lexcache | sygnatury z ekstraktora | sygnatura istnieje; **data i skład z treści orzeczenia**, nie z metadanych | SYGNATURA | metadane SAOS potrafią mieć złą datę - źródłem jest treść |
-| `lexcache isap pdf <ELI t.j.> --find "Art. N."` (`shared/MOD-TEKST-JEDNOLITY.md`) | powołane przepisy | brzmienie obowiązujące | PRZEPIS | cytowalne tylko FOUND + tekst_jednolity + obowiązuje |
+| MCP `saos` (lex.xlap.pl/mcp, lokalny dump) | sygnatury z ekstraktora | sygnatura istnieje; **data i skład z treści orzeczenia**, nie z metadanych | SYGNATURA | metadane SAOS potrafią mieć złą datę - źródłem jest treść |
+| MCP `isap` (lex.xlap.pl/mcp) (`shared/MOD-TEKST-JEDNOLITY.md`) | powołane przepisy | brzmienie obowiązujące | PRZEPIS | cytowalne tylko FOUND + tekst_jednolity + obowiązuje |
 | `patron-identyfikatory-pl` (`pl_entities.py extract`) | `.clean.md` | PESEL/NIP/REGON sumy, format sygnatur | SYGNATURA | tani, zawsze |
 
 Wynik E1 jest binarny. 🔴 z E1 blokuje wysyłkę, dopóki E8 nie potwierdzi naprawy ponownym przebiegiem.
 Konektor offline i brak cache -> ustalenie z `naprawa: DOWOD` i komentarzem „NIEPEWNE - źródło
 niedostępne (data próby)”. Nigdy „OK”.
 
-## E2 - spójność (każda stawka od M; przy S tylko pismo ↔ akta)
+## E2 - spójność (zawsze, pełna)
 
 | Soczewka | Mandat | Klasa |
 |---|---|---|
@@ -83,18 +83,18 @@ inaczej. Pytania do biegłego i pozycje petitum to jedna jednostka - nie dziel i
 
 ## Soczewki tylko na żądanie (bez unikalnego ustalenia w przebiegach 25.09 i 28.09)
 
-`prawny-router-v3`, `legal-request-router-pl` (routing był jednoznaczny), `hierarchia-zrodel-pl`,
+`prawny-router-v3`,
 `patron-prawo-pl-zrodla` (mapa źródeł), `dr-11-cyfrowe-cyber-ai-dane-ip`, `terminy-procesowe-pl` (tylko gdy pismo liczy
 terminy), `chronologia-sprawy-v1` (tylko gdy oś czasu jest sporna), `patron-pismo-procesowe-pl`
-(forma), `legal-ai-audit-bundle` (pakowanie przy stawce L, nie atak).
+(forma), .
 
 ## Mapowanie klasa -> kto zwykle znajduje -> dopuszczalna naprawa
 
 | Klasa | Kto | Najwyżej |
 |---|---|---|
 | CYTAT | citation-grounding, patron-weryfikacja-cytatow | AUTO (🔴 z dowodem E1) |
-| SYGNATURA | iura, saos, patron-identyfikatory | AUTO (🔴 z dowodem E1, data z treści) |
-| PRZEPIS | lexcache isap pdf | AUTO (🔴 z dowodem E1, t.j.) |
+| SYGNATURA | mcp-saos, patron-identyfikatory | AUTO (🔴 z dowodem E1, data z treści) |
+| PRZEPIS | MCP isap | AUTO (🔴 z dowodem E1, t.j.) |
 | FAKT_BEZ_ZRODLA | patron-weryfikacja-cytatow, analizator-dowodow, MOD-ATAK D4 | REDAKCJA (dodać źródło albo nazwać wiedzę strony) |
 | SPRZECZNOSC | analizator-dowodow, adversarial, fidelity | REDAKCJA, gdy akta rozstrzygają; DECYZJA_AUTORA, gdy dotyka faktu klienta |
 | LOGIKA | atak-przeciwnika, pierwsze-wrażenie, MOD-ATAK D1/D2 | REDAKCJA |

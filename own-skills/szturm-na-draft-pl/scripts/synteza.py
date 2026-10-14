@@ -56,8 +56,8 @@ KLASY = ["CYTAT", "SYGNATURA", "PRZEPIS", "FAKT_BEZ_ZRODLA", "SPRZECZNOSC", "LOG
 WAGI = ["🔴", "🟠", "🟡", "🟢"]  # od najciezszej
 NAPRAWY = ["AUTO", "REDAKCJA", "DECYZJA_AUTORA", "DOWOD"]
 # soczewki deterministyczne warstwy E1 - tylko ich dowod otwiera AUTO dla 🔴
-E1 = {"citation-grounding-pl", "patron-weryfikacja-cytatow", "ekstraktor-cytatow-pl", "iura",
-      "saos-orzecznictwo", "lexcache", "patron-identyfikatory-pl", "E1"}
+E1 = {"citation-grounding-pl", "patron-weryfikacja-cytatow", "ekstraktor-cytatow-pl", "iura", "mcp-saos",
+      "saos-orzecznictwo", "patron-identyfikatory-pl", "E1"}
 KLASY_AUTO_CZERWONE = {"CYTAT", "SYGNATURA", "PRZEPIS"}
 KLASY_AUTO_REDAKCYJNE = {"STYL", "FORMAT"}
 KLASY_TYLKO_AUTOR = {"STRATEGIA", "KOMPLETNOSC"}

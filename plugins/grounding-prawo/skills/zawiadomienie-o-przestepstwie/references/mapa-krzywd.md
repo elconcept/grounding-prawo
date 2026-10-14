@@ -19,10 +19,7 @@ przepisów pasuje, wpisz oba - wybór należy do organu.
 
 - Kodeks karny: tekst jednolity **Dz.U. 2025 poz. 383** (ELI `DU/2025/383`; najnowszy t.j. według
   ISAP, sprawdzone 09.10.2026), brzmienia z bazy `mcp/cache/kodeks/kodeks_karny.md` (wersja od
-  21.07.2026). Ślad: `lexcache isap search --title "Kodeks karny" --type Obwieszczenie`.
-- Przepis spoza katalogu: najpierw `lexcache find` / `lexcache isap pdf <ELI t.j.> --find "Art. N."`
-  (bez `mutool`: PDF z `~/.Codex/cache/lexcache/isap/_pdf/` czytaj przez PyMuPDF). Bez weryfikacji
-  przepis nie trafia do pisma.
+  21.07.2026). Ślad: MCP `isap` (`search_acts`, tytuł „Kodeks karny”).
 - Wykroczenia (Kodeks wykroczeń): katalog jeszcze ich nie obejmuje - zob. TODO.
 
 ## Tryb ścigania

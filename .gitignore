@@ -22,3 +22,9 @@ TEMP/_pluginy-cowork/cowork-plugins-prawne.tar.gz
 node_modules/
 .venv/
 @eaDir/
+
+# --- MCP stoją w Dockerze za portalem lex.xlap.pl; lokalne kopie nie należą do repo ---
+/vendor/mcp-*/
+/mcp/mcp-ip-rotator/
+/mcp/legalize-mcp/
+/mcp/prawo-pl-mcp/

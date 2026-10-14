@@ -844,10 +844,6 @@ Q&A / pytania użytkownika
  (nie tylko KROK H po analizie), wpisany do SELF-CHECK per-wiadomość.*
 *Wywołuje: analizator-umow-v1 · analiza-sadowa-v6 · analizator-dowodow-v3*
 *           pisma-procesowe-v3 · pisma-proste-v2 · orzeczenia-sadowe-v2*
-*           analizator-przepisow-v2 · przesluchanie-swiadkow-v2-min90 · raport-sytuacyjny-v2*
-*           raport-klienta-v1 (tryb PRAWNIK, po wygenerowaniu pisma — D.4)*
-*Prawo: isap.sejm.gov.pl · Orzeczenia: sn.pl, orzeczenia.ms.gov.pl*
-*Tryb Q&A: weryfikacja online przy każdej odpowiedzi — ZAKAZ odpowiedzi z pamięci*
 
 ---
 

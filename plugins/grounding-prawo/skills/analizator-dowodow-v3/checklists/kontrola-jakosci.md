@@ -34,4 +34,3 @@
 
 - [ ] HYBRID-VALIDATION uruchomiony.
 - [ ] M9 audyt zakończony statusem: gotowa / warunkowo gotowa.
-- [ ] raport-sytuacyjny-v2 zaproponowany użytkownikowi.

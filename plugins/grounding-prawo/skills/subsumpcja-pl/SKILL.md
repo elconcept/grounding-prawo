@@ -27,7 +27,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  companion_skills: adversarial-legal-review-pl, citation-grounding-pl, struktura-wyroku-pl, legal-request-router-pl
+  companion_skills: adversarial-legal-review-pl, citation-grounding-pl, struktura-wyroku-pl
 ---
 
 # Subsumpcja PL - jawny sylogizm prawniczy

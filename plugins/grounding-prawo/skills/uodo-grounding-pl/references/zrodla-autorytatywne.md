@@ -7,10 +7,7 @@
   sekcji aktualności. To resolver kotwicy (ISTNIENIE) i źródło tekstu - **ALE strona jest wroga
   botom** (500/JS/TLS), więc tekst decyzji często wymaga PDF / realnego Chrome / użytkownika
   (patrz `drabinka-zrodel.md`).
-- **RODO - rozporządzenie (UE) 2016/679** (EUR-Lex, CELEX `32016R0679`, resolver `eu-sparql-search`).
 - **Ustawa o ochronie danych osobowych z 10 maja 2018 r.** (ISAP) - akt krajowy uzupełniający.
-- **Wyroki WSA/NSA ze skarg na decyzje UODO** - dla łańcucha instancji; częściowo w SAOS
-  (`saos-orzecznictwo`, courtType ADMINISTRATIVE - pokrycie ubogie), pełniej w orzeczenia.nsa.gov.pl.
 
 ## Tier 2 - dopuszczalne, oznacz jako wtórne
 

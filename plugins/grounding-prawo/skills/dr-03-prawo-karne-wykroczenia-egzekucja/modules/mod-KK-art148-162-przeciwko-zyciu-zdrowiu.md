@@ -354,30 +354,6 @@ użyciem w piśmie (PRAWO-HARDGATE).
 - Kontratypy mogące wyłączyć bezprawność (obrona konieczna, stan
   wyższej konieczności) → `mod-KK-kwalifikator-karnomaterialny.md`
   DRZEWO K.1/K.2.
-- ⚠️ DODANE 2026-07-30 (na żądanie użytkownika) — ŚMIERTELNY WYPADEK
-  PRZY PRACY, aspekt KARNY: jeśli śmierć pracownika nastąpiła wskutek
-  niedopełnienia obowiązków BHP przez osobę odpowiedzialną — DWA
-  MOŻLIWE, ODRĘBNE reżimy prawne, NIE MYL ICH:
-  (a) art. 220 KK ("narażenie życia/zdrowia pracownika") — stosuje
-      się TYLKO do samego NARAŻENIA na niebezpieczeństwo (skutek =
-      stan zagrożenia, NIE sama śmierć) — do 3 lat (umyślnie) / do
-      roku (nieumyślnie)
-  (b) jeśli śmierć FAKTYCZNIE NASTĄPIŁA wskutek naruszenia BHP — TO
-      NIE jest odrębny typ przestępstwa "wypadkowego" — stosuje się
-      WPROST **art. 155 KK** (nieumyślne spowodowanie śmierci, 3
-      miesiące — 5 lat) — TA SAMA podstawa co przy każdej innej
-      śmierci nieumyślnej, tylko z odpowiedzialną osobą = pracodawca/
-      osoba kierująca BHP zamiast np. kierowcy
-  → Jeśli BRAK dowodu na bezpośredni związek przyczynowy MIĘDZY
-    naruszeniem a zagrożeniem życia (art. 220 wymaga BEZPOŚREDNIOŚCI
-    niebezpieczeństwa) — możliwa WYŁĄCZNIE odpowiedzialność za
-    WYKROCZENIE z art. 283 §1 Kodeksu pracy (nie przestępstwo)
-  → Pełne aspekty ADMINISTRACYJNE/pracownicze (klasyfikacja wypadku,
-    obowiązki zgłoszeniowe pracodawcy, świadczenia dla rodziny) →
-    `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-wypadek-przy-pracy-choroba-zawodowa.md` — TEN moduł
-    (dr-03) dostarcza WYŁĄCZNIE aspekt KARNY, unikaj duplikacji
-  Potwierdzone w 6+ zgodnych źródłach, w tym PIP (pip.gov.pl, Rząd 1)
-  i orzecznictwem SN (V KK 64/12).
 
   ⭐ DODANE 2026-07-30 (na żądanie użytkownika) — "CZYSTY" NIESZCZĘŚLIWY
   WYPADEK (np. awaria maszyny, BEZ naruszenia BHP): jeśli BRAK

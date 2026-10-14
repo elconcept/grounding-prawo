@@ -13,9 +13,6 @@ WYKONYWANY W WARUNKACH stosunku pracy.*
   wprowadzony ustawą z 11.03.2026 r., Dz.U. 2026 poz. 473, w życie
   8.07.2026 r.) — ⚠️ zweryfikuj aktualny t.j. na ISAP, przepis BARDZO
   ŚWIEŻY
-- Pełny opis mechanizmu (procedura, skutki temporalne, zakaz retorsji)
-  → `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md` sekcja 6.1 (NIE
-  duplikowany tutaj)
 
 ## ⭐ ZNACZENIE STRATEGICZNE — DLACZEGO WARTO ZŁOŻYĆ TEN WNIOSEK
 
@@ -101,10 +98,3 @@ w OBU wnioskach były IDENTYCZNE.
 
 ## ŹRÓDŁA (zweryfikowane online 2026-07-21)
 
-- Pełny opis reformy PIP (art. 10 ust. 1 pkt 7a, art. 14b) →
-  `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md` sekcja 6.1-6.2
-  (dodane we wcześniejszej sesji, ⚠️ zweryfikuj status wdrożenia
-  mechanizmu interpretacyjnego na pip.gov.pl przy konkretnej sprawie —
-  przepis wszedł w życie 8.07.2026, praktyka może się jeszcze
-  kształtować).
-```

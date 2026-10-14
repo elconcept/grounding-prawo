@@ -4,9 +4,6 @@
 
 - Wytyczne: https://www.gov.pl/web/po-ostroleka/jak-zlozyc-zawiadomienie-o-przestepstwie (odczyt
   09.10.2026; na podstawie opracowania Biura Kryminalnego KGP „Jak złożyć zawiadomienie o przestępstwie?”).
-- Kodeks postępowania karnego: tekst jednolity **Dz.U. 2026 poz. 490** (ELI `DU/2026/490`, najnowszy
-  t.j. według ISAP, sprawdzone 09.10.2026); brzmienia odczytane z PDF t.j.
-  (`lexcache isap pdf DU/2026/490`; bez `mutool` - PyMuPDF na `~/.Codex/cache/lexcache/isap/_pdf/DU_2026_490.pdf`).
 - Kodeks karny: t.j. **Dz.U. 2025 poz. 383** (zob. `mapa-krzywd.md`).
 
 ## Wytyczne Policji / prokuratury - najważniejsze punkty

@@ -634,9 +634,6 @@ oba wątki równolegle — wynik sprawy wykroczeniowej nie wyczerpuje ryzyka.
   której art. 263 KK odsyła przez znamię „bez wymaganego zezwolenia".
 - **`dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-KPA-decyzja-i-odwolanie.md`**, **`mod-KPA-tryby-nadzwyczajne-i-strategia.md`**,
   **`mod-PPSA-terminy-kasacja-prawo-pomocy.md`** — ścieżka odwoławcza i sądowa.
-- **`dr-09-budownictwo-srodowisko-energia-transport/modules/mod-lowiectwo-klusownictwo.md`** — pozwolenie do celów łowieckich,
-  zwolnienie członków PZŁ z egzaminu, odstrzał sanitarny, świadectwo broni dla
-  dzierżawcy obwodu (art. 29 ust. 1 pkt 8).
 - **`dr-13-sluzby-bezpieczenstwo-informacje-niejawne/modules/mod-ustawa-policja.md`** — ustawa o środkach przymusu bezpośredniego
   i broni palnej (t.j. Dz.U. 2026 poz. 244 ze zm. 2026 poz. 737, 815) — INNY AKT, uzbrojenie służb.
 - **`dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-ustawa-SKO.md`** — organ odwoławczy przy zatwierdzeniu regulaminu

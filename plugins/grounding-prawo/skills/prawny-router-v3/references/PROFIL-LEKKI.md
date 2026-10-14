@@ -104,13 +104,6 @@ warunkowych), i to on, a nie ten plik, zmniejszył koszt.
 
 Pięć pozycji. Kolejność wiążąca.
 
-```
-R-1  prawny-router-v3/SKILL.md          — jesteś tutaj, routing i reguły
-R-2  references/KROK0A-anonimizer.md    — bramka twarda, blokuje wszystko dalej
-R-3  references/KROK1-detekcja.md       — tryb, jurysdykcja, hard gate
-R-4  shared/PRAWO-HARDGATE.md           — zakaz cytowania z pamięci
-R-5  references/SELF-CHECK.md           — przed wysłaniem odpowiedzi
-```
 
 ⛔ Żadna z tych pięciu pozycji NIE PODLEGA odroczeniu w żadnym profilu.
 Brak którejkolwiek → `⛔ TRYB ZDEGRADOWANY`, nie „profil jeszcze lżejszy”.

@@ -18,7 +18,7 @@ metadata:
   author: Wiesław Mazur / MateMatic
   version: 0.1.0
   cost: zero LLM (walidacja kryptograficzna)
-  companion_skills: doc-intel-contract-pl, opendataloader-pdf
+  companion_skills: doc-intel-contract-pl
 ---
 
 # Walidacja podpisu elektronicznego w PDF
@@ -151,13 +151,11 @@ Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimiza
 
 ### Ochrona danych
 
-- **Anonimizacja przed wysyłką** - gdy dokument zawiera dane osobowe, oczyść je lokalnie (skill `let-it-be`), zanim treść trafi do modelu. Dane osobowe nie powinny wychodzić do API. To zasada minimalizacji (RODO).
 - **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
 - **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
 
 ### Operacje nieodwracalne
 
-Niektóre operacje są nieodwracalne (anonimizacja w trybie nieodwracalnym, zaakceptowanie wszystkich zmian w .docx). Skille oznaczają je jawnie - wykonuj je dopiero po potwierdzeniu przez człowieka.
 
 ### Bramka człowieka
 

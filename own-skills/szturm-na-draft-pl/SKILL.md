@@ -24,10 +24,10 @@ metadata:
   plan: dokumentacja/06-PLAN-SKILL-SZTURM-NA-DRAFT.md
   companion_skills: >-
     redline-docx-pl, ocena-outputu-pl, citation-grounding-pl, patron-weryfikacja-cytatow,
-    ekstraktor-cytatow-pl, iura, lexcache, patron-identyfikatory-pl, deliverable-fidelity-pl,
+    ekstraktor-cytatow-pl, mcp-saos, patron-identyfikatory-pl, deliverable-fidelity-pl,
     analizator-dowodow-v3, pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl,
     adversarial-legal-review-pl, subsumpcja-pl, zarzuty-do-opinii-bieglego, marko-pl-content,
-    humanizer-pl, patron-pisz-po-ludzku, legal-request-router-pl, legal-ai-audit-bundle
+    pisz-po-polsku
 ---
 
 # Szturm na draft
@@ -50,9 +50,9 @@ reszta to dopiski do plików inkrementalnych.
 1. `<nowa_wersja>_REDLINE.docx` (w `RUN/`, czyli `_robocze/`; autor otwiera go stamtąd, by odrzucić zmianę)
    - wszystkie poprawki jako zmiany śledzone Worda, przy każdej komentarz
    `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
-2. `drafty/<pismo>/<nowa_wersja>.docx` - kopia z zastosowanymi **wszystkimi** zmianami (AUTO, REDAKCJA i DECYZJA_AUTORA),
-   bez śladów i komentarzy. Oba pliki powstają jednocześnie z tej samej listy edycji. Autor, który
-   odrzuca zmianę DECYZJA_AUTORA, robi to w REDLINE (jedno kliknięcie) i stamtąd przyjmuje resztę.
+2. `drafty/<pismo>/<nowa_wersja>.docx` - kopia z zastosowanymi zmianami AUTO i REDAKCJA, bez śladów i komentarzy.
+   Zmiany DECYZJA_AUTORA **nie trafiają do kopii**: są wyłącznie propozycjami w REDLINE (zmiana śledzona z etykietą)
+   i pytaniami w raporcie, dopóki autor ich nie zatwierdzi. Autor przyjmuje je w REDLINE.
    **Bez PDF** - PDF robi prawnik po własnej korekcie.
 3. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie, plus pytania do autora
    wyłącznie tam, gdzie model nie może rozstrzygnąć (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane).
@@ -73,16 +73,14 @@ wejście bez numeru = `_v2`). Wejście zostaje nietknięte.
 | `fakty_potwierdzone[]` | fakty, które klient zna z własnej obserwacji, ze źródłem | nie wolno ich osłabiać; najwyżej dopisać źródło |
 | `decyzje_autora` | rejestr decyzji zamkniętych | nie otwierać ponownie; zgłaszać tylko sprzeczność z nowym faktem |
 | `poprzednie_kotwice` | karta `ocena-outputu-pl` z poprzedniego przebiegu | sprawdzić, czy kotwice zdjęto |
-| `stawka` | S / M / L | bramka kosztu; domyślnie z `legal-request-router-pl` |
 
 Czego brakuje, ustal w E0 z rejestru stałego sprawy; pytaj autora tylko o to, czego tam nie ma
-(zwykle: teza nadrzędna i stawka przy pierwszym przebiegu). Rejestry zapisz do
+(zwykle: teza nadrzędna przy pierwszym przebiegu). Rejestry zapisz do
 `<katalog_przebiegu>/rejestry.json` - to wejście skryptu syntezy:
 
 ```json
 {
   "teza_nadrzedna": "…",
-  "stawka": "M",
   "fakty_potwierdzone": [
     {"id": "F1", "tekst": "dosłowny fragment pisma z faktem", "zrodlo": "wyjaśnienia z 23.07.2026",
      "z_akt": false, "wyklucza": ["zwrot, którego nie wolno dopisać jako alternatywy"]}
@@ -98,16 +96,16 @@ Fakt klienta bez dokumentu (`z_akt: false`) zostaje w piśmie jako wyjaśnienia/
 fakt z akt; jeśli tekst podaje go jako fakt z akt, to ustalenie FAKT_BEZ_ZRODLA, a naprawa to nazwanie
 źródła, nie usunięcie faktu.
 
-## Bramka kosztu
+## Profil MAX (stały, bez bramki kosztu)
 
-| Stawka | Soczewki | Kiedy |
-|---|---|---|
-| **S** | E1 + `marko-pl-content` + `atak-przeciwnika-pl` | pismo proste, wewnętrzne |
-| **M** | S + `pierwsze-wrazenie-sedziego-pl` + `MOD-ATAK-NA-DRAFT` + `deliverable-fidelity-pl` + E2 + E4 pełne | pismo procesowe |
-| **L** | M + `adversarial-legal-review-pl` (4 role, panel rozbieżności) + `subsumpcja-pl` + `zarzuty-do-opinii-bieglego` odwrotnie (załączniki techniczne) + `legal-ai-audit-bundle` | przed rozprawą, opinia, sprawa z terminem |
+Każde pismo dostaje pełny zestaw soczewek: E1 + `marko-pl-content` + `atak-przeciwnika-pl` + `pierwsze-wrazenie-sedziego-pl`
++ `MOD-ATAK-NA-DRAFT` + `deliverable-fidelity-pl` + E2 (spójność pełna) + E4 pełne + `adversarial-legal-review-pl`
+(4 role, panel rozbieżności) + `subsumpcja-pl` + `zarzuty-do-opinii-bieglego` odwrotnie (załączniki techniczne).
+Nie ma stawek S/M/L ani limitu rund wynikającego z kosztu. Soczewki uruchamiaj jako osobne przebiegi, najlepiej w osobnych
+kontekstach (recenzent bez wniosków poprzednich); „OK" jednej nie zwalnia z następnej.
 
-Limit rund E8: S = 1, M = 2, L = 3. Mandat każdej soczewki, jej wejście i klasy, które zgłasza:
-[references/soczewki.md](references/soczewki.md). Przeczytaj go przed E1.
+Pętla E8: minimum 2 pełne przebiegi, maksimum 5; przerwij wcześniej tylko po dwóch kolejnych przebiegach bez nowych ustaleń.
+Mandat każdej soczewki, jej wejście i klasy, które zgłasza: [references/soczewki.md](references/soczewki.md). Przeczytaj go przed E1.
 
 ## Przebieg
 
@@ -138,13 +136,13 @@ jednorazowy, nie katalog raportów (`shared/MOD-PLIKI-INKREMENTALNE.md`). Katalo
 
 ### E1-E4 - soczewki
 
-Uruchamiaj wg stawki i [references/soczewki.md](references/soczewki.md). Każda soczewka zapisuje
+Uruchamiaj wszystkie soczewki wg [references/soczewki.md](references/soczewki.md). Każda soczewka zapisuje
 **tylko** listę ustaleń w schemacie [references/schemat-ustalenia.json](references/schemat-ustalenia.json)
 do `RUN/ustalenia/<NN>_<soczewka>.json` - nie osobny raport.
 
 - **E1 zawsze i najpierw.** Deterministyczne: cytaty z akt dosłownie, sygnatura i data **z treści
-  orzeczenia** (metadane SAOS bywają błędne), przepis z obowiązującego t.j. (`lexcache isap pdf … --find`).
-  Konektor offline → cache lexcache z datą pobrania; bez cache → ustalenie `DOWOD` „NIEPEWNE - źródło
+  orzeczenia** (metadane SAOS bywają błędne), przepis z obowiązującego t.j. (MCP `isap` (tekst jednolity)).
+  Konektor offline → wynik oznaczony jako niezweryfikowany; → ustalenie `DOWOD` „NIEPEWNE - źródło
   niedostępne”, nigdy „OK”.
 - **E3 niezależnie.** Soczewki IZOLOWANE (sędzia, przeciwnik) dostają sam draft i tezę - bez akt,
   bez cudzych ustaleń. Mając subagentów, puść je równolegle. Rolę przeciwnika dobierz do sprawy
@@ -204,7 +202,9 @@ powód jest w raporcie - to pytanie do autora, nie do obejścia.
 ```bash
 A="Szturm <dd.mm.rrrr>"                         # etykieta przebiegu = autor zmian (nie nazwa konta)
 uvx --from adeu==1.30.0 adeu apply draft.docx RUN/edits.PISMO.redline.json -o <nowa>_REDLINE.docx --author "$A"
-uvx --from adeu==1.30.0 adeu sanitize <nowa>_REDLINE.docx -o <nowa>.docx --accept-all --author "$A"
+# kopia czysta: tylko AUTO + REDAKCJA (bez DECYZJA_AUTORA)
+uvx --from adeu==1.30.0 adeu apply draft.docx RUN/edits.PISMO.json -o RUN/_auto_redline.docx --author "$A"
+uvx --from adeu==1.30.0 adeu sanitize RUN/_auto_redline.docx -o <nowa>.docx --accept-all --author "$A"
 uv run $SZ/fix_format.py <nowa>.docx --apply -o <nowa>.fmt.docx --json > RUN/format.json && mv <nowa>.fmt.docx <nowa>.docx
 python3 $SZ/weryfikuj_wynik.py --redline <nowa>_REDLINE.docx --czysty <nowa>.docx \
     --edits RUN/edits.PISMO.json RUN/edits.PISMO.decyzje.json --katalog <katalog_wyniku>
@@ -214,7 +214,7 @@ python3 $SZ/weryfikuj_wynik.py --redline <nowa>_REDLINE.docx --czysty <nowa>.doc
   jest wypisana w `RUN/format.json` i w raporcie w sekcji „Zmiany nieśledzone”.
 - `weryfikuj_wynik.py` sprawdza plik, nie log adeu: `w:ins`/`w:del`/`w:delText`, dokładnie jeden komentarz
   przypięty do tekstu na edycję (osierocone wpisy w `comments.xml` z wcześniejszej edycji draftu nie liczą się,
-  ale REDLINE je niesie - przed wysyłką REDLINE `adeu sanitize`), kopia z zastosowanymi zmianami bez śladów, `skan_placeholder.py` z redline-docx-pl, brak PDF w katalogu.
+  ale REDLINE je niesie - przed wysyłką REDLINE `adeu sanitize`), kopia z zastosowanymi zmianami AUTO i REDAKCJA bez śladów, `skan_placeholder.py` z redline-docx-pl, brak PDF w katalogu.
 
 **Dlaczego tu bez potwierdzenia przed `apply` i `sanitize --accept-all`** (redline-docx-pl traktuje je
 jako tier M i D): szturm nie dotyka pliku wejściowego i niczego nie wysyła. Zapisuje dwa **nowe**
@@ -228,12 +228,12 @@ nadpisać plik w miejscu albo wysłać wynik na zewnątrz - wracają reguły red
 1. E1 na `<nowa>.clean.md` (wyciąg z nowej wersji). Kotwicę `ocena-outputu-pl` zdejmuje wyłącznie
    ponowny przebieg narzędzia, które ją postawiło (reguła monotoniczności) - nie uzasadnienie.
 2. Karta `ocena-outputu-pl` z linią `REWIZJA #r` względem poprzedniej.
-3. Przy M/L: funkcja werdyktu `adversarial-legal-review-pl` (kroki A/B/C, sekcja 4b) i `wynik_zbiorczy`
+3. Funkcja werdyktu `adversarial-legal-review-pl` (kroki A/B/C, sekcja 4b) i `wynik_zbiorczy`
    (sekcja 4a).
 4. **Nigdy gorsza wersja:** jeżeli runda obniża `wynik_zbiorczy` albo otwiera nową kotwicę, wróć do
    najlepszej wersji i zakończ ze stanem `wymuszone_wyjscie_na_v<najlepsza>`.
-5. Nowe ustalenia rundy → E5 z `--poprzednie` (stałe ID), E7 na wersji z poprzedniej rundy. Limit rund
-   wg stawki; po limicie zostaje lista otwartych pozycji, nie kolejna runda.
+5. Nowe ustalenia rundy → E5 z `--poprzednie` (stałe ID), E7 na wersji z poprzedniej rundy. Po osiągnięciu maksimum (5)
+   zostaje lista otwartych pozycji, nie kolejna runda.
 
 ### E9 - raport i rejestr
 
@@ -248,12 +248,12 @@ katalogi dowodów wpadłyby do historii) i wpis do logu sesji, jeśli repo go wy
 ## Raport dla użytkownika (odpowiedź w czacie)
 
 ```
-SZTURM <dokument(y)> | stawka <S/M/L> | rundy <r>/<limit> | stan <…>
+SZTURM <dokument(y)> | profil MAX | rundy <r>/5 | stan <…>
 Ustalenia: <x> zgłoszonych → <y> po deduplikacji | WPROWADZONE <a> | DO DECYZJI <b> | PYTANIA <c> | ZABLOKOWANE <d>
 E1: cytaty <ok/✗> | sygnatury <…> | przepisy <…> | kotwice z poprzedniego przebiegu: <zdjęte/otwarte>
 Pliki: <nowa>_REDLINE.docx (w:ins i / w:del d, komentarzy k) | <nowa>.docx (wszystkie zmiany zastosowane) | RUN/raport_synteza.md
 Zmiany nieśledzone: <lista z format.json albo „brak”>
-Nieuruchomione / ograniczenia: <konektory offline, cache z datą, soczewki pominięte przez stawkę>
+Nieuruchomione / ograniczenia: <konektory offline, cache z datą, soczewki, których nie udało się uruchomić (podaj powód)>
 
 Pytania do autora (tylko to, czego model nie rozstrzyga):
 1. <S-ID> …
@@ -268,7 +268,7 @@ Bez tabel per skill i bez streszczeń raportów soczewek - one są w `RUN/ustale
 - **AUTO na złym źródle.** Data i sygnatura tylko z treści orzeczenia; metadane nie są dowodem.
 - **Fakt klienta bez dokumentu** wchodzi jako wyjaśnienia strony z komentarzem „DO WERYFIKACJI
   AUTORA”, nigdy jako fakt z akt.
-- **Konektory MCP offline:** cache lexcache z jawną datą pobrania; bez cache wynik NIEPEWNE.
+- **Konektory MCP offline:** wynik NIEPEWNE z jawną adnotacją o braku weryfikacji.
 - Skill poprawia i raportuje; nie składa pisma, nie generuje PDF i nie wysyła niczego na zewnątrz.
   Przed wysyłką: `adeu sanitize --keep-markup` / `--accept-all` wg redline-docx-pl, krok 4.
 

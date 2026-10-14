@@ -21,6 +21,10 @@ Pomagasz osobie, która doznała krzywdy, przekazać ją organom ścigania tak, 
 postępowanie. Nie jesteś prokuratorem ani sędzią tej relacji. Jesteś kimś, kto słucha, dopytuje,
 porządkuje i pisze.
 
+## Tryb pracy: poza torem pism procesowych
+
+Zawiadomienie o przestępstwie omija wszystkie bramki toru procesowego: KROK 1B, CN-GATE/REM-GATE, STEP-TRACKER (ST-FINAL), CLAIM-VALIDATION, pipeline `pisma-procesowe-v3` i `pisma-proste-v2`. Router ma na to osobny wyjątek. Pismo jest subiektywne i ocenne, nie oględne. Jedyne bramki: własna spójność relacji (K5) i aktualne brzmienie przepisów z listy na końcu.
+
 ## Kanon tego skilla
 
 Te zasady mają pierwszeństwo przed regułami innych skilli (zob. „Kolizje z innymi skillami”).
@@ -135,7 +139,6 @@ Bez wypełniaczy.
 4. Lista „oczami prokuratora”: czy pismo uprzedza typowe powody odmowy.
 5. Forma: organ z adresem sprawdzonym wyszukiwaniem (nie z pamięci), dane autora, otwarcie,
    wniosek o ściganie, lista przepisów (tylko zweryfikowane), data, podpis.
-6. Pass anty-AI według `humanizer-pl` (wzorce 1-34, 43) z wyjątkami opisanymi w `references/styl.md`.
 7. Dla wersji do złożenia: raport HARDGATE bez nierozstrzygniętej sprzeczności.
 
 ### F8. Zapis (repo abogada, `shared/MOD-PLIKI-INKREMENTALNE.md`)
@@ -164,9 +167,8 @@ Przy oddaniu pisma:
 
 | Skill | Co z niego bierzesz | Czego NIE stosujesz |
 |---|---|---|
-| `pisma-proste-v2` | nagłówek (M4), weryfikacja adresu organu (POV-B), lista kontrolna (M8), `⬛ [UZUPEŁNIJ: …]` dla danych formalnych | `shared/CLAIM-VALIDATION.md` (zastępowanie relacji dokumentami, usuwanie twierdzeń bez oparcia), „jedno pytanie zbiorcze”, moduł opłat |
-| `humanizer-pl` | wzorce anty-AI, rytm, czasowniki, zakres emocji, typografia, pisownia 2026 | kalibracja głosu MateMatic, tryb dokumentacji |
-| `patron-pisz-po-ludzku` | zachowanie faktów, lista usunięć 1-9 | sekcja „Teksty prawnicze”: formuły procesowe tu są wadą (poza otwarciem, wnioskiem o ściganie i listą przepisów) |
+| `pisma-proste-v2` | WYŁĄCZNIE wzorzec nagłówka (M4) i `⬛ [UZUPEŁNIJ: …]` dla danych formalnych; tor pisma prostego nie jest uruchamiany | cała reszta toru, w tym `shared/CLAIM-VALIDATION.md` (zastępowanie relacji dokumentami, usuwanie twierdzeń bez oparcia), „jedno pytanie zbiorcze”, moduł opłat |
+| `pisz-po-polsku` | wzorce anty-AI, rytm, czasowniki, zakres emocji, typografia, pisownia 2026, zachowanie faktów | tryb „Pismo prawnicze”: formuły procesowe są tu wadą (poza otwarciem, wnioskiem o ściganie i listą przepisów); używaj trybu „Relacja pokrzywdzonego” |
 | `zazalenie-na-postanowienie-prokuratora` | wiedza, na co patrzy prokurator i co się zaskarża po odmowie | styl uzasadnienia, zarzuty, „każde twierdzenie zakotwiczone w dowodzie” |
 | `szturm-na-draft-pl`, `adversarial-legal-review-pl`, `atak-przeciwnika-pl` | tylko na wyraźne życzenie autora, z instrukcją: atak służy uprzedzeniu powodów odmowy, nie osłabianiu relacji | rozmywanie tez alternatywami, dopisywanie zastrzeżeń, „korygowanie” relacji autora |
 
@@ -185,6 +187,5 @@ Pismo procesowe w już toczącym się postępowaniu (wniosek dowodowy, zażaleni
 | `references/forma.md` | F6 (nagłówek, otwarcie, wniosek o ściganie, lista przepisów) i przy informacjach praktycznych |
 | `assets/szablon.md` | F6 |
 | `scripts/rejestr_relacji.py` | F4 w repo abogada |
-| `evals/evals.json` | rozwój skilla (skill-creator) |
 
 Historia zmian i decyzje autora: `references/CHANGELOG.md`.

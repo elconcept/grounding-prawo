@@ -1,0 +1,23 @@
+diff -ruN a/prawny-router-v3/SKILL.md b/prawny-router-v3/SKILL.md
+--- a/prawny-router-v3/SKILL.md	2026-10-14 21:11:33.639558256 +0200
++++ b/prawny-router-v3/SKILL.md	2026-10-14 21:11:33.688558688 +0200
+@@ -220,6 +220,19 @@
+          jurysdykcyjnego
+ ```
+ 
++## KONFIGURACJA PLUGINU grounding-prawo (nadrzędna wobec ogólnych zapisów poniżej)
++
++- **Źródła prawa:** najpierw konektory MCP z portalu `lex.xlap.pl/mcp` (ISAP, SAOS z lokalnym dumpem, NSA/CBOSA, KRS, UODO,
++  EUR-Lex/SPARQL, EUREKA). `web_search`/`web_fetch` tylko gdy konektor nie pokrywa źródła. Granice pokrycia podawaj wprost.
++  Brak cache lokalnego: nie ma już skilla `lexcache`.
++- **Dane osobowe:** pracujemy na oryginałach, bez anonimizacji i bez ograniczeń „nie do chmury” (KROK 0A zamknięty).
++- **Typy pism:** pozew, odpowiedź na pozew, apelacja karna, zażalenie na postanowienie prokuratora, zarzuty do opinii biegłego
++  obsługuje `pisma-procesowe-v3` przez `modules/typy/`. Zawiadomienie o przestępstwie: wyjątek poniżej.
++- **Po wygenerowaniu pisma:** zaproponuj `szturm-na-draft-pl` (profil MAX, bez tańszych wariantów) i `pisz-po-polsku` do redakcji.
++  Pełna ścieżka kontroli jest zawsze; nie proponuj lżejszej.
++- **Moduły dziedzinowe wyłączone w tym pluginie:** praca/ZUS (DR-04), podatki (DR-06), zamówienia (DR-07), samorząd (DR-08),
++  budownictwo/środowisko (DR-09), compliance (DR-15). Gdy sprawa ich wymaga, powiedz o tym wprost i nie wymyślaj ścieżki.
++
+ ## WYJĄTEK: ZAWIADOMIENIE O PRZESTĘPSTWIE (sprawdź PRZED KROKIEM 0)
+ 
+ Gdy użytkownik jako pokrzywdzony chce zawiadomić organy ścigania o przestępstwie (frazy: „zawiadomienie

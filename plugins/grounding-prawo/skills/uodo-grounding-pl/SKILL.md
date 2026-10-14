@@ -24,7 +24,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  companion_skills: citation-grounding-pl, eu-sparql-search, saos-orzecznictwo, let-it-be, legal-ai-audit-bundle
+  companion_skills: citation-grounding-pl
   shared_engine: citation-grounding-pl/scripts/ground-citations.mjs
 ---
 
@@ -76,7 +76,6 @@ Przykłady na realnych sygnaturach: `examples/przyklad-weryfikacja.md`, `example
    ustawy z 10.05.2018. Nie przypisuj decyzji GIODO „Prezesowi UODO" ani odwrotnie. Patrz `traps.md`.
 4. **RODO ≠ krajowa ustawa.** RODO = rozporządzenie UE 2016/679 (art. 5, 6, 32, 33, 83…). Ustawa o
    ochronie danych osobowych z 10 maja 2018 r. to akt KRAJOWY uzupełniający. Nie myl podstawy prawnej.
-5. **Dane osobowe = tajemnica.** Materiały sprawy pseudonimizuj przez `let-it-be` PRZED weryfikacją.
 6. Awaria fetcha uodo.gov.pl = pracuj drabinkę (PDF / Chrome / user), nie porzucaj realnej decyzji.
 
 ## Czym ten skill NIE jest

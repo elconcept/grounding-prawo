@@ -47,8 +47,6 @@ kto to zrobił, co autor widział, a co z tego wnosi. Prosto, ale nie prostacko.
 
 Po redakcji przejdź `humanizer-pl` (wzorce 1-34 i 43: pisownia 2026) i zadaj pytanie „co tu wciąż
 zdradza AI?”. Wyjątki dla zawiadomienia:
-- `humanizer-pl` #33 (zakres emocji) stosuj mocno: strach, złość, upokorzenie są dozwolone.
-- `patron-pisz-po-ludzku`, sekcja „Teksty prawnicze”, **nie obowiązuje**: formuły procesowe usuwasz (zostają tylko otwarcie, wniosek o ściganie i lista przepisów).
 - Typografia: łącznik „-” (nie pauza), polskie cudzysłowy „…”.
 
 ## TODO v0.3

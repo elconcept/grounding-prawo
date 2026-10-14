@@ -21,23 +21,15 @@ dependencies:
     - pisma-procesowe-v3
     - przesluchanie-swiadkow-v2-min90
     - chronologia-sprawy-v1
-    - raport-sytuacyjny-v2
-    - raport-klienta-v1
     - dr-01-ustroj-konstytucyjny-i-zrodla-prawa
     - dr-02-prawo-cywilne-rodzinne-gospodarcze
     - dr-03-prawo-karne-wykroczenia-egzekucja
-    - dr-04-prawo-pracy-zus-swiadczenia
     - dr-05-prawo-administracyjne-sadowoadministracyjne
-    - dr-06-podatki-finanse-publiczne-aml
-    - dr-07-zamowienia-publiczne-fundusze-ue
-    - dr-08-samorzad-terytorialny-prawo-lokalne
-    - dr-09-budownictwo-srodowisko-energia-transport
     - dr-10-zdrowie-farmacja-zywnosc-rolnictwo
     - dr-11-cyfrowe-cyber-ai-dane-ip
     - dr-12-sadownictwo-prokuratura-zawody-prawnicze
     - dr-13-sluzby-bezpieczenstwo-informacje-niejawne
     - dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka
-    - dr-15-compliance-iso-governance-audyt
     - dr-16-pisma-strategia-dowody-orzecznictwo
   # 3.57: pełny zestaw 31 skilli = `dependencies` wpisu routera w .claude-plugin/marketplace.json
   called_by:
@@ -220,88 +212,34 @@ UP-6: KAŻDA sprawa → CN-GATE przed analizą (shared/MOD-CN-GATE.md) i REM-GAT
          jurysdykcyjnego
 ```
 
+## KONFIGURACJA PLUGINU grounding-prawo (nadrzędna wobec ogólnych zapisów poniżej)
+
+- **Źródła prawa:** najpierw konektory MCP z portalu `lex.xlap.pl/mcp` (ISAP, SAOS z lokalnym dumpem, NSA/CBOSA, KRS, UODO,
+  EUR-Lex/SPARQL, EUREKA). `web_search`/`web_fetch` tylko gdy konektor nie pokrywa źródła. Granice pokrycia podawaj wprost.
+  Brak cache lokalnego: nie ma już skilla `lexcache`.
+- **Dane osobowe:** pracujemy na oryginałach, bez anonimizacji i bez ograniczeń „nie do chmury” (KROK 0A zamknięty).
+- **Typy pism:** pozew, odpowiedź na pozew, apelacja karna, zażalenie na postanowienie prokuratora, zarzuty do opinii biegłego
+  obsługuje `pisma-procesowe-v3` przez `modules/typy/`. Zawiadomienie o przestępstwie: wyjątek poniżej.
+- **Po wygenerowaniu pisma:** zaproponuj `szturm-na-draft-pl` (profil MAX, bez tańszych wariantów) i `pisz-po-polsku` do redakcji.
+  Pełna ścieżka kontroli jest zawsze; nie proponuj lżejszej.
+- **Moduły dziedzinowe wyłączone w tym pluginie:** praca/ZUS (DR-04), podatki (DR-06), zamówienia (DR-07), samorząd (DR-08),
+  budownictwo/środowisko (DR-09), compliance (DR-15). Gdy sprawa ich wymaga, powiedz o tym wprost i nie wymyślaj ścieżki.
+
+## WYJĄTEK: ZAWIADOMIENIE O PRZESTĘPSTWIE (sprawdź PRZED KROKIEM 0)
+
+Gdy użytkownik jako pokrzywdzony chce zawiadomić organy ścigania o przestępstwie (frazy: „zawiadomienie
+o przestępstwie", „doniesienie", „zgłosić na policję/do prokuratury", „opisz, co mi zrobił"), zawiadomienie
+nie jest pismem procesowym i nie przechodzi toru pism:
+
+- PRIMARY: `view zawiadomienie-o-przestepstwie/SKILL.md`; skill ma własny kanon (K1–K5) i własną bramkę spójności.
+- NIE stosuj: ST-INIT/ST-FINAL i FAZY 2–3 STEP-TRACKERA, KROK 0C/PD0, CN-GATE/REM-GATE, KROK 1B, CLAIM-VALIDATION,
+  pipeline `pisma-procesowe-v3` ani `pisma-proste-v2`. Relacja pokrzywdzonego nie jest weryfikowana wobec dokumentów
+  i nie jest „oględna": ma być subiektywna, ocenna i stanowcza tam, gdzie autor jest pewny.
+- PRAWO-HARDGATE obowiązuje wyłącznie dla listy przepisów na końcu pisma (numer artykułu z aktualnego tekstu).
+- Gdy to samo zdarzenie wymaga pisma w toczącym się postępowaniu (zażalenie, wniosek dowodowy): wtedy normalny tor.
+
 ## SEKWENCJA GŁÓWNA
 
-```
-KROK 0  → Wczytaj ten plik → ⛔ HG-ACTIVE (blok powyżej) — potwierdź przed kontynuacją
-KROK 0-ST → ⛔ [ST-INIT — STEP-TRACKER] (zaraz po HG-ACTIVE, przed jakimkolwiek krokiem):
-          view shared/MOD-STEP-TRACKER.md → zainicjuj REJESTR kroków
-          (FAZA 0). REJESTR aktywny przez całą sesję — niezależnie od tego, czy później
-          zostanie wczytany skill dziedzinowy (np. pisma-procesowe-v3).
-          ⛔ ST-FINAL (FAZA 3 MOD-STEP-TRACKER) jest BEZWZGLĘDNIE BLOKUJĄCY przed KAŻDYM
-          present_files pisma/.docx — także gdy pismo generowane jest bezpośrednio z routera
-          bez pełnego pipeline pisma-procesowe-v3. Polecenia „dalej"/„kontynuuj"/„generuj"
-          NIE zwalniają z ST-FINAL ani z obowiązku raportowania pominięć (FAZA 2).
-KROK 0-RPK → Gdy zakres obejmuje ≥10 ponumerowanych jednostek albo pracę
-          partiami nad wyliczoną listą: view shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md
-          i wykonaj RPK-INIT/RPK-COMMIT/RPK-RESUME zgodnie z modułem.
-KROK 0A → [ANONIMIZER] → view references/KROK0A-anonimizer.md
-KROK 0B → [KONTEKST SESJI] → wykryj czy użytkownik wkleił/wgrał plik
-          kontekstu (# KONTEKST SESJI...) lub czy napisał "masz kontekst" /
-          "wczytaj sesję" / "plik z poprzedniej sesji" — jeśli TAK:
-          view shared/MOD-KONTEKST-SESJI.md → wykonaj
-          TRYB IMPORT (§4). IMPORT_AKTYWNY = true dla tej sesji.
-          Jeśli NIE — pomiń, kontynuuj do KROK 1.
-KROK 0C → Gdy są pliki lub wzmianka o załącznikach: najpierw view
-          shared/MOD-SKAN-DOWODOW-KOMPLETNY.md i wykonaj pełny SD-VER.
-          Po raporcie SD-VER zakończ turę. Dla dużych materiałów wykonaj też
-          shared/MOD-PORCJOWANIE-DOWODOW.md; jego STOP/checkpointy są blokujące.
-KROK 0D → [STATUS PODMIOTÓW — OZNACZENIE ⬛] → obowiązkowy gdy w materiałach widoczne
-          dane podmiotów (spółki, organy, sądy, fundusze):
-          ⛔ Każdy podmiot niebędący osobą prywatną = natychmiast ⬛ [DO WERYFIKACJI]
-          ⛔ Status ⬛ utrzymuje się aż do faktycznego web_search/web_fetch w tej sesji
-          ⛔ ZAKAZ wstawiania danych ⬛ do pisma / argumentacji bez weryfikacji
-          Szczegóły + STATUS-LIFECYCLE: view shared/PRE-W2-VERIFICATION-GATE.md (PRE-W2.0)
-          Wyjątki (NIE oznaczaj): imię/nazwisko, adres, PESEL osoby fizycznej
-KROK 1  → [DETEKCJA TRYBU + HARD GATE] → view references/KROK1-detekcja.md
-KROK 2  → [ROUTING [1]–[11]] → poniżej w tym pliku
-KROK 3  → Załaduj PRIMARY → SECONDARY → FALLBACK
-          ⛔ [R-3.54-a] Skill dziedzinowy (DR-01…DR-16) wczytuj PRZED weryfikacją
-          przepisów, nie po niej — to on wskazuje, które przepisy weryfikować.
-          Odroczenie DR-xx „do czasu weryfikacji” jest niedopuszczalne.
-          ⛔ [R-3.54-b] Gdy sprawa dotyczy odpowiedzi na wezwanie / zarządzenie
-          sądu: przed decyzją PRIMARY / ODRZUCONE odczytaj treść wezwania.
-          Wezwanie żądające stanowiska, twierdzeń lub wniosków dowodowych →
-          pisma-procesowe-v3; wyłącznie uzupełnienie braku formalnego lub
-          przedłożenie dokumentu → pisma-proste-v2. Powód odrzucenia w KROKU 3A
-          musi wskazywać, co wynika z treści wezwania.
-KROK 3A → [ŚLAD ROUTINGU — OBOWIĄZKOWY]
-          Bezpośrednio po KROK 3, PRZED przejściem do KROK 4, wypisz blok:
-          ```
-          TRYB: [LAIK / PRAWNIK]
-          PRIMARY: [nazwa skilla] — ROUTER-WCZYTANY: [TAK: ścieżka view / NIE]
-          SECONDARY: [nazwa(-y) skilla] — ROUTER-WCZYTANY: [TAK / NIE / N-D]
-          ODRZUCONE: [skille rozważone i odrzucone] — powód: [jedno zdanie]
-          PROFIL: [PEŁNY / LEKKI] — rdzeń R-1…R-5: [TAK]
-          ODROCZONE: [zasób — wyzwalacz, który jeszcze nie padł / BRAK]
-          WERSJA ROUTERA: [numer z YAML frontmatter tego pliku]
-          RESOLVER: shared → [katalog] (v[wersja]); DUPLIKATY: [BRAK / skill v1 i v2]
-          ```
-          ⛔ Gdy `ROUTER-WCZYTANY: NIE` dla PRIMARY (np. z powodu braku
-          dostępu do narzędzi plikowych w danym środowisku) — poprzedź
-          resztę odpowiedzi nagłówkiem `⛔ TRYB ZDEGRADOWANY — router
-          niewczytany`. Efekt uboczny pożądany: rozbraja sprzeczność
-          „zakaz narzędzi plikowych + wykonaj routing" — brak wczytania
-          staje się zadeklarowanym, jawnym stanem, nie milczącym
-          pominięciem karanym jako uchybienie (patrz F-113 zakres (a)).
-          `ROUTER-WCZYTANY: TAK` wymaga faktycznego odczytu w tej turze;
-          kontrolę antyfasadową wykonaj z `references/SELF-CHECK.md`.
-KROK 4  → Wykonaj analizę / zbierz dane
-KROK 5  → Sprawdź TYP WYJŚCIA → SEKWENCJA END-TO-END → poniżej
-KROK 5B → [EXPORT KONTEKSTU] → po KROK 5 jeśli sesja zawierała KROK 3B
-           (analizator-dowodow-v3) lub W3 (pisma-procesowe-v3):
-           view shared/MOD-KONTEKST-SESJI.md → wykonaj
-           TRYB EXPORT (§3) — generuj plik .md i present_files.
-KROK 6  → Jeśli pismo → generuj .docx
-          Kontrola jakości i statusu DRAFT/FINAL zarządzana przez pisma-procesowe-v3
-          (shared/CP-GATE.md). Router nie ingeruje w pipeline CP — tylko deleguje.
-          ⛔ KROK 6-ST — ST-FINAL (BLOKUJĄCY): przed present_files KAŻDEGO pisma/.docx
-          wyświetl PEŁNY REJESTR KROKÓW (FAZA 3 MOD-STEP-TRACKER). Jeśli STATUS =
-          ⚠️ DRAFT — NIEZWERYFIKOWANY → pokaż raport pominięć (FAZA 2) i czekaj na decyzję
-          a/b. ZAKAZ present_files bez uprzedniego ST-FINAL — także gdy router generuje
-          pismo bez pełnego pipeline pisma-procesowe-v3.
-KROK 7  → DISCLAIMER → view shared/DISCLAIMER.md
-```
 
 > ⛔ KROK 0A jest BRAMKĄ TWARDĄ. Żaden kolejny krok nie może być wykonany
 > jeśli KROK 0A nie jest zamknięty (decyzja_sesji ≠ null).
@@ -518,7 +456,6 @@ została poprawnie zamknięta.
 
 - **Reguła 1 — wejście:** router jest pierwszym krokiem; wczytaj PRIMARY przed analizą.
 - **Reguła 1C — pliki:** wykonaj KROK 0C i PD0; status krytyczny blokuje analizę.
-- **Reguła 2 — anonimizacja:** zamknij KROK 0A przed analizą.
 - **Reguła 3 — HARD GATE:** przed analizą wykonaj KROK 1B.
 - **Reguła 4 — niejednoznaczność:** zadaj jedno pytanie, nie zakładaj trybu.
 - **Reguła 5 — kreator:** żądanie kreatora uruchamia go natychmiast.

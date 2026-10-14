@@ -121,4 +121,3 @@ epizod do lejka krzywd (art. 271 § 1 k.k. - poświadczenie nieprawdy przez funk
   zaproponuj wniosek o wgląd w akta jako krok poza pismem.
 
 ## TODO v0.3
-- Półautomatyczna ekstrakcja twierdzeń z protokołów do tabeli (skrypt lub `doc-intel-llm-tier-pl`).

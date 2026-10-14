@@ -39,7 +39,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 2.6.0
-  companion_skills: saos-orzecznictwo, eu-sparql-search, legal-ai-audit-bundle, adversarial-legal-review-pl, deliverable-fidelity-pl, legal-request-router-pl
+  companion_skills: adversarial-legal-review-pl, deliverable-fidelity-pl
 ---
 
 # Citation Grounding PL - mechaniczny weryfikator cytatu (gradient)
@@ -123,9 +123,6 @@ oznacz je `claim_type` i poddaj weryfikacji na właściwym poziomie. Bez cudzys�
 ## Workflow
 
 1. **Zbierz źródła i rozwiąż kotwice** - tekst dokumentu źródłowego dostępny lokalnie:
-   - Orzeczenia: `saos-orzecznictwo` (zwraca też datę i organ → kotwica)
-   - Akty EU: `eu-sparql-search` (CELEX → kotwica)
-   - Ustawy PL / umowy / pisma: dostarcza użytkownik (.txt/.md/.docx → markitdown)
    - Gdy bezpośredni fetch zawiedzie, pracuj **drabinkę źródeł**: `references/drabinka-zrodel-pl.md`
    - **Bez źródła nie ma weryfikacji TREŚĆ/FRAGMENT** - status `BRAK ŹRÓDŁA`, nie „prawdopodobnie ok".
 
@@ -255,7 +252,6 @@ NIE publikuj dopóki C3 i C5 nie zostaną poprawione lub usunięte. C4 wymaga z�
 
 - Skill działa **w całości lokalnie** - normalizacja i string-match w Node, bez wywołań sieciowych.
   (Rozwiązywanie kotwic przez SAOS/EUR-Lex robi agent osobnym krokiem - skrypt dostaje gotowy `anchor_resolved`.)
-- Dla materiałów objętych tajemnicą zawodową: pseudonimizuj wcześniej przez `let-it-be`.
 - Skrypt nie zapisuje logów poza katalogiem zadania.
 
 ## Integracja z AI Act
@@ -267,9 +263,6 @@ do `legal-ai-audit-bundle` obok deliverable.
 
 ## Integracja z innymi skillami
 
-- **`legal-request-router-pl`** routuje TU, gdy zapytanie zawiera powołania. Wysoka stawka →
-  rozwiąż wszystkie kotwice (ISTNIENIE) + paraphrase-judge na 🟡.
-- **`saos-orzecznictwo` / `eu-sparql-search`** = resolver kotwic (dają `anchor_resolved`) i źródło tekstu.
 - **`deliverable-fidelity-pl`** pyta „czy nic nie wypadło z podsumowania"; ten skill pyta „czy to,
   co zostało, jest prawdziwe". Komplementarne - oba przed wysłaniem high-stakes.
 - 🟡 `WYMAGA_OSADU` to dokładnie wejście dla warstwy paraphrase-judge (kaskada PATRON) -

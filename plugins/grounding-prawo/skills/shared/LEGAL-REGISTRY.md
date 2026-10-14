@@ -51,9 +51,6 @@ Dodano do rejestru obszary obowiązkowe:
 
 | Obszar | Moduł | Status |
 |---|---|---|
-| ZUS/KRUS i ubezpieczenia społeczne | `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-SUS-ZUS-ubezpieczenia-spoleczne.md` + `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KRUS-rolnicze-ubezpieczenia.md` | wymagaj kontroli ISAP przed cytowaniem |
-| niepełnosprawność/PFRON/świadczenie wspierające | `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-rehabilitacja-PFRON.md` + `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-swiadczenie-wspierajace-WZON.md` | wymagaj kontroli ISAP przed cytowaniem |
-| renty i emerytury FUS/KRUS | `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-SUS-ZUS-ubezpieczenia-spoleczne.md` + `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-FUS-zasilek-pogrzebowy-renta-rodzinna-waloryzacja.md` + `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KRUS-rolnicze-ubezpieczenia.md` | wymagaj kontroli ISAP przed cytowaniem |
 | biegli i opinie | `dr-12-sadownictwo-prokuratura-zawody-prawnicze/modules/mod-KPC-biegli-sadowi-opinie.md` | wymagaj kontroli aktu i rozporządzenia wykonawczego |
 | sądownictwo | `dr-01-ustroj-konstytucyjny-i-zrodla-prawa/modules/mod-USP-ustroj-sadow-powszechnych.md` | wymagaj kontroli ISAP i regulaminów |
 | ORA/OIRP/zawody zaufania | `dr-12-sadownictwo-prokuratura-zawody-prawnicze/modules/mod-ustawa-adwokatura.md` + `dr-12-sadownictwo-prokuratura-zawody-prawnicze/modules/mod-ustawa-radcowie-prawni.md` + właściwy moduł zawodu | ISAP + źródła samorządowe |

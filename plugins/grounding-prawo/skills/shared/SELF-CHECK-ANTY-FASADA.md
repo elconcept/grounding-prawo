@@ -63,7 +63,6 @@ odpowiedzi**, nie brak narzędzi w sesji. Nie wolno uzasadniać pominięcia tego
    |---|---|
    | Podłączone wcześniej jako KOPIA, przerobione na wywołanie | `analizator-dowodow-v3`, `prawny-router-v3` (references/SELF-CHECK.md), `pisma-proste-v2`, `analiza-sadowa-v6`, `przewodnik-prawny-v2`, `pisma-procesowe-v3` (references/SELF-CHECK-PISMA.md), `analizator-umow-v1` |
    | P1 — dodane 2026-08-23i | `orzeczenia-sadowe-v2`, `analizator-przepisow-v2` |
-   | P2 — dodane 2026-08-23i | `chronologia-sprawy-v1`, `przesluchanie-swiadkow-v2-min90`, `raport-klienta-v1`, `raport-sytuacyjny-v2` |
    | P3 — DO ZROBIENIA | 16 skilli DR-01…DR-16 |
    | ŚWIADOMIE POZA ZAKRESEM | `prawo-polskie-v2` — czysta fasada routingu, decyzja zapisana w jego `SKILL.md` (F-123, 2026-08-23g); wyzwalacz odwrócenia decyzji: pierwsze twierdzenie o TREŚCI prawa w tym skillu |
 

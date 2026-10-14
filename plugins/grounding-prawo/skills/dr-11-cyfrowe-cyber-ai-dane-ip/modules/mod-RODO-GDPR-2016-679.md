@@ -81,7 +81,6 @@ Dla BENCHMARKINGU orzeczniczego i predykcji wyniku wywołaj skill `orzeczenia-sa
 | Pozew o odszkodowanie RODO | `pisma-procesowe-v3` |
 | Skarga do UODO | `pisma-proste-v2` |
 | Naruszenie wizerunku + IP | `dr-11-cyfrowe-cyber-ai-dane-ip/modules/mod-PrAut-wlasnosc-intelektualna-IP.md` |
-| Monitoring w miejscu pracy | `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-prawo-pracy.md` |
 | Analiza szans procesowych | `analiza-sadowa-v6` |
 | Redakcja/audyt: polityka prywatności, RCP/RCO, PBI, upoważnienia, IOD, procedura naruszeń, archiwizacja/retencja, regulamin pracy/wynagradzania/ZFŚS | `analizator-umow-v1` → `mod-J21-rodo-archiwizacja-regulaminy.md` (J21) |
 | Klauzule RODO/DPA w umowie z kontrahentem | `analizator-umow-v1` → `mod-shared-rodo.md` |

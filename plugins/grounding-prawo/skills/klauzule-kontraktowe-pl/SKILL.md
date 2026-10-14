@@ -25,7 +25,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
-  companion_skills: contract-review-pl, citation-grounding-pl, redline-docx-pl, let-it-be
+  companion_skills: citation-grounding-pl, redline-docx-pl
 ---
 
 # Klauzule kontraktowe PL - lista kontrolna pojedynczej umowy
@@ -47,7 +47,6 @@ Traktowanie każdego braku jak red-flagi zakopuje prawdziwe luki w fałszywych a
 
 ## Różnica wobec contract-review-pl
 
-- `contract-review-pl` - bulk audit PORTFELA umów (folder PDF/DOCX) do jednej tabeli .docx.
 - `klauzule-kontraktowe-pl` - głęboki spotting JEDNEJ umowy po 41 kategoriach z kotwicą prawną.
 
 Naturalna kolejność: bulk audit przesiewa portfel, ta checklista wchodzi głębiej w umowę, która
@@ -55,8 +54,6 @@ wymaga uwagi.
 
 ## Workflow
 
-1. **Wczytaj umowę** (tekst lub przez `contract-review-pl` / `redline-docx-pl` jako ekstraktor).
-2. **Pseudonimizuj** dane osobowe stron, jeśli umowa idzie do modelu w chmurze (`let-it-be`).
 3. **Przejdź 41 kategorii** poniżej - w dwóch krokach na kategorię. Najpierw **zastosowalność**: czy ta
    transakcja w ogóle potrzebuje tej klauzuli (typ umowy, strony, przedmiot)? Potem, tylko dla kategorii
    zastosowalnych: status `JEST` / `BRAK` / `RYZYKO` + krótkie uzasadnienie + cytat fragmentu (jeśli
@@ -167,13 +164,11 @@ Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimiza
 
 ### Ochrona danych
 
-- **Anonimizacja przed wysyłką** - gdy dokument zawiera dane osobowe, oczyść je lokalnie (skill `let-it-be`), zanim treść trafi do modelu. Dane osobowe nie powinny wychodzić do API. To zasada minimalizacji (RODO).
 - **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
 - **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
 
 ### Operacje nieodwracalne
 
-Niektóre operacje są nieodwracalne (anonimizacja w trybie nieodwracalnym, zaakceptowanie wszystkich zmian w .docx). Skille oznaczają je jawnie - wykonuj je dopiero po potwierdzeniu przez człowieka.
 
 ### Bramka człowieka
 

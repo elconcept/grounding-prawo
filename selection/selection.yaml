@@ -20,7 +20,6 @@ keep:
   - {name: pisma-procesowe-v3, from: lex, why: "główny generator pism"}
   - {name: pisma-proste-v2, from: lex, why: "21 odwołań z shared; zostaje jako część silnika, ale profil MAX wymusza pełną kontrolę (patrz profil-postepowan-wlasnych)"}
   - {name: przesluchanie-swiadkow-v2-min90, from: lex, why: "pytania do świadków, sprzeczności"}
-  - {name: raport-sytuacyjny-v2, from: lex, why: "status wielu spraw"}
   - {name: audyt-systemu-v4, internal: true, from: lex, why: "shared odwołuje się do niego 33x; zostaje jako biblioteka (9 MB, głównie references i mcp-servers)"}
   - {name: przewodnik-prawny-v2, internal: true, from: lex, why: "FALLBACK routera w 5 ścieżkach; odcięcie wymagałoby przepisania routera"}
   - {name: dr-01-ustroj-konstytucyjny-i-zrodla-prawa, internal: true, from: lex, why: "gwarancje konstytucyjne, kontrola działań państwa"}
@@ -33,13 +32,6 @@ keep:
   - {name: dr-13-sluzby-bezpieczenstwo-informacje-niejawne, internal: true, from: lex, why: "Policja, uprawnienia funkcjonariuszy"}
   - {name: dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka, internal: true, from: lex, why: "EKPC, TSUE"}
   - {name: dr-16-pisma-strategia-dowody-orzecznictwo, internal: true, from: lex, why: "żądania, dowody, strategia"}
-  - {name: dr-04-prawo-pracy-zus-swiadczenia, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
-  - {name: dr-06-podatki-finanse-publiczne-aml, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
-  - {name: dr-07-zamowienia-publiczne-fundusze-ue, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
-  - {name: dr-08-samorzad-terytorialny-prawo-lokalne, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
-  - {name: dr-09-budownictwo-srodowisko-energia-transport, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
-  - {name: dr-15-compliance-iso-governance-audyt, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
-  - {name: raport-klienta-v1, internal: true, from: lex, why: "poza profilem spraw, ale router ma do niego dziesiątki wierszy routingu; zostaje jako moduł wewnętrzny"}
   # --- weryfikacja: awesome-matematic ---
   - {name: citation-grounding-pl, from: "awe:fundament-weryfikacyjny", why: "kontrola treści cytatu (ISTNIENIE/TREŚĆ/FRAGMENT); LexMachina tego nie sprawdza"}
   - {name: ekstraktor-cytatow-pl, from: "awe:fundament-weryfikacyjny", why: "znajduje wszystkie powołania przed weryfikacją; sprawdzić, czy ma działający kod"}
@@ -56,21 +48,16 @@ keep:
   - {name: waliduj-podpis-pdf-pl, from: "awe:dokumenty", why: "integralność podpisanych PDF od szpitali, sądów, prokuratury; tylko odczyt"}
   - {name: akta-przeszukiwalne-pl, from: "awe:dokumenty", why: "niezależny drugi odczyt akt, duplikaty, strony nieczytelne"}
   - {name: chronologia-stanowiska-pl, from: "awe:dokumenty", why: "mechaniczna kontrola chronologii i stanowisk wobec cytatu i strony"}
-  - {name: opendataloader-pdf, from: "awe:dokumenty", why: "tabele i układ w dokumentacji szpitalnej"}
   - {name: redline-docx-pl, from: "awe:dokumenty", why: "Track Changes; sanitize metadanych jest jawną komendą, nie domyślną operacją"}
   - {name: klauzule-kontraktowe-pl, from: "awe:dokumenty", why: "umowa zarządzania najmem"}
   - {name: rodo-dsar-pl, from: "awe:ochrona-danych", why: "żądania dostępu, sprostowania, usunięcia własnych danych"}
-  - {name: humanizer-pl, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: marko-pl-content, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: ocena-outputu-pl, from: "awe:fundament-weryfikacyjny", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
-  - {name: legal-ai-audit-bundle, from: "awe:fundament-weryfikacyjny", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
-  - {name: saos-orzecznictwo, from: "awe:orzecznictwo-zrodla", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
-  - {name: iura, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: patron-weryfikacja-cytatow, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
-  - {name: patron-pisz-po-ludzku, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: doc-intel-contract-pl, from: "awe:dokumenty", internal: true, transitional: true, why: "jedyny dom tablicy prawdy normalizacji, którą testuje citation-grounding-pl (test-grounding.mjs 34/34). Ma mechanizmy maskowania - nieużywane, skill niewidoczny dla modelu"}
+  - {name: patron-przeglad-tabelaryczny, from: own, why: "tabelaryczny przegląd dokumentów (z pipeline Patrona); do wzbogacenia o klauzule/kolumny pod Twoje sprawy"}
+  - {name: pisz-po-polsku, from: own, why: "JEDEN skill redakcji: scala humanizer-pl + naturalne-pisanie + patron-pisz-po-ludzku (pliki skopiowane do own-skills, zmiany upstreamu trzeba przenosić ręcznie)"}
   # --- źródła zewnętrzne ---
-  - {name: naturalne-pisanie, from: "vendor:naturalne-pisanie", why: "jedyny edytor stylu (ma warstwę prawniczą); zastępuje humanizer-pl i patron-pisz-po-ludzku"}
   - {name: the-ocr, from: own, why: "własny OCR (Datalab/Azure DI/Google Vision); kopia skilla z aplikacją w środku, źródło: agents/skills/the-ocr"}
   # --- skille własne, bez upstreamu (own-skills/) ---
   - {name: szturm-na-draft-pl, from: own, why: "główny mechanizm wielokrotnej kontroli pisma; WYMAGA przebudowy (profil S/M/L i limit rund) - propozycja diffu, nie zastosowana"}
@@ -81,16 +68,31 @@ keep:
   - {name: patron-skan-dokumentu, from: own, why: "deterministyczny skan przychodzących dokumentów pod kątem prompt injection"}
   - {name: patron-identyfikatory-pl, from: own, why: "walidacja PESEL/NIP/KRS, ekstrakcja sygnatur"}
   - {name: patron-prawo-pl-zrodla, from: own, why: "kolejność źródeł i konektorów MCP"}
-  - {name: lexcache, from: own, why: "cache źródeł; DO WERYFIKACJI: zakłada bazę GROUNDING-PRAWO na OneDrive/SMB, może być artefaktem starego systemu"}
-  - {name: pozew-cywilny, from: own, why: "pozew cywilny"}
-  - {name: odpowiedz-na-pozew, from: own, why: "odpowiedź na pozew"}
-  - {name: apelacja-karna, from: own, why: "apelacja karna"}
-  - {name: zazalenie-na-postanowienie-prokuratora, from: own, why: "zażalenia na postanowienia prokuratora"}
+  - {name: pozew-cywilny, from: own, fold_into: pisma-procesowe-v3, typ: "pozew w postępowaniu cywilnym", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
+  - {name: odpowiedz-na-pozew, from: own, fold_into: pisma-procesowe-v3, typ: "odpowiedź na pozew", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
+  - {name: apelacja-karna, from: own, fold_into: pisma-procesowe-v3, typ: "apelacja od wyroku w postępowaniu karnym", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
+  - {name: zazalenie-na-postanowienie-prokuratora, from: own, fold_into: pisma-procesowe-v3, typ: "zażalenie na postanowienie prokuratora", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
   - {name: zawiadomienie-o-przestepstwie, from: own, why: "pisane przez pokrzywdzonego obywatela"}
-  - {name: wniosek-o-rozprawe-zdalna, from: own, why: "wniosek o rozprawę zdalną"}
-  - {name: zarzuty-do-opinii-bieglego, from: own, why: "zarzuty do opinii biegłych (psychiatria)"}
+  - {name: zarzuty-do-opinii-bieglego, from: own, fold_into: pisma-procesowe-v3, typ: "zarzuty do opinii biegłego", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
   - {name: profil-postepowan-wlasnych, from: own, why: "NOWY, mały skill nadrzędny (szkic do akceptacji): pełna ścieżka kontroli, brak anonimizacji, osobne przebiegi soczewek"}
 drop:
+  - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ISAP)", archive: true}
+  - {name: opendataloader-pdf, why: "scalony w the-ocr (references/opendataloader-pdf.md)"}
+  - {name: humanizer-pl, why: "scalony w pisz-po-polsku"}
+  - {name: naturalne-pisanie, why: "scalony w pisz-po-polsku (vendor/naturalne-pisanie zostaje jako źródło)"}
+  - {name: patron-pisz-po-ludzku, why: "scalony w pisz-po-polsku", archive: true}
+  - {name: dr-04-prawo-pracy-zus-swiadczenia, why: "poza profilem spraw (decyzja właściciela)"}
+  - {name: dr-06-podatki-finanse-publiczne-aml, why: "poza profilem spraw (decyzja właściciela)"}
+  - {name: dr-07-zamowienia-publiczne-fundusze-ue, why: "poza profilem spraw (decyzja właściciela)"}
+  - {name: dr-08-samorzad-terytorialny-prawo-lokalne, why: "poza profilem spraw (decyzja właściciela)"}
+  - {name: dr-09-budownictwo-srodowisko-energia-transport, why: "poza profilem spraw (decyzja właściciela)"}
+  - {name: dr-15-compliance-iso-governance-audyt, why: "poza profilem spraw (decyzja właściciela)"}
+  - {name: raport-klienta-v1, why: "raportowanie dla klientów, niepotrzebne"}
+  - {name: raport-sytuacyjny-v2, why: "niepotrzebny"}
+  - {name: legal-ai-audit-bundle, why: "to nie USA: nikt w PL nie oczekuje sha256 pliku poza sprawami o zbrodnie; rejestr kontroli w Basic Memory"}
+  - {name: lexcache, why: "cache zastąpiony przez MCP z lokalnym dumpem SAOS (lex.xlap.pl/mcp)", archive: true}
+  - {name: wniosek-o-rozprawe-zdalna, why: "decyzja właściciela", archive: true}
+  - {name: saos-orzecznictwo, why: "zastąpiony przez mcp-saos z lokalnym dumpem"}
   # LexMachina
   # awesome
   - {name: let-it-be, why: "anonimizacja/pseudonimizacja, sprzeczne z polityką właściciela"}
@@ -126,7 +128,6 @@ drop:
   - {name: cofniecie-pozwu-ze-zrzeczeniem-roszczenia, why: "poza profilem, drugi generator pism", archive: true}
   - {name: patron-obrona-pisma, why: "duplikat szturm-na-draft-pl", archive: true}
   - {name: patron-pismo-procesowe-pl, why: "duplikat pisma-procesowe-v3", archive: true}
-  - {name: patron-przeglad-tabelaryczny, why: "kancelaria, bulk-review umów", archive: true}
   - {name: patron-streszczenia-umow, why: "kancelaria", archive: true}
   - {name: patron-streszczenie-dla-klienta, why: "kancelaria", archive: true}
   - {name: przeglad-tabelaryczny, why: "kancelaria", archive: true}

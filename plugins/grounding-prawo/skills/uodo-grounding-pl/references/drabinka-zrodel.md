@@ -14,8 +14,6 @@ prostego fetcha, treść renderowana JS, TLS bywa niespójny. Awaria to stan NOR
 
 ## Dla treści i cytatu (TREŚĆ / FRAGMENT)
 
-3. **PDF decyzji** - UODO często udostępnia pełną decyzję jako PDF (→ `markitdown` / `opendataloader-pdf`).
-   To podstawowa droga do FRAGMENT, bo HTML jest renderowany JS.
 4. **Realny Chrome (byob)** - gdy treść tylko w JS-SPA. Uwaga: byob działa wyłącznie z Chrome
    (Windows otwiera Edge → „No live byob bridge"); przy braku mostka zejdź do PDF lub użytkownika.
 5. **Wyrok WSA/NSA ze skargi** - sąd cytuje decyzję UODO w uzasadnieniu; pośrednie potwierdzenie

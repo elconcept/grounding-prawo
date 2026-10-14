@@ -65,7 +65,9 @@ EOF
 
 A="Szturm test"
 "${ADEU[@]}" apply "$W/PISMO_v1.docx" "$W/RUN/edits.PISMO.redline.json" -o "$W/PISMO_v2_REDLINE.docx" --author "$A" >/dev/null 2>&1
-"${ADEU[@]}" sanitize "$W/PISMO_v2_REDLINE.docx" -o "$W/PISMO_v2.docx" --accept-all --author "$A" >/dev/null 2>&1
+# kopia czysta: tylko AUTO + REDAKCJA (DECYZJA_AUTORA zostaje propozycją w REDLINE)
+"${ADEU[@]}" apply "$W/PISMO_v1.docx" "$W/RUN/edits.PISMO.json" -o "$W/RUN/_auto_redline.docx" --author "$A" >/dev/null 2>&1
+"${ADEU[@]}" sanitize "$W/RUN/_auto_redline.docx" -o "$W/PISMO_v2.docx" --accept-all --author "$A" >/dev/null 2>&1
 ok "E7 adeu apply + sanitize"
 
 uv run -q "$SZ/fix_format.py" "$W/PISMO_v2.docx" --apply -o "$W/RUN/_fmt.docx" --json > "$W/RUN/format.json"
@@ -80,7 +82,7 @@ python3 "$SZ/weryfikuj_wynik.py" --redline "$W/PISMO_v2_REDLINE.docx" --czysty "
 bash "$SZ/extract_all_pages.sh" "$W/PISMO_v2.docx" "$W/RUN" >/dev/null
 grep -q "14 marca 2024" "$W/RUN/PISMO_v2.clean.md" && ok "wersja czysta: poprawka AUTO przyjeta" || zle "brak poprawki AUTO"
 grep -q "Wniosek dowodowy obejmuje porównawczego nagrania" "$W/RUN/PISMO_v2.clean.md" && ok "regresja: obie edycje z ta sama kotwica przyjete" || zle "regresja: zgubiona edycja przy wspolnej kotwicy"
-grep -q "strategię obrony" "$W/RUN/PISMO_v2.clean.md" && ok "kopia z zastosowanymi zmianami: DECYZJA_AUTORA zastosowana" || zle "brak DECYZJA_AUTORA w kopii"
+grep -q "strategię obrony" "$W/RUN/PISMO_v2.clean.md" && zle "DECYZJA_AUTORA trafiła do czystej kopii" || ok "kopia czysta: DECYZJA_AUTORA NIE zastosowana (tylko propozycja w REDLINE)"
 grep -q "strategię obrony" <("${ADEU[@]}" extract "$W/PISMO_v2_REDLINE.docx" --page all 2>/dev/null) \
   && ok "REDLINE: DECYZJA_AUTORA jako zmiana sledzona" || zle "brak DECYZJA_AUTORA w REDLINE"
 python3 "$SZ/metryki_stylu.py" "$W/RUN/PISMO_v2.clean.md" >/dev/null && ok "E4 metryki_stylu"

@@ -121,8 +121,6 @@ użyciem w piśmie (PRAWO-HARDGATE).
 - Nadużycie zaufania / działanie na szkodę spółki bez elementu korupcji
   (art. 296 KK, bez litery "a") — odrębny, szerszy przepis, do rozważenia
   jako kandydat na kolejną sesję (obecnie poza zakresem dr-03).
-- Perspektywa compliance (ABMS, ISO 37001 obejmuje też sektor prywatny)
-  → `dr-15-compliance-iso-governance-audyt/modules/mod-ISO-37001-antykorupcja.md`.
 - Odpowiedzialność podmiotów zbiorowych, gdy korzyść przyjął pracownik
   na rzecz/w interesie podmiotu zbiorowego →
   `mod-ustawa-odpowiedzialnosc-podmiotow-zbiorowych.md`.

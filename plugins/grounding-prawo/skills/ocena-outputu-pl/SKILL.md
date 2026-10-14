@@ -36,7 +36,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.2.0
-  companion_skills: legal-request-router-pl, citation-grounding-pl, deliverable-fidelity-pl, adversarial-legal-review-pl
+  companion_skills: citation-grounding-pl, deliverable-fidelity-pl, adversarial-legal-review-pl
 disable-model-invocation: true
 ---
 
@@ -101,9 +101,6 @@ To slogan "AI, która wie, czego nie wie" jako pole w karcie ocen, nie deklaracj
 - **Wyślij** - warstwa 1 czysta, zero NIEPEWNYCH, średnia subiektywna ≥ 4, żaden wymiar < 3.
 - **Popraw** - warstwa 1 czysta, ale któryś wymiar subiektywny 2-3 (wskaż który) albo
   NIEPEWNE poza wymiarami krytycznymi.
-- **Pełna weryfikacja** - warstwa 1 ma niezgodność, wymiar = 1 albo NIEPEWNE w Poprawności
-  prawnej / Ugruntowaniu -> skieruj do legal-request-router-pl (grounding / adversarial /
-  paczka audytowa).
 
 ## Rewizja oceny - monotoniczność i kotwica
 
@@ -157,8 +154,6 @@ nowego dowodu (warstwa 1 nie była powtórzona).
 
 ## Granice
 
-- Ocena subiektywna to osąd modelu wg rubryki, nie wyrocznia - przy wysokiej stawce ostateczna
-  ocena należy do prawnika, a karta jest dowodem należytej staranności (do legal-ai-audit-bundle).
 - Warstwa 1 nie zastępuje narzędzi, które wywołuje - jest ich agregatorem do jednej decyzji.
 - Skill ocenia output, nie tworzy go i nie poprawia.
 

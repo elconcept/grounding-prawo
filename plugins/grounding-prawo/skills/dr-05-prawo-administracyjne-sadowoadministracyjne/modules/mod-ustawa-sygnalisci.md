@@ -150,8 +150,6 @@ OCHRONA MAJĄTKOWA SYGNALISTY (przy działaniach odwetowych):
   zmieniające art. 42 KP vs próba zamaskowania kary porządkowej poza
   zamkniętym katalogiem art. 108 KP) — stosuj oba łącznie
 - `pisma-procesowe-v3` — pozew o odszkodowanie za odwet, zawiadomienie do RPO
-- `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-klasyfikacja-naruszen-bhp-prawa-pracy.md` — GDZIE ZGŁOSIĆ
-  naruszenie BHP/prawa pracy, skoro NIE w trybie sygnalisty (dodano 2026-07-27)
 - `dr-15` → `mod-ustawa-sygnalisci.md` — perspektywa compliance pracodawcy / CMS / ISO 37301
 
 **Źródła:**

@@ -28,7 +28,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  companion_skills: atak-przeciwnika-pl, adversarial-legal-review-pl, deliverable-fidelity-pl, humanizer-pl
+  companion_skills: atak-przeciwnika-pl, adversarial-legal-review-pl, deliverable-fidelity-pl
 ---
 
 # Pierwsze wrażenie sędziego PL - test zimnego czytelnika
@@ -106,8 +106,6 @@ Jedno lub więcej z poniższych:
    życzliwą rekonstrukcję? Czy autor po lekturze wie, CO nie działa - bez podpowiedzi JAK
    to naprawić? Czy każda sekcja zawiera konkretne obserwacje, nie ogólniki?
 
-Jeśli dokument zawiera dane objęte tajemnicą zawodową, pseudonimizuj wejście przez
-`let-it-be` przed uruchomieniem.
 
 ## Format wyniku (dosłowny szablon - 7 nagłówków, w tej kolejności, żadnego nie pomijaj)
 

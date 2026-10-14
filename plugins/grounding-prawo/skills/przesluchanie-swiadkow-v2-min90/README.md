@@ -7,7 +7,6 @@ Scalona, najdojrzalsza wersja modułu przesłuchania świadków.
 - stabilność i self-contained JSX z `jsxfix2`,
 - typologie świadków i sędziów z `jsxfix1`,
 - routing/testy z wersji pośredniej,
-- text-first i YAML frontmatter z wersji kompletnej.
 
 ## Status
 

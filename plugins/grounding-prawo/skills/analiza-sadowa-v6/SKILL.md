@@ -23,7 +23,6 @@ Ta sekcja zmienia wyłącznie warstwę wykonawczą. Model czteroprzebiegowy, izo
 
 1. `view analiza-sadowa-v6/<plik>` oraz `view references/...` oznaczają świeży odczyt lokalnego pliku tego skilla. Literalna ścieżka `/mnt/skills/user` nie jest wymagana.
 2. `view shared/<plik>` oznacza odczyt z osobnego kanonicznego skilla `shared`. NIE kopiuj żadnego modułu `shared` do tej paczki. Brak obowiązkowego modułu = fail-closed.
-3. Odwołania do `analizator-dowodow-v3`, `raport-sytuacyjny-v2`, DR-skilli i innych skilli oznaczają integracje między-skillowe; nie vendoryzuj ich.
 4. `web_search` / `web_fetch` oznaczają świeże wyszukanie i odczyt źródła przez równoważną funkcję hosta, z zachowaniem oficjalnych źródeł i PRAWO-HARDGATE.
 5. `show_widget`, HTML/JSX i legacy instrukcje renderowania oznaczają opcjonalny interaktywny widok. Jeśli host ma natywny renderer, użyj równoważnego UI; brak UI nie blokuje pełnej analizy tekstowej.
 6. Polecenia `pdftoppm`, `pdftotext`, `openpyxl`, `zipfile`, shell/Python oraz `view` plików użytkownika są technikami odczytu. Użyj natywnego parsera hosta, jeśli zapewnia równoważną kompletność; nie deklaruj wykonania narzędzia, którego faktycznie nie użyto.

@@ -259,17 +259,11 @@ uvx --from adeu==1.30.0 adeu diff v1.docx v2.docx          # wizualny diff dwoch
 uvx --from adeu==1.30.0 adeu apply --live edits.json       # edycja zywego dokumentu w Word (Windows + MS Word)
 ```
 
-## Integracja z let-it-be (PII PL)
 
-`sanitize` czysci **metadane** Worda, ale NIE tresc. Do anonimizacji tresci (PESEL,
-NIP, nazwiska w fleksji) najpierw przepusc tekst przez `let-it-be`, potem redline:
 
-1. `let-it-be` -> pseudonimizuj tresc pisma (PII -> tokeny)
 2. praca/redline na zpseudonimizowanej wersji
 3. `adeu sanitize` -> domkniecie metadanych przed wyslaniem
 
-let-it-be = tresc (RODO art. 4 dane osobowe w tekscie); adeu sanitize = metadane pliku.
-Dwie rozne warstwy wycieku, obie trzeba domknac.
 
 ## Ograniczenia
 
@@ -324,13 +318,11 @@ Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimiza
 
 ### Ochrona danych
 
-- **Anonimizacja przed wysyłką** - gdy dokument zawiera dane osobowe, oczyść je lokalnie (skill `let-it-be`), zanim treść trafi do modelu. Dane osobowe nie powinny wychodzić do API. To zasada minimalizacji (RODO).
 - **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
 - **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
 
 ### Operacje nieodwracalne
 
-Niektóre operacje są nieodwracalne (anonimizacja w trybie nieodwracalnym, zaakceptowanie wszystkich zmian w .docx). Skille oznaczają je jawnie - wykonuj je dopiero po potwierdzeniu przez człowieka.
 
 ### Bramka człowieka
 

@@ -13,7 +13,6 @@
 ## Zmiany wyłącznie runtime portability
 
 1. `Anthropic API` w compatibility zastąpiono neutralnymi capability.
-2. Skrócono tylko frontmatter `description`; historia wersji i auto-trigger pozostają w treści.
 3. Dodano adapter dla legacy ścieżek, narzędzi oraz renderowania widgetu/JSX.
 4. Pełne `assets`, `references` i archiwalne `upgrade-min8` pozostają w ZIP-ie.
 5. Ekstrakcja, sprzeczności, finanse, pewność i proweniencja nie zostały przepisane.

@@ -13,7 +13,6 @@
 ## Zmiany wyłącznie runtime portability
 
 1. Neutralne capability metadata zamiast nazw narzędzi jednego hosta.
-2. Skrócony tylko frontmatter `description`; szczegółowe triggery i funkcje pozostają w treści.
 3. Dodany adapter dla legacy `view`, `web_search`, `web_fetch`, `show_widget`, `sendPrompt` i `/mnt/...`.
 4. Moduły analizy, orzecznictwa, historii zmian, vacatio legis, drzewo przesłanek i schemat widgetu nie zostały przepisane.
 5. Inne skille, w tym `shared`, pozostają odrębne.

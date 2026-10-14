@@ -178,10 +178,6 @@ KROK 5 — Brak przepisu przejściowego, brak kwalifikacji do KROK 2-4 →
 - **E. Łętowska**, *Prawo intertemporalne w orzecznictwie Trybunału
   Konstytucyjnego i Sądu Najwyższego* — analiza linii orzeczniczej na styku
   obu najwyższych instancji.
-- Artykuł *Przepisy i reguły intertemporalne w prawie cywilnym — kwestie
-  podstawowe* (Temidium) — praktyczne zastosowanie reguł kolizyjnych,
-  w tym roli pełnomocnika w naprowadzaniu sądu na właściwy przepis
-  intertemporalny (iura novit curia a praktyka).
 - Opracowanie nt. intertemporalnej kategoryzacji przepisów Kodeksu pracy
   (Wolters Kluwer) — obszerne studium przypadków branżowych z własną
   systematyką kategorii intertemporalnych prawa pracy.

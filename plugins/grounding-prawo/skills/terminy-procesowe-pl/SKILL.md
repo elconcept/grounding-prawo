@@ -25,7 +25,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
-  companion_skills: sejm-eli-mcp (konektor), hierarchia-zrodel-pl, intake-sufficiency-pl, legal-request-router-pl
+  companion_skills: sejm-eli-mcp (konektor)
 ---
 
 # Terminy procesowe PL - wyliczenie krok po kroku, nigdy sama data
@@ -152,9 +152,6 @@ weryfikacja przepisu i doktryny, tag `[DO SPRAWDZENIA]` na karcie.
 
 ## Workflow
 
-1. **Zbierz wejście** (przy brakach - dopytaj, nie zakładaj; wzorzec: intake-sufficiency-pl):
-   zdarzenie startowe + jego data, tryb doręczenia (osobiste / awizo / portal /
-   e-doręczenia), rodzaj pisma / czynności, procedura (KPC / KPA / PZP / PPSA / inna).
 2. **Sklasyfikuj termin** wg dwóch osi z sekcji "Reguły" pkt 1. Niejednoznaczne = STOP.
 3. **Zweryfikuj regułę w aktualnym brzmieniu przepisu** - obowiązkowo przez konektor
    `sejm-eli-mcp` (ISAP/ELI): przepis źródłowy terminu + przepisy o liczeniu + przepisy
@@ -232,12 +229,6 @@ To skill najwyższej stawki, więc bramka jest rozbudowana:
 
 - **sejm-eli-mcp (konektor)** - obowiązkowa weryfikacja aktualnego brzmienia przepisu
   (krok 3 workflow); bez niego wszystko zostaje na tagach `[DO SPRAWDZENIA]`.
-- **hierarchia-zrodel-pl** - gdy reguły terminu zderzają się między aktami (ustawa
-  szczególna vs KPC/KC): która norma wygrywa.
-- **intake-sufficiency-pl** - gdy wejście jest dziurawe (brak daty doręczenia, brak
-  trybu doręczenia): jakie pytania zadać zanim zaczniesz liczyć.
-- **legal-request-router-pl** - triage na wejściu; wyliczenie terminu klasyfikuj
-  zawsze jako high-stakes.
 
 ## Weryfikacja źródeł
 
@@ -262,13 +253,11 @@ Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimiza
 
 ### Ochrona danych
 
-- **Anonimizacja przed wysyłką** - gdy dokument zawiera dane osobowe, oczyść je lokalnie (skill `let-it-be`), zanim treść trafi do modelu. Dane osobowe nie powinny wychodzić do API. To zasada minimalizacji (RODO).
 - **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
 - **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
 
 ### Operacje nieodwracalne
 
-Niektóre operacje są nieodwracalne (anonimizacja w trybie nieodwracalnym, zaakceptowanie wszystkich zmian w .docx). Skille oznaczają je jawnie - wykonuj je dopiero po potwierdzeniu przez człowieka.
 
 ### Bramka człowieka
 

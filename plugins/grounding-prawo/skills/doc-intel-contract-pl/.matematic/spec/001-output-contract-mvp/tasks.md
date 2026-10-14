@@ -32,8 +32,6 @@ Format: `[ID] [P?] [Story] Opis`. `[P]` = parallel-safe (rozne pliki, brak zalez
 - [x] T033 scripts/adapters/gaius.py - OCR PATRONa/Gaius-Lex /ocr/poll {text,engine} -> Block (tekstowy, partial); engine_variant=default|google_doc_ai. Schemat: enum +gaius, pole engine_variant. +testy
 
 ## Phase N - Polish  [DONE]
-- [x] T040 [P] SKILL.md (trigger, workflow, przyklad) + humanizer-pl + marko-pl (werdykt: przecietne -> naprawiony dryf engine/flags)
-- [x] T041 [P] README.md + humanizer-pl (czysto: zero em-dash/kalk)
 - [x] T042 wpis do drabinki PDF w CLAUDE.md (krok 6 normalizacji) + humanizer-en na poscie EN (bramka OK)
 
 ## Wynik koncowy

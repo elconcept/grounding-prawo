@@ -193,9 +193,3 @@ potwierdzenia na isap.sejm.gov.pl przed użyciem w piśmie (PRAWO-HARDGATE).
   przez osoby działające w ich imieniu → `mod-ustawa-odpowiedzialnosc-podmiotow-zbiorowych.md`
   (⚠️ ten moduł obecnie NIE wymienia art. 228-231 wprost — do
   uzupełnienia w przyszłej sesji jako cross-ref zwrotny).
-- Perspektywa compliance/prewencyjna (ABMS, ISO 37001, due diligence) →
-  `dr-15-compliance-iso-governance-audyt/modules/mod-ISO-37001-antykorupcja.md`
-  (ten moduł dr-03 dostarcza analizę ZNAMION przestępstwa, tamten —
-  system zarządzania ryzykiem; NIE dubluj między nimi).
-- Wykluczenie wykonawcy z przetargu za skazanie korupcyjne →
-  `dr-07-zamowienia-publiczne-fundusze-ue/modules/mod-PZP-zamowienia-publiczne-KIO.md`.

@@ -25,7 +25,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
-  companion_skills: adversarial-legal-review-pl, citation-grounding-pl, legal-ai-audit-bundle, legal-request-router-pl
+  companion_skills: adversarial-legal-review-pl, citation-grounding-pl
 ---
 
 # Deliverable Fidelity PL - weryfikator wiernosci dokumentu
@@ -140,8 +140,6 @@ Werdykt: FAIL - NIE wysylaj. Dodaj F3 do podsumowania, wzmocnij F2 do faktycznej
 
 ## Ochrona danych (RODO)
 
-Skrypt dziala lokalnie (Node, zero sieci). Kontrola wyrywkowa LLM widzi ustalenia i deliverable - jezeli zawieraja
-dane objete tajemnica, pseudonimizuj przez `let-it-be` wczesniej. Skrypt nie zapisuje logow poza katalogiem zadania.
 
 ## Integracja z AI Act
 

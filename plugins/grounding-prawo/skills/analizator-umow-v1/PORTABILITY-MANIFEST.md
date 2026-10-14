@@ -13,7 +13,6 @@
 ## Zmiany wyłącznie runtime portability
 
 1. Usunięte z metadanych twarde wskazanie `/mnt/skills/user/shared/`.
-2. Skrócony tylko frontmatter `description`; szczegółowe triggery pozostają w treści.
 3. Dodany adapter dla legacy nazw narzędzi, ścieżek `/mnt/...` i dostarczania dokumentów.
 4. Routing umów, moduły references/workflows, hard gate’y, step tracker, redakcja i walidacja dokumentów nie zostały przepisane.
 5. Inne skille i `shared` pozostają odrębne.

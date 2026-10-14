@@ -5,8 +5,17 @@ description: OCR polskich dokumentów (PDF, JPG, PNG) przez Datalab (Chandra) z 
 
 # the-ocr
 
-Rdzeń projektu `the-ocr` (źródło prawdy: `D:\projects\the-ocr`, praca w toku właściciela; providery `azure-di`
-i `google-vision` dodane w repo abogada 10.10.2026 - upstream usunął je w commicie „remodel”).
+## Wybór silnika odczytu dokumentu
+
+| Dokument | Silnik |
+|---|---|
+| skan, zdjęcie, PDF bez warstwy tekstowej | `the-ocr` (niżej) |
+| PDF z prawdziwą warstwą tekstową, złożone tabele, kolumny (dokumentacja szpitalna, pisma sądowe) | `references/opendataloader-pdf.md` (lokalnie, Java 17+) |
+| wynik wątpliwy | drugi, niezależny odczyt drugim silnikiem; rozbieżności zgłoś, nie wygładzaj |
+
+Każdy silnik tworzy nową reprezentację tekstową. Plik źródłowy pozostaje nietknięty; przy sporze rozstrzyga warstwa wizualna (PDF/obraz).
+
+Rdzeń projektu `the-ocr` (repozytorium `elconcept/the-ocr`; providery `azure-di` i `google-vision` dodane 10.10.2026 - upstream usunął je w commicie „remodel”).
 Tu jest sam kod `src/the_ocr` z `pyproject.toml` i `uv.lock` - bez binariów, materiałów
 referencyjnych i próbek.
 

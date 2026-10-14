@@ -384,7 +384,6 @@ Pytanie od użytkownika → moduł AB gdy zawiera:
 | AI w umowach (klauzule zgodności) | `analizator-umow-v1` |
 | Pismo / skarga do KRiBSI | `pisma-procesowe-v3` |
 | AI w postępowaniu sądowym (dowód) | `analizator-dowodow-v3` |
-| AI w miejscu pracy (art. 5 zakazy) | `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-prawo-pracy.md` |
 | AI w administracji publicznej | `dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-KPA-postepowanie-administracyjne.md` |
 
 ---

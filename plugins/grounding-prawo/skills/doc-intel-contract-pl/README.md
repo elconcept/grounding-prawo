@@ -20,7 +20,6 @@ jednego i od razu odpowiada na trzy pytania audytu LegalTech:
 
 | Engine | Źródło | Bogactwo |
 |---|---|---|
-| `opendataloader` | opendataloader-pdf (JSON) | bbox + typy bloków + confidence |
 | `chandra` | Chandra OCR 2 (`parse_chunks`) | bbox + 19 etykiet layoutu, bez confidence |
 | `vlm-html` | dowolny VLM z promptem `references/prompt_vlm_ocr_pl.md` | bbox + nasze etykiety (w tym podpis i pieczątka), bez confidence |
 | `gaius` | OCR PATRONa, Gaius-Lex `/api/v1/ocr/poll` | tekst + wariant silnika (default / google_doc_ai) |

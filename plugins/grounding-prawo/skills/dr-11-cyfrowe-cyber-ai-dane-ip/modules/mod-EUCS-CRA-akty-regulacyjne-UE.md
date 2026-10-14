@@ -38,8 +38,6 @@ w zakresie cyberbezpieczeństwa. Producenci i importerzy odpowiadają przez cał
 **Data Governance Act:** Reguluje ponowne wykorzystanie danych sektora publicznego,
 pośredników danych i altruizm danych (organizacje udostępniające dane dobrowolnie).
 
-**Data Act:** Prawo dostępu do danych generowanych przez produkty (IoT) dla użytkowników,
-obowiązki producentów urządzeń, umowy B2B dotyczące danych, przenoszenie danych do chmury.
 
 ## Zasady absolutne
 ```

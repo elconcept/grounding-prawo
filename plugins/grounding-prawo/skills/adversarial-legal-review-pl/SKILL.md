@@ -34,7 +34,7 @@ attribution:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.3.0
-  companion_skills: citation-grounding-pl, legal-ai-audit-bundle, matematic-expert-panel, saos-orzecznictwo
+  companion_skills: citation-grounding-pl
 ---
 
 # Adversarial Legal Review PL - czerwony zespół dla pisma prawnego
@@ -68,8 +68,6 @@ review zamiast pełnej debaty. Nie pal tokenów na rutynę.
 
 ## Workflow (4 role + weryfikacja)
 
-Każda rola to osobny przebieg z czystym mandatem. Pseudonimizuj wejście przez `let-it-be`,
-jeśli dokument zawiera dane objęte tajemnicą zawodową.
 
 ### Poziomy dostępu recenzentów (anty-bias)
 
@@ -99,7 +97,6 @@ Output: teza + 3-7 filarów (każdy z podstawą prawną).
 
 ### 2. Attacker - adwokat diabła
 Zaatakuj każdy filar jak przeciwnik procesowy / sceptyczny sąd:
-- kontr-orzecznictwo (pobierz realne przez `saos-orzecznictwo` / `eu-sparql-search`)
 - kontrargument doktrynalny
 - luka faktyczna / dowodowa
 - nadinterpretacja przepisu, pominięty wyjątek, nieaktualna linia orzecznicza
@@ -250,11 +247,6 @@ progu - nie uruchamiaj panelu i napisz to wprost w raporcie.
    klauzuli wskazał jako podstawę. NIE ukrywaj jej i NIE uśredniaj. Cichy wybór
    „lepszej" odpowiedzi to rozstrzygnięcie bez mandatu - dokładnie to, przed czym
    panel ma chronić.
-5. **Pętla rozstrzygania: dociągnij autorytet.** Pobierz orzecznictwo lub
-   przepis przez `saos-orzecznictwo` / ISAP (`legal-data-hunter-pl`) /
-   `eu-sparql-search` (polskie i unijne źródła; oryginał lavern używa
-   CourtListener - US) i powtórz głosowanie z dowodem na stole. Jedna runda
-   re-vote, nie więcej.
 6. **Split, który przetrwał dowody → human gate.** Filar dostaje werdykt
    NIEPEWNE (sekcja 3): DOKUMENT_NIEJEDNOZNACZNY, gdy panel czytał ten sam
    materiał i widzi różne rzeczy; NIEWYSTARCZAJĄCY_DOWÓD, gdy do rozstrzygnięcia
@@ -314,8 +306,6 @@ i ograniczonej rewizji.
 
 ## Ochrona danych (RODO)
 
-- Każda rola działa w ramach standardowego API - dla materiałów objętych tajemnicą zawodową
-  pseudonimizuj wejście przez `let-it-be` PRZED uruchomieniem.
 - Pobieranie kontr-orzecznictwa przez companion-skille (saos / eu-sparql) - publiczne źródła.
 - Skill nie zapisuje deliverable poza katalogiem sprawy.
 

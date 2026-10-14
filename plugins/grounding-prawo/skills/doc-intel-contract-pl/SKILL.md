@@ -1,8 +1,7 @@
 ---
 name: doc-intel-contract-pl
 description: >
-  Normalizuje wyjscie darmowego RODO-safe stacku OCR/PDF (opendataloader-pdf,
-  pdftotext, Chandra OCR, LiteParse - OCR skanow na CPU, OCR PATRONa/Gaius-Lex)
+  Normalizuje wyjscie darmowego RODO-safe stacku OCR/PDF (pdftotext, Chandra OCR, LiteParse - OCR skanow na CPU, OCR PATRONa/Gaius-Lex)
   do jednego audytowalnego kontraktu
   {block_type, bbox, text, confidence} inspirowanego architektura Mistral OCR 4
   (idea, nie wagi - model zamkniety=SKIP). Daje trzy rzeczy naraz: confidence-gating
@@ -109,7 +108,7 @@ metadata:
   scope: warstwa normalizujaca stack OCR/PDF -> kontrakt wyjscia (zero-cloud)
   cost: zero LLM (deterministyczna normalizacja)
   license: MIT
-  companion_skills: citation-grounding-pl, opendataloader-pdf, markitdown
+  companion_skills: citation-grounding-pl
 disable-model-invocation: true
 ---
 
@@ -319,7 +318,6 @@ python scripts/mask_for_model.py < fragment.txt > fragment.dla_modelu.txt
 
 ## Status / roadmap (spec 001)
 - **US1 (MVP, DONE 2026-07-01):** adaptery opendataloader+pdftotext, kontrakt, confidence-gating, walidacja schematu.
-- **US2 (DONE):** flagi PESEL/NIP/REGON (checksum)/IBAN/email/dowod + redaction_candidates; signature/stamp=sensitive_block. Flaga dowodu z wykluczeniami (pilot anonimizacji 2026-08-31): serie LEX/PLH/PLB oraz trafienie po liczebniku rzymskim (sygnatura repertorium, np. "III CRN 100001") NIE flaguja; to samo odsianie obowiazuje w `mask_for_model.py`.
 - **US3 T030 (DONE):** most `grounding_bridge.py` -> zadanie citation-grounding-pl; lokalizuje cytat w blokach i doklada `anchor_resolved {page,bbox,block_id}` (cytat -> region).
 - **US3 T031 (DONE):** adapter Chandra (layout DOM, bbox 0-1, block conf = MIN linii).
 - **US3 T032 (DONE):** `signature.py` - heurystyka podpisu/pieczatki (dol strony + krotki + low-conf); detektor vision wstrzykiwalny (opt-in). Potwierdzenie wizualne = krok operatora w runtime.
@@ -410,13 +408,11 @@ Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimiza
 
 ### Ochrona danych
 
-- **Anonimizacja przed wysyłką** - gdy dokument zawiera dane osobowe, oczyść je lokalnie (skill `let-it-be`), zanim treść trafi do modelu. Dane osobowe nie powinny wychodzić do API. To zasada minimalizacji (RODO).
 - **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
 - **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
 
 ### Operacje nieodwracalne
 
-Niektóre operacje są nieodwracalne (anonimizacja w trybie nieodwracalnym, zaakceptowanie wszystkich zmian w .docx). Skille oznaczają je jawnie - wykonuj je dopiero po potwierdzeniu przez człowieka.
 
 ### Bramka człowieka
 

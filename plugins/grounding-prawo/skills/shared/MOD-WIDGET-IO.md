@@ -30,8 +30,6 @@ lub bezpośrednio pod nagłówkiem widgetu.
 | `analizator-przepisow-v2` | ✅ OBL | ✅ OBL | — | — | ✅ OBL |
 | `orzeczenia-sadowe-v2` | ✅ OBL | ✅ OBL | — | — | — |
 | `chronologia-sprawy-v1` | ✅ OBL | ✅ OBL | — | — | ✅ OBL |
-| `raport-sytuacyjny-v2` | ✅ OBL | — | — | ✅ OBL | ✅ OBL |
-| `raport-klienta-v1` | — | ✅ OBL | — | ✅ OBL | — |
 
 > OBL = obligatoryjny w danym typie narzędzia
 > — = niewymagany (nie pasuje do charakteru narzędzia)

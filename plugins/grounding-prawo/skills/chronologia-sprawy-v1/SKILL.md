@@ -25,7 +25,6 @@ Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Nie zmien
 5. `web_search` / `web_fetch` oznaczają świeże wyszukanie i odczyt źródła. Jeśli chronologia zawiera termin ustawowy, datę wejścia w życie aktu lub sygnaturę, zachowaj PRAWO-HARDGATE i zakaz cytowania z pamięci.
 6. Instrukcje mówiące, że `.jsx` nie renderuje się w `claude.ai`, są ograniczeniem legacy renderera, nie zakazem użycia natywnego UI innego hosta. Preferuj `assets/widget-timeline.html` zgodnie z istniejącą logiką; jeśli host ma własny renderer interaktywny, może użyć równoważnego widoku zachowującego ten sam model danych i funkcje.
 7. `show_widget` oznacza interaktywną oś czasu, gdy host ją obsługuje. Jeżeli nie, zwróć równoważny raport/HTML/natywny artefakt; brak renderera nie może blokować analizy tekstowej TRYB A.
-8. Odwołania do innych skilli, w tym `raport-sytuacyjny-v2`, są integracjami między-skillowymi. Nie kopiuj ich do tej paczki; jeśli brak integracji, wykonaj część lokalną i jawnie oznacz pominięty krok.
 
 **Zasada nadrzędna adaptera:** jeśli istniejąca instrukcja jest zrozumiała i wykonalna przez bieżący host, wykonaj ją bez konwersji. Adapter działa tylko na rzeczywistej granicy runtime.
 # Chronologia Sprawy v1.3 — Framework Wielowarstwowy
