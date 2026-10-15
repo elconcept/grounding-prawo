@@ -304,7 +304,8 @@ def main():
     pdir = os.path.join(ROOT, "selection/patches")
     for p in sorted(os.listdir(pdir)) if os.path.isdir(pdir) else []:
         if p.endswith(".patch"):
-            r = subprocess.run(["patch", "-p1", "-s", "-d", SKILLS, "-i", os.path.join(pdir, p)],
+            # -E: plik usunięty patchem znika także w BSD patch (macOS zostawia pusty plik)
+            r = subprocess.run(["patch", "-p1", "-s", "-E", "-d", SKILLS, "-i", os.path.join(pdir, p)],
                                capture_output=True, text=True)
             if r.returncode:
                 raise SystemExit(f"patch {p} nie przeszedł:\n{r.stdout}{r.stderr}")
