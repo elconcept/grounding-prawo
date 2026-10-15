@@ -1,43 +1,19 @@
 ---
 name: ocena-outputu-pl
-description: >
-  Ocenia jakość outputu prawnego AI przed wysyłką w dwóch warstwach: obiektywnej
-  (sprawdzalne mechanicznie - czy cytaty istnieją, czy przepisy i sygnatury realne)
-  oraz subiektywnej (LLM-as-judge wg rubryki 1-5: poprawność prawna, kompletność,
-  jasność, zgodność z jurysdykcją, ugruntowanie/anty-halucynacja). Zwraca kartę ocen
-  i decyzję: wyślij / popraw / pełna weryfikacja. Warstwa nad deliverable - nie pisze
-  pisma, ocenia gotowe. Pairuje z legal-request-router-pl (routing), citation-grounding-pl
-  (obiektywne sprawdzenie), deliverable-fidelity-pl (czy nic nie wypadlo) i
-  adversarial-legal-review-pl (atak). Uzywaj gdy: "oceń ten output", "scoring opinii",
-  "czy to gotowe do wysyłki", "jakość odpowiedzi prawnej", "karta ocen deliverable",
-  "rubryka jakości", przed wysłaniem pisma/opinii/memo do klienta.
+description: 'Ocenia jakość outputu prawnego AI przed wysyłką w dwóch warstwach: obiektywnej (sprawdzalne mechanicznie - czy cytaty istnieją, czy przepisy i sygnatury realne) oraz subiektywnej (LLM-as-judge wg rubryki 1-5: poprawność prawna, kompletność, jasność, zgodność z jurysdykcją, ugruntowanie/anty-halucynacja). Zwraca kartę ocen i decyzję: wyślij / popraw / pełna weryfikacja. Warstwa nad deliverable - nie pisze pisma, ocenia gotowe. Pairuje z legal-request-router-pl (routing), citation-grounding-pl (obiektywne sprawdzenie), deliverable-fidelity-pl (czy nic nie wypadlo) i adversarial-legal-review-pl (atak). Uzywaj gdy: "oceń ten output", "scoring opinii", "czy to gotowe do wysyłki", "jakość odpowiedzi prawnej", "karta ocen deliverable", "rubryka jakości", przed wysłaniem pisma/opinii/memo do klienta.
+
+  '
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  - source: FudanDISC/DISC-LawLLM (Fudan DISC Lab)
-    url: https://github.com/FudanDISC/DISC-LawLLM
-    license: Apache-2.0
-    relationship: clean-room
-    note: >
-      Metoda dwuwarstwowa (obiektywne dopasowanie plus subiektywna rubryka LLM-as-judge,
-      skala 1-5) oparta na DISC-Law-Eval. Chińskie dane egzaminacyjne i model-sędzia
-      porzucone; rubryka, wymiary i kotwice PL napisane od zera.
-  - source: AnttiHero/lavern
-    license: Apache-2.0
-    relationship: pattern-only
-    note: >
-      Wzorzec dodany w v1.1.0: NIEPEWNE jako ocena pierwszej klasy wraz z zakazem
-      wymuszonej trójki. Podkategorie (NIEWYSTARCZAJĄCY_DOWÓD /
-      DOKUMENT_NIEJEDNOZNACZNY), reguły decyzji i polska semantyka - od zera.
-      Warstwa nieobecna w output-scoring-en, stąd rozjazd kredytów między bliźniakami.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.2.0
   companion_skills: citation-grounding-pl, deliverable-fidelity-pl, adversarial-legal-review-pl
-disable-model-invocation: true
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '[{"source": "FudanDISC/DISC-LawLLM (Fudan DISC Lab)", "url": "https://github.com/FudanDISC/DISC-LawLLM", "license": "Apache-2.0", "relationship": "clean-room", "note": "Metoda dwuwarstwowa (obiektywne dopasowanie plus subiektywna rubryka LLM-as-judge, skala 1-5) oparta na DISC-Law-Eval. Chińskie dane egzaminacyjne i model-sędzia porzucone; rubryka, wymiary i kotwice PL napisane od zera.\n"}, {"source": "AnttiHero/lavern", "license": "Apache-2.0", "relationship": "pattern-only", "note": "Wzorzec dodany w v1.1.0: NIEPEWNE jako ocena pierwszej klasy wraz z zakazem wymuszonej trójki. Podkategorie (NIEWYSTARCZAJĄCY_DOWÓD / DOKUMENT_NIEJEDNOZNACZNY), reguły decyzji i polska semantyka - od zera. Warstwa nieobecna w output-scoring-en, stąd rozjazd kredytów między bliźniakami.\n"}]'
 ---
 
 # Ocena outputu PL - karta ocen przed wysyłką

@@ -1,14 +1,12 @@
 ---
 name: chronologia-sprawy-v1
-version: "1.17"
-type: executive-chronologia
-status: production
-compatibility: "live_web_lookup, file_read, optional_interactive_ui"
-description: "Chronologia sprawy z dokumentów i dowodów: oś czasu per wątek, klasy pewności, proweniencja, sprzeczności dat/opisów, korelacja finansowa i opcjonalny interaktywny timeline."
-dependencies:
-  requires:
-    - shared
-  # 2026-09-27e: jawna zależność (każdy skill systemu korzysta z `shared`); pole czytane przy imporcie z marketplace
+description: 'Chronologia sprawy z dokumentów i dowodów: oś czasu per wątek, klasy pewności, proweniencja, sprzeczności dat/opisów, korelacja finansowa i opcjonalny interaktywny timeline.'
+metadata:
+  version: '1.17'
+  type: executive-chronologia
+  status: production
+  compatibility: live_web_lookup, file_read, optional_interactive_ui
+  dependencies: '{"requires": ["shared"]}'
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

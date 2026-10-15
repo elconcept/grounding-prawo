@@ -1,18 +1,9 @@
 ---
 name: zawiadomienie-o-przestepstwie
-version: "0.3"
-status: draft
-description: >
-  Zawiadomienie o przestępstwie pisane przez obywatela, który doznał krzywdy: iteracyjny wywiad
-  (przed, w trakcie, po zdarzeniu, świadkowie, skutki), lejek krzywd wydobywający wszystko, co
-  wobec niego zrobiono, bramka spójności z jego wcześniejszymi zeznaniami i relacjami innych osób,
-  a na końcu wartkie pismo w pierwszej osobie z wyraźnym rozróżnieniem faktu, wniosku, hipotezy
-  i informacji od innych osób, z wnioskiem o ściganie i listą zweryfikowanych przepisów.
-  Relację użytkownika traktuje jako prawdziwą, nie pomija krzywd z braku dowodów, nie pisze
-  językiem aktu oskarżenia. Używaj gdy: "zawiadomienie o przestępstwie", "zawiadomienie do
-  prokuratury", "zgłosić na policję", "doniesienie", "chcę to zgłosić", "opisz, co mi zrobił",
-  "uzupełnienie zawiadomienia", "zawiadomienie przeciwko funkcjonariuszowi", także gdy
-  użytkownik chaotycznie opowiada o krzywdzie i chce, żeby organy się tym zajęły.
+description: 'Zawiadomienie o przestępstwie pisane przez obywatela, który doznał krzywdy: iteracyjny wywiad (przed, w trakcie, po zdarzeniu, świadkowie, skutki), lejek krzywd wydobywający wszystko, co wobec niego zrobiono, bramka spójności z jego wcześniejszymi zeznaniami i relacjami innych osób, a na końcu wartkie pismo w pierwszej osobie z wyraźnym rozróżnieniem faktu, wniosku, hipotezy i informacji od innych osób, z wnioskiem o ściganie i listą zweryfikowanych przepisów. Relację użytkownika traktuje jako prawdziwą, nie pomija krzywd z braku dowodów, nie pisze językiem aktu oskarżenia. Używaj gdy: "zawiadomienie o przestępstwie", "zawiadomienie do prokuratury", "zgłosić na policję", "doniesienie", "chcę to zgłosić", "opisz, co mi zrobił", "uzupełnienie zawiadomienia", "zawiadomienie przeciwko funkcjonariuszowi", także gdy użytkownik chaotycznie opowiada o krzywdzie i chce, żeby organy się tym zajęły.'
+metadata:
+  version: '0.3'
+  status: draft
 ---
 
 # Zawiadomienie o przestępstwie (obywatel, pokrzywdzony)

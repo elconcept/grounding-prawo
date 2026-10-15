@@ -1,113 +1,19 @@
 ---
 name: audyt-systemu-v4
-description: "Audyt jakości, spójności i bezpieczeństwa systemu prawnych skilli: zależności, wersje, mapy Dz.U., treść merytoryczna, propagacja zmian, deduplikacja i bramki jakości."
-dependencies:
-  requires:
-    - shared
-version: "6.229"   # zawsze w cudzysłowie (6.10 bez niego = float 6.1)
-type: governance-audit
-compatibility: "host-neutral; file read/write, fresh legal-source lookup and optional archive/UI operations mapped by the runtime adapter"
-entrypoint: SKILL.md
-modules:
-  - modules/MOD-INTERLINIE.md
-  - modules/MOD-WSTAWKI.md
-  - modules/MOD-DESCRIPTION.md
-  - modules/MOD-TRESC-MERYTORYCZNA.md
-  - modules/MOD-PROPAGACJA-NOWELIZACJI.md
-widgets:
-  - widgets/WIDGET-MENU.md
-references:
-  - references/AUDIT-JOURNAL.md
-  - references/F-113-PREFLIGHT-2026-08-26.md
-  - references/HISTORIA-ZMIAN-PLIKOW.md
-  - references/CHANGELOG.md
-  - references/F-171-pomiar-domen-2026-09-09.md
-  - references/F-152-pomiar-domen-2026-09-04.md
-  - references/PORTALE-ORZECZNICZE-API.md
-  - references/WARN-OTWARTE.md
-  - references/CHECKLIST-DEDUP.md
-  - references/mapa_dzu_2026-10-04.md
-  - references/mapa_dzu_2026-08-28.md
-  - references/ALIASY-NAZW-AKTOW.md
-  - references/SKRYPTY-RECZNE.md
-  - references/PROTOKOL-WYKONAWCZY-F113.md
-  - references/PLAN-TESTU-BRAMEK-F113.md
-  - references/REGRESSION-TEST-PLAN.md
-  - references/SYNC-DZU-AUTOMATYCZNY.md
-  - references/HARMONOGRAM-CRON.md
-  - references/SCHEDULED-TASK-COWORK.md
-  - references/PAMIEC-TRWALA-ROUTER.md
-  - references/FORMAT-RAPORTU-ROZNIC.md
-  - references/F-108-lista-MS-egzamin-2026.md
-  - references/COWORK-HARMONOGRAM-NATYWNY.md
-  - references/raporty-pokrycia-2026-08-13/
-  - references/PLAN-POMIARU-BRAMEK-UNIWERSALNY.md
-  - references/REJESTR-BRAMEK-POMIAR.json
-  - references/REJESTR-KORPUSU-POMIAROWEGO.md
-scripts:
-  - scripts/check_wartosci_prawne.py
-  - scripts/check_oplaty_mapa.py
-  - scripts/check_utrata_tresci.py
-  - scripts/check_wydanie.py
-  - scripts/check_archiwa_repo.py
-  - scripts/check_wejscie_dokumentu.py
-  - scripts/check_eli_extract.py
-  - scripts/check_plugin_manifest.py
-  - scripts/check_kontrakt_rachunek.py
-  - scripts/check_sekrety.py
-  - scripts/check_graf_przyczynowy.py
-  - scripts/check_mapy_aktow.py
-  - scripts/test_mac_ce_litery.py
-  - scripts/test_konstytucja_tekst_czysty.py
-  - scripts/napraw_tekst_dzu.py
-  - scripts/check_osiagalnosc_shared.py
-  - scripts/check_testy_skilli.py
-  - scripts/test_mutacje_zestawu.py
-  - scripts/check_sieroty.py
-  - scripts/_lex_common.py
-  - scripts/check_limit_plikow.py
-  - scripts/check_tabele_satelickie.py
-  - scripts/check_podmiana_aktu.py
-  - scripts/check_widmowe_pokrycie.py
-  - scripts/weryfikator_sygnatur.py
-  - scripts/test_konstytucja_tekst_czysty.py
-  - scripts/test_pokrycie_orkiestratora.py
-  - scripts/test_module_registration.py
-  - scripts/test_module_count.py
-  - scripts/test_cross_map_dzu.py
-  - scripts/test_header_snapshot.py
-  - scripts/test_title_scope_match.py
-  - scripts/test_moved_to_shared.py
-  - scripts/check_wersje_changelog.py
-  - scripts/check_dlugosc_modulow.py
-  - scripts/build_ramie_kontrolne_f113.py
-  - scripts/build_ramie_kontrolne.py
-  - scripts/ocena_transkryptow_f113.py
-  - scripts/check_description.py
-  - scripts/check_sync_aktow.py
-  - scripts/run_regression_suite.py
-  - scripts/ci_check_shared.py
-  - scripts/check_rejestracja_modulow.py
-  - scripts/check_coverage_coherence.py
-  - scripts/sync_dzu_eli.py
-  - scripts/audit_tj_inventory.py
-  - scripts/audit_amendment_scope.py
-  - scripts/check_status_podstaw.py
-  - scripts/check_wyjatek_gate_eli.py
-  - scripts/check_checksums.py
-  - scripts/check_nowelizacje_po_tj.py
-  - scripts/check_frontmatter_yaml.py
-  - scripts/check_domeny_allowlist.py
-  - scripts/test_router_contract.py
-  - scripts/check_frontmatter_rejestracja.py
-  - scripts/test_f108_trade.py
-  - scripts/test_f108_consistency.py
-  - scripts/mock_eli_server_test.py
-  - scripts/bootstrap_last_sync_date.py
-  - scripts/dostarcz_skill.sh
-  - scripts/install_precommit_hook.sh
-  - scripts/README.md
-disable-model-invocation: true
+description: 'Audyt jakości, spójności i bezpieczeństwa systemu prawnych skilli: zależności, wersje, mapy Dz.U., treść merytoryczna, propagacja zmian, deduplikacja i bramki jakości.'
+metadata:
+  dependencies: '{"requires": ["shared"]}'
+  version: '6.229'
+  type: governance-audit
+  compatibility: host-neutral; file read/write, fresh legal-source lookup and optional archive/UI operations mapped by the runtime adapter
+  entrypoint: SKILL.md
+  modules: '["modules/MOD-INTERLINIE.md", "modules/MOD-WSTAWKI.md", "modules/MOD-DESCRIPTION.md", "modules/MOD-TRESC-MERYTORYCZNA.md", "modules/MOD-PROPAGACJA-NOWELIZACJI.md"]'
+  widgets: '["widgets/WIDGET-MENU.md"]'
+  references: '["references/AUDIT-JOURNAL.md", "references/F-113-PREFLIGHT-2026-08-26.md", "references/HISTORIA-ZMIAN-PLIKOW.md", "references/CHANGELOG.md", "references/F-171-pomiar-domen-2026-09-09.md", "references/F-152-pomiar-domen-2026-09-04.md", "references/PORTALE-ORZECZNICZE-API.md", "references/WARN-OTWARTE.md", "references/CHECKLIST-DEDUP.md", "references/mapa_dzu_2026-10-04.md", "references/mapa_dzu_2026-08-28.md", "references/ALIASY-NAZW-AKTOW.md", "references/SKRYPTY-RECZNE.md", "references/PROTOKOL-WYKONAWCZY-F113.md", "references/PLAN-TESTU-BRAMEK-F113.md", "references/REGRESSION-TEST-PLAN.md", "references/SYNC-DZU-AUTOMATYCZNY.md", "references/HARMONOGRAM-CRON.md", "references/SCHEDULED-TASK-COWORK.md", "references/PAMIEC-TRWALA-ROUTER.md", "references/FORMAT-RAPORTU-ROZNIC.md", "references/F-108-lista-MS-egzamin-2026.md", "references/COWORK-HARMONOGRAM-NATYWNY.md", "references/raporty-pokrycia-2026-08-13/", "references/PLAN-POMIARU-BRAMEK-UNIWERSALNY.md", "references/REJESTR-BRAMEK-POMIAR.json",
+    "references/REJESTR-KORPUSU-POMIAROWEGO.md"]'
+  scripts: '["scripts/check_wartosci_prawne.py", "scripts/check_oplaty_mapa.py", "scripts/check_utrata_tresci.py", "scripts/check_wydanie.py", "scripts/check_archiwa_repo.py", "scripts/check_wejscie_dokumentu.py", "scripts/check_eli_extract.py", "scripts/check_plugin_manifest.py", "scripts/check_kontrakt_rachunek.py", "scripts/check_sekrety.py", "scripts/check_graf_przyczynowy.py", "scripts/check_mapy_aktow.py", "scripts/test_mac_ce_litery.py", "scripts/test_konstytucja_tekst_czysty.py", "scripts/napraw_tekst_dzu.py", "scripts/check_osiagalnosc_shared.py", "scripts/check_testy_skilli.py", "scripts/test_mutacje_zestawu.py", "scripts/check_sieroty.py", "scripts/_lex_common.py", "scripts/check_limit_plikow.py", "scripts/check_tabele_satelickie.py", "scripts/check_podmiana_aktu.py", "scripts/check_widmowe_pokrycie.py", "scripts/weryfikator_sygnatur.py", "scripts/test_konstytucja_tekst_czysty.py", "scripts/test_pokrycie_orkiestratora.py", "scripts/test_module_registration.py", "scripts/test_module_count.py",
+    "scripts/test_cross_map_dzu.py", "scripts/test_header_snapshot.py", "scripts/test_title_scope_match.py", "scripts/test_moved_to_shared.py", "scripts/check_wersje_changelog.py", "scripts/check_dlugosc_modulow.py", "scripts/build_ramie_kontrolne_f113.py", "scripts/build_ramie_kontrolne.py", "scripts/ocena_transkryptow_f113.py", "scripts/check_description.py", "scripts/check_sync_aktow.py", "scripts/run_regression_suite.py", "scripts/ci_check_shared.py", "scripts/check_rejestracja_modulow.py", "scripts/check_coverage_coherence.py", "scripts/sync_dzu_eli.py", "scripts/audit_tj_inventory.py", "scripts/audit_amendment_scope.py", "scripts/check_status_podstaw.py", "scripts/check_wyjatek_gate_eli.py", "scripts/check_checksums.py", "scripts/check_nowelizacje_po_tj.py", "scripts/check_frontmatter_yaml.py", "scripts/check_domeny_allowlist.py", "scripts/test_router_contract.py", "scripts/check_frontmatter_rejestracja.py", "scripts/test_f108_trade.py", "scripts/test_f108_consistency.py", "scripts/mock_eli_server_test.py",
+    "scripts/bootstrap_last_sync_date.py", "scripts/dostarcz_skill.sh", "scripts/install_precommit_hook.sh", "scripts/README.md"]'
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

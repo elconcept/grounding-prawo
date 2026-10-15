@@ -1,7 +1,8 @@
 ---
 name: uoozp-compliance
-description: "Rozszerzona kontrola zgodności hospitalizacji psychiatrycznej z UoOZP — obejmuje przyjęcie bez zgody (art. 23/24), przymus bezpośredni (art. 18–18f), leczenie bez zgody (art. 33–34) i kontrolę sądową (art. 42–49). Rozdziela przyjęcie bez zgody od leczenia bez zgody oraz zasadność (bezzasadność) od legalności (bezprawność). Używaj do audytu protokołu przyjęcia, karty przymusu, planu leczenia lub całej hospitalizacji."
-argument-hint: ''
+description: Rozszerzona kontrola zgodności hospitalizacji psychiatrycznej z UoOZP — obejmuje przyjęcie bez zgody (art. 23/24), przymus bezpośredni (art. 18–18f), leczenie bez zgody (art. 33–34) i kontrolę sądową (art. 42–49). Rozdziela przyjęcie bez zgody od leczenia bez zgody oraz zasadność (bezzasadność) od legalności (bezprawność). Używaj do audytu protokołu przyjęcia, karty przymusu, planu leczenia lub całej hospitalizacji.
+metadata:
+  argument-hint: ''
 ---
 
 # /tk-uoopz-compliance-check — Rozszerzona Kontrola UoOZP (przyjęcie, przymus, leczenie, sąd)

@@ -1,107 +1,6 @@
 ---
 name: doc-intel-contract-pl
-description: >
-  Normalizuje wyjscie darmowego RODO-safe stacku OCR/PDF (pdftotext, Chandra OCR, LiteParse - OCR skanow na CPU, OCR PATRONa/Gaius-Lex)
-  do jednego audytowalnego kontraktu
-  {block_type, bbox, text, confidence} inspirowanego architektura Mistral OCR 4
-  (idea, nie wagi - model zamkniety=SKIP). Daje trzy rzeczy naraz: confidence-gating
-  (region niskiej pewnosci -> kolejka human-in-the-loop, reszta auto-approve),
-  typed blocks + flagi PII pod redakcje RODO (signature/stamp/PESEL/NIP/IBAN),
-  oraz bbox+block domykajace grounding cytatow (cytat -> region dokumentu).
-  Zero-cloud, zero LLM w sciezce normalizacji, deterministyczne (doc_id SHA256),
-  Python stdlib. Uzywaj gdy: "znormalizuj OCR", "kontrakt dokumentu", "ktore
-  bloki do przegladu", "confidence gating", "przygotuj redakcje PII", "bbox do
-  cytatu", "wyjscie opendataloader do JSON", "human-in-the-loop dla skanu".
-  Dzieli teczke akt na pisma lokalnie (split_packet.py, bez LLM). "podziel teczke",
-  "rozbij akta na pisma", "OCR skanu bez GPU". Komplementarny do citation-grounding-pl
-  (konsument kontraktu) i drabinki PDF.
-attribution:
-  - source: Mistral OCR 4 (Mistral AI)
-    url: https://mistral.ai/news/mistral-ocr
-    license: proprietary
-    relationship: pattern-only
-    note: >
-      Idea kontraktu wyjscia Document Intelligence: typed blocks + bbox + confidence
-      jako jedno audytowalne wyjscie. Model jest zamkniety, wiec bierzemy sam ksztalt
-      kontraktu; schemat, gating, flagi PII i caly kod napisane od zera.
-  - source: datalab-to/chandra
-    url: https://github.com/datalab-to/chandra
-    license: Apache-2.0
-    relationship: adaptation
-    note: >
-      Z KODU (Apache-2.0), nie z wag (wagi sa na Modified OpenRAIL-M i nie sa tu
-      uzywane). Wzorzec prompt-kontraktu constrained-HTML z data-label/data-bbox
-      w skali 0-1000 (silnik vlm-html), algorytm detekcji zapetlenia generacji
-      detect_repeat_token (degeneracja.py) oraz przepis renderu strony
-      flatten AcroForm + dynamiczne DPI. Taksonomia etykiet, obsluga podpisu
-      i pieczatki, adapter i testy napisane od zera.
-  - source: firecrawl/pdf-inspector
-    url: https://github.com/firecrawl/pdf-inspector
-    license: MIT
-    relationship: dependency
-    note: >
-      Zaleznosc opcjonalna (PyPI `pdf-inspector`, MIT) uzywana WYLACZNIE przez
-      `scripts/routing_gate.py` do mechanicznej klasyfikacji skan-vs-tekst
-      (classify_pdf: pdf_type, pages_needing_ocr, confidence 0-1). Sciezka
-      normalizacji pozostaje zero-dep stdlib. Zmierzone 2026-08-08 na realnych aktach:
-      pelny skan wykryty w milisekundach (pewnosc 0.95), wielostronicowy PDF
-      tekstowy w kilkudziesieciu ms. Zamyka dziure szczebla 4 drabinki, gdzie decyzja
-      "czy to skan" byla dotad ocena oka ludzkiego.
-  - source: run-llama/liteparse
-    url: https://github.com/run-llama/liteparse
-    license: Apache-2.0
-    relationship: dependency
-    note: >
-      Zaleznosc opcjonalna (PyPI `liteparse`, przypieta 2.14.6) uzywana WYLACZNIE
-      przez `scripts/liteparse_extract.py` - szczebel OCR skanow na CPU (Tesseract
-      w srodku, bez chmury). Zmierzone 2026-09-21: CER 0,5% na skanie 300 dpi
-      publicznego wyroku SN, 3,5% na zdegradowanym, ogonki 431/431, ~2 s/str. na
-      CPU. Piec pulapek wpisanych w ekstraktor jako
-      bezpieczniki (limit 1000 stron obcinajacy po cichu, markdown wycinajacy
-      sygnature, DPI, pobieranie modelu w locie, `§` czytany jako `$`). Modele
-      jezyka (tessdata_best, Apache-2.0) przypinane `--tessdata`.
-  - source: jerryjliu/docjev
-    url: https://github.com/jerryjliu/docjev
-    license: Apache-2.0
-    relationship: pattern-only
-    note: >
-      NIE jest zaleznoscia. Wzorzec dla `scripts/split_packet.py`: podzial teczki
-      jako decyzja dla kazdej strony osobno (kategoria + "czy strona N zaczyna nowe pismo"), a nie
-      prosba o liste segmentow; niezmiennik "kazda strona dokladnie raz"; pusty
-      odczyt to nie pusta strona; reguly kategorii jako id + opis celu pisma.
-      DocJev pyta Jeva (hostowany model decyzyjny TypeSafe) - u nas silnik jest
-      lokalny i deterministyczny,
-      bo tekst akt nie moze opuscic maszyny kancelarii. Kod napisany od zera.
-  - source: firecrawl/anydoc
-    url: https://github.com/firecrawl/anydoc
-    license: MIT
-    relationship: pattern-only
-    note: >
-      NIE jest zaleznoscia - jest POWODEM istnienia bramki. Audyt zrodla
-      2026-08-08 wykazal, ze zdarzenia pominiecia tresci (42 miejsca, m.in.
-      "skipping slide", "skipping chapter", "duplicate note id dropped") ida do
-      fasady `log`, a repo nigdzie nie rejestruje loggera. Dowod bojowy:
-      .docx z jednym uszkodzonym chart1.xml -> exit 0, stderr 0 bajtow,
-      a z wyjscia znika cala tabela danych. `check_ooxml` nazywa uszkodzona
-      czesc ZANIM ktokolwiek zaufa wyjsciu. Kod bramki napisany od zera.
-  - source: sandbox-quantum/flintai-cli
-    url: https://github.com/sandbox-quantum/flintai-cli
-    license: Apache-2.0 WITH Commons-Clause
-    relationship: pattern-only
-    note: >
-      `mask_for_model.py` - maska dlugosciowa dla KOPII tekstu wysylanej do modelu
-      (rung-5): kazdy znak sekretu -> `*`, dlugosc i pozycje reszty identyczne, wiec
-      offsety i bbox dalej pasuja do oryginalu. Idea z ich `secret_anonymizer.py`
-      (maskowanie kluczy w kodzie); tu regexy PII PL z pii_flags i wlasne. Zero kodu.
-  - source: docling-project/docling-graph
-    url: https://github.com/docling-project/docling-graph
-    license: MIT
-    relationship: pattern-only
-    note: >
-      Warstwa dowodowa `evidence.py` (zasada "fail-empty, never fail-wrong",
-      proweniencja cytatu) oraz kotwica dokumentacji testem
-      (`tests/test_dokumentacja_zakotwiczona.py`, wzorzec ich
-      `tests/test_architecture_doc.py`). Wziete idee, nie zaleznosc; kod od zera.
+description: 'Normalizuje OCR/PDF do kontraktu dokumentu: bloki tekstu, bbox, confidence, flagi PII i powiązanie cytatu z regionem strony. Używaj do normalizacji OCR, oceny bloków wymagających przeglądu, przygotowania redakcji PII oraz dzielenia teczki akt na pisma. Obsługuje pdftotext, Chandra OCR, LiteParse i OCR PATRONa/Gaius-Lex; działa deterministycznie w Python stdlib bez LLM. Współpracuje z citation-grounding-pl.'
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 0.5.0
@@ -109,7 +8,11 @@ metadata:
   cost: zero LLM (deterministyczna normalizacja)
   license: MIT
   companion_skills: citation-grounding-pl
-disable-model-invocation: true
+  attribution: '[{"source": "Mistral OCR 4 (Mistral AI)", "url": "https://mistral.ai/news/mistral-ocr", "license": "proprietary", "relationship": "pattern-only", "note": "Idea kontraktu wyjscia Document Intelligence: typed blocks + bbox + confidence jako jedno audytowalne wyjscie. Model jest zamkniety, wiec bierzemy sam ksztalt kontraktu; schemat, gating, flagi PII i caly kod napisane od zera.\n"}, {"source": "datalab-to/chandra", "url": "https://github.com/datalab-to/chandra", "license": "Apache-2.0", "relationship": "adaptation", "note": "Z KODU (Apache-2.0), nie z wag (wagi sa na Modified OpenRAIL-M i nie sa tu uzywane). Wzorzec prompt-kontraktu constrained-HTML z data-label/data-bbox w skali 0-1000 (silnik vlm-html), algorytm detekcji zapetlenia generacji detect_repeat_token (degeneracja.py) oraz przepis renderu strony flatten AcroForm + dynamiczne DPI. Taksonomia etykiet, obsluga podpisu i pieczatki, adapter i testy napisane od zera.\n"}, {"source": "firecrawl/pdf-inspector", "url":
+    "https://github.com/firecrawl/pdf-inspector", "license": "MIT", "relationship": "dependency", "note": "Zaleznosc opcjonalna (PyPI `pdf-inspector`, MIT) uzywana WYLACZNIE przez `scripts/routing_gate.py` do mechanicznej klasyfikacji skan-vs-tekst (classify_pdf: pdf_type, pages_needing_ocr, confidence 0-1). Sciezka normalizacji pozostaje zero-dep stdlib. Zmierzone 2026-08-08 na realnych aktach: pelny skan wykryty w milisekundach (pewnosc 0.95), wielostronicowy PDF tekstowy w kilkudziesieciu ms. Zamyka dziure szczebla 4 drabinki, gdzie decyzja \"czy to skan\" byla dotad ocena oka ludzkiego.\n"}, {"source": "run-llama/liteparse", "url": "https://github.com/run-llama/liteparse", "license": "Apache-2.0", "relationship": "dependency", "note": "Zaleznosc opcjonalna (PyPI `liteparse`, przypieta 2.14.6) uzywana WYLACZNIE przez `scripts/liteparse_extract.py` - szczebel OCR skanow na CPU (Tesseract w srodku, bez chmury). Zmierzone 2026-09-21: CER 0,5% na skanie 300 dpi publicznego wyroku SN, 3,5%
+    na zdegradowanym, ogonki 431/431, ~2 s/str. na CPU. Piec pulapek wpisanych w ekstraktor jako bezpieczniki (limit 1000 stron obcinajacy po cichu, markdown wycinajacy sygnature, DPI, pobieranie modelu w locie, `§` czytany jako `$`). Modele jezyka (tessdata_best, Apache-2.0) przypinane `--tessdata`.\n"}, {"source": "jerryjliu/docjev", "url": "https://github.com/jerryjliu/docjev", "license": "Apache-2.0", "relationship": "pattern-only", "note": "NIE jest zaleznoscia. Wzorzec dla `scripts/split_packet.py`: podzial teczki jako decyzja dla kazdej strony osobno (kategoria + \"czy strona N zaczyna nowe pismo\"), a nie prosba o liste segmentow; niezmiennik \"kazda strona dokladnie raz\"; pusty odczyt to nie pusta strona; reguly kategorii jako id + opis celu pisma. DocJev pyta Jeva (hostowany model decyzyjny TypeSafe) - u nas silnik jest lokalny i deterministyczny, bo tekst akt nie moze opuscic maszyny kancelarii. Kod napisany od zera.\n"}, {"source": "firecrawl/anydoc", "url": "https://github.com/firecrawl/anydoc",
+    "license": "MIT", "relationship": "pattern-only", "note": "NIE jest zaleznoscia - jest POWODEM istnienia bramki. Audyt zrodla 2026-08-08 wykazal, ze zdarzenia pominiecia tresci (42 miejsca, m.in. \"skipping slide\", \"skipping chapter\", \"duplicate note id dropped\") ida do fasady `log`, a repo nigdzie nie rejestruje loggera. Dowod bojowy: .docx z jednym uszkodzonym chart1.xml -> exit 0, stderr 0 bajtow, a z wyjscia znika cala tabela danych. `check_ooxml` nazywa uszkodzona czesc ZANIM ktokolwiek zaufa wyjsciu. Kod bramki napisany od zera.\n"}, {"source": "sandbox-quantum/flintai-cli", "url": "https://github.com/sandbox-quantum/flintai-cli", "license": "Apache-2.0 WITH Commons-Clause", "relationship": "pattern-only", "note": "`mask_for_model.py` - maska dlugosciowa dla KOPII tekstu wysylanej do modelu (rung-5): kazdy znak sekretu -> `*`, dlugosc i pozycje reszty identyczne, wiec offsety i bbox dalej pasuja do oryginalu. Idea z ich `secret_anonymizer.py` (maskowanie kluczy w kodzie);
+    tu regexy PII PL z pii_flags i wlasne. Zero kodu.\n"}, {"source": "docling-project/docling-graph", "url": "https://github.com/docling-project/docling-graph", "license": "MIT", "relationship": "pattern-only", "note": "Warstwa dowodowa `evidence.py` (zasada \"fail-empty, never fail-wrong\", proweniencja cytatu) oraz kotwica dokumentacji testem (`tests/test_dokumentacja_zakotwiczona.py`, wzorzec ich `tests/test_architecture_doc.py`). Wziete idee, nie zaleznosc; kod od zera.\n"}]'
 ---
 
 # doc-intel-contract-pl - kontrakt wyjscia Document Intelligence

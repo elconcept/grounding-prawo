@@ -1,31 +1,23 @@
 ---
 name: uodo-grounding-pl
-description: >
-  Mechaniczny weryfikator cytatu dla decyzji Prezesa UODO (ochrona danych osobowych / RODO)
-  po polsku, z gradientem weryfikacji ISTNIENIE / TREŚĆ / FRAGMENT. Sprawdza, czy cytat,
-  parafraza lub sygnatura decyzji UODO faktycznie istnieje i czy oddaje jej rozstrzygnięcie -
-  zamiast wierzyć modelowi "na oko". Krytyczne pułapki domeny: GIODO (przed 25.05.2018) vs
-  Prezes UODO (po), RODO (rozporządzenie UE 2016/679) vs krajowa ustawa o ochronie danych
-  osobowych, oraz strona uodo.gov.pl wroga botom (drabinka źródeł). RODO-safe (lokalnie).
-  Używaj gdy: weryfikacja powołań decyzji UODO w opinii / skardze do WSA / memo RODO przed
-  wysłaniem, "sprawdź decyzję UODO", "czy ta sygnatura DKN istnieje", "grounding RODO",
-  "czy UODO to nałożyło", "weryfikacja kary RODO", "czy AI zmyśliło decyzję UODO".
+description: 'Mechaniczny weryfikator cytatu dla decyzji Prezesa UODO (ochrona danych osobowych / RODO) po polsku, z gradientem weryfikacji ISTNIENIE / TREŚĆ / FRAGMENT. Sprawdza, czy cytat, parafraza lub sygnatura decyzji UODO faktycznie istnieje i czy oddaje jej rozstrzygnięcie - zamiast wierzyć modelowi "na oko". Krytyczne pułapki domeny: GIODO (przed 25.05.2018) vs Prezes UODO (po), RODO (rozporządzenie UE 2016/679) vs krajowa ustawa o ochronie danych osobowych, oraz strona uodo.gov.pl wroga botom (drabinka źródeł). RODO-safe (lokalnie). Używaj gdy: weryfikacja powołań decyzji UODO w opinii / skardze do WSA / memo RODO przed wysłaniem, "sprawdź decyzję UODO", "czy ta sygnatura DKN istnieje", "grounding RODO", "czy UODO to nałożyło", "weryfikacja kary RODO", "czy AI zmyśliło decyzję UODO".
+
+  '
 license: Apache-2.0
-allowed-tools: [Bash, Read, Grep, WebFetch]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  relationship: original
-  note: >
-    Brak źródła trzeciej strony. Drugi weryfikator domenowy zbudowany z własnego szablonu
-    citation-grounding-pl/references/szkielet-weryfikatora-domenowego; silnik współdzielony.
-    Dowód generalizacji na domenie bez resolvera w SAOS (decyzje na uodo.gov.pl).
+allowed-tools:
+- Bash
+- Read
+- Grep
+- WebFetch
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: citation-grounding-pl
   shared_engine: citation-grounding-pl/scripts/ground-citations.mjs
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '{"relationship": "original", "note": "Brak źródła trzeciej strony. Drugi weryfikator domenowy zbudowany z własnego szablonu citation-grounding-pl/references/szkielet-weryfikatora-domenowego; silnik współdzielony. Dowód generalizacji na domenie bez resolvera w SAOS (decyzje na uodo.gov.pl).\n"}'
 ---
 
 # UODO Grounding PL - weryfikator cytatu decyzji Prezesa UODO

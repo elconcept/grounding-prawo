@@ -2,35 +2,17 @@
 name: redline-docx-pl
 description: Redlining polskich umow i pism w .docx z natywnymi Word Track Changes - bez niszczenia formatowania OOXML. Czyta .docx do Markdown (CriticMarkup) dla LLM, aplikuje zmiany jako sledzone (w:ins/w:del) + komentarze, i robi sanitize przed wyslaniem (strip metadanych autora, last-modified-by, rsid, timestampy - RODO przy wysylce pisma). Silnik = adeu (MIT). Use when the user wants to nanosic poprawki w umowie/pismie .docx, zrobic redline/tryb sledzenia zmian, czytac docx dla LLM bez utraty formatowania, przygotowac pismo do wyslania (usunac metadane autora z Worda), porownac dwie wersje .docx, lub mentions track changes / sledzenie zmian / redline / .docx / DOCX.
 license: MIT
-attribution:
-  - source: dealfluence/adeu
-    url: https://github.com/dealfluence/adeu
-    license: MIT
-    relationship: dependency
-    note: >
-      Silnik konwersji i aplikacji zmian, wolany przez uvx. Skill go opakowuje,
-      nie wywodzi sie z jego kodu.
-  - source: evolsb/legal-redline-tools
-    url: https://github.com/evolsb/legal-redline-tools
-    license: MIT
-    relationship: pattern-only
-    note: >
-      Wzorce memo negocjacyjnego (tier/rationale/walkaway/precedent) i skanera
-      placeholderow. Oba skrypty napisane od zera pod realia polskie.
-  - source: genspark-ai/genoffice
-    url: https://github.com/genspark-ai/genoffice
-    license: Apache-2.0
-    relationship: vendored
-    note: >
-      packages/docx-engine wendorowany do vendor/docx-engine (commit 8f52328,
-      Apache-2.0). Silnik round-trip po bajtach. Zmierzony 2026-08-05 (round-trip,
-      sledzone zmiany, tabele), NIE wpiety w workflow skilla - sledzonych zmian
-      nie robi poprawnie na sciezce blokowej. Szczegoly i wykaz zmian
-      w vendor/docx-engine/NOTICE i README.md.
-allowed-tools: [Bash, Read, Write, Edit]
-data-residency: local
-requires-human-approval: true
-pii-egress: none
+allowed-tools:
+- Bash
+- Read
+- Write
+- Edit
+metadata:
+  attribution: '[{"source": "dealfluence/adeu", "url": "https://github.com/dealfluence/adeu", "license": "MIT", "relationship": "dependency", "note": "Silnik konwersji i aplikacji zmian, wolany przez uvx. Skill go opakowuje, nie wywodzi sie z jego kodu.\n"}, {"source": "evolsb/legal-redline-tools", "url": "https://github.com/evolsb/legal-redline-tools", "license": "MIT", "relationship": "pattern-only", "note": "Wzorce memo negocjacyjnego (tier/rationale/walkaway/precedent) i skanera placeholderow. Oba skrypty napisane od zera pod realia polskie.\n"}, {"source": "genspark-ai/genoffice", "url": "https://github.com/genspark-ai/genoffice", "license": "Apache-2.0", "relationship": "vendored", "note": "packages/docx-engine wendorowany do vendor/docx-engine (commit 8f52328, Apache-2.0). Silnik round-trip po bajtach. Zmierzony 2026-08-05 (round-trip, sledzone zmiany, tabele), NIE wpiety w workflow skilla - sledzonych zmian nie robi poprawnie na sciezce blokowej. Szczegoly i wykaz zmian w vendor/docx-engine/NOTICE
+    i README.md.\n"}]'
+  data-residency: local
+  requires-human-approval: 'true'
+  pii-egress: none
 ---
 
 # Redline DOCX po polsku

@@ -1,69 +1,22 @@
 ---
 name: przesluchanie-swiadkow-v2-min90
-version: "3.32"
-type: legal-skill
-domain: litigation-witness-examination
-status: production
-default_mode: text
-graphic_mode: on_request_only
-performance_profile: staged-intake-first
-compatibility: "live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui; modular Agent Skills environment"
-entrypoint: SKILL.md
-description: "Przygotowanie przesłuchania świadków: analiza akt i dowodów, cele dowodowe, sprzeczności, pytania główne i kontrolne oraz rozbudowane zestawy pytań do świadków."
-dependencies:
-  required:
-    - shared
-    - analizator-dowodow-v3
-    - MOD-SKAN-DOWODOW-KOMPLETNY
-    - MOD-REJESTR-ZALACZNIKOW-CHECKPOINT
-    - MOD-STEP-TRACKER
-    - MOD-ATAK-NA-SWIADKA   # źródło siatki pojęć dla FUNDAMENT-A w BLOKU A
-                            # (SW-P1 relacja, SW-P3 źródło wiedzy, SW-A1 interes,
-                            # SW-A6 upływ czasu) — dodane 2026-08-23g, flaga F-122
-  optional:
-    - chronologia-sprawy-v1
-    - analiza-sadowa-v6
-    - MOD-KONTEKST-SESJI
-    - MOD-PRIORYTETY-ASPEKTOW
-    - MOD-SELEKCJA-DOWODOW
-    - MOD-MAPA-PRZEPISOW
-validation:
-  required_gates:
-    - SD-VER-GATE-WITNESS
-    - PRAWO-HARDGATE
-    - PRIOR-TESTIMONY-GATE
-    - WITNESS-TYPE-GATE
-    - INTAKE-COMPLETENESS-GATE
-    - QUESTION-ADMISSIBILITY-GATE
-    - WITNESS-SCORING
-    - WITNESS-INTELLIGENCE
-    - FACT-EVIDENCE-MAPPING
-    - MODEL-SELECTION-GATE
-    - CROSS-EXAMINATION-GATE
-    - TEXT-FIRST-UI-GATE
-    - HARDGATE-SD-01
-    - HARDGATE-SD-02
-    - RZ-SHOW-GATE
-    - STEP-TRACKER-WITNESS
-    - PRZESLANKI-GATE
-    - FORMALNA-ZGODNOSC-GATE
-pipeline:
-  stages:
-    - PRE-W1a-SD-VER
-    - PRE-W1a.4-RZ-SHOW
-    - KROK-PRE-W1-INTELLIGENCE
-    - KROK-0-KONTEKST
-    - W1-INTAKE
-    - W1-SUPPLEMENT
-    - W2-THESES-AND-MODEL
-    - CHECKPOINT-W2
-    - W3-QUESTIONS
-    - W4-REHEARSAL
-    - W5-BINDER
-    - W6-LIVE-DIRECT
-changelog: |
-  Wersja bieżąca: 3.32 (2026-10-06): PRAWO-HARDGATE-WITNESS: sn.pl wyszukiwarka-orzeczen, link = karta
-  Pełna historia: references/CHANGELOG.md (ZASADA 15).
+description: 'Przygotowanie przesłuchania świadków: analiza akt i dowodów, cele dowodowe, sprzeczności, pytania główne i kontrolne oraz rozbudowane zestawy pytań do świadków.'
+metadata:
+  version: '3.32'
+  type: legal-skill
+  domain: litigation-witness-examination
+  status: production
+  default_mode: text
+  graphic_mode: on_request_only
+  performance_profile: staged-intake-first
+  compatibility: live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui; modular Agent Skills environment
+  entrypoint: SKILL.md
+  dependencies: '{"required": ["shared", "analizator-dowodow-v3", "MOD-SKAN-DOWODOW-KOMPLETNY", "MOD-REJESTR-ZALACZNIKOW-CHECKPOINT", "MOD-STEP-TRACKER", "MOD-ATAK-NA-SWIADKA"], "optional": ["chronologia-sprawy-v1", "analiza-sadowa-v6", "MOD-KONTEKST-SESJI", "MOD-PRIORYTETY-ASPEKTOW", "MOD-SELEKCJA-DOWODOW", "MOD-MAPA-PRZEPISOW"]}'
+  validation: '{"required_gates": ["SD-VER-GATE-WITNESS", "PRAWO-HARDGATE", "PRIOR-TESTIMONY-GATE", "WITNESS-TYPE-GATE", "INTAKE-COMPLETENESS-GATE", "QUESTION-ADMISSIBILITY-GATE", "WITNESS-SCORING", "WITNESS-INTELLIGENCE", "FACT-EVIDENCE-MAPPING", "MODEL-SELECTION-GATE", "CROSS-EXAMINATION-GATE", "TEXT-FIRST-UI-GATE", "HARDGATE-SD-01", "HARDGATE-SD-02", "RZ-SHOW-GATE", "STEP-TRACKER-WITNESS", "PRZESLANKI-GATE", "FORMALNA-ZGODNOSC-GATE"]}'
+  pipeline: '{"stages": ["PRE-W1a-SD-VER", "PRE-W1a.4-RZ-SHOW", "KROK-PRE-W1-INTELLIGENCE", "KROK-0-KONTEKST", "W1-INTAKE", "W1-SUPPLEMENT", "W2-THESES-AND-MODEL", "CHECKPOINT-W2", "W3-QUESTIONS", "W4-REHEARSAL", "W5-BINDER", "W6-LIVE-DIRECT"]}'
+  changelog: 'Wersja bieżąca: 3.32 (2026-10-06): PRAWO-HARDGATE-WITNESS: sn.pl wyszukiwarka-orzeczen, link = karta
+
+    Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

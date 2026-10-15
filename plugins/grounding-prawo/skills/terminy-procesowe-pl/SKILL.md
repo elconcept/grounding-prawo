@@ -1,31 +1,17 @@
 ---
 name: terminy-procesowe-pl
-description: >-
-  Metodyka obliczania terminów procesowych i materialnych w prawie polskim -
-  klasyfikuje termin (ustawowy / sądowy / instrukcyjny, procesowy / materialny),
-  wylicza go krok po kroku wg reguł KC (art. 110-116) z podstawą prawną i tagiem
-  pewności przy KAŻDYM kroku, sprawdza dni wolne, flaguje pułapki (ogłoszenie vs
-  doręczenie, wniosek o uzasadnienie, tydzień vs 7 dni) i wystawia kartę terminu
-  DO ZATWIERDZENIA PRZEZ CZŁOWIEKA. Nigdy nie podaje samej daty - zawsze pełne
-  wyliczenie. Fail-closed: niepewna reguła = STOP i weryfikacja przepisu przez
-  sejm-eli-mcp, nie założenie. Używaj gdy: "do kiedy apelacja", "policz termin",
-  "kiedy mija termin", "termin na odpowiedź na pozew", "czy termin zachowany",
-  "przywrócenie terminu", "od kiedy liczyć termin", "czy sobota przesuwa termin",
-  kontrola terminu przed wpisem do kalendarza kancelarii.
+description: 'Metodyka obliczania terminów procesowych i materialnych w prawie polskim - klasyfikuje termin (ustawowy / sądowy / instrukcyjny, procesowy / materialny), wylicza go krok po kroku wg reguł KC (art. 110-116) z podstawą prawną i tagiem pewności przy KAŻDYM kroku, sprawdza dni wolne, flaguje pułapki (ogłoszenie vs doręczenie, wniosek o uzasadnienie, tydzień vs 7 dni) i wystawia kartę terminu DO ZATWIERDZENIA PRZEZ CZŁOWIEKA. Nigdy nie podaje samej daty - zawsze pełne wyliczenie. Fail-closed: niepewna reguła = STOP i weryfikacja przepisu przez sejm-eli-mcp, nie założenie. Używaj gdy: "do kiedy apelacja", "policz termin", "kiedy mija termin", "termin na odpowiedź na pozew", "czy termin zachowany", "przywrócenie terminu", "od kiedy liczyć termin", "czy sobota przesuwa termin", kontrola terminu przed wpisem do kalendarza kancelarii.'
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: true
-pii-egress: none
-attribution:
-  relationship: original
-  note: >
-    Brak źródła trzeciej strony do skredytowania. Idea „litigation deadline calendar” jest
-    utrwalona w ekosystemie legal-AI; metodyka i treść PL napisane od zera.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: sejm-eli-mcp (konektor)
+  data-residency: local
+  requires-human-approval: 'true'
+  pii-egress: none
+  attribution: '{"relationship": "original", "note": "Brak źródła trzeciej strony do skredytowania. Idea „litigation deadline calendar” jest utrwalona w ekosystemie legal-AI; metodyka i treść PL napisane od zera.\n"}'
 ---
 
 # Terminy procesowe PL - wyliczenie krok po kroku, nigdy sama data

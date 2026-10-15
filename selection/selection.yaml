@@ -3,9 +3,10 @@
 # from: lex = vendor/LexMachina/"Wersja rozwojowa rozpakowana"; awe:<pakiet> = vendor/awesome-matematic-skills-pl;
 #       own = own-skills/ (skille własne, bez upstreamu); vendor:<katalog> = vendor/<katalog>.
 # transitional: true = zależność szturm-na-draft-pl; ocenić ponownie po jego przebudowie.
-# internal: true = build dodaje disable-model-invocation (opis nie trafia do listy skilli; router czyta plik przez view).
+# internal: true = moduł pomocniczy routera; pozostaje dostępny dla modelu (import OpenAI odrzuca disable-model-invocation).
 # Zasada: LexMachina jest spleciona (shared odwołuje się do audyt-systemu 33x, do DR-04..15 16x),
 # więc jest zachowana jako zamknięty silnik; wycinamy tylko moduły, które da się odciąć patchem.
+version: "0.1.1"
 keep:
   # --- silnik: LexMachina (wersja rozwojowa, przypięta do commita w submodule) ---
   - {name: prawny-router-v3, from: lex, why: "jedyny router; patch: KROK 0A zamknięty na stałe bez anonimizacji, requires przycięte"}
@@ -54,7 +55,7 @@ keep:
   - {name: marko-pl-content, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: ocena-outputu-pl, from: "awe:fundament-weryfikacyjny", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: patron-weryfikacja-cytatow, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
-  - {name: doc-intel-contract-pl, from: "awe:dokumenty", internal: true, transitional: true, why: "jedyny dom tablicy prawdy normalizacji, którą testuje citation-grounding-pl (test-grounding.mjs 34/34). Ma mechanizmy maskowania - nieużywane, skill niewidoczny dla modelu"}
+  - {name: doc-intel-contract-pl, description: "Normalizuje OCR/PDF do kontraktu dokumentu: bloki tekstu, bbox, confidence, flagi PII i powiązanie cytatu z regionem strony. Używaj do normalizacji OCR, oceny bloków wymagających przeglądu, przygotowania redakcji PII oraz dzielenia teczki akt na pisma. Obsługuje pdftotext, Chandra OCR, LiteParse i OCR PATRONa/Gaius-Lex; działa deterministycznie w Python stdlib bez LLM. Współpracuje z citation-grounding-pl.", from: "awe:dokumenty", internal: true, transitional: true, why: "jedyny dom tablicy prawdy normalizacji, którą testuje citation-grounding-pl (test-grounding.mjs 34/34). Ma mechanizmy maskowania - nieużywane, moduł pomocniczy routera"}
   - {name: patron-przeglad-tabelaryczny, from: own, why: "tabelaryczny przegląd dokumentów (z pipeline Patrona); do wzbogacenia o klauzule/kolumny pod Twoje sprawy"}
   - {name: pisz-po-polsku, from: own, why: "JEDEN skill redakcji: scala humanizer-pl + naturalne-pisanie + patron-pisz-po-ludzku (pliki skopiowane do own-skills, zmiany upstreamu trzeba przenosić ręcznie)"}
   # --- źródła zewnętrzne ---

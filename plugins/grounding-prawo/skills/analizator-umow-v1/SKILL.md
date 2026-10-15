@@ -1,14 +1,12 @@
 ---
 name: analizator-umow-v1
-version: "1.49"
-type: executive-umowy
-status: production
-description: "Analiza, redakcja, negocjacje i generowanie umów oraz dokumentów korporacyjnych, HR i RODO: ryzyka klauzul, B2B/B2C, praca, najem, IT/SaaS, IP, founders, finansowanie i PZP."
-dependencies:
-  requires:
-    - shared
-  # 2026-09-27e: jawna zależność (każdy skill systemu korzysta z `shared`); pole czytane przy imporcie z marketplace
-compatibility: "Requires current official legal sources and access to the separately installed canonical shared skill; document generation is optional."
+description: 'Analiza, redakcja, negocjacje i generowanie umów oraz dokumentów korporacyjnych, HR i RODO: ryzyka klauzul, B2B/B2C, praca, najem, IT/SaaS, IP, founders, finansowanie i PZP.'
+metadata:
+  version: '1.49'
+  type: executive-umowy
+  status: production
+  dependencies: '{"requires": ["shared"]}'
+  compatibility: Requires current official legal sources and access to the separately installed canonical shared skill; document generation is optional.
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

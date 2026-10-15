@@ -1,6 +1,6 @@
 ---
 name: profil-postepowan-wlasnych
-description: "Profil pracy nad własnymi postępowaniami właściciela (sprawy karne i wykroczeniowe, działania Policji i prokuratury, hospitalizacja psychiatryczna, pozew przeciw szpitalowi, najem, RODO). Używaj przy KAŻDEJ pracy nad sprawą, pismem lub dowodem, razem z prawny-router-v3. Narzuca pełną ścieżkę kontroli bez tańszych wariantów, brak anonimizacji, pracę na oryginałach i rozdzielenie ustaleń od twierdzeń."
+description: Profil pracy nad własnymi postępowaniami właściciela (sprawy karne i wykroczeniowe, działania Policji i prokuratury, hospitalizacja psychiatryczna, pozew przeciw szpitalowi, najem, RODO). Używaj przy KAŻDEJ pracy nad sprawą, pismem lub dowodem, razem z prawny-router-v3. Narzuca pełną ścieżkę kontroli bez tańszych wariantów, brak anonimizacji, pracę na oryginałach i rozdzielenie ustaleń od twierdzeń.
 ---
 
 # Profil postępowań własnych

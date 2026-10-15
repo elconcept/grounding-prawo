@@ -130,6 +130,36 @@ def fold(sel):
         open(sm, "w", encoding="utf-8").write(t.replace(marker, block + marker, 1))
 
 
+def normalize_skill(sm, entry):
+    """Emit portable skill metadata; preserve upstream annotations as strings."""
+    fm, text, match = frontmatter(sm)
+    allowed = {"name", "description", "license", "allowed-tools", "metadata"}
+    metadata = fm.get("metadata") or {}
+    metadata = {k: v if isinstance(v, str) else json.dumps(v, ensure_ascii=False)
+                for k, v in metadata.items()}
+    for key, value in fm.items():
+        if key not in allowed and key not in {"disable-model-invocation", "disable_model_invocation"}:
+            metadata[key] = value if isinstance(value, str) else json.dumps(value, ensure_ascii=False)
+    portable = {k: v for k, v in fm.items() if k in allowed and k != "metadata"}
+    if entry.get("description"):
+        portable["description"] = entry["description"]
+    if metadata:
+        portable["metadata"] = metadata
+    open(sm, "w", encoding="utf-8").write(
+        "---\n" + yaml.safe_dump(portable, allow_unicode=True, sort_keys=False, width=1000)
+        + "---\n" + text[match.end():])
+    agent = os.path.join(os.path.dirname(sm), "agents/openai.yaml")
+    if os.path.isfile(agent):
+        data = yaml.safe_load(open(agent, encoding="utf-8"))
+        if "policy" in data:
+            data["policy"].pop("products", None)
+        with open(agent, "w", encoding="utf-8") as f:
+            yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False, width=1000)
+    # These are manifests of upstream standalone plugins, not components of this plugin.
+    for name in (".claude-plugin", ".codex-plugin"):
+        shutil.rmtree(os.path.join(os.path.dirname(sm), name), ignore_errors=True)
+
+
 def main():
     sel = yaml.safe_load(open(os.path.join(ROOT, "selection/selection.yaml"), encoding="utf-8"))
     if os.path.isdir(SKILLS):
@@ -162,13 +192,10 @@ def main():
         if not fm or fm.get("name") != e["name"] or not fm.get("description"):
             errors.append(f"{e['name']}: frontmatter name/description niezgodne (name={fm and fm.get('name')})")
             continue
-        if e.get("internal"):
-            if "disable-model-invocation" not in fm:
-                t = t[: m.end(1)] + "\ndisable-model-invocation: true" + t[m.end(1):]
-                open(sm, "w", encoding="utf-8").write(t)
         for dep in ((fm.get("dependencies") or {}).get("requires") or []):
             if not os.path.isdir(os.path.join(SKILLS, dep)):
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
+        normalize_skill(sm, e)
 
     plugin = {
         "name": "grounding-prawo",
@@ -181,7 +208,12 @@ def main():
               ensure_ascii=False, indent=2)
     # adapter Codex: ten sam katalog pluginu, osobny manifest
     os.makedirs(os.path.join(PLUGIN, ".codex-plugin"), exist_ok=True)
-    codex = dict(plugin, skills="./skills/", interface={"displayName": "Grounding Prawo", "category": "Legal"})
+    codex = dict(plugin, skills="./skills/", mcpServers="./.mcp.json", interface={
+        "displayName": "Grounding Prawo", "category": "Legal",
+        "shortDescription": "Prawo polskie: analiza spraw, źródła i kontrola pism",
+        "longDescription": plugin["description"], "developerName": "elconcept",
+        "defaultPrompt": ["Przeanalizuj moją sprawę prawną i wskaż źródła wymagające weryfikacji."],
+        "capabilities": []})
     json.dump(codex, open(os.path.join(PLUGIN, ".codex-plugin/plugin.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     os.makedirs(os.path.join(ROOT, ".agents/plugins"), exist_ok=True)
     json.dump({"name": "grounding-prawo", "interface": {"displayName": "Grounding Prawo"},
@@ -189,7 +221,7 @@ def main():
                             "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Legal"}]},
               open(os.path.join(ROOT, ".agents/plugins/marketplace.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     shutil.copy(os.path.join(ROOT, ".mcp.json"), os.path.join(PLUGIN, ".mcp.json"))  # jedyny konektor: portal MCP
-    print(f"zbudowano {len(sel['keep'])} skilli, błędów: {len(errors)}")
+    print(f"zbudowano {sum(not e.get('fold_into') for e in sel['keep'])} skilli, błędów: {len(errors)}")
     for x in errors:
         print("  BŁĄD", x)
     sys.exit(1 if errors else 0)

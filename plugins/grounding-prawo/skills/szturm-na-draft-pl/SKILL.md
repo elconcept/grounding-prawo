@@ -1,33 +1,24 @@
 ---
 name: szturm-na-draft-pl
-description: >
-  Szturm na draft pisma lub ekspertyzy - jedno wywołanie zamiast ręcznego przepuszczania
-  dokumentu przez kilkanaście skilli. Warstwa obiektywna (cytaty, sygnatury, przepisy t.j.),
-  spójność pismo ↔ załączniki ↔ akta, niezależne soczewki ataku (sędzia na zimno,
-  przeciwnik, MOD-ATAK-NA-DRAFT, biegły), styl i format .docx, potem deterministyczna
-  synteza z deduplikacją i bramkami, redline Worda (zmiany śledzone z komentarzem przy
-  każdej) i jednocześnie kopia .docx z zastosowanymi zmianami (bez PDF), ponowna kontrola i dopisek tury do rejestru
-  stałego sprawy (_SUBSUMPCJA_*). Chroni fakty potwierdzone i decyzje autora - nie
-  rozmywa tezy alternatywami. Używaj gdy: "szturm na draft", "przepuść pismo przez
-  wszystkie skille", "przejrzyj i nanieś poprawki", "zrób redline po przeglądzie",
-  "kolejna runda przeglądu", "sprawdź pismo i ekspertyzę przed złożeniem", "TK/v następna
-  wersja", "zamknij kotwice z poprzedniego przebiegu", gdy użytkownik podaje draft .docx
-  z aktami i chce poprawionej wersji, a nie samego raportu.
+description: 'Szturm na draft pisma lub ekspertyzy - jedno wywołanie zamiast ręcznego przepuszczania dokumentu przez kilkanaście skilli. Warstwa obiektywna (cytaty, sygnatury, przepisy t.j.), spójność pismo ↔ załączniki ↔ akta, niezależne soczewki ataku (sędzia na zimno, przeciwnik, MOD-ATAK-NA-DRAFT, biegły), styl i format .docx, potem deterministyczna synteza z deduplikacją i bramkami, redline Worda (zmiany śledzone z komentarzem przy każdej) i jednocześnie kopia .docx z zastosowanymi zmianami (bez PDF), ponowna kontrola i dopisek tury do rejestru stałego sprawy (_SUBSUMPCJA_*). Chroni fakty potwierdzone i decyzje autora - nie rozmywa tezy alternatywami. Używaj gdy: "szturm na draft", "przepuść pismo przez wszystkie skille", "przejrzyj i nanieś poprawki", "zrób redline po przeglądzie", "kolejna runda przeglądu", "sprawdź pismo i ekspertyzę przed złożeniem", "TK/v następna wersja", "zamknij kotwice z poprzedniego przebiegu", gdy użytkownik podaje draft .docx z aktami i chce poprawionej
+  wersji, a nie samego raportu.
+
+  '
 license: MIT
-allowed-tools: [Bash, Read, Write, Edit, Agent]
-data-residency: local
-requires-human-approval: true
-pii-egress: none
+allowed-tools:
+- Bash
+- Read
+- Write
+- Edit
+- Agent
 metadata:
   author: GROUNDING-PRAWO / abogada
   version: 1.2.0
   plan: dokumentacja/06-PLAN-SKILL-SZTURM-NA-DRAFT.md
-  companion_skills: >-
-    redline-docx-pl, ocena-outputu-pl, citation-grounding-pl, patron-weryfikacja-cytatow,
-    ekstraktor-cytatow-pl, mcp-saos, patron-identyfikatory-pl, deliverable-fidelity-pl,
-    analizator-dowodow-v3, pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl,
-    adversarial-legal-review-pl, subsumpcja-pl, zarzuty-do-opinii-bieglego, marko-pl-content,
-    pisz-po-polsku
+  companion_skills: redline-docx-pl, ocena-outputu-pl, citation-grounding-pl, patron-weryfikacja-cytatow, ekstraktor-cytatow-pl, mcp-saos, patron-identyfikatory-pl, deliverable-fidelity-pl, analizator-dowodow-v3, pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl, adversarial-legal-review-pl, subsumpcja-pl, zarzuty-do-opinii-bieglego, marko-pl-content, pisz-po-polsku
+  data-residency: local
+  requires-human-approval: 'true'
+  pii-egress: none
 ---
 
 # Szturm na draft

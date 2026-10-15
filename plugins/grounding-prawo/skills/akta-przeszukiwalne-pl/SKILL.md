@@ -1,21 +1,8 @@
 ---
 name: akta-przeszukiwalne-pl
-description: >
-  Zamienia folder akt sprawy (PDF, takze skany bez warstwy tekstowej) w tekst z numerami
-  stron, lokalna wyszukiwarke i raport: strony nieczytelne, duplikaty plikow oraz pliki
-  o IDENTYCZNEJ tresci pod roznymi nazwami (bywa sladem brakujacego pisma). OCR dziala
-  lokalnie na CPU - tekst akt nie opuszcza komputera, bez konta i bez chmury. Uzywaj gdy:
-  "przeszukaj akta", "zrob z akt tekst", "gdzie w aktach jest", "OCR akt", "skany akt",
-  "akta ze skanow", "czego brakuje w aktach", "zdigitalizuj akta sprawy".
-attribution:
-  - source: run-llama/liteparse
-    url: https://github.com/run-llama/liteparse
-    license: Apache-2.0
-    relationship: dependency
-    note: >
-      Zaleznosc (PyPI `liteparse`, przypieta 2.14.6): parser PDF z OCR Tesseract na CPU.
-      Ekstraktor `scripts/liteparse_extract.py` to kopia z doc-intel-contract-pl, gdzie
-      zyje kanon wraz z pomiarem i piecioma bezpiecznikami na ciche pulapki biblioteki.
+description: 'Zamienia folder akt sprawy (PDF, takze skany bez warstwy tekstowej) w tekst z numerami stron, lokalna wyszukiwarke i raport: strony nieczytelne, duplikaty plikow oraz pliki o IDENTYCZNEJ tresci pod roznymi nazwami (bywa sladem brakujacego pisma). OCR dziala lokalnie na CPU - tekst akt nie opuszcza komputera, bez konta i bez chmury. Uzywaj gdy: "przeszukaj akta", "zrob z akt tekst", "gdzie w aktach jest", "OCR akt", "skany akt", "akta ze skanow", "czego brakuje w aktach", "zdigitalizuj akta sprawy".
+
+  '
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 0.1.2
@@ -23,6 +10,7 @@ metadata:
   cost: zero LLM, zero chmury (OCR lokalny)
   companion_skills: doc-intel-contract-pl, citation-grounding-pl
   twin: searchable-case-files-en
+  attribution: '[{"source": "run-llama/liteparse", "url": "https://github.com/run-llama/liteparse", "license": "Apache-2.0", "relationship": "dependency", "note": "Zaleznosc (PyPI `liteparse`, przypieta 2.14.6): parser PDF z OCR Tesseract na CPU. Ekstraktor `scripts/liteparse_extract.py` to kopia z doc-intel-contract-pl, gdzie zyje kanon wraz z pomiarem i piecioma bezpiecznikami na ciche pulapki biblioteki.\n"}]'
 ---
 
 # Akta przeszukiwalne

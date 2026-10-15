@@ -1,7 +1,6 @@
 ---
 name: patron-weryfikacja-cytatow
 description: Cytowanie dokumentów w formacie [N] + blok CITATIONS i mechaniczna (bez LLM) weryfikacja, czy cytaty z odpowiedzi, z przeglądu tabelarycznego albo z wyników konektorów MCP naprawdę występują w tekście źródłowym. Użyj, gdy odpowiedź opiera się na dokumentach, przed wykorzystaniem cytatów w piśmie albo gdy użytkownik prosi „zweryfikuj cytaty”.
-disable-model-invocation: true
 ---
 
 # Weryfikacja cytatów

@@ -1,33 +1,19 @@
 ---
 name: subsumpcja-pl
-description: >
-  Buduje jawny sylogizm prawniczy (subsumcję) dla zagadnienia - rozkłada rozumowanie na
-  przesłankę większą (norma + wykładnia), przesłankę mniejszą (istotne fakty), podciągnięcie
-  faktów pod normę i wniosek, a potem wskazuje słabe ogniwa: ukryte założenia, sporne fakty,
-  wątpliwą wykładnię. Wymusza, by każdy krok był wypowiedziany i sprawdzalny, zamiast skoku
-  od stanu faktycznego do tezy. Pairuje z adversarial-legal-review-pl (atak na sylogizm),
-  citation-grounding-pl (weryfikacja powołanej normy) i struktura-wyroku-pl. Uzywaj gdy:
-  "zbuduj subsumpcję", "sylogizm prawniczy", "podciągnij fakty pod normę", "rozpisz
-  rozumowanie", "gdzie jest luka w argumentacji", "przesłanka większa i mniejsza",
-  "uzasadnij krok po kroku", przy pisaniu opinii / uzasadnienia / pisma procesowego.
+description: 'Buduje jawny sylogizm prawniczy (subsumcję) dla zagadnienia - rozkłada rozumowanie na przesłankę większą (norma + wykładnia), przesłankę mniejszą (istotne fakty), podciągnięcie faktów pod normę i wniosek, a potem wskazuje słabe ogniwa: ukryte założenia, sporne fakty, wątpliwą wykładnię. Wymusza, by każdy krok był wypowiedziany i sprawdzalny, zamiast skoku od stanu faktycznego do tezy. Pairuje z adversarial-legal-review-pl (atak na sylogizm), citation-grounding-pl (weryfikacja powołanej normy) i struktura-wyroku-pl. Uzywaj gdy: "zbuduj subsumpcję", "sylogizm prawniczy", "podciągnij fakty pod normę", "rozpisz rozumowanie", "gdzie jest luka w argumentacji", "przesłanka większa i mniejsza", "uzasadnij krok po kroku", przy pisaniu opinii / uzasadnienia / pisma procesowego.
+
+  '
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  source: Fuzi.Mingcha (irlab-sdu)
-  license: not-stated
-  relationship: pattern-only
-  note: >
-    Subsumcja (sylogizm prawniczy) to klasyczna metoda polskiej dogmatyki prawa. Pomysł
-    jawnego scaffoldu sylogizmu dla AI zainspirowany m.in. projektem Fuzi.Mingcha
-    (podejście major/minor/conclusion). Bez użycia jego kodu ani modeli; implementacja,
-    reguły i kotwice PL napisane od zera.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: adversarial-legal-review-pl, citation-grounding-pl, struktura-wyroku-pl
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '{"source": "Fuzi.Mingcha (irlab-sdu)", "license": "not-stated", "relationship": "pattern-only", "note": "Subsumcja (sylogizm prawniczy) to klasyczna metoda polskiej dogmatyki prawa. Pomysł jawnego scaffoldu sylogizmu dla AI zainspirowany m.in. projektem Fuzi.Mingcha (podejście major/minor/conclusion). Bez użycia jego kodu ani modeli; implementacja, reguły i kotwice PL napisane od zera.\n"}'
 ---
 
 # Subsumpcja PL - jawny sylogizm prawniczy

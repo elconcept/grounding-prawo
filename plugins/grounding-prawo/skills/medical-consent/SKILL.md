@@ -1,7 +1,8 @@
 ---
 name: medical-consent
-description: "Analizuj czynność medyczną wykonaną bez zgody lub mimo sprzeciwu pod kątem art. 192 k.k. oraz równoległych skutków pacjenckich i cywilnych. Filtr karnoprawny (Stępniak/Wala/Sułkowski-Bargiel) — rozdziela brak świadomej zgody, brak zgody, sprzeciw aktualny i sprzeciw pro futuro. Używaj przy świadczeniu, zabiegu, iniekcji, farmakoterapii lub procedurze wykonanej bez zgody. Wnioski karne formułuje ostrożniej niż cywilne."
-argument-hint: '<czynność / dokument / stan faktyczny do analizy zgody>'
+description: Analizuj czynność medyczną wykonaną bez zgody lub mimo sprzeciwu pod kątem art. 192 k.k. oraz równoległych skutków pacjenckich i cywilnych. Filtr karnoprawny (Stępniak/Wala/Sułkowski-Bargiel) — rozdziela brak świadomej zgody, brak zgody, sprzeciw aktualny i sprzeciw pro futuro. Używaj przy świadczeniu, zabiegu, iniekcji, farmakoterapii lub procedurze wykonanej bez zgody. Wnioski karne formułuje ostrożniej niż cywilne.
+metadata:
+  argument-hint: <czynność / dokument / stan faktyczny do analizy zgody>
 ---
 
 # /tk-medical-consent-check — Filtr Zgody i Odpowiedzialności Karnej (art. 192 k.k.)

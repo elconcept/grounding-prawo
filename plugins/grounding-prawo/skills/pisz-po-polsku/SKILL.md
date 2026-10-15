@@ -1,6 +1,6 @@
 ---
 name: pisz-po-polsku
-description: "Pisanie i redakcja tekstów po polsku tak, by brzmiały naturalnie, konkretnie i bez manier generycznego stylu AI, z zachowaniem faktów, cytatów, przepisów, sygnatur i stopnia pewności. Używaj przy redakcji pism, notatek, relacji i opisów po polsku oraz gdy tekst brzmi sztucznie. Łączy minimalną ingerencję (naturalne-pisanie), katalog 36 wzorców AI-slop z bramką wierności po przepisaniu (humanizer-pl) i zasady z Patrona (pisz-po-ludzku). Nie zmienia petitum, zarzutów ani ustaleń faktycznych."
+description: Pisanie i redakcja tekstów po polsku tak, by brzmiały naturalnie, konkretnie i bez manier generycznego stylu AI, z zachowaniem faktów, cytatów, przepisów, sygnatur i stopnia pewności. Używaj przy redakcji pism, notatek, relacji i opisów po polsku oraz gdy tekst brzmi sztucznie. Łączy minimalną ingerencję (naturalne-pisanie), katalog 36 wzorców AI-slop z bramką wierności po przepisaniu (humanizer-pl) i zasady z Patrona (pisz-po-ludzku). Nie zmienia petitum, zarzutów ani ustaleń faktycznych.
 ---
 
 # Pisz po polsku

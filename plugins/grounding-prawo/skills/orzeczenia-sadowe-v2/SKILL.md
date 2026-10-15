@@ -1,14 +1,12 @@
 ---
 name: orzeczenia-sadowe-v2
-version: "2.31"
-type: executive-analiza
-status: production
-compatibility: "live_web_lookup, file_read, cross_skill_file_read, optional_code_execution, optional_document_and_interactive_ui"
-description: "Research orzecznictwa: wyszukiwanie, weryfikacja sygnatur i tez, hierarchia źródeł, porównanie orzeczeń oraz dobór judykatury do argumentacji prawnej."
-dependencies:
-  requires:
-    - shared
-  # 2026-09-27e: jawna zależność (każdy skill systemu korzysta z `shared`); pole czytane przy imporcie z marketplace
+description: 'Research orzecznictwa: wyszukiwanie, weryfikacja sygnatur i tez, hierarchia źródeł, porównanie orzeczeń oraz dobór judykatury do argumentacji prawnej.'
+metadata:
+  version: '2.31'
+  type: executive-analiza
+  status: production
+  compatibility: live_web_lookup, file_read, cross_skill_file_read, optional_code_execution, optional_document_and_interactive_ui
+  dependencies: '{"requires": ["shared"]}'
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

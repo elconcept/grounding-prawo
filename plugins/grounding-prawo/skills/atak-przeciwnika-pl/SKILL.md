@@ -1,34 +1,17 @@
 ---
 name: atak-przeciwnika-pl
-description: >-
-  Jednoprzebiegowy atak przeciwnika procesowego na argumentację prawną - wciela się
-  w doświadczonego pełnomocnika drugiej strony, któremu wręczono Twoje pismo z poleceniem
-  "znajdź każdy sposób, żeby to pokonać". Wynik w sześciu sekcjach: rdzeń teorii ataku
-  ("ta sprawa stoi lub pada na [założeniu]"), zrekonstruowany argument odarty z retoryki,
-  główne linie ataku (w tym zarzuty proceduralne: ciężar dowodu, prekluzja, wymogi
-  apelacji), perspektywa sceptycznego sędziego, ciosy chirurgiczne do repliki oraz to,
-  co pismo przemilcza. Tani, niższy szczebel gradientu kosztu - poniżej pełnej debaty
-  adversarial-legal-review-pl. Używaj gdy: "co powie druga strona", "zaatakuj to pismo",
-  "słabe punkty", "atak przeciwnika", "jak to obali pełnomocnik przeciwnika", "sparing
-  przed rozprawą", "gdzie mnie uderzą", szybki stress-test argumentacji bez pełnej
-  debaty czterech ról.
+description: 'Jednoprzebiegowy atak przeciwnika procesowego na argumentację prawną - wciela się w doświadczonego pełnomocnika drugiej strony, któremu wręczono Twoje pismo z poleceniem "znajdź każdy sposób, żeby to pokonać". Wynik w sześciu sekcjach: rdzeń teorii ataku ("ta sprawa stoi lub pada na [założeniu]"), zrekonstruowany argument odarty z retoryki, główne linie ataku (w tym zarzuty proceduralne: ciężar dowodu, prekluzja, wymogi apelacji), perspektywa sceptycznego sędziego, ciosy chirurgiczne do repliki oraz to, co pismo przemilcza. Tani, niższy szczebel gradientu kosztu - poniżej pełnej debaty adversarial-legal-review-pl. Używaj gdy: "co powie druga strona", "zaatakuj to pismo", "słabe punkty", "atak przeciwnika", "jak to obali pełnomocnik przeciwnika", "sparing przed rozprawą", "gdzie mnie uderzą", szybki stress-test argumentacji bez pełnej debaty czterech ról.'
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  source: lawvable/awesome-legal-skills
-  url: https://github.com/lawvable/awesome-legal-skills
-  license: Apache-2.0
-  relationship: adaptation
-  note: >
-    Adaptacja i przekład skilla opposing-counsel-review autorstwa Larissy Meredith-Flister.
-    Licencja wg frontmatteru autorki. Odpowiednik EN: opposing-counsel-attack-en.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: adversarial-legal-review-pl, citation-grounding-pl
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '{"source": "lawvable/awesome-legal-skills", "url": "https://github.com/lawvable/awesome-legal-skills", "license": "Apache-2.0", "relationship": "adaptation", "note": "Adaptacja i przekład skilla opposing-counsel-review autorstwa Larissy Meredith-Flister. Licencja wg frontmatteru autorki. Odpowiednik EN: opposing-counsel-attack-en.\n"}'
 ---
 
 # Atak przeciwnika PL - jednoprzebiegowy sparing procesowy

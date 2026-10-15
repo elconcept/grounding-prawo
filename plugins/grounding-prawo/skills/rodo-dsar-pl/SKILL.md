@@ -1,25 +1,19 @@
 ---
 name: rodo-dsar-pl
-description: >
-  Obsługa żądań osób, których dane dotyczą (DSAR) po polsku, w oparciu o art. 12 oraz 15-22 RODO.
-  Identyfikuje typ żądania (dostęp 15, sprostowanie 16, usunięcie 17, ograniczenie 18, przenoszenie
-  20, sprzeciw 21, decyzje zautomatyzowane 22), pilnuje TERMINU (najpóźniej 1 miesiąc od otrzymania,
-  art. 12 ust. 3; przedłużenie o maks. 2 miesiące z uwagi na skomplikowany charakter lub liczbę
-  żądań), bramkuje wyjątki i podstawy odmowy (np. art. 17 ust. 3, żądania ewidentnie nieuzasadnione
-  lub nadmierne - art. 12 ust. 5), składa draft
-  odpowiedzi i rejestr. Weryfikacja tożsamości wnioskodawcy (art. 12 ust. 6) jako pierwszy krok.
-  Wysyłkę odpowiedzi oraz usunięcie lub eksport danych zostawia człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; treść wniosku trafia do modelu, który masz skonfigurowany. Używaj gdy: "wniosek o dostęp do danych",
-  "żądanie usunięcia", "prawo do bycia zapomnianym", "sprzeciw RODO", "termin na odpowiedź DSAR".
+description: 'Obsługa żądań osób, których dane dotyczą (DSAR) po polsku, w oparciu o art. 12 oraz 15-22 RODO. Identyfikuje typ żądania (dostęp 15, sprostowanie 16, usunięcie 17, ograniczenie 18, przenoszenie 20, sprzeciw 21, decyzje zautomatyzowane 22), pilnuje TERMINU (najpóźniej 1 miesiąc od otrzymania, art. 12 ust. 3; przedłużenie o maks. 2 miesiące z uwagi na skomplikowany charakter lub liczbę żądań), bramkuje wyjątki i podstawy odmowy (np. art. 17 ust. 3, żądania ewidentnie nieuzasadnione lub nadmierne - art. 12 ust. 5), składa draft odpowiedzi i rejestr. Weryfikacja tożsamości wnioskodawcy (art. 12 ust. 6) jako pierwszy krok. Wysyłkę odpowiedzi oraz usunięcie lub eksport danych zostawia człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; treść wniosku trafia do modelu, który masz skonfigurowany. Używaj gdy: "wniosek o dostęp do danych", "żądanie usunięcia", "prawo do bycia zapomnianym", "sprzeciw RODO", "termin na odpowiedź DSAR".
+
+  '
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: true
-pii-egress: none
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.3.0
   companion_skills: uodo-grounding-pl, gaius-api-anonymization
   parity: gdpr-dsar-en
+  data-residency: local
+  requires-human-approval: 'true'
+  pii-egress: none
 ---
 
 # RODO DSAR PL - obsługa żądań podmiotów danych (art. 12, 15-22)

@@ -1,65 +1,38 @@
 ---
 name: shared
-version: "3.99.34"   # ⛔ CUDZYSŁÓW OBOWIĄZKOWY: niecytowane `3.17` YAML parsuje
-                  # jako float 3.17, a 3.17 < 3.9 — porządek wersji odwraca się
-                  # dla każdego narzędzia porównującego liczbowo. Wykryte
-                  # testem T12 (check_wersje_changelog.py), 2026-08-20z.
-type: library
-entrypoint: SKILL.md
-compatibility: "wszystkie skille prawne systemu"
-description: "Kanoniczna biblioteka Lex Machina: hardgate, walidacja, definicje, terminy i moduły wspólne. Nie odpowiada użytkownikowi samodzielnie; zasoby wczytują inne skille."
-dependencies:
-  requires: []
-  # `shared` z definicji powinien być warstwą bazową bez zależności
-  # zwrotnych do skili nadrzędnych — patrz limitations poniżej dla
-  # ODSTĘPSTWA znanego i zweryfikowanego ręcznie 2026-07-04.
-  called_by:
-    - wszystkie 31 pozostałych skille systemu (in-degree najwyższy w systemie)
-inputs:
-  - żadne bezpośrednie — pliki wczytywane (`view`) przez inne skille w
-    trakcie ich własnych pipeline'ów
-outputs:
-  - treść modułu wczytana do kontekstu skilla wywołującego (nie generuje
-    samodzielnego outputu)
-confidence: n/a
-  # moduły proceduralne (walidacja, hardgate, śledzenie kroków) — nie
-  # zawierają samodzielnych twierdzeń merytorycznych podlegających ocenie
-  # wiarygodności; PRAWO-HARDGATE.md wymusza weryfikację online dla treści
-  # dodawanej PRZEZ skille wywołujące, nie przez shared samo
-escalation:
-  - plik kanoniczny nieznaleziony/uszkodzony → skill wywołujący MUSI
-    zatrzymać się i zgłosić błąd, nie kontynuować z pamięci
-limitations:
-  - "ZNANE ODSTĘPSTWO od zasady 'shared = warstwa bazowa bez zależności
-    zwrotnych', zweryfikowane ręcznie 2026-07-04 (FAZA 2E audyt-systemu-v4):
-    4 pliki zawierają instrukcję `view` wprost do konkretnego skilla
-    nadrzędnego — MOD-METODY-BADAWCZE.md → analizator-dowodow-v3/SKILL.md;
-    PRE-W2-VERIFICATION-GATE.md i MOD-IDENTYFIKACJA-STRONY-UMOWY.md →
-    pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md;
-    MOD-MAPA-PRZEPISOW.md → analizator-przepisow-v2/SKILL.md;
-    raport-sytuacyjny-integracja.md → raport-sytuacyjny-v2/SKILL.md.
-    NIE scalone/wydzielone w tej sesji — pole `dependencies.requires`
-    zostawione jako [] (zgodnie z zasadą architektoniczną), ODSTĘPSTWO
-    opisane tu jawnie, żeby FAZA 2E w trybie deklarowanym go NIE zgubiła.
-    Decyzja architektoniczna (uznać jako świadomy wzorzec 'plik-most' czy
-    wydzielić poza shared/) pozostaje OTWARTA — do następnego audytu."
-  - rozmiar (176 plików — stan 2026-10-09f po przeniesieniu 15 plików z jednym konsumentem do skilli; 190 — stan 2026-10-04b po usunięciu 7 reliktów, F-225; wcześniej 197 — stan 2026-10-01b, z .claude-plugin/plugin.json) — każda zmiana pliku kanonicznego ma
-    potencjalnie systemowy promień rażenia; edytować tylko przez
-    audyt-systemu-v4 z pełną weryfikacją CHECKLIST-DEDUP.md
-required_modules: []
-  # nie ma zastosowania — shared jest wczytywany, nie wczytuje sam siebie
-changelog: |
-  Wersja bieżąca: 3.99.34 (2026-10-13c, AUDYT-2026-10-13c): PRAWO-HARDGATE ŹRÓDŁO-3 bez ✅ [VER: web-fallback] (RZĄD 2B: 🟨/⚠️), tropy z wyszukiwarki/LEX/Legalis weryfikowane w ELI; HIERARCHIA-ZRODEL: CBOSA jako 🟨 snapshot.
-  3.99.32 (2026-10-12b, AUDYT-2026-10-12b): ISAP-METRYKI-AKTOW, LEGAL-REGISTRY, terminy.md: UPEA t.j. 2026/1311 (⏳ 2026/1003 — art. 17 § 1a, od 28.10.2026), ochrona przyrody t.j. 2026/1315, megaustawa t.j. 2026/562, zmiany z 2026/815 (KSC, PKE, Prawo wodne, ochrona ludności); orka-bas-leksykon: metryki obrony Ojczyzny i UDP.
-  3.99.31 (2026-10-12a, AUDYT-2026-10-12a): walidator_cytowan.py na konsoli Windows (cp1250) zwraca kod 3, nie UnicodeEncodeError; agenci: liczba zmian po t.j. i zapis dziennika, PDF tylko w katalogu tymczasowym, walidator w recenzji, zapis orzeczenia z datą słownie (uwagi #109, #110).
-  3.99.29 (2026-10-10c, AUDYT-2026-10-10c): DOSTEP-MASZYNOWY-API: konektor SN otwiera przeglądarkę użytkownika (Edge/Chrome), weryfikację sn.pl przechodzi człowiek, bez podmiany User-Agenta.
-  3.99.22 (2026-10-08): usunięto archiwum tools/mcp-servers/mcp-servers-examples.zip (serwery MCP żyją w audyt-systemu-v4/mcp-servers/); CHECKSUMS bez wpisu
-  3.99.21 (2026-10-07): CBOSA-ADAPTER 1.2 — sekcja „powiązane” poza kandydatami, etykieta pola w zagnieżdżonej tabeli (PR #84)
-  3.99.20 (2026-10-07): walidator_cytowan z PR #95 — zgodność po pełnym identyfikatorze (Dz.U. rok+pozycja/ELI/WDU, sygnatura całością, artykuł z § i kodeksem) zamiast samych liczb; domena po hoście, https także w result_urls (zgł. #89)
-  3.99.19 (2026-10-07): walidator_cytowan — domena urzędowa po hoście URL-a, liczby cytatu jako całe liczby i wszystkie naraz (zgł. #89); plugin.json zsynchronizowany
-  3.99.18 (2026-10-07): CBOSA-ADAPTER — pola „sąd" i „data orzeczenia" w dokumencie są BEST-EFFORT (null + brak_metadanych), wymagane pozostają tylko zamknięty BODY/HTML, sygnatura i sentencja; twardy wymóg sądu/daty dawał fałszywe OUT_OF_SCOPE dla realnych orzeczeń (zgł. 2026-10-07)
-  Pełna historia: references/CHANGELOG.md (ZASADA 15).
-disable-model-invocation: true
+description: 'Kanoniczna biblioteka Lex Machina: hardgate, walidacja, definicje, terminy i moduły wspólne. Nie odpowiada użytkownikowi samodzielnie; zasoby wczytują inne skille.'
+metadata:
+  version: 3.99.34
+  type: library
+  entrypoint: SKILL.md
+  compatibility: wszystkie skille prawne systemu
+  dependencies: '{"requires": [], "called_by": ["wszystkie 31 pozostałych skille systemu (in-degree najwyższy w systemie)"]}'
+  inputs: '["żadne bezpośrednie — pliki wczytywane (`view`) przez inne skille w trakcie ich własnych pipeline''ów"]'
+  outputs: '["treść modułu wczytana do kontekstu skilla wywołującego (nie generuje samodzielnego outputu)"]'
+  confidence: n/a
+  escalation: '["plik kanoniczny nieznaleziony/uszkodzony → skill wywołujący MUSI zatrzymać się i zgłosić błąd, nie kontynuować z pamięci"]'
+  limitations: '["ZNANE ODSTĘPSTWO od zasady ''shared = warstwa bazowa bez zależności zwrotnych'', zweryfikowane ręcznie 2026-07-04 (FAZA 2E audyt-systemu-v4): 4 pliki zawierają instrukcję `view` wprost do konkretnego skilla nadrzędnego — MOD-METODY-BADAWCZE.md → analizator-dowodow-v3/SKILL.md; PRE-W2-VERIFICATION-GATE.md i MOD-IDENTYFIKACJA-STRONY-UMOWY.md → pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md; MOD-MAPA-PRZEPISOW.md → analizator-przepisow-v2/SKILL.md; raport-sytuacyjny-integracja.md → raport-sytuacyjny-v2/SKILL.md. NIE scalone/wydzielone w tej sesji — pole `dependencies.requires` zostawione jako [] (zgodnie z zasadą architektoniczną), ODSTĘPSTWO opisane tu jawnie, żeby FAZA 2E w trybie deklarowanym go NIE zgubiła. Decyzja architektoniczna (uznać jako świadomy wzorzec ''plik-most'' czy wydzielić poza shared/) pozostaje OTWARTA — do następnego audytu.", "rozmiar (176 plików — stan 2026-10-09f po przeniesieniu 15 plików z jednym konsumentem do skilli; 190 — stan 2026-10-04b
+    po usunięciu 7 reliktów, F-225; wcześniej 197 — stan 2026-10-01b, z .claude-plugin/plugin.json) — każda zmiana pliku kanonicznego ma potencjalnie systemowy promień rażenia; edytować tylko przez audyt-systemu-v4 z pełną weryfikacją CHECKLIST-DEDUP.md"]'
+  required_modules: '[]'
+  changelog: 'Wersja bieżąca: 3.99.34 (2026-10-13c, AUDYT-2026-10-13c): PRAWO-HARDGATE ŹRÓDŁO-3 bez ✅ [VER: web-fallback] (RZĄD 2B: 🟨/⚠️), tropy z wyszukiwarki/LEX/Legalis weryfikowane w ELI; HIERARCHIA-ZRODEL: CBOSA jako 🟨 snapshot.
+
+    3.99.32 (2026-10-12b, AUDYT-2026-10-12b): ISAP-METRYKI-AKTOW, LEGAL-REGISTRY, terminy.md: UPEA t.j. 2026/1311 (⏳ 2026/1003 — art. 17 § 1a, od 28.10.2026), ochrona przyrody t.j. 2026/1315, megaustawa t.j. 2026/562, zmiany z 2026/815 (KSC, PKE, Prawo wodne, ochrona ludności); orka-bas-leksykon: metryki obrony Ojczyzny i UDP.
+
+    3.99.31 (2026-10-12a, AUDYT-2026-10-12a): walidator_cytowan.py na konsoli Windows (cp1250) zwraca kod 3, nie UnicodeEncodeError; agenci: liczba zmian po t.j. i zapis dziennika, PDF tylko w katalogu tymczasowym, walidator w recenzji, zapis orzeczenia z datą słownie (uwagi #109, #110).
+
+    3.99.29 (2026-10-10c, AUDYT-2026-10-10c): DOSTEP-MASZYNOWY-API: konektor SN otwiera przeglądarkę użytkownika (Edge/Chrome), weryfikację sn.pl przechodzi człowiek, bez podmiany User-Agenta.
+
+    3.99.22 (2026-10-08): usunięto archiwum tools/mcp-servers/mcp-servers-examples.zip (serwery MCP żyją w audyt-systemu-v4/mcp-servers/); CHECKSUMS bez wpisu
+
+    3.99.21 (2026-10-07): CBOSA-ADAPTER 1.2 — sekcja „powiązane” poza kandydatami, etykieta pola w zagnieżdżonej tabeli (PR #84)
+
+    3.99.20 (2026-10-07): walidator_cytowan z PR #95 — zgodność po pełnym identyfikatorze (Dz.U. rok+pozycja/ELI/WDU, sygnatura całością, artykuł z § i kodeksem) zamiast samych liczb; domena po hoście, https także w result_urls (zgł. #89)
+
+    3.99.19 (2026-10-07): walidator_cytowan — domena urzędowa po hoście URL-a, liczby cytatu jako całe liczby i wszystkie naraz (zgł. #89); plugin.json zsynchronizowany
+
+    3.99.18 (2026-10-07): CBOSA-ADAPTER — pola „sąd" i „data orzeczenia" w dokumencie są BEST-EFFORT (null + brak_metadanych), wymagane pozostają tylko zamknięty BODY/HTML, sygnatura i sentencja; twardy wymóg sądu/daty dawał fałszywe OUT_OF_SCOPE dla realnych orzeczeń (zgł. 2026-10-07)
+
+    Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

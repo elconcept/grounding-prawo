@@ -1,16 +1,14 @@
 ---
 name: pisma-procesowe-v3
-version: "5.42"
-type: executive-pisma
-status: production
-description: "Zaawansowane pisma procesowe: pozwy, odpowiedzi, apelacje, zażalenia i inne pisma wymagające strategii, faktów, dowodów, weryfikacji prawa i finalnej walidacji dokumentu."
-dependencies:
-  requires:
-    - shared
-  # 2026-09-27e: jawna zależność (każdy skill systemu korzysta z `shared`); pole czytane przy imporcie z marketplace
-compatibility: "live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui"
-cp_gate: "shared/CP-GATE.md"
-reread_gate: "MRG — przed każdym [CP] i każdą odpowiedzią pipeline: view CP-GATE.md + view MOD-STEP-TRACKER.md (zakaz polegania na pamięci)"
+description: 'Zaawansowane pisma procesowe: pozwy, odpowiedzi, apelacje, zażalenia i inne pisma wymagające strategii, faktów, dowodów, weryfikacji prawa i finalnej walidacji dokumentu.'
+metadata:
+  version: '5.42'
+  type: executive-pisma
+  status: production
+  dependencies: '{"requires": ["shared"]}'
+  compatibility: live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui
+  cp_gate: shared/CP-GATE.md
+  reread_gate: 'MRG — przed każdym [CP] i każdą odpowiedzią pipeline: view CP-GATE.md + view MOD-STEP-TRACKER.md (zakaz polegania na pamięci)'
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

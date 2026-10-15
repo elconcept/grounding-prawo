@@ -1,13 +1,21 @@
 {
   "name": "grounding-prawo",
   "description": "Prawo polskie z weryfikacją źródeł: silnik LexMachina (router, DR-01…16), kontrola pism (MateMatic), skille własne do spraw karnych, medycznych i RODO.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "elconcept"
   },
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Grounding Prawo",
-    "category": "Legal"
+    "category": "Legal",
+    "shortDescription": "Prawo polskie: analiza spraw, źródła i kontrola pism",
+    "longDescription": "Prawo polskie z weryfikacją źródeł: silnik LexMachina (router, DR-01…16), kontrola pism (MateMatic), skille własne do spraw karnych, medycznych i RODO.",
+    "developerName": "elconcept",
+    "defaultPrompt": [
+      "Przeanalizuj moją sprawę prawną i wskaż źródła wymagające weryfikacji."
+    ],
+    "capabilities": []
   }
 }

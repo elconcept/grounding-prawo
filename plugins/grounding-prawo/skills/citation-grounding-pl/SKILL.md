@@ -1,45 +1,21 @@
 ---
 name: citation-grounding-pl
-description: >
-  Mechaniczny weryfikator cytatu dla tekstów prawnych po polsku z GRADIENTEM
-  weryfikacji (ISTNIENIE / TREŚĆ / FRAGMENT) - sprawdza string-matchem, czy każdy
-  cytat z orzeczenia, ustawy, umowy lub pisma faktycznie istnieje w dokumencie
-  źródłowym, czy sygnatura jest realna i czy parafraza oddaje stanowisko sądu,
-  zamiast wierzyć modelowi "na oko". Przeciwdziała halucynacjom modelu (w tym
-  problemowi "prawdziwy-cytat-fałszywa-teza"), RODO-safe (działa lokalnie), spina
-  się z saos-orzecznictwo i eu-sparql-search. Używaj gdy:
-  weryfikacja cytatów w opinii prawnej / memo / piśmie procesowym, sprawdzenie czy
-  AI nie zmyśliło fragmentu wyroku, przepisu lub sygnatury, czy parafraza nie
-  przekręca holdingu, kontrola cytatu przed wysłaniem deliverable do klienta,
-  audyt grounding outputu LLM, "sprawdź czy ten cytat jest prawdziwy", "zweryfikuj
-  cytaty", "czy ten fragment wyroku istnieje", "grounding", "anti-halucynacja",
-  "citation check", "czy AI to zmyśliło", "czy SN to naprawdę orzekł".
+description: 'Mechaniczny weryfikator cytatu dla tekstów prawnych po polsku z GRADIENTEM weryfikacji (ISTNIENIE / TREŚĆ / FRAGMENT) - sprawdza string-matchem, czy każdy cytat z orzeczenia, ustawy, umowy lub pisma faktycznie istnieje w dokumencie źródłowym, czy sygnatura jest realna i czy parafraza oddaje stanowisko sądu, zamiast wierzyć modelowi "na oko". Przeciwdziała halucynacjom modelu (w tym problemowi "prawdziwy-cytat-fałszywa-teza"), RODO-safe (działa lokalnie), spina się z saos-orzecznictwo i eu-sparql-search. Używaj gdy: weryfikacja cytatów w opinii prawnej / memo / piśmie procesowym, sprawdzenie czy AI nie zmyśliło fragmentu wyroku, przepisu lub sygnatury, czy parafraza nie przekręca holdingu, kontrola cytatu przed wysłaniem deliverable do klienta, audyt grounding outputu LLM, "sprawdź czy ten cytat jest prawdziwy", "zweryfikuj cytaty", "czy ten fragment wyroku istnieje", "grounding", "anti-halucynacja", "citation check", "czy AI to zmyśliło", "czy SN to naprawdę orzekł".
+
+  '
 license: Apache-2.0
-allowed-tools: [Bash, Read, Grep]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  - source: AnttiHero/lavern
-    license: Apache-2.0
-    relationship: pattern-only
-    note: >
-      Wzorzec mechanicznego weryfikatora grounding (v1). Kod i prompty napisane od zera.
-  - source: jeannesulzer/international-criminal-tribunals-skills
-    license: CC-BY-4.0
-    relationship: adaptation
-    note: >
-      Gradient weryfikacji ISTNIENIE/TREŚĆ/FRAGMENT (v2) to adaptacja trójstopniowego
-      Existence/Content/Paragraph.
-  - source: john-walkoe/courtlistener_citations_mcp
-    license: MIT
-    relationship: pattern-only
-    note: >
-      Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.
+allowed-tools:
+- Bash
+- Read
+- Grep
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 2.6.0
   companion_skills: adversarial-legal-review-pl, deliverable-fidelity-pl
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '[{"source": "AnttiHero/lavern", "license": "Apache-2.0", "relationship": "pattern-only", "note": "Wzorzec mechanicznego weryfikatora grounding (v1). Kod i prompty napisane od zera.\n"}, {"source": "jeannesulzer/international-criminal-tribunals-skills", "license": "CC-BY-4.0", "relationship": "adaptation", "note": "Gradient weryfikacji ISTNIENIE/TREŚĆ/FRAGMENT (v2) to adaptacja trójstopniowego Existence/Content/Paragraph.\n"}, {"source": "john-walkoe/courtlistener_citations_mcp", "license": "MIT", "relationship": "pattern-only", "note": "Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.\n"}]'
 ---
 
 # Citation Grounding PL - mechaniczny weryfikator cytatu (gradient)

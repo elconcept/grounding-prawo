@@ -1,18 +1,15 @@
 ---
 name: przewodnik-prawny-v2
-version: "2.11"
-type: ux-guide
-status: production
-description: "Przewodnik prawny i fallback routera: pomaga zidentyfikować problem, właściwą ścieżkę postępowania, potrzebne dokumenty i kolejny specjalistyczny skill."
-dependencies:
-  requires:
-    - shared
-  # 2026-09-27e: jawna zależność (każdy skill systemu korzysta z `shared`); pole czytane przy imporcie z marketplace
-compatibility: "live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui"
-changelog: |
-  Wersja bieżąca: 2.11 (2026-10-10b, AUDYT-2026-10-10b): Katalog wyjściowy hosta zamiast stałej ścieżki /mnt/user-data.
-  Pełna historia: references/CHANGELOG.md (ZASADA 15).
-disable-model-invocation: true
+description: 'Przewodnik prawny i fallback routera: pomaga zidentyfikować problem, właściwą ścieżkę postępowania, potrzebne dokumenty i kolejny specjalistyczny skill.'
+metadata:
+  version: '2.11'
+  type: ux-guide
+  status: production
+  dependencies: '{"requires": ["shared"]}'
+  compatibility: live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui
+  changelog: 'Wersja bieżąca: 2.11 (2026-10-10b, AUDYT-2026-10-10b): Katalog wyjściowy hosta zamiast stałej ścieżki /mnt/user-data.
+
+    Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

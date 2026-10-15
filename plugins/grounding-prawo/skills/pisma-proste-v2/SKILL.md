@@ -1,14 +1,12 @@
 ---
 name: pisma-proste-v2
-version: "2.30"
-type: executive-pisma
-status: production
-description: "Proste pisma prawne i urzędowe: wezwania, wnioski, odpowiedzi i krótsze dokumenty; kompletność danych, aktualna weryfikacja prawa i walidacja przed wygenerowaniem pliku."
-dependencies:
-  requires:
-    - shared
-  # 2026-09-27e: jawna zależność (każdy skill systemu korzysta z `shared`); pole czytane przy imporcie z marketplace
-compatibility: "live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui"
+description: 'Proste pisma prawne i urzędowe: wezwania, wnioski, odpowiedzi i krótsze dokumenty; kompletność danych, aktualna weryfikacja prawa i walidacja przed wygenerowaniem pliku.'
+metadata:
+  version: '2.30'
+  type: executive-pisma
+  status: production
+  dependencies: '{"requires": ["shared"]}'
+  compatibility: live_web_lookup, file_read, cross_skill_file_read, optional_document_and_interactive_ui
 ---
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.

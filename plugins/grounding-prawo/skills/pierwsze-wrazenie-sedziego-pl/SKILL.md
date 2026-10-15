@@ -1,34 +1,17 @@
 ---
 name: pierwsze-wrazenie-sedziego-pl
-description: >-
-  Ocena pisma procesowego lub argumentacji prawnej z perspektywy sędziego, który czyta
-  je NA ZIMNO, pod presją czasu, z referatem kilkuset spraw. Zwraca ustrukturyzowaną
-  ocenę siedmioczęściową: o co z lektury wygląda sprawa, natychmiastowe punkty
-  zamieszania, co brzmi mocno, co słabo, co jest założone a nieudowodnione, wstępny
-  poziom przekonania (niski/średni/wysoki) i czego trzeba, żeby przekonać. Skill NIE
-  przepisuje, NIE poprawia i NIE atakuje pisma - mówi, jak ono faktycznie LĄDUJE
-  u doświadczonego, sceptycznego czytelnika bez kontekstu. Działa na pozwie, apelacji,
-  zażaleniu, wniosku dowodowym, piśmie przygotowawczym, skardze i każdej
-  ustrukturyzowanej argumentacji. Używaj gdy: "jak to przeczyta sąd", "pierwsze
-  wrażenie", "czy to jest jasne dla sędziego", "test zimnego czytelnika", "jak to
-  wyląduje w sądzie", przed złożeniem pisma procesowego.
+description: 'Ocena pisma procesowego lub argumentacji prawnej z perspektywy sędziego, który czyta je NA ZIMNO, pod presją czasu, z referatem kilkuset spraw. Zwraca ustrukturyzowaną ocenę siedmioczęściową: o co z lektury wygląda sprawa, natychmiastowe punkty zamieszania, co brzmi mocno, co słabo, co jest założone a nieudowodnione, wstępny poziom przekonania (niski/średni/wysoki) i czego trzeba, żeby przekonać. Skill NIE przepisuje, NIE poprawia i NIE atakuje pisma - mówi, jak ono faktycznie LĄDUJE u doświadczonego, sceptycznego czytelnika bez kontekstu. Działa na pozwie, apelacji, zażaleniu, wniosku dowodowym, piśmie przygotowawczym, skardze i każdej ustrukturyzowanej argumentacji. Używaj gdy: "jak to przeczyta sąd", "pierwsze wrażenie", "czy to jest jasne dla sędziego", "test zimnego czytelnika", "jak to wyląduje w sądzie", przed złożeniem pisma procesowego.'
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  source: lawvable/awesome-legal-skills
-  url: https://github.com/lawvable/awesome-legal-skills
-  license: Apache-2.0
-  relationship: adaptation
-  note: >
-    Adaptacja i przekład skilla judicial-first-impression autorstwa Larissy Meredith-Flister.
-    Licencja wg frontmatteru autorki. Odpowiednik EN: judicial-first-impression-en.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: atak-przeciwnika-pl, adversarial-legal-review-pl, deliverable-fidelity-pl
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '{"source": "lawvable/awesome-legal-skills", "url": "https://github.com/lawvable/awesome-legal-skills", "license": "Apache-2.0", "relationship": "adaptation", "note": "Adaptacja i przekład skilla judicial-first-impression autorstwa Larissy Meredith-Flister. Licencja wg frontmatteru autorki. Odpowiednik EN: judicial-first-impression-en.\n"}'
 ---
 
 # Pierwsze wrażenie sędziego PL - test zimnego czytelnika

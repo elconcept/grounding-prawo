@@ -1,119 +1,24 @@
 ---
 name: prawny-router-v3
-version: "3.71"
-type: orchestration
-status: production
-entrypoint: SKILL.md
-compatibility: "web_search, web_fetch, file_read (view), create_file, show_widget — lub równoważne funkcje hosta wg shared/UNIVERSAL-RUNTIME-ADAPTER.md"
-description: "UŻYWAJ ZAWSZE, gdy użytkownik prosi o analizę prawną, pismo lub ocenę materiału prawnego, w każdej jurysdykcji. Nie przy wzmiankach prawnych w pracy nad kodem (licencje, RODO)."
-dependencies:
-  requires:
-    - shared
-    - prawo-polskie-v2
-    - przewodnik-prawny-v2
-    - audyt-systemu-v4
-    - orzeczenia-sadowe-v2
-    - analizator-przepisow-v2
-    - analizator-umow-v1
-    - analizator-dowodow-v3
-    - analiza-sadowa-v6
-    - pisma-proste-v2
-    - pisma-procesowe-v3
-    - przesluchanie-swiadkow-v2-min90
-    - chronologia-sprawy-v1
-    - dr-01-ustroj-konstytucyjny-i-zrodla-prawa
-    - dr-02-prawo-cywilne-rodzinne-gospodarcze
-    - dr-03-prawo-karne-wykroczenia-egzekucja
-    - dr-05-prawo-administracyjne-sadowoadministracyjne
-    - dr-10-zdrowie-farmacja-zywnosc-rolnictwo
-    - dr-11-cyfrowe-cyber-ai-dane-ip
-    - dr-12-sadownictwo-prokuratura-zawody-prawnicze
-    - dr-13-sluzby-bezpieczenstwo-informacje-niejawne
-    - dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka
-    - dr-16-pisma-strategia-dowody-orzecznictwo
-  # 3.57: pełny zestaw 31 skilli = `dependencies` wpisu routera w .claude-plugin/marketplace.json
-  called_by:
-    - użytkownik (punkt wejścia — brak nadrzędnego skilla)
-inputs:
-  - opis sprawy użytkownika (tekst wolny)
-  - "opcjonalnie — pliki/dowody wgrane przez użytkownika"
-  - "opcjonalnie — plik kontekstu sesji (eksport z wcześniejszej rozmowy)"
-outputs:
-  - decyzja routingu ([1]-[11]) + wywołanie właściwego skilla PRIMARY/SECONDARY/FALLBACK
-  - "finalnie — odpowiedź tekstowa, widget (show_widget) lub dokument .docx/.pdf (create_file)"
-confidence: verified-online
-  # HARD GATE wymusza web_search/web_fetch dla każdego przepisu/sygnatury —
-  # router sam nie generuje treści prawnej z pamięci, tylko orkiestruje.
-escalation:
-  - "⛔ ZANIM orzekniesz o niedostępności JAKIEGOKOLWIEK źródła w kanale kodu
-    → sprawdź kształt żądania wg shared/DOSTEP-MASZYNOWY-API.md §1
-    (neutralny User-Agent, nagłówek Accept, ścieżka robocza zamiast roota,
-    ponowienie). HTTP 502 albo 200 ze stroną zastępczą bywa skutkiem naszego
-    żądania, nie awarii serwisu — zmierzone, flagi F-151/F-157"
-  - "brak możliwości pobrania tekstu aktu z ISAP → to stan NORMALNY, nie awaria:
-    kanał maszynowy ISAP jest martwy (Imperva, pętla 302). Brzmienie weryfikuj
-    przez api.sejm.gov.pl/eli lub eli.gov.pl (ten sam publikator, RZĄD 1),
-    ISAP powołuj jako adres dla człowieka. Dalej: references/ZRODLA-AKTOW-FALLBACK.md"
-  - brak dostępu do orzeczenia.ms.gov.pl / sn.pl / nsa.gov.pl
-    → wykonaj właściwą procedurę weryfikacji orzecznictwa; jeśli brak potwierdzenia
-    po dostępnych alternatywach, oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika
-  - brak źródła dla powołania po wykorzystaniu dostępnych alternatyw
-    → oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika, nie kontynuuj cicho
-  - "sprawa transgraniczna / prawo obce → pomiń prawo-polskie-v2 i ISAP,
-    ale NIE pomijaj weryfikacji — view shared/MIEDZYNARODOWE-GATES.md +
-    shared/HIERARCHIA-ZRODEL-MIEDZYNARODOWE.md, kanał RZĘDU 1 przełączony
-    na depozytariusza/EUR-Lex/bazy organów; pozostałe zasady HG aktywne (UP-5)"
-  - użytkownik zagubiony / brak klasyfikacji → [7] FALLBACK, nie zgadywanie dziedziny
-  - "podmiot (spółka/organ/sąd) oznaczony ⬛ [DO WERYFIKACJI] i brak dostępu do
-    rejestru (KRS/CEIDG) → STOP, poinformuj użytkownika, ZAKAZ generowania
-    pisma z podmiotem w statusie ⬛. ⚠️ Wcześniej sprawdź
-    shared/DOSTEP-MASZYNOWY-API.md §4: KRS działa bez klucza przez
-    api-krs.ms.gov.pl (odpis JSON jest ZANONIMIZOWANY względem PDF),
-    a CEIDG zwraca 401 bez tokenu — to nie jest brak dostępu do rejestru"
-  - "weryfikacja rachunku kontrahenta (biała lista VAT) → ✅ OSIĄGALNA
-    maszynowo od 2026-09-13c (F-157b): wl-api.mf.gov.pl, bez klucza,
-    /api/search/nip/{NIP}?date=RRRR-MM-DD oraz /api/search/nip-bank-account/
-    {NIP}/{26_CYFR}?date=... ⛔ data = dzień transakcji, nie dzisiejszy;
-    requestId z odpowiedzi zapisz do śladu weryfikacji. Parametry:
-    shared/DOSTEP-MASZYNOWY-API.md §4. ⚠️ Poprzedni zapis 'NIEOSIĄGALNA,
-    brak zamiennika' był prawdziwy do 2026-09-04 i przestał być prawdziwy
-    bez zmiany w tym pliku — statusy osiągalności odtwarzaj testem T25"
-limitations:
-  - nie zastępuje porady radcy prawnego/adwokata — patrz shared/DISCLAIMER.md (KROK 7, obowiązkowy)
-  - jakość i czas odpowiedzi zależą od dostępności i jakości web_search/web_fetch
-  - nie ingeruje w kontrolę jakości pipeline'u pisma-procesowe-v3 (tylko deleguje)
-required_modules:
-  - shared/MCP-INTEGRACJA.md  # opcjonalny — patrz KROK 1; tani gdy MCP niepodłączone
-  - shared/PRAWO-HARDGATE.md
-  - shared/HIERARCHIA-ZRODEL.md
-  - shared/DOSTEP-MASZYNOWY-API.md  # JAK wywołać API/serwis (nagłówki, ścieżki,
-                                    # tokeny, limity); wczytaj przy kanale kodu
-  - shared/PORTALE-BRANZOWE-RZAD-2B.md
-  - shared/MOD-STEP-TRACKER.md
-  - shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md
-  - shared/MOD-KONTEKST-SESJI.md
-  - shared/MOD-OS-CZASU-PRZESLANEK.md
-  - shared/MOD-WYJATEK-GATE.md
-  - shared/MOD-SKAN-DOWODOW-KOMPLETNY.md
-  - shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md
-  - shared/MOD-PORCJOWANIE-DOWODOW.md
-  - shared/PRE-W2-VERIFICATION-GATE.md
-  - shared/CP-GATE.md
-  - shared/DISCLAIMER.md
-  - references/KROK0A-anonimizer.md
-  - references/KROK1-detekcja.md
-  - shared/TABELE-OPLAT.md   # kolejnosc siegania po kwoty; KROK 0 = czy strona
-                            # w ogole placi (art. 94-103 KSCU)
-  - references/PROFIL-LEKKI.md
-  - references/ZRODLA-AKTOW-FALLBACK.md
-  - dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md
-  - references/AUDYT-KLUCZA-ODPOWIEDZI.md
-  - shared/MOD-CN-GATE.md
-  - shared/MOD-REM-GATE.md
-  - dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md
-changelog: |
-  Wersja bieżąca: 3.71 (2026-10-10b, AUDYT-2026-10-10b): Opis: router przy sprawach prawnych, nie przy wzmiankach prawnych w pracy nad kodem; preferencje użytkownika w zakresie sprawy prawnej; PROFIL-LEKKI 1.3 z kosztami zmierzonymi (rdzeń ≈103 kB ≈28 tys. tokenów, typowa sprawa ≈221 kB ≈55-60 tys.); HARD-GATES-ORZECZNICTWO i ZRODLA-AKTOW-FALLBACK bez obchodzenia WAF.
-  Pełna historia: references/CHANGELOG.md (ZASADA 15).
+description: UŻYWAJ ZAWSZE, gdy użytkownik prosi o analizę prawną, pismo lub ocenę materiału prawnego, w każdej jurysdykcji. Nie przy wzmiankach prawnych w pracy nad kodem (licencje, RODO).
+metadata:
+  version: '3.71'
+  type: orchestration
+  status: production
+  entrypoint: SKILL.md
+  compatibility: web_search, web_fetch, file_read (view), create_file, show_widget — lub równoważne funkcje hosta wg shared/UNIVERSAL-RUNTIME-ADAPTER.md
+  dependencies: '{"requires": ["shared", "prawo-polskie-v2", "przewodnik-prawny-v2", "audyt-systemu-v4", "orzeczenia-sadowe-v2", "analizator-przepisow-v2", "analizator-umow-v1", "analizator-dowodow-v3", "analiza-sadowa-v6", "pisma-proste-v2", "pisma-procesowe-v3", "przesluchanie-swiadkow-v2-min90", "chronologia-sprawy-v1", "dr-01-ustroj-konstytucyjny-i-zrodla-prawa", "dr-02-prawo-cywilne-rodzinne-gospodarcze", "dr-03-prawo-karne-wykroczenia-egzekucja", "dr-05-prawo-administracyjne-sadowoadministracyjne", "dr-10-zdrowie-farmacja-zywnosc-rolnictwo", "dr-11-cyfrowe-cyber-ai-dane-ip", "dr-12-sadownictwo-prokuratura-zawody-prawnicze", "dr-13-sluzby-bezpieczenstwo-informacje-niejawne", "dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka", "dr-16-pisma-strategia-dowody-orzecznictwo"], "called_by": ["użytkownik (punkt wejścia — brak nadrzędnego skilla)"]}'
+  inputs: '["opis sprawy użytkownika (tekst wolny)", "opcjonalnie — pliki/dowody wgrane przez użytkownika", "opcjonalnie — plik kontekstu sesji (eksport z wcześniejszej rozmowy)"]'
+  outputs: '["decyzja routingu ([1]-[11]) + wywołanie właściwego skilla PRIMARY/SECONDARY/FALLBACK", "finalnie — odpowiedź tekstowa, widget (show_widget) lub dokument .docx/.pdf (create_file)"]'
+  confidence: verified-online
+  escalation: '["⛔ ZANIM orzekniesz o niedostępności JAKIEGOKOLWIEK źródła w kanale kodu → sprawdź kształt żądania wg shared/DOSTEP-MASZYNOWY-API.md §1 (neutralny User-Agent, nagłówek Accept, ścieżka robocza zamiast roota, ponowienie). HTTP 502 albo 200 ze stroną zastępczą bywa skutkiem naszego żądania, nie awarii serwisu — zmierzone, flagi F-151/F-157", "brak możliwości pobrania tekstu aktu z ISAP → to stan NORMALNY, nie awaria: kanał maszynowy ISAP jest martwy (Imperva, pętla 302). Brzmienie weryfikuj przez api.sejm.gov.pl/eli lub eli.gov.pl (ten sam publikator, RZĄD 1), ISAP powołuj jako adres dla człowieka. Dalej: references/ZRODLA-AKTOW-FALLBACK.md", "brak dostępu do orzeczenia.ms.gov.pl / sn.pl / nsa.gov.pl → wykonaj właściwą procedurę weryfikacji orzecznictwa; jeśli brak potwierdzenia po dostępnych alternatywach, oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika", "brak źródła dla powołania po wykorzystaniu dostępnych alternatyw → oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika,
+    nie kontynuuj cicho", "sprawa transgraniczna / prawo obce → pomiń prawo-polskie-v2 i ISAP, ale NIE pomijaj weryfikacji — view shared/MIEDZYNARODOWE-GATES.md + shared/HIERARCHIA-ZRODEL-MIEDZYNARODOWE.md, kanał RZĘDU 1 przełączony na depozytariusza/EUR-Lex/bazy organów; pozostałe zasady HG aktywne (UP-5)", "użytkownik zagubiony / brak klasyfikacji → [7] FALLBACK, nie zgadywanie dziedziny", "podmiot (spółka/organ/sąd) oznaczony ⬛ [DO WERYFIKACJI] i brak dostępu do rejestru (KRS/CEIDG) → STOP, poinformuj użytkownika, ZAKAZ generowania pisma z podmiotem w statusie ⬛. ⚠️ Wcześniej sprawdź shared/DOSTEP-MASZYNOWY-API.md §4: KRS działa bez klucza przez api-krs.ms.gov.pl (odpis JSON jest ZANONIMIZOWANY względem PDF), a CEIDG zwraca 401 bez tokenu — to nie jest brak dostępu do rejestru", "weryfikacja rachunku kontrahenta (biała lista VAT) → ✅ OSIĄGALNA maszynowo od 2026-09-13c (F-157b): wl-api.mf.gov.pl, bez klucza, /api/search/nip/{NIP}?date=RRRR-MM-DD oraz /api/search/nip-bank-account/ {NIP}/{26_CYFR}?date=...
+    ⛔ data = dzień transakcji, nie dzisiejszy; requestId z odpowiedzi zapisz do śladu weryfikacji. Parametry: shared/DOSTEP-MASZYNOWY-API.md §4. ⚠️ Poprzedni zapis ''NIEOSIĄGALNA, brak zamiennika'' był prawdziwy do 2026-09-04 i przestał być prawdziwy bez zmiany w tym pliku — statusy osiągalności odtwarzaj testem T25"]'
+  limitations: '["nie zastępuje porady radcy prawnego/adwokata — patrz shared/DISCLAIMER.md (KROK 7, obowiązkowy)", "jakość i czas odpowiedzi zależą od dostępności i jakości web_search/web_fetch", "nie ingeruje w kontrolę jakości pipeline''u pisma-procesowe-v3 (tylko deleguje)"]'
+  required_modules: '["shared/MCP-INTEGRACJA.md", "shared/PRAWO-HARDGATE.md", "shared/HIERARCHIA-ZRODEL.md", "shared/DOSTEP-MASZYNOWY-API.md", "shared/PORTALE-BRANZOWE-RZAD-2B.md", "shared/MOD-STEP-TRACKER.md", "shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md", "shared/MOD-KONTEKST-SESJI.md", "shared/MOD-OS-CZASU-PRZESLANEK.md", "shared/MOD-WYJATEK-GATE.md", "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md", "shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md", "shared/MOD-PORCJOWANIE-DOWODOW.md", "shared/PRE-W2-VERIFICATION-GATE.md", "shared/CP-GATE.md", "shared/DISCLAIMER.md", "references/KROK0A-anonimizer.md", "references/KROK1-detekcja.md", "shared/TABELE-OPLAT.md", "references/PROFIL-LEKKI.md", "references/ZRODLA-AKTOW-FALLBACK.md", "dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md", "references/AUDYT-KLUCZA-ODPOWIEDZI.md", "shared/MOD-CN-GATE.md", "shared/MOD-REM-GATE.md", "dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md"]'
+  changelog: 'Wersja bieżąca: 3.71 (2026-10-10b, AUDYT-2026-10-10b): Opis: router przy sprawach prawnych, nie przy wzmiankach prawnych w pracy nad kodem; preferencje użytkownika w zakresie sprawy prawnej; PROFIL-LEKKI 1.3 z kosztami zmierzonymi (rdzeń ≈103 kB ≈28 tys. tokenów, typowa sprawa ≈221 kB ≈55-60 tys.); HARD-GATES-ORZECZNICTWO i ZRODLA-AKTOW-FALLBACK bez obchodzenia WAF.
+
+    Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
 ## ŁADOWANE ZAWSZE — BEZWZGLĘDNIE

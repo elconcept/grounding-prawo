@@ -1,7 +1,8 @@
 ---
 name: case-risk
 description: Wielodomenowa ocena ryzyk w sprawie — dowodowe, proceduralne, dokumentacyjno-medyczne, interwencji Policji/ZRM, karnoprocesowe, cywilne, ryzyko nadmiernego twierdzenia (overclaiming) i ryzyko strategicznego czasu. Integruje mapy UoOZP, KC, art. 192 k.k. i skargi nadzorczej. Używaj do oceny konkretnego zarzutu albo całościowego przeglądu materiału pod kątem ryzyka procesowego.
-argument-hint: '<kwestia / zarzut / dokument do oceny ryzyka>'
+metadata:
+  argument-hint: <kwestia / zarzut / dokument do oceny ryzyka>
 ---
 # case-risk Wielodomenowa Ocena Ryzyk Procesowych
 

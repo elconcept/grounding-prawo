@@ -1,31 +1,19 @@
 ---
 name: klauzule-kontraktowe-pl
-description: >
-  Lista kontrolna klauzul umownych dla polskiej kancelarii - przechodzi umowę po 41 kategoriach
-  klauzul (taksonomia CUAD zlokalizowana do PL/UE) i oznacza, które są obecne, których brakuje
-  i które są ryzykowne, z kotwicą do polskiego przepisu (KC, prawo autorskie, KP). Inny niz
-  contract-review-pl (bulk audit portfela do tabeli) - ten skupia sie na JEDNEJ umowie i pyta
-  "czego tu nie ma i co tu gryzie". Uzywaj gdy: "sprawdz klauzule w tej umowie", "czego brakuje
-  w umowie", "spotting klauzul", "lista kontrolna kontraktu", "review pojedynczej umowy",
-  "jakie klauzule ryzykowne", "audyt jednej umowy", przed podpisem / w negocjacji / przy DD
-  pojedynczego kontraktu.
+description: 'Lista kontrolna klauzul umownych dla polskiej kancelarii - przechodzi umowę po 41 kategoriach klauzul (taksonomia CUAD zlokalizowana do PL/UE) i oznacza, które są obecne, których brakuje i które są ryzykowne, z kotwicą do polskiego przepisu (KC, prawo autorskie, KP). Inny niz contract-review-pl (bulk audit portfela do tabeli) - ten skupia sie na JEDNEJ umowie i pyta "czego tu nie ma i co tu gryzie". Uzywaj gdy: "sprawdz klauzule w tej umowie", "czego brakuje w umowie", "spotting klauzul", "lista kontrolna kontraktu", "review pojedynczej umowy", "jakie klauzule ryzykowne", "audyt jednej umowy", przed podpisem / w negocjacji / przy DD pojedynczego kontraktu.
+
+  '
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  source: CUAD (Contract Understanding Atticus Dataset), The Atticus Project
-  url: https://www.atticusprojectai.org/cuad
-  license: CC-BY-4.0
-  relationship: adaptation
-  note: >
-    Taksonomia 41 kategorii klauzul pochodzi z CUAD. Opisy kategorii, kotwice do prawa
-    polskiego i logika red-flag napisane od zera dla realiów PL/UE.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
   companion_skills: citation-grounding-pl, redline-docx-pl
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '{"source": "CUAD (Contract Understanding Atticus Dataset), The Atticus Project", "url": "https://www.atticusprojectai.org/cuad", "license": "CC-BY-4.0", "relationship": "adaptation", "note": "Taksonomia 41 kategorii klauzul pochodzi z CUAD. Opisy kategorii, kotwice do prawa polskiego i logika red-flag napisane od zera dla realiów PL/UE.\n"}'
 ---
 
 # Klauzule kontraktowe PL - lista kontrolna pojedynczej umowy

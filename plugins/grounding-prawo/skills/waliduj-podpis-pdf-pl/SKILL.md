@@ -2,23 +2,18 @@
 name: waliduj-podpis-pdf-pl
 description: Sprawdza podpis elektroniczny w PRZYCHODZĄCYM PDF - czy plik zmieniono po podpisaniu, kto go podpisał, kiedy, czy jest znacznik czasu i czy podpis obejmuje cały dokument. Działa lokalnie na pyHanko, bez sieci i bez wysyłania pliku gdziekolwiek (RODO-safe, tajemnica zawodowa). Wyłącznie odczyt - NIE podpisuje niczego. Używaj gdy - "sprawdź podpis", "zweryfikuj podpis elektroniczny", "czy ten PDF jest podpisany", "czy dokument zmieniono po podpisaniu", "kto podpisał ten PDF", "walidacja eIDAS", "PAdES", "czy podpis jest ważny", "dostałem podpisany PDF", "weryfikacja podpisu kwalifikowanego", "czy pismo z sądu ma podpis", sprawdzenie podpisu na umowie, wyroku, decyzji administracyjnej lub piśmie procesowym otrzymanym od drugiej strony.
 license: MIT
-attribution:
-  - source: MatthiasValvekens/pyHanko
-    url: https://github.com/MatthiasValvekens/pyHanko
-    license: MIT
-    relationship: dependency
-    note: >
-      Biblioteka walidacji PAdES wolana lokalnie. Skill ja opakowuje i tlumaczy
-      wynik na werdykt laczony - nie wywodzi sie z jej kodu.
-allowed-tools: [Bash, Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
+allowed-tools:
+- Bash
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 0.1.0
   cost: zero LLM (walidacja kryptograficzna)
   companion_skills: doc-intel-contract-pl
+  attribution: '[{"source": "MatthiasValvekens/pyHanko", "url": "https://github.com/MatthiasValvekens/pyHanko", "license": "MIT", "relationship": "dependency", "note": "Biblioteka walidacji PAdES wolana lokalnie. Skill ja opakowuje i tlumaczy wynik na werdykt laczony - nie wywodzi sie z jej kodu.\n"}]'
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
 ---
 
 # Walidacja podpisu elektronicznego w PDF

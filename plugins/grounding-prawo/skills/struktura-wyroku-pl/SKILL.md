@@ -1,34 +1,19 @@
 ---
 name: struktura-wyroku-pl
-description: >
-  Rozkłada polskie orzeczenie na role retoryczne i robi streszczenie EKSTRAKTYWNE
-  (cytuje zdania źródłowe, nie parafrazuje) - segmentuje wyrok/postanowienie na
-  komparycję, stan faktyczny, przebieg postępowania, zarzuty/wnioski, podstawę prawną,
-  rozważania sądu, sentencję i tezę (ratio decidendi), wskazuje rozstrzygnięcie i
-  powołane przepisy. Mechaniczna segmentacja + ekstrakcja kluczowych zdań, bez
-  zmyślania. Pairuje z saos-orzecznictwo (znajdź), ekstraktor-cytatow-pl (cytaty) i
-  citation-grounding-pl (weryfikacja). Uzywaj gdy: "streść ten wyrok", "co sąd
-  orzekł i dlaczego", "wyciągnij tezę z orzeczenia", "struktura uzasadnienia",
-  "ratio decidendi", "rozłóż wyrok na części", "podsumuj orzeczenie", przy czytaniu
-  długiego uzasadnienia / analizie linii orzeczniczej / przygotowaniu glosy.
+description: 'Rozkłada polskie orzeczenie na role retoryczne i robi streszczenie EKSTRAKTYWNE (cytuje zdania źródłowe, nie parafrazuje) - segmentuje wyrok/postanowienie na komparycję, stan faktyczny, przebieg postępowania, zarzuty/wnioski, podstawę prawną, rozważania sądu, sentencję i tezę (ratio decidendi), wskazuje rozstrzygnięcie i powołane przepisy. Mechaniczna segmentacja + ekstrakcja kluczowych zdań, bez zmyślania. Pairuje z saos-orzecznictwo (znajdź), ekstraktor-cytatow-pl (cytaty) i citation-grounding-pl (weryfikacja). Uzywaj gdy: "streść ten wyrok", "co sąd orzekł i dlaczego", "wyciągnij tezę z orzeczenia", "struktura uzasadnienia", "ratio decidendi", "rozłóż wyrok na części", "podsumuj orzeczenie", przy czytaniu długiego uzasadnienia / analizie linii orzeczniczej / przygotowaniu glosy.
+
+  '
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  source: OpenNyAI/Opennyai (Legal-NLP-EkStep)
-  url: https://github.com/OpenNyAI/Opennyai
-  license: MIT
-  relationship: clean-room
-  note: >
-    Metoda: strukturyzacja wyroku przez role retoryczne zdań plus extractive summarization.
-    Indyjskie role i modele porzucone; role retoryczne polskiego orzeczenia i reguły
-    ekstrakcji napisane od zera.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: ekstraktor-cytatow-pl, citation-grounding-pl
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '{"source": "OpenNyAI/Opennyai (Legal-NLP-EkStep)", "url": "https://github.com/OpenNyAI/Opennyai", "license": "MIT", "relationship": "clean-room", "note": "Metoda: strukturyzacja wyroku przez role retoryczne zdań plus extractive summarization. Indyjskie role i modele porzucone; role retoryczne polskiego orzeczenia i reguły ekstrakcji napisane od zera.\n"}'
 ---
 
 # Struktura wyroku PL - rozłóż orzeczenie i streść ekstraktywnie

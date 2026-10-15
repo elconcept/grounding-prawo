@@ -1,35 +1,18 @@
 ---
 name: kalkulatory-procesowe-pl
-description: >-
-  Cztery kalkulatory procesu cywilnego w jednym skillu - opłata sądowa (UKSC),
-  przedawnienie roszczeń (art. 117-125 KC), odsetki (ustawowe, za opóźnienie,
-  w transakcjach handlowych) i WPS - wartość przedmiotu sporu (art. 19-26 KPC).
-  Każdy kalkulator zaczyna od tabeli "Aktualne parametry - POBIERZ przed
-  obliczeniem": stopy NBP i tabele opłat zmieniają się szybciej niż ten plik,
-  więc żywa wartość ma pierwszeństwo przed fallbackiem. Nigdy sama liczba -
-  zawsze pełny rachunek z podstawą prawną każdego kroku i kartą obliczenia
-  DO ZATWIERDZENIA PRZEZ CZŁOWIEKA. Używaj gdy: "ile wynosi opłata od pozwu",
-  "policz opłatę sądową", "opłata od apelacji", "czy roszczenie się
-  przedawniło", "termin przedawnienia", "policz odsetki ustawowe", "odsetki
-  za opóźnienie", "odsetki w transakcjach handlowych", "rekompensata 40 euro",
-  "oblicz WPS", "wartość przedmiotu sporu", "który sąd właściwy według WPS".
+description: 'Cztery kalkulatory procesu cywilnego w jednym skillu - opłata sądowa (UKSC), przedawnienie roszczeń (art. 117-125 KC), odsetki (ustawowe, za opóźnienie, w transakcjach handlowych) i WPS - wartość przedmiotu sporu (art. 19-26 KPC). Każdy kalkulator zaczyna od tabeli "Aktualne parametry - POBIERZ przed obliczeniem": stopy NBP i tabele opłat zmieniają się szybciej niż ten plik, więc żywa wartość ma pierwszeństwo przed fallbackiem. Nigdy sama liczba - zawsze pełny rachunek z podstawą prawną każdego kroku i kartą obliczenia DO ZATWIERDZENIA PRZEZ CZŁOWIEKA. Używaj gdy: "ile wynosi opłata od pozwu", "policz opłatę sądową", "opłata od apelacji", "czy roszczenie się przedawniło", "termin przedawnienia", "policz odsetki ustawowe", "odsetki za opóźnienie", "odsetki w transakcjach handlowych", "rekompensata 40 euro", "oblicz WPS", "wartość przedmiotu sporu", "który sąd właściwy według WPS".'
 license: Apache-2.0
-allowed-tools: [Read, WebFetch]
-data-residency: local
-requires-human-approval: true
-pii-egress: none
-attribution:
-  source: crankshift/lawpowers
-  license: MIT
-  relationship: pattern-only
-  note: >
-    Dekompozycja na 4 kalkulatory i protokół „fetch przed obliczeniem”. Treść, tabele i
-    rachunki napisane od zera na tekstach UKSC/KC/KPC; przy okazji poprawione 4 nieaktualne
-    wartości źródła, m.in. limit opłaty stosunkowej po noweli z 2025 r.
+allowed-tools:
+- Read
+- WebFetch
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: terminy-procesowe-pl, sejm-eli-mcp (konektor)
+  data-residency: local
+  requires-human-approval: 'true'
+  pii-egress: none
+  attribution: '{"source": "crankshift/lawpowers", "license": "MIT", "relationship": "pattern-only", "note": "Dekompozycja na 4 kalkulatory i protokół „fetch przed obliczeniem”. Treść, tabele i rachunki napisane od zera na tekstach UKSC/KC/KPC; przy okazji poprawione 4 nieaktualne wartości źródła, m.in. limit opłaty stosunkowej po noweli z 2025 r.\n"}'
 ---
 
 # Kalkulatory procesowe PL - żywe parametry, nigdy sama liczba

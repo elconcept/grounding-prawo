@@ -1,42 +1,15 @@
 ---
 name: chronologia-stanowiska-pl
-description: >
-  Dla prawnika prowadzącego spór. Z tekstu akt (wynik akta-przeszukiwalne-pl) buduje
-  chronologię zdarzeń albo zestawienie stanowisk stron (element roszczenia x twierdzenie x
-  stanowisko przeciwnika x dowody x luka), a mechaniczna bramka sprawdza, czy każdy wpis
-  wskazuje istniejący plik i stronę akt i czy cytat naprawdę na niej stoi. Wpis bez kotwicy
-  w aktach nie przechodzi. Z perspektywy powoda albo pozwanego (także oskarżyciela i obrony).
-  Nie ocenia, kto ma rację, nie rozstrzyga sprzeczności i nie liczy terminów. Używaj gdy:
-  "zrób chronologię z akt", "oś czasu sprawy", "co się działo kiedy", "zestawienie
-  stanowisk stron", "co przyznał pozwany", "czego nam brakuje do udowodnienia",
-  "stan faktyczny do pisma", "chronologia dla świadka".
-attribution:
-  - source: anthropics/claude-for-legal
-    url: https://github.com/anthropics/claude-for-legal
-    license: Apache-2.0
-    relationship: adaptation
-    note: skille litigation-legal chronology i claim-chart, commit d541734
-  - source: b1rdmania/chronology
-    url: https://github.com/b1rdmania/chronology
-    license: Apache-2.0
-    relationship: adaptation
-    note: Andrew Bird, commit 628e807
-  - source: legalquants/lq-skills
-    url: https://github.com/legalquants/lq-skills
-    license: Apache-2.0
-    relationship: adaptation
-    note: skill building-chronologies, commit 70ebcea
-  - source: rohasnagpal/legal-ai-skills
-    url: https://github.com/rohasnagpal/legal-ai-skills
-    license: MIT
-    relationship: adaptation
-    note: skille chronology-builder i pleadings-analyst, commit 20fbad1
+description: 'Dla prawnika prowadzącego spór. Z tekstu akt (wynik akta-przeszukiwalne-pl) buduje chronologię zdarzeń albo zestawienie stanowisk stron (element roszczenia x twierdzenie x stanowisko przeciwnika x dowody x luka), a mechaniczna bramka sprawdza, czy każdy wpis wskazuje istniejący plik i stronę akt i czy cytat naprawdę na niej stoi. Wpis bez kotwicy w aktach nie przechodzi. Z perspektywy powoda albo pozwanego (także oskarżyciela i obrony). Nie ocenia, kto ma rację, nie rozstrzyga sprzeczności i nie liczy terminów. Używaj gdy: "zrób chronologię z akt", "oś czasu sprawy", "co się działo kiedy", "zestawienie stanowisk stron", "co przyznał pozwany", "czego nam brakuje do udowodnienia", "stan faktyczny do pisma", "chronologia dla świadka".
+
+  '
 metadata:
   author: Wieslaw Mazur / MateMatic
   version: 0.2.0
   license: Apache-2.0
   cost: bramka bez LLM i bez sieci (stdlib); budowa wpisów - model w sesji
   companion_skills: akta-przeszukiwalne-pl, citation-grounding-pl, adversarial-legal-review-pl
+  attribution: '[{"source": "anthropics/claude-for-legal", "url": "https://github.com/anthropics/claude-for-legal", "license": "Apache-2.0", "relationship": "adaptation", "note": "skille litigation-legal chronology i claim-chart, commit d541734"}, {"source": "b1rdmania/chronology", "url": "https://github.com/b1rdmania/chronology", "license": "Apache-2.0", "relationship": "adaptation", "note": "Andrew Bird, commit 628e807"}, {"source": "legalquants/lq-skills", "url": "https://github.com/legalquants/lq-skills", "license": "Apache-2.0", "relationship": "adaptation", "note": "skill building-chronologies, commit 70ebcea"}, {"source": "rohasnagpal/legal-ai-skills", "url": "https://github.com/rohasnagpal/legal-ai-skills", "license": "MIT", "relationship": "adaptation", "note": "skille chronology-builder i pleadings-analyst, commit 20fbad1"}]'
 ---
 
 # Chronologia akt i zestawienie stanowisk

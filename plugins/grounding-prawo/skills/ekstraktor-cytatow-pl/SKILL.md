@@ -1,33 +1,19 @@
 ---
 name: ekstraktor-cytatow-pl
-description: >
-  Deterministyczny ekstraktor cytatów prawnych z polskiego pisma - znajduje WSZYSTKIE
-  odwołania (sygnatury sądów, ECLI, identyfikatory Dz.U./M.P./ELI, powołane przepisy),
-  normalizuje je, deduplikuje i rozwiązuje odwołania skrótowe (tamże, op. cit., wyżej
-  powołany wyrok) do antecedentu. Front-end do citation-grounding-pl: najpierw znajdź
-  każdy cytat, potem zweryfikuj. Mechaniczny, bez LLM przy ekstrakcji (regex + reguły),
-  RODO-safe (lokalnie). Uzywaj gdy: "wypisz wszystkie cytaty z tego pisma", "jakie
-  orzeczenia sa powolane", "lista sygnatur", "wyciagnij przepisy z opinii", "ekstrakcja
-  cytatow", "co tu jest cytowane", przed groundingiem / przed wyslaniem pisma /
-  przy audycie cudzego pisma.
+description: 'Deterministyczny ekstraktor cytatów prawnych z polskiego pisma - znajduje WSZYSTKIE odwołania (sygnatury sądów, ECLI, identyfikatory Dz.U./M.P./ELI, powołane przepisy), normalizuje je, deduplikuje i rozwiązuje odwołania skrótowe (tamże, op. cit., wyżej powołany wyrok) do antecedentu. Front-end do citation-grounding-pl: najpierw znajdź każdy cytat, potem zweryfikuj. Mechaniczny, bez LLM przy ekstrakcji (regex + reguły), RODO-safe (lokalnie). Uzywaj gdy: "wypisz wszystkie cytaty z tego pisma", "jakie orzeczenia sa powolane", "lista sygnatur", "wyciagnij przepisy z opinii", "ekstrakcja cytatow", "co tu jest cytowane", przed groundingiem / przed wyslaniem pisma / przy audycie cudzego pisma.
+
+  '
 license: Apache-2.0
-allowed-tools: [Read]
-data-residency: local
-requires-human-approval: false
-pii-egress: none
-attribution:
-  source: freelawproject/eyecite (Free Law Project)
-  url: https://github.com/freelawproject/eyecite
-  license: BSD-2-Clause
-  relationship: clean-room
-  note: >
-    Architektura ekstrakcja -> agregacja -> adnotacja idzie za eyecite. Amerykańskie wzorce
-    reporterów porzucone; wzorce sygnatur PL, ECLI, Dz.U./ELI i logika antecedentów napisane
-    od zera dla realiów polskich.
+allowed-tools:
+- Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.1.0
   companion_skills: citation-grounding-pl
+  data-residency: local
+  requires-human-approval: 'false'
+  pii-egress: none
+  attribution: '{"source": "freelawproject/eyecite (Free Law Project)", "url": "https://github.com/freelawproject/eyecite", "license": "BSD-2-Clause", "relationship": "clean-room", "note": "Architektura ekstrakcja -> agregacja -> adnotacja idzie za eyecite. Amerykańskie wzorce reporterów porzucone; wzorce sygnatur PL, ECLI, Dz.U./ELI i logika antecedentów napisane od zera dla realiów polskich.\n"}'
 ---
 
 # Ekstraktor cytatów PL - znajdź każdy cytat, zanim go zweryfikujesz

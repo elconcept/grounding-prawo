@@ -1,46 +1,17 @@
 ---
 name: analizator-dowodow-v3
-version: "5.16.23"
-type: executive-analiza
-status: production
-description: "Ocena dowodów, dokumentów, zeznań i akt: siła dowodowa, hierarchia A-D, pokrycie przesłanek, sprzeczności, terminy procesowe i analiza śledcza."
-compatibility: "web_search, bash, document_analysis"
-dependencies:
-  required:
-    - shared
-    - MOD-SKAN-DOWODOW-KOMPLETNY
-    - MOD-STEP-TRACKER
-  optional:
-    - analizator-umow-v1
-    - analiza-sadowa
-    - pisma-procesowe
-    - orzeczenia-sadowe
-    - analizator-przepisow
-    - chronologia-sprawy
-    - przesluchanie-swiadkow
-    - raport-sytuacyjny
-    - raport-klienta
-validation:
-  required_gates:
-    - PRAWO-HARDGATE
-    - SD-VER-GATE-AD
-    - STEP-TRACKER-AD
-pipeline:
-  stages:
-    - AD-KROK0-BLOKADA
-    - AD-KROK0a-MODE
-    - AD-KROK0b-SDVER
-    - AD-KROK0c-STINIT
-    - AD-KROK1-INTAKE
-    - AD-KROK2-ROUTER
-    - AD-BLOKG-STRONY
-    - AD-BLOKJ-LAPSUSY
-    - AD-BLOKH-DIS
-    - AD-KROK3-WYKONANIE
-    - AD-KROK4-DASHBOARD
-changelog: |
-  Wersja bieżąca: 5.16.23 (2026-10-10b, AUDYT-2026-10-10b): widget-kreator: auto-fill lokalny, bez wysyłania treści rozmowy do api.anthropic.com; MD-NARR: katalog wyjściowy hosta zamiast /mnt/user-data.
-  Pełna historia: references/CHANGELOG.md (ZASADA 15).
+description: 'Ocena dowodów, dokumentów, zeznań i akt: siła dowodowa, hierarchia A-D, pokrycie przesłanek, sprzeczności, terminy procesowe i analiza śledcza.'
+metadata:
+  version: 5.16.23
+  type: executive-analiza
+  status: production
+  compatibility: web_search, bash, document_analysis
+  dependencies: '{"required": ["shared", "MOD-SKAN-DOWODOW-KOMPLETNY", "MOD-STEP-TRACKER"], "optional": ["analizator-umow-v1", "analiza-sadowa", "pisma-procesowe", "orzeczenia-sadowe", "analizator-przepisow", "chronologia-sprawy", "przesluchanie-swiadkow", "raport-sytuacyjny", "raport-klienta"]}'
+  validation: '{"required_gates": ["PRAWO-HARDGATE", "SD-VER-GATE-AD", "STEP-TRACKER-AD"]}'
+  pipeline: '{"stages": ["AD-KROK0-BLOKADA", "AD-KROK0a-MODE", "AD-KROK0b-SDVER", "AD-KROK0c-STINIT", "AD-KROK1-INTAKE", "AD-KROK2-ROUTER", "AD-BLOKG-STRONY", "AD-BLOKJ-LAPSUSY", "AD-BLOKH-DIS", "AD-KROK3-WYKONANIE", "AD-KROK4-DASHBOARD"]}'
+  changelog: 'Wersja bieżąca: 5.16.23 (2026-10-10b, AUDYT-2026-10-10b): widget-kreator: auto-fill lokalny, bez wysyłania treści rozmowy do api.anthropic.com; MD-NARR: katalog wyjściowy hosta zamiast /mnt/user-data.
+
+    Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
 # Analizator Dowodów Procesowych v5
