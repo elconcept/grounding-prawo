@@ -76,8 +76,8 @@ web_search: "kary administracyjne miarkowanie art 189d KPA NSA 2025 2026"
 | Sprawa ZUS / KRUS | `mod-SUS-ZUS-ubezpieczenia-spoleczne` |
 | Pismo: odwołanie / skarga do WSA | `pisma-procesowe-v3` |
 | Orzecznictwo NSA / WSA | `orzeczenia-sadowe-v2` |
-| Budownictwo / środowisko | `dr-09` |
-| Samorząd terytorialny / decyzje lokalne | `dr-08` |
+| Budownictwo / środowisko | `dr-09 (poza pluginem)` |
+| Samorząd terytorialny / decyzje lokalne | `dr-08 (poza pluginem)` |
 
 ---
 

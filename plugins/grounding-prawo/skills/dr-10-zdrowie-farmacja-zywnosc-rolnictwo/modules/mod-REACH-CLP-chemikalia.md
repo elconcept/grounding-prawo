@@ -13,7 +13,7 @@ description: |
   - zezwolenia REACH (Annex XIV), ograniczenia (Annex XVII), SVHC
   - kontrolę Inspekcji Ochrony Środowiska lub PIP w zakresie chemikaliów
   - naruszenia przepisów REACH/CLP i sankcje (ustawa o substancjach chemicznych)
-  Powiązane: `dr-09-budownictwo-srodowisko-energia-transport/modules/mod-POS-prawo-ochrony-srodowiska.md` (środowisko/DŚU), `dr-10-zdrowie-farmacja-zywnosc-rolnictwo/modules/mod-PrFarm-prawo-farmaceutyczne.md` (farmacja), `dr-06-podatki-finanse-publiczne-aml/modules/mod-ustawa-akcyzowa-i-clo-UCC.md` (akcyza/cło na wybrane substancje), `prawo-polskie-v2`.
+  Powiązane: `dr-09-budownictwo-srodowisko-energia-transport/modules/mod-POS-prawo-ochrony-srodowiska.md (poza pluginem)` (środowisko/DŚU), `dr-10-zdrowie-farmacja-zywnosc-rolnictwo/modules/mod-PrFarm-prawo-farmaceutyczne.md` (farmacja), `dr-06-podatki-finanse-publiczne-aml/modules/mod-ustawa-akcyzowa-i-clo-UCC.md (poza pluginem)` (akcyza/cło na wybrane substancje), `prawo-polskie-v2`.
 compatibility:
   tools:
     - web_search

@@ -253,3 +253,10 @@ Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to upra
 
 Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** data doręczenia / zdarzenia i rodzaj terminu
+- **Wynik zapisz w:** termin z podstawą prawną w `analiza/_brief.md`; KPK/KPW oznacz do sprawdzenia (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisma-procesowe-v3`, `pisma-proste-v2`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

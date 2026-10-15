@@ -1735,3 +1735,10 @@ Tryb JSX / widget uruchamiany wyłącznie gdy użytkownik użyje:
 „pokaż graficznie", „dashboard", „panel JSX", „wizualizacja", „diagram".
 
 W razie wątpliwości zawsze wybierz tryb tekstowy.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `analizator-dowodow-v3` (sprzeczności) i chronologia
+- **Wynik zapisz w:** pytania do świadków: dopisek do `analiza/_dowody-i-przepisy.md`; zestawy pytań w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisma-procesowe-v3`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

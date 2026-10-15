@@ -198,7 +198,7 @@ art. 27**; ta sesja odczytała skalę z tekstu jednolitego.
 
 ⛔ Progi VAT (zwolnienie podmiotowe, mały podatnik), limity ryczałtu, stawki CIT
 i danina solidarnościowa **nie są tu przepisywane** — dziedzina
-`dr-06-podatki-finanse-publiczne-aml`, odczyt przy sprawie.
+`dr-06-podatki-finanse-publiczne-aml (poza pluginem)`, odczyt przy sprawie.
 
 ---
 

@@ -290,3 +290,10 @@ Gdy materiał dotyczy art. 192 k.k. i problemu zgody, odpowiedź MUSI zawierać:
 **Źródła map**: `legal/skill_polish_law_articles_map/criminal_liability_medical_consent_map.md`, `informed_consent_notes.md`, `patient_rights_article_map.md` (art. 9, 15–19 UPP), `mental_health_article_map.md` (art. 21, 23, 24, 29, 33, 34 UoOZP — lex specialis).
 
 &nbsp;
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** dokumentacja medyczna po OCR, chronologia
+- **Wynik zapisz w:** ocena art. 192 k.k. w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `uoozp-compliance`, `zawiadomienie-o-przestepstwie`, `pisma-procesowe-v3`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

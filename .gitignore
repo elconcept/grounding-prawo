@@ -28,3 +28,6 @@ node_modules/
 /mcp/mcp-ip-rotator/
 /mcp/legalize-mcp/
 /mcp/prawo-pl-mcp/
+
+# --- wzory i materiały robocze użytkownika (prawdziwe pisma, dane osobowe) ---
+INBOX/

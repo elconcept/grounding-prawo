@@ -23,7 +23,7 @@ sygnatury może być poprawna, a przypisanie organu/podstawy błędne. Sprawdź 
 
 Nie pisz „art. 83 ustawy o ochronie danych osobowych" (kary są w RODO, nie w ustawie krajowej).
 Weryfikuj, czy powołany przepis pochodzi z właściwego aktu. CELEX RODO: `32016R0679` (resolver UE:
-`eu-sparql-search`).
+`eu-sparql-search (poza pluginem)`).
 
 ## 3. Sygnatura decyzji
 

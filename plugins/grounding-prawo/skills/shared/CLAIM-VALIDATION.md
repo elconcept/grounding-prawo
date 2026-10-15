@@ -1,3 +1,12 @@
+## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu CLAIM-VALIDATION
+
+Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
+obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
+Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
+nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
+Nie stosuj CLAIM-FIRST ani kroków C0 i dalszych do relacji pokrzywdzonego. Nie kwalifikuj jej jako błędnej procesowo, nie zastępuj dokumentem i nie wymagaj dowodu. Przejdź do wywiadu i kontroli integralności zawiadomienia.
+Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
+
 # MOD-CLAIM-VALIDATION — Walidacja Twierdzeń Strony względem Materiału Dowodowego
 
 **Plik kanoniczny:** `shared/CLAIM-VALIDATION.md`

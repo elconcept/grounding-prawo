@@ -1,5 +1,17 @@
 # Soczewki szturmu - mandat, wejście, co zwracają
 
+## Wybór mandatu przed soczewkami
+
+Dla zawiadomienia pokrzywdzonego stosuj ZOP-R z
+[recenzja-zawiadomienia.md](recenzja-zawiadomienia.md) i
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`. Poniższe ogólne mandaty E2/E3,
+„sam draft”, „akta rozstrzygają”, „kategoryczne bez dowodu”, „prokurator jako przeciwnik”
+i mapa FAKT_BEZ_ZRODLA nie obowiązują w ZOP-R. Role dostają pełną relację i zwracają
+pytania o pominięte osoby, zdarzenia, skutki, prawa i działania organów; pytania zapisują
+poza wejściem skryptu syntezy. Prawo/cytaty/format kontroluj bez cenzury relacji.
+Dalsza część opisuje zwykły szturm dla pozostałych pism.
+
+
 Każda soczewka czyta draft innym okiem i dlatego łapie inne błędy (dane z przebiegów 25.09 i 28.09:
 to samo ustalenie zgłaszały 2-4 skille, a część skilli nie dała żadnego unikalnego). Soczewka
 **nie pisze raportu**. Zwraca listę ustaleń w schemacie `schemat-ustalenia.json` do pliku

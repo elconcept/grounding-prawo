@@ -17,7 +17,7 @@ tury i ostatniej pozycji `[n]`. Jeżeli plików nie ma, E0 pyta autora, czy je z
 
 Pliki robocze przebiegu (wyciągi `.clean.md`, `ustalenia/*.json`, `edits.*.json`, `raport_synteza.md`,
 REDLINE, obrazy, skrypty pomiarowe) idą do `<sprawa>/_robocze/<rrrrMMdd>_<pismo>__szturm/`. Rejestr odsyła do
-nich ścieżką; nie kopiuje ich treści. Zasada ogólna: `shared/MOD-PLIKI-INKREMENTALNE.md`.
+nich ścieżką; nie kopiuje ich treści. Zasada ogólna: `shared/ARTEFAKTY-SPRAWY.md`.
 
 ## Szablony dopisków
 

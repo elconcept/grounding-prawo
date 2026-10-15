@@ -1,7 +1,7 @@
 # Raport pokrycia — Prawo budowlane (PrBud)
 
 **Data analizy:** 2026-08-13
-**Zakres skilla:** `dr-09-budownictwo-srodowisko-energia-transport`
+**Zakres skilla:** `dr-09-budownictwo-srodowisko-energia-transport (poza pluginem)`
 **Stan prawny bazowy w modułach:** Dz.U. 2026 poz. 524 t.j. (obwieszczenie Marszałka Sejmu z 27.03.2026)
 **Metodologia:** inwentaryzacja treści rzeczywiście obecnej w dwóch dedykowanych modułach (`mod-PrBud-prawo-budowlane.md` — moduł ogólny/strategiczny, `mod-PrBud-patodeweloperka-uzytkowanie-male-obiekty-ograniczenia.md` — moduł tematyczny) oraz punktowych odniesień w module ochrony zabytków (`mod-ochrona-zabytkow-obiekty-uzytecznosci-publicznej.md`). Struktura oficjalna aktu: 11 rozdziałów (w tym cztery oznaczone literami: 5a–5d), ponad 100 artykułów. Każdy przepis wymaga weryfikacji ISAP przed użyciem w piśmie (HARD GATE), niezależnie od statusu w tym raporcie.
 

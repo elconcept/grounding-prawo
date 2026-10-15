@@ -5,7 +5,7 @@
 > cywilnym (`dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-KC-cywilne-zobowiazania-odpowiedzialnosc.md`
 > — odpowiedzialność odszkodowawcza). Ten moduł dodaje brakujące ujęcie
 > KARNE i uzupełnia (nie duplikuje) ujęcie cywilne oraz administracyjne
-> (dr-07, KIO).
+> (dr-07 (poza pluginem), KIO).
 > ⚠️ **POPRAWKA 2026-07-27 (FAZA 3E/ZASADA 14) — CAŁOŚCIOWA PRZEBUDOWA.**
 > Poprzednia wersja (v1.0.0) opisywała NIEAKTUALNĄ/POMYLONĄ strukturę
 > przepisu: (a) §1 i §2 miały ZAMIENIONE treści (element "wejście w

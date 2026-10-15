@@ -366,8 +366,8 @@ Sygnały typowe (poglądowe, do rozwinięcia w DR-03):
 ### DR-04 — Prawo pracy, ZUS, świadczenia
 
 ```
-Pełna specyfika: dr-04-prawo-pracy-zus-swiadczenia/modules/
-  `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-mobbing-dyskryminacja.md` (częściowo — świadkowie mobbingu)
+Pełna specyfika: dr-04-prawo-pracy-zus-swiadczenia/modules/ (poza pluginem)
+  `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-mobbing-dyskryminacja.md (poza pluginem)` (częściowo — świadkowie mobbingu)
   — pełne rozwinięcie SW-specyfiki: DO OPRACOWANIA.
 
 Sygnały typowe (poglądowe):

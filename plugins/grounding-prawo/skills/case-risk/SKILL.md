@@ -153,3 +153,10 @@ Upływ terminu zażalenia (7 dni od doręczenia); upływ terminu zastrzeżenia a
 `mental_health_article_map.md` (bezzasadność/bezprawność, red flags Policja/ZRM)
 
 Na podstawie kanonicznego Anthropic`legal-risk-assessment` (art. 23)
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `analiza/_dowody-i-przepisy.md`, chronologia
+- **Wynik zapisz w:** ryzyka w `analiza/_podsumowanie.md` (sekcja ryzyk) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

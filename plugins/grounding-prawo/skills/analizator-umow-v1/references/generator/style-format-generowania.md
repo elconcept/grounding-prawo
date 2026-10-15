@@ -5,7 +5,7 @@
 > `commercial-legal-pl` (© 2026 Kancelaria Radców Prawnych Żurawska Piotrowski i Wspólnicy,
 > Apache License 2.0); **zmieniony** w ramach Lex Machina. Szczegóły: `NOTICE` w katalogu skilla.
 
-> Odpowiednik `style-redakcyjny.md` + `format-checklist.md` z wzorca `commercial-legal-pl`,
+> Odpowiednik `style-redakcyjny.md` + `format-checklist.md` z wzorca `commercial-legal-pl (poza pluginem)`,
 > uogólniony (nie przypisany do jednej kancelarii). Ma pierwszeństwo nad ogólnymi
 > konwencjami pisania dokumentów, ale jest podrzędny wobec essentialia negotii
 > i wymogów ustawowych z modułu źródłowego (J0–MA, J20, J21).

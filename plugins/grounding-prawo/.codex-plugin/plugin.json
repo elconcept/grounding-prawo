@@ -1,7 +1,7 @@
 {
   "name": "grounding-prawo",
   "description": "Prawo polskie z weryfikacją źródeł: silnik LexMachina (router, DR-01…16), kontrola pism (MateMatic), skille własne do spraw karnych, medycznych i RODO.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": {
     "name": "elconcept"
   },

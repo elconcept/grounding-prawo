@@ -350,7 +350,8 @@ Zawartość: generuj dynamicznie per sprawę na podstawie:
   Wykonaj SVG-1 → SVG-2 → SVG-3 przed generowaniem pliku.
   Blokada: nie wywołuj docx/SKILL.md dopóki SVG-1–SVG-3 niezamknięte.
 
-view HOST_CAPABILITY[document_generation] → generuj .docx
+view shared/FORMAT-PISMA.md → python3 -I shared/format-pisma/render_pismo.py <pismo>.md
+  (.docx + sidecar .md, bez PDF; renderer zamiast HOST_CAPABILITY[document_generation])
 
 ⛔ HARD GATE STEP-DISCLOSURE → wykonaj ST-FINAL (REJESTR KROKÓW).
   Jeśli ≥1 krok wymagany ma status ⚠️ POMINIĘTY lub ○ OCZEKUJE →

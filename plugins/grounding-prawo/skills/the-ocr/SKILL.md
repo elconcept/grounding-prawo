@@ -51,10 +51,10 @@ w `.Codex/.env`, Google przez ADC w kontenerze HolyClaude (`CLOUDSDK_CONFIG=~/.C
 Uruchomienie w repo: `set -a; . <(tr -d '\r' < .Codex/.env); set +a; PYTHONPATH=.Codex/skills/the-ocr/src python3 -m the_ocr <plik>`
 (najlepiej na kopii w katalogu tymczasowym, a do `01_dowody/` przenieść sam sidecar `.md` - pipeline tworzy `archive/` obok wejścia).
 
-PDF z warstwą tekstu nie potrzebuje OCR: tekst wyciąga PyMuPDF (`pymupdf`), `markitdown` albo `pdftotext`.
+PDF z warstwą tekstu nie potrzebuje OCR: tekst wyciąga PyMuPDF (`pymupdf`), `markitdown (poza pluginem)` albo `pdftotext`.
 
 ## Wynik
-Obok wejścia powstają `pismo.md` (frontmatter `source_file`, `converted_at`, `ocr_backend`;
+Obok wejścia powstają `pismo.md` (frontmatter (poza pluginem) `source_file`, `converted_at`, `ocr_backend`;
 strony jako `## Page N`), `pismo.json` (bloki z bboxami), `pismo.pdf` (przeszukiwalny)
 oraz kopia wejścia w `archive/`. Obraz JPG/PNG jest po sukcesie przenoszony do `archive/`.
 
@@ -66,3 +66,10 @@ do kontraktu bloków z bboxami.
 ## Aktualizacja kopii
 Po zmianach w `D:\projects\the-ocr` skopiuj ponownie `src/the_ocr`, `pyproject.toml`
 i `uv.lock` do katalogu tego skilla.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** pliki PDF/JPG/PNG bez warstwy tekstowej; obcy dokument najpierw przez `patron-skan-dokumentu`
+- **Wynik zapisz w:** `<nazwa>.md` obok oryginału (strony `## Page N`); wpis w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `akta-przeszukiwalne-pl`, `patron-przeglad-tabelaryczny`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

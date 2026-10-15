@@ -58,7 +58,7 @@ przepis to art. 11 ust. 1 pkt 7a ustawy o PIP, NIE "art. 10 ust. 1 pkt
 7a" jak podawała poprzednia wersja — potwierdzone jednoznacznie
 oficjalnym tekstem ustawy [orka.sejm.gov.pl] i 5+ zgodnymi źródłami
 — pełny opis mechanizmu, w tym niuanse temporalne i zakaz
-retorsji: `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md` sekcja 6.2,
+retorsji: `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md (poza pluginem)` sekcja 6.2,
 NIE duplikuj tutaj), SAMODZIELNIE stwierdzić istnienie stosunku pracy —
 BEZ POŚREDNICTWA sądu. Kluczowe dla OCENY RYZYKA w tym module:
   □ ✅ ROZSTRZYGNIĘTE 2026-08-08 (FLAGA F-19 ZAMKNIĘTA): odwołanie od
@@ -66,7 +66,7 @@ BEZ POŚREDNICTWA sądu. Kluczowe dla OCENY RYZYKA w tym module:
     rozstrzygnięcia — TO ZASADA (odwrotnie niż WCZEŚNIEJSZA, BŁĘDNA
     wersja tej sekcji twierdziła) — WYJĄTEK: rygor natychmiastowej
     wykonalności, zastrzeżony dla decyzji dot. OSÓB POD SZCZEGÓLNĄ
-    OCHRONĄ — PEŁNE uzasadnienie i źródła: `dr-04/mod-ustawa-PIP-
+    OCHRONĄ — PEŁNE uzasadnienie i źródła: `dr-04/mod-ustawa-PIP- (poza pluginem)
     inspekcja-pracy.md` sekcja 6.2 (NIE duplikuj tutaj)
   □ WARUNKIEM wydania decyzji jest wcześniejsze NIEWYKONANIE polecenia
     inspektora usunięcia nieprawidłowości — czyli podmiot DOSTAJE
@@ -241,7 +241,7 @@ NIESPÓJNOŚĆ między źródłami co do aktualnych kwot, zweryfikuj na ISAP).
 > zadania są przekazywane jako odrębne, każdorazowo akceptowane „zlecenia" —
 > skonstruowane formalnie jako oferta i jej przyjęcie. Dotąd BRAK w systemie
 > odrębnego opracowania tej konstrukcji (sprawdzone `grep` po całym
-> `analizator-umow-v1` i `dr-04-prawo-pracy-zus-swiadczenia` — 0 trafień
+> `analizator-umow-v1` i `dr-04-prawo-pracy-zus-swiadczenia (poza pluginem)` — 0 trafień
 > poza ogólnym testem G.1/G.1B).
 
 ### Podstawa cywilnoprawna (weryfikuj każdorazowo w ELI — RZĄD 1)
@@ -380,17 +380,17 @@ WSPÓLNE DLA OBU STRON — PO ZAPROPONOWANIU POPRAWEK:
   o kwalifikacji decyduje SPOSÓB WYKONYWANIA, nie forma dokumentu
 ```
 
-### Powiązanie z prawem pracy (dr-04)
+### Powiązanie z prawem pracy (dr-04 (poza pluginem))
 
 ```
 Jeśli analiza dotyczy strony pracowniczej relacji (np. spór o ustalenie
 istnienia stosunku pracy, odwołanie od decyzji inspektora pracy) —
-wczytaj dodatkowo `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-prawo-pracy.md`
+wczytaj dodatkowo `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-prawo-pracy.md (poza pluginem)`
 (sekcja kwalifikacji prawnej stosunku, tabela kontrargumentów/ryzyk) oraz
-`dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md`
+`dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md (poza pluginem)`
 sekcja 6.2 (decyzja administracyjna inspektora pracy — mechanizm i tryb
 odwoławczy). Ten moduł (G.1D) pozostaje właściwy dla analizy TREŚCI SAMEJ
-UMOWY ramowej/zleceń; dr-04 — dla postępowania i skutków po stronie prawa
+UMOWY ramowej/zleceń; dr-04 (poza pluginem) — dla postępowania i skutków po stronie prawa
 pracy/ZUS.
 ```
 

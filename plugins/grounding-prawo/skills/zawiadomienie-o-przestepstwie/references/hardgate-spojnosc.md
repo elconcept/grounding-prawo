@@ -1,78 +1,61 @@
-# HARDGATE spójności (F4)
+# AUDYT-B — rozbieżności i integralność źródeł (F4)
 
-## Po co
-
-Prokurator porówna zawiadomienie z tym, co autor i inne osoby już mówiły organom. Niewyjaśniona
-sprzeczność jest gotowym powodem, żeby relacji nie dać wiary. Bramka nie ocenia prawdziwości
-relacji (K1). Pilnuje, żeby rozbieżności nie zostały przypadkowe i nienazwane, a jednocześnie
-żeby rozbieżności pozorne nie zostały „naprawione” kosztem prawdziwej relacji autora.
-
-## Zakres
-
-- Dotyczy **wersji przeznaczonej do złożenia**. Draft, notatka, wersja robocza: bramka nie blokuje,
-  w odpowiedzi dopisek „draft, bramka nieuruchomiona”.
-- **Relacje autora pisma** (zakres blokujący): protokoły przesłuchań (jako świadek, pokrzywdzony,
-  podejrzany, obwiniony), wyjaśnienia, protokoły ustnych zawiadomień, złożone pisma
-  i zawiadomienia, oświadczenia do protokołu.
-- **Relacje innych osób** (zakres informacyjny i źródło szczegółów): zeznania świadków,
-  współpokrzywdzonych, funkcjonariuszy, notatki służbowe, protokoły czynności. Zgodnie z wytycznymi
-  Policji („jak najwięcej konkretnych informacji”) to cenne źródło szczegółów do pisma, ale każda
-  taka informacja w piśmie ma wskazane źródło: kto, kiedy, w jakiej formie („Jak zeznała X
-  przed [organ] w dniu […], …”; „X powiedziała mi tego samego wieczoru, że …”).
-  Rozbieżności autora z cudzymi relacjami nie blokują pisma; autor decyduje, czy i jak je nazwać.
-- Nie porównujesz z draftami z `00_sprawy/*/drafty/` (to nie relacje złożone).
+Nazwa pliku jest zachowana dla istniejących odwołań. Od v0.4 nie jest to blokujący test
+zgodności. HARDGATE-A jest opisany w SKILL.md. Dokument instytucji nie ma automatycznego
+pierwszeństwa przed relacją; audyt pomaga świadomie pokazać różnice, nie rozstrzyga prawdy.
 
 ## Procedura
 
-1. **Rejestr relacji.** Repo abogada:
-   `python3 .Codex/skills/zawiadomienie-o-przestepstwie/scripts/rejestr_relacji.py --osoba "<nazwisko>" [--osoba <inicjały>] [--sygnatura <sygn>] [--tresc]`
-   Uruchom dla autora i dla osób, o których wiadomo, że zeznawały. Skrypt wskazuje kandydatów; ty
-   sprawdzasz, czyje to relacje. Zawsze zapytaj też użytkownika: „Czy ty albo ktoś inny składał
-   w tej sprawie (albo w sprawach powiązanych) zeznania, wyjaśnienia lub pisma, których tu nie ma?”
-2. **Lektura.** Każdą relację przeczytaj w całości (sidecar `.md`). Tekst z OCR z blokami
-   `review_required` cytuj dopiero po sprawdzeniu w skanie (`ocr_kontrakt.py cytat <stem> "…"`).
-3. **Ekstrakcja.** Wypisz twierdzenia faktyczne dotyczące epizodów z mapy, z kotwicą: plik, karta
-   lub strona, kto mówi.
-4. **Test pozornej sprzeczności** (niżej) - zanim cokolwiek nazwiesz sprzecznością.
-5. **Porównanie** z mapą wewnętrzną. Klasy (dla relacji autora):
+1. Ustal dostępne złożone relacje autora i innych osób: protokoły, zeznania, wyjaśnienia,
+   pisma i notatki. Nie traktuj draftu jako wcześniejszego złożonego oświadczenia.
+   W repo abogada można użyć `scripts/rejestr_relacji.py --osoba "<nazwisko>" --tresc`
+   (ścieżka względem folderu skilla). Skrypt daje kandydatów, nie ustala autorstwa.
+   Zapytaj o brakujące wcześniejsze relacje; brak akt oznacz jako ograniczenie zakresu,
+   nie przeszkodę do złożenia.
+2. Czytaj dostępne relacje w kontekście pytania i całego opisu epizodu. Zapisz autora,
+   datę, plik, stronę/kartę i brzmienie. Niepewny OCR sprawdź w skanie przed cytowaniem;
+   jeśli skan niedostępny, nie przypisuj autorowi pewnego cytatu.
+3. Porównaj z mapą: te same zdarzenia, zakres czasu, sens słów i perspektywa? Pominięcie
+   szczegółu nie jest jego zaprzeczeniem. Nie przesądzaj na podstawie samych etykiet
+   „partner”, „obcy”, „pobicie” czy „kradzież”. Definicje prawne sprawdzaj osobno.
+4. Pokaż różnicę rzeczowo. Zapytaj otwarcie: „Jak rozumiesz różnicę między tym zapisem
+   a tym, co pamiętasz teraz?”. Nie podsuwaj stresu, traumy lub błędu protokolanta jako
+   wyjaśnienia. Zapisz odpowiedź, odmowę wyjaśnienia lub brak pamięci.
+5. Zachowaj aktualną relację z jej źródłem i pewnością. Przy materialnej różnicy zaproponuj
+   nazwanie jej w piśmie bez rozstrzygania: „W protokole zapisano X. Dziś pamiętam Y.
+   Nie potrafię wyjaśnić tej różnicy” — ostatnie zdanie tylko jeśli autor tak odpowiedział.
+   Autor może podtrzymać aktualną relację bez wyjaśnienia; nie blokuj złożenia.
 
-| Klasa | Kiedy | Co robisz |
-|---|---|---|
-| zgodne | to samo | nic |
-| uzupełnienie | nowy szczegół, który nie przeczy wcześniejszemu (przypomniał się, zauważony później, nikt o to nie pytał) | dozwolone; w piśmie można to powiedzieć naturalnie, jeśli ma znaczenie („Dopiero później przypomniałem sobie, że…”) |
-| rozbieżność pozorna | różne słowa, ten sam stan rzeczy; słowo potoczne vs pojęcie prawne; odpowiedź na inaczej postawione pytanie | nie jest sprzecznością; nie blokuje; nie „poprawiasz” autora. Jeśli prokurator może to źle odczytać, pismo może jednym zdaniem wyjaśnić znaczenie słowa |
-| rozbieżność drobna | godzina, kolejność, liczba osób, szczegół drugoplanowy | pokaż autorowi, ustal wersję; w piśmie zaznacz, jeśli rozbieżność jest widoczna w aktach |
-| sprzeczność | wcześniej X, teraz nie-X w istotnym punkcie, po teście pozornej sprzeczności | ⛔ blokada wersji do złożenia, dopóki autor nie rozstrzygnie |
+## Statusy i decyzje
 
-6. **Rozstrzygnięcie sprzeczności** należy do autora:
-   - (a) koryguje nową relację, albo
-   - (b) podtrzymuje nową wersję. Wtedy pismo wprost wskazuje: „W protokole z dnia … zapisano, że …
-     To nie oddaje tego, co się stało / pomyliłem się, ponieważ …” (stres, ból, pytanie nie padło,
-     protokół zapisał skrót, nie czytałem protokołu przed podpisem, przypomniałem sobie później).
-   Nie podsuwasz wyjaśnienia. Pytasz autora, skąd jego zdaniem różnica.
-7. **Raport bramki** w odpowiedzi i jako dopisek przebiegu w `drafty/<pismo>/_HARDGATE.md`:
+| Status | Znaczenie / działanie |
+|---|---|
+| ZGODNE | Nie wymaga osobnego komentarza w piśmie. |
+| NOWY SZCZEGÓŁ | Nowe wspomnienie lub pominięty wcześniej wątek; dopytaj, nie traktuj jako automatycznej sprzeczności. |
+| INNA PERSPEKTYWA | Inny obserwator, zakres pytania albo znaczenie słowa; zachowaj pochodzenie obu opisów. |
+| RÓŻNICA DO WYJAŚNIENIA | Także istotne X / nie-X: pytanie do autora, bez obowiązku rozstrzygnięcia przed złożeniem. |
+| UŻYTKOWNIK NIE PAMIĘTA | Nie wypełniaj luki; zakresy i niepewność pozostają jawne. |
+| BŁĄD PROTOKOŁU WG UŻYTKOWNIKA | To stanowisko autora, nie ustalenie modelu; zachowaj jego opis błędu. |
 
+Nierozstrzygnięta różnica, brak dokumentu i fragmentaryczna pamięć nie blokują pisma.
+Zatrzymaj tylko przedstawianie świadomego fałszu jako faktu lub nierozwiązany dopisek modelu;
+usuń taki dopisek i kontynuuj pozostałą część. Nie utożsamiaj rozbieżności ze świadomym fałszem.
+
+## Raport poza pismem
+
+W repo dopisz do `_HARDGATE.md`, poza nim podaj krótko przy wyniku:
+
+```text
+AUDYT-B: wykonany / częściowy (brak materiału) / brak znanych wcześniejszych relacji
+Zakres: autor, data, organ, sygnatura, plik i karta/strona; ograniczenia dostępu/OCR
+| # epizodu | Wcześniej (źródło) | Teraz (źródło) | Status | Odpowiedź / brak pamięci | Decyzja autora |
 ```
-HARDGATE: [PRZESZŁA | ZABLOKOWANA]
-Relacje autora porównane: <data, organ, sygnatura, karta, plik>
-Relacje innych osób użyte / porównane: <osoba, data, organ, plik>
-| # | Punkt | Wcześniej (kto, plik, k.) | Teraz | Klasa | Uzasadnienie klasy | Decyzja autora |
-```
 
-## Test pozornej sprzeczności
+## Pozorne sprzeczności
 
-Zanim uznasz coś za sprzeczność, odpowiedz na cztery pytania:
-1. **Czy to te same pojęcia?** Słowo potoczne („partner”, „mieszkamy razem”, „pobił”, „ukradł”)
-   i pojęcie prawne („osoba najbliższa”, „wspólne pożycie”, „pobicie” z art. 158, „kradzież”)
-   to różne porządki. Odpowiedź w jednym nie przesądza drugiego.
-2. **Na jakie pytanie odpowiadała osoba?** Pytanie sądu o „stosunek do strony” dotyczy relacji
-   prawnej (pokrewieństwo, małżeństwo, wspólne pożycie), nie emocjonalnej ani towarzyskiej.
-3. **Czy obie wypowiedzi mogą być jednocześnie prawdziwe?** Jeśli tak - to nie sprzeczność.
-4. **Czy znam definicję prawną z bazy, a nie z pamięci?** Jeśli nie, nie rozstrzygaj; oznacz
-   do weryfikacji i nie blokuj.
-
-**Ton:** nigdy nie pouczasz i nie strofujesz autora („to niespójne”, „pani wcześniej zeznała coś
-innego”, „to podważy wiarygodność”). Rozbieżność pokazujesz rzeczowo jako pytanie.
+Sprawdź znaczenie słów, pytanie, czas i możliwość współistnienia obu wypowiedzi.
+Nie zakładaj automatycznie ani sprzeczności, ani jej pozorności bez kontekstu.
+Jeśli potrzebna definicja prawna jest niezweryfikowana, zostaw ocenę otwartą.
 
 ### Wzorzec błędu (przypadek z repo, opis autora 09.10.2026)
 
@@ -102,13 +85,14 @@ Klasa poprawna: **rozbieżność pozorna**. Co wolno: jedno zdanie w piśmie, je
 („Mówię o T.K. «partner», bo tak się potocznie mówi; nie prowadziliśmy wspólnego gospodarstwa
 ani budżetu”). Czego nie wolno: blokować, „korygować” relacji, sugerować nieprawdy.
 
-## Sprzeczność z dokumentami instytucji (poza bramką)
+## Różnice z dokumentami instytucji
 
 Notatki policyjne, protokoły czynności, dokumentacja medyczna, pisma urzędów mogą opisywać
 zdarzenie inaczej niż autor. To nie blokuje pisma i nie jest „prawdą” zastępującą relację (K1).
 W piśmie: nazwij dokument i rozbieżność, przedstaw wersję autora („W notatce z interwencji
 napisano, że …; tak nie było. …”). Jeśli autor uważa, że dokument jest nieprawdziwy, to osobny
-epizod do lejka krzywd (art. 271 § 1 k.k. - poświadczenie nieprawdy przez funkcjonariusza).
+wątek do dopytania o powstanie, autora i treść dokumentu; sama różnica nie przesądza
+poświadczenia nieprawdy ani świadomości funkcjonariusza. Kwalifikację sprawdź osobno.
 
 ## Przypadki szczególne
 
@@ -116,8 +100,6 @@ epizod do lejka krzywd (art. 271 § 1 k.k. - poświadczenie nieprawdy przez funk
   zarówno zeznanie, jak i oświadczenie o wycofaniu. Porównuj z uwzględnieniem wycofania. Autor
   decyduje, czy i jak pismo o tym mówi.
 - **Odmowa zeznań, odstąpienie od przesłuchania:** brak relacji nie jest sprzecznością.
-- **Relacja z innej sprawy o tym samym zdarzeniu:** obejmij bramką (prokurator może ją pozyskać).
+- **Relacja z innej sprawy o tym samym zdarzeniu:** obejmij audytem (prokurator może ją pozyskać).
 - **Autor nie pamięta, co zeznał, a protokołu nie ma w repo:** zapisz to w raporcie jako lukę;
   zaproponuj wniosek o wgląd w akta jako krok poza pismem.
-
-## TODO v0.3

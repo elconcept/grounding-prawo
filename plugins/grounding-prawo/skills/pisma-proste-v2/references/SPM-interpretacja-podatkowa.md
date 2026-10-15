@@ -11,7 +11,7 @@ faktycznym LUB zdarzeniu przyszłym).*
 
 - **art. 14b-14p Ordynacji podatkowej** — przepis centralny
 - Pełna mapa systemu interpretacji (indywidualna/ogólna/objaśnienia/
-  opinia zabezpieczająca/WIS/WIA) → `dr-06/modules/mod-interpretacje-
+  opinia zabezpieczająca/WIS/WIA) → `dr-06/modules/mod-interpretacje- (poza pluginem)
   definicje-podatkowe.md` sekcja 1 (NIE duplikowana tutaj)
 
 ## KTO MOŻE ZŁOŻYĆ

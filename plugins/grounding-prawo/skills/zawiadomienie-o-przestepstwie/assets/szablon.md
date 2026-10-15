@@ -1,15 +1,17 @@
 <!--
-Szablon zawiadomienia (v0.2). Kolejność i podtytuły są elastyczne: przy jednym krótkim zdarzeniu
+Szablon zawiadomienia (v0.4). Kolejność i podtytuły są elastyczne: przy jednym krótkim zdarzeniu
 wystarczy ciągła narracja bez podtytułów. Sekcje bez treści usuń. Komentarze usuń przed oddaniem.
-Obowiązkowe zawsze: nagłówek, otwarcie, wniosek o ściganie, treść, lista przepisów, data i podpis.
+Nagłówek, otwarcie, treść, data i podpis; wniosek o ściganie stosownie do uprawnienia.
+Listę przepisów umieść tylko po weryfikacji; jej brak nie blokuje pisma.
+Dopasuj rolę autora: pokrzywdzony, przedstawiciel lub osoba zawiadamiająca o cudzej krzywdzie.
 -->
 
 [miejscowość], [data: 9 października 2026 r.]
 
 [Imię i nazwisko]
-[adres]
+[bezpieczny adres do korespondencji — forma podania zgodna z aktualnym prawem]
 tel. [numer], e-mail: [adres]
-[Wyrażam zgodę / Nie wyrażam zgody na doręczenia na adres do doręczeń elektronicznych: AE:PL-…]
+[Oświadczenia i dane do doręczeń wymagane przez przepisy obowiązujące w dniu pisma]
 
 [Pełna nazwa organu]
 [adres - zweryfikowany wyszukiwaniem]
@@ -37,24 +39,28 @@ Wnoszę o ściganie [imię i nazwisko / sprawcy (sprawców)] wszystkich opisanyc
 **Co z tego wnoszę i co podejrzewam**
 <!-- Wnioski i hipotezy autora nazwane wprost: „Uważam, że …, bo …”. „Podejrzewam, że …”. -->
 
+**Tropy dla organu**
+
 **Kto może coś wiedzieć**
 <!-- Świadkowie: dane albo opis; osoby, którym autor mówił o zdarzeniu (kiedy). -->
 
 **Gdzie mogą być ślady**
-<!-- Kamery, nagrania, wiadomości, dokumentacja medyczna, miejsca. Informacja, nie wniosek dowodowy. -->
+<!-- Kamery, nagrania, wiadomości, dokumentacja medyczna, miejsca. Osobna warstwa; może być pusta.
+     Przy ryzyku utraty opcjonalna krótka prośba o zabezpieczenie, bez warunkowania relacji śladem. -->
 
 **Rozbieżności**
 <!-- Z dokumentami instytucji: „W notatce z … napisano, że …; tak nie było: …”.
-     Z moimi wcześniejszymi zeznaniami (po HARDGATE): „W protokole z … zapisano …; …”.
+     Z moimi wcześniejszymi zeznaniami (AUDYT-B, bez blokady przy niewyjaśnionej różnicy): „W protokole z … zapisano …; …”.
      Rozbieżność pozorna (słowo potoczne vs pojęcie prawne) - najwyżej jedno zdanie wyjaśnienia, jeśli autor chce. -->
 
 **Przepisy**
 
 Uważam, że opisane zachowania są przestępstwami określonymi w tych przepisach Kodeksu karnego
-(t.j. Dz.U. 2025 poz. 383 ze zm.):
+[publikator i wersja zweryfikowane dla sprawy]:
 - art. [nr] - [prosty opis, którego zachowania dotyczy, np. „groźba, że mnie zabije”];
 - art. [nr] - […].
-<!-- Tylko przepisy z references/mapa-krzywd.md albo zweryfikowane w bazie. Bez „w zw. z”. -->
+<!-- Tylko przepisy zweryfikowane w źródle urzędowym na właściwą datę, również te z katalogu.
+     Warianty/kumulacja tylko z podstawą w faktach. Bez weryfikacji usuń tę sekcję, nie narrację. -->
 
 Chcę brać udział w postępowaniu jako osoba pokrzywdzona.
 
@@ -62,3 +68,5 @@ Chcę brać udział w postępowaniu jako osoba pokrzywdzona.
 
 Załączniki:
 <!-- opcjonalnie -->
+
+<!-- Raporty HARDGATE-A / AUDYT-B, luki redakcyjne i informacje praktyczne są poza pismem. -->

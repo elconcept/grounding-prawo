@@ -1,7 +1,7 @@
 # Raport pokrycia — Ordynacja podatkowa (Op)
 
 **Data analizy:** 2026-08-13
-**Zakres skilla:** `dr-06-podatki-finanse-publiczne-aml`
+**Zakres skilla:** `dr-06-podatki-finanse-publiczne-aml (poza pluginem)`
 **Stan prawny bazowy w modułach:** Dz.U. 2026 poz. 622 t.j. (publ. 11.05.2026)
 **Metodologia:** inwentaryzacja treści rzeczywiście obecnej w module głównym `mod-OP-ordynacja-podatkowa.md` (554 linie) oraz w module powiązanym `mod-interpretacje-definicje-podatkowe.md`. Struktura oficjalna aktu we współczesnym brzmieniu: 9 działów podstawowych znacznie rozbudowanych o działy pochodne (IIa–IIc, IIIa–IIIb, VIIa, VIIIa), łącznie ok. 18 jednostek działowych — stąd zbieżność z wewnętrzną notatką w mapie centralnej ("mapa pokrycia 🟢 4→9/18"). Każdy przepis wymaga weryfikacji ISAP przed użyciem w piśmie (HARD GATE), niezależnie od statusu w tym raporcie.
 

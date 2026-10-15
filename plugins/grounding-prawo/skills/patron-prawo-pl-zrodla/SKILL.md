@@ -5,8 +5,10 @@ description: Research prawa polskiego i unijnego przez konektory MCP (SAOS, NSA/
 
 # Źródła prawa PL i UE
 
-Wymaga serwerów MCP z `~/docker/patron-Codex/.mcp.json`. Narzędzia mają w Codex
-nazwy `mcp__<serwer>__<narzędzie>`, np. `mcp__saos__search_by_case`.
+Konektory działają przez portal MCP (`lex.xlap.pl/mcp`, plik `.mcp.json` pluginu). Narzędzia mają w hoście
+nazwy z prefiksem portalu (np. `isap_get_act_text`, `nsa_search`); poniżej podano samą nazwę narzędzia.
+Składnia zapytań, drabinka do tekstu jednolitego, pokrycie czasowe i standardy cytowania: `references/iura-metodyka.md`
+oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prowadnik-grounding-prawo`.
 
 ## Który konektor do czego
 
@@ -76,3 +78,10 @@ nazwy `mcp__<serwer>__<narzędzie>`, np. `mcp__saos__search_by_case`.
 ---
 Źródło: Patron (MateMatic Solutions, AGPL-3.0) - `backend/src/lib/chat/prompts.ts`
 (COURTS_PL, SAOS_DISCIPLINE_PL, DRAFTING_PL), `docs/BAZA_WIEDZY.md`. Konektory MCP: MIT.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** każde pytanie o przepis, orzeczenie, KRS, prawo UE, interpretację
+- **Wynik zapisz w:** odpowiedź ze źródłem; do sprawy: dopisek do `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `orzeczenia-sadowe-v2`, `analizator-przepisow-v2`, `webwright-legal-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

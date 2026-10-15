@@ -1,9 +1,7 @@
 ---
 name: szturm-na-draft-pl
-description: 'Szturm na draft pisma lub ekspertyzy - jedno wywołanie zamiast ręcznego przepuszczania dokumentu przez kilkanaście skilli. Warstwa obiektywna (cytaty, sygnatury, przepisy t.j.), spójność pismo ↔ załączniki ↔ akta, niezależne soczewki ataku (sędzia na zimno, przeciwnik, MOD-ATAK-NA-DRAFT, biegły), styl i format .docx, potem deterministyczna synteza z deduplikacją i bramkami, redline Worda (zmiany śledzone z komentarzem przy każdej) i jednocześnie kopia .docx z zastosowanymi zmianami (bez PDF), ponowna kontrola i dopisek tury do rejestru stałego sprawy (_SUBSUMPCJA_*). Chroni fakty potwierdzone i decyzje autora - nie rozmywa tezy alternatywami. Używaj gdy: "szturm na draft", "przepuść pismo przez wszystkie skille", "przejrzyj i nanieś poprawki", "zrób redline po przeglądzie", "kolejna runda przeglądu", "sprawdź pismo i ekspertyzę przed złożeniem", "TK/v następna wersja", "zamknij kotwice z poprzedniego przebiegu", gdy użytkownik podaje draft .docx z aktami i chce poprawionej
-  wersji, a nie samego raportu.
-
-  '
+description: 'Szturm na draft pisma lub ekspertyzy - jedno wywołanie zamiast ręcznego przepuszczania dokumentu przez kilkanaście skilli: cytaty, sygnatury, przepisy t.j., spójność pismo ↔ załączniki ↔ akta, niezależne soczewki (sędzia na zimno, przeciwnik, MOD-ATAK-NA-DRAFT, biegły), styl i format .docx, deterministyczna synteza z bramkami, redline Worda z komentarzami i kopia .docx, dopisek tury do rejestru sprawy. Chroni fakty potwierdzone i decyzje autora. Dla zawiadomienia o przestępstwie tryb ZOP-R zamiast ataku: wywiad rozszerzający o pełną relację i rozmiar krzywdy, pominiętych sprawców, naruszenia praw pokrzywdzonego przez Policję i prokuraturę, dodatkowe czyny; potem rozbudowa pisma. Używaj gdy: "szturm na draft", "przepuść pismo przez wszystkie skille", "przejrzyj i nanieś poprawki", "zrób redline po przeglądzie", "kolejna runda przeglądu", "sprawdź pismo przed złożeniem", "zrób szturm zawiadomienia", "przejrzyj zawiadomienie", gdy użytkownik chce poprawionej wersji, a nie samego
+  raportu.'
 license: MIT
 allowed-tools:
 - Bash
@@ -13,7 +11,7 @@ allowed-tools:
 - Agent
 metadata:
   author: GROUNDING-PRAWO / abogada
-  version: 1.2.0
+  version: 1.3.0
   plan: dokumentacja/06-PLAN-SKILL-SZTURM-NA-DRAFT.md
   companion_skills: redline-docx-pl, ocena-outputu-pl, citation-grounding-pl, patron-weryfikacja-cytatow, ekstraktor-cytatow-pl, mcp-saos, patron-identyfikatory-pl, deliverable-fidelity-pl, analizator-dowodow-v3, pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl, adversarial-legal-review-pl, subsumpcja-pl, zarzuty-do-opinii-bieglego, marko-pl-content, pisz-po-polsku
   data-residency: local
@@ -22,6 +20,26 @@ metadata:
 ---
 
 # Szturm na draft
+
+## WYJĄTEK: ZAWIADOMIENIE — recenzja rozszerzająca zamiast ataku
+
+Gdy recenzujesz zawiadomienie pokrzywdzonego lub jego uzupełnienie, wybierz tryb ZOP-R
+przed profilem MAX i E0. Samo zlecenie szturmu/recenzji zawiadomienia jest zleceniem tego trybu;
+nie pytaj dodatkowo o zgodę na pytania rozszerzające. Przy samym pisaniu/eksporcie nie uruchamiaj
+recenzji automatycznie. Dla innych pism pozostaje zwykły przebieg opisany dalej.
+
+Czytaj [references/recenzja-zawiadomienia.md](references/recenzja-zawiadomienia.md) oraz
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`. Celem jest jak najpełniejsza, konkretna
+relacja: nowe szczegóły, krzywdy, skutki, inne osoby, działania i zaniechania Policji,
+prokuratury i funkcjonariuszy oraz możliwe dodatkowe kwalifikacje. Nie wystarcza brak
+skreśleń ani raport „OK”. Pytaj, rozwijaj, wracaj po odpowiedziach i włączaj je do pisma.
+Hipotezy recenzenta pozostają pytaniami do czasu uzyskania relacji i sprawdzenia prawa.
+
+W tym trybie mandaty z `references/soczewki.md`, izolacja „sam draft”, profil MAX, limit
+E8 i format ustaleń/syntezy są zastąpione regułami ZOP-R. Każda rola otrzymuje pierwotną
+relację, odpowiedzi, mapę krzywd oraz jawny mandat rozszerzający; izoluj jedynie cudze wnioski.
+Nie stosuj „wygraj przeciwko tekstowi”, redukcji do najmocniejszej tezy, diagnozy wiarygodności,
+ciężaru dowodu pokrzywdzonego ani rozmiękczania opisu. HARDGATE-ZOP obowiązuje zawsze.
 
 Skille z różnych pluginów atakują pismo z różnych stron, więc znajdują różne błędy. Puszczane
 ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
@@ -35,7 +53,7 @@ ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
 
 ## Wynik
 
-Zapis według `shared/MOD-PLIKI-INKREMENTALNE.md`: nowym plikiem poza `_robocze/` jest tylko wersja wynikowa,
+Zapis według `shared/ARTEFAKTY-SPRAWY.md`: nowym plikiem poza `_robocze/` jest tylko wersja wynikowa,
 reszta to dopiski do plików inkrementalnych.
 
 1. `<nowa_wersja>_REDLINE.docx` (w `RUN/`, czyli `_robocze/`; autor otwiera go stamtąd, by odrzucić zmianę)
@@ -107,7 +125,7 @@ E0 intake ─► E1 obiektywna ─► E2 spójność ─► E3 atak ─► E4 st
 
 `<skille>` = katalog skilli (w repo `.Codex/skills`, w pluginie `skills/`). `SZ` = `<skille>/szturm-na-draft-pl/scripts`.
 Katalog roboczy przebiegu: `00_sprawy/<sprawa>/_robocze/<rrrrMMdd>_<pismo>__szturm/` (dalej `RUN`) - workspace
-jednorazowy, nie katalog raportów (`shared/MOD-PLIKI-INKREMENTALNE.md`). Katalog wyniku (`<katalog_wyniku>`):
+jednorazowy, nie katalog raportów (`shared/ARTEFAKTY-SPRAWY.md`). Katalog wyniku (`<katalog_wyniku>`):
 `00_sprawy/<sprawa>/drafty/<pismo>/`. Nie twórz `analiza/PRZEBIEG_*`.
 
 ### E0 - intake
@@ -270,6 +288,8 @@ Bez tabel per skill i bez streszczeń raportów soczewek - one są w `RUN/ustale
 | `scripts/extract_all_pages.sh` | E0: `adeu extract --page all` (+ `--clean-view`, numery linii) |
 | `scripts/metryki_stylu.py` | E4: #30 długość i rozrzut zdań, tasiemce, #34 klamry, pauzy, podkreślenia |
 | `scripts/fix_format.py` | E4/E7: tekst w stylu nagłówka, podkreślenia, puste nagłówki (python-docx przez `uv run`) |
+| `references/recenzja-zawiadomienia.md` | tryb ZOP-R, zawsze przy recenzji zawiadomienia |
+| `references/schemat-rozszerzenia.json` | pytania i nowe gałęzie ZOP-R, osobno od edycji |
 | `scripts/synteza.py` | E5/E6: schemat, deduplikacja, bramki i zakazy, edits dla adeu, raport |
 | `scripts/clean_targets.py` | E7: markdown z targetów, jednoznaczność dopasowania (używany też przez synteza.py) |
 | `scripts/weryfikuj_wynik.py` | E7/E8: struktura REDLINE i wersji czystej, placeholdery, brak PDF |
@@ -277,3 +297,11 @@ Bez tabel per skill i bez streszczeń raportów soczewek - one są w `RUN/ustale
 | `references/schemat-ustalenia.json` | format ustalenia soczewki |
 | `references/rejestr-staly.md` | szablony dopisków E9 do `_SUBSUMPCJA_*.md` |
 | `tests/smoke_test.sh` | test dymny na syntetycznym piśmie (`bash tests/smoke_test.sh`) - uruchom po każdej zmianie skryptów |
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** draft `.docx` z aktami; wariant domyślny pełnej kontroli (zastępuje ręczne przepuszczanie przez soczewki)
+- **Wynik zapisz w:** `drafty/<pismo>/<nowa_wersja>.docx`; REDLINE w `_robocze/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `deliverable-fidelity-pl`, `pisz-po-polsku`, `redline-docx-pl`
+- **Nie dubluj:** pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

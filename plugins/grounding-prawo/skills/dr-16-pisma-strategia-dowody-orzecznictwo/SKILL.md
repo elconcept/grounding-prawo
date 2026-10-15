@@ -233,3 +233,11 @@ Wybierz wariant odpowiedni do trybu:
 
 Disclaimer musi być **ostatnim elementem** każdej odpowiedzi zawierającej analizę prawną,
 ocenę szans, kwalifikację prawną lub interpretację przepisu.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`
+- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `analizator-przepisow-v2`, `orzeczenia-sadowe-v2`, `pisma-procesowe-v3`
+- **Nie dubluj:** domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

@@ -260,8 +260,8 @@ view dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka/MAPA-POKRYCIA.md
 - Cyberprzestępstwa transgraniczne (dyrektywa NIS2, Budapest) → `dr-11`
 - AI Act, DSA, DMA — regulacje sektorowe UE wymagają analizy merytorycznej → `dr-11` (mod-AI-Act-framework, mod-DSA-digital-services-act, mod-DMA-digital-markets-act); ten skill dostarcza podstawę praw podstawowych (KPP art. 47, EKPC) gdy decyzja krajowa na bazie tych regulacji jest zaskarżana
 - Prawo karne UE (ENA, dyrektywy ofiarowe, Eurojust) → `dr-03`
-- Prawo pracy UE (swoboda przepływu, dyrektywy pracownicze) → `dr-04`
-- Zamówienia publiczne UE (dyrektywy 2014/24, 2014/25) → `dr-07`
+- Prawo pracy UE (swoboda przepływu, dyrektywy pracownicze) → `dr-04 (poza pluginem)`
+- Zamówienia publiczne UE (dyrektywy 2014/24, 2014/25) → `dr-07 (poza pluginem)`
 - Obrona narodowa / NATO → `dr-13` → `mod-ustawa-obrona-ojczyzny-mobilizacja`
 - Weryfikacja orzecznictwa TSUE/ETPC → `orzeczenia-sadowe-v2`
 - Wychodzi do: `pisma-procesowe-v3` / `analiza-sadowa-v6` / `orzeczenia-sadowe-v2`
@@ -281,3 +281,11 @@ Wybierz wariant odpowiedni do trybu:
 
 Disclaimer musi być **ostatnim elementem** każdej odpowiedzi zawierającej analizę prawną,
 ocenę szans, kwalifikację prawną lub interpretację przepisu.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`
+- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `analizator-przepisow-v2`, `orzeczenia-sadowe-v2`, `pisma-procesowe-v3`
+- **Nie dubluj:** domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

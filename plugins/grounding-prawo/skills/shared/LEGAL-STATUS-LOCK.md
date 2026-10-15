@@ -1,3 +1,12 @@
+## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu LEGAL-STATUS-LOCK
+
+Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
+obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
+Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
+nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
+Sprawdzaj wyłącznie rzeczywiście potrzebny status prawny aktu. Nie przenoś wyniku LSL na ocenę doświadczeń autora; nie zastępuj relacji dokumentem. Nieustalony status aktu nie blokuje opisania krzywdy.
+Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
+
 # LEGAL-STATUS-LOCK (LSL) — Weryfikacja Statusu Prawnego Aktów
 
 **Plik kanoniczny:** `shared/LEGAL-STATUS-LOCK.md`

@@ -9,17 +9,18 @@
 ```
 [Miejscowość], dnia [DD miesiąc RRRR] r.
 
-[Imię i nazwisko / Nazwa firmy Wnioskodawcy]
-[Adres]
-[PESEL: XXXXXXXXXXX / NIP: XXX-XXX-XX-XX]
+[Imię i nazwisko / Nazwa firmy Wnioskodawcy]          ← 14 pt
+[ulica/osiedle nr, kod pocztowy miasto]                ← jedna linia
+[tel. …, e-mail: …]                                    ← znane z akt albo od użytkownika; nie zgaduj
 
-                        [Nazwa Sądu / Organu]
-                        [Wydział (jeśli znany)]
-                        [Adres sądu]
+                        [Nazwa Sądu / Organu]          ← 14 pt, do prawej
+                        [Wydział (jeśli znany)]        ← 12 pt, do prawej
+                        [ulica nr, kod pocztowy miasto] ← jedna linia, do prawej
 
-Sygn. akt: [sygnatura] / (dla nowego postępowania: —)
+Sygn. akt:      [sygnatura] / (dla nowego postępowania: —)
+[Rola strony]:  [imię i nazwisko]
 
-            [TYTUŁ PISMA WERSALIKAMI]
+            [T Y T U Ł  P I S M A]                     ← rozstrzelone wersaliki, bez pogrubienia
             np. SPRZECIW OD NAKAZU ZAPŁATY
             lub WNIOSEK O NADANIE KLAUZULI WYKONALNOŚCI
 
@@ -42,12 +43,14 @@ Załączniki:
 - Dane **wnioskodawcy** — lewy górny róg.
 - Dane **sądu/organu** — prawy górny róg lub wyśrodkowane (zależy od zwyczaju sądu).
 - Sygnatura akt pod nagłówkiem, wyśrodkowana lub po lewej.
-- Tytuł pisma — **WERSALIKAMI**, wyśrodkowany, pogrubiony.
+- Tytuł pisma — rozstrzelonymi wersalikami, wyśrodkowany, bez pogrubienia.
+- Krój, rozmiary, telefon i e-mail nadawcy, użycie pogrubienia i podkreślenia: `shared/FORMAT-PISMA.md`
+  (ma pierwszeństwo przed tym plikiem). PESEL tylko gdy wymaga go przepis albo wzór urzędowy.
 
 ### Treść
 - Akapity oddzielone pojedynczą linią.
 - Żądanie procesowe w pierwszym akapicie: „Wnoszę o…" / „Powód wnosi o…"
-- Uzasadnienie po żądaniu — oddzielone nagłówkiem **UZASADNIENIE**.
+- Uzasadnienie po żądaniu — oddzielone nagłówkiem UZASADNIENIE (wyśrodkowane wersaliki, bez pogrubienia).
 - Podstawy prawne na końcu uzasadnienia lub po każdym zarzucie.
 
 ### Żądanie

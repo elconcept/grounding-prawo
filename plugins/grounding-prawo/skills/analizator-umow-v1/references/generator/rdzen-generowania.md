@@ -5,7 +5,7 @@
 > `commercial-legal-pl` (© 2026 Kancelaria Radców Prawnych Żurawska Piotrowski i Wspólnicy,
 > Apache License 2.0); **zmieniony** w ramach Lex Machina. Szczegóły: `NOTICE` w katalogu skilla.
 
-> Ten plik jest odpowiednikiem `rdzen-ktzr.md` (wzorzec: pakiet `commercial-legal-pl`),
+> Ten plik jest odpowiednikiem `rdzen-ktzr.md` (wzorzec: pakiet `commercial-legal-pl (poza pluginem)`),
 > dostosowanym do architektury systemu użytkownika. Nie duplikuje wiedzy merytorycznej
 > zawartej w modułach J0–MA — **odsyła** do niej. Wczytaj ten plik na starcie KAŻDEGO
 > workflow z folderu `workflows/generator-*.md`, zanim zaczniesz zadawać pytania
@@ -71,7 +71,7 @@ etapu BRAMKI 5.
 
 ## R4 — PROFIL: brak `practice-profile.md` w tym systemie
 
-W przeciwieństwie do wzorca `commercial-legal-pl`, ten system nie zakłada jednej
+W przeciwieństwie do wzorca `commercial-legal-pl (poza pluginem)`, ten system nie zakłada jednej
 kancelarii z jednym plikiem profilu. Domyślne pozycje negocjacyjne i progi ryzyka
 pochodzą z `mod-shared-fallback-library.md` (warianty A/B/C/D) — stosuj je jako
 domyślne, chyba że użytkownik poda własne (np. cap odpowiedzialności, forum sporów).

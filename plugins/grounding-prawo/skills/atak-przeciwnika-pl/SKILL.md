@@ -1,6 +1,6 @@
 ---
 name: atak-przeciwnika-pl
-description: 'Jednoprzebiegowy atak przeciwnika procesowego na argumentację prawną - wciela się w doświadczonego pełnomocnika drugiej strony, któremu wręczono Twoje pismo z poleceniem "znajdź każdy sposób, żeby to pokonać". Wynik w sześciu sekcjach: rdzeń teorii ataku ("ta sprawa stoi lub pada na [założeniu]"), zrekonstruowany argument odarty z retoryki, główne linie ataku (w tym zarzuty proceduralne: ciężar dowodu, prekluzja, wymogi apelacji), perspektywa sceptycznego sędziego, ciosy chirurgiczne do repliki oraz to, co pismo przemilcza. Tani, niższy szczebel gradientu kosztu - poniżej pełnej debaty adversarial-legal-review-pl. Używaj gdy: "co powie druga strona", "zaatakuj to pismo", "słabe punkty", "atak przeciwnika", "jak to obali pełnomocnik przeciwnika", "sparing przed rozprawą", "gdzie mnie uderzą", szybki stress-test argumentacji bez pełnej debaty czterech ról.'
+description: 'Jednoprzebiegowy atak przeciwnika procesowego na argumentację prawną - wciela się w doświadczonego pełnomocnika drugiej strony, któremu wręczono Twoje pismo z poleceniem "znajdź każdy sposób, żeby to pokonać". Wynik w sześciu sekcjach: rdzeń teorii ataku ("ta sprawa stoi lub pada na [założeniu]"), zrekonstruowany argument odarty z retoryki, główne linie ataku (w tym zarzuty proceduralne: ciężar dowodu, prekluzja, wymogi apelacji), perspektywa sceptycznego sędziego, ciosy chirurgiczne do repliki oraz to, co pismo przemilcza. Tani, niższy szczebel gradientu kosztu - poniżej pełnej debaty adversarial-legal-review-pl. Używaj gdy: "co powie druga strona", "zaatakuj to pismo", "słabe punkty", "atak przeciwnika", "jak to obali pełnomocnik przeciwnika", "sparing przed rozprawą", "gdzie mnie uderzą", szybki stress-test argumentacji bez pełnej debaty czterech ról. Dla zawiadomienia o przestępstwie nie atakuje: szuka pominiętych krzywd, sprawców i naruszeń przez organy oraz dopytuje pokrzywdzonego.'
 license: Apache-2.0
 allowed-tools:
 - Read
@@ -15,6 +15,17 @@ metadata:
 ---
 
 # Atak przeciwnika PL - jednoprzebiegowy sparing procesowy
+
+## WYJĄTEK: ZAWIADOMIENIE — rola „poszukujący pominiętych krzywd”
+
+Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
+poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
+Szukaj przemocy, przymusu, zależności, prywatności, wolności, poniżenia, nacisków i odwetu, które autor opisuje, ale nie nazywa naruszeniem. Dopytaj o pozostałe osoby, działania funkcjonariuszy i skutki. Krytykuj zawężenie opisu, nie pokrzywdzonego. Sześć sekcji ataku i „ciosy chirurgiczne” zastępują pytania, mapa rozszerzeń i rozbudowana relacja.
+Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
+rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
+Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
+Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
 
 ## Filozofia
 
@@ -59,7 +70,7 @@ To jest JEDNOPRZEBIEGOWY, tani atak - niższy szczebel gradientu kosztu.
 | 2 | **atak-przeciwnika-pl (ten skill)** | niski, jeden przebieg | sparing pisma, przygotowanie do rozprawy, wstępny filtr |
 | 3 | adversarial-legal-review-pl | wysoki, cztery role | deliverable wysokiej stawki przed wysłaniem do klienta lub sądu |
 
-O wyborze szczebla decyduje `legal-request-router-pl`. Praktyczna reguła: jeśli po ataku
+O wyborze szczebla decyduje `legal-request-router-pl (poza pluginem)`. Praktyczna reguła: jeśli po ataku
 jednoprzebiegowym padły dwa lub więcej filarów tezy, a stawka jest wysoka - eskaluj do
 pełnej debaty. Jeden przebieg nie zastąpi syntezy i kontroli końcowej verifiera.
 
@@ -216,3 +227,10 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** draft po pierwszym wrażeniu sędziego
+- **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `szturm-na-draft-pl`, `adversarial-legal-review-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

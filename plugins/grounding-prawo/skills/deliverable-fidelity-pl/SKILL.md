@@ -1,8 +1,6 @@
 ---
 name: deliverable-fidelity-pl
-description: 'Weryfikator wiernosci deliverable - sprawdza, czy finalny dokument (opinia, memo, pismo) wiernie oddaje ustalenia analizy: czy zadna flaga RED nie wypadla z podsumowania, czy rozstrzygniecia sa odzwierciedlone. Mechaniczny check (skrypt, za darmo) + osad LLM na 3 najciezszych ustaleniach. Inny niz grounding (czy cytat prawdziwy) i adversarial (czy teza wytrzymuje) - ten pyta "czy streszczenie nie zgubilo tego, co wazne". Pominiete RED = blokada. Uzywaj gdy: "czy deliverable oddaje analize", "czy nic nie wypadlo z podsumowania", "weryfikacja wiernosci", "fidelity", "czy executive summary jest pelne", "czy RED jest w finalnej wersji", "spojnosc analizy z deliverable", przed wyslaniem zlozonego dokumentu ktory streszcza dluzsza analize.
-
-  '
+description: 'Weryfikator wiernosci deliverable - sprawdza, czy finalny dokument (opinia, memo, pismo) wiernie oddaje ustalenia analizy: czy zadna flaga RED nie wypadla z podsumowania, czy rozstrzygniecia sa odzwierciedlone. Mechaniczny check (skrypt, za darmo) + osad LLM na 3 najciezszych ustaleniach. Inny niz grounding (czy cytat prawdziwy) i adversarial (czy teza wytrzymuje) - ten pyta "czy streszczenie nie zgubilo tego, co wazne". Pominiete RED = blokada. Uzywaj gdy: "czy deliverable oddaje analize", "czy nic nie wypadlo z podsumowania", "weryfikacja wiernosci", "fidelity", "czy executive summary jest pelne", "czy RED jest w finalnej wersji", "spojnosc analizy z deliverable", przed wyslaniem zlozonego dokumentu ktory streszcza dluzsza analize. Dla zawiadomienia o przestępstwie sprawdza pokrycie całej relacji pokrzywdzonego: epizody, osoby, rozmiar krzywdy, pewność i źródło wiedzy.'
 license: Apache-2.0
 allowed-tools:
 - Bash
@@ -18,6 +16,17 @@ metadata:
 ---
 
 # Deliverable Fidelity PL - weryfikator wiernosci dokumentu
+
+## WYJĄTEK: ZAWIADOMIENIE — rola „pełne pokrycie krzywdy”
+
+Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
+poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
+Porównaj wynik z pierwotną relacją i każdą odpowiedzią: epizody, osoby, konkretne działania, skutki, pewność i źródło wiedzy. Nie ograniczaj kontroli do RED/findings, słów kluczowych lub draftu. Odzyskaj pominięcia i wskaż pytania o brakujący kontekst. Pusta lista RED nie oznacza kompletnej relacji.
+Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
+rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
+Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
+Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
 
 ## Filozofia
 
@@ -133,7 +142,7 @@ Werdykt: FAIL - NIE wysylaj. Dodaj F3 do podsumowania, wzmocnij F2 do faktycznej
 ## Integracja z AI Act
 
 Weryfikacja wiernosci to dowod, ze nadzor czlowieka (art. 14) dostaje pelen obraz - deliverable nie ukrywa
-przed decydentem ustalen, ktore analiza wykryla. Raport wiernosci wkladaj do `legal-ai-audit-bundle`.
+przed decydentem ustalen, ktore analiza wykryla. Raport wiernosci wkladaj do `legal-ai-audit-bundle (poza pluginem)`.
 
 ## Atrybucja
 
@@ -176,3 +185,10 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** ostateczna wersja pisma i `analiza/_podsumowanie.md`
+- **Wynik zapisz w:** wynik kontroli w `_PRZEBIEGI.md`; brakujące flagi RED blokują gotowość (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisz-po-polsku`, `redline-docx-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

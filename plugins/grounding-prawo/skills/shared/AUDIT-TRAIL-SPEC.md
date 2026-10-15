@@ -68,7 +68,7 @@ hash[n]        = SHA256(canonical_json(event_n) + hash[n-1])
   wyliczony) — to pozwala zweryfikować cały łańcuch bez dostępu do poprzednich
   wpisów w pamięci, tylko na podstawie samego pliku/logu.
 - Weryfikacja integralności = przejście od `hash[0]` do końca i porównanie
-  wyliczonych hashy z zapisanymi — patrz `scripts/hash_chain_verify.py`.
+  wyliczonych hashy z zapisanymi — patrz `scripts/hash_chain_verify.py` (brak w pluginie).
 
 ## 4. Punkty emisji zdarzeń w prawny-router-v3
 

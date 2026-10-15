@@ -1,7 +1,7 @@
 # MODULE-STANDARD-POLISH-LAW — standard modułu prawa polskiego
 
 ## Cel
-Każdy moduł prawa polskiego ma działać jak moduły wzorcowe `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-prawo-pracy.md` i `dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-KPK-framework-karne.md`: nie jako opis dziedziny, lecz jako praktyczny workflow kancelaryjny.
+Każdy moduł prawa polskiego ma działać jak moduły wzorcowe `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-KP-prawo-pracy.md (poza pluginem)` i `dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-KPK-framework-karne.md`: nie jako opis dziedziny, lecz jako praktyczny workflow kancelaryjny.
 
 ## Zakaz podstawowy — ⛔ HARD GATE
 

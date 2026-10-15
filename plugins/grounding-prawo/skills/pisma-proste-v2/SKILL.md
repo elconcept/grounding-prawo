@@ -154,6 +154,8 @@ KROK 9c → Wczytaj:
            view shared/HYBRID-VALIDATION.md    [zawsze — auto-raport braków]
            view shared/WERYFIKACJA-SLAD.md § STRIP-VER-GATE  [zawsze przed plikiem — znaczniki ✅/⚠️ i tabela śladu poza dokumentem]
 KROK 10 → Wczytaj references/M9-format.md             [zawsze — prezentacja odpowiedzi]
+KROK 11 → view shared/FORMAT-PISMA.md                 [zawsze gdy powstaje plik pisma (DOCX, bez PDF) — krój, nagłówek,
+           wyróżnienia; plik generuje shared/format-pisma/render_pismo.py, nie ręczny HTML]
 ```
 
 ---
@@ -477,3 +479,10 @@ view shared/PREKLUZJA-DOWODOWA.md
 ```
 
 Pismo proste nie może ominąć walidacji tylko dlatego, że jest krótkie.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`
+- **Wynik zapisz w:** `drafty/<pismo>/rrrrMMdd_<nazwa>_v1.*`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `terminy-procesowe-pl`, `citation-grounding-pl`, `szturm-na-draft-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

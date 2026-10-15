@@ -20,7 +20,7 @@ view dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KKS-karny-skarbowy-i-AM
 ```
 Pranie pieniędzy i AML:
 ```
-view dr-06-podatki-finanse-publiczne-aml/modules/mod-ustawa-AML-instytucje-obowiazkowe.md
+view dr-06-podatki-finanse-publiczne-aml/modules/mod-ustawa-AML-instytucje-obowiazkowe.md (poza pluginem)
 ```
 
 ## Źródła

@@ -1,6 +1,6 @@
 ---
 name: analizator-dowodow-v3
-description: 'Ocena dowodów, dokumentów, zeznań i akt: siła dowodowa, hierarchia A-D, pokrycie przesłanek, sprzeczności, terminy procesowe i analiza śledcza.'
+description: 'Ocena dowodów, dokumentów, zeznań i akt: siła dowodowa, hierarchia A-D, pokrycie przesłanek, sprzeczności, terminy procesowe i analiza śledcza. Przy zawiadomieniu o przestępstwie: mapa osób, ról i zachowań oraz pytania rozszerzające; relacja pokrzywdzonego nie wymaga dowodu.'
 metadata:
   version: 5.16.23
   type: executive-analiza
@@ -15,6 +15,17 @@ metadata:
 ---
 
 # Analizator Dowodów Procesowych v5
+
+## WYJĄTEK: ZAWIADOMIENIE — rola „osoby, role i perspektywy”
+
+Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
+poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
+Dla potrzeb redakcji zawiadomienia sporządź mapę osób i zachowań: kto działał, polecał, pomagał, obserwował, miał obowiązek zareagować, co robił przed/w trakcie/po. Dopytaj skąd autor wie o roli każdej osoby, bez domniemania zmowy z obecności. Dokument instytucji nie zastępuje relacji; rozbieżność jest pytaniem, nie rankingiem wiarygodności. Wynik to pytania/rozszerzenia, nie odrzucenie twierdzeń bez dokumentu.
+Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
+rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
+Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
+Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
 
 > ⛔ HARD GATE — ZAKAZ CYTOWANIA PRAWA I ORZECZEŃ Z PAMIĘCI
 > Przed każdą analizą z powołaniem na przepisy lub sygnatury: `view /mnt/skills/user/shared/PRAWO-HARDGATE.md`
@@ -757,9 +768,9 @@ Tablice do wypełnienia: `evidence[]` · `alerts_data{}` · `coverage_data[]`
 | Weryfikacja przepisu | `analizator-przepisow-v2` |
 | Chronologia wielu dok. | `chronologia-sprawy-v1` |
 | Świadkowie | `przesluchanie-swiadkow-v2` |
-| Raport stanu sprawy (widget interaktywny) | `raport-sytuacyjny-v2` (po MD6/MP7) |
+| Raport stanu sprawy (widget interaktywny) | `raport-sytuacyjny-v2 (poza pluginem)` (po MD6/MP7) |
 | Wersja szczegółowa raportu jako dokument .md (DODATEK do dashboardu, na żądanie) | MD-NARR (ten skill) |
-| Raport dla klienta (zewnętrzny, LAIK/uproszczony) | `raport-klienta-v1` |
+| Raport dla klienta (zewnętrzny, LAIK/uproszczony) | `raport-klienta-v1 (poza pluginem)` |
 | Eksport .docx | HYBRID-VALIDATION → `docx` |
 
 ---
@@ -1186,3 +1197,10 @@ Nie wolno domyślnie:
 - pomijać alertu o legalności nagrań, gdy materiał zawiera nagranie,
 - mylić terminy instrukcyjne z zawitymi,
 - sugerować, że analiza zastępuje poradę prawnika.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `analiza/_chronologia.md`, indeks akt; dla zeznań i nagrań także `przesluchanie-swiadkow-v2-min90`
+- **Wynik zapisz w:** `analiza/_dowody-i-przepisy.md` (siła dowodowa, sprzeczności, luki) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `analizator-przepisow-v2`, `case-risk`, `analiza-sadowa-v6`, `subsumpcja-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

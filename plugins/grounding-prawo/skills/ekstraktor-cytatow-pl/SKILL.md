@@ -131,3 +131,10 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** draft pisma `drafty/<pismo>/..._vN`
+- **Wynik zapisz w:** lista powołań w `_robocze/` (wejście dla weryfikatorów) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `citation-grounding-pl`, `uodo-grounding-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

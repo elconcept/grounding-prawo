@@ -69,7 +69,7 @@ C. OBA JEDNOCZEŚNIE (A + B)
 
 ## NARUSZENIE OCHRONY DANYCH — PROCEDURA
 
-> Rozszerzono: 2026-07-05 (AUDYT-2026-07-05a), wzorzec rodo-naruszenie-72h-pl:
+> Rozszerzono: 2026-07-05 (AUDYT-2026-07-05a), wzorzec rodo-naruszenie-72h-pl (poza pluginem):
 > deterministyczny zegar 72h, typologia naruszenia, zgłoszenie etapowe, wyjątki art. 34 ust. 3.
 
 ```

@@ -1,0 +1,90 @@
+--- a/shared/HYBRID-VALIDATION.md
++++ b/shared/HYBRID-VALIDATION.md
+@@ -1,3 +1,12 @@
++## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu HYBRID-VALIDATION
++
++Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
++obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
++Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
++nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
++Pomiń BLOCK ZERO, wywołania MOD-FAKTY/FSL/LSL i dowodowe warstwy A–D dla relacji autora. Nie uruchamiaj poniższego schematu dla zawiadomienia; wykonaj wyłącznie kontrolę prawa, rzeczywistych cytatów i formy według wyjątku. Nie klasyfikuj braku dowodu jako 🔴 lub 🟡.
++Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
++
+ # HYBRID-VALIDATION — Walidacja hybrydowa po wygenerowaniu pisma / dokumentu
+ 
+ ## KIEDY URUCHAMIAĆ
+--- a/shared/FAKTY_v2.md
++++ b/shared/FAKTY_v2.md
+@@ -1,3 +1,12 @@
++## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu MOD-FAKTY
++
++Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
++obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
++Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
++nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
++Nie uruchamiaj F0/FSL/LSL ani klasyfikacji BRAK ŹRÓDŁA dla relacji pokrzywdzonego. Sprawdzaj wierność zapisowi autora; cytat z akt porównuj z aktami, nie zastępując nimi relacji.
++Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
++
+ # MOD-FAKTY — Weryfikacja Zgodności Faktycznej Pisma ze Źródłem
+ 
+ **Plik kanoniczny:** `shared/FAKTY_v2.md`
+--- a/shared/CLAIM-VALIDATION.md
++++ b/shared/CLAIM-VALIDATION.md
+@@ -1,3 +1,12 @@
++## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu CLAIM-VALIDATION
++
++Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
++obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
++Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
++nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
++Nie stosuj CLAIM-FIRST ani kroków C0 i dalszych do relacji pokrzywdzonego. Nie kwalifikuj jej jako błędnej procesowo, nie zastępuj dokumentem i nie wymagaj dowodu. Przejdź do wywiadu i kontroli integralności zawiadomienia.
++Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
++
+ # MOD-CLAIM-VALIDATION — Walidacja Twierdzeń Strony względem Materiału Dowodowego
+ 
+ **Plik kanoniczny:** `shared/CLAIM-VALIDATION.md`
+--- a/shared/FACT-SOURCE-LOCK.md
++++ b/shared/FACT-SOURCE-LOCK.md
+@@ -1,3 +1,12 @@
++## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu FACT-SOURCE-LOCK
++
++Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
++obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
++Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
++nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
++Nie stosuj hierarchii wiarygodności FSL-A/B/C ani wynikającej z niej blokady do doświadczeń autora. Nazwij źródło wiedzy i jego pewność bez degradacji relacji wobec dokumentu urzędowego.
++Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
++
+ # FACT-SOURCE-LOCK (FSL) — Klasyfikacja i Blokada Twierdzeń Bez Źródła
+ 
+ **Plik kanoniczny:** `shared/FACT-SOURCE-LOCK.md`
+--- a/shared/LEGAL-STATUS-LOCK.md
++++ b/shared/LEGAL-STATUS-LOCK.md
+@@ -1,3 +1,12 @@
++## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu LEGAL-STATUS-LOCK
++
++Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
++obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
++Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
++nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
++Sprawdzaj wyłącznie rzeczywiście potrzebny status prawny aktu. Nie przenoś wyniku LSL na ocenę doświadczeń autora; nie zastępuj relacji dokumentem. Nieustalony status aktu nie blokuje opisania krzywdy.
++Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
++
+ # LEGAL-STATUS-LOCK (LSL) — Weryfikacja Statusu Prawnego Aktów
+ 
+ **Plik kanoniczny:** `shared/LEGAL-STATUS-LOCK.md`
+--- a/dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md
++++ b/dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md
+@@ -1,3 +1,12 @@
++## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu kwalifikator
++
++Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
++obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
++Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
++nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
++W zawiadomieniu drzewo służy pytaniom o fakty i poszerzaniu możliwych kwalifikacji. Nie testuje, czy pokrzywdzony udowodnił czyn. Linia obrony ani brak ustalonego zamiaru nie uprawniają do osłabiania relacji; nieznane cechy dopytaj, kwalifikację sprawdź osobno.
++Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
++
+ # Kwalifikator Karnomaterialny v3.0 — INDEKS (podzielony 2026-08-20, naprawa F-78)
+ # Moduł: Drzewo Decyzyjne Podobnych Czynów Zabronionych
+ # Dla: prawo-polskie-v2 / `dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-KPK-framework-karne.md` / analiza-sadowa-v6

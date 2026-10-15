@@ -109,3 +109,11 @@ Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to upra
 
 Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** folder akt po OCR (`the-ocr`)
+- **Wynik zapisz w:** indeks akt: `analiza/_dokumenty.md` (strony nieczytelne, duplikaty); tekst i wyszukiwarka w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `chronologia-sprawy-v1`, `analizator-dowodow-v3`, `patron-przeglad-tabelaryczny`
+- **Nie dubluj:** `doc-intel-contract-pl` tylko gdy potrzeba bboxów, confidence lub podziału teczki na pisma; `the-ocr` robi samo OCR
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

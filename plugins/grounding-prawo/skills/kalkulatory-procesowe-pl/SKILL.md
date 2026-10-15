@@ -70,7 +70,7 @@ i przedawnienie liczone równolegle. Czytaj tylko plik potrzebnego kalkulatora.
 
 Data 2026-07-13 to dzień weryfikacji fallbacków tej wersji pliku. Rejestr
 aktów bazowych (UKSC, KC, KPC, ustawa o transakcjach handlowych) pilnowany
-jest mechanicznie: `scripts/wachta-parametrow-kalkulatorow.mjs` w CI raz
+jest mechanicznie: `scripts/wachta-parametrow-kalkulatorow.mjs` (brak w pluginie) w CI raz
 w miesiącu porównuje stan ISAP z `parametry-baseline.json` i alarmuje, gdy
 akt został uchylony albo zmieniony po dacie baseline.
 
@@ -163,3 +163,10 @@ Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to upra
 
 Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** dane o roszczeniu (kwota, daty) z `analiza/_brief.md`
+- **Wynik zapisz w:** wartości (opłata, WPS, odsetki, przedawnienie) wpisane do pisma i `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisma-procesowe-v3`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

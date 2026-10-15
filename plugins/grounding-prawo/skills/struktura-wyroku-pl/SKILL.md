@@ -1,6 +1,6 @@
 ---
 name: struktura-wyroku-pl
-description: 'Rozkłada polskie orzeczenie na role retoryczne i robi streszczenie EKSTRAKTYWNE (cytuje zdania źródłowe, nie parafrazuje) - segmentuje wyrok/postanowienie na komparycję, stan faktyczny, przebieg postępowania, zarzuty/wnioski, podstawę prawną, rozważania sądu, sentencję i tezę (ratio decidendi), wskazuje rozstrzygnięcie i powołane przepisy. Mechaniczna segmentacja + ekstrakcja kluczowych zdań, bez zmyślania. Pairuje z saos-orzecznictwo (znajdź), ekstraktor-cytatow-pl (cytaty) i citation-grounding-pl (weryfikacja). Uzywaj gdy: "streść ten wyrok", "co sąd orzekł i dlaczego", "wyciągnij tezę z orzeczenia", "struktura uzasadnienia", "ratio decidendi", "rozłóż wyrok na części", "podsumuj orzeczenie", przy czytaniu długiego uzasadnienia / analizie linii orzeczniczej / przygotowaniu glosy.
+description: 'Rozkłada polskie orzeczenie na role retoryczne i robi streszczenie EKSTRAKTYWNE (cytuje zdania źródłowe, nie parafrazuje) - segmentuje wyrok/postanowienie na komparycję, stan faktyczny, przebieg postępowania, zarzuty/wnioski, podstawę prawną, rozważania sądu, sentencję i tezę (ratio decidendi), wskazuje rozstrzygnięcie i powołane przepisy. Mechaniczna segmentacja + ekstrakcja kluczowych zdań, bez zmyślania. Pairuje z saos-orzecznictwo (poza pluginem) (znajdź), ekstraktor-cytatow-pl (cytaty) i citation-grounding-pl (weryfikacja). Uzywaj gdy: "streść ten wyrok", "co sąd orzekł i dlaczego", "wyciągnij tezę z orzeczenia", "struktura uzasadnienia", "ratio decidendi", "rozłóż wyrok na części", "podsumuj orzeczenie", przy czytaniu długiego uzasadnienia / analizie linii orzeczniczej / przygotowaniu glosy.
 
   '
 license: Apache-2.0
@@ -114,3 +114,10 @@ Oprócz konektorów plugin zawiera skill `webwright-legal-pl` - pobiera orzeczen
 
 Plugin dostarcza wyszukiwanie i pobieranie źródeł prawa PL/UE. Nie zastępuje analizy prawnej ani weryfikacji cytatu - tę warstwę daje plugin "fundament weryfikacyjny" (zalecany razem).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** pełny tekst orzeczenia z narzędzia MCP (`get_judgment`)
+- **Wynik zapisz w:** streszczenie ekstraktywne w `_robocze/`; użyta teza w `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `orzeczenia-sadowe-v2`, `citation-grounding-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

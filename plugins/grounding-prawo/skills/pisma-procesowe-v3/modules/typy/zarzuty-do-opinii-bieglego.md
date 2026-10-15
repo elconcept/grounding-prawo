@@ -2,7 +2,7 @@
 
 > Moduł scalony ze skilla `zarzuty-do-opinii-bieglego` (IURA). Stosuj w W1/W2 jako wzorzec struktury i argumentacji dla tego typu pisma; bramki `pisma-procesowe-v3` obowiązują bez zmian.
 
-> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/MOD-PLIKI-INKREMENTALNE.md` - nowym plikiem jest
+> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/ARTEFAKTY-SPRAWY.md` - nowym plikiem jest
 > tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
 > dopisuj do istniejących plików inkrementalnych (`_PRZEBIEGI.md`, `_SUBSUMPCJA*.md`, `_FINDINGS.md` …), a pliki
 > jednorazowe zostawiaj w `_robocze/` sprawy.
@@ -13,9 +13,9 @@
 
 Skill generuje maksymalnie skuteczne, wyczerpujące pismo procesowe zawierające zarzuty do opinii biegłego sądowego. Pismo ma na celu wykazanie KAŻDEJ wady opinii — od fundamentalnych błędów metodologicznych po najdrobniejsze niespójności — tak, aby sąd nie mógł oprzeć rozstrzygnięcia na zakwestionowanej opinii.
 
-> **Weryfikacja podstaw prawnych (konektory MCP):** przed powołaniem jakiegokolwiek przepisu potwierdź jego brzmienie w **ISAP** (`search_acts` → `get_act` → `get_act_text`, Dziennik Ustaw przez Sejm ELI API); orzecznictwo — w **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`). **Przed pierwszym wywołaniem przeczytaj skill `iura`** — te API są **polowe, nie semantyczne**, a ISAP domyślnie zwraca **tekst ogłoszony** (brzmienie pierwotne), nie stan na dziś.
+> **Weryfikacja podstaw prawnych (konektory MCP):** przed powołaniem jakiegokolwiek przepisu potwierdź jego brzmienie w **ISAP** (`search_acts` → `get_act` → `get_act_text`, Dziennik Ustaw przez Sejm ELI API); orzecznictwo — w **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`). **Przed pierwszym wywołaniem przeczytaj `shared/MOD-TEKST-JEDNOLITY.md` i `patron-prawo-pl-zrodla`** — te API są **polowe, nie semantyczne**, a ISAP domyślnie zwraca **tekst ogłoszony** (brzmienie pierwotne), nie stan na dziś.
 >
-> Procedura: `search_acts(title: "Kodeks postępowania cywilnego", publisher: "DU")` → `get_act(eli)` → weź **najnowszy** `consolidated_text_eli` → `get_act_text(eli: <jednolity>, search_text: "Art. 286.")`. Cytuj wyłącznie przy `text_version = tekst_jednolity` i `in_force = IN_FORCE`. Przy błędzie `text_unavailable_use_pdf` (dla kodeksów **typowy**) użyj `python3 <skille>/lexcache/scripts/lexcache.py isap pdf <ELI t.j.> --find "Art. N."` — wyciągnie brzmienie obowiązujące wprost z PDF tekstu jednolitego; cytuj tylko przy `text_version: tekst_jednolity` (`AMBIGUOUS` = trafiłeś na akt bazowy). Dopiero gdy to zawiedzie: starszy tekst jednolity z HTML, z wyraźną datą, albo przyznanie braku — drabinka w skillu `iura`, sekcja 4. **Nie zgaduj brzmienia i nie podstawiaj aktu bazowego.** W piśmie podawaj adres publikacyjny z `display_address`/ELI zwróconego przez ISAP, a nie z pamięci.
+> Procedura: `search_acts(title: "Kodeks postępowania cywilnego", publisher: "DU")` → `get_act(eli)` → weź **najnowszy** `consolidated_text_eli` → `get_act_text(eli: <jednolity>, search_text: "Art. 286.")`. Cytuj wyłącznie przy `text_version = tekst_jednolity` i `in_force = IN_FORCE`. Przy błędzie `text_unavailable_use_pdf` (dla kodeksów **typowy**) wg drabinki w `shared/MOD-TEKST-JEDNOLITY.md` przeczytaj `pdf_url` z odpowiedzi (natywny `Read` z `pages` albo WebFetch) — wyciągnie brzmienie obowiązujące wprost z PDF tekstu jednolitego; cytuj tylko przy `text_version: tekst_jednolity` (`AMBIGUOUS` = trafiłeś na akt bazowy). Dopiero gdy to zawiedzie: starszy tekst jednolity z HTML, z wyraźną datą, albo przyznanie braku — drabinka w skillu `iura (poza pluginem)`, sekcja 4. **Nie zgaduj brzmienia i nie podstawiaj aktu bazowego.** W piśmie podawaj adres publikacyjny z `display_address`/ELI zwróconego przez ISAP, a nie z pamięci.
 >
 > Numery artykułów wskazane w tym skillu i w Twojej wiedzy własnej to **hipotezy do sprawdzenia**, nie gotowa podstawa prawna. Sygnatury orzeczeń bierz wyłącznie z SAOS i przepuszczaj przez `saos_cite_check`; daty w SAOS bywają zniekształcone przez OCR — weryfikuj je pod `saos.org.pl/judgments/{id}`. Sądy administracyjne (WSA/NSA) **nie są w SAOS**, interpretacji podatkowych nie ma w żadnym konektorze — w razie potrzeby powiedz to wprost zamiast cytować z pamięci. **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
 >
@@ -413,7 +413,7 @@ PISMO [ROLA PROCESOWA: UCZESTNIKA/UCZESTNICZKI/POWODA/POZWANEGO]
 — zarzuty do opinii biegłego
 ```
 
-- Tytuł wyśrodkowany, pogrubiony
+- Tytuł wyśrodkowany, rozstrzelone wersaliki, bez pogrubienia (`shared/FORMAT-PISMA.md`)
 - Rola procesowa dopasowana do płci i roli strony składającej zarzuty
 - Podtytuł (po myślniku) mniejszą czcionką lub zwykłym krojem
 
@@ -685,7 +685,7 @@ Po napisaniu treści zarzutów, wygeneruj profesjonalny dokument Word (.docx). P
 
 Dokument musi mieć:
 - Profesjonalny układ strony (A4, marginesy 2.5 cm)
-- Czcionkę Times New Roman lub Arial, rozmiar 12pt, interlinia 1.5
+- Czcionkę Georgia 10 pt albo krój zbliżony, interlinia ok. 1,25; nadawca i organ 14 pt. Wygląd pliku: `shared/FORMAT-PISMA.md` (ma pierwszeństwo) - wynik to DOCX z sidecarem .md, bez PDF; Georgia 10 pt, nadawca i organ 14 pt, wydział 12 pt, adresat do prawej, adres w jednej linii, telefon i e-mail nadawcy, pogrubienie i podkreślenie tylko dla tez; plik generuje `shared/format-pisma/render_pismo.py`.
 - Poprawne formatowanie: nagłówki, numeracja, wcięcia
 - Tabelę w nagłówku z danymi sądu i stron
 - Poprawną polską typografię (cudzysłowy, myślniki, znaki specjalne)

@@ -1,8 +1,8 @@
 # grounding-prawo - reguły pluginu
 
 Jeden plugin do praktyki prawa polskiego: silnik Lex Machina (router i moduły DR-01…DR-16),
-rodzina IURA na SAOS + ISAP, skille weryfikacji i jakości MateMatic, skille z Patrona, OCR
-the-ocr, `lexcache` i 16 konektorów MCP z cache w bazie GROUNDING-PRAWO.
+wiedza z pluginu IURA (typy pism, metodyka SAOS + ISAP), skille weryfikacji i jakości MateMatic, skille z Patrona,
+OCR the-ocr i konektory MCP przez portal `lex.xlap.pl/mcp`.
 
 ## Model dowodowy
 
@@ -22,40 +22,28 @@ sygnatura niezweryfikowana. Źródłem tezy o przepisie lub orzeczeniu jest baza
 dokument - nie pamięć modelu. Granice pokrycia źródeł (SN po ~2016, WSA/NSA tylko przez CBOSA,
 interpretacje podatkowe przez EUREKA) nazywaj w odpowiedzi wprost.
 
-## Baza GROUNDING-PRAWO
-Folder GROUNDING-PRAWO (OneDrive, `LEGAL/GROUNDING-PRAWO`) to wspólna baza wszystkich hostów:
-korpus (`ORZECZENIA/`, `USTAWY/`), cache (`CACHE/`) i indeks (`INDEX/`). Konektory i `lexcache`
-znajdują ją same (OneDrive na macOS i Windows, WSL, podpięty folder Cowork). Gdy pracujesz
-w Cowork albo w innym katalogu, ustaw `GROUNDING_ROOT` na ścieżkę tego folderu - inaczej cache
-trafi do katalogu lokalnego i nie zasili bazy.
-
-Każdy wynik konektora trafia do bazy; powtórzone zapytanie wraca z niej z linią
-`[GROUNDING-PRAWO cache] wynik pobrany <data>` - tę datę podawaj w śladzie weryfikacji
-(poziom A0 w `skills/shared/PRAWO-HARDGATE.md`). Wpis wygasły albo zwrócony przy awarii źródła
-cytuj tylko z jawną adnotacją o dacie.
-
 ## Gdzie szukać, w tej kolejności
-1. Baza: `python3 <skille>/lexcache/scripts/lexcache.py find "<fraza | sygnatura | ELI>"`.
-2. Konektory MCP: `isap`, `saos`, `nsa`, `krs`, `eu-sparql`, `eu-compliance`, `eureka`,
-   9 rejestrów ELI UE. Który do czego: skill `patron-prawo-pl-zrodla`, kolejność warstw:
-   `hierarchia-zrodel-pl`.
-3. Obowiązujące brzmienie przepisu: `skills/shared/MOD-TEKST-JEDNOLITY.md`
-   (`lexcache isap pdf <ELI t.j.> --find "Art. N."`).
-4. Serwisy bez konektora: komendy `/orzeczenie`, `/szukaj`, `/eurlex`, skill `webwright-legal-pl`.
+1. Obowiązujące brzmienie przepisu: MCP `cite_verify_article` (dosłowny artykuł z t.j.), a gdy odmówi -
+   `skills/shared/MOD-TEKST-JEDNOLITY.md` (`isap_get_act_text`, odczyt `pdf_url`).
+2. Konektory MCP portalu `lex` (`lex.xlap.pl/mcp`, `.mcp.json`): `isap`, `cite`, `saos`, `nsa`, `uodo`, `krs`, `eu-sparql`,
+   `eu-compliance`, `repertorium`, `basic-memory`. Który do czego: skill `patron-prawo-pl-zrodla`
+   (metodyka: `references/iura-metodyka.md`), kolejność warstw: `shared/HIERARCHIA-ZRODEL.md`.
+3. Serwisy bez konektora: skill `webwright-legal-pl`.
 
-`<skille>` = katalog `skills/` tego pluginu (nadrzędny wobec katalogu bazowego skilla); w
-repozytorium GROUNDING-PRAWO - `.claude/skills`.
+Wiedza wielosprawowa i lekcje do doskonalenia pism: `_wiedza.md` w teczce sprawy oraz Basic Memory.
 
 ## Mapa skilli
-- Sprawa prawna: `prawny-router-v3` → moduły `dr-01`…`dr-16`.
-- Pisma: `pisma-procesowe-v3`, `pisma-proste-v2`, rodzina IURA (`pozew-cywilny`, `odpowiedz-na-pozew`,
-  `apelacja-karna`, …), `patron-pismo-procesowe-pl`, pomoc prawna (`pomoc-prawna-*`).
-- Kontrola tekstu - szczeble kosztu opisuje `legal-request-router-pl`: `citation-grounding-pl`
-  i `patron-weryfikacja-cytatow`, `pierwsze-wrazenie-sedziego-pl`, `atak-przeciwnika-pl`,
-  `patron-obrona-pisma`, `adversarial-legal-review-pl`, `ocena-outputu-pl`.
-- Dokumenty: `the-ocr` (OCR), `patron-przeglad-tabelaryczny`, `contract-review-pl`,
+Pełny opis ścieżek, skilli i konektorów: `README.md`. Wejście: `prowadnik-grounding-prawo` + `profil-postepowan-wlasnych`.
+- Sprawa prawna: `prawny-router-v3` → moduły `dr-01`…`dr-16` (bez dr-04, 06, 07, 08, 09, 15).
+- Pisma: `pisma-procesowe-v3` (typy pism jako moduły: pozew, odpowiedź, apelacja karna, zażalenie, zarzuty do opinii,
+  cofnięcie pozwu, wniosek o rozprawę zdalną, notatka, memo UE), `pisma-proste-v2`, `zawiadomienie-o-przestepstwie`, `rodo-dsar-pl`.
+- Kontrola pisma: domyślnie `szturm-na-draft-pl`; ręcznie `ekstraktor-cytatow-pl` → `citation-grounding-pl`
+  (`patron-weryfikacja-cytatow`, `uodo-grounding-pl`) → `subsumpcja-pl` → `pierwsze-wrazenie-sedziego-pl` →
+  `atak-przeciwnika-pl` → `adversarial-legal-review-pl` → `deliverable-fidelity-pl`; ocena: `ocena-outputu-pl`.
+- Dokumenty: `the-ocr` (OCR), `akta-przeszukiwalne-pl`, `patron-przeglad-tabelaryczny`, `analizator-umow-v1`,
   `klauzule-kontraktowe-pl`, `redline-docx-pl`, `patron-skan-dokumentu`.
 - Kalkulatory i terminy: `kalkulatory-procesowe-pl`, `terminy-procesowe-pl`.
+- Pliki sprawy: `skills/shared/ARTEFAKTY-SPRAWY.md` (dopisuj do plików `_*.md`, nie twórz raportów).
 
 ## Dokumenty użytkownika
 - OCR: skill `the-ocr` (Markdown ze stronami `## Page N`). Czytaj `.md` zamiast PDF; przy parze

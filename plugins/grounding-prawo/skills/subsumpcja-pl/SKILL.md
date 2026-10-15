@@ -1,8 +1,6 @@
 ---
 name: subsumpcja-pl
-description: 'Buduje jawny sylogizm prawniczy (subsumcję) dla zagadnienia - rozkłada rozumowanie na przesłankę większą (norma + wykładnia), przesłankę mniejszą (istotne fakty), podciągnięcie faktów pod normę i wniosek, a potem wskazuje słabe ogniwa: ukryte założenia, sporne fakty, wątpliwą wykładnię. Wymusza, by każdy krok był wypowiedziany i sprawdzalny, zamiast skoku od stanu faktycznego do tezy. Pairuje z adversarial-legal-review-pl (atak na sylogizm), citation-grounding-pl (weryfikacja powołanej normy) i struktura-wyroku-pl. Uzywaj gdy: "zbuduj subsumpcję", "sylogizm prawniczy", "podciągnij fakty pod normę", "rozpisz rozumowanie", "gdzie jest luka w argumentacji", "przesłanka większa i mniejsza", "uzasadnij krok po kroku", przy pisaniu opinii / uzasadnienia / pisma procesowego.
-
-  '
+description: 'Buduje jawny sylogizm prawniczy (subsumcję) dla zagadnienia - rozkłada rozumowanie na przesłankę większą (norma + wykładnia), przesłankę mniejszą (istotne fakty), podciągnięcie faktów pod normę i wniosek, a potem wskazuje słabe ogniwa: ukryte założenia, sporne fakty, wątpliwą wykładnię. Wymusza, by każdy krok był wypowiedziany i sprawdzalny, zamiast skoku od stanu faktycznego do tezy. Pairuje z adversarial-legal-review-pl (atak na sylogizm), citation-grounding-pl (weryfikacja powołanej normy) i struktura-wyroku-pl. Uzywaj gdy: "zbuduj subsumpcję", "sylogizm prawniczy", "podciągnij fakty pod normę", "rozpisz rozumowanie", "gdzie jest luka w argumentacji", "przesłanka większa i mniejsza", "uzasadnij krok po kroku", przy pisaniu opinii / uzasadnienia / pisma procesowego. Przy zawiadomieniu o przestępstwie szuka dodatkowych czynów, sprawców i naruszeń przez funkcjonariuszy; braki zamienia w pytania do pokrzywdzonego.'
 license: Apache-2.0
 allowed-tools:
 - Read
@@ -17,6 +15,17 @@ metadata:
 ---
 
 # Subsumpcja PL - jawny sylogizm prawniczy
+
+## WYJĄTEK: ZAWIADOMIENIE — rola „kwalifikacje rozszerzające”
+
+Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
+poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
+Wyjdź od całej relacji, nie tylko od wybranego przepisu. Zbadaj sąsiednie czyny, innych sprawców, współdziałanie, następstwa i naruszenia przez funkcjonariuszy. Brakujące cechy zamień w otwarte pytania; po odpowiedziach sprawdź alternatywy/kumulację i inne reżimy odpowiedzialności. Nie dopisuj znamion ani przestępstwa z samego uchybienia proceduralnego.
+Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
+rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
+Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
+Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
 
 ## Filozofia
 
@@ -112,3 +121,10 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** draft i zweryfikowane przepisy (`analizator-przepisow-v2`)
+- **Wynik zapisz w:** `drafty/<pismo>/_SUBSUMPCJA.md` (rejestr stały; dopisek przebiegu) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pierwsze-wrazenie-sedziego-pl`, `atak-przeciwnika-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

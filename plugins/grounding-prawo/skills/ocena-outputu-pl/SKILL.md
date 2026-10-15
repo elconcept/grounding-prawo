@@ -1,6 +1,6 @@
 ---
 name: ocena-outputu-pl
-description: 'Ocenia jakość outputu prawnego AI przed wysyłką w dwóch warstwach: obiektywnej (sprawdzalne mechanicznie - czy cytaty istnieją, czy przepisy i sygnatury realne) oraz subiektywnej (LLM-as-judge wg rubryki 1-5: poprawność prawna, kompletność, jasność, zgodność z jurysdykcją, ugruntowanie/anty-halucynacja). Zwraca kartę ocen i decyzję: wyślij / popraw / pełna weryfikacja. Warstwa nad deliverable - nie pisze pisma, ocenia gotowe. Pairuje z legal-request-router-pl (routing), citation-grounding-pl (obiektywne sprawdzenie), deliverable-fidelity-pl (czy nic nie wypadlo) i adversarial-legal-review-pl (atak). Uzywaj gdy: "oceń ten output", "scoring opinii", "czy to gotowe do wysyłki", "jakość odpowiedzi prawnej", "karta ocen deliverable", "rubryka jakości", przed wysłaniem pisma/opinii/memo do klienta.
+description: 'Ocenia jakość outputu prawnego AI przed wysyłką w dwóch warstwach: obiektywnej (sprawdzalne mechanicznie - czy cytaty istnieją, czy przepisy i sygnatury realne) oraz subiektywnej (LLM-as-judge wg rubryki 1-5: poprawność prawna, kompletność, jasność, zgodność z jurysdykcją, ugruntowanie/anty-halucynacja). Zwraca kartę ocen i decyzję: wyślij / popraw / pełna weryfikacja. Warstwa nad deliverable - nie pisze pisma, ocenia gotowe. Pairuje z legal-request-router-pl (poza pluginem) (routing), citation-grounding-pl (obiektywne sprawdzenie), deliverable-fidelity-pl (czy nic nie wypadlo) i adversarial-legal-review-pl (atak). Uzywaj gdy: "oceń ten output", "scoring opinii", "czy to gotowe do wysyłki", "jakość odpowiedzi prawnej", "karta ocen deliverable", "rubryka jakości", przed wysłaniem pisma/opinii/memo do klienta.
 
   '
 license: Apache-2.0
@@ -113,7 +113,7 @@ WARSTWA 2 (rubryka 1-5):
   Kompletność: 3 - <...>
   Jasność: 5 - <...>
   Zgodność z jurysdykcją: NIEPEWNE (NIEWYSTARCZAJĄCY_DOWÓD) - output opiera się na wyroku
-    II CSK NN/RR, którego tekstu nie ma w sesji; brakuje: treść uzasadnienia (saos-orzecznictwo)
+    II CSK NN/RR, którego tekstu nie ma w sesji; brakuje: treść uzasadnienia (saos-orzecznictwo (poza pluginem))
   Ugruntowanie: 4 - <...>
   Średnia: 4.0 (z 4 wymiarów liczbowych; NIEPEWNE poza średnią)
 KOTWICE: brak (albo: cytat II CSK NN/RR niezgodny - decyzja ograniczona do Pełnej weryfikacji)
@@ -176,3 +176,10 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** tekst do oceny jakości przed wysyłką (używany przez `szturm-na-draft-pl`)
+- **Wynik zapisz w:** ocena w `_robocze/`; ustalenia do `_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `szturm-na-draft-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

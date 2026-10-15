@@ -3,7 +3,7 @@
 **Status:** moduł NOWY — utworzony 2026-07-15 (temat wcześniej całkowicie
 nieobecny w systemie — potwierdzone grep-em przed utworzeniem: 0 wyników na
 "inwestycje zagraniczne"/FDI/BIT/ICSID poza ogólnymi wzmiankami o funduszach
-inwestycyjnych krajowych w dr-06).
+inwestycyjnych krajowych w dr-06 (poza pluginem)).
 
 Dwa NIEZALEŻNE, często mylone reżimy prawne pod wspólną nazwą "inwestycje
 transgraniczne" — rozróżnij od razu przy intake:

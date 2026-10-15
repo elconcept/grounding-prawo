@@ -5,7 +5,7 @@
 **Status:** Planned
 
 ## Problem statement
-Nasza drabinka PDF (pdftotext -> markitdown -> opendataloader -> Chandra OCR ->
+Nasza drabinka PDF (pdftotext -> markitdown (poza pluginem) -> opendataloader -> Chandra OCR ->
 vision) daje piec roznych ksztaltow wyjscia. Nic tego nie ujednolica, wiec nie
 mamy jednego miejsca, w ktorym da sie: (a) powiedziec "temu fragmentowi ufam w
 0.4, niech spojrzy czlowiek", (b) znalezc blok podpisu/PII do redakcji, (c) podac

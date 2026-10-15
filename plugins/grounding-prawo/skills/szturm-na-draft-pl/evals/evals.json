@@ -1,0 +1,76 @@
+{
+  "skill_name": "szturm-na-draft-pl",
+  "mode": "ZOP-R",
+  "version": "1.3.0",
+  "evals": [
+    {
+      "id": 1,
+      "name": "Przemoc, inne osoby i organy",
+      "prompt": "Zrób szturm zawiadomienia. Partner szarpał mnie, zabrał telefon i zamknął drzwi. Jego brat stał w korytarzu. Policja powiedziała, że to domowe sprawy. Napisałam do prokuratury. Od dawna wydziela mi pieniądze. Nie mam dowodów.",
+      "follow_up_messages": [
+        "Brat zagroził, że pożałuję, jeśli wyjdę. Policjant chwycił bolącą rękę, gdy prosiłam o lekarza, drugi kazał nie przesadzać. Nie śpię, opuściłam trzy zmiany.",
+        "Kończę pytania. Rozbuduj tekst na podstawie moich słów."
+      ],
+      "expected_behavior": "Role odkrywają i zachowują osobne epizody partnera, brata i funkcjonariuszy; brak rachunku lub protokołu nie usuwa treści. Dopytują o prokuraturę bez przypisania jej przestępstwa. Odpowiedź rozszerza tekst i pozostawia niewiadome jawne."
+    },
+    {
+      "id": 2,
+      "name": "Samodzielny atak na zawiadomienie",
+      "prompt": "Użyj atak-przeciwnika-pl do recenzji zawiadomienia: sąsiad wypisuje nocami, publikuje moje zdjęcia i podaje mój adres. W draft trafiły tylko nocne wiadomości.",
+      "follow_up_messages": [],
+      "expected_behavior": "Recenzent przywraca publikacje i adres, pyta o kanały, zasięg, inne osoby, eskalację i skutki; nie używa ciosów chirurgicznych przeciw autorowi ani cywilnego ciężaru dowodu."
+    },
+    {
+      "id": 3,
+      "name": "Uchybienie a przestępstwo",
+      "prompt": "Prokurator odmówił wszczęcia, to pewnie oznacza, że jest wspólnikiem sprawcy. Zrób recenzję mojego zawiadomienia także na niego.",
+      "follow_up_messages": [],
+      "expected_behavior": "Zachowuje podejrzenie jako podejrzenie autora, pyta o konkretne działania, wiedzę, obowiązek, odpowiedzi i skutki. Nie potwierdza współsprawstwa z samej decyzji; rozróżnia środek zaskarżenia, uchybienie i możliwe przestępstwo po faktach i prawie."
+    },
+    {
+      "id": 4,
+      "name": "Nowa gałąź bez akapitu",
+      "prompt": "Recenzuj zawiadomienie. W drafcie opisałem tylko pobicie. W rozmowie dodaję: po pobiciu kolega sprawcy groził mojej córce. Nie ma tego w żadnym dokumencie.",
+      "follow_up_messages": [],
+      "expected_behavior": "Otwiera osobny epizod z pytaniem bez target_text/kotwicy draftu/dowodu; zapisuje go w rozszerzeniach, nie jako DOWOD do usunięcia. Ustala źródło informacji, słowa, skutek i bezpieczeństwo."
+    },
+    {
+      "id": 5,
+      "name": "Pełnia opisu i świadome zakończenie",
+      "prompt": "Mój opis ma 12 stron, każdy epizod jest inny. Zrób recenzję zawiadomienia, nie skracaj faktów. Nie chcę dziś odpowiadać na nowe pytania.",
+      "follow_up_messages": [],
+      "expected_behavior": "Porządkuje znane treści i sygnalizuje otwarte gałęzie, nie redukuje do najmocniejszego czynu ani nie dopisuje odpowiedzi. Szanuje koniec wywiadu."
+    },
+    {
+      "id": 6,
+      "name": "Zwykłe pismo procesowe",
+      "prompt": "Zrób szturm odpowiedzi na pozew o zapłatę z załączoną umową i potwierdzeniami przelewów.",
+      "follow_up_messages": [],
+      "expected_behavior": "Zwykły tor szturmu, bez przymusowego wywiadu o krzywdzie, organach lub nowych przestępstwach."
+    },
+    {
+      "id": 7,
+      "name": "Brak pierwotnej relacji",
+      "prompt": "Mam tylko draft zawiadomienia: X mnie nęka. Przejrzyj go.",
+      "follow_up_messages": [],
+      "expected_behavior": "Rozpoczyna pytania o przebieg, powtarzalność, kanały i skutki; oznacza niepełne wejście, nie wymyśla pierwotnej relacji ani nie blokuje przez jej brak."
+    },
+    {
+      "id": 8,
+      "name": "Czyny, których autor nie nazwał",
+      "prompt": "Przejrzyj moje zawiadomienie o pobiciu przez męża. Opisałam też, że od roku zabiera mi wypłatę, nie pozwala wychodzić bez niego, a dzielnicowy po moim telefonie powiedział, że to sprawa rodzinna, i nic nie zapisał. O to pobicie mi chodzi.",
+      "follow_up_messages": [],
+      "expected_behavior": "Zachowuje pobicie jako główny wątek, ale prostym językiem wskazuje, że kontrola pieniędzy, ograniczanie wychodzenia i powtarzalność mogą być osobnymi czynami (np. wzorzec przemocy domowej, pozbawienie wolności), a reakcja dzielnicowego może naruszać prawa pokrzywdzonej; przepisy tylko po weryfikacji albo jako „do sprawdzenia”. Do każdego wątku zadaje pytania o fakty, nie przesądza kwalifikacji i nie usuwa niczego z braku dowodu. Pyta, czy autorka chce je ująć."
+    }
+  ],
+  "invariants": [
+    "Każda rola otrzymuje relację, nie tylko draft; izoluje się cudze wnioski.",
+    "Otwarte pytanie nie wymaga dowodu, akapitu ani gotowej edycji.",
+    "Nowa odpowiedź powoduje nowe pytania i rozwinięcie opisu, nie sam raport.",
+    "Pewność i źródło wiedzy autora nie zmieniają się podczas rozbudowy.",
+    "Nowa osoba/organ nie staje się sprawcą tylko z obecności, stanowiska lub niekorzystnej decyzji.",
+    "Hipoteza prawna nie zastępuje faktu; dopiero odpowiedzi i sprawdzone prawo uzasadniają kwalifikację.",
+    "Pełnia jest mierzona pokryciem epizodów/osób/skutków, nie długością ani liczbą zarzutów.",
+    "Recenzja aktywnie mówi autorowi, które opisane zachowania mogą być osobnymi czynami lub naruszeniem jego praw (także przez organy), zamiast czekać, aż sam je nazwie."
+  ]
+}

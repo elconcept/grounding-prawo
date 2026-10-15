@@ -13,7 +13,7 @@ Router i skille dziedzinowe wywołują je **bezpośrednio** przez:
 view /mnt/skills/user/shared/NAZWA.md
 ```
 
-**Zakaz tworzenia lokalnych stubów/adapterów** — od 2026-06-13 każde wywołanie modułu shared/ musi być bezpośrednie. Stuby pośrednie (`references/HYBRID-VALIDATION.md` → `shared/HYBRID-VALIDATION.md`) są niedopuszczalne i będą usuwane w audytach.
+**Zakaz tworzenia lokalnych stubów/adapterów** — od 2026-06-13 każde wywołanie modułu shared/ musi być bezpośrednie. Stuby pośrednie (`references/HYBRID-VALIDATION.md` (brak w pluginie) → `shared/HYBRID-VALIDATION.md`) są niedopuszczalne i będą usuwane w audytach.
 
 ## Stuby zadeklarowane jako usunięte 2026-06-13 — FAKTYCZNIE usunięte 2026-07-12
 
@@ -22,7 +22,7 @@ view /mnt/skills/user/shared/NAZWA.md
 > gotowości komercyjnej) potwierdził, że 9 z 10 wciąż fizycznie leżało na
 > dysku jako martwe stuby, mimo tej deklaracji. Zweryfikowano ponownie
 > (zero żywych `view()` na pełną ścieżkę każdego pliku) i usunięto naprawdę
-> w tej sesji. Jedyny faktycznie usunięty wcześniej: `raport-sytuacyjny-v2/
+> w tej sesji. Jedyny faktycznie usunięty wcześniej: `raport-sytuacyjny-v2 (poza pluginem)/
 > references/HYBRID-VALIDATION.md`. Pełny opis: AUDIT-JOURNAL.md,
 > wpis AUDYT-2026-07-12g.
 
@@ -76,7 +76,7 @@ Poniższe moduły istnieją w dwóch DR-skillach. **NIE są błędami.** Zakresy
 | Lokalizacja | Zakres | Kiedy ładować |
 |---|---|---|
 | `dr-05/.../mod-ustawa-sygnalisci.md` | Perspektywa procesowa sygnalisty: kanały zgłoszenia, ochrona przed odwetem, roszczenia, pisma do RPO/PIP | Gdy klient = sygnalista chroniący swoje prawa |
-| `dr-15/.../mod-ustawa-sygnalisci.md` | Perspektywa compliance pracodawcy: wdrożenie kanału, ISO 37301 CMS, AML, RODO w rejestrze, audyt | Gdy klient = pracodawca wdrażający lub audytujący system |
+| `dr-15/.../mod-ustawa-sygnalisci.md (poza pluginem)` | Perspektywa compliance pracodawcy: wdrożenie kanału, ISO 37301 CMS, AML, RODO w rejestrze, audyt | Gdy klient = pracodawca wdrażający lub audytujący system |
 
 ### mod-ustawa-cudzoziemcy.md
 

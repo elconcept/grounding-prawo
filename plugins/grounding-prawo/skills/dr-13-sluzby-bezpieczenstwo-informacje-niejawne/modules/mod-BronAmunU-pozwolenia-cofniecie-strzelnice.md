@@ -19,7 +19,7 @@ trafiało na moduł KARNY i było obsługiwane niewłaściwym materiałem.
 > oficjalna chronologia zmian aktu; ISAP-hosted PDF z nagłówkiem stan na
 > 30.03.2026 wprost wymieniający obie pozycje w podstawie prawnej):
 > 1. **Dz.U. 2025 poz. 1795** — ustawa z 21.11.2025 o zdrowiu zwierząt
->    (już skatalogowana gdzie indziej w systemie, dr-09 — nie generuje
+>    (już skatalogowana gdzie indziej w systemie, dr-09 (poza pluginem) — nie generuje
 >    nowej luki); zakres zmiany w samej ustawie o broni i amunicji NIE
 >    zweryfikowany artykuł po artykule w tej sesji, tylko fakt objęcia.
 > 2. **Dz.U. 2026 poz. 187** — ustawa z 23.01.2026 o zawodzie psychologa
@@ -119,7 +119,7 @@ art. 10 ust. 3 — CO JEST „WAŻNĄ PRZYCZYNĄ" dla danego celu:
      zagrożenie życia, zdrowia lub mienia  ⭐ najtrudniejsza do wykazania,
      źródło ~większości spraw sądowoadministracyjnych
   2) cele ŁOWIECKIE → posiadanie uprawnień do wykonywania polowania
-     (→ `dr-09-budownictwo-srodowisko-energia-transport/modules/mod-lowiectwo-klusownictwo.md`, art. 42 Prawa łowieckiego)
+     (→ `dr-09-budownictwo-srodowisko-energia-transport/modules/mod-lowiectwo-klusownictwo.md (poza pluginem)`, art. 42 Prawa łowieckiego)
   3) cele SPORTOWE → członkostwo w stowarzyszeniu strzeleckim + kwalifikacje
      z art. 10b + licencja polskiego związku sportowego (KOMPLET TRZECH)
   4) rekonstrukcje → członkostwo w stowarzyszeniu + zaświadczenie o czynnym
@@ -560,7 +560,7 @@ weryfikowany numer z sesji 2026-08-16 — sprawdzić tam, nie zgadywać).
   → organ odwoławczy: SKO (nie Policja!) — patrz `dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-ustawa-SKO.md`
 □ art. 48 — wymagania środowiskowe budowy i użytkowania strzelnic
   (rozporządzenie ministra klimatu w porozumieniu z ministrem środowiska)
-  → hałas/emisje: `dr-09-budownictwo-srodowisko-energia-transport/modules/mod-POS-prawo-ochrony-srodowiska.md`
+  → hałas/emisje: `dr-09-budownictwo-srodowisko-energia-transport/modules/mod-POS-prawo-ochrony-srodowiska.md (poza pluginem)`
 □ art. 49 — strzelnice wyłączone spod stosowania przepisów ustawy
 ```
 

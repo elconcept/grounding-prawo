@@ -1,7 +1,7 @@
 # Raport pokrycia — Ustawa o systemie ubezpieczeń społecznych (SUS) i Ustawa o emeryturach i rentach z FUS
 
 **Data analizy:** 2026-08-13
-**Zakres skilla:** `dr-04-prawo-pracy-zus-swiadczenia`
+**Zakres skilla:** `dr-04-prawo-pracy-zus-swiadczenia (poza pluginem)`
 **Stan prawny bazowy w modułach:** SUS — Dz.U. 2026 poz. 199 t.j.; FUS — Dz.U. 2025 poz. 1749 t.j.
 **Metodologia:** inwentaryzacja treści rzeczywiście obecnej w module głównym `mod-SUS-ZUS-ubezpieczenia-spoleczne.md` (347 linii, jedyny moduł dedykowany obu ustawom łącznie) oraz w module powiązanym `mod-dodatek-pielegnacyjny-swiadczenie-rehabilitacyjne-wyrownawcze.md` (dotyka FUS art. 75–76 i punktowo innych ustaw świadczeniowych). To dwa osobne, obszerne akty prawne — SUS (13 rozdziałów, art. 1–106+) i FUS (9 działów, art. 1–194j) — oceniane tutaj równolegle, ponieważ system traktuje je łącznie w jednym module głównym. Każdy przepis wymaga weryfikacji ISAP przed użyciem w piśmie (HARD GATE), niezależnie od statusu w tym raporcie.
 

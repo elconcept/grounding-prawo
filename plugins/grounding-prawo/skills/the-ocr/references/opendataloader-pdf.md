@@ -1,6 +1,6 @@
 # OpenDataLoader PDF (silnik dla PDF z warstwą tekstową i tabelami)
 
-Część skilla `the-ocr`; wcześniej osobny skill `opendataloader-pdf` (Apache-2.0).
+Część skilla `the-ocr`; wcześniej osobny skill `opendataloader-pdf (poza pluginem)` (Apache-2.0).
 
 # OpenDataLoader PDF - PDF→JSON/MD (PL)
 
@@ -9,10 +9,10 @@ Java-based (Python wrapper) parser PDF najwyższej jakości dla AI. Benchmarki: 
 ## Instalacja (zrobione 2026-04-21)
 
 ```bash
-python -m pip install --user opendataloader-pdf
+python -m pip install --user opendataloader-pdf (poza pluginem)
 ```
 
-Python 3.14, `opendataloader-pdf 2.2.1`. Wymaga **Java 17+** (mamy Eclipse Adoptium JDK 17). CLI: `python -m opendataloader_pdf` albo `opendataloader-pdf.exe` ze Scripts/.
+Python 3.14, `opendataloader-pdf (poza pluginem) 2.2.1`. Wymaga **Java 17+** (mamy Eclipse Adoptium JDK 17). CLI: `python -m opendataloader_pdf` albo `opendataloader-pdf (poza pluginem).exe` ze Scripts/.
 
 ## Wspierane outputy
 

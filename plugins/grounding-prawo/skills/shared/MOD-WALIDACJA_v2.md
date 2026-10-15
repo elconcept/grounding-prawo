@@ -322,7 +322,7 @@ w formie interaktywnego widgetu gotowego do wydruku lub edycji.
 
 Wpisz 'raport' lub kliknij aby uruchomić."
 
-→ Na potwierdzenie: wywołaj raport-sytuacyjny-v2 natychmiast.
+→ Na potwierdzenie: wywołaj raport-sytuacyjny-v2 (poza pluginem) natychmiast.
 → Raport generuje się automatycznie z danych rozmowy (bez ponownego podawania).
 ```
 

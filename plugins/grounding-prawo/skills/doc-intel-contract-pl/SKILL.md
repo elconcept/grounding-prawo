@@ -18,7 +18,7 @@ metadata:
 # doc-intel-contract-pl - kontrakt wyjscia Document Intelligence
 
 ## Po co
-Kazdy szczebel naszej drabinki PDF (pdftotext -> anydoc -> markitdown ->
+Kazdy szczebel naszej drabinki PDF (pdftotext -> anydoc -> markitdown (poza pluginem) ->
 opendataloader -> liteparse -> Chandra -> vision) zwraca wynik w innym
 formacie. Ten skill sprowadza te formaty do JEDNEGO kontraktu, ktory od razu
 odpowiada na trzy pytania:
@@ -325,3 +325,11 @@ Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to upra
 
 Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** wynik OCR (`the-ocr`) lub pdftotext, gdy potrzebne bloki, bboxy albo powiązanie cytatu ze stroną
+- **Wynik zapisz w:** kontrakt dokumentu w `_robocze/`; podział teczki w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `citation-grounding-pl`, `akta-przeszukiwalne-pl`
+- **Nie dubluj:** moduł pomocniczy; nie używaj funkcji maskowania PII (decyzja właściciela: bez anonimizacji)
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

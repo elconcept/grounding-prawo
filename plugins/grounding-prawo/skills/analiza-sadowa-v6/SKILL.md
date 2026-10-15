@@ -762,13 +762,13 @@ SEKWENCJA:
   1. view shared/raport-sytuacyjny-integracja.md
      (tylko jeśli nie wczytano w tej sesji)
 
-  2. Zbuduj blueprint JSON ze schematu w raport-sytuacyjny-v2/SKILL.md
+  2. Zbuduj blueprint JSON ze schematu w raport-sytuacyjny-v2/SKILL.md (poza pluginem)
      → dane wyłącznie z rozmowy / dokumentów; pola nieznane → null
      → tryb: "A" (po pełnej analizie)
 
-  3. show_widget(path="raport-sytuacyjny-v2/assets/widget-raport-sytuacyjny.html",
+  3. show_widget(path="raport-sytuacyjny-v2/assets/widget-raport-sytuacyjny.html (poza pluginem)",
                  data=BLUEPRINT) — bez kodu; host wstawia dane i pasek IO.
-     Host bez pola `data`: raport-sytuacyjny-v2/SKILL.md § WIDGET — WYKONANIE BEZ POLA `data`.
+     Host bez pola `data`: raport-sytuacyjny-v2/SKILL.md (poza pluginem) § WIDGET — WYKONANIE BEZ POLA `data`.
 
   Poprzedź widgetem komunikat:
   "Poniżej aktualny raport sytuacyjny sprawy —
@@ -864,3 +864,11 @@ view shared/STRATEGIA-PROCESOWA.md
 view shared/QUALITY-CHECK.md
 
 Nie dubluj logiki shared w lokalnych plikach.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** wyniki ścieżki A (indeks, chronologia, dowody, przepisy); może też zacząć od aktów surowych
+- **Wynik zapisz w:** `analiza/_podsumowanie.md` (jeden raport końcowy; bez osobnych plików raportu) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisma-procesowe-v3`, `case-risk`, `adversarial-legal-review-pl`
+- **Nie dubluj:** to synteza; pojedyncze kroki (dowody, przepisy, chronologia) rób wyspecjalizowanymi skillami i tylko je zbieraj
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

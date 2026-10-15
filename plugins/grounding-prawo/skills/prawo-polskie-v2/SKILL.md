@@ -176,3 +176,10 @@ F-102(C), dwa źródła prawdy o wersji zawsze się rozjeżdżają (ta stopka ni
 `shared/PRAWO-HARDGATE.md` w tym skillu (F-123). Wcześniej: 2026-07-02,
 WARN-28 zamknięty — ABW/AW to nowy t.j. tej samej ustawy z 2002 r., nie
 reforma; sync ROUTING-MAP.*
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `prawny-router-v3` (krok kwalifikacji)
+- **Wynik zapisz w:** wskazanie modułu DR (w `analiza/_brief.md`) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `dr-02-prawo-cywilne-rodzinne-gospodarcze`, `dr-03-prawo-karne-wykroczenia-egzekucja`, `dr-05-prawo-administracyjne-sadowoadministracyjne`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

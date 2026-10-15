@@ -79,6 +79,6 @@ OBOWIĄZKI PODMIOTÓW PUBLICZNYCH (weryfikuj aktualne przepisy w ELI (RZĄD 1)):
 
 **Output:** Kwalifikacja → wniosek → (brak reakcji) → skarga do Prezesa PFRON → (brak wykonania nakazu) → skarga do WSA w Warszawie.
 
-**Powiązania:** `dr-04` → `mod-ustawa-rehabilitacja-PFRON` | `mod-ustawa-RPO` | `pisma-procesowe-v3` | `dr-10/mod-ustawa-edukacja-specjalna-dostepnosc` (pełne omówienie trybu + styk z edukacją specjalną)
+**Powiązania:** `dr-04 (poza pluginem)` → `mod-ustawa-rehabilitacja-PFRON` | `mod-ustawa-RPO` | `pisma-procesowe-v3` | `dr-10/mod-ustawa-edukacja-specjalna-dostepnosc` (pełne omówienie trybu + styk z edukacją specjalną)
 
 **Źródła:** https://ELI (RZĄD 1)/isap.nsf/DocDetails.xsp?id=WDU20190001696 (akt pierwotny) — zweryfikuj aktualny t.j. w ISAP przed cytowaniem

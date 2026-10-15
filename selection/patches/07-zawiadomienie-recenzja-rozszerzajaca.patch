@@ -1,0 +1,128 @@
+--- a/atak-przeciwnika-pl/SKILL.md
++++ b/atak-przeciwnika-pl/SKILL.md
+@@ -35,2 +35,13 @@
+ 
++## WYJĄTEK: ZAWIADOMIENIE — rola „poszukujący pominiętych krzywd”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Szukaj przemocy, przymusu, zależności, prywatności, wolności, poniżenia, nacisków i odwetu, które autor opisuje, ale nie nazywa naruszeniem. Dopytaj o pozostałe osoby, działania funkcjonariuszy i skutki. Krytykuj zawężenie opisu, nie pokrzywdzonego. Sześć sekcji ataku i „ciosy chirurgiczne” zastępują pytania, mapa rozszerzeń i rozbudowana relacja.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
++
+ ## Filozofia
+--- a/adversarial-legal-review-pl/SKILL.md
++++ b/adversarial-legal-review-pl/SKILL.md
+@@ -41,2 +41,13 @@
+ 
++## WYJĄTEK: ZAWIADOMIENIE — rola „panel rozszerzający”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Builder rekonstruuje relację i skutki; attacker szuka pominiętych krzywd, osób i naruszeń przez organy; synthesizer scala pytania, zbiera odpowiedzi i rozwija pismo; verifier sprawdza pokrycie relacji i prawo. Zamiast werdyktów „filary obalone” oddaj mapę otwartych gałęzi, pytania oraz uzupełnienia z odpowiedzi. Każda rola dostaje pierwotną relację; izolacja dotyczy cudzych wniosków.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
++
+ ## Filozofia
+--- a/pierwsze-wrazenie-sedziego-pl/SKILL.md
++++ b/pierwsze-wrazenie-sedziego-pl/SKILL.md
+@@ -35,2 +35,13 @@
+ 
++## WYJĄTEK: ZAWIADOMIENIE — rola „czytelnik rekonstruujący”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Ustal, czy da się odtworzyć każdy epizod, osobę, czynność, wypowiedź i skutek. Oznacz brakujące ogniwa pytaniami. Nie skracaj całości do pierwszej strony, najmocniejszej tezy lub limitu słów. Obszerną relację porządkuj podtytułami i chronologią, zachowując rozmiar krzywdy.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
++
+ ## Filozofia
+--- a/subsumpcja-pl/SKILL.md
++++ b/subsumpcja-pl/SKILL.md
+@@ -33,2 +33,13 @@
+ # Subsumpcja PL - jawny sylogizm prawniczy
++
++## WYJĄTEK: ZAWIADOMIENIE — rola „kwalifikacje rozszerzające”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Wyjdź od całej relacji, nie tylko od wybranego przepisu. Zbadaj sąsiednie czyny, innych sprawców, współdziałanie, następstwa i naruszenia przez funkcjonariuszy. Brakujące cechy zamień w otwarte pytania; po odpowiedziach sprawdź alternatywy/kumulację i inne reżimy odpowiedzialności. Nie dopisuj znamion ani przestępstwa z samego uchybienia proceduralnego.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
+ 
+--- a/deliverable-fidelity-pl/SKILL.md
++++ b/deliverable-fidelity-pl/SKILL.md
+@@ -32,2 +32,13 @@
+ 
++## WYJĄTEK: ZAWIADOMIENIE — rola „pełne pokrycie krzywdy”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Porównaj wynik z pierwotną relacją i każdą odpowiedzią: epizody, osoby, konkretne działania, skutki, pewność i źródło wiedzy. Nie ograniczaj kontroli do RED/findings, słów kluczowych lub draftu. Odzyskaj pominięcia i wskaż pytania o brakujący kontekst. Pusta lista RED nie oznacza kompletnej relacji.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
++
+ ## Filozofia
+--- a/analizator-dowodow-v3/SKILL.md
++++ b/analizator-dowodow-v3/SKILL.md
+@@ -47,2 +47,13 @@
+ 
++## WYJĄTEK: ZAWIADOMIENIE — rola „osoby, role i perspektywy”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Dla potrzeb redakcji zawiadomienia sporządź mapę osób i zachowań: kto działał, polecał, pomagał, obserwował, miał obowiązek zareagować, co robił przed/w trakcie/po. Dopytaj skąd autor wie o roli każdej osoby, bez domniemania zmowy z obecności. Dokument instytucji nie zastępuje relacji; rozbieżność jest pytaniem, nie rankingiem wiarygodności. Wynik to pytania/rozszerzenia, nie odrzucenie twierdzeń bez dokumentu.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
++
+ > ⛔ HARD GATE — ZAKAZ CYTOWANIA PRAWA I ORZECZEŃ Z PAMIĘCI
+--- a/marko-pl-content/SKILL.md
++++ b/marko-pl-content/SKILL.md
+@@ -21,2 +21,13 @@
+ # Marko-PL (content)
++
++## WYJĄTEK: ZAWIADOMIENIE — rola „szczegóły i rozmiar krzywdy”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Zachowaj emocje jako doznania i skutki. Rozwijaj skróty pytaniami o ból, czas, zdrowie, sen, pracę, majątek, relacje i bezpieczeństwo. Styl poprawiaj przez uporządkowanie obszernej relacji, nie przez wycinanie krzywd lub usuwanie opisu jako „emocjonalnego”. Nie diagnozuj ani nie zgaduj kwot.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
+ 
+--- a/shared/MOD-ATAK-NA-DRAFT.md
++++ b/shared/MOD-ATAK-NA-DRAFT.md
+@@ -1,2 +1,13 @@
+ # MOD-ATAK-NA-DRAFT — symulacja ataku przeciwnika na gotowy draft pisma
++
++## WYJĄTEK: ZAWIADOMIENIE — rola „rozszerzanie opisu”
++
++Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
++`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
++poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
++Nie wykonuj D1–D5 ani nakazu łagodzenia zdań bez dowodu. Przejdź epizod po epizodzie i zapytaj o pominięte osoby, mikro-sekwencję, skutki, działania/zaniechania Policji i prokuratury. Oddaj mapę rozszerzeń i kolejną serię pytań zamiast listy zarzutów wobec autora.
++Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
++rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
++Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
++Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
+ 

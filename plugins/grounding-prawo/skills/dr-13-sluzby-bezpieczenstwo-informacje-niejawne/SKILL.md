@@ -204,15 +204,15 @@ view dr-13-sluzby-bezpieczenstwo-informacje-niejawne/MAPA-POKRYCIA.md
 ## Powiązania zewnętrzne
 - Wchodzi z: `prawo-polskie-v2` → `ROUTING-MAP.md` → ten skill
 - Cyberbezpieczeństwo państwa → `dr-11` → `mod-KSC-NIS2-cyberbezpieczenstwo-telekom`
-- Zarządzanie kryzysowe JST → `dr-08` → `mod-ustawa-zarzadzanie-kryzysowe`
+- Zarządzanie kryzysowe JST → `dr-08 (poza pluginem)` → `mod-ustawa-zarzadzanie-kryzysowe`
 - Prawo karne wojskowe / odpowiedzialność karna → `dr-03`
 - Nielegalne posiadanie/wyrób/handel bronią (art. 263 KK) → `dr-03` →
   `mod-KK-art263-bron-nielegalna`
-- Pozwolenie na broń do celów łowieckich, odstrzał sanitarny → `dr-09` →
+- Pozwolenie na broń do celów łowieckich, odstrzał sanitarny → `dr-09 (poza pluginem)` →
   `mod-lowiectwo-klusownictwo`
 - Odwołanie od decyzji KWP / skarga do WSA → `dr-05` → `mod-KPA-decyzja-i-odwolanie`,
   `mod-PPSA-terminy-kasacja-prawo-pomocy`
-- Zamówienia obronne (PZP obronna) → `dr-07`
+- Zamówienia obronne (PZP obronna) → `dr-07 (poza pluginem)`
 - Wychodzi do: `pisma-procesowe-v3` / `analiza-sadowa-v6` / `orzeczenia-sadowe-v2`
 - Weryfikacja: ELI (RZĄD 1) | orzeczenia.ms.gov.pl | nsa.gov.pl | sn.pl
 
@@ -230,3 +230,11 @@ Wybierz wariant odpowiedni do trybu:
 
 Disclaimer musi być **ostatnim elementem** każdej odpowiedzi zawierającej analizę prawną,
 ocenę szans, kwalifikację prawną lub interpretację przepisu.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`
+- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `analizator-przepisow-v2`, `orzeczenia-sadowe-v2`, `pisma-procesowe-v3`
+- **Nie dubluj:** domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

@@ -10,7 +10,7 @@
 
 
 **Data:** 2026-08-13
-**Kontekst:** raporty przygotowane jako materiał wyjściowy do planowania dalszej rozbudowy skilla `dr-03-prawo-karne-wykroczenia-egzekucja` i `dr-04-prawo-pracy-zus-swiadczenia`. Każdy raport wskazuje, które rozdziały/działy danego kodeksu są pokryte w pełni, częściowo lub wcale, wraz z rekomendowaną kolejnością uzupełniania luk.
+**Kontekst:** raporty przygotowane jako materiał wyjściowy do planowania dalszej rozbudowy skilla `dr-03-prawo-karne-wykroczenia-egzekucja` i `dr-04-prawo-pracy-zus-swiadczenia (poza pluginem)`. Każdy raport wskazuje, które rozdziały/działy danego kodeksu są pokryte w pełni, częściowo lub wcale, wraz z rekomendowaną kolejnością uzupełniania luk.
 
 ## Pliki w tym zestawie
 

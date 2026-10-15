@@ -6,7 +6,7 @@ description: >
   i antycypowaniem zarzutów strony przeciwnej.
 ---
 
-> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/MOD-PLIKI-INKREMENTALNE.md` - nowym plikiem jest
+> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/ARTEFAKTY-SPRAWY.md` - nowym plikiem jest
 > tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
 > dopisuj do istniejących plików inkrementalnych (`_PRZEBIEGI.md`, `_SUBSUMPCJA*.md`, `_FINDINGS.md` …), a pliki
 > jednorazowe zostawiaj w `_robocze/` sprawy.
@@ -54,7 +54,7 @@ Jeśli użytkownik nie poda wszystkich danych, oznacz brakujące jako „…" (w
 
 Po zebraniu stanu faktycznego, ZANIM zaczniesz pisać pozew, MUSISZ przeprowadzić badanie prawne przy użyciu konektorów **ISAP** (legislacja) i **SAOS** (orzecznictwo). To nie jest opcjonalne — pozew bez aktualnych podstaw prawnych i orzecznictwa jest bezwartościowy.
 
-> **Zanim wywołasz cokolwiek — przeczytaj skill `iura`.** Te API są **polowe, nie semantyczne**: opisowe zdanie zwraca zero wyników. ISAP domyślnie serwuje **tekst ogłoszony** (brzmienie pierwotne), więc brzmienie na dziś wymaga przejścia przez tekst jednolity.
+> **Zanim wywołasz cokolwiek — przeczytaj `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`).** Te API są **polowe, nie semantyczne**: opisowe zdanie zwraca zero wyników. ISAP domyślnie serwuje **tekst ogłoszony** (brzmienie pierwotne), więc brzmienie na dziś wymaga przejścia przez tekst jednolity.
 
 ### Strategia wyszukiwania:
 
@@ -85,7 +85,7 @@ Dla głównych kodeksów `get_act_text` na obowiązującym tekście jednolitym z
 # MCP isap: get_act_text(<ELI tekstu jednolitego>), potem wyszukaj "Art. N."
 ```
 
-PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: skill `iura`, sekcja 4.
+PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`), sekcja 4.
 
 **Nie zgaduj brzmienia z samego linku do PDF i nie podstawiaj aktu bazowego** (KC/KPC z 1964 r.) jako brzmienia obowiązującego.
 
@@ -653,7 +653,7 @@ Użyj skilla docx do wygenerowania dokumentu Word. Ważne wytyczne formatowania:
 ### Format dokumentu:
 - **Papier**: A4 (11906 x 16838 DXA)
 - **Marginesy**: 1 cal (1440 DXA) z każdej strony
-- **Font**: Times New Roman 12pt (standardowy font pism sądowych w Polsce)
+- **Font**: Georgia 10 pt albo krój zbliżony; nagłówek nadawcy i organu 14 pt. Wygląd pliku: `shared/FORMAT-PISMA.md` (ma pierwszeństwo) - wynik to DOCX z sidecarem .md, bez PDF; Georgia 10 pt, nadawca i organ 14 pt, wydział 12 pt, adresat do prawej, adres w jednej linii, telefon i e-mail nadawcy, pogrubienie i podkreślenie tylko dla tez; plik generuje `shared/format-pisma/render_pismo.py`.
 - **Interlinia**: 1.15 lub 1.5
 - **Justowanie**: pełne (obustronne) dla treści uzasadnienia
 - **Numeracja stron**: na dole, wycentrowana

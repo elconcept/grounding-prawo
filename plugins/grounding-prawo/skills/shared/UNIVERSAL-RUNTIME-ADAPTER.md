@@ -8,7 +8,7 @@
 
 ## 1. Zasoby i ścieżki
 
-- Zapis `shared/PLIK.md` lub `<skill>/PLIK.md` oznacza **kanoniczny zasób
+- Zapis `shared/PLIK.md` (brak w pluginie) lub `<skill>/PLIK.md` oznacza **kanoniczny zasób
   zainstalowanego skilla**, a nie obowiązek istnienia konkretnego katalogu systemowego.
 - Rozwiązuj zasób kolejno: natywny resolver skilli hosta → wspólny katalog projektu/
   sibling skills → skonfigurowany read-only resolver/MCP. Jeżeli zasób obowiązkowy

@@ -34,7 +34,7 @@ python3 scripts/doc_to_text.py teczka/*.pdf teczka/*.docx teczka/*.md --out-dir 
 Numer strony w cytacie to kolejny `[Page N]`, nie numer ze stopki dokumentu.
 
 Markdown po OCR (the-ocr, Chandra/Datalab, LlamaParse) jest przyjmowany bezpośrednio: strony
-rozpoznawane po `## Page N`, `[Page N]`, `<!-- page N -->`, `{N}------` i `\f`, frontmatter
+rozpoznawane po `## Page N`, `[Page N]`, `<!-- page N -->`, `{N}------` i `\f`, frontmatter (poza pluginem)
 pomijany. Przy parze `umowa.pdf` + `umowa.md` brany jest `.md` (`--no-md` wyłącza). Plik bez
 znaczników stron to jedna strona (skrypt ostrzega); własny separator: `--page-sep hr` albo regex.
 
@@ -97,3 +97,10 @@ z niezweryfikowanym cytatem wymagają przeczytania fragmentu źródłowego.
 (EXTRACTION_SYSTEM, formatPromptSuffix, queryTabularAllColumns),
 `frontend/src/app/components/workflows/builtinWorkflows.ts`, `lib/tabular/grounding.ts`
 (ADR-0010, ADR-0080).
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** wiele dokumentów tego samego rodzaju (umowy, korespondencja) po OCR
+- **Wynik zapisz w:** tabela CSV/Excel w `_robocze/`; esencja i flagi ryzyka w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `chronologia-sprawy-v1`, `analizator-umow-v1`, `case-risk`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

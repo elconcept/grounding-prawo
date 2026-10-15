@@ -259,8 +259,8 @@ KARY DLA PRACODAWCY za nielegalne zatrudnienie:
 |---|---|
 | Tytuły pobytowe, taksonomia wiz/kart pobytu | `mod-ustawa-cudzoziemcy.md` |
 | Procedura odwoławcza, wydalenie, ochrona międzynarodowa | `mod-ustawa-cudzoziemcy.md` |
-| Prawo pracy — strona pracownicza | `dr-04` |
-| Kary PIP, nielegalne zatrudnienie | `dr-04` → moduł PIP/inspekcja pracy |
+| Prawo pracy — strona pracownicza | `dr-04 (poza pluginem)` |
+| Kary PIP, nielegalne zatrudnienie | `dr-04 (poza pluginem)` → moduł PIP/inspekcja pracy |
 
 ---
 

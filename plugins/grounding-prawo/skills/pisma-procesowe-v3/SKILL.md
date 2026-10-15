@@ -144,9 +144,6 @@ KROK C — ST-FINAL (OBOWIĄZKOWY i BLOKUJĄCY przed KAŻDYM present_files pisma
   • Jeśli liczba = 0:
        STATUS PISMA = ✅ FINAL — GOTOWE DO ZŁOŻENIA.
        Dozwolone present_files bez dalszych pytań.
-       Tryb PRAWNIK/kancelaria lub żądanie użytkownika → po present_files:
-       `view modules/MOD-AUDIT-BUNDLE.md` (paczka audytowa AI Act art. 12 —
-       deliverable dla audytora, nigdy dla sądu ani kontrahenta).
 
   • Jeśli liczba ≥ 1  →  WARUNEK SPEŁNIONY → URUCHOM INFORMACJĘ WARUNKOWĄ:
        1) STATUS PISMA = ⚠️ DRAFT — NIEZWERYFIKOWANY (X krok(ów) pominięto/do zrobienia).
@@ -809,6 +806,10 @@ view shared/STRATEGIA-PROCESOWA.md                (⛔ OBOWIĄZKOWE — zawsze p
 > + UWAGI-REDAKCYJNE), generowanie .docx i ST-FINAL:
 >
 > `view pisma-procesowe-v3/references/W3-WERYFIKACJA.md`
+>
+> Wygląd pliku (.docx, bez PDF) dla każdego typu pisma: `view shared/FORMAT-PISMA.md` - Georgia 10 pt,
+> nadawca i organ 14 pt, telefon i e-mail nadawcy, pogrubienie i podkreślenie tylko dla tez.
+> Ma pierwszeństwo przed regułami czcionki i tytułu w `modules/typy/`.
 
 ## SELF-CHECK PRZED KAŻDĄ ODPOWIEDZIĄ
 
@@ -833,6 +834,11 @@ Gdy typ pisma jest znany, wczytaj odpowiedni moduł i użyj go jako wzorca struk
 
 | Typ pisma | Moduł |
 |---|---|
+| cofnięcie pozwu ze zrzeczeniem się roszczenia | `modules/typy/cofniecie-pozwu-ze-zrzeczeniem-roszczenia.md` |
+| wniosek o rozprawę w trybie zdalnym | `modules/typy/wniosek-o-rozprawe-zdalna.md` |
+| ocena decyzji procesowej prokuratora (wzorzec formy) | `modules/typy/decyzja-procesowa-prokuratora.md` |
+| notatka prawna (memo wewnętrzne) | `modules/typy/notatka-prawna.md` |
+| memo z prawa UE (TSUE, CELEX) | `modules/typy/eu-legal-memo.md` |
 | pozew w postępowaniu cywilnym | `modules/typy/pozew-cywilny.md` |
 | odpowiedź na pozew | `modules/typy/odpowiedz-na-pozew.md` |
 | apelacja od wyroku w postępowaniu karnym | `modules/typy/apelacja-karna.md` |
@@ -864,3 +870,11 @@ też `theory-of-case-engine.md`.
 
 > Matryca aktywacji V10, sekwencja 6 modułów engines, obsługa KPA/PPSA/WSA/NSA:
 > `view pisma-procesowe-v3/references/DODATKI.md`
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM
+- **Wynik zapisz w:** `drafty/<pismo>/rrrrMMdd_<nazwa>_v1.docx|md`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `kalkulatory-procesowe-pl`, `terminy-procesowe-pl`, `ekstraktor-cytatow-pl`, `szturm-na-draft-pl`
+- **Nie dubluj:** krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

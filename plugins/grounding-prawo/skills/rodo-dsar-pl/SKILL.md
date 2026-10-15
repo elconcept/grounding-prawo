@@ -63,7 +63,7 @@ decyzje UODO => [[uodo-grounding-pl]].
 
 Skill składa odpowiedź (język prosty, art. 12 ust. 1), dopasowaną do powołanego prawa. Przy art. 15
 to **kopia danych osobowych pobrana z systemów operacyjnych**, które je faktycznie przechowują, plus
-dostępne informacje o źródle danych (art. 15 ust. 1 lit. g) - RCP ([[rodo-ropa-dpa-pl]]) dostarcza
+dostępne informacje o źródle danych (art. 15 ust. 1 lit. g) - RCP ([[rodo-ropa-dpa-pl (poza pluginem)]]) dostarcza
 tylko ogólnych informacji o przetwarzaniu (cele, kategorie, odbiorcy), nie danych osoby. Do tego wpis
 do rejestru żądań (data wpływu, typ, termin, rozstrzygnięcie).
 
@@ -87,7 +87,7 @@ na zewnątrz nigdy nie są automatyczne.
 
 ## Companion
 
-Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl]]. Anonimizacja przy kopii: `gaius-api-anonymization`.
+Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl (poza pluginem)]]. Anonimizacja przy kopii: `gaius-api-anonymization`.
 Parytet: `gdpr-dsar-en`.
 
 <!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
@@ -110,3 +110,10 @@ Plugin prowadzi operacje RODO kancelarii i inspektora ochrony danych: ocenę sku
 
 Plugin daje operacyjne narzędzia RODO (DPIA, naruszenie 72h, DSAR, RoPA/DPA). Nie weryfikuje cytatu ani nie pobiera źródeł prawa - do tego są pluginy "fundament weryfikacyjny" i "orzecznictwo i źródła". Redline umowy powierzenia korzysta z `redline-docx-pl` i `klauzule-kontraktowe-pl` (bundel dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
+- **Wynik zapisz w:** `drafty/dsar/rrrrMMdd_dsar_v1.*` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `terminy-procesowe-pl`, `pisz-po-polsku`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

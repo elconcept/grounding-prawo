@@ -6,7 +6,7 @@ description: >
   odwołania do orzecznictwa i doktryny.
 ---
 
-> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/MOD-PLIKI-INKREMENTALNE.md` - nowym plikiem jest
+> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/ARTEFAKTY-SPRAWY.md` - nowym plikiem jest
 > tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
 > dopisuj do istniejących plików inkrementalnych (`_PRZEBIEGI.md`, `_SUBSUMPCJA*.md`, `_FINDINGS.md` …), a pliki
 > jednorazowe zostawiaj w `_robocze/` sprawy.
@@ -38,7 +38,7 @@ Zanim zaczniesz pisać, ustal z użytkownikiem następujące dane. Nie generuj a
 
 ## KROK 1 — Wyszukaj podstawy prawne
 
-> **Konektory (grounding):** ten skill opiera się na dwóch serwerach MCP — **ISAP** (`search_acts`, `get_act`, `get_act_text`: Dziennik Ustaw i Monitor Polski przez oficjalne Sejm ELI API) oraz **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`: SN, sądy powszechne, TK, KIO). **Przed pierwszym wywołaniem przeczytaj skill `iura`** — zawiera składnię zapytań (te API są polowe, nie semantyczne), pułapkę „tekst ogłoszony vs. tekst jednolity" w ISAP wraz z drabinką na `text_unavailable_use_pdf` (obowiązujące teksty jednolite kodeksów są dostępne **tylko w PDF** — brzmienie na dziś wyciąga skill `lexcache` komendą `isap pdf`), użycie citatora i standardy cytowania. Bez tych konektorów **nie podawaj brzmienia przepisów ani sygnatur z pamięci**. Sądy administracyjne (WSA/NSA) i interpretacje podatkowe są **poza pokryciem** — patrz `iura`, sekcja „Granice pokrycia". **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
+> **Konektory (grounding):** ten skill opiera się na dwóch serwerach MCP — **ISAP** (`search_acts`, `get_act`, `get_act_text`: Dziennik Ustaw i Monitor Polski przez oficjalne Sejm ELI API) oraz **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`: SN, sądy powszechne, TK, KIO). **Przed pierwszym wywołaniem przeczytaj `shared/MOD-TEKST-JEDNOLITY.md` i `patron-prawo-pl-zrodla`** — zawiera składnię zapytań (te API są polowe, nie semantyczne), pułapkę „tekst ogłoszony vs. tekst jednolity" w ISAP wraz z drabinką na `text_unavailable_use_pdf` (obowiązujące teksty jednolite kodeksów są dostępne **tylko w PDF** — brzmienie na dziś: `pdf_url` z odpowiedzi, wg `shared/MOD-TEKST-JEDNOLITY.md`), użycie citatora i standardy cytowania. Bez tych konektorów **nie podawaj brzmienia przepisów ani sygnatur z pamięci**. Sądy administracyjne (WSA/NSA) i interpretacje podatkowe są **poza pokryciem** — patrz `iura`, sekcja „Granice pokrycia". **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
 
 OBOWIĄZKOWE: przed napisaniem apelacji ZAWSZE użyj konektorów, aby pozyskać aktualne i relewantne:
 
@@ -52,7 +52,7 @@ Dla głównych kodeksów `get_act_text` na obowiązującym tekście jednolitym z
 # MCP isap: get_act_text(<ELI tekstu jednolitego>), potem wyszukaj "Art. N."
 ```
 
-PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: skill `iura`, sekcja 4.
+PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`), sekcja 4.
 
 Zweryfikuj brzmienie kluczowych przepisów k.p.k. i k.k./k.k.s. relewantnych dla sprawy:
 - Przepisy o apelacji: art. 425, 427, 428, 437, 438, 439, 444-449a k.p.k.

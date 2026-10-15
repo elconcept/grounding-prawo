@@ -60,7 +60,7 @@ Deterministyczny guard bieżącego benchmarku 52 aktów. Chroni rozdzielenie
 current-state modułów domykających F-108 oraz zestaw krytycznych korekt metryk
 Dz.U. z audytu 2026-08-28. Jest uruchamiany przez
 `run_regression_suite.py` (z `--repo-root`) i jego FAIL jest blockerem strukturalnym.
-Wiersze Dz.U. sprawdza w najnowszej `references/mapa_dzu_RRRR-MM-DD.md` (od 2026-10-10).
+Wiersze Dz.U. sprawdza w najnowszej `references/mapa_dzu_RRRR-MM-DD.md` (brak w pluginie) (od 2026-10-10).
 
 ## _lex_common.py — wspólne narzędzia (import, nie test)
 

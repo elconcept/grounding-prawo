@@ -233,7 +233,7 @@ web_search: "UDIP BIP ustawa dostęp informacja Dz.U. 2022 poz. 902 isap"
 | RODO / ochrona danych osobowych | `dr-11` → moduł RODO |
 | Pismo: wniosek / skarga na bezczynność | `pisma-procesowe-v3` |
 | Orzecznictwo NSA | `orzeczenia-sadowe-v2` |
-| Samorząd terytorialny (BIP gminny) | `dr-08` |
+| Samorząd terytorialny (BIP gminny) | `dr-08 (poza pluginem)` |
 
 ---
 

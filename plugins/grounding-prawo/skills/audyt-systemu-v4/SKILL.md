@@ -149,7 +149,7 @@ Po zakończeniu audytu: **obowiązkowa aktualizacja plików references**.
 > listą wpisów.
 >
 > Uzasadnienie nie jest porządkowe, tylko funkcjonalne: rozproszenie historii
-> między trzy lokalizacje (korpus SKILL.md, frontmatter, `references/`) było
+> między trzy lokalizacje (korpus SKILL.md, frontmatter (poza pluginem), `references/`) było
 > BEZPOŚREDNIĄ przyczyną fałszywych wyników testu T12 w sesji 2026-08-20z3 —
 > test szukał wpisów w `references/`, nie znajdował ich (bo leżały w SKILL.md)
 > i raportował luki, których nie było. W `pisma-procesowe-v3` groziło to
@@ -169,7 +169,7 @@ Po zakończeniu audytu: **obowiązkowa aktualizacja plików references**.
 
 > ⚠️ **NAPRAWA 2026-08-15 (F-80, wykryta na skutek pytania użytkownika o
 > scheduled task):** 15 plików istniało fizycznie na dysku (references/
-> i scripts/), ale nie było wpisanych do YAML frontmatter powyżej —
+> i scripts/), ale nie było wpisanych do YAML frontmatter (poza pluginem) powyżej —
 > dokładnie ten sam wzorzec luki, jaki `scripts/check_rejestracja_modulow.py`
 > wykrywa dla modułów DR (F-33/F-77), tylko dotyczący plików SAMEGO
 > audyt-systemu-v4. Naprawione: wszystkie 15 plików dopisane do
@@ -551,10 +551,10 @@ Dla każdego aktu z tabeli MONITORING wykonaj:
 
 | Akt | Dz.U. opubl. | Data wejścia w życie | Zastępuje / zmienia | Moduł DR | Status |
 |---|---|---|---|---|---|
-| Prawo budowlane art. 1 pkt 1 lit. a i c, pkt 3 *(przykład formatu — historyczny; w mocy od 20.09.2026, źródło zmiany: 2025/1847, nie t.j. 2026/524 — F-195)* | Dz.U. 2025 poz. 1847 | 20.09.2026 | — (przepis nowy) | dr-09/mod-PrBud-* | ✅ WSZEDŁ |
-| Ordynacja podatkowa (część przepisów z Dz.U. 2025 poz. 1235) | Dz.U. 2026 poz. 622 | ~4 mies. od ogłoszenia | — (nowelizacja OP) | dr-06/mod-OP-* | ⏳ OCZEKUJE |
+| Prawo budowlane art. 1 pkt 1 lit. a i c, pkt 3 *(przykład formatu — historyczny; w mocy od 20.09.2026, źródło zmiany: 2025/1847, nie t.j. 2026/524 — F-195)* | Dz.U. 2025 poz. 1847 | 20.09.2026 | — (przepis nowy) | dr-09/mod-PrBud- (poza pluginem)* | ✅ WSZEDŁ |
+| Ordynacja podatkowa (część przepisów z Dz.U. 2025 poz. 1235) | Dz.U. 2026 poz. 622 | ~4 mies. od ogłoszenia | — (nowelizacja OP) | dr-06/mod-OP- (poza pluginem)* | ⏳ OCZEKUJE |
 | Obrona cywilna zm. | Dz.U. 2026 poz. 646 | 29.05.2026 (ELI 2026-10-12) | Dz.U. 2024 poz. 1907 (część) | dr-13/mod-ustawa-zarzadzanie-kryzysowe-* | ✅ WSZEDŁ |
-| Zarządzanie kryzysowe zm. (+ obrona cywilna art. 27, obrona Ojczyzny art. 23) | Dz.U. 2026 poz. 815 | 4.07.2026 (art. 73: 14 dni od ogłoszenia 19.06.2026) | Dz.U. 2026 poz. 574 t.j. (uchyla art. 5–6d, dodaje rozdz. 2–16); Dz.U. 2024 poz. 1907 (art. 5, 15, 38, 40, 44) | dr-01/mod-stany-nadzwyczajne-*, dr-08/mod-ustawa-zarzadzanie-kryzysowe, dr-13/mod-ustawa-zarzadzanie-kryzysowe-*, dr-13/mod-ustawa-obrona-ojczyzny-* | ✅ WSZEDŁ |
+| Zarządzanie kryzysowe zm. (+ obrona cywilna art. 27, obrona Ojczyzny art. 23) | Dz.U. 2026 poz. 815 | 4.07.2026 (art. 73: 14 dni od ogłoszenia 19.06.2026) | Dz.U. 2026 poz. 574 t.j. (uchyla art. 5–6d, dodaje rozdz. 2–16); Dz.U. 2024 poz. 1907 (art. 5, 15, 38, 40, 44) | dr-01/mod-stany-nadzwyczajne-*, dr-08/mod-ustawa-zarzadzanie-kryzysowe (poza pluginem), dr-13/mod-ustawa-zarzadzanie-kryzysowe-*, dr-13/mod-ustawa-obrona-ojczyzny-* | ✅ WSZEDŁ |
 
 **Reguły statusów MONITORING:**
 
@@ -574,7 +574,7 @@ Dla każdego aktu z tabeli MONITORING wykonaj:
 ### 3C — Rozporządzenia "do weryfikacji"
 
 Otwarte WARN z poprzednich audytów:
-- WARN-4: Rozp. RM 2020.2437 (progi PZP) — dr-07
+- WARN-4: Rozp. RM 2020.2437 (progi PZP) — dr-07 (poza pluginem)
 - WARN-5b: Rozp. MS 2015.1800 (stawki komornicze) — analizator-dowodow-v3
 - WARN-6: Rozp. RM 2008.1656 (prace uciążliwe) — dr-16
 
@@ -880,7 +880,7 @@ z WARN-OTWARTE.md, dodaj pełny wpis do AUDIT-JOURNAL.md.
    >
    > ⛔ **`SKILL_SOURCE` = repozytorium (`main`), NIGDY kopia zainstalowana
    > w hoście (F-221/F-223, od 6.158).** claude.ai przy imporcie z marketplace
-   > serializuje frontmatter `SKILL.md` ponownie: usuwa komentarze YAML, zdejmuje
+   > serializuje frontmatter (poza pluginem) `SKILL.md` ponownie: usuwa komentarze YAML, zdejmuje
    > wcięcia list, zamienia skalary blokowe na ciągi z literalnym `\n`. Pozostałe
    > pliki są bajtowo zgodne z `main`. Wydanie 6.157 zbudowane z takiej kopii
    > straciło 181 linii frontmatteru audytu i podniosło T22 na `main` z 6 do 113

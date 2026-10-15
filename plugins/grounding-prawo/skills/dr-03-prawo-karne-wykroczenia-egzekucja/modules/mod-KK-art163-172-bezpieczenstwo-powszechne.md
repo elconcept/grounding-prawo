@@ -128,7 +128,7 @@ niezbędne do: a) realizacji ważnych interesów państwa, w tym zapewnienia
 funkcjonowania organów administracji publicznej, b) zapewnienia
 funkcjonowania przedsiębiorstw, c) zaspokajania oraz utrzymywania potrzeb
 obywateli, w tym potrzeb o charakterze lokalnym, d) zapewnienia świadczenia
-usług kluczowych" (zm. Dz.U. 2026 poz. 815, od 4.07.2026); patrz `dr-08-samorzad-terytorialny-prawo-lokalne/modules/
+usług kluczowych" (zm. Dz.U. 2026 poz. 815, od 4.07.2026); patrz `dr-08-samorzad-terytorialny-prawo-lokalne/modules/ (poza pluginem)
 mod-ustawa-zarzadzanie-kryzysowe.md` oraz `dr-01/mod-stany-nadzwyczajne-
 sytuacje-kryzysowe.md`). Przy konkretnej sprawie sprawdź, czy dany obiekt
 jest formalnie wpisany do wykazu infrastruktury krytycznej prowadzonego

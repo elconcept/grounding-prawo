@@ -6,8 +6,8 @@
 > przemianowano z `MOD-DOKUMENT-ANOMALIE_v1.0.0.md` na
 > `MOD-DOKUMENT-ANOMALIE_v1.1.0.md`, żeby nazwa fizyczna zgadzała się z
 > deklarowaną wersją treści. Zaktualizowano oba realne odwołania `view` w
-> pisma-procesowe-v3 (`references/MODULY-MAPA.md`,
-> `references/AUTOMAT-STANOW.md`) — sprawdzone jako jedyne dwa miejsca w
+> pisma-procesowe-v3 (`pisma-procesowe-v3/references/MODULY-MAPA.md`,
+> `pisma-procesowe-v3/references/AUTOMAT-STANOW.md`) — sprawdzone jako jedyne dwa miejsca w
 > całym systemie, które odwoływały się do tego pliku po ścieżce z
 > rozszerzeniem `.md` (pozostałe wzmianki to nazwy koncepcyjne bez ścieżki,
 > nie wymagały zmiany).

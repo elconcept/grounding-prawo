@@ -70,7 +70,7 @@ python szukaj_orzeczen.py --fraza "AI Act odpowiedzialnosc" --sad "Sąd Apelacyj
 
 ### 3. Pobierz akt prawny z EUR-Lex (`/webwright-legal-pl:eurlex`)
 
-Referencyjny skrypt: [`scripts/fetch_eurlex.py`](scripts/fetch_eurlex.py) (Playwright Chromium, ~200 wierszy). Komplementarny do `eu-sparql-search`: SPARQL znajduje akty semantycznie, ten skrypt pobiera pełną treść konkretnego CELEX (do citation grounding i audit bundle).
+Referencyjny skrypt: [`scripts/fetch_eurlex.py`](scripts/fetch_eurlex.py) (Playwright Chromium, ~200 wierszy). Komplementarny do `eu-sparql-search (poza pluginem)`: SPARQL znajduje akty semantycznie, ten skrypt pobiera pełną treść konkretnego CELEX (do citation grounding i audit bundle).
 
 ```bash
 python scripts/fetch_eurlex.py --celex 32024R1689 --out outputs/eurlex
@@ -101,7 +101,7 @@ screenshot_*.png   -> dowód wizualny dla self-verify
 ```
 
 `meta.json` jest zgodny ze schematem oczekiwanym przez `citation-grounding-pl`
-oraz `legal-ai-audit-bundle`: pola `url` i `pobrano_at` umożliwiają późniejszy
+oraz `legal-ai-audit-bundle (poza pluginem)`: pola `url` i `pobrano_at` umożliwiają późniejszy
 audit trail.
 
 ## Workflow (Webwright standard)
@@ -158,3 +158,10 @@ Oprócz konektorów plugin zawiera skill `webwright-legal-pl` - pobiera orzeczen
 
 Plugin dostarcza wyszukiwanie i pobieranie źródeł prawa PL/UE. Nie zastępuje analizy prawnej ani weryfikacji cytatu - tę warstwę daje plugin "fundament weryfikacyjny" (zalecany razem).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** orzeczenie z ms.gov.pl, sn.pl, TK, gdy portal MCP go nie ma
+- **Wynik zapisz w:** tekst orzeczenia w `_robocze/`; sygnatura i teza w `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `citation-grounding-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

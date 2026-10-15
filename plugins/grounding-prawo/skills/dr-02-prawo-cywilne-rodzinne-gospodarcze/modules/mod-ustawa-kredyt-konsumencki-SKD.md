@@ -345,7 +345,7 @@ DOWODY KLUCZOWE:
 
 - **Generator oświadczenia (Etap 1):** `pisma-proste-v2` → schemat
   **SPM — Oświadczenie o skorzystaniu z sankcji kredytu darmowego**
-  (`references/SPM-skd-oswiadczenie.md`)
+  (`pisma-proste-v2/references/SPM-skd-oswiadczenie.md`)
 - **Generator pozwu (Etap 2):** `pisma-procesowe-v3` — sprawa wielowątkowa
   (żądanie zapłaty + ocena skuteczności oświadczenia + ryzyko zarzutu
   prekluzji) → wczytaj ten moduł jako źródło podstawy materialnoprawnej
@@ -355,7 +355,7 @@ DOWODY KLUCZOWE:
   (wykrywanie naruszeń art. 30 już na etapie analizy umowy, zanim
   dojdzie do sporu)
 - **Analiza dowodów / akt sprawy SKD:** `analizator-dowodow-v3` →
-  `modules/MX-dziedziny.md` — dodano kod `[KREDYT-SKD]`
+  `analizator-dowodow-v3/modules/MX-dziedziny.md` — dodano kod `[KREDYT-SKD]`
 - **Ogólne roszczenia konsumenckie:** → `mod-KC-konsumenckie.md`
 - **Nienależne świadczenie (rozliczenie nadpłaty):** →
   `mod-KC-cywilne-zobowiazania-odpowiedzialnosc.md` (art. 405/410 KC)

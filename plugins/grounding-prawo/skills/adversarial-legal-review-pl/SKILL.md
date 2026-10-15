@@ -1,8 +1,6 @@
 ---
 name: adversarial-legal-review-pl
-description: 'Czerwony zespół dla pisma prawnego - bierze gotowy deliverable wysokiej stawki (opinia, memo DD, M&A, pismo procesowe, rekomendacja do zarządu) i prowadzi kontradyktoryjną debatę: builder buduje najmocniejszą wersję tezy, attacker ją atakuje kontrargumentami i kontr-orzecznictwem, synthesizer godzi, verifier robi kontrolę końcową. Cel: wyłapać słabość ZANIM zrobi to przeciwnik, sąd albo klient. Bez bramki kosztu - w profilu właściciela każde pismo jest sprawą wysokiej stawki. Używaj gdy: "przeatakuj tę opinię", "czerwony zespół", "adwokat diabła dla tego pisma", "znajdź słabości", "red team", "stress-test argumentacji", "co powie druga strona", "pre-mortem opinii", "obroń tę tezę", "kontradyktoryjna weryfikacja", "devil''s advocate", weryfikacja high-stakes deliverable przed wysłaniem.
-
-  '
+description: 'Czerwony zespół dla pisma prawnego - bierze gotowy deliverable wysokiej stawki (opinia, memo DD, M&A, pismo procesowe, rekomendacja do zarządu) i prowadzi kontradyktoryjną debatę: builder buduje najmocniejszą wersję tezy, attacker ją atakuje kontrargumentami i kontr-orzecznictwem, synthesizer godzi, verifier robi kontrolę końcową. Cel: wyłapać słabość ZANIM zrobi to przeciwnik, sąd albo klient. Bez bramki kosztu - w profilu właściciela każde pismo jest sprawą wysokiej stawki. Używaj gdy: "przeatakuj tę opinię", "czerwony zespół", "adwokat diabła dla tego pisma", "znajdź słabości", "red team", "stress-test argumentacji", "co powie druga strona", "pre-mortem opinii", "obroń tę tezę", "kontradyktoryjna weryfikacja", "devil''s advocate", weryfikacja high-stakes deliverable przed wysłaniem. Dla zawiadomienia o przestępstwie panel rozszerza relację: pominięte krzywdy, osoby, naruszenia przez organy, dodatkowe czyny, pytania do pokrzywdzonego.'
 license: Apache-2.0
 allowed-tools:
 - Read
@@ -18,6 +16,17 @@ metadata:
 ---
 
 # Adversarial Legal Review PL - czerwony zespół dla pisma prawnego
+
+## WYJĄTEK: ZAWIADOMIENIE — rola „panel rozszerzający”
+
+Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
+poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
+Builder rekonstruuje relację i skutki; attacker szuka pominiętych krzywd, osób i naruszeń przez organy; synthesizer scala pytania, zbiera odpowiedzi i rozwija pismo; verifier sprawdza pokrycie relacji i prawo. Zamiast werdyktów „filary obalone” oddaj mapę otwartych gałęzi, pytania oraz uzupełnienia z odpowiedzi. Każda rola dostaje pierwotną relację; izolacja dotyczy cudzych wniosków.
+Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
+rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
+Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
+Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
 
 ## Filozofia
 
@@ -249,7 +258,7 @@ Filary tezy: 5 | Przetrwały: 2 | Osłabione: 1 | Obalone: 1 | NIEPEWNE: 1
 |------------------------------|------------------|------------|----------------------------|
 | Podstawa roszczenia art. X   | brak (niska)     | przetrwał  | bez zmian                  |
 | Linia orzecznicza SN         | III CZP NN/RR (wysoka)| obalony| usuń lub dodaj zastrzeżenie|
-| Skuteczność zastrzeżenia umownego | II CSK NN/RR (średnia) | NIEPEWNE (NIEWYSTARCZAJĄCY_DOWÓD) | brakuje: pełny tekst uzasadnienia - pobierz przez saos-orzecznictwo |
+| Skuteczność zastrzeżenia umownego | II CSK NN/RR (średnia) | NIEPEWNE (NIEWYSTARCZAJĄCY_DOWÓD) | brakuje: pełny tekst uzasadnienia - pobierz przez saos-orzecznictwo (poza pluginem) |
 | ...                          | ...              | ...        | ...                        |
 
 Kontrola verifiera: 9/10 OK. Punkt 1 (grounding): 1 cytat 🔴 - warunek krytyczny.
@@ -266,7 +275,7 @@ obalonego, (c) uzupełnieniem dowodu dla filaru NIEPEWNEGO albo jawnym zastrzeż
 ```
 
 Pełny zapis debaty (transcript builder/attacker/synthesizer, wszystkie wersje v1..vN)
-zwróć jako załącznik do `legal-ai-audit-bundle` - to dowód kontradyktoryjnej weryfikacji
+zwróć jako załącznik do `legal-ai-audit-bundle (poza pluginem)` - to dowód kontradyktoryjnej weryfikacji
 i ograniczonej rewizji.
 
 ## Ochrona danych (RODO)
@@ -280,9 +289,9 @@ Kontradyktoryjna weryfikacja + jawny poziom pewności + transcript = operacjonal
 człowieka (art. 14) i dokumentacji (art. 12). Człowiek dostaje nie "gotową odpowiedź", lecz
 mapę tego, co przetrwało atak i z jaką pewnością - i na tej podstawie decyduje.
 
-## Różnica od matematic-expert-panel
+## Różnica od matematic-expert-panel (poza pluginem)
 
-`matematic-expert-panel` = wieloperspektywiczna analiza decyzji biznesowej przez 5-7 person
+`matematic-expert-panel (poza pluginem)` = wieloperspektywiczna analiza decyzji biznesowej przez 5-7 person
 (produkt warsztatowy dla zarządu). Ten skill = kontradyktoryjny stress-test JEDNEGO prawnego
 deliverable (teza vs antyteza vs synteza vs weryfikacja). Panel patrzy wszerz, adversarial w głąb.
 
@@ -309,8 +318,8 @@ i przymusową eskalacją (sekcja 4a), deterministyczna funkcja werdyktu z jawnym
 Czwarty wzorzec dodany w v1.2.0: panel rozbieżności (sekcja 4c) z AnttiHero/lavern
 (Apache 2.0, `src/mcp/tools/dissent.ts`) - pytanie multiple-choice do niezależnych ocen,
 split jako FINDING pokazywany verbatim, pętla resolveDissent (autorytet → re-vote →
-eskalacja). Adaptacja od zera: źródła autorytetu polskie i unijne (saos-orzecznictwo /
-ISAP / eu-sparql-search zamiast CourtListener), wpięcie splitu w werdykt NIEPEWNE i wagę
+eskalacja). Adaptacja od zera: źródła autorytetu polskie i unijne (saos-orzecznictwo (poza pluginem) /
+ISAP / eu-sparql-search (poza pluginem) zamiast CourtListener), wpięcie splitu w werdykt NIEPEWNE i wagę
 0.25 zamiast osobnego rejestru panelistów, limit jednej rundy re-vote.
 
 Piąty wzorzec dodany w v1.3.0: ograniczona samorewizja z cofnięciem po regresji (drzewo
@@ -356,3 +365,10 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** pismo po `szturm-na-draft-pl` albo `atak-przeciwnika-pl`; profil MAX - bez bramki kosztu
+- **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `deliverable-fidelity-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

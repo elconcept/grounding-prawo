@@ -5,7 +5,7 @@ NAJPILNIEJSZĄ pozostałą po F-67 lukę pokrycia Kodeksu wykroczeń — częś�
 ogólna (art. 1–48) była CAŁKOWICIE nieobecna jako osobny, systematyczny
 moduł, mimo że stanowi podstawę kwalifikacji dla KAŻDEJ sprawy
 wykroczeniowej (rekomendacja priorytetowa #2 raportu pokrycia KW,
-`references/raporty-pokrycia-2026-08-13/raport-pokrycia-KW.md`).
+`audyt-systemu-v4/references/raporty-pokrycia-2026-08-13/raport-pokrycia-KW.md`).
 
 > ⛔ NIE DUBLUJ: część szczególną (rozdziały VIII-XIX) — patrz
 > `mod-KW-art49-64-porzadek-publiczny.md`, `mod-KW-art70-118-bezpieczenstwo-osoba-zdrowie.md`,

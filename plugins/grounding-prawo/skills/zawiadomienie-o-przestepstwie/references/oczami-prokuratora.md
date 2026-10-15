@@ -1,8 +1,11 @@
 # Oczami prokuratora (F7)
 
-Prokurator rutynowo odmawia wszczęcia. Zawiadomienie ma zostawić mu materiał, którego nie da się
-zbyć jednym zdaniem, w granicach prawdy autora. Ta lista służy do wyboru, co dopytać, i do
-kontroli gotowego pisma. Nie służy do osłabiania relacji.
+Ta kontrola wykrywa luki do dopytania i nieuprawnione redukcje („tylko konflikt”, „tylko dług”).
+Nie przewiduje decyzji organu ani nie wymaga materiału wystarczającego do skazania.
+HARDGATE-ZOP obowiązuje również wobec recenzenta: odrzuć propozycje usunięcia emocji, epizodów
+bez załączników lub zastąpienia relacji dokumentem. Zachowaj relację i popraw źródła wiedzy.
+Pusta lista tropów jest dopuszczalna. Historyczne przepisy poniżej wymagają sprawdzenia przed
+podaniem ich jako aktualnej informacji prawnej.
 
 Źródło wiedzy o drugim końcu procesu: `zazalenie-na-postanowienie-prokuratora` (co się zaskarża po
 odmowie i umorzeniu). Przepisy k.p.k.: t.j. Dz.U. 2026 poz. 490 (zob. `forma.md`).
@@ -23,10 +26,10 @@ Inne typowe zarzuty wobec zawiadomień:
 
 | Zarzut | Co pismo daje |
 |---|---|
-| Sprzeczność z wcześniejszymi zeznaniami | HARDGATE: rozbieżność nazwana i wyjaśniona przez autora; rozbieżności pozorne nie są „naprawiane” |
+| Sprzeczność z wcześniejszymi zeznaniami | AUDYT-B: różnica nazwana, odpowiedź autora lub brak pamięci zapisane; bez wymuszania wyjaśnienia i bez blokady |
 | Wersja funkcjonariuszy lub instytucji jest inna | Rozbieżność nazwana, wersja autora przedstawiona stanowczo |
 | Zawiadamiający „nie jest pokrzywdzonym” | Krzywda autora opisana osobiście i bezpośrednio (art. 49 § 1: dobro prawne naruszone lub zagrożone bezpośrednio); od tego zależy prawo do zażalenia na odmowę (art. 306 § 1 pkt 1) |
-| Brak kontaktu z zawiadamiającym, luki | Pełne dane kontaktowe; wszystko, o co organ musiałby dopytać, jest już w piśmie (art. 307 § 1 i 3: organ może żądać uzupełnienia albo przesłuchać zawiadamiającego) |
+| Brak kontaktu z zawiadamiającym, luki | Pełne dane kontaktowe; znane informacje i luki jawne, bez obietnicy wyczerpania pytań organu (art. 307 § 1 i 3: organ może żądać uzupełnienia albo przesłuchać zawiadamiającego) |
 
 ## Kontrola gotowego pisma
 
@@ -36,7 +39,7 @@ Inne typowe zarzuty wobec zawiadomień:
 - Czy są osoby, które mogą coś wiedzieć, i miejsca, gdzie mogą być ślady?
 - Czy informacje od innych osób mają wskazane źródło?
 - Czy rozbieżności z dokumentami i wcześniejszymi zeznaniami są nazwane?
-- Czy autor występuje jako osoba pokrzywdzona, a nie obserwator?
+- Czy rola autora i źródła jego wiedzy są właściwie opisane, także gdy zawiadamia jako obserwator lub w cudzym imieniu?
 - Czy jest wniosek o ściganie i lista przepisów (tylko zweryfikowane)?
 
 ## Czego tu nie robisz

@@ -112,3 +112,10 @@ Oprócz konektorów plugin zawiera skill `webwright-legal-pl` - pobiera orzeczen
 
 Plugin dostarcza wyszukiwanie i pobieranie źródeł prawa PL/UE. Nie zastępuje analizy prawnej ani weryfikacji cytatu - tę warstwę daje plugin "fundament weryfikacyjny" (zalecany razem).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** pismo cytujące decyzje Prezesa UODO
+- **Wynik zapisz w:** ustalenia do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `subsumpcja-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

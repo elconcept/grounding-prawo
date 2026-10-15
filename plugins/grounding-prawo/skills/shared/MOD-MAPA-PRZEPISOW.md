@@ -231,7 +231,7 @@ jako rozszerzenie pola `priorytety`:
 }
 ```
 
-Pozwala to w zakładce "Historia strategii" (raport-sytuacyjny-v2) porównać,
+Pozwala to w zakładce "Historia strategii" (raport-sytuacyjny-v2 (poza pluginem)) porównać,
 czy między wersjami zmieniła się ocena zgodności tezy dla danego przepisu
 (np. po dostarczeniu nowych dokumentów NIEROZSTRZYGNIĘTA → ZGODNA).
 

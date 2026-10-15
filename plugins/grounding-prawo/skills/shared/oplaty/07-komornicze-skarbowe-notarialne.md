@@ -137,7 +137,7 @@ cywilnych, w których mocodawcy przysługuje **zwolnienie od kosztów sądowych*
 oraz dla pełnomocnictw udzielanych **małżonkowi, wstępnemu, zstępnemu**
 i rodzeństwu — odczytać kolumnę zwolnień części IV w całości.
 
-Dziedzina: `dr-06-podatki-finanse-publiczne-aml`.
+Dziedzina: `dr-06-podatki-finanse-publiczne-aml (poza pluginem)`.
 
 ---
 

@@ -11,6 +11,16 @@ description: "Profil pracy nad własnymi postępowaniami właściciela (sprawy k
 Ten skill nie zastępuje routera. Zawęża jego zachowanie i bramki kosztu innych skilli do jednego profilu:
 osoba prowadząca własne sprawy, każde pismo ma wysoką stawkę i ma być wolne od błędów.
 
+## Wyjątek dla zawiadomienia pokrzywdzonego
+
+Przed regułami 1, 2, 6 i 9 stosuj `zawiadomienie-o-przestepstwie` oraz
+`shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`. Pełna kontrola oznacza tu pełnię i wierność
+relacji, nie tor procesowy ani automatyczny atak. Recenzję uruchamiaj tylko na żądanie autora.
+Brak dowodu lub niewyjaśniona różnica z protokołem nie są krytyczną uwagą blokującą pismo.
+We własnym zawiadomieniu autor pisze „widziałem”, „poczułem”, zgodnie ze swoją pamięcią;
+nie zastępuj tego „X twierdzi” ani „rzekomo”. Źródło informacji cudzej nazwij oddzielnie.
+Weryfikacja prawa i rzeczywistych cytatów pozostaje; nie przenoś jej progu na krzywdę autora.
+
 ## Reguły
 
 1. **Pełna ścieżka zawsze.** Nie proponuj tańszej ścieżki, nie klasyfikuj pisma jako mniej istotnego,

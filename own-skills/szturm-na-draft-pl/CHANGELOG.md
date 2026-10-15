@@ -1,7 +1,18 @@
 # Changelog - szturm-na-draft-pl
 
+## 1.3.0 — 2026-10-15 — recenzja rozszerzająca zawiadomienia
+
+- Dedykowany ZOP-R zamiast pełnomocnika przeciwnika: mikro-sekwencja, skutki, osoby, prawa pokrzywdzonego, organy i dodatkowe kwalifikacje.
+- Każda rola otrzymuje pierwotną relację i odpowiedzi; izolacja dotyczy cudzych wniosków, nie doświadczeń autora.
+- Pętla pytań → odpowiedzi → rozwinięcie pisma → nowe gałęzie, bez limitu rund wywiadu; świadome zakończenie przez autora.
+- Oddzielny schemat rozszerzeń: pytanie nie wymaga targetu, dowodu ani istniejącego akapitu; dopiero gotowa edycja trafia do syntezy.
+- Wspólny protokół w overlay/shared, mandaty recenzentów w patchu 07. Pozostałe rodzaje pism zachowują zwykły szturm.
+- R4a: recenzja mówi autorowi prostym językiem, które opisane zachowania (także osób trzecich, funkcjonariuszy i organów) mogą być osobnymi czynami lub naruszeniem jego praw; bank praw pokrzywdzonego wobec organów (bez numerów artykułów do czasu weryfikacji w t.j.). Eval 8.
+- Opisy: przywrócone frazy wyzwalające szturmu i recenzentów; tryb zawiadomienia dopisywany przez `description_append` w selection.yaml zamiast nadpisywania opisu upstreamu.
+
+
 ## 2026-10-10 - pliki inkrementalne
-- Zapis według `shared/MOD-PLIKI-INKREMENTALNE.md`: katalog roboczy `RUN` = `_robocze/<rrrrMMdd>_<pismo>__szturm/`
+- Zapis według `shared/ARTEFAKTY-SPRAWY.md`: katalog roboczy `RUN` = `_robocze/<rrrrMMdd>_<pismo>__szturm/`
   (zamiast `analiza/PRZEBIEG_<data>/`), REDLINE w `RUN`, wersja czysta `drafty/<pismo>/<rrrrMMdd>_<nazwa>_vN.docx`,
   dopisek przebiegu do `drafty/<pismo>/_PRZEBIEGI.md` obok tury w rejestrze stałym.
 

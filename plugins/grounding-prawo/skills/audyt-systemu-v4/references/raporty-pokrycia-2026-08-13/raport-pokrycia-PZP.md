@@ -1,7 +1,7 @@
 # Raport pokrycia — Prawo zamówień publicznych (PZP)
 
 **Data analizy:** 2026-08-13
-**Zakres skilla:** `dr-07-zamowienia-publiczne-fundusze-ue`
+**Zakres skilla:** `dr-07-zamowienia-publiczne-fundusze-ue (poza pluginem)`
 **Stan prawny bazowy w modułach:** Dz.U. 2026 poz. 793 t.j.
 **Metodologia:** inwentaryzacja treści rzeczywiście obecnej w ośmiu modułach dedykowanych PZP (`mod-PZP-zamowienia-publiczne-KIO` — moduł ogólny, plus siedem modułów tematycznych/działowych). Struktura oficjalna aktu: 13 działów, 623 artykuły (ustawa z 11.09.2019, w mocy od 1.01.2021). Każdy przepis wymaga weryfikacji ISAP przed użyciem w piśmie (HARD GATE), niezależnie od statusu w tym raporcie.
 

@@ -1,3 +1,12 @@
+## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu kwalifikator
+
+Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
+obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
+Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
+nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
+W zawiadomieniu drzewo służy pytaniom o fakty i poszerzaniu możliwych kwalifikacji. Nie testuje, czy pokrzywdzony udowodnił czyn. Linia obrony ani brak ustalonego zamiaru nie uprawniają do osłabiania relacji; nieznane cechy dopytaj, kwalifikację sprawdź osobno.
+Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
+
 # Kwalifikator Karnomaterialny v3.0 — INDEKS (podzielony 2026-08-20, naprawa F-78)
 # Moduł: Drzewo Decyzyjne Podobnych Czynów Zabronionych
 # Dla: prawo-polskie-v2 / `dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-KPK-framework-karne.md` / analiza-sadowa-v6

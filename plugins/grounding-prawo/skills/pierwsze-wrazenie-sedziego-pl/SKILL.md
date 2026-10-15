@@ -1,6 +1,6 @@
 ---
 name: pierwsze-wrazenie-sedziego-pl
-description: 'Ocena pisma procesowego lub argumentacji prawnej z perspektywy sędziego, który czyta je NA ZIMNO, pod presją czasu, z referatem kilkuset spraw. Zwraca ustrukturyzowaną ocenę siedmioczęściową: o co z lektury wygląda sprawa, natychmiastowe punkty zamieszania, co brzmi mocno, co słabo, co jest założone a nieudowodnione, wstępny poziom przekonania (niski/średni/wysoki) i czego trzeba, żeby przekonać. Skill NIE przepisuje, NIE poprawia i NIE atakuje pisma - mówi, jak ono faktycznie LĄDUJE u doświadczonego, sceptycznego czytelnika bez kontekstu. Działa na pozwie, apelacji, zażaleniu, wniosku dowodowym, piśmie przygotowawczym, skardze i każdej ustrukturyzowanej argumentacji. Używaj gdy: "jak to przeczyta sąd", "pierwsze wrażenie", "czy to jest jasne dla sędziego", "test zimnego czytelnika", "jak to wyląduje w sądzie", przed złożeniem pisma procesowego.'
+description: 'Ocena pisma procesowego lub argumentacji prawnej z perspektywy sędziego, który czyta je NA ZIMNO, pod presją czasu, z referatem kilkuset spraw. Zwraca ustrukturyzowaną ocenę siedmioczęściową: o co z lektury wygląda sprawa, natychmiastowe punkty zamieszania, co brzmi mocno, co słabo, co jest założone a nieudowodnione, wstępny poziom przekonania (niski/średni/wysoki) i czego trzeba, żeby przekonać. Skill NIE przepisuje, NIE poprawia i NIE atakuje pisma - mówi, jak ono faktycznie LĄDUJE u doświadczonego, sceptycznego czytelnika bez kontekstu. Działa na pozwie, apelacji, zażaleniu, wniosku dowodowym, piśmie przygotowawczym, skardze i każdej ustrukturyzowanej argumentacji. Używaj gdy: "jak to przeczyta sąd", "pierwsze wrażenie", "czy to jest jasne dla sędziego", "test zimnego czytelnika", "jak to wyląduje w sądzie", przed złożeniem pisma procesowego. W zawiadomieniu o przestępstwie rekonstruuje epizody i skutki, dopytuje o brakujące ogniwa, nie skraca krzywd.'
 license: Apache-2.0
 allowed-tools:
 - Read
@@ -15,6 +15,17 @@ metadata:
 ---
 
 # Pierwsze wrażenie sędziego PL - test zimnego czytelnika
+
+## WYJĄTEK: ZAWIADOMIENIE — rola „czytelnik rekonstruujący”
+
+Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
+poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
+Ustal, czy da się odtworzyć każdy epizod, osobę, czynność, wypowiedź i skutek. Oznacz brakujące ogniwa pytaniami. Nie skracaj całości do pierwszej strony, najmocniejszej tezy lub limitu słów. Obszerną relację porządkuj podtytułami i chronologią, zachowując rozmiar krzywdy.
+Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
+rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
+Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
+Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
 
 ## Filozofia
 
@@ -183,7 +194,7 @@ Tamte dwa SZUKAJĄ słabości aktywnie i agresywnie. Ten skill NEUTRALNIE raport
 także mocne strony - bez zamiaru zniszczenia tezy. Sensowna sekwencja pełnego przeglądu:
 (1) pierwsze wrażenie - jak pismo się czyta, (2) atak przeciwnika - co uderzy druga
 strona, (3) poprawa pisma przez autora, (4) `deliverable-fidelity-pl` - czy finalna
-wersja nie zgubiła ustaleń, (5) `humanizer-pl` - czy tekst nie brzmi jak AI.
+wersja nie zgubiła ustaleń, (5) `humanizer-pl (poza pluginem)` - czy tekst nie brzmi jak AI.
 
 ## Atrybucja
 
@@ -225,3 +236,10 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** draft po kontroli cytatów
+- **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `atak-przeciwnika-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

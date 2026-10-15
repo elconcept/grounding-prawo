@@ -11,6 +11,9 @@ nieistotne albo czego nie umie udowodnić. Relacja bywa chaotyczna. Porządkowan
   odpowiedzi w mapie, przejdź dalej. Nie wysyłaj formularza z trzydziestoma pytaniami.
 - **Bez pytań sugerujących.** „Co zrobił potem?”, nie „Czy potem cię uderzył?”. Wyjątek: lejek
   krzywd (F3), gdzie pytasz o konkretne kategorie, ale bez podsuwania odpowiedzi.
+- **Sprawdzaj przesłankę pytania.** „Teraz pamiętam dwa, a nie raz” nie oznacza, że
+  wcześniejszy protokół zawiera jedno uderzenie. Najpierw ustal, czy autor mówi o wcześniejszej
+  pamięci, rozmowie czy złożonej relacji. Nie umieszczaj nieznanej treści dokumentu w pytaniu.
 - **Bez oceniania.** Nie mów „to mało prawdopodobne”, „nie ma na to dowodu”, „to trudno będzie
   udowodnić”. Na wahanie użytkownika: „Opisz tak, jak pamiętasz. Jeśli czegoś nie jesteś pewien,
   zaznaczymy to.”
@@ -21,7 +24,7 @@ nieistotne albo czego nie umie udowodnić. Relacja bywa chaotyczna. Porządkowan
   wnioskuje (z czego), podejrzewa. Informacje od innych osób są cenne - dopytuj o nie aktywnie
   („Czy ktoś ci potem opowiadał, co widział?”).
 - **Nowe szczegóły są normalne.** Jeśli coś się „właśnie przypomniało”, zapisz to i zanotuj, że to
-  nowy element (ważne dla HARDGATE).
+  nowy element (nowy szczegół dla AUDYTU-B).
 - **Tempo i obciążenie.** To mogą być traumatyczne wspomnienia. Krótkie podsumowanie tego, co już
   wiesz, pomaga użytkownikowi i pokazuje, że słuchasz. Nie komentuj emocjonalnie, nie pocieszaj
   formułkami.
@@ -32,9 +35,10 @@ Stosowana przy przesłuchaniach świadków. Cztery ruchy, których można używa
 1. **Odtworzenie kontekstu:** „Wróć do tamtej chwili. Gdzie stałeś? Co było słychać? Jaka była
    pogoda, światło, co miałeś w rękach?”
 2. **Wszystko, nawet drobiazgi:** „Powiedz też to, co wydaje ci się bez znaczenia.”
-3. **Zmiana kolejności:** „Opowiedz to od końca” albo „zacznij od momentu, kiedy przyjechała
-   policja”.
-4. **Zmiana perspektywy:** „Co widziała osoba stojąca przy drzwiach?”
+3. **Kotwica czasowa:** jeśli autor chce, wróć do wybranego momentu, np. przyjazdu Policji.
+   Nie wymagaj odwróconej chronologii ani odtwarzania szczegółów, których nie pamięta.
+4. **Perspektywa innej osoby:** „Co sam widziałeś z zachowania osoby przy drzwiach?
+   Czy później mówiła ci, co zauważyła?”. Nigdy nie proś o zgadywanie cudzych doznań.
 
 ## Bank pytań na epizod
 
@@ -80,11 +84,65 @@ Stosowana przy przesłuchaniach świadków. Cztery ruchy, których można używa
 ## Znaczniki w notatkach
 
 - `[BRAK FAKTU: …]` dla luki, której użytkownik nie umie uzupełnić. Luka nie wyklucza epizodu z pisma.
-- `[NOWE: …]` dla szczegółu, który przypomniał się teraz (dla HARDGATE).
+- `[NOWE: …]` dla szczegółu, który przypomniał się teraz (dla AUDYTU-B).
 - `[DATA PRZYBLIŻONA]`, gdy autor podaje datę w przybliżeniu. W piśmie piszesz to wprost
   („w drugiej połowie sierpnia 2025 r.”).
 
-## TODO v0.3
-- Przegląd `przesluchanie-swiadkow-v2-min90` pod kątem technik pytań do przejęcia.
-- Bank pytań dla zdarzeń z udziałem funkcjonariuszy (interwencja, zatrzymanie, notatka).
-- Bank pytań dla krzywd rozciągniętych w czasie (nękanie, inwigilacja).
+
+## Pętla adaptacyjna i warunek zakończenia
+
+Po każdej odpowiedzi aktualizuj mapę oraz otwarte gałęzie. Nowa osoba, działanie, wypowiedź,
+miejsce, skutek, źródło wiedzy albo podobny epizod wymaga rozważenia dalszego pytania:
+kto / co dokładnie / kiedy / gdzie / jak długo / co przed / co potem / jaki skutek / skąd wiesz.
+Nie przechodź automatycznie do następnego epizodu po pierwszym zestawie odpowiedzi.
+Wybierz kilka pytań o najważniejszą otwartą gałąź; nie powtarzaj pytań już wyjaśnionych.
+Wewnętrzne cele pytań: `[SEKWENCJA]`, `[ŹRÓDŁO WIEDZY]`, `[SKUTEK]`, `[WZORZEC]`,
+`[KWALIFIKACJA+]`, `[BEZPIECZEŃSTWO]`, `[PILNE ZABEZPIECZENIE]`.
+
+Po mikro-sekwencji sprawdź sąsiednie kwalifikacje: etykieta „ukradł”, „pobił”, „groził” nie
+zastępuje opisu. Pytaj o obserwowalne fakty, bez podpowiadania znamion ani czytania w myślach.
+Pytanie o kategorię nie jest sugestią, że do takiego zachowania doszło; dopuść „nie”, „nie wiem”
+i odmowę odpowiedzi. Nie wyciągaj wniosków przeciw autorowi z przerwy lub fragmentarycznej pamięci.
+
+Po epizodach zrób przegląd:
+- **Skutki:** ciało, emocje, prywatność, majątek, praca, relacje, mieszkanie, dzieci; początek,
+  czas trwania, stan obecny. Ustal osobno datę czynu i ujawnienia następstw.
+- **Wzorzec:** powtarzalność, eskalacja, kontrola, zależność i relacja sił, także inne osoby krzywdzone.
+- **Następstwa:** zachowanie każdej osoby po czynie, naciski, odwet, ukrywanie śladów.
+- **Instytucje:** kto interweniował, co sporządzono, czy przyjęto formalne zgłoszenie; lekarz,
+  szkoła, MOPS/GOPS, NK i pomoc bliskich. Brak lub zamknięcie NK nie przeczą krzywdzie.
+- **Bezpieczeństwo i pilność:** aktualne zagrożenie, bezpieczny kontakt i adres, monitoring,
+  znikające wiadomości, świeże obrażenia, dane o ograniczonej retencji i ryzyko zbycia rzeczy.
+
+Zakończ krótkim „Tak rozumiem…”: przebieg, skutki, źródła i jawne luki. Daj możliwość
+skorygowania i zapytaj o to, co ważne, choć nie padło pytanie. Koniec następuje, gdy nie ma
+nowych gałęzi albo autor świadomie kończy/żąda draftu. Nie ustalaj maksymalnej liczby rund
+ani nie przedłużaj wywiadu po świadomej decyzji autora. Otwarte gałęzie zapisz jako luki,
+nie zamieniaj ich w domyślne odpowiedzi.
+
+## Bank KWALIFIKACJA+ — wybieraj gałęzie pasujące do relacji
+
+To otwarty bank pytań, nie katalog przestępstw ani obowiązek przepytania o wszystko.
+
+| Sygnał z relacji | Co ustalić i jakie odgałęzienie rozważyć |
+|---|---|
+| Przemoc fizyczna | Działanie każdej osoby, kolejność, narzędzie, miejsce trafienia, upadek, możliwość odejścia, czas. Każdy uraz i objaw: początek, nasilenie, ograniczenie funkcji, leczenie, stan obecny. L4 nie przesądza czasu naruszenia czynności narządu; nie diagnozuj ani nie zastępuj biegłego. |
+| Przemoc domowa | Fizyczna, psychiczna, ekonomiczna i seksualna; izolacja, niezaspokajanie potrzeb, zależność, wspólne zamieszkiwanie, dzieci, powtarzalność, eskalacja, interwencje i środki ochrony. Brak uderzeń nie zamyka wątku. |
+| Groźby, zmuszanie, wymuszenie | Słowa/gest/obraz, adresat i bliscy, kanał, żądanie i jego podstawa, oczekiwana korzyść, reakcja, obawa i jej kontekst: wcześniejsze działania, broń, dostęp do autora. Rozróżniaj groźbę, żądanie wymuszenia zachowania i rozporządzenia mieniem; nie zakładaj, że każda groźba z żądaniem to jeden konkretny typ czynu. |
+| Stalking | Oś czasu kontaktów, kont i numerów, pory, częstotliwość, śledzenie, wizyty, kontakt przez innych, podszywanie się. Zagrożenie, poniżenie, udręczenie, prywatność; zmiany snu, pracy, mieszkania, rutyny. Nie wymagaj wcześniejszego sprzeciwu ani kontaktu ze sprawcą. |
+| Mienie | Zabór czy legalne przekazanie/znalezienie? Własność i współwłasność, rzecz, wartość i sposób oszacowania, identyfikatory, warunki, termin zwrotu, odpowiedź na żądanie, sprzedaż/zastaw/ukrycie, zabezpieczenia, przemoc lub groźba. Rozważ kradzież, przywłaszczenie, oszustwo oraz wykroczenie po sprawdzeniu prawa. |
+| Oszustwo | Co powiedziano lub zatajono przed rozporządzeniem, co autor wtedy rozumiał i dlaczego przekazał pieniądze/rzecz/prawo, korzyść, kiedy ujawniono nieprawdę, zachowanie po umowie. Sam brak zapłaty nie przesądza oszustwa; ustna obietnica pozostaje w relacji bez dokumentu. |
+| Funkcjonariusz / zatrzymanie | Role i identyfikacja, służbowe działanie, polecenia i podana podstawa, czas zatrzymania i zwolnienia, siła/kajdanki, warunki, godność, pouczenia, pomoc prawnika/bliskich/lekarza, obrażenia, protokół i jego odczytanie. Zbadaj legalność, zasadność i sposób wykonania jako odrębne kwestie; termin odrębnego zażalenia sprawdź pilnie. |
+| Internet / konta | Platforma, URL, konto/numer, daty i godziny, odbiorcy i zasięg, miejsce odbioru i skutku, przejęcie konta, podszywanie, publikacja/usunięcie, płatności, logi i ich dysponent. Skasowane wiadomości nie usuwają opisu wzorca. |
+| Zniewaga / zniesławienie / konflikt wzajemny | Słowa i gesty, obecność i publiczność, zarzut faktu czy obelga, kanał i zasięg, kto co powiedział lub zrobił w całej wymianie. Pytaj bez obwiniania autora; nie utożsamiaj prywatnoskargowej skargi na Policji ze skargą na działanie policjanta. |
+| Przemoc seksualna | Pozwól wybrać tempo i przerwę. Pytaj tylko o potrzebne okoliczności: zachowanie i zgoda, przymus, bezradność, zależność, wiek, reakcja i następstwa. Nie sugeruj czynności, nie wymagaj zbędnych intymnych detali ani oporu fizycznego; nie traktuj późnego ujawnienia jako niewiarygodności. |
+| Dziecko lub kryzys psychiczny | Ustal wiek, bieżące bezpieczeństwo i bezpieczną osobę dorosłą; rozdziel własne obserwacje od spontanicznie przekazanej relacji dziecka. Nie instruuj do wielokrotnego wypytywania ani sugerowania odpowiedzi dziecku. Nie diagnozuj; przy bezpośrednim zagrożeniu życia, także samobójczym, najpierw pilna pomoc. Informacje o wyspecjalizowanym wsparciu sprawdzaj w aktualnym źródle instytucjonalnym. |
+| Po czynie | Kto, kiedy i jak zacierał ślady, naciskał na autora/świadków, sporządzał dokument, kontaktował się lub mścił. Pomoc przed, w trakcie i po czynie może mieć różne znaczenie; zaznacz źródło wiedzy o celu i świadomości. To mogą być osobne epizody. |
+
+## Tropy dla organu i ochrona śladów
+
+Pytaj również o osoby, które widziały stan po zdarzeniu lub udzieliły pomocy, nie tylko
+bezpośrednich świadków. Ustal dysponenta i lokalizację materiału, okres/identyfikator oraz
+znany termin nadpisania, bez wymyślania retencji. Przy pilności można zaproponować krótki,
+konkretny wniosek o zabezpieczenie; nie zmienia to pisma w obowiązkowy katalog wniosków dowodowych.
+Nie każ zdobywać materiału przez konfrontację ze sprawcą. Brak znanych tropów jest poprawnym wynikiem.

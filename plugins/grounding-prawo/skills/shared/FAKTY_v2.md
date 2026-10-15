@@ -1,3 +1,12 @@
+## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu MOD-FAKTY
+
+Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
+obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
+Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
+nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
+Nie uruchamiaj F0/FSL/LSL ani klasyfikacji BRAK ŹRÓDŁA dla relacji pokrzywdzonego. Sprawdzaj wierność zapisowi autora; cytat z akt porównuj z aktami, nie zastępując nimi relacji.
+Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
+
 # MOD-FAKTY — Weryfikacja Zgodności Faktycznej Pisma ze Źródłem
 
 **Plik kanoniczny:** `shared/FAKTY_v2.md`

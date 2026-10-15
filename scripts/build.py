@@ -101,6 +101,115 @@ def scrub(sel, stats):
 
 
 
+# --- odwołania do skilli spoza pluginu: jedna reguła zamiast ręcznych poprawek ---------------
+OUT_TAG = " (poza pluginem)"
+HISTORY = re.compile(r"CHANGELOG|AUDIT-JOURNAL|HISTORIA|mapa_dzu|REGRESSION|NOTICE|THIRD_PARTY")
+PROVENANCE = re.compile(r"Zast[eę]puje|Pochodzenie|nie ma ju[zż]|©|Źr[oó]d[lł]o:", re.I)
+
+
+def out_of_plugin_re(sel):
+    """Nazwy odrzuconych skilli (i skróty dr-NN), których nie ma w pluginie."""
+    names = {d["name"] for d in sel["drop"]}
+    names |= {n.split("-")[0] + "-" + n.split("-")[1] for n in names if re.match(r"dr-\d\d-", n)}
+    names |= {"iura", "lexcache"}
+    names -= {e["name"] for e in sel["keep"]}
+    alt = "|".join(sorted(map(re.escape, names), key=len, reverse=True))
+    return re.compile(r"(?<![\w/.-])(" + alt + r")(?![\w-])((?:/[\w./@§-]+)?)(?!" + re.escape(OUT_TAG) + ")")
+
+
+def tag_out_of_plugin(sel):
+    """Dopisuje '(poza pluginem)' do odwołań do skilli, których plugin nie zawiera - model widzi, że nie może ich użyć."""
+    rx, n = out_of_plugin_re(sel), 0
+    for e in sel["keep"]:
+        if e.get("fold_into"):
+            continue
+        for root, _, fs in os.walk(os.path.join(SKILLS, e["name"])):
+            for f in fs:
+                p = os.path.join(root, f)
+                if not f.endswith(".md") or HISTORY.search(p):
+                    continue
+                out, changed = [], False
+                for ln in open(p, encoding="utf-8").read().split("\n"):
+                    if not PROVENANCE.search(ln) and rx.search(ln):
+                        ln, k = rx.subn(lambda m: m.group(0) + OUT_TAG, ln)
+                        n += k; changed = True
+                    out.append(ln)
+                if changed:
+                    open(p, "w", encoding="utf-8").write("\n".join(out))
+    return n
+
+
+PATH_REF = re.compile(r"`((?:references|modules|scripts|assets|workflows|shared)/[\w./@§-]+\.\w+)`(?! \(brak w pluginie\))")
+MISSING_TAG = " (brak w pluginie)"
+
+
+def qualify_paths(sel):
+    """Ścieżka bez nazwy skilla, której nie ma w skillu bieżącym: jeśli istnieje w dokładnie jednym innym - dopisz nazwę skilla;
+    jeśli nigdzie - oznacz jawnie, że pliku nie ma w pluginie."""
+    names = [d for d in os.listdir(SKILLS) if os.path.isdir(os.path.join(SKILLS, d))]
+    fixed = missing = 0
+    for e in sel["keep"]:
+        if e.get("fold_into"):
+            continue
+        base = os.path.join(SKILLS, e["name"])
+        for root, _, fs in os.walk(base):
+            for f in fs:
+                p = os.path.join(root, f)
+                if not f.endswith(".md") or HISTORY.search(p):
+                    continue
+                text = open(p, encoding="utf-8").read()
+
+                def fix(m):
+                    nonlocal fixed, missing
+                    rel = m.group(1)
+                    if rel.startswith("shared/"):
+                        cands = [os.path.join(SKILLS, rel)]
+                        ok = os.path.exists(cands[0])
+                    else:
+                        ok = os.path.exists(os.path.join(root, rel)) or os.path.exists(os.path.join(base, rel)) or os.path.exists(os.path.join(SKILLS, rel))
+                    if ok:
+                        return m.group(0)
+                    owners = [n for n in names if os.path.exists(os.path.join(SKILLS, n, rel))]
+                    if len(owners) == 1:
+                        fixed += 1
+                        return f"`{owners[0]}/{rel}`"
+                    missing += 1
+                    return m.group(0) + MISSING_TAG
+
+                new = PATH_REF.sub(fix, text)
+                if new != text:
+                    open(p, "w", encoding="utf-8").write(new)
+    return fixed, missing
+
+
+def add_bridges(sel):
+    """Dopisuje do każdego skilla sekcję MOST z selection/bridges.yaml: skąd wejście, gdzie wynik, co dalej."""
+    bridges = yaml.safe_load(open(os.path.join(ROOT, "selection/bridges.yaml"), encoding="utf-8"))
+    keep = {e["name"] for e in sel["keep"] if not e.get("fold_into")}
+    errors = []
+    for name in sorted(keep):
+        if name in ("shared", "audyt-systemu-v4"):
+            continue
+        b = bridges["skills"].get(name) or (bridges["default_dr"] if name.startswith("dr-") else None)
+        if not b:
+            errors.append(f"bridges.yaml: brak mostu dla {name}")
+            continue
+        for d in b.get("dalej", []):
+            if d not in keep:
+                errors.append(f"bridges.yaml: {name} -> {d} (brak skilla w pluginie)")
+        lines = ["", "", "## MOST - miejsce w przepływie grounding-prawo", "",
+                 f"- **Wejście z:** {b['wejscie']}",
+                 f"- **Wynik zapisz w:** {b['wynik']} (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)",
+                 "- **Następny krok:** " + ", ".join(f"`{d}`" for d in b.get("dalej", []))]
+        if b.get("nie_dubluj"):
+            lines.append(f"- **Nie dubluj:** {b['nie_dubluj']}")
+        lines.append("- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.")
+        sm = os.path.join(SKILLS, name, "SKILL.md")
+        text = open(sm, encoding="utf-8").read().rstrip("\n")
+        open(sm, "w", encoding="utf-8").write(text + "\n".join(lines) + "\n")
+    return errors
+
+
 def fold(sel):
     """Skille z fold_into trafiają do modułów skilla nadrzędnego (modules/typy/) i do tabeli typów pism."""
     groups = {}
@@ -110,24 +219,37 @@ def fold(sel):
     for host, items in groups.items():
         hdir = os.path.join(SKILLS, host)
         tdir = os.path.join(hdir, "modules", "typy")
-        os.makedirs(tdir, exist_ok=True)
-        rows = []
+        rdir = os.path.join(hdir, "references")
+        rows, refs = [], []
         for e in items:
             src = os.path.join(SKILLS, e["name"])
             body = re.sub(r"\A---\n.*?\n---\n", "", open(os.path.join(src, "SKILL.md"), encoding="utf-8").read(), flags=re.S)
-            open(os.path.join(tdir, e["name"] + ".md"), "w", encoding="utf-8").write(
-                f"# Typ pisma: {e['typ']}\n\n> Moduł scalony ze skilla `{e['name']}` (IURA). Stosuj w W1/W2 jako wzorzec struktury i argumentacji dla tego typu pisma; bramki `{host}` obowiązują bez zmian.\n" + body)
+            is_ref = e.get("as") == "reference"
+            outdir = rdir if is_ref else tdir
+            os.makedirs(outdir, exist_ok=True)
+            # zasoby skilla leżą po scaleniu w <katalog>/<nazwa>-references itd.; ścieżki w treści muszą to odzwierciedlać
+            body = re.sub(r"(?<![\w/.-])(references|assets|scripts)/", lambda m: f"{e['name']}-{m.group(1)}/", body)
+            kind = "Referencja" if is_ref else "Typ pisma"
+            hint = ("Czytaj jako metodykę uzupełniającą skilla `" + host + "`.") if is_ref else \
+                f"Stosuj w W1/W2 jako wzorzec struktury i argumentacji dla tego typu pisma; bramki `{host}` obowiązują bez zmian."
+            open(os.path.join(outdir, e["name"] + ".md"), "w", encoding="utf-8").write(
+                f"# {kind}: {e['typ']}\n\n> Moduł scalony ze skilla `{e['name']}` (IURA). {hint}\n" + body)
             for sub in ("references", "assets", "scripts"):
                 if os.path.isdir(os.path.join(src, sub)):
-                    shutil.copytree(os.path.join(src, sub), os.path.join(tdir, e["name"] + "-" + sub), dirs_exist_ok=True)
+                    shutil.copytree(os.path.join(src, sub), os.path.join(outdir, e["name"] + "-" + sub), dirs_exist_ok=True)
             shutil.rmtree(src)
-            rows.append(f"| {e['typ']} | `modules/typy/{e['name']}.md` |")
+            (refs if is_ref else rows).append(
+                f"| {e['typ']} | `{'references' if is_ref else 'modules/typy'}/{e['name']}.md` |")
         sm = os.path.join(hdir, "SKILL.md")
         t = open(sm, encoding="utf-8").read()
-        block = "## TYPY PISM - MODUŁY SPECJALISTYCZNE\n\nGdy typ pisma jest znany, wczytaj odpowiedni moduł i użyj go jako wzorca struktury w W1/W2:\n\n| Typ pisma | Moduł |\n|---|---|\n" + "\n".join(rows) + "\n\n"
-        marker = "## MODUŁY — MAPA WCZYTYWANIA"
-        assert marker in t, "brak markera w " + host
-        open(sm, "w", encoding="utf-8").write(t.replace(marker, block + marker, 1))
+        if rows:
+            block = "## TYPY PISM - MODUŁY SPECJALISTYCZNE\n\nGdy typ pisma jest znany, wczytaj odpowiedni moduł i użyj go jako wzorca struktury w W1/W2:\n\n| Typ pisma | Moduł |\n|---|---|\n" + "\n".join(rows) + "\n\n"
+            marker = "## MODUŁY — MAPA WCZYTYWANIA"
+            assert marker in t, "brak markera w " + host
+            t = t.replace(marker, block + marker, 1)
+        if refs:
+            t = t.rstrip("\n") + "\n\n## REFERENCJE DOŁĄCZONE (IURA)\n\n| Temat | Plik |\n|---|---|\n" + "\n".join(refs) + "\n"
+        open(sm, "w", encoding="utf-8").write(t)
 
 
 def normalize_skill(sm, entry):
@@ -143,6 +265,10 @@ def normalize_skill(sm, entry):
     portable = {k: v for k, v in fm.items() if k in allowed and k != "metadata"}
     if entry.get("description"):
         portable["description"] = entry["description"]
+    if entry.get("description_append"):  # dopisek do opisu upstreamu, bez utraty jego fraz wyzwalających
+        portable["description"] = " ".join(str(portable["description"]).split()) + " " + entry["description_append"]
+    if len(portable["description"]) > 1024:
+        raise SystemExit(f"{entry['name']}: description ma {len(portable['description'])} znaków (limit 1024)")
     if metadata:
         portable["metadata"] = metadata
     open(sm, "w", encoding="utf-8").write(
@@ -171,6 +297,10 @@ def main():
             raise SystemExit(f"brak SKILL.md: {src}")
         shutil.copytree(src, os.path.join(SKILLS, e["name"]), ignore=IGNORE)
 
+    overlay = os.path.join(ROOT, "selection/overlay")  # pliki dopisane do pluginu (np. shared/ARTEFAKTY-SPRAWY.md)
+    if os.path.isdir(overlay):
+        shutil.copytree(overlay, SKILLS, dirs_exist_ok=True)
+
     pdir = os.path.join(ROOT, "selection/patches")
     for p in sorted(os.listdir(pdir)) if os.path.isdir(pdir) else []:
         if p.endswith(".patch"):
@@ -185,7 +315,9 @@ def main():
     stats = collections.Counter()
     scrub(sel, stats)
     print("czyszczenie:", dict(stats))
-    errors = []
+    print("odwołania poza pluginem oznaczone:", tag_out_of_plugin(sel))
+    print("ścieżki zakwalifikowane / brakujące oznaczone:", qualify_paths(sel))
+    errors = add_bridges(sel)
     for e in [x for x in sel["keep"] if not x.get("fold_into")]:
         sm = os.path.join(SKILLS, e["name"], "SKILL.md")
         fm, t, m = frontmatter(sm)

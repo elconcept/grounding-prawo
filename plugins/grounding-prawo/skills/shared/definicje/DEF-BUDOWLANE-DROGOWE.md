@@ -43,7 +43,7 @@ SKRÓCONĄ wersję treści, która w pełnej, bardziej szczegółowej formie
 (strategia obrony krok-po-kroku, parking prywatny jako odrębny reżim,
 karta parkingowa, zaskarżenie uchwały rady gminy) istnieje jako
 DEDYKOWANY MODUŁ:
-→ `view dr-08-samorzad-terytorialny-prawo-lokalne/modules/mod-UDP-strefy-platnego-parkowania.md`
+→ `view dr-08-samorzad-terytorialny-prawo-lokalne/modules/mod-UDP-strefy-platnego-parkowania.md (poza pluginem)`
   (293 linii — zawiera m.in. linię NSA/WSA Białystok II SA/Bk 159/24,
   zarzuty art. 33 UPEA termin 7 dni — patrz DEF-PROCEDURA.md)
 

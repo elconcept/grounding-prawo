@@ -136,11 +136,15 @@ Gdy użytkownik jako pokrzywdzony chce zawiadomić organy ścigania o przestęps
 o przestępstwie", „doniesienie", „zgłosić na policję/do prokuratury", „opisz, co mi zrobił"), zawiadomienie
 nie jest pismem procesowym i nie przechodzi toru pism:
 
-- PRIMARY: `view zawiadomienie-o-przestepstwie/SKILL.md`; skill ma własny kanon (K1–K5) i własną bramkę spójności.
+- PRIMARY: `view zawiadomienie-o-przestepstwie/SKILL.md`; obowiązuje HARDGATE-ZOP, kontrola kompletności A i nieblokujący audyt rozbieżności B.
 - NIE stosuj: ST-INIT/ST-FINAL i FAZY 2–3 STEP-TRACKERA, KROK 0C/PD0, CN-GATE/REM-GATE, KROK 1B, CLAIM-VALIDATION,
   pipeline `pisma-procesowe-v3` ani `pisma-proste-v2`. Relacja pokrzywdzonego nie jest weryfikowana wobec dokumentów
   i nie jest „oględna": ma być subiektywna, ocenna i stanowcza tam, gdzie autor jest pewny.
-- PRAWO-HARDGATE obowiązuje wyłącznie dla listy przepisów na końcu pisma (numer artykułu z aktualnego tekstu).
+- UP-4 / HYBRID-VALIDATION, BLOCK ZERO, MOD-FAKTY, FSL/LSL jako bramki relacji są wyłączone także przed DOCX.
+- Przeczytaj `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`: ten wyjątek wyprzedza wszystkie niższe reguły „zawsze”.
+- Reguła 10: ⬛ danych formalnych wolno zostawić w drafcie; ich brak nie oznacza braku dowodu krzywdy.
+- Szturm i atak tylko na żądanie autora, z mandatem ochrony relacji; format ani recenzja nie zmieniają typu pisma.
+- PRAWO-HARDGATE dotyczy używanych przepisów, trybów i terminów, nigdy dopuszczenia relacji bez dowodów.
 - Gdy to samo zdarzenie wymaga pisma w toczącym się postępowaniu (zażalenie, wniosek dowodowy): wtedy normalny tor.
 
 ## SEKWENCJA GŁÓWNA
@@ -459,3 +463,11 @@ Tylko gdy: pytanie o dostępność modułu, audyt systemu, budowanie kombinacji 
 
 Mosty dziedzinowe (8 skrótów do kanonu DR/shared): rejestr w `references/pokrycie-dziedzinowe.md`,
 sekcja MOSTY.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** pytanie, akta albo draft pisma od użytkownika; `prowadnik-grounding-prawo`, gdy cel niejasny
+- **Wynik zapisz w:** `analiza/_brief.md` (strony, cel, żądania, terminy, wybrana domena i ścieżka) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `prawo-polskie-v2`, `akta-przeszukiwalne-pl`, `pisma-procesowe-v3`, `analiza-sadowa-v6`
+- **Nie dubluj:** `przewodnik-prawny-v2` to fallback routera, nie osobna ścieżka; `prawo-polskie-v2` wywołuj przez router
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

@@ -1,8 +1,8 @@
-# Katalog wzorców AI-slop (z humanizer-pl 1.5.1, MIT)
+# Katalog wzorców AI-slop (z humanizer-pl (poza pluginem) 1.5.1, MIT)
 
 Używany przez `pisz-po-polsku` jako lista kontrolna. Najpierw zasady z SKILL.md (minimalna ingerencja), dopiero potem ten katalog.
 
-# humanizer-pl: usuwanie wzorcow AI ze slop polskiego tekstu
+# humanizer-pl (poza pluginem): usuwanie wzorcow AI ze slop polskiego tekstu
 
 Jestes redaktorem polskiego tekstu. Wykrywasz i usuwasz sygnaly pisania generowanego przez AI, zeby tekst brzmial naturalnie i ludzko. To polska adaptacja blader/humanizer - oryginal jest anglocentryczny, ta wersja niesie polskie listy slow i polska typografie.
 
@@ -49,7 +49,7 @@ W tym rejestrze usuwasz tylko artefakty czatbota (#20-#22), oczywisty filler (#2
 
 ## Miejsce w procesie
 
-`draft .md` -> **humanizer-pl** -> recenzja (np. `marko-pl-content`, jesli go masz) -> poprawki -> publikacja.
+`draft .md` -> **humanizer-pl (poza pluginem)** -> recenzja (np. `marko-pl-content`, jesli go masz) -> poprawki -> publikacja.
 
 
 ## Kalibracja glosu (opcjonalna)
@@ -374,7 +374,7 @@ Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT). Or
 
 Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
 
-Te skille edytują polski tekst - usuwają wzorce pisania AI (humanizer-pl) i recenzują copy pod kątem treści i tonu (marko-pl-content). To narzędzia redakcyjne, nie porada prawna i nie źródło faktów.
+Te skille edytują polski tekst - usuwają wzorce pisania AI (humanizer-pl (poza pluginem)) i recenzują copy pod kątem treści i tonu (marko-pl-content). To narzędzia redakcyjne, nie porada prawna i nie źródło faktów.
 
 ### Reguły
 

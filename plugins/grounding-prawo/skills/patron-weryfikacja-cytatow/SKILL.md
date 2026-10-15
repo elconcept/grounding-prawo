@@ -6,7 +6,7 @@ description: Cytowanie dokumentów w formacie [N] + blok CITATIONS i mechaniczna
 # Weryfikacja cytatów
 
 Skrypt: `scripts/verify_citations.py` w katalogu tego skilla (Python 3, bez zależności).
-Źródła: `.md` (np. po OCR; frontmatter pomijany), `.txt`, `.docx`, `.pdf` przez `pdftotext` -
+Źródła: `.md` (np. po OCR; frontmatter (poza pluginem) pomijany), `.txt`, `.docx`, `.pdf` przez `pdftotext` -
 a gdy obok PDF leży `.md` o tej samej nazwie, brany jest `.md`.
 
 ## 1. Jak cytować dokumenty
@@ -68,3 +68,10 @@ wyjątki). Brak tekstu źródła nigdy nie oznacza potwierdzenia.
 Źródło: Patron (MateMatic Solutions, AGPL-3.0) - `backend/src/lib/citation/grounding.ts`
 (ADR-0005), `mcp-grounding.ts` (ADR-0146), `heuristicCitations.ts`; format cytatów z
 `lib/chat/prompts.ts`.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** odpowiedź modelu lub tabela z cytatami [N] i tekst źródłowy
+- **Wynik zapisz w:** wynik w `_robocze/`; błędy do `_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `citation-grounding-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

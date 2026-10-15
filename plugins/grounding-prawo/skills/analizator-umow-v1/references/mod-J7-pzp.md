@@ -269,7 +269,7 @@ TERMINY ODWOŁANIA (art. 515 PZP) — ✅ RZĄD 1 2026-09-16j:
   ⛔ Poprzednia wersja: „10 dni e-mail/faks, 15 dni inaczej, 5 dni poniżej progów"
      — pomijała 10 dni poniżej progów i zaliczała faks do komunikacji elektronicznej.
   UWAGA: odwołanie po terminie — Izba ODRZUCA (art. 528 pkt 3).
-  Szczegóły i terminy z art. 515 ust. 4: dr-07/mod-PZP-zamowienia-publiczne-KIO, sekcja 4.
+  Szczegóły i terminy z art. 515 ust. 4: dr-07/mod-PZP-zamowienia-publiczne-KIO (poza pluginem), sekcja 4.
 
 TREŚĆ ODWOŁANIA (art. 516 PZP):
   □ Oznaczenie zamawiającego
@@ -283,7 +283,7 @@ TREŚĆ ODWOŁANIA (art. 516 PZP):
 
 WPIS OD ODWOŁANIA:
   Wysokość — rozporządzenie Prezesa Rady Ministrów z 30.12.2020 (Dz.U. 2020 poz. 2437,
-  status: obowiązujący), nie regulamin KIO; kwoty: dr-07/mod-PZP-zamowienia-publiczne-KIO.
+  status: obowiązujący), nie regulamin KIO; kwoty: dr-07/mod-PZP-zamowienia-publiczne-KIO. (poza pluginem)
   Termin: najpóźniej do upływu terminu na wniesienie odwołania (art. 517 ust. 2).
 
 ZAKAZ ZAWARCIA UMOWY (⛔ nie „wstrzymanie postępowania"):

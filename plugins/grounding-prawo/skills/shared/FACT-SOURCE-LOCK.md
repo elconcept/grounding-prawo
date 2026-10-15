@@ -1,3 +1,12 @@
+## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu FACT-SOURCE-LOCK
+
+Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
+obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
+Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
+nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
+Nie stosuj hierarchii wiarygodności FSL-A/B/C ani wynikającej z niej blokady do doświadczeń autora. Nazwij źródło wiedzy i jego pewność bez degradacji relacji wobec dokumentu urzędowego.
+Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
+
 # FACT-SOURCE-LOCK (FSL) — Klasyfikacja i Blokada Twierdzeń Bez Źródła
 
 **Plik kanoniczny:** `shared/FACT-SOURCE-LOCK.md`

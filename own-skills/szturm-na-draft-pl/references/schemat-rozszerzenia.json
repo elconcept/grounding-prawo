@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gałęzie rozszerzające zawiadomienie — nie jest to wejście synteza.py",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "rola",
+      "epizod",
+      "osoba",
+      "punkt_wyjscia",
+      "cel",
+      "pytanie",
+      "status"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "rola": {
+        "type": "string"
+      },
+      "epizod": {
+        "type": "string"
+      },
+      "osoba": {
+        "type": "string"
+      },
+      "punkt_wyjscia": {
+        "type": "string",
+        "description": "Rzeczywisty fragment relacji/odpowiedzi lub jawny brak kontekstu, nie wymóg dowodu ani kotwicy w drafcie."
+      },
+      "cel": {
+        "type": "string"
+      },
+      "pytanie": {
+        "type": "string"
+      },
+      "odpowiedz": {
+        "type": "string"
+      },
+      "zrodlo_odpowiedzi": {
+        "type": "string"
+      },
+      "pewnosc": {
+        "type": "string"
+      },
+      "skutek": {
+        "type": "string"
+      },
+      "hipoteza_prawna": {
+        "type": "string"
+      },
+      "miejsce_w_pismie": {
+        "type": "string"
+      },
+      "status": {
+        "enum": [
+          "DO DOPYTANIA",
+          "ODPOWIEDŹ WŁĄCZONA",
+          "NIE PAMIĘTA",
+          "NIE DOTYCZY",
+          "POMINIĘTE NA ŻĄDANIE",
+          "PRAWO DO SPRAWDZENIA"
+        ]
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "status": {
+              "const": "ODPOWIEDŹ WŁĄCZONA"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "odpowiedz",
+            "zrodlo_odpowiedzi",
+            "miejsce_w_pismie"
+          ]
+        }
+      }
+    ]
+  }
+}

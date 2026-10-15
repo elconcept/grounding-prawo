@@ -12,16 +12,31 @@ wynikają z okoliczności (np. interwencja policji → kategorie funkcjonariusza
 → mienie, mir domowy, groźby, nagrywanie).
 
 Do listy przepisów w piśmie trafia przepis, gdy zachowanie opisane przez autora odpowiada
-brzmieniu przepisu w jego słowach (nie gdy „jest udowodnione”). Przy wątpliwości, który z dwóch
-przepisów pasuje, wpisz oba - wybór należy do organu.
+brzmieniu przepisu w jego słowach (nie gdy „jest udowodnione”). Przy wątpliwości dopytaj o fakty rozróżniające. Warianty lub kumulację przedstaw
+po sprawdzeniu ich podstaw, nie dopisuj automatycznie obu przepisów.
+
+## Otwarty katalog i KWALIFIKACJA+
+
+Katalog nie ogranicza zakresu krzywd. Wątek spoza tabeli zostaje w mapie i piśmie także bez
+ustalonego przepisu. Bank gałęzi w [wywiad.md](wywiad.md) służy rozszerzaniu: groźba → żądanie /
+nękanie / przemoc domowa; rzecz zabrana → przekazanie / przywłaszczenie / podstęp; interwencja →
+siła / wolność / dokument / naciski. Rozważ oddzielne epizody po głównym czynie.
+Nie wyprowadzaj kwalifikacji z samego „tak” na pytanie ogólne ani nie zawężaj opisu do jednego przepisu.
 
 ## Źródło i weryfikacja
+
+Poniższe brzmienia i tryby to historyczny punkt wyjścia, nie gwarancja aktualności. Przed użyciem
+w piśmie sprawdź urzędowy tekst na datę czynu i pisma, zmiany oraz wejście w życie; zapisz źródło,
+wersję i datę sprawdzenia. Ta zasada dotyczy także każdego przepisu już obecnego w tabeli.
+Nie powielaj publikatora ani dawnych progów z pamięci. Przy braku dostępu pomiń niezweryfikowaną
+kwalifikację, zachowując pełny opis i jawną lukę w analizie poza pismem.
+
 
 - Kodeks karny: tekst jednolity **Dz.U. 2025 poz. 383** (ELI `DU/2025/383`; najnowszy t.j. według
   ISAP, sprawdzone 09.10.2026), brzmienia z bazy `mcp/cache/kodeks/kodeks_karny.md` (wersja od
   21.07.2026). Ślad: MCP `isap` (`search_acts`, tytuł „Kodeks karny”).
 - Przepis spoza katalogu: najpierw MCP `isap` (`get_act_text` dla ELI t.j.; wyszukaj „Art. N.”)`
-  (bez `mutool`: PDF z `~/.Codex/cache/lexcache/isap/_pdf/` czytaj przez PyMuPDF). Bez weryfikacji
+  (bez `mutool`: PDF z `pdf_url` odpowiedzi MCP czytaj natywnym `Read`). Bez weryfikacji
   przepis nie trafia do pisma.
 - Wykroczenia (Kodeks wykroczeń): katalog jeszcze ich nie obejmuje - zob. TODO.
 
@@ -68,10 +83,10 @@ autorowi, czego się spodziewać:
 | Kradzież | Czy coś zginęło, ktoś zabrał twoją rzecz? | art. 278 § 1 k.k. | z urzędu; na wniosek, gdy na szkodę osoby najbliższej (§ 4) |
 | Przywłaszczenie | Czy ktoś zatrzymał twoją rzecz, nie oddał rzeczy powierzonej? | art. 284 § 1-2 k.k. | z urzędu; na wniosek, gdy na szkodę osoby najbliższej (§ 4) |
 | Oszustwo | Czy ktoś wprowadził cię w błąd, żebyś oddał pieniądze lub mienie? | art. 286 § 1 k.k. | z urzędu; na wniosek, gdy na szkodę osoby najbliższej (§ 4) |
-| Odwet | Czy coś z tego stało się po tym, jak wcześniej coś zgłosiłeś albo zeznawałeś? | (okoliczność, nie osobny przepis; opisz w narracji) | - |
+| Odwet | Czy coś z tego stało się po tym, jak wcześniej coś zgłosiłeś albo zeznawałeś? | (może być odrębnym czynem; ustal działanie, cel, czas i zweryfikuj kwalifikację) | - |
 | Przemoc wobec bliskich, w obecności dzieci | Czy krzywda dotknęła też innych? Czy widziały to dzieci? | (zależnie od czynu; osobne zawiadomienie lub wątek, gdy pokrzywdzona jest inna osoba) | - |
 
-## Osoba najbliższa (art. 115 § 11 k.k.) - uwaga dla trybu i dla HARDGATE
+## Osoba najbliższa (art. 115 § 11 k.k.) - uwaga dla trybu i AUDYTU-B
 
 Brzmienie: „Osobą najbliższą jest małżonek, wstępny, zstępny, rodzeństwo, powinowaty w tej samej
 linii lub stopniu, osoba pozostająca w stosunku przysposobienia oraz jej małżonek, a także osoba
@@ -81,8 +96,7 @@ razem”: według uchwały 7 sędziów SN z 25.02.2016, I KZP 20/15, wymaga jedn
 (emocjonalnej), fizycznej i gospodarczej (wspólne gospodarstwo domowe); obiektywnie usprawiedliwiony
 brak jednej z nich nie wyklucza pożycia. Zob. `hardgate-spojnosc.md`, „Pozorne sprzeczności”.
 
-## TODO v0.3
-- Kodeks wykroczeń (t.j. do ustalenia w ISAP): naruszenie nietykalności o mniejszej wadze, szkoda w
-  mieniu do progu wykroczenia, złośliwe niepokojenie, nieobyczajny wybryk.
+## Poza dotychczasowym katalogiem — sprawdzaj zależnie od sprawy
+- Kodeks wykroczeń (t.j. do ustalenia w ISAP): szkoda w mieniu do progu wykroczenia, złośliwe niepokojenie, nieobyczajny wybryk.
 - Ustawa o Policji / środki przymusu bezpośredniego - jako kontekst do art. 231 (nie do listy przepisów karnych).
 - Kategorie specyficzne dla spraw z repo (monitoring, psychiatria, toksykologia) z teczek `00_sprawy/`.

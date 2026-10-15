@@ -1,7 +1,7 @@
 # mod-ustawa-sygnalisci — Ochrona Sygnalistów [PERSPEKTYWA PROCESOWA]
 
 **Zakres modułu:** SYGNALISTA jako podmiot chroniący swoje prawa — zgłoszenie, kanały, ochrona przed odwetem, roszczenia, pisma procesowe.
-**Wersja kanoniczna dla compliance pracodawcy / CMS / ISO 37301:** `dr-15` → `mod-ustawa-sygnalisci.md`
+**Wersja kanoniczna dla compliance pracodawcy / CMS / ISO 37301:** `dr-15 (poza pluginem)` → `mod-ustawa-sygnalisci.md`
 **Świadome utrzymanie dwóch wersji:** TAK — zakresy się nie pokrywają; tu perspektywa procesowo-pracownicza, w DR-15 perspektywa compliance pracodawcy.
 
 **Status:** moduł klasy kancelaryjnej
@@ -42,7 +42,7 @@ Ochrona sygnalisty zgłaszającego naruszenia: dobór kanału zgłoszenia (wewn�
 □ Jaki rodzaj naruszenia: korupcja / prawo podatkowe / ochrona środowiska /
   zamówienia publiczne / ochrona konsumentów / usługi finansowe / AML / inne?
   ⚠️ POPRAWKA KRYTYCZNA 2026-07-27 (FAZA 3E/ZASADA 14, ta sama poprawka
-  co w dr-15-compliance-iso-governance-audyt/modules/mod-ustawa-sygnalisci.md): PRAWO PRACY, WŁĄCZNIE Z BHP,
+  co w dr-15-compliance-iso-governance-audyt/modules/mod-ustawa-sygnalisci.md (poza pluginem)): PRAWO PRACY, WŁĄCZNIE Z BHP,
   ZOSTAŁO WPROST USUNIĘTE Z ZAMKNIĘTEGO KATALOGU na etapie senackim,
   mimo że pierwotny projekt MRPiPS je zawierał (potwierdzone: inforlex.pl,
   forbes.pl, sygnalista24.info). W TYM MODULE (perspektywa pracownicza)
@@ -141,16 +141,16 @@ OCHRONA MAJĄTKOWA SYGNALISTY (przy działaniach odwetowych):
 **Output:** 1. Kwalifikacja (zakres naruszenia / kanał); 2. Procedura zgłoszenia; 3. Ochrona sygnalisty; 4. Działania odwetowe (dowody i roszczenia); 5. Rekomendacja + ewentualne pisma.
 
 **Powiązania:**
-- `dr-04` → `mod-KP-prawo-pracy` — zwolnienie, roszczenia pracownicze
-- `dr-04` → `mod-ustawa-PIP-inspekcja-pracy` — PIP jako organ kontroli i kanał zewnętrzny
-- `dr-04` → `mod-KP-naduzycia-pracodawcy-limity-kary-degradacja` (dodane
+- `dr-04 (poza pluginem)` → `mod-KP-prawo-pracy` — zwolnienie, roszczenia pracownicze
+- `dr-04 (poza pluginem)` → `mod-ustawa-PIP-inspekcja-pracy` — PIP jako organ kontroli i kanał zewnętrzny
+- `dr-04 (poza pluginem)` → `mod-KP-naduzycia-pracodawcy-limity-kary-degradacja` (dodane
   2026-07-17) — GDY odwet wobec sygnalisty przybiera formę DEGRADACJI:
   ten moduł (DR-05) dostarcza domniemanie odwetu, tamten (DR-04) dostarcza
   analizę formalnej poprawności samego trybu degradacji (wypowiedzenie
   zmieniające art. 42 KP vs próba zamaskowania kary porządkowej poza
   zamkniętym katalogiem art. 108 KP) — stosuj oba łącznie
 - `pisma-procesowe-v3` — pozew o odszkodowanie za odwet, zawiadomienie do RPO
-- `dr-15` → `mod-ustawa-sygnalisci.md` — perspektywa compliance pracodawcy / CMS / ISO 37301
+- `dr-15 (poza pluginem)` → `mod-ustawa-sygnalisci.md` — perspektywa compliance pracodawcy / CMS / ISO 37301
 
 **Źródła:**
 - https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20240000928

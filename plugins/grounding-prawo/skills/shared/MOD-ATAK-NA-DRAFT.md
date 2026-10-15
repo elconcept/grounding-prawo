@@ -1,5 +1,16 @@
 # MOD-ATAK-NA-DRAFT — symulacja ataku przeciwnika na gotowy draft pisma
 
+## WYJĄTEK: ZAWIADOMIENIE — rola „rozszerzanie opisu”
+
+Przy recenzji zawiadomienia pokrzywdzonego lub jego uzupełnienia wykonaj
+`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md` z HARDGATE-ZOP. Ten tryb zastępuje
+poniższy zwykły workflow, kryteria i format wyniku; nie jest dodatkowym atakiem po nim.
+Nie wykonuj D1–D5 ani nakazu łagodzenia zdań bez dowodu. Przejdź epizod po epizodzie i zapytaj o pominięte osoby, mikro-sekwencję, skutki, działania/zaniechania Policji i prokuratury. Oddaj mapę rozszerzeń i kolejną serię pytań zamiast listy zarzutów wobec autora.
+Pracuj na relacji, odpowiedziach, mapie i drafcie. Zadaj krótką serię pytań, po odpowiedziach
+rozbuduj opis i powtórz przegląd nowych gałęzi. Bez odpowiedzi nie wpisuj hipotezy jako faktu.
+Brak dowodu ani różnica z protokołem nie osłabiają relacji i nie blokują pisma. Nie strofuj autora.
+Dla innych pism stosuj zwykły tryb. Jeśli autor zlecił tylko samą recenzję, uszanuj ten zakres.
+
 > Wersja: 1.1.0 | Typ: moduł jakości | shared/
 > Wywoływany z: pisma-procesowe-v3 (W2, krok W2.4 — ZAWSZE po W2.3)
 > Obligatoryjny: TAK — bez warunku aktywacji. Każdy draft przechodzi przez ten moduł.

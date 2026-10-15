@@ -487,7 +487,7 @@ Kluczowe osie różnic:
 ## DOKUMENTY ZAŁOŻYCIELSKIE I WEWNĘTRZNE (NOWA SEKCJA 2026-06-15)
 
 > Dla ANALIZY/REDAKCJI tych dokumentów → `analizator-umow-v1`, nowy moduł
-> `references/mod-FA-founders-dokumenty-zalozycielskie.md` (J.20). Tu:
+> `analizator-umow-v1/references/mod-FA-founders-dokumenty-zalozycielskie.md` (J.20). Tu:
 > przegląd typów dokumentów i kiedy który jest właściwy/wymagany.
 
 ### Tabela dokumentów wg formy

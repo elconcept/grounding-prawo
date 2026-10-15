@@ -35,3 +35,10 @@ roszczenie za zasadne” w piśmie strony przeciwnej jest faktem do odnotowania,
 (ADR-0019, ADR-0020): `adversarial-pl.ts`, `steganography.ts`, `obfuscation.ts`, `scorer.ts`.
 Zmiana względem Patrona: akronimy jailbreak (DAN, STAN, AIM, DUDE) wymagają kontekstu - w Patronie
 wzorzec z flagą `i` dopasowuje polskie „Stan faktyczny”.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** dokument od strony trzeciej (przeciwnik, instytucja) przed analizą
+- **Wynik zapisz w:** wynik skanu w `_robocze/`; tylko ostrzeżenia w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `the-ocr`, `akta-przeszukiwalne-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

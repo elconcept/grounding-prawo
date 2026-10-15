@@ -51,7 +51,7 @@
 □ ⚠️ NIE korzystaj z ipon.pl jako źródła PRAWNEGO — to portal
   społecznościowy/randkowy, INNY cel niż analiza prawna
 □ Ta sekcja UZUPEŁNIA (nie zastępuje) merytoryczną treść już
-  zbudowaną w `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-swiadczenie-wspierajace-WZON.md`,
+  zbudowaną w `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-swiadczenie-wspierajace-WZON.md (poza pluginem)`,
   `mod-ustawa-rehabilitacja-PFRON.md`, `mod-dodatek-pielegnacyjny-
   swiadczenie-rehabilitacyjne-wyrownawcze.md` i `mod-rzecznik-praw-
   pacjenta-RPP.md` (DR-10) — te moduły dostarczają PRAWO, ten rejestr

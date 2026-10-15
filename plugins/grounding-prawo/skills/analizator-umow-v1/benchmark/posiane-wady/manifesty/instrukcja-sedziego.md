@@ -2,7 +2,7 @@
 
 > **Atrybucja (Apache 2.0).** Struktura metryk i format wyniku niniejszej
 > instrukcji zaadaptowano z `examples/benchmark/manifesty/instrukcja-sedziego.md`
-> projektu **Polish Commercial Legal (commercial-legal-pl)**
+> projektu **Polish Commercial Legal (commercial-legal-pl (poza pluginem))**
 > (https://github.com/apiotrowski-afk/commercial-legal-pl,
 > © Kancelaria Radców Prawnych Żurawska Piotrowski i Wspólnicy, Apache License 2.0).
 > Umowy ocenianie tą instrukcją, manifest wad oraz warunki FAIL są własnym

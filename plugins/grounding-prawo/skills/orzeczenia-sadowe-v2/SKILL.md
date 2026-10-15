@@ -1252,3 +1252,10 @@ Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprec
 > Najnowsza pozycja: **2.17 (2026-09-14)** — snapshot CBOSA z host post-check i jawnym provenance. — routing CBOSA wpięty do RZĄD 2A/shared,
 > exact-match sygnatur NSA/WSA, pełny odczyt sentencji/uzasadnienia oraz
 > statusy FOUND / NOT_FOUND / AMBIGUOUS / OUT_OF_SCOPE z fallbackiem V-SYG-0.5.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** teza do poparcia orzecznictwem; `patron-prawo-pl-zrodla` (wybór konektora)
+- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (sygnatura z narzędzia, teza, link) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `struktura-wyroku-pl`, `citation-grounding-pl`, `pisma-procesowe-v3`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

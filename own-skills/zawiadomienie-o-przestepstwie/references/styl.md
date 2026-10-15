@@ -13,7 +13,7 @@ kto to zrobił, co autor widział, a co z tego wnosi. Prosto, ale nie prostacko.
    - fakt: „widziałem”, „słyszałem”, „poczułem”, „powiedział: «…»”, „wiem od X, że …”;
    - wniosek: „dlatego uważam, że …”, „z tego, co widziałem, wynika dla mnie, że …”;
    - hipoteza: „podejrzewam, że …”, „przypuszczam”, „wydaje mi się” - **raz, przy tezie**.
-   Rozróżnienie służy czytelności, nie asekuracji (K4). Fakt podawaj stanowczo.
+   Rozróżnienie służy czytelności (K4). Pewność języka dopasuj do pamięci autora.
 5. **Pewność tam, gdzie autor jest pewny.** Bez „rzekomo”, „prawdopodobnie miało miejsce”,
    „w mojej subiektywnej ocenie mogło dojść do”.
 6. **Emocje i skutki to treść.** „Od tamtej nocy nie śpię przy zgaszonym świetle.” mówi organowi
@@ -35,7 +35,7 @@ kto to zrobił, co autor widział, a co z tego wnosi. Prosto, ale nie prostacko.
 | „Zawiadamiam o możliwości popełnienia przestępstwa”, „o podejrzeniu”, „mogło dojść do” | asekuracja w otwarciu | „Zawiadamiam o popełnieniu na moją szkodę przestępstwa …” |
 | „Ponoć mnie obrażał.”, „Słyszałem, że …” (bez źródła) | informacja od innych bez źródła | „N.N. powiedziała mi 28 sierpnia, że słyszała, jak mnie obrażał.” |
 | „Pani wcześniej zeznała, że to obca osoba, więc …” | strofowanie autora, pozorna sprzeczność (HARDGATE) | (nie pisz; zob. `hardgate-spojnosc.md`, test pozornej sprzeczności) |
-| „Wnoszę o przeprowadzenie dowodu z przesłuchania świadka X oraz zabezpieczenie monitoringu.” | lista czynności (K3) | „Wszystko widziała sąsiadka, X. Nad wejściem do sklepu jest kamera.” |
+| Rozbudowany katalog czynności zamiast relacji | przesłania przebieg zdarzeń | „Wszystko widziała sąsiadka X. Nad wejściem jest kamera”; przy pilności osobno prośba o zabezpieczenie. |
 | „Z ostrożności procesowej wskazuję …”, „niniejszym”, „przedmiotowy”, „ww.” | formuły procesowe | (usuń) |
 | „Rzekomo miał przy sobie nóż.” | asekuracja faktu | „Widziałem w jego ręce nóż.” albo „Wydawało mi się, że trzyma nóż - widziałem błysk ostrza.” |
 | „Pokrzywdzony odczuwał silny lęk.” | trzecia osoba o sobie | „Bałem się, że mnie zabije.” |
@@ -43,14 +43,22 @@ kto to zrobił, co autor widział, a co z tego wnosi. Prosto, ale nie prostacko.
 | „Doszło do zniszczenia mienia.” | strona bierna ukrywa sprawcę | „Kopnął w drzwi mojego auta i wgniótł je.” |
 | „W dniu dzisiejszym”, „w chwili obecnej”, „w związku z powyższym” | wypełniacze | „dziś”, „teraz”, (usuń) |
 
-## Pass anty-AI
+## Integralność podczas redakcji
 
-Po redakcji przejdź `humanizer-pl` (wzorce 1-34 i 43: pisownia 2026) i zadaj pytanie „co tu wciąż
-zdradza AI?”. Wyjątki dla zawiadomienia:
-- `humanizer-pl` #33 (zakres emocji) stosuj mocno: strach, złość, upokorzenie są dozwolone.
-- `patron-pisz-po-ludzku`, sekcja „Teksty prawnicze”, **nie obowiązuje**: formuły procesowe usuwasz (zostają tylko otwarcie, wniosek o ściganie i lista przepisów).
-- Typografia: łącznik „-” (nie pauza), polskie cudzysłowy „…”.
+Brak zewnętrznego potwierdzenia nie zmienia „widziałem” na „rzekomo” ani „mogło dojść”.
+Niepewność autora zachowaj: „około”, zakres dat, „nie pamiętam kolejności”. Słowa przybliżone
+wprowadzaj np. „powiedział mniej więcej: …”; nie twórz pozornie dosłownego cytatu.
+Nie uogólniaj groźby lub obelgi do etykiety, gdy autor pamięta treść.
+Daty względne („wczoraj”, „w poniedziałek”) przeliczaj tylko względem znanej daty relacji,
+nie daty późniejszej redakcji. Jeśli kotwica jest założeniem, oznacz ją do potwierdzenia
+bezpośrednio przy dacie w drafcie, aby nie zniknęła po skopiowaniu samego pisma.
+Strach, ból, upokorzenie, bezsenność i unikanie są doświadczeniem oraz skutkami, a nie zbędną
+retoryką. Usuwaj obelżywe oceny charakteru, jeśli nie niosą informacji; cytowane słowa sprawcy
+pozostają. Po skrótach i recenzji sprawdź pełne pokrycie mapy.
 
-## TODO v0.3
-- Przykład pełnego akapitu przed i po (z draftu z repo, za zgodą autora).
-- Lista żargonu do mechanicznej kontroli (do `scripts/`).
+## Kontrola języka
+
+Wystarcza lokalna kontrola powyższych zasad; nie wymagaj niedostępnego skilla stylistycznego.
+Jeśli używasz dostępnego `pisz-po-polsku`, wybierz „Relacja pokrzywdzonego”. Żadna korekta
+stylistyczna nie może usunąć skutków, zmienić źródła wiedzy lub podnieść/obniżyć pewności autora.
+Zachowaj polskie cudzysłowy i naturalne zdania; nie dodawaj procesowych formuł poza potrzebną formą.

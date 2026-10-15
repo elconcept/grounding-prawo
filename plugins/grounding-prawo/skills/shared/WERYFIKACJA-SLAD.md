@@ -196,7 +196,7 @@ GRAD-3b: GUARD INSTYTUCJA/PRZEDMIOT (NOWE v1.2 — gdy GUARD STRON niemożliwy,
 
         ⚠️ DEDUPLIKACJA: `pisma-procesowe-v3` ma już lokalną, bardziej
         rozbudowaną implementację tej samej kontroli — KROK 3a
-        ZAKRES-STOSOWANIA w `references/W3-WERYFIKACJA.md` (pytania o typ
+        ZAKRES-STOSOWANIA w `pisma-procesowe-v3/references/W3-WERYFIKACJA.md` (pytania o typ
         podmiotu, ten sam przepis/kontekst, ograniczony zakres, utrwalenie
         doktryny). GRAD-3b NIE zastępuje ZAKRES-STOSOWANIA tam, gdzie już
         działa — jest wersją OGÓLNĄ dla skilli, które własnej kontroli

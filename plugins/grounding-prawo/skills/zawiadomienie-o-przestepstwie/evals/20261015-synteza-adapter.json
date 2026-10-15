@@ -1,0 +1,35 @@
+{
+  "relacja_jako_zrodlo": {
+    "target_text": "Skutki:",
+    "new_text": "Skutki: Zapłaciłam 500 zł za leczenie.",
+    "dowody": [
+      "Relacja autora, akapit 1: Zapłaciłam 500 zł za leczenie."
+    ],
+    "naprawa": "REDAKCJA",
+    "waga": "🟠",
+    "klasa": "STYL",
+    "soczewki": [
+      "E4"
+    ],
+    "flagi": [],
+    "stan": "WPROWADZONE",
+    "powody": []
+  },
+  "nowa_kwota_bez_zrodla": {
+    "target_text": "Skutki:",
+    "new_text": "Skutki: Zapłaciłam 500 zł za leczenie.",
+    "dowody": [],
+    "naprawa": "REDAKCJA",
+    "waga": "🟠",
+    "klasa": "STYL",
+    "soczewki": [
+      "E4"
+    ],
+    "flagi": [],
+    "stan": "ZABLOKOWANE",
+    "powody": [
+      "nowe liczby bez pomiaru/zrodla: 500",
+      "dopisuje kwota bez wskazania w dowodzie: 500 zł"
+    ]
+  }
+}

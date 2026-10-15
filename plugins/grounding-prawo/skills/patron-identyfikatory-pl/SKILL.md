@@ -56,3 +56,10 @@ nazwa firmy wymaga formy prawnej (sp. z o.o., S.A., sp. k., s.c. ...).
 Źródło: Patron (MateMatic Solutions, AGPL-3.0) - `backend/src/lib/pl-entities/checksums.ts`,
 `regex.ts` (ADR-0008), `lib/pseudonim/plDetector.ts`. Odwołania do Dz.U. i dane z PESEL -
 dodane w tym porcie.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** tekst z sygnaturami, PESEL, NIP, KRS, ELI
+- **Wynik zapisz w:** wynik walidacji w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `ekstraktor-cytatow-pl`, `citation-grounding-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

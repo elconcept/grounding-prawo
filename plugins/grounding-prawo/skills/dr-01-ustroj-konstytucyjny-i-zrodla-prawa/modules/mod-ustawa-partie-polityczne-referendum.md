@@ -222,7 +222,7 @@ web_search: "subwencja partyjna PKW odrzucenie sprawozdanie orzecznictwo SN NSA"
 | Sytuacja | Skill / Moduł |
 |---|---|
 | Delegalizacja partii — TK | `mod-Konstytucja-TK-skarga-konstytucyjna` |
-| Finanse partii — podatki, dotacje publiczne | `dr-06` |
+| Finanse partii — podatki, dotacje publiczne | `dr-06 (poza pluginem)` |
 | Ustrój władzy (KRS, RM, Prezydent) | `mod-ustawa-KRS-i-ustroj-wladzy` |
 | Pismo procesowe | `pisma-procesowe-v3` |
 | Orzecznictwo NSA (rejestracja, finanse) | `orzeczenia-sadowe-v2` |

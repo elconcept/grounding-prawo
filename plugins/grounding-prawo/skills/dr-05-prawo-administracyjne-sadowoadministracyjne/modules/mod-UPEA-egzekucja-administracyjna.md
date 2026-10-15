@@ -287,8 +287,8 @@ web_search: "UPEA Dz.U. 2026 poz. 1311 isap.sejm.gov.pl tekst jednolity"
 |---|---|
 | Egzekucja komornicza (KPC) | `dr-02` → `mod-KPC-egzekucja-windykacja` |
 | Postępowanie administracyjne (KPA) | `dr-05` → `mod-KPA-postepowanie-administracyjne` |
-| Podatki (zaległości US) | `dr-06` |
-| ZUS (zaległości składek) | `dr-04` → `mod-SUS-ZUS-ubezpieczenia-spoleczne` |
+| Podatki (zaległości US) | `dr-06 (poza pluginem)` |
+| ZUS (zaległości składek) | `dr-04 (poza pluginem)` → `mod-SUS-ZUS-ubezpieczenia-spoleczne` |
 | Pismo: zarzuty / skarga do WSA | `pisma-procesowe-v3` |
 
 ---

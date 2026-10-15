@@ -40,13 +40,13 @@ Ustal, czy akt jest decyzją administracyjną, czynnością wewnętrzną, uchwa�
 > pokrycie prawa oświatowego — znaleziono brak wzajemnej świadomości
 > między modułami): dla SPECYFICZNIE **dyscyplinarki nauczyciela,
 > oceny pracy i orzeczeń PPP** — zob. RÓWNIEŻ
-> `dr-15-compliance-iso-governance-audyt/modules/mod-ustawa-nauczyciele-uczelnie.md`
+> `dr-15-compliance-iso-governance-audyt/modules/mod-ustawa-nauczyciele-uczelnie.md (poza pluginem)`
 > (moduł bardziej szczegółowy dla samego postępowania dyscyplinarnego).
 > Ten moduł (dr-10) pozostaje właściwy dla szerszego kontekstu
 > administracyjnego (kuratorium, skreślenia, decyzje uczelni, KPA/PPSA).
 > ⚠️ **Elementy PRACOWNICZE Karty Nauczyciela** (wynagrodzenie, urlopy,
 > czas pracy, ZFŚS) — BRAK substantywnej treści w całym systemie poza
-> jednolinijkową wzmianką w `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-ZFSS.md` — do
+> jednolinijkową wzmianką w `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-ZFSS.md (poza pluginem)` — do
 > rozbudowy, jeśli temat stanie się aktywny (patrz WARN-OTWARTE.md).
 
 ---

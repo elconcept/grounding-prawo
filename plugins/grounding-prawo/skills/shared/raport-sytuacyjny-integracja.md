@@ -3,7 +3,7 @@
 ## SEKWENCJA WYWOŁANIA (identyczna dla wszystkich skilli)
 
 ```
-1. view raport-sytuacyjny-v2/SKILL.md
+1. view raport-sytuacyjny-v2/SKILL.md (poza pluginem)
    → wykonaj KROK 1–5 zgodnie z SKILL.md (blueprint JSON → show_widget inline HTML)
    Widget generowany jest jako HTML inline z danymi sprawy wbudowanymi jako literały JS.
    NIE ładuj pliku .jsx przez view — widget tworzony jest inline w show_widget.

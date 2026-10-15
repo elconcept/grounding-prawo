@@ -3,7 +3,7 @@
 **Hasła spraw:** ocena skutków dla ochrony danych, DPIA, monitoring wizyjny, wysokie ryzyko przetwarzania, profilowanie, nowa technologia
 
 > **Dodano:** 2026-07-05 (AUDYT-2026-07-05a) — wypełnienie luki operacyjnej RODO.
-> **Wzorzec:** rodo-dpia-pl (bundle ochrona-danych, awesome-matematic-skills-pl).
+> **Wzorzec:** rodo-dpia-pl (poza pluginem) (bundle ochrona-danych, awesome-matematic-skills-pl).
 > **Charakter:** moduł OPERACYJNY (proces + draft), komplementarny do merytorycznych
 > mod-RODO-GDPR-2016-679 i mod-RODO-szczegolowy — nie duplikuje ich treści.
 

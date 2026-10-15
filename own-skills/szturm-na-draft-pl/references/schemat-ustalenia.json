@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "szturm-na-draft-pl/schemat-ustalenia",
   "title": "Ustalenie soczewki szturmu (E1-E4) - wejscie do synteza.py",
-  "description": "Kazda soczewka zwraca liste takich obiektow (plik ustalenia/<nr>_<soczewka>.json). Nie osobny raport. Pola z '_' na poczatku sa ignorowane.",
+  "description": "Kazda soczewka zwraca liste takich obiektow (plik ustalenia/<nr>_<soczewka>.json). Nie osobny raport. Pola z '_' na poczatku sa ignorowane. W trybie ZOP-R tylko gotowe edycje oparte na relacji. Otwarte pytania i nowe gałęzie: schemat-rozszerzenia.json, poza synteza.py.",
   "type": "array",
   "items": {
     "type": "object",

@@ -50,7 +50,7 @@ generalnym
   pkt 7: akty NADZORU nad działalnością organów JEDNOSTEK samorządu
     terytorialnego (⭐ np. rozstrzygnięcie NADZORCZE wojewody
     stwierdzające NIEWAŻNOŚĆ uchwały rady GMINY na podstawie art.
-    91 ustawy O samorządzie gminnym — powiązanie Z dr-08/mod-
+    91 ustawy O samorządzie gminnym — powiązanie Z dr-08/mod- (poza pluginem)
     samorzad-terytorialny)
 
 ⭐⭐⭐ ODRĘBNOŚĆ trybu WZGLĘDEM skargi na DECYZJĘ (art. 53 §1) —

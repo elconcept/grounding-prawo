@@ -126,7 +126,7 @@ ustanawiająca (ten plik → przepis), nie plik satelicki.
 ⚡ **Egzekwowanie (O-11(b), od 2026-09-16e):** `audyt-systemu-v4/scripts/check_tabele_satelickie.py`
 (T32) czyta ten rejestr i w każdym pliku z kolumną „Plik" zgłasza **wiersz tabeli z kwotą bez
 podstawy prawnej** (ani w wierszu, ani w kolumnie „Podstawa" / „Przepis"). Ścieżka `…/`
-rozwija się do katalogu skilla. Wiersz bez ścieżki do pliku (np. `dr-07`) — poza testem.
+rozwija się do katalogu skilla. Wiersz bez ścieżki do pliku (np. `dr-07 (poza pluginem)`) — poza testem.
 
 ⚠️ **Wzorzec błędu wykryty w trzech z nich naraz:** progi WPS opisane jako
 **„art. 27 pkt 1–6 KSCU"**. Art. 27 ustanawia opłatę stałą 200 zł od <!-- T28-OK: cytat opisowy — dokumentacja naprawy -->

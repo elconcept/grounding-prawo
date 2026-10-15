@@ -1,9 +1,18 @@
 ---
 name: pisz-po-polsku
-description: Pisanie i redakcja tekstów po polsku tak, by brzmiały naturalnie, konkretnie i bez manier generycznego stylu AI, z zachowaniem faktów, cytatów, przepisów, sygnatur i stopnia pewności. Używaj przy redakcji pism, notatek, relacji i opisów po polsku oraz gdy tekst brzmi sztucznie. Łączy minimalną ingerencję (naturalne-pisanie), katalog 36 wzorców AI-slop z bramką wierności po przepisaniu (humanizer-pl) i zasady z Patrona (pisz-po-ludzku). Nie zmienia petitum, zarzutów ani ustaleń faktycznych.
+description: Pisanie i redakcja tekstów po polsku tak, by brzmiały naturalnie, konkretnie i bez manier generycznego stylu AI, z zachowaniem faktów, cytatów, przepisów, sygnatur i stopnia pewności. Używaj przy redakcji pism, notatek, relacji i opisów po polsku oraz gdy tekst brzmi sztucznie. Łączy minimalną ingerencję (naturalne-pisanie (poza pluginem)), katalog 36 wzorców AI-slop z bramką wierności po przepisaniu (humanizer-pl (poza pluginem)) i zasady z Patrona (pisz-po-ludzku). Nie zmienia petitum, zarzutów ani ustaleń faktycznych.
 ---
 
 # Pisz po polsku
+
+## Zawiadomienie pokrzywdzonego — pełnia opisu
+
+Przy zleconej recenzji zawiadomienia stosuj `shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`:
+rola skutków i szczegółów. Pytaj o konkretne doznania, słowa, czas, nasilenie i wpływ na życie,
+gdy autor podał skrót; nie dopisuj odpowiedzi. Zachowaj obszerność potrzebną do przedstawienia
+całej krzywdy i epizodów. Usuwaj puste powtórzenia, nie fakty, emocje i odrębne skutki.
+Sama korekta językowa nie uruchamia pełnej recenzji ani nie rozszerza zlecenia na inne pisma.
+
 
 Jeden skill redakcji polskiego tekstu. Zastępuje `humanizer-pl`, `patron-pisz-po-ludzku` i `naturalne-pisanie`.
 Poprawia sposób wypowiedzi, nigdy treść stanowiska.
@@ -55,3 +64,10 @@ brak zmiany jest prawidłowym wynikiem redakcji. Nie obiecuj niewykrywalności d
 | `scripts/audyt_po_przepisaniu.py`, `tests/` | bramka wierności po przepisaniu |
 
 Pochodzenie: humanizer-pl (MIT, MateMatic), naturalne-pisanie (elconcept), pisz-po-ludzku (Patron, AGPL-3.0). Zob. pliki NOTICE-*.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
+- **Wynik zapisz w:** nowa wersja `drafty/<pismo>/..._vN+1` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `redline-docx-pl`, `deliverable-fidelity-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

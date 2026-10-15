@@ -152,5 +152,5 @@ Załączniki:
 
 *SPE-OSTATECZNE · v1.0 · 2026-05*
 *Moduł: pisma-proste-v2/references/SPE-ostateczne.md*
-*Powiązane: SPE (wezwanie zwykłe), dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-KPC-egzekucja-windykacja.md, dr-06-podatki-finanse-publiczne-aml/modules/mod-OP-ordynacja-podatkowa.md*
+*Powiązane: SPE (wezwanie zwykłe), dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-KPC-egzekucja-windykacja.md, dr-06-podatki-finanse-publiczne-aml/modules/mod-OP-ordynacja-podatkowa.md (poza pluginem)*
 *Weryfikacja: ELI (RZĄD 1) · nbp.pl (kurs EUR) · sn.pl (uchwała III CZP 6/19)*

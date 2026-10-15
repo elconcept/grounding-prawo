@@ -108,7 +108,7 @@ web_search: "dyskryminacja art 18(3a) KP orzecznictwo SN uprawdopodobnienie"
 
 | Sytuacja | Skill / Moduł |
 |---|---|
-| Prawo pracy ogólnie (wypowiedzenie, umowa) | `dr-04` |
+| Prawo pracy ogólnie (wypowiedzenie, umowa) | `dr-04 (poza pluginem)` |
 | Pismo: pozew o zadośćuczynienie / odszkodowanie | `pisma-procesowe-v3` |
 | Orzecznictwo SN — mobbing | `orzeczenia-sadowe-v2` |
 | Wycena i ocena dowodów | `analizator-dowodow-v3` |
@@ -208,6 +208,6 @@ Przedawnienie:
 
 | Sytuacja | Skill / Moduł |
 |---|---|
-| Mobbing + wypowiedzenie w tym samym czasie | `dr-04` → `mod-KP-prawo-pracy` (termin 21 dni!) |
-| Skarga do PIP | `dr-04` → `mod-ustawa-PIP-inspekcja-pracy` |
-| Projekt nowelizacji KP (UD183) | `dr-04` → `mod-KP-prawo-pracy` → Aneks A |
+| Mobbing + wypowiedzenie w tym samym czasie | `dr-04 (poza pluginem)` → `mod-KP-prawo-pracy` (termin 21 dni!) |
+| Skarga do PIP | `dr-04 (poza pluginem)` → `mod-ustawa-PIP-inspekcja-pracy` |
+| Projekt nowelizacji KP (UD183) | `dr-04 (poza pluginem)` → `mod-KP-prawo-pracy` → Aneks A |

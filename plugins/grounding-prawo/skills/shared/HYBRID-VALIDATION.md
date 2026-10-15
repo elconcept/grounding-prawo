@@ -1,3 +1,12 @@
+## WYJĄTEK: ZAWIADOMIENIE — przed regułami modułu HYBRID-VALIDATION
+
+Jeśli tworzysz, uzupełniasz, recenzujesz lub eksportujesz zawiadomienie pokrzywdzonego,
+obowiązuje `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i kanon skilla zawiadomienia.
+Relacja autora wystarcza do redakcji: brak zewnętrznego dowodu lub zgodności z protokołem
+nie usuwa krzywdy, nie osłabia pewnego spostrzeżenia i nie blokuje pisma. Nie strofuj autora.
+Pomiń BLOCK ZERO, wywołania MOD-FAKTY/FSL/LSL i dowodowe warstwy A–D dla relacji autora. Nie uruchamiaj poniższego schematu dla zawiadomienia; wykonaj wyłącznie kontrolę prawa, rzeczywistych cytatów i formy według wyjątku. Nie klasyfikuj braku dowodu jako 🔴 lub 🟡.
+Ten warunek wyprzedza wszystkie poniższe „zawsze” i bramki. Poza zawiadomieniem stosuj zwykły tryb.
+
 # HYBRID-VALIDATION — Walidacja hybrydowa po wygenerowaniu pisma / dokumentu
 
 ## KIEDY URUCHAMIAĆ

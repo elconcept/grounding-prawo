@@ -752,14 +752,14 @@ ZASADY:
 ## INTEGRACJA Z INNYMI SKILLAMI
 
 ```
-→ raport-sytuacyjny-v2 [NOWE — v1.1]:
+→ raport-sytuacyjny-v2 (poza pluginem) [NOWE — v1.1]:
    Po zakończeniu ekstrakcji TRYB A lub TRYB B:
    Przekaż dane chronologii jako tablicę JSON do blueprintu raportu sytuacyjnego.
-   Format zgodny ze schematem raport-sytuacyjny-v2:
+   Format zgodny ze schematem raport-sytuacyjny-v2 (poza pluginem):
      chronologia: [
        { data, zdarzenie, zrodlo, status_zrodla, znaczenie_procesowe, ryzyko }
      ]
-   Wywołanie: raport-sytuacyjny-v2 TRYB [A] odbiera tablicę automatycznie
+   Wywołanie: raport-sytuacyjny-v2 (poza pluginem) TRYB [A] odbiera tablicę automatycznie
    z historii rozmowy. Żeby zasilić go danymi z chronologii:
    Po KROK A4 lub B3 — dodaj do odpowiedzi gotową strukturę JSON z zakodowanymi
    zdarzeniami, opatrzoną nagłówkiem:
@@ -852,3 +852,11 @@ view shared/QUALITY-CHECK.md
 ```
 
 Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprecyzować analizę dziedzinową.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** indeks akt (`akta-przeszukiwalne-pl`) i dokumenty po OCR
+- **Wynik zapisz w:** `analiza/_chronologia.md` (dopisywana, pozycje ze stałym ID) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `chronologia-stanowiska-pl`, `analizator-dowodow-v3`, `przesluchanie-swiadkow-v2-min90`
+- **Nie dubluj:** `chronologia-stanowiska-pl` to mechaniczna kontrola cytat-strona i zestawienie stanowisk stron; nie buduj drugiej osi czasu
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

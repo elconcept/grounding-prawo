@@ -1,7 +1,20 @@
 # Historia zmian
 
+## v0.4 (2026-10-15) — integralność narracji
+- Dokończenie po przerwanej sesji Astry: przywrócone frazy wyzwalające w opisie skilla; tabela skilli pomocniczych kieruje szturm/atak/adversarial do recenzji rozszerzającej (R4a: czyny i naruszenia praw, których autor nie nazwał, także przez organy) zamiast mandatu przeciwnika.
+- Uzupełnienie po audycie `INBOX/20261010_AUDYT_SKILLI_kolizje_zawiadomienia.md`: zamknięta kolizja A2 (HYBRID/BLOCK ZERO), doprecyzowane A3 (draft a dane formalne), A6 (pochodzenie edycji/kwoty z relacji), A7 (brak repo nie blokuje). Wbrew dawnemu zaleceniu A9 „bez zmian” dodano ochronę także w punktach wejścia recenzji zgodnie z późniejszą instrukcją użytkownika.
+- Kontrakt między modułami w `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`, źródło `selection/overlay/shared/`; wyjątki w routerze i patchu 06 dla HYBRID, FAKTY, CLAIM, FSL/LSL, ataku, adversarial i kwalifikatora. Szturm oraz profil mają własny warunek wejścia; most nie wymusza automatycznej recenzji.
+- Poprawki po testach: data względna zakotwiczona w relacji, kontrola przesłanki pytania o wcześniejszy zapis, bez domyślnego autorstwa cytatu; formalna gotowość oddzielona od zakończenia redakcji.
+- HARDGATE-ZOP chroni relację także po recenzji lub załadowaniu korpusu dowodowego. Brak zewnętrznego dowodu nie usuwa ani nie osłabia epizodu.
+- HARDGATE-A kontroluje kompletność wywiadu z możliwością świadomego zakończenia przez autora; AUDYT-B ujawnia różnice bez blokady złożenia. Zastępuje blokujący K5 z v0.3.
+- Wywiad adaptacyjny, gałęzie KWALIFIKACJA+, przegląd skutków/wzorca/następstw/instytucji/pilności, podsumowanie do korekty; bez zgadywania cudzej perspektywy.
+- Rozdzielone narracja, tropy i informacje praktyczne; mapa zawiera źródło i pewność pamięci. Prawo z historycznego katalogu wymaga ponownej weryfikacji dla sprawy.
+- Zachowane preferencje autora dotyczące pierwszej osoby, otwarcia, wniosku o ściganie i listy przepisów; wyjaśniono ich zakres i brak blokady przy niezweryfikowanej kwalifikacji.
+- Pochodzenie: [pochodzenie i memo researchowe](research.md) (38 pozycji, w tym duplikaty). Narracja/tropy: źródła 1–4, 8, 14; wywiad/skutki: 1–10, 12, 15–17, 24, 27, 30, 34–36; bezpieczeństwo: 7, 12, 23, 36; routing/aktualność: 13, 18–22, 25–26, 28–29, 32–33, 37. Blogi służą projektowaniu pytań, nie ustalaniu aktualnego prawa.
+- Rozszerzone evale behawioralne do 21 scenariuszy. [Forward-test](../evals/20261015-forward-test.md): 11 dokładnych promptów i 6 wariantów pokrywających 17 ID, z jawnymi błędami oraz retestami. [Test integracji](../evals/20261015-integration-test.md): cztery próby po audycie, zakres i ograniczenia oraz rzeczywisty test adaptera syntezy. Nie deklaruje pełnego testu DOCX ani wielokrotnej stabilności modelu.
+
 ## v0.3 (2026-10-10)
-- Zapis według `shared/MOD-PLIKI-INKREMENTALNE.md`: mapa krzywd i raport HARDGATE jako pliki inkrementalne pisma
+- Zapis według `shared/ARTEFAKTY-SPRAWY.md`: mapa krzywd i raport HARDGATE jako pliki inkrementalne pisma
   (`_MAPA_KRZYWD.md`, `_HARDGATE.md`), jednorazowe pliki w `_robocze/`.
 
 ## v0.2.1 (2026-10-10)

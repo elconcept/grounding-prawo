@@ -6,14 +6,14 @@
 # internal: true = moduł pomocniczy routera; pozostaje dostępny dla modelu (import OpenAI odrzuca disable-model-invocation).
 # Zasada: LexMachina jest spleciona (shared odwołuje się do audyt-systemu 33x, do DR-04..15 16x),
 # więc jest zachowana jako zamknięty silnik; wycinamy tylko moduły, które da się odciąć patchem.
-version: "0.1.1"
+version: "0.2.0"
 keep:
   # --- silnik: LexMachina (wersja rozwojowa, przypięta do commita w submodule) ---
   - {name: prawny-router-v3, from: lex, why: "jedyny router; patch: KROK 0A zamknięty na stałe bez anonimizacji, requires przycięte"}
   - {name: shared, internal: true, from: lex, why: "biblioteka hard-gate'ów, wymagana przez wszystkie skille silnika; nie jest agentem"}
   - {name: prawo-polskie-v2, from: lex, why: "kwalifikacja postępowań, ROUTING-MAP do DR"}
   - {name: analiza-sadowa-v6, from: lex, why: "wieloprzebiegowy audyt sądowy"}
-  - {name: analizator-dowodow-v3, from: lex, why: "sprzeczne zeznania, dokumentacja medyczna, nagrania, działania Policji"}
+  - {name: analizator-dowodow-v3, from: lex, why: "sprzeczne zeznania, dokumentacja medyczna, nagrania, działania Policji", description_append: "Przy zawiadomieniu o przestępstwie: mapa osób, ról i zachowań oraz pytania rozszerzające; relacja pokrzywdzonego nie wymaga dowodu."}
   - {name: analizator-przepisow-v2, from: lex, why: "przesłanki, wyjątki, brzmienie obowiązujące"}
   - {name: analizator-umow-v1, from: lex, why: "umowa najmu i kaucja; 13 odwołań z DR-02, więc odcięcie zepsułoby routing"}
   - {name: chronologia-sprawy-v1, from: lex, why: "oś zdarzeń i niespójności między postępowaniami"}
@@ -36,11 +36,11 @@ keep:
   # --- weryfikacja: awesome-matematic ---
   - {name: citation-grounding-pl, from: "awe:fundament-weryfikacyjny", why: "kontrola treści cytatu (ISTNIENIE/TREŚĆ/FRAGMENT); LexMachina tego nie sprawdza"}
   - {name: ekstraktor-cytatow-pl, from: "awe:fundament-weryfikacyjny", why: "znajduje wszystkie powołania przed weryfikacją; sprawdzić, czy ma działający kod"}
-  - {name: adversarial-legal-review-pl, from: "awe:fundament-weryfikacyjny", why: "debata czterech ról; bramka kosztu do wyłączenia patchem"}
-  - {name: atak-przeciwnika-pl, from: "awe:fundament-weryfikacyjny", why: "osobny przebieg ataku"}
-  - {name: pierwsze-wrazenie-sedziego-pl, from: "awe:fundament-weryfikacyjny", why: "zimna lektura"}
-  - {name: subsumpcja-pl, from: "awe:fundament-weryfikacyjny", why: "pokrycie przesłanek faktami"}
-  - {name: deliverable-fidelity-pl, from: "awe:fundament-weryfikacyjny", why: "czy ustalenia RED trafiły do pisma; check słowny traktować jako sito"}
+  - {name: adversarial-legal-review-pl, from: "awe:fundament-weryfikacyjny", why: "debata czterech ról; bramka kosztu do wyłączenia patchem", description_append: "Dla zawiadomienia o przestępstwie panel rozszerza relację: pominięte krzywdy, osoby, naruszenia przez organy, dodatkowe czyny, pytania do pokrzywdzonego."}
+  - {name: atak-przeciwnika-pl, from: "awe:fundament-weryfikacyjny", why: "osobny przebieg ataku", description_append: "Dla zawiadomienia o przestępstwie nie atakuje: szuka pominiętych krzywd, sprawców i naruszeń przez organy oraz dopytuje pokrzywdzonego."}
+  - {name: pierwsze-wrazenie-sedziego-pl, from: "awe:fundament-weryfikacyjny", why: "zimna lektura", description_append: "W zawiadomieniu o przestępstwie rekonstruuje epizody i skutki, dopytuje o brakujące ogniwa, nie skraca krzywd."}
+  - {name: subsumpcja-pl, from: "awe:fundament-weryfikacyjny", why: "pokrycie przesłanek faktami", description_append: "Przy zawiadomieniu o przestępstwie szuka dodatkowych czynów, sprawców i naruszeń przez funkcjonariuszy; braki zamienia w pytania do pokrzywdzonego."}
+  - {name: deliverable-fidelity-pl, from: "awe:fundament-weryfikacyjny", why: "czy ustalenia RED trafiły do pisma; check słowny traktować jako sito", description_append: "Dla zawiadomienia o przestępstwie sprawdza pokrycie całej relacji pokrzywdzonego: epizody, osoby, rozmiar krzywdy, pewność i źródło wiedzy."}
   - {name: struktura-wyroku-pl, from: "awe:orzecznictwo-zrodla", why: "rozdziela sentencję, ratio, votum separatum"}
   - {name: uodo-grounding-pl, from: "awe:orzecznictwo-zrodla", why: "decyzje UODO, sprawa RODO"}
   - {name: webwright-legal-pl, from: "awe:orzecznictwo-zrodla", why: "orzeczenia z ms.gov.pl, sn.pl, TK bez MCP; wymaga Playwrighta"}
@@ -52,12 +52,19 @@ keep:
   - {name: redline-docx-pl, from: "awe:dokumenty", why: "Track Changes; sanitize metadanych jest jawną komendą, nie domyślną operacją"}
   - {name: klauzule-kontraktowe-pl, from: "awe:dokumenty", why: "umowa zarządzania najmem"}
   - {name: rodo-dsar-pl, from: "awe:ochrona-danych", why: "żądania dostępu, sprostowania, usunięcia własnych danych"}
-  - {name: marko-pl-content, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: marko-pl-content, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny", description_append: "W zawiadomieniu o przestępstwie zachowuje emocje i skutki, dopytuje o szczegóły krzywdy."}
   - {name: ocena-outputu-pl, from: "awe:fundament-weryfikacyjny", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: patron-weryfikacja-cytatow, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: doc-intel-contract-pl, description: "Normalizuje OCR/PDF do kontraktu dokumentu: bloki tekstu, bbox, confidence, flagi PII i powiązanie cytatu z regionem strony. Używaj do normalizacji OCR, oceny bloków wymagających przeglądu, przygotowania redakcji PII oraz dzielenia teczki akt na pisma. Obsługuje pdftotext, Chandra OCR, LiteParse i OCR PATRONa/Gaius-Lex; działa deterministycznie w Python stdlib bez LLM. Współpracuje z citation-grounding-pl.", from: "awe:dokumenty", internal: true, transitional: true, why: "jedyny dom tablicy prawdy normalizacji, którą testuje citation-grounding-pl (test-grounding.mjs 34/34). Ma mechanizmy maskowania - nieużywane, moduł pomocniczy routera"}
   - {name: patron-przeglad-tabelaryczny, from: own, why: "tabelaryczny przegląd dokumentów (z pipeline Patrona); do wzbogacenia o klauzule/kolumny pod Twoje sprawy"}
   - {name: pisz-po-polsku, from: own, why: "JEDEN skill redakcji: scala humanizer-pl + naturalne-pisanie + patron-pisz-po-ludzku (pliki skopiowane do own-skills, zmiany upstreamu trzeba przenosić ręcznie)"}
+  # --- wiedza z pluginu IURA scalona w moduły (nie osobne skille) ---
+  - {name: cofniecie-pozwu-ze-zrzeczeniem-roszczenia, from: own, fold_into: pisma-procesowe-v3, typ: "cofnięcie pozwu ze zrzeczeniem się roszczenia", why: "IURA: moduł typu pisma"}
+  - {name: wniosek-o-rozprawe-zdalna, from: own, fold_into: pisma-procesowe-v3, typ: "wniosek o rozprawę w trybie zdalnym", why: "IURA: moduł typu pisma (cywilne, karne)"}
+  - {name: decyzja-procesowa-prokuratora, from: own, fold_into: pisma-procesowe-v3, typ: "ocena decyzji procesowej prokuratora (wzorzec formy)", why: "IURA: wiedza o formie decyzji, używana do oceny cudzej decyzji i budowy zażalenia"}
+  - {name: notatka-prawna, from: own, fold_into: pisma-procesowe-v3, typ: "notatka prawna (memo wewnętrzne)", why: "IURA: struktura notatki; zastępuje osobny skill, wynik do analiza/_podsumowanie.md"}
+  - {name: eu-legal-memo, from: own, fold_into: pisma-procesowe-v3, typ: "memo z prawa UE (TSUE, CELEX)", why: "IURA-EU: memo prawa UE na eu-sparql i eu-compliance"}
+  - {name: przeglad-umow, from: own, fold_into: klauzule-kontraktowe-pl, as: reference, typ: "przegląd umowy wg playbooka (klasyfikacja wagi odstępstw, propozycje zmian)", why: "IURA: metodyka przeglądu umów; referencja zamiast osobnego skilla"}
   # --- źródła zewnętrzne ---
   - {name: the-ocr, from: own, why: "własny OCR (Datalab/Azure DI/Google Vision); kopia skilla z aplikacją w środku, źródło: agents/skills/the-ocr"}
   # --- skille własne, bez upstreamu (own-skills/) ---
@@ -75,6 +82,7 @@ keep:
   - {name: zazalenie-na-postanowienie-prokuratora, from: own, fold_into: pisma-procesowe-v3, typ: "zażalenie na postanowienie prokuratora", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
   - {name: zawiadomienie-o-przestepstwie, from: own, why: "pisane przez pokrzywdzonego obywatela"}
   - {name: zarzuty-do-opinii-bieglego, from: own, fold_into: pisma-procesowe-v3, typ: "zarzuty do opinii biegłego", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
+  - {name: prowadnik-grounding-prawo, from: own, why: "skill wejściowy: wybór ścieżki A-E, mosty między skillami (graf w selection/bridges.yaml, opis w README.md)"}
   - {name: profil-postepowan-wlasnych, from: own, why: "NOWY, mały skill nadrzędny (szkic do akceptacji): pełna ścieżka kontroli, brak anonimizacji, osobne przebiegi soczewek"}
 drop:
   - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ISAP)", archive: true}
@@ -92,7 +100,6 @@ drop:
   - {name: raport-sytuacyjny-v2, why: "niepotrzebny"}
   - {name: legal-ai-audit-bundle, why: "to nie USA: nikt w PL nie oczekuje sha256 pliku poza sprawami o zbrodnie; rejestr kontroli w Basic Memory"}
   - {name: lexcache, why: "cache zastąpiony przez MCP z lokalnym dumpem SAOS (lex.xlap.pl/mcp)", archive: true}
-  - {name: wniosek-o-rozprawe-zdalna, why: "decyzja właściciela", archive: true}
   - {name: saos-orzecznictwo, why: "zastąpiony przez mcp-saos z lokalnym dumpem"}
   # LexMachina
   # awesome
@@ -125,17 +132,12 @@ drop:
   - {name: root-cause-tracing, why: "narzędzie developerskie"}
   - {name: skill-creator, why: "narzędzie developerskie"}
   # lokalne, bez upstreamu -> archive/ (płasko)
-  - {name: decyzja-procesowa-prokuratora, why: "pisanie decyzji prokuratora", archive: true}
-  - {name: cofniecie-pozwu-ze-zrzeczeniem-roszczenia, why: "poza profilem, drugi generator pism", archive: true}
   - {name: patron-obrona-pisma, why: "duplikat szturm-na-draft-pl", archive: true}
   - {name: patron-pismo-procesowe-pl, why: "duplikat pisma-procesowe-v3", archive: true}
   - {name: patron-streszczenia-umow, why: "kancelaria", archive: true}
   - {name: patron-streszczenie-dla-klienta, why: "kancelaria", archive: true}
   - {name: przeglad-tabelaryczny, why: "kancelaria", archive: true}
-  - {name: przeglad-umow, why: "kancelaria", archive: true}
   - {name: contract-review-pl, why: "kancelaria, pseudonimizacja", archive: true}
-  - {name: notatka-prawna, why: "pokrywa analiza-sadowa-v6", archive: true}
-  - {name: eu-legal-memo, why: "pokrywa analiza-sadowa-v6 + dr-14", archive: true}
   - {name: pomoc-prawna-konfiguracja, why: "NGO/kliniki prawa", archive: true}
   - {name: pomoc-prawna-kwalifikacja, why: "NGO/kliniki prawa", archive: true}
   - {name: pomoc-prawna-memo, why: "NGO/kliniki prawa", archive: true}

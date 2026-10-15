@@ -250,8 +250,8 @@ view dr-10-zdrowie-farmacja-zywnosc-rolnictwo/MAPA-POKRYCIA.md
 ## Powiązania zewnętrzne
 - Wchodzi z: `prawo-polskie-v2` → `ROUTING-MAP.md` → ten skill
 - Odpowiedzialność karna za przestępstwa medyczne → `dr-03`
-- Zamówienia publiczne (sprzęt medyczny, leki) → `dr-07`
-- Prawo pracy (personel medyczny, lekarze rezydenci) → `dr-04`
+- Zamówienia publiczne (sprzęt medyczny, leki) → `dr-07 (poza pluginem)`
+- Prawo pracy (personel medyczny, lekarze rezydenci) → `dr-04 (poza pluginem)`
 - RODO w placówkach medycznych → `dr-11`
 - Wychodzi do: `pisma-procesowe-v3` / `analiza-sadowa-v6` / `orzeczenia-sadowe-v2`
 - Weryfikacja: ELI (RZĄD 1) | urpl.gov.pl | gif.gov.pl | eur-lex.europa.eu | mz.gov.pl
@@ -270,3 +270,11 @@ Wybierz wariant odpowiedni do trybu:
 
 Disclaimer musi być **ostatnim elementem** każdej odpowiedzi zawierającej analizę prawną,
 ocenę szans, kwalifikację prawną lub interpretację przepisu.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`
+- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `analizator-przepisow-v2`, `orzeczenia-sadowe-v2`, `pisma-procesowe-v3`
+- **Nie dubluj:** domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

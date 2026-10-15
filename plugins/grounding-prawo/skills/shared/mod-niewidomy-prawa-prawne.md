@@ -380,10 +380,10 @@ LUKI WDROŻENIOWE W POLSCE (raport RPO — brpo.gov.pl):
 | Obrona obowiązkowa KPK | `dr-03/mod-KK-KPK-framework-karne` |
 | Pełnomocnik z urzędu KPC | `dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-KPA-postepowanie-administracyjne.md` |
 | Orzeczenie niepełnosprawności odwołanie | `dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-KPA-postepowanie-administracyjne.md` |
-| Ulga rehabilitacyjna PIT | `dr-06/mod-PIT-podatek-dochodowy-fizyczne` |
-| Uprawnienia pracownicze | `dr-04/mod-KP-prawo-pracy` + `mod-SUS-ZUS-ubezpieczenia-spoleczne` |
+| Ulga rehabilitacyjna PIT | `dr-06/mod-PIT-podatek-dochodowy-fizyczne (poza pluginem)` |
+| Uprawnienia pracownicze | `dr-04/mod-KP-prawo-pracy (poza pluginem)` + `mod-SUS-ZUS-ubezpieczenia-spoleczne` |
 | Dostęp do wymiaru sprawiedliwości | `dr-14/mod-TFUE-TUE-prawo-pierwotne-UE` (Konwencja ONZ) |
-| Dofinansowanie PFRON, ZUS renta | `dr-04/mod-SUS-ZUS-ubezpieczenia-spoleczne` |
+| Dofinansowanie PFRON, ZUS renta | `dr-04/mod-SUS-ZUS-ubezpieczenia-spoleczne (poza pluginem)` |
 
 ---
 

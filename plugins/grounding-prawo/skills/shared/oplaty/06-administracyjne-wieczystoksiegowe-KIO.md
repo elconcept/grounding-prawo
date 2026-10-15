@@ -83,7 +83,7 @@ złożeniem wniosku o wpis (art. 106, sekcja 2d).
 
 ⚠️ Art. 34 ust. 1 nie podaje kwoty — odsyła do **wpisu od odwołania**, który
 ustanawiają przepisy PZP i rozporządzenie wykonawcze. Kwotę bierze się stamtąd,
-nie z KSCU. Dziedzina: `dr-07-zamowienia-publiczne-fundusze-ue`.
+nie z KSCU. Dziedzina: `dr-07-zamowienia-publiczne-fundusze-ue (poza pluginem)`.
 
 ---
 

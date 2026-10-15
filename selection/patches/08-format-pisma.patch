@@ -1,0 +1,105 @@
+diff -ruN a/pisma-procesowe-v3/SKILL.md b/pisma-procesowe-v3/SKILL.md
+--- a/pisma-procesowe-v3/SKILL.md	2026-10-15 21:26:06
++++ b/pisma-procesowe-v3/SKILL.md	2026-10-15 22:06:03
+@@ -833,6 +833,10 @@
+ > + UWAGI-REDAKCYJNE), generowanie .docx i ST-FINAL:
+ >
+ > `view pisma-procesowe-v3/references/W3-WERYFIKACJA.md`
++>
++> Wygląd pliku (.docx, bez PDF) dla każdego typu pisma: `view shared/FORMAT-PISMA.md` - Georgia 10 pt,
++> nadawca i organ 14 pt, telefon i e-mail nadawcy, pogrubienie i podkreślenie tylko dla tez.
++> Ma pierwszeństwo przed regułami czcionki i tytułu w `modules/typy/`.
+ 
+ ## SELF-CHECK PRZED KAŻDĄ ODPOWIEDZIĄ
+ 
+diff -ruN a/pisma-procesowe-v3/references/W3-WERYFIKACJA.md b/pisma-procesowe-v3/references/W3-WERYFIKACJA.md
+--- a/pisma-procesowe-v3/references/W3-WERYFIKACJA.md	2026-10-15 21:26:06
++++ b/pisma-procesowe-v3/references/W3-WERYFIKACJA.md	2026-10-15 22:06:03
+@@ -350,7 +350,8 @@
+   Wykonaj SVG-1 → SVG-2 → SVG-3 przed generowaniem pliku.
+   Blokada: nie wywołuj docx/SKILL.md dopóki SVG-1–SVG-3 niezamknięte.
+ 
+-view HOST_CAPABILITY[document_generation] → generuj .docx
++view shared/FORMAT-PISMA.md → python3 -I shared/format-pisma/render_pismo.py <pismo>.md
++  (.docx + sidecar .md, bez PDF; renderer zamiast HOST_CAPABILITY[document_generation])
+ 
+ ⛔ HARD GATE STEP-DISCLOSURE → wykonaj ST-FINAL (REJESTR KROKÓW).
+   Jeśli ≥1 krok wymagany ma status ⚠️ POMINIĘTY lub ○ OCZEKUJE →
+diff -ruN a/pisma-proste-v2/SKILL.md b/pisma-proste-v2/SKILL.md
+--- a/pisma-proste-v2/SKILL.md	2026-10-15 21:26:06
++++ b/pisma-proste-v2/SKILL.md	2026-10-15 22:06:03
+@@ -156,6 +156,8 @@
+            view shared/HYBRID-VALIDATION.md    [zawsze — auto-raport braków]
+            view shared/WERYFIKACJA-SLAD.md § STRIP-VER-GATE  [zawsze przed plikiem — znaczniki ✅/⚠️ i tabela śladu poza dokumentem]
+ KROK 10 → Wczytaj references/M9-format.md             [zawsze — prezentacja odpowiedzi]
++KROK 11 → view shared/FORMAT-PISMA.md                 [zawsze gdy powstaje plik pisma (DOCX, bez PDF) — krój, nagłówek,
++           wyróżnienia; plik generuje shared/format-pisma/render_pismo.py, nie ręczny HTML]
+ ```
+ 
+ ---
+diff -ruN a/pisma-proste-v2/references/M4-struktura.md b/pisma-proste-v2/references/M4-struktura.md
+--- a/pisma-proste-v2/references/M4-struktura.md	2026-10-15 21:26:06
++++ b/pisma-proste-v2/references/M4-struktura.md	2026-10-15 22:06:03
+@@ -9,17 +9,18 @@
+ ```
+ [Miejscowość], dnia [DD miesiąc RRRR] r.
+ 
+-[Imię i nazwisko / Nazwa firmy Wnioskodawcy]
+-[Adres]
+-[PESEL: XXXXXXXXXXX / NIP: XXX-XXX-XX-XX]
++[Imię i nazwisko / Nazwa firmy Wnioskodawcy]          ← 14 pt
++[ulica/osiedle nr, kod pocztowy miasto]                ← jedna linia
++[tel. …, e-mail: …]                                    ← znane z akt albo od użytkownika; nie zgaduj
+ 
+-                        [Nazwa Sądu / Organu]
+-                        [Wydział (jeśli znany)]
+-                        [Adres sądu]
++                        [Nazwa Sądu / Organu]          ← 14 pt, do prawej
++                        [Wydział (jeśli znany)]        ← 12 pt, do prawej
++                        [ulica nr, kod pocztowy miasto] ← jedna linia, do prawej
+ 
+-Sygn. akt: [sygnatura] / (dla nowego postępowania: —)
++Sygn. akt:      [sygnatura] / (dla nowego postępowania: —)
++[Rola strony]:  [imię i nazwisko]
+ 
+-            [TYTUŁ PISMA WERSALIKAMI]
++            [T Y T U Ł  P I S M A]                     ← rozstrzelone wersaliki, bez pogrubienia
+             np. SPRZECIW OD NAKAZU ZAPŁATY
+             lub WNIOSEK O NADANIE KLAUZULI WYKONALNOŚCI
+ 
+@@ -42,12 +43,14 @@
+ - Dane **wnioskodawcy** — lewy górny róg.
+ - Dane **sądu/organu** — prawy górny róg lub wyśrodkowane (zależy od zwyczaju sądu).
+ - Sygnatura akt pod nagłówkiem, wyśrodkowana lub po lewej.
+-- Tytuł pisma — **WERSALIKAMI**, wyśrodkowany, pogrubiony.
++- Tytuł pisma — rozstrzelonymi wersalikami, wyśrodkowany, bez pogrubienia.
++- Krój, rozmiary, telefon i e-mail nadawcy, użycie pogrubienia i podkreślenia: `shared/FORMAT-PISMA.md`
++  (ma pierwszeństwo przed tym plikiem). PESEL tylko gdy wymaga go przepis albo wzór urzędowy.
+ 
+ ### Treść
+ - Akapity oddzielone pojedynczą linią.
+ - Żądanie procesowe w pierwszym akapicie: „Wnoszę o…" / „Powód wnosi o…"
+-- Uzasadnienie po żądaniu — oddzielone nagłówkiem **UZASADNIENIE**.
++- Uzasadnienie po żądaniu — oddzielone nagłówkiem UZASADNIENIE (wyśrodkowane wersaliki, bez pogrubienia).
+ - Podstawy prawne na końcu uzasadnienia lub po każdym zarzucie.
+ 
+ ### Żądanie
+diff -ruN a/pisma-proste-v2/references/M9-format.md b/pisma-proste-v2/references/M9-format.md
+--- a/pisma-proste-v2/references/M9-format.md	2026-10-15 21:26:06
++++ b/pisma-proste-v2/references/M9-format.md	2026-10-15 22:06:03
+@@ -89,3 +89,15 @@
+ | Wnioski SPH (proste) | 100–200 słów |
+ 
+ Pisma dłuższe niż górna granica → rozważ eskalację do pisma-procesowe-v3.
++
++---
++
++## PLIK DO ZŁOŻENIA (DOCX)
++
++Wygląd pliku określa `shared/FORMAT-PISMA.md` i ma pierwszeństwo przed tym modułem:
++Georgia 10 pt, nadawca i organ 14 pt, wydział 12 pt, adresat do prawej, adres w jednej linii, telefon i e-mail
++nadawcy, pogrubienie i podkreślenie wyłącznie dla tezy, którą sędzia ma zauważyć.
++
++1. Zapisz źródło pisma jako `drafty/<pismo>/<rrrrMMdd>_<nazwa>.md` w składni renderera.
++2. `python3 -I <skills>/shared/format-pisma/render_pismo.py <plik>.md` → `.docx` obok źródła.
++3. Przekaż użytkownikowi `.docx` (artefakt końcowy do redakcji, wydruku i podpisu) i sidecar `.md`. Nie twórz PDF.

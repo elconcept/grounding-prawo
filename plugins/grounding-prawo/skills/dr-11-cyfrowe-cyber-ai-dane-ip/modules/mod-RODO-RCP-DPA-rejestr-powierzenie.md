@@ -3,7 +3,7 @@
 **Hasła spraw:** rejestr czynności przetwarzania, umowa powierzenia przetwarzania, podmiot przetwarzający, procesor, dostawca chmury, inspektor ochrony danych, IOD
 
 > **Dodano:** 2026-07-05 (AUDYT-2026-07-05a) — wypełnienie luki operacyjnej RODO.
-> **Wzorzec:** rodo-ropa-dpa-pl (bundle ochrona-danych, awesome-matematic-skills-pl).
+> **Wzorzec:** rodo-ropa-dpa-pl (poza pluginem) (bundle ochrona-danych, awesome-matematic-skills-pl).
 > **Charakter:** moduł OPERACYJNY — walidacja kompletności rejestru i mechaniczna
 > kontrola klauzul umowy powierzenia (checklist a–h). Redakcja/redline samej umowy →
 > `analizator-umow-v1`.

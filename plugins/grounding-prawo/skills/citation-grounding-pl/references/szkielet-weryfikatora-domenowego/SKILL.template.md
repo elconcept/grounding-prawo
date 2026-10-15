@@ -13,7 +13,7 @@ metadata:
   inspiration: >
     Gradient i kalibracja - citation-grounding-pl (MateMatic) / Existence-Content-Paragraph
     Jeanne Sulzer (CC BY 4.0). Silnik współdzielony z citation-grounding-pl.
-  companion_skills: <resolver-kotwicy np. saos-orzecznictwo / eu-sparql-search>
+  companion_skills: <resolver-kotwicy np. saos-orzecznictwo (poza pluginem) / eu-sparql-search (poza pluginem)>
   shared_engine: citation-grounding-pl/scripts/ground-citations.mjs
 ---
 
@@ -30,13 +30,13 @@ doktryna gradientu: `../citation-grounding-pl/references/gradient-weryfikacji.md
 - **Źródło autorytatywne:** <np. baza orzeczeń KIO na uzp.gov.pl / decyzje UODO>
 - **Resolver kotwicy (ISTNIENIE):** <companion_skill + jak buduje anchor_resolved>
 - **Jednostka cytowania:** <sygnatura/numer decyzji - format>
-- **Pułapki domenowe:** patrz `references/traps.md` (CZYTAJ przed weryfikacją)
+- **Pułapki domenowe:** patrz `uodo-grounding-pl/references/traps.md` (CZYTAJ przed weryfikacją)
 
 ## Workflow
 
-1. **Zbierz źródła i rozwiąż kotwice** przez <resolver>; przy awarii pracuj `references/drabinka-zrodel.md`.
+1. **Zbierz źródła i rozwiąż kotwice** przez <resolver>; przy awarii pracuj `uodo-grounding-pl/references/drabinka-zrodel.md`.
 2. **Sklasyfikuj każde twierdzenie** `claim_type` (macierz: `../citation-grounding-pl/references/gradient-weryfikacji.md`).
-3. **Sprawdź pułapki domenowe** z `references/traps.md`.
+3. **Sprawdź pułapki domenowe** z `uodo-grounding-pl/references/traps.md`.
 4. **Weryfikacja mechaniczna:**
    ```bash
    node ../citation-grounding-pl/scripts/ground-citations.mjs <zadanie.json>

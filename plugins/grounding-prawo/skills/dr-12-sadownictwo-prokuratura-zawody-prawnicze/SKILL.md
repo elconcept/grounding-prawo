@@ -359,8 +359,8 @@ view dr-12-sadownictwo-prokuratura-zawody-prawnicze/MAPA-POKRYCIA.md
 
 - Wchodzi z: `prawo-polskie-v2` → `ROUTING-MAP.md` → ten skill
 - USP / ustrój sądów: `dr-01` → `mod-USP-ustroj-sadow-powszechnych`
-- Arbitraż / mediacja (pełny framework): `dr-07` → `mod-ustawa-arbitraz-mediacja`
-- Notariat (czynności notarialne w rejestrach): `dr-07` → `mod-PrNotariat-notariat-rejestry`
+- Arbitraż / mediacja (pełny framework): `dr-07 (poza pluginem)` → `mod-ustawa-arbitraz-mediacja`
+- Notariat (czynności notarialne w rejestrach): `dr-07 (poza pluginem)` → `mod-PrNotariat-notariat-rejestry`
 - KPK (obrońca w procesie karnym): `dr-03`
 - Egzekucja komornicza (tryb KPC) — patrz `shared/...` lub `mod-ustawa-komornicy-sadowi-zawod` (sekcja "Łącz obowiązkowo z")
 - PPSA (skargi na regulatorów): `dr-05-prawo-administracyjne-sadowoadministracyjne/modules/mod-PPSA-terminy-kasacja-prawo-pomocy.md` (a dla posiedzeń/orzeczeń doładuj odpowiedni moduł PPSA DR05)
@@ -380,3 +380,11 @@ Wybierz wariant odpowiedni do trybu:
 
 Disclaimer musi być **ostatnim elementem** każdej odpowiedzi zawierającej analizę prawną,
 ocenę szans, kwalifikację prawną lub interpretację przepisu.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** `prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`
+- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `analizator-przepisow-v2`, `orzeczenia-sadowe-v2`, `pisma-procesowe-v3`
+- **Nie dubluj:** domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

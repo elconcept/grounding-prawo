@@ -277,7 +277,7 @@ checklistem, BEZ samej materialnej TREŚCI przepisów
 
 ⭐ ART. 81A — ZASADA rozstrzygania WĄTPLIWOŚCI na KORZYŚĆ strony
   (⭐ analogiczna DO zasady in DUBIO pro tributario Z Ordynacji
-  podatkowej — POWIĄZANIE międzydziedzinowe Z dr-06/mod-OP-
+  podatkowej — POWIĄZANIE międzydziedzinowe Z dr-06/mod-OP- (poza pluginem)
   ordynacja-podatkowa.md)
 
 ⭐ ART. 82 — BEZWZGLĘDNE zakazy DOWODOWE (kto NIE może być

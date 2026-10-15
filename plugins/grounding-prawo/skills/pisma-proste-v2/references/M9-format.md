@@ -89,3 +89,15 @@ Pismo zawiera ⬛ [X] pól do uzupełnienia.
 | Wnioski SPH (proste) | 100–200 słów |
 
 Pisma dłuższe niż górna granica → rozważ eskalację do pisma-procesowe-v3.
+
+---
+
+## PLIK DO ZŁOŻENIA (DOCX)
+
+Wygląd pliku określa `shared/FORMAT-PISMA.md` i ma pierwszeństwo przed tym modułem:
+Georgia 10 pt, nadawca i organ 14 pt, wydział 12 pt, adresat do prawej, adres w jednej linii, telefon i e-mail
+nadawcy, pogrubienie i podkreślenie wyłącznie dla tezy, którą sędzia ma zauważyć.
+
+1. Zapisz źródło pisma jako `drafty/<pismo>/<rrrrMMdd>_<nazwa>.md` w składni renderera.
+2. `python3 -I <skills>/shared/format-pisma/render_pismo.py <plik>.md` → `.docx` obok źródła.
+3. Przekaż użytkownikowi `.docx` (artefakt końcowy do redakcji, wydruku i podpisu) i sidecar `.md`. Nie twórz PDF.

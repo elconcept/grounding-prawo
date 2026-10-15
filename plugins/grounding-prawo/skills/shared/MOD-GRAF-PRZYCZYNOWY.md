@@ -3,7 +3,7 @@
 > **Wersja:** 1.1.0 (shared 3.99.1, AUDYT-2026-10-02 — rewizja ekspercka: NESS, zaniechanie, przypisanie karne, model wykluczeniowy MET-ACH) | **Status:** PRODUKCJA — plik kanoniczny shared/
 > **Wywoływany z:**
 >   - `analizator-dowodow-v3` MP13 §13.2 (łańcuchy → graf, gdy ogniwa się rozgałęziają lub zbiegają)
->   - `chronologia-sprawy-v1` TRYB C „graf” (zdarzenia z osi czasu jako węzły; widget `assets/widget-graf-przyczynowy.html`)
+>   - `chronologia-sprawy-v1` TRYB C „graf” (zdarzenia z osi czasu jako węzły; widget `chronologia-sprawy-v1/assets/widget-graf-przyczynowy.html`)
 >   - `shared/MOD-METODY-BADAWCZE.md` MET-PT (siła dowodu połączenia = atrybut krawędzi)
 >   - `shared/MOD-LANCUCH-DOWODOWY.md` (rachunek łańcucha szeregowego i dowodów równoległych)
 > **Silnik:** `shared/tools/graf_przyczynowy.py` (raport MD / JSON / Mermaid, `--selftest`); ten sam model liczbowy

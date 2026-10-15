@@ -5,6 +5,15 @@ description: "Pisanie i redakcja tekstów po polsku tak, by brzmiały naturalnie
 
 # Pisz po polsku
 
+## Zawiadomienie pokrzywdzonego — pełnia opisu
+
+Przy zleconej recenzji zawiadomienia stosuj `shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`:
+rola skutków i szczegółów. Pytaj o konkretne doznania, słowa, czas, nasilenie i wpływ na życie,
+gdy autor podał skrót; nie dopisuj odpowiedzi. Zachowaj obszerność potrzebną do przedstawienia
+całej krzywdy i epizodów. Usuwaj puste powtórzenia, nie fakty, emocje i odrębne skutki.
+Sama korekta językowa nie uruchamia pełnej recenzji ani nie rozszerza zlecenia na inne pisma.
+
+
 Jeden skill redakcji polskiego tekstu. Zastępuje `humanizer-pl`, `patron-pisz-po-ludzku` i `naturalne-pisanie`.
 Poprawia sposób wypowiedzi, nigdy treść stanowiska.
 

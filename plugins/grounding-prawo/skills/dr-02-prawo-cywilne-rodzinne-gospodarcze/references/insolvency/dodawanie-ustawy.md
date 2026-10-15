@@ -27,7 +27,7 @@
    przy zmianie źródła/błędzie sieci oraz rzeczywiste scenariusze prawne.
    Uruchom checkery rejestracji/licznika/manifestów/map repozytorium.
 9. Przebuduj odpowiednie nieversionowane ZIP-y w WERSJA ROZWOJOWA.
-   `scripts/verify_development_archives.py` z korzenia repo sprawdza ich
+   `scripts/verify_development_archives.py` (brak w pluginie) z korzenia repo sprawdza ich
    bajtową zgodność z rozpakowaną wersją. Wersji stabilnej nie nadpisuj
    przypadkowo jako części prac nad linią rozwojową.
 

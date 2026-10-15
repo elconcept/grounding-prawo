@@ -226,3 +226,10 @@ Reguły:
 **Źródła map**: `legal/skill_polish_law_articles_map/mental_health_article_map.md` (art. 18–18f, 21–34, 42–49; model bezzasadność/bezprawność; red\_flag\_taxonomy; documents\_to\_request). Fork rozszerzający istniejący, kanoniczny skill `compliance-check` (art. 23\) — kanoniczny plik pozostaje nietknięty.
 
 &nbsp;
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** dokumentacja hospitalizacji psychiatrycznej, chronologia
+- **Wynik zapisz w:** kontrola zgodności w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

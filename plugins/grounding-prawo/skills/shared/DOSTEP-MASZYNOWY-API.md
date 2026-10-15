@@ -386,7 +386,7 @@ równolegle: **obie** formy zwracają HTTP 200 i poprawny JSON. `/index.php`
 oddaje 301 na `/pl/` — `requests` i `curl -L` podążają za nim i same utrzymują
 ciasteczka Imperva w obrębie wywołania, więc kod działa bez zmian; `curl` **bez**
 `-L` dostanie pustą odpowiedź i 301, co łatwo wziąć za awarię API.
-Zapis w `scripts/weryfikator_sygnatur.py` (`SN = "https://sn.pl/index.php"`) jest
+Zapis w `audyt-systemu-v4/scripts/weryfikator_sygnatur.py` (`SN = "https://sn.pl/index.php"`) jest
 funkcjonalnie poprawny — nieaktualne jest wyłącznie jego uzasadnienie w komentarzu.
 
 ```
@@ -676,7 +676,7 @@ weryfikacji razem z datą.
 1. Sprawdź **kształt żądania** (§1) — zanim orzekniesz o niedostępności źródła.
 2. Sprawdź **ścieżkę roboczą** zamiast roota.
 3. Ponów (limity tempa, hosty niedeterministyczne).
-4. Dopiero potem: `references/ZRODLA-AKTOW-FALLBACK.md` (routera) lub
+4. Dopiero potem: `prawny-router-v3/references/ZRODLA-AKTOW-FALLBACK.md` (routera) lub
    `shared/HIERARCHIA-ZRODEL.md` → kanał zastępczy RZĘDU 1.
 5. Jeśli nadal brak potwierdzenia — ⚠️ `[NIEWERYFIKOWANE]` i **poinformuj
    użytkownika**. ⛔ Nigdy cicho.

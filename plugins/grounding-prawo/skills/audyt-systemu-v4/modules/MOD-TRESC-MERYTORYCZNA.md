@@ -122,7 +122,7 @@ dotyczy tej nowelizacji).
 
 | Akt (zmiana) | Moduł dotknięty | Art. zmienione | Wynik | Akcja |
 |---|---|---|---|---|
-| Ordynacja podatkowa Dz.U. 2026 poz. 622 | dr-06-podatki-finanse-publiczne-aml/modules/mod-OP-ordynacja-podatkowa.md | art. 70 §1 (termin) | ❌ CRIT-TREŚĆ | naprawiono str_replace, patrz wpis journal |
+| Ordynacja podatkowa Dz.U. 2026 poz. 622 | dr-06-podatki-finanse-publiczne-aml/modules/mod-OP-ordynacja-podatkowa.md (poza pluginem) | art. 70 §1 (termin) | ❌ CRIT-TREŚĆ | naprawiono str_replace, patrz wpis journal |
 | KC Dz.U. 2026 poz. 795 (nowy t.j.) | dr-02/mod-*.md | nowy t.j. wymaga odrębnej kontroli zmian uwzględnionych i późniejszych nowelizacji | ✅ ZGODNE dopiero po fresh gate | brak akcji wyłącznie po weryfikacji |
 ```
 

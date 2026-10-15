@@ -1,7 +1,7 @@
 # audyt-systemu-v4
 
 Orchestrator audytu jakości, spójności i bezpieczeństwa systemu prawniczych
-skilli AI. SKILL.md zawiera pełny YAML frontmatter (name, version, type,
+skilli AI. SKILL.md zawiera pełny YAML frontmatter (poza pluginem) (name, version, type,
 compatibility, entrypoint, modules, widgets, references) — wymóg zgodności
 spełniony.
 

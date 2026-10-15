@@ -3,7 +3,7 @@ name: patron-analiza-akt-karnych
 description: Ustrukturyzowana 6-punktowa analiza obrończa akt sprawy karnej - zarzut, dowody (sprzeczności, luki, opinie biegłych), wyrok I instancji, apelacja, wyrok II instancji i dalsza linia obrony (kasacja, wznowienie, areszt). Użyj, gdy użytkownik ma akta sprawy karnej i prosi o analizę, streszczenie pod kątem obrony albo wskazanie słabych punktów oskarżenia.
 ---
 
-> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/MOD-PLIKI-INKREMENTALNE.md` - nowym plikiem jest
+> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/ARTEFAKTY-SPRAWY.md` - nowym plikiem jest
 > tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
 > dopisuj do istniejących plików inkrementalnych (`_PRZEBIEGI.md`, `_SUBSUMPCJA*.md`, `_FINDINGS.md` …), a pliki
 > jednorazowe zostawiaj w `_robocze/` sprawy.

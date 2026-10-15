@@ -37,7 +37,7 @@ znajduje się w standardowym drzewie Lex-Machina, argument katalogu można pomin
 
 Gdy description przekracza 200 znaków:
 
-1. Odczytaj aktualny frontmatter `SKILL.md`.
+1. Odczytaj aktualny frontmatter (poza pluginem) `SKILL.md`.
 2. Skróć description zachowując przede wszystkim:
    - główne triggery wywołania,
    - rzeczywisty zakres skilla,

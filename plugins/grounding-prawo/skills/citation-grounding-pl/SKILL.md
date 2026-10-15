@@ -1,6 +1,7 @@
 ---
 name: citation-grounding-pl
-description: 'Mechaniczny weryfikator cytatu dla tekstów prawnych po polsku z GRADIENTEM weryfikacji (ISTNIENIE / TREŚĆ / FRAGMENT) - sprawdza string-matchem, czy każdy cytat z orzeczenia, ustawy, umowy lub pisma faktycznie istnieje w dokumencie źródłowym, czy sygnatura jest realna i czy parafraza oddaje stanowisko sądu, zamiast wierzyć modelowi "na oko". Przeciwdziała halucynacjom modelu (w tym problemowi "prawdziwy-cytat-fałszywa-teza"), RODO-safe (działa lokalnie), spina się z saos-orzecznictwo i eu-sparql-search. Używaj gdy: weryfikacja cytatów w opinii prawnej / memo / piśmie procesowym, sprawdzenie czy AI nie zmyśliło fragmentu wyroku, przepisu lub sygnatury, czy parafraza nie przekręca holdingu, kontrola cytatu przed wysłaniem deliverable do klienta, audyt grounding outputu LLM, "sprawdź czy ten cytat jest prawdziwy", "zweryfikuj cytaty", "czy ten fragment wyroku istnieje", "grounding", "anti-halucynacja", "citation check", "czy AI to zmyśliło", "czy SN to naprawdę orzekł".
+description: 'Mechaniczny weryfikator cytatu dla tekstów prawnych po polsku z GRADIENTEM weryfikacji (ISTNIENIE / TREŚĆ / FRAGMENT) - sprawdza string-matchem, czy każdy cytat z orzeczenia, ustawy, umowy lub pisma faktycznie istnieje w dokumencie źródłowym, czy sygnatura jest realna i czy parafraza oddaje stanowisko sądu, zamiast wierzyć modelowi "na oko". Przeciwdziała halucynacjom modelu (w tym problemowi "prawdziwy-cytat-fałszywa-teza"), RODO-safe (działa lokalnie), spina się z saos-orzecznictwo (poza pluginem) i eu-sparql-search (poza pluginem). Używaj gdy: weryfikacja cytatów w opinii prawnej / memo / piśmie procesowym, sprawdzenie czy AI nie zmyśliło fragmentu wyroku, przepisu lub sygnatury, czy parafraza nie przekręca holdingu, kontrola cytatu przed wysłaniem deliverable do klienta, audyt grounding outputu LLM, "sprawdź czy ten cytat jest prawdziwy", "zweryfikuj cytaty", "czy ten fragment wyroku istnieje", "grounding", "anti-halucynacja", "citation check", "czy AI to zmyśliło", "czy
+  SN to naprawdę orzekł".
 
   '
 license: Apache-2.0
@@ -235,7 +236,7 @@ NIE publikuj dopóki C3 i C5 nie zostaną poprawione lub usunięte. C4 wymaga z�
 Mechaniczny grounding to dowód należytej staranności i element dokumentacji z art. 12 (rejestrowanie
 zdarzeń) oraz nadzoru człowieka z art. 14. Gradient dodaje wymiar **kalibracji ryzyka**: poziom
 weryfikacji per twierdzenie to ślad, jak mocno każda teza jest osadzona. Raport grounding wkładaj
-do `legal-ai-audit-bundle` obok deliverable.
+do `legal-ai-audit-bundle (poza pluginem)` obok deliverable.
 
 ## Integracja z innymi skillami
 
@@ -305,3 +306,11 @@ Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi 
 
 Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
 <!-- shared-rules:end -->
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** lista powołań (`ekstraktor-cytatow-pl`) i tekst źródeł z MCP
+- **Wynik zapisz w:** wyniki ISTNIENIE/TREŚĆ/FRAGMENT: ustalenia do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `subsumpcja-pl`, `pierwsze-wrazenie-sedziego-pl`
+- **Nie dubluj:** `patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format [N]); `uodo-grounding-pl` - decyzje UODO; ten skill - cytaty w piśmie
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

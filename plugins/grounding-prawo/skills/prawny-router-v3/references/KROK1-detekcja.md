@@ -146,7 +146,7 @@ V2 — Klasyfikacja dziedzinowa i wczytanie skilla (obowiązkowe)
   Cyberprzestępczość:          view dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-art267-269c-cyberprzestepstwa.md
   Najem / lokatorzy prywatni:    view dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-ustawa-ochrona-praw-lokatorow-najem-eksmisja.md
   Zakup / księga wieczysta:     view dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-KW-ksiega-wieczysta-zakup-nieruchomosci.md
-  UGN / mienie publiczne:       view dr-09-budownictwo-srodowisko-energia-transport/modules/mod-UGN-gospodarka-nieruchomosciami.md
+  UGN / mienie publiczne:       view dr-09-budownictwo-srodowisko-energia-transport/modules/mod-UGN-gospodarka-nieruchomosciami.md (poza pluginem)
   IP / autorskie / wizerunek:  view dr-11-cyfrowe-cyber-ai-dane-ip/modules/mod-PrAut-wlasnosc-intelektualna-IP.md
   RODO:                        view dr-11-cyfrowe-cyber-ai-dane-ip/modules/mod-RODO-GDPR-2016-679.md
   AI Act / prawo AI:           view dr-11-cyfrowe-cyber-ai-dane-ip/modules/mod-AI-Act-framework.md
@@ -154,9 +154,9 @@ V2 — Klasyfikacja dziedzinowa i wczytanie skilla (obowiązkowe)
   UODO (postępowanie):         view dr-11-cyfrowe-cyber-ai-dane-ip/modules/mod-UODO-postepowanie-ochrona-danych.md
   Prawo farmaceutyczne:        view dr-10-zdrowie-farmacja-zywnosc-rolnictwo/modules/mod-PrFarm-prawo-farmaceutyczne.md
   Błąd medyczny / pacjent:     view dr-10-zdrowie-farmacja-zywnosc-rolnictwo/modules/mod-ustawa-prawa-pacjenta-framework.md
-  Budowlane / samowola:        view dr-09-budownictwo-srodowisko-energia-transport/modules/mod-PrBud-prawo-budowlane.md
-  Środowisko / OOŚ:            view dr-09-budownictwo-srodowisko-energia-transport/modules/mod-POS-prawo-ochrony-srodowiska.md
-  Działalność regulowana:      view dr-08-samorzad-terytorialny-prawo-lokalne/modules/mod-kontrola-administracji-inspekcje.md
+  Budowlane / samowola:        view dr-09-budownictwo-srodowisko-energia-transport/modules/mod-PrBud-prawo-budowlane.md (poza pluginem)
+  Środowisko / OOŚ:            view dr-09-budownictwo-srodowisko-energia-transport/modules/mod-POS-prawo-ochrony-srodowiska.md (poza pluginem)
+  Działalność regulowana:      view dr-08-samorzad-terytorialny-prawo-lokalne/modules/mod-kontrola-administracji-inspekcje.md (poza pluginem)
 
   POZOSTAŁE DZIEDZINY (brak jeszcze oznaczonego modułu wejściowego — wyłącznie
   przez krok podstawowy prawo-polskie-v2 → ROUTING-MAP → DR-skill):

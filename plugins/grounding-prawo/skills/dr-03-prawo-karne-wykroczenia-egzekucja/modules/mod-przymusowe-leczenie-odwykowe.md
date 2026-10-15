@@ -168,7 +168,7 @@ Gdy uzależnienie współwystępuje z zaburzeniem psychicznym uzasadniającym
 | Zagadnienie | Moduł |
 |---|---|
 | Przymusowe leczenie psychiatryczne (inne niż uzależnienia) | dr-10-zdrowie-farmacja-zywnosc-rolnictwo/modules/mod-ustawa-zdrowie-psychiczne.md |
-| Nieletni — postępowanie w sprawach nieletnich | dr-04 lub dedykowany moduł resocjalizacji nieletnich (sprawdź istnienie) |
+| Nieletni — postępowanie w sprawach nieletnich | dr-04 (poza pluginem) lub dedykowany moduł resocjalizacji nieletnich (sprawdź istnienie) |
 | Przestępstwa narkotykowe — kwalifikacja czynu (posiadanie/obrót/uprawa) | dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md BLOK D |
 | Przemoc domowa współwystępująca z alkoholizmem | dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-przemoc-domowa-szczegolowy.md |
 | Warunkowe zawieszenie wykonania kary, obowiązki probacyjne | mod-KK-KPK-framework-szczegolowy.md (sprawdź czy art. 72-75 KK są tam opisane) |

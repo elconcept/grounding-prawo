@@ -1,12 +1,31 @@
 # Forma, złożenie, co dalej
 
+## Relacja, tropy i informacje praktyczne
+
+Najpierw pełna narracja i skutki, potem odrębne tropy dla organu i opcjonalne załączniki.
+Przy szybko zanikającym materiale można dodać krótką prośbę o zabezpieczenie z lokalizacją,
+dysponentem i okresem; nie wymuszaj listy wniosków dowodowych. Wskazówki o złożeniu,
+prawach i pomocy podawaj poza pismem.
+Zapytaj o bezpieczny adres do korespondencji i ryzyko ujawnienia danych. Nie kopiuj adresu
+zamieszkania do narracji; sposób podania/ochrony danych sprawdź w aktualnych przepisach.
+Gdy autor nie jest pokrzywdzonym, dopasuj „na moją szkodę”, status i wniosek o ściganie
+zgodnie z rolą i uprawnieniem; nie przypisuj mu cudzych przeżyć ani uprawnień.
+
+## Aktualność
+
+Poniższe informacje są zapisem wcześniejszego researchu. Przed podaniem artykułu, trybu,
+terminu lub kanału elektronicznego sprawdź tekst urzędowy i wejście w życie na właściwą datę.
+Nie zakładaj, że najnowszy tekst jednolity obejmuje wszystkie późniejsze zmiany.
+Przy niepewności kanału elektronicznego nie zapewniaj skuteczności zwykłego maila;
+wskaż zweryfikowaną drogę złożenia. Niepewność właściwości nie blokuje opisu ani zgłoszenia.
+
 ## Źródła
 
 - Wytyczne: https://www.gov.pl/web/po-ostroleka/jak-zlozyc-zawiadomienie-o-przestepstwie (odczyt
   09.10.2026; na podstawie opracowania Biura Kryminalnego KGP „Jak złożyć zawiadomienie o przestępstwie?”).
 - Kodeks postępowania karnego: tekst jednolity **Dz.U. 2026 poz. 490** (ELI `DU/2026/490`, najnowszy
   t.j. według ISAP, sprawdzone 09.10.2026); brzmienia odczytane z PDF t.j.
-  (MCP `isap` `get_act_text` dla DU/2026/490; bez `mutool` - PyMuPDF na `~/.Codex/cache/lexcache/isap/_pdf/DU_2026_490.pdf`).
+  (MCP `isap` `get_act_text` dla DU/2026/490; bez `mutool` - PyMuPDF na `pdf_url z odpowiedzi MCP`).
 - Kodeks karny: t.j. **Dz.U. 2025 poz. 383** (zob. `mapa-krzywd.md`).
 
 ## Wytyczne Policji / prokuratury - najważniejsze punkty
@@ -35,7 +54,7 @@
   oświadczenie o ich nieposiadaniu; 3) treść wniosku lub oświadczenia, w miarę potrzeby
   z uzasadnieniem; 4) datę i podpis. **§ 3**: pismo przez portal informacyjny - podpis kwalifikowany,
   zaufany albo osobisty. (Uwaga: w t.j. są dwie wersje pkt 2 z przypisami - wersja z e-Doręczeniami
-  może jeszcze nie obowiązywać; podanie obu oświadczeń niczemu nie szkodzi.)
+  może jeszcze nie obowiązywać; ustal datę wejścia w życie i zastosuj właściwą wersję, nie dodawaj oświadczeń automatycznie.)
 - **Art. 12 § 1** - w sprawach o przestępstwa ścigane na wniosek postępowanie po złożeniu wniosku
   toczy się z urzędu. **§ 2** - wniosek o ściganie niektórych sprawców obejmuje też osoby, których
   czyny pozostają w ścisłym związku z czynem wskazanym (nie dotyczy osób najbliższych składającego).
@@ -63,7 +82,7 @@
 | Otwarcie | według wzoru: „Zawiadamiam o popełnieniu na moją szkodę przestępstwa [potocznie: pobicia, gróźb, …] przez [osobę / nieznaną mi osobę] w dniu … w … i wnoszę o wszczęcie postępowania.” Bez „podejrzenia”, „możliwości popełnienia”, „mogło dojść” |
 | Wniosek o ściganie | **zawsze**: „Wnoszę o ściganie sprawcy (sprawców) wszystkich opisanych niżej czynów.” Przy znanych sprawcach - z nazwiskami |
 | Treść | według `assets/szablon.md` |
-| Lista przepisów | na końcu, przed podpisem: „Uważam, że opisane zachowania są przestępstwami określonymi w tych przepisach:” → punkty `art. … k.k. - [opis prosty]`; tylko przepisy z katalogu `mapa-krzywd.md` albo zweryfikowane w bazie; podaj publikator t.j. raz („Kodeks karny, t.j. Dz.U. 2025 poz. 383 ze zm.”) |
+| Lista przepisów | na końcu, przed podpisem: „Uważam, że opisane zachowania są przestępstwami określonymi w tych przepisach:” → punkty `art. … k.k. - [opis prosty]`; tylko przepisy zweryfikowane dla danej sprawy; katalog jest punktem wyjścia; podaj publikator t.j. raz („Kodeks karny, t.j. Dz.U. 2025 poz. 383 ze zm.”) |
 | Status pokrzywdzonego | jedno zdanie: „Chcę brać udział w postępowaniu jako osoba pokrzywdzona.” |
 | Podpis | własnoręczny; przez portal informacyjny - podpis kwalifikowany, zaufany albo osobisty (art. 119 § 3) |
 | Załączniki | opcjonalne; lista na końcu; brak załączników niczego nie osłabia |
@@ -86,7 +105,22 @@ asekurować. Przy każdym przepisie krótko, prostym językiem, którego zachowa
 - Co dalej: wezwanie na przesłuchanie lub uzupełnienie, postanowienie o wszczęciu albo odmowie;
   terminy i środki - `oczami-prokuratora.md`.
 
-## TODO v0.3
+## Kwestie wymagające sprawdzenia przed użyciem
 - Opłaty: potwierdzić w bazie brak opłaty od zawiadomienia (nie podawać podstawy z pamięci).
 - Forma elektroniczna: portal informacyjny, e-Doręczenia, ePUAP, mail - które organy przyjmują
   i z jakim podpisem; stan wejścia w życie pkt 2 art. 119 § 1 w wersji z e-Doręczeniami.
+
+Lista przepisów jest konwencją tego skilla, nie warunkiem przyjęcia zawiadomienia. Jeżeli
+nie można jej zweryfikować, nie wpisuj numerów na próbę i nie blokuj pełnej relacji.
+Wniosek o ściganie zachowaj jako preferowany element, gdy składa go uprawniony; nie zastępuje
+on skargi prywatnej. Warianty kwalifikacji opisuj zgodnie z faktami, bez sztucznej pewności.
+Przed podpisaniem protokołu warto go przeczytać i zgłosić skróty lub błędy; późniejszy nowy
+szczegół nie staje się przez to niedopuszczalny. Przekazanie sprawy Policji pod nadzorem
+prokuratora nie oznacza podważenia relacji.
+
+## Wygląd pliku
+
+DOCX zawiadomienia (bez PDF, ze źródłem .md obok): `shared/FORMAT-PISMA.md` (Georgia 10 pt, nadawca i organ 14 pt,
+wydział 12 pt, adresat do prawej,
+adres w jednej linii, telefon i e-mail nadawcy, pogrubienie i podkreślenie tylko dla tez); plik generuje
+`shared/format-pisma/render_pismo.py`.

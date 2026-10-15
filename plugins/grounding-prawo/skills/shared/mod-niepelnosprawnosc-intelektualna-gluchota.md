@@ -477,7 +477,7 @@ WCZYTAJ ZAWSZE:
   mod-niewidomy-prawa-prawne.md     → wzorzec struktury dla podobnych spraw
   shared/DEFINICJE-KLUCZOWE.md    → BAS-004 (dziecko NP), BAS-124 (niezdolność)
   shared/ORKA-BAS-LEKSYKON.md     → BAS-004, BAS-102, BAS-124, BAS-131
-  dr-04: prawo pracy + PFRON
+  dr-04 (poza pluginem): prawo pracy + PFRON
   dr-02: KC ubezwłasnowolnienie (art. 12–16), KPC postęp. nieprocesowe
   dr-03: KPK art. 79, art. 31 KK niepoczytalność, art. 93a środki zabezpiecz.
   dr-12: biegły sądowy psychiatra/psycholog, kurator sądowy

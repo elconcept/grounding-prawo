@@ -10,7 +10,7 @@ zaleznosci od zamknietego modelu vendora.
 
 ### Article I - Zero-cloud / RODO-safe (MUST)
 Cala normalizacja dziala lokalnie. Zaden dokument ani jego fragment NIE opuszcza
-maszyny. Zaleznosci: tylko lokalne silniki (Chandra OCR, opendataloader-pdf,
+maszyny. Zaleznosci: tylko lokalne silniki (Chandra OCR, opendataloader-pdf (poza pluginem),
 pdftotext) + Python stdlib. Wywolania sieciowe = zakazane w warstwie kontraktu.
 
 ### Article II - Idea, nie waga (MUST)

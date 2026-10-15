@@ -123,7 +123,7 @@ web_search: "kara pracodawca nielegalne zatrudnienie cudzoziemiec PIP 2025"
 |---|---|
 | Pismo: odwołanie od decyzji UW, skarga do WSA | `pisma-procesowe-v3` |
 | Prawo administracyjne / WSA / NSA | `dr-05` |
-| Prawo pracy cudzoziemców | `dr-04` |
+| Prawo pracy cudzoziemców | `dr-04 (poza pluginem)` |
 | Orzecznictwo NSA (cudzoziemcy) | `orzeczenia-sadowe-v2` |
 
 ---

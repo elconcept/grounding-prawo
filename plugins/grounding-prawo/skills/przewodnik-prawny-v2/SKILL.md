@@ -498,7 +498,7 @@ Brak dokumentów:
 4. PRAWNIK — zaproponuj raport dla klienta:
    "Czy wygenerować raport statusu sprawy dla klienta?
    → Powiedz 'raport dla klienta' żebym przygotował dokument zewnętrzny."
-   (wywołuje raport-klienta-v1 po potwierdzeniu)
+   (wywołuje raport-klienta-v1 (poza pluginem) po potwierdzeniu)
 5. → KROK I (co dalej?)
 ```
 
@@ -761,7 +761,7 @@ Przesłuchanie świadka
 Raport sytuacyjny sprawy
   → "Tworzę przegląd całej sprawy — co wiadomo, co brakuje,
      co pilne."
-  → view raport-sytuacyjny-v2/SKILL.md → widget → KROK I
+  → view raport-sytuacyjny-v2/SKILL.md (poza pluginem) → widget → KROK I
 
 Q&A / pytania użytkownika
   → KROK Q — bez wywołania zewnętrznego skilla
@@ -881,3 +881,10 @@ Kontrola jakości              → QUALITY-CHECK.md     → SELF-CHECK (opcjonal
 
 Nie dubluj logiki shared w lokalnych plikach. Lokalne KROKI mogą tylko doprecyzować
 warstwę UX (język laika, formatowanie odpowiedzi) — nie logikę prawną.
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** router nie znalazł ścieżki albo użytkownik nie wie, jakiego pisma potrzebuje
+- **Wynik zapisz w:** wskazana ścieżka i lista potrzebnych dokumentów (w odpowiedzi) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `prowadnik-grounding-prawo`, `pisma-proste-v2`, `pisma-procesowe-v3`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

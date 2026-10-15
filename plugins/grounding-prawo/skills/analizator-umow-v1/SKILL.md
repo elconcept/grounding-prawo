@@ -564,3 +564,10 @@ na żądanie         → zawsze F.1 niezależnie od kwoty
 *             instrukcja sędziego (5 metryk, twarde zero zmyśleń). Ocena dziś*
 *             ręczna — patrz `benchmark/posiane-wady/README.md` i*
 *             `audyt-systemu-v4/references/REGRESSION-TEST-PLAN.md` (T37).*
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** umowa po OCR; `patron-przeglad-tabelaryczny` dla wielu umów
+- **Wynik zapisz w:** `analiza/_podsumowanie.md` (ryzyka klauzul); propozycje zmian jako redline (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `klauzule-kontraktowe-pl`, `redline-docx-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

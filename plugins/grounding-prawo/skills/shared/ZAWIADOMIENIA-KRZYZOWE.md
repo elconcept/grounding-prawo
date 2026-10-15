@@ -53,7 +53,7 @@ narażenie życia pracowników na niebezpieczeństwo z art. 220 KK) —
 ma obowiązek zawiadomić prokuratora/Policję na podstawie art. 304 §2
 KPK, NIEZALEŻNIE od własnego postępowania administracyjnego/
 wykroczeniowego prowadzonego w ramach ustawy o PIP. Zob. też
-`dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md` (sekcja o wymianie
+`dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md (poza pluginem)` (sekcja o wymianie
 danych PIP↔ZUS↔KAS — mechanizm ADMINISTRACYJNY, ODRĘBNY od obowiązku
 zawiadomienia karnego z art. 304 §2 KPK).
 
@@ -65,7 +65,7 @@ pospolitego — pranie pieniędzy, fałszerstwo), zawiadamia prokuratora.
 ⚠️ Sprawy STRICTE skarbowe (KKS) same KAS może częściowo prowadzić
 jako finansowy organ postępowania przygotowawczego — rozróżnij to od
 zawiadomienia o przestępstwie POSPOLITYM wykraczającym poza KKS.
-Zob. `dr-06-podatki-finanse-publiczne-aml/modules/mod-KAS-kontrola-celno-skarbowa.md`.
+Zob. `dr-06-podatki-finanse-publiczne-aml/modules/mod-KAS-kontrola-celno-skarbowa.md (poza pluginem)`.
 
 ### SĄD (w toku postępowania cywilnego/administracyjnego)
 Jeśli sąd cywilny/administracyjny w toku SWOJEGO postępowania
@@ -94,7 +94,7 @@ naruszenia administracyjnego/regulacyjnego), organ, który przyjął
 zgłoszenie (KNF, UOKiK, RPO), jako instytucja państwowa SAM podlega
 obowiązkowi z art. 304 §2 KPK i musi zawiadomić prokuraturę — NIEZALEŻNIE
 od własnego postępowania regulacyjnego wobec podmiotu, którego dotyczy
-zgłoszenie. Zob. `mod-ustawa-sygnalisci.md` (dr-15) dla mechanizmu
+zgłoszenie. Zob. `mod-ustawa-sygnalisci.md` (dr-15 (poza pluginem)) dla mechanizmu
 wyboru organu sektorowego przez sygnalistę.
 
 ## HANDEL LUDŹMI — KONKRETNY, POWAŻNY PRZYKŁAD (dodano 2026-07-27,

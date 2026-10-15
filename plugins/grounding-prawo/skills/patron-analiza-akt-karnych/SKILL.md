@@ -3,7 +3,7 @@ name: patron-analiza-akt-karnych
 description: Ustrukturyzowana 6-punktowa analiza obrończa akt sprawy karnej - zarzut, dowody (sprzeczności, luki, opinie biegłych), wyrok I instancji, apelacja, wyrok II instancji i dalsza linia obrony (kasacja, wznowienie, areszt). Użyj, gdy użytkownik ma akta sprawy karnej i prosi o analizę, streszczenie pod kątem obrony albo wskazanie słabych punktów oskarżenia.
 ---
 
-> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/MOD-PLIKI-INKREMENTALNE.md` - nowym plikiem jest
+> **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/ARTEFAKTY-SPRAWY.md` - nowym plikiem jest
 > tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
 > dopisuj do istniejących plików inkrementalnych (`_PRZEBIEGI.md`, `_SUBSUMPCJA*.md`, `_FINDINGS.md` …), a pliki
 > jednorazowe zostawiaj w `_robocze/` sprawy.
@@ -47,3 +47,10 @@ weryfikację cytatów (skill `patron-weryfikacja-cytatow`) przed użyciem fragme
 ---
 Źródło: Patron (MateMatic Solutions, AGPL-3.0) - `backend/src/lib/builtinWorkflows.ts`
 (builtin-analiza-akt-karne, ADR-0130).
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** akta sprawy karnej po OCR
+- **Wynik zapisz w:** analiza obrończa w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `pisma-procesowe-v3`, `analizator-dowodow-v3`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

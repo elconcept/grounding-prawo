@@ -1,6 +1,6 @@
 ---
 name: klauzule-kontraktowe-pl
-description: 'Lista kontrolna klauzul umownych dla polskiej kancelarii - przechodzi umowę po 41 kategoriach klauzul (taksonomia CUAD zlokalizowana do PL/UE) i oznacza, które są obecne, których brakuje i które są ryzykowne, z kotwicą do polskiego przepisu (KC, prawo autorskie, KP). Inny niz contract-review-pl (bulk audit portfela do tabeli) - ten skupia sie na JEDNEJ umowie i pyta "czego tu nie ma i co tu gryzie". Uzywaj gdy: "sprawdz klauzule w tej umowie", "czego brakuje w umowie", "spotting klauzul", "lista kontrolna kontraktu", "review pojedynczej umowy", "jakie klauzule ryzykowne", "audyt jednej umowy", przed podpisem / w negocjacji / przy DD pojedynczego kontraktu.
+description: 'Lista kontrolna klauzul umownych dla polskiej kancelarii - przechodzi umowę po 41 kategoriach klauzul (taksonomia CUAD zlokalizowana do PL/UE) i oznacza, które są obecne, których brakuje i które są ryzykowne, z kotwicą do polskiego przepisu (KC, prawo autorskie, KP). Inny niz contract-review-pl (poza pluginem) (bulk audit portfela do tabeli) - ten skupia sie na JEDNEJ umowie i pyta "czego tu nie ma i co tu gryzie". Uzywaj gdy: "sprawdz klauzule w tej umowie", "czego brakuje w umowie", "spotting klauzul", "lista kontrolna kontraktu", "review pojedynczej umowy", "jakie klauzule ryzykowne", "audyt jednej umowy", przed podpisem / w negocjacji / przy DD pojedynczego kontraktu.
 
   '
 license: Apache-2.0
@@ -33,7 +33,7 @@ w każdej umowie.** Część kategorii zależy od typu transakcji, a niektóre t
 się (odpowiedzialność bez limitu vs limit odpowiedzialności; licencja nieograniczona vs ograniczona).
 Traktowanie każdego braku jak red-flagi zakopuje prawdziwe luki w fałszywych alarmach.
 
-## Różnica wobec contract-review-pl
+## Różnica wobec contract-review-pl (poza pluginem)
 
 - `klauzule-kontraktowe-pl` - głęboki spotting JEDNEJ umowy po 41 kategoriach z kotwicą prawną.
 
@@ -166,3 +166,16 @@ Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to upra
 
 Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
 <!-- shared-rules:end -->
+
+## REFERENCJE DOŁĄCZONE (IURA)
+
+| Temat | Plik |
+|---|---|
+| przegląd umowy wg playbooka (klasyfikacja wagi odstępstw, propozycje zmian) | `references/przeglad-umow.md` |
+
+## MOST - miejsce w przepływie grounding-prawo
+
+- **Wejście z:** umowa; wynik `analizator-umow-v1`
+- **Wynik zapisz w:** lista kontrolna klauzul w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Następny krok:** `redline-docx-pl`
+- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
