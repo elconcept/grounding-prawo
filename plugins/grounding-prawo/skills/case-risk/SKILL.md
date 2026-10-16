@@ -4,6 +4,10 @@ description: Wielodomenowa ocena ryzyk w sprawie — dowodowe, proceduralne, dok
 metadata:
   argument-hint: <kwestia / zarzut / dokument do oceny ryzyka>
 ---
+
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 # case-risk Wielodomenowa Ocena Ryzyk Procesowych
 
 Oceń i sklasyfikuj ryzyka w sprawie obejmującej wątki psychiatryczne (UoOZP), cywilne (KC), karne (art. 192 k.k.) i nadzorcze (skarga do prezesa sądu). Skill scala kategorie ryzyk z wielu domen w jedną matrycę.
@@ -159,4 +163,4 @@ Na podstawie kanonicznego Anthropic`legal-risk-assessment` (art. 23)
 - **Wejście z:** `analiza/_dowody-i-przepisy.md`, chronologia
 - **Wynik zapisz w:** ryzyka w `analiza/_podsumowanie.md` (sekcja ryzyk) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

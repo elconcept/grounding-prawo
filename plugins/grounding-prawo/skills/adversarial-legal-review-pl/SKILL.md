@@ -15,6 +15,10 @@ metadata:
   attribution: '[{"source": "AnttiHero/lavern", "license": "Apache-2.0", "relationship": "pattern-only", "note": "Wzorzec debaty z trójwarstwową weryfikacją oraz panel rozbieżności. Prompty i role napisane od zera.\n"}, {"source": "gregmos/memoforge", "url": "https://github.com/gregmos/memoforge", "license": "MIT", "relationship": "clean-room", "note": "Ograniczona samorewizja z cofnięciem po regresji, poziomy dostępu recenzentów i zasada „zawsze dostarcz\". Koncepcje adaptowane clean-room, nie prompty ani kod. Ten sam upstream co bliźniak EN.\n"}]'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Adversarial Legal Review PL - czerwony zespół dla pisma prawnego
 
 ## WYJĄTEK: ZAWIADOMIENIE — rola „panel rozszerzający”
@@ -371,4 +375,4 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wejście z:** pismo po `szturm-na-draft-pl` albo `atak-przeciwnika-pl`; profil MAX - bez bramki kosztu
 - **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `deliverable-fidelity-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

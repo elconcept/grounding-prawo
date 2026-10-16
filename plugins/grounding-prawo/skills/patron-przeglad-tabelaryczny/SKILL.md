@@ -3,6 +3,10 @@ name: patron-przeglad-tabelaryczny
 description: Masowa ekstrakcja danych z pakietu dokumentów (umowy, NDA, SPA, najmy, umowy o pracę, kredytowe, korespondencja) do tabeli - kolumna po kolumnie, z cytatem i stroną w każdej komórce oraz flagą ryzyka - i eksport do CSV/Excela. Użyj, gdy trzeba przejrzeć wiele dokumentów według tych samych pytań, zrobić due diligence, change of control review albo zestawienie warunków umów.
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Przegląd tabelaryczny
 
 Ścieżki względem katalogu tego skilla. Skrypty: `scripts/doc_to_text.py` (tekst ze znacznikami
@@ -33,7 +37,7 @@ python3 scripts/doc_to_text.py teczka/*.pdf teczka/*.docx teczka/*.md --out-dir 
 ```
 Numer strony w cytacie to kolejny `[Page N]`, nie numer ze stopki dokumentu.
 
-Markdown po OCR (the-ocr, Chandra/Datalab, LlamaParse) jest przyjmowany bezpośrednio: strony
+Markdown po OCR (odczyt-dokumentow, Chandra/Datalab, LlamaParse) jest przyjmowany bezpośrednio: strony
 rozpoznawane po `## Page N`, `[Page N]`, `<!-- page N -->`, `{N}------` i `\f`, frontmatter (poza pluginem)
 pomijany. Przy parze `umowa.pdf` + `umowa.md` brany jest `.md` (`--no-md` wyłącza). Plik bez
 znaczników stron to jedna strona (skrypt ostrzega); własny separator: `--page-sep hr` albo regex.
@@ -103,4 +107,4 @@ z niezweryfikowanym cytatem wymagają przeczytania fragmentu źródłowego.
 - **Wejście z:** wiele dokumentów tego samego rodzaju (umowy, korespondencja) po OCR
 - **Wynik zapisz w:** tabela CSV/Excel w `_robocze/`; esencja i flagi ryzyka w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `chronologia-sprawy-v1`, `analizator-umow-v1`, `case-risk`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

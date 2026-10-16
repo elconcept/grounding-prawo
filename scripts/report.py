@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generuje docs/selekcja.md z selection/selection.yaml."""
+"""Generuje _log/selekcja.md z selection/selection.yaml."""
 import os, yaml
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 d = yaml.safe_load(open(os.path.join(ROOT, "selection/selection.yaml"), encoding="utf-8"))
@@ -9,7 +9,7 @@ vis = [x for x in k if not x.get("internal") and not x.get("fold_into")]
 inn = [x for x in k if x.get("internal") and not x.get("fold_into")]
 L = ["# Selekcja skilli - grounding-prawo", "",
      "Własna analiza (14.10.2026) z korektami właściciela. Analizy GPT i Sonnet były doradcami.", "",
-     f"- w pluginie: **{len(k) - len(folded)}** skilli: **{len(vis)}** widocznych dla modelu i **{len(inn)}** wewnętrznych (`disable-model-invocation`),",
+     f"- w pluginie: **{len(k) - len(folded)}** skilli: **{len(vis)}** widocznych dla modelu i **{len(inn)}** pomocniczych (również dostępnych dla modelu),",
      f"- **{len(folded)}** skilli scalonych jako moduły typów pism w `pisma-procesowe-v3`,",
      f"- poza pluginem: **{len(d['drop'])}**, w tym {sum(1 for x in d['drop'] if x.get('archive'))} unikatów w `archive/` (płasko).", "",
      "## Zasady", "",
@@ -28,12 +28,10 @@ for x in d["drop"]:
     L.append(f"| `{x['name']}` | {'archive/' if x.get('archive') else 'upstream'} | {x['why']} |")
 L += ["", "## Znane problemy i rzeczy niezrobione", "",
       "- Po usunięciu skilli zostają odwołania w prozie (ok. 150 miejsc, głównie w `shared`, `analizator-umow-v1`, `citation-grounding-pl`); nie są to ścieżki wczytywane przez router, ale wymagają stopniowego sprzątania.",
-      "- `profil-postepowan-wlasnych` to szkic do akceptacji właściciela.",
       "- Patche routera zmieniają pliki objęte `CHECKSUMS.sha256`; sumy w skillu się nie zgadzają.",
       "- `ekstraktor-cytatow-pl` ma tylko SKILL.md, bez kodu: ekstrakcja idzie promptem.",
-      "- `doc-intel-contract-pl` jest wewnętrzny wyłącznie dla testu `citation-grounding-pl` (tablica prawdy normalizacji); ma nieużywane mechanizmy maskowania.",
       "- Komentarze w `iura`-pochodnych skillach nadal wspominają `text_unavailable_use_pdf` (ISAP zwracał to dla kodeksów); sprawdzić po naprawie paginacji w mcp-isap.",
       "- `pisz-po-polsku`: pliki skopiowane z upstreamu, zmiany `humanizer-pl` i `naturalne-pisanie` trzeba przenosić ręcznie.",
       "- Upstream LexMachina jest na GPL v3; publiczny marketplace z przerobionymi skillami oznacza dystrybucję na GPL. Repo jest prywatne.",
       "- Nie sprawdzono, czy claude.ai i chatgpt.com przyjmują ten układ marketplace."]
-open(os.path.join(ROOT, "docs/selekcja.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
+open(os.path.join(ROOT, "_log/selekcja.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")

@@ -17,7 +17,7 @@ import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 // --- Normalizacja: JEDEN DOM reguly ------------------------------------------
-// Tablica prawdy (kontrakt): doc-intel-contract-pl/contract/normalizacja.cases.json
+// Tablica prawdy (kontrakt): odczyt-dokumentow/document_contract/contract/normalizacja.cases.json
 // Ten sam kontrakt realizuje `evidence.py` po stronie Pythona; oba testy czytaja
 // TEN plik, nie swoje kopie.
 //

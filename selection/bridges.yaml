@@ -1,260 +1,342 @@
-# Graf przepływu pracy pluginu: jedno źródło dla sekcji "MOST" dopisywanej do każdego skilla przez scripts/build.py.
-# Pola: etap (A analiza, B pismo, C doskonalenie, D pytanie, E umowy/RODO/dokumenty, S wsparcie), wejscie, wynik, dalej, nie_dubluj.
-# Nazwy plików: shared/ARTEFAKTY-SPRAWY.md. Opis ścieżek dla użytkownika: README.md.
 default_dr:
   etap: A
-  wejscie: "`prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`"
-  wynik: "dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci)"
-  dalej: [analizator-przepisow-v2, orzeczenia-sadowe-v2, pisma-procesowe-v3]
-  nie_dubluj: "domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj"
+  wejscie: '`prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`'
+  wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci)
+  dalej:
+  - analizator-przepisow-v2
+  - orzeczenia-sadowe-v2
+  - pisma-procesowe-v3
+  nie_dubluj: domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają
+    modułów - powiedz to wprost, nie zgaduj
 skills:
   profil-postepowan-wlasnych:
     etap: S
-    wejscie: "zawsze razem z `prawny-router-v3`, od pierwszego kroku"
-    wynik: "brak pliku - zasady pracy (pełna kontrola, bez anonimizacji, wynik trójstanowy)"
-    dalej: [prawny-router-v3]
-  prowadnik-grounding-prawo:
-    etap: S
-    wejscie: "początek każdej rozmowy o sprawie, gdy nie wiadomo, od czego zacząć"
-    wynik: "wskazana ścieżka A-E i pierwszy skill"
-    dalej: [prawny-router-v3, the-ocr, patron-prawo-pl-zrodla]
+    wejscie: zawsze razem z `prawny-router-v3`, od pierwszego kroku
+    wynik: brak pliku - zasady pracy (pełna kontrola, bez anonimizacji, wynik trójstanowy)
+    dalej:
+    - prawny-router-v3
   prawny-router-v3:
     etap: A
-    wejscie: "pytanie, akta albo draft pisma od użytkownika; `prowadnik-grounding-prawo`, gdy cel niejasny"
-    wynik: "`analiza/_brief.md` (strony, cel, żądania, terminy, wybrana domena i ścieżka)"
-    dalej: [prawo-polskie-v2, akta-przeszukiwalne-pl, pisma-procesowe-v3, analiza-sadowa-v6]
-    nie_dubluj: "`przewodnik-prawny-v2` to fallback routera, nie osobna ścieżka; `prawo-polskie-v2` wywołuj przez router"
+    wejscie: pytanie, akta albo draft pisma; jedyny punkt wyboru ścieżki
+    wynik: '`analiza/_brief.md` (strony, cel, żądania, terminy, wybrana domena i ścieżka)'
+    dalej:
+    - prawo-polskie-v2
+    - odczyt-dokumentow
+    - pisma-procesowe-v3
+    - analiza-sadowa-v6
+    nie_dubluj: '`przewodnik-prawny-v2` to fallback routera, nie osobna ścieżka; `prawo-polskie-v2` wywołuj przez router'
   prawo-polskie-v2:
     etap: A
-    wejscie: "`prawny-router-v3` (krok kwalifikacji)"
-    wynik: "wskazanie modułu DR (w `analiza/_brief.md`)"
-    dalej: [dr-02-prawo-cywilne-rodzinne-gospodarcze, dr-03-prawo-karne-wykroczenia-egzekucja, dr-05-prawo-administracyjne-sadowoadministracyjne]
+    wejscie: '`prawny-router-v3` (krok kwalifikacji)'
+    wynik: wskazanie modułu DR (w `analiza/_brief.md`)
+    dalej:
+    - dr-02-prawo-cywilne-rodzinne-gospodarcze
+    - dr-03-prawo-karne-wykroczenia-egzekucja
+    - dr-05-prawo-administracyjne-sadowoadministracyjne
   przewodnik-prawny-v2:
     etap: D
-    wejscie: "router nie znalazł ścieżki albo użytkownik nie wie, jakiego pisma potrzebuje"
-    wynik: "wskazana ścieżka i lista potrzebnych dokumentów (w odpowiedzi)"
-    dalej: [prowadnik-grounding-prawo, pisma-proste-v2, pisma-procesowe-v3]
-  the-ocr:
-    etap: A
-    wejscie: "pliki PDF/JPG/PNG bez warstwy tekstowej; obcy dokument najpierw przez `patron-skan-dokumentu`"
-    wynik: "`<nazwa>.md` obok oryginału (strony `## Page N`); wpis w `analiza/_dokumenty.md`"
-    dalej: [akta-przeszukiwalne-pl, patron-przeglad-tabelaryczny]
+    wejscie: router nie znalazł ścieżki albo użytkownik nie wie, jakiego pisma potrzebuje
+    wynik: wskazana ścieżka i lista potrzebnych dokumentów (w odpowiedzi)
+    dalej:
+    - prawny-router-v3
+    - pisma-proste-v2
+    - pisma-procesowe-v3
   patron-skan-dokumentu:
     etap: A
-    wejscie: "dokument od strony trzeciej (przeciwnik, instytucja) przed analizą"
-    wynik: "wynik skanu w `_robocze/`; tylko ostrzeżenia w `analiza/_dokumenty.md`"
-    dalej: [the-ocr, akta-przeszukiwalne-pl]
-  akta-przeszukiwalne-pl:
-    etap: A
-    wejscie: "folder akt po OCR (`the-ocr`)"
-    wynik: "indeks akt: `analiza/_dokumenty.md` (strony nieczytelne, duplikaty); tekst i wyszukiwarka w `_robocze/`"
-    dalej: [chronologia-sprawy-v1, analizator-dowodow-v3, patron-przeglad-tabelaryczny]
-    nie_dubluj: "`doc-intel-contract-pl` tylko gdy potrzeba bboxów, confidence lub podziału teczki na pisma; `the-ocr` robi samo OCR"
-  doc-intel-contract-pl:
-    etap: A
-    wejscie: "wynik OCR (`the-ocr`) lub pdftotext, gdy potrzebne bloki, bboxy albo powiązanie cytatu ze stroną"
-    wynik: "kontrakt dokumentu w `_robocze/`; podział teczki w `analiza/_dokumenty.md`"
-    dalej: [citation-grounding-pl, akta-przeszukiwalne-pl]
-    nie_dubluj: "moduł pomocniczy; nie używaj funkcji maskowania PII (decyzja właściciela: bez anonimizacji)"
+    wejscie: dokument od strony trzeciej (przeciwnik, instytucja) przed analizą
+    wynik: wynik skanu w `_robocze/`; tylko ostrzeżenia w `analiza/_dokumenty.md`
+    dalej:
+    - odczyt-dokumentow
   patron-przeglad-tabelaryczny:
     etap: A
-    wejscie: "wiele dokumentów tego samego rodzaju (umowy, korespondencja) po OCR"
-    wynik: "tabela CSV/Excel w `_robocze/`; esencja i flagi ryzyka w `analiza/_dokumenty.md`"
-    dalej: [chronologia-sprawy-v1, analizator-umow-v1, case-risk]
+    wejscie: wiele dokumentów tego samego rodzaju (umowy, korespondencja) po OCR
+    wynik: tabela CSV/Excel w `_robocze/`; esencja i flagi ryzyka w `analiza/_dokumenty.md`
+    dalej:
+    - chronologia-sprawy-v1
+    - analizator-umow-v1
+    - case-risk
   chronologia-sprawy-v1:
     etap: A
-    wejscie: "indeks akt (`akta-przeszukiwalne-pl`) i dokumenty po OCR"
-    wynik: "`analiza/_chronologia.md` (dopisywana, pozycje ze stałym ID)"
-    dalej: [chronologia-stanowiska-pl, analizator-dowodow-v3, przesluchanie-swiadkow-v2-min90]
-    nie_dubluj: "`chronologia-stanowiska-pl` to mechaniczna kontrola cytat-strona i zestawienie stanowisk stron; nie buduj drugiej osi czasu"
+    wejscie: indeks akt (`odczyt-dokumentow`) i dokumenty po OCR
+    wynik: '`analiza/_chronologia.md` (dopisywana, pozycje ze stałym ID)'
+    dalej:
+    - chronologia-stanowiska-pl
+    - analizator-dowodow-v3
+    - przesluchanie-swiadkow-v2-min90
+    nie_dubluj: '`chronologia-stanowiska-pl` to mechaniczna kontrola cytat-strona i zestawienie stanowisk stron; nie buduj
+      drugiej osi czasu'
   chronologia-stanowiska-pl:
     etap: A
-    wejscie: "`akta-przeszukiwalne-pl` (tekst akt) i `analiza/_chronologia.md`"
-    wynik: "dopisek do `analiza/_chronologia.md` (stanowiska stron: element roszczenia x twierdzenie x dowód x luka)"
-    dalej: [analizator-dowodow-v3, subsumpcja-pl]
+    wejscie: '`odczyt-dokumentow` (tekst akt) i `analiza/_chronologia.md`'
+    wynik: 'dopisek do `analiza/_chronologia.md` (stanowiska stron: element roszczenia x twierdzenie x dowód x luka)'
+    dalej:
+    - analizator-dowodow-v3
+    - subsumpcja-pl
   analizator-dowodow-v3:
     etap: A
-    wejscie: "`analiza/_chronologia.md`, indeks akt; dla zeznań i nagrań także `przesluchanie-swiadkow-v2-min90`"
-    wynik: "`analiza/_dowody-i-przepisy.md` (siła dowodowa, sprzeczności, luki)"
-    dalej: [analizator-przepisow-v2, case-risk, analiza-sadowa-v6, subsumpcja-pl]
+    wejscie: '`analiza/_chronologia.md`, indeks akt; dla zeznań i nagrań także `przesluchanie-swiadkow-v2-min90`'
+    wynik: '`analiza/_dowody-i-przepisy.md` (siła dowodowa, sprzeczności, luki)'
+    dalej:
+    - analizator-przepisow-v2
+    - case-risk
+    - analiza-sadowa-v6
+    - subsumpcja-pl
   przesluchanie-swiadkow-v2-min90:
     etap: A
-    wejscie: "`analizator-dowodow-v3` (sprzeczności) i chronologia"
-    wynik: "pytania do świadków: dopisek do `analiza/_dowody-i-przepisy.md`; zestawy pytań w `_robocze/`"
-    dalej: [pisma-procesowe-v3]
+    wejscie: '`analizator-dowodow-v3` (sprzeczności) i chronologia'
+    wynik: 'pytania do świadków: dopisek do `analiza/_dowody-i-przepisy.md`; zestawy pytań w `_robocze/`'
+    dalej:
+    - pisma-procesowe-v3
   analizator-przepisow-v2:
     etap: A
-    wejscie: "wskazany moduł DR albo przepis z dokumentu"
-    wynik: "dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ISAP)"
-    dalej: [orzeczenia-sadowe-v2, subsumpcja-pl, pisma-procesowe-v3]
-    nie_dubluj: "brzmienie przepisu bierz wg `shared/MOD-TEKST-JEDNOLITY.md`, nie z pamięci"
+    wejscie: wskazany moduł DR albo przepis z dokumentu
+    wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ISAP)
+    dalej:
+    - orzeczenia-sadowe-v2
+    - subsumpcja-pl
+    - pisma-procesowe-v3
+    nie_dubluj: brzmienie przepisu bierz wg `shared/MOD-TEKST-JEDNOLITY.md`, nie z pamięci
   orzeczenia-sadowe-v2:
     etap: D
-    wejscie: "teza do poparcia orzecznictwem; `patron-prawo-pl-zrodla` (wybór konektora)"
-    wynik: "dopisek do `analiza/_dowody-i-przepisy.md` (sygnatura z narzędzia, teza, link)"
-    dalej: [struktura-wyroku-pl, citation-grounding-pl, pisma-procesowe-v3]
+    wejscie: teza do poparcia orzecznictwem; `patron-prawo-pl-zrodla` (wybór konektora)
+    wynik: dopisek do `analiza/_dowody-i-przepisy.md` (sygnatura z narzędzia, teza, link)
+    dalej:
+    - struktura-wyroku-pl
+    - citation-grounding-pl
+    - pisma-procesowe-v3
   struktura-wyroku-pl:
     etap: D
-    wejscie: "pełny tekst orzeczenia z narzędzia MCP (`get_judgment`)"
-    wynik: "streszczenie ekstraktywne w `_robocze/`; użyta teza w `analiza/_dowody-i-przepisy.md`"
-    dalej: [orzeczenia-sadowe-v2, citation-grounding-pl]
+    wejscie: pełny tekst orzeczenia z narzędzia MCP (`get_judgment`)
+    wynik: streszczenie ekstraktywne w `_robocze/`; użyta teza w `analiza/_dowody-i-przepisy.md`
+    dalej:
+    - orzeczenia-sadowe-v2
+    - citation-grounding-pl
   patron-prawo-pl-zrodla:
     etap: D
-    wejscie: "każde pytanie o przepis, orzeczenie, KRS, prawo UE, interpretację"
-    wynik: "odpowiedź ze źródłem; do sprawy: dopisek do `analiza/_dowody-i-przepisy.md`"
-    dalej: [orzeczenia-sadowe-v2, analizator-przepisow-v2, webwright-legal-pl]
+    wejscie: każde pytanie o przepis, orzeczenie, KRS, prawo UE, interpretację
+    wynik: 'odpowiedź ze źródłem; do sprawy: dopisek do `analiza/_dowody-i-przepisy.md`'
+    dalej:
+    - orzeczenia-sadowe-v2
+    - analizator-przepisow-v2
+    - webwright-legal-pl
   webwright-legal-pl:
     etap: D
-    wejscie: "orzeczenie z ms.gov.pl, sn.pl, TK, gdy portal MCP go nie ma"
-    wynik: "tekst orzeczenia w `_robocze/`; sygnatura i teza w `analiza/_dowody-i-przepisy.md`"
-    dalej: [citation-grounding-pl]
+    wejscie: orzeczenie z ms.gov.pl, sn.pl, TK, gdy portal MCP go nie ma
+    wynik: tekst orzeczenia w `_robocze/`; sygnatura i teza w `analiza/_dowody-i-przepisy.md`
+    dalej:
+    - citation-grounding-pl
   analiza-sadowa-v6:
     etap: A
-    wejscie: "wyniki ścieżki A (indeks, chronologia, dowody, przepisy); może też zacząć od aktów surowych"
-    wynik: "`analiza/_podsumowanie.md` (jeden raport końcowy; bez osobnych plików raportu)"
-    dalej: [pisma-procesowe-v3, case-risk, adversarial-legal-review-pl]
-    nie_dubluj: "to synteza; pojedyncze kroki (dowody, przepisy, chronologia) rób wyspecjalizowanymi skillami i tylko je zbieraj"
+    wejscie: wyniki ścieżki A (indeks, chronologia, dowody, przepisy); może też zacząć od aktów surowych
+    wynik: '`analiza/_podsumowanie.md` (jeden raport końcowy; bez osobnych plików raportu)'
+    dalej:
+    - pisma-procesowe-v3
+    - case-risk
+    - adversarial-legal-review-pl
+    nie_dubluj: to synteza; pojedyncze kroki (dowody, przepisy, chronologia) rób wyspecjalizowanymi skillami i tylko je zbieraj
   case-risk:
     etap: A
-    wejscie: "`analiza/_dowody-i-przepisy.md`, chronologia"
-    wynik: "ryzyka w `analiza/_podsumowanie.md` (sekcja ryzyk)"
-    dalej: [pisma-procesowe-v3, zawiadomienie-o-przestepstwie]
+    wejscie: '`analiza/_dowody-i-przepisy.md`, chronologia'
+    wynik: ryzyka w `analiza/_podsumowanie.md` (sekcja ryzyk)
+    dalej:
+    - pisma-procesowe-v3
+    - zawiadomienie-o-przestepstwie
   medical-consent:
     etap: A
-    wejscie: "dokumentacja medyczna po OCR, chronologia"
-    wynik: "ocena art. 192 k.k. w `analiza/_podsumowanie.md`"
-    dalej: [uoozp-compliance, zawiadomienie-o-przestepstwie, pisma-procesowe-v3]
+    wejscie: dokumentacja medyczna po OCR, chronologia
+    wynik: ocena art. 192 k.k. w `analiza/_podsumowanie.md`
+    dalej:
+    - uoozp-compliance
+    - zawiadomienie-o-przestepstwie
+    - pisma-procesowe-v3
   uoozp-compliance:
     etap: A
-    wejscie: "dokumentacja hospitalizacji psychiatrycznej, chronologia"
-    wynik: "kontrola zgodności w `analiza/_podsumowanie.md`"
-    dalej: [pisma-procesowe-v3, zawiadomienie-o-przestepstwie]
+    wejscie: dokumentacja hospitalizacji psychiatrycznej, chronologia
+    wynik: kontrola zgodności w `analiza/_podsumowanie.md`
+    dalej:
+    - pisma-procesowe-v3
+    - zawiadomienie-o-przestepstwie
   patron-analiza-akt-karnych:
     etap: A
-    wejscie: "akta sprawy karnej po OCR"
-    wynik: "analiza obrończa w `analiza/_podsumowanie.md`"
-    dalej: [pisma-procesowe-v3, analizator-dowodow-v3]
+    wejscie: akta sprawy karnej po OCR
+    wynik: analiza obrończa w `analiza/_podsumowanie.md`
+    dalej:
+    - pisma-procesowe-v3
+    - analizator-dowodow-v3
   patron-identyfikatory-pl:
     etap: S
-    wejscie: "tekst z sygnaturami, PESEL, NIP, KRS, ELI"
-    wynik: "wynik walidacji w `_robocze/`"
-    dalej: [ekstraktor-cytatow-pl, citation-grounding-pl]
+    wejscie: tekst z sygnaturami, PESEL, NIP, KRS, ELI
+    wynik: wynik walidacji w `_robocze/`
+    dalej:
+    - ekstraktor-cytatow-pl
+    - citation-grounding-pl
   pisma-procesowe-v3:
     etap: B
-    wejscie: "`analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM"
-    wynik: "`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.docx|md`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`"
-    dalej: [kalkulatory-procesowe-pl, terminy-procesowe-pl, ekstraktor-cytatow-pl, szturm-na-draft-pl]
-    nie_dubluj: "krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`"
+    wejscie: '`analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM'
+    wynik: '`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.docx|md`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
+    dalej:
+    - kalkulatory-procesowe-pl
+    - terminy-procesowe-pl
+    - ekstraktor-cytatow-pl
+    - szturm-na-draft-pl
+    nie_dubluj: krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
   pisma-proste-v2:
     etap: B
-    wejscie: "krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`"
-    wynik: "`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.*`, wpis w `_PRZEBIEGI.md`"
-    dalej: [terminy-procesowe-pl, citation-grounding-pl, szturm-na-draft-pl]
+    wejscie: 'krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`'
+    wynik: '`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.*`, wpis w `_PRZEBIEGI.md`'
+    dalej:
+    - terminy-procesowe-pl
+    - citation-grounding-pl
+    - szturm-na-draft-pl
   zawiadomienie-o-przestepstwie:
     etap: B
-    wejscie: "relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)"
-    wynik: "`drafty/zawiadomienie/rrrrMMdd_zawiadomienie_v1.*`, `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`"
-    dalej: [pisz-po-polsku]
-    nie_dubluj: "HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj odrębnie, a atak tylko na żądanie z ochroną pełnej relacji"
+    wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
+    wynik: '`drafty/zawiadomienie/rrrrMMdd_zawiadomienie_v1.*`, `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`'
+    dalej:
+    - pisz-po-polsku
+    nie_dubluj: 'HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj
+      odrębnie, a atak tylko na żądanie z ochroną pełnej relacji'
   rodo-dsar-pl:
     etap: E
-    wejscie: "żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)"
-    wynik: "`drafty/dsar/rrrrMMdd_dsar_v1.*`"
-    dalej: [terminy-procesowe-pl, pisz-po-polsku]
+    wejscie: żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
+    wynik: '`drafty/dsar/rrrrMMdd_dsar_v1.*`'
+    dalej:
+    - terminy-procesowe-pl
+    - pisz-po-polsku
   kalkulatory-procesowe-pl:
     etap: B
-    wejscie: "dane o roszczeniu (kwota, daty) z `analiza/_brief.md`"
-    wynik: "wartości (opłata, WPS, odsetki, przedawnienie) wpisane do pisma i `analiza/_dowody-i-przepisy.md`"
-    dalej: [pisma-procesowe-v3]
+    wejscie: dane o roszczeniu (kwota, daty) z `analiza/_brief.md`
+    wynik: wartości (opłata, WPS, odsetki, przedawnienie) wpisane do pisma i `analiza/_dowody-i-przepisy.md`
+    dalej:
+    - pisma-procesowe-v3
   terminy-procesowe-pl:
     etap: B
-    wejscie: "data doręczenia / zdarzenia i rodzaj terminu"
-    wynik: "termin z podstawą prawną w `analiza/_brief.md`; KPK/KPW oznacz do sprawdzenia"
-    dalej: [pisma-procesowe-v3, pisma-proste-v2]
+    wejscie: data doręczenia / zdarzenia i rodzaj terminu
+    wynik: termin z podstawą prawną w `analiza/_brief.md`; KPK/KPW oznacz do sprawdzenia
+    dalej:
+    - pisma-procesowe-v3
+    - pisma-proste-v2
   ekstraktor-cytatow-pl:
     etap: C
-    wejscie: "draft pisma `drafty/<pismo>/..._vN`"
-    wynik: "lista powołań w `_robocze/` (wejście dla weryfikatorów)"
-    dalej: [citation-grounding-pl, uodo-grounding-pl]
+    wejscie: draft pisma `drafty/<pismo>/..._vN`
+    wynik: lista powołań w `_robocze/` (wejście dla weryfikatorów)
+    dalej:
+    - citation-grounding-pl
+    - uodo-grounding-pl
   citation-grounding-pl:
     etap: C
-    wejscie: "lista powołań (`ekstraktor-cytatow-pl`) i tekst źródeł z MCP"
-    wynik: "wyniki ISTNIENIE/TREŚĆ/FRAGMENT: ustalenia do `drafty/<pismo>/_FINDINGS.md`"
-    dalej: [subsumpcja-pl, pierwsze-wrazenie-sedziego-pl]
-    nie_dubluj: "`patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format [N]); `uodo-grounding-pl` - decyzje UODO; ten skill - cytaty w piśmie"
+    wejscie: lista powołań (`ekstraktor-cytatow-pl`) i tekst źródeł z MCP
+    wynik: 'wyniki ISTNIENIE/TREŚĆ/FRAGMENT: ustalenia do `drafty/<pismo>/_FINDINGS.md`'
+    dalej:
+    - subsumpcja-pl
+    - pierwsze-wrazenie-sedziego-pl
+    nie_dubluj: '`patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format [N]); `uodo-grounding-pl`
+      - decyzje UODO; ten skill - cytaty w piśmie'
   patron-weryfikacja-cytatow:
     etap: C
-    wejscie: "odpowiedź modelu lub tabela z cytatami [N] i tekst źródłowy"
-    wynik: "wynik w `_robocze/`; błędy do `_FINDINGS.md`"
-    dalej: [citation-grounding-pl]
+    wejscie: odpowiedź modelu lub tabela z cytatami [N] i tekst źródłowy
+    wynik: wynik w `_robocze/`; błędy do `_FINDINGS.md`
+    dalej:
+    - citation-grounding-pl
   uodo-grounding-pl:
     etap: C
-    wejscie: "pismo cytujące decyzje Prezesa UODO"
-    wynik: "ustalenia do `drafty/<pismo>/_FINDINGS.md`"
-    dalej: [subsumpcja-pl]
+    wejscie: pismo cytujące decyzje Prezesa UODO
+    wynik: ustalenia do `drafty/<pismo>/_FINDINGS.md`
+    dalej:
+    - subsumpcja-pl
   subsumpcja-pl:
     etap: C
-    wejscie: "draft i zweryfikowane przepisy (`analizator-przepisow-v2`)"
-    wynik: "`drafty/<pismo>/_SUBSUMPCJA.md` (rejestr stały; dopisek przebiegu)"
-    dalej: [pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl]
+    wejscie: draft i zweryfikowane przepisy (`analizator-przepisow-v2`)
+    wynik: '`drafty/<pismo>/_SUBSUMPCJA.md` (rejestr stały; dopisek przebiegu)'
+    dalej:
+    - pierwsze-wrazenie-sedziego-pl
+    - atak-przeciwnika-pl
   pierwsze-wrazenie-sedziego-pl:
     etap: C
-    wejscie: "draft po kontroli cytatów"
-    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma)"
-    dalej: [atak-przeciwnika-pl]
+    wejscie: draft po kontroli cytatów
+    wynik: dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma)
+    dalej:
+    - atak-przeciwnika-pl
   atak-przeciwnika-pl:
     etap: C
-    wejscie: "draft po pierwszym wrażeniu sędziego"
-    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md`"
-    dalej: [szturm-na-draft-pl, adversarial-legal-review-pl]
+    wejscie: draft po pierwszym wrażeniu sędziego
+    wynik: dopisek do `drafty/<pismo>/_FINDINGS.md`
+    dalej:
+    - szturm-na-draft-pl
+    - adversarial-legal-review-pl
   szturm-na-draft-pl:
     etap: C
-    wejscie: "draft `.docx` z aktami; wariant domyślny pełnej kontroli (zastępuje ręczne przepuszczanie przez soczewki)"
-    wynik: "`drafty/<pismo>/<nowa_wersja>.docx`; REDLINE w `_robocze/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md`"
-    dalej: [deliverable-fidelity-pl, pisz-po-polsku, redline-docx-pl]
-    nie_dubluj: "pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli"
+    wejscie: draft `.docx` z aktami; wariant domyślny pełnej kontroli (zastępuje ręczne przepuszczanie przez soczewki)
+    wynik: '`drafty/<pismo>/<nowa_wersja>.docx`; REDLINE w `_robocze/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md`'
+    dalej:
+    - deliverable-fidelity-pl
+    - pisz-po-polsku
+    - redline-docx-pl
+    nie_dubluj: pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli
   adversarial-legal-review-pl:
     etap: C
-    wejscie: "pismo po `szturm-na-draft-pl` albo `atak-przeciwnika-pl`; profil MAX - bez bramki kosztu"
-    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md`"
-    dalej: [deliverable-fidelity-pl]
+    wejscie: pismo po `szturm-na-draft-pl` albo `atak-przeciwnika-pl`; profil MAX - bez bramki kosztu
+    wynik: dopisek do `drafty/<pismo>/_FINDINGS.md`
+    dalej:
+    - deliverable-fidelity-pl
   deliverable-fidelity-pl:
     etap: C
-    wejscie: "ostateczna wersja pisma i `analiza/_podsumowanie.md`"
-    wynik: "wynik kontroli w `_PRZEBIEGI.md`; brakujące flagi RED blokują gotowość"
-    dalej: [pisz-po-polsku, redline-docx-pl]
+    wejscie: ostateczna wersja pisma i `analiza/_podsumowanie.md`
+    wynik: wynik kontroli w `_PRZEBIEGI.md`; brakujące flagi RED blokują gotowość
+    dalej:
+    - pisz-po-polsku
+    - redline-docx-pl
   ocena-outputu-pl:
     etap: C
-    wejscie: "tekst do oceny jakości przed wysyłką (używany przez `szturm-na-draft-pl`)"
-    wynik: "ocena w `_robocze/`; ustalenia do `_FINDINGS.md`"
-    dalej: [szturm-na-draft-pl]
+    wejscie: tekst do oceny jakości przed wysyłką (używany przez `szturm-na-draft-pl`)
+    wynik: ocena w `_robocze/`; ustalenia do `_FINDINGS.md`
+    dalej:
+    - szturm-na-draft-pl
   marko-pl-content:
     etap: C
-    wejscie: "wywołany przez `szturm-na-draft-pl` jako soczewka stylu"
-    wynik: "uwagi w `_robocze/`"
-    dalej: [pisz-po-polsku]
+    wejscie: wywołany przez `szturm-na-draft-pl` jako soczewka stylu
+    wynik: uwagi w `_robocze/`
+    dalej:
+    - pisz-po-polsku
   pisz-po-polsku:
     etap: C
-    wejscie: "pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)"
-    wynik: "nowa wersja `drafty/<pismo>/..._vN+1`"
-    dalej: [redline-docx-pl, deliverable-fidelity-pl]
+    wejscie: pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
+    wynik: nowa wersja `drafty/<pismo>/..._vN+1`
+    dalej:
+    - redline-docx-pl
+    - deliverable-fidelity-pl
   redline-docx-pl:
     etap: C
-    wejscie: "draft `.docx` i lista zmian"
-    wynik: "REDLINE w `_robocze/`; kopia z zatwierdzonymi zmianami jako kolejna wersja"
-    dalej: [deliverable-fidelity-pl]
+    wejscie: draft `.docx` i lista zmian
+    wynik: REDLINE w `_robocze/`; kopia z zatwierdzonymi zmianami jako kolejna wersja
+    dalej:
+    - deliverable-fidelity-pl
   analizator-umow-v1:
     etap: E
-    wejscie: "umowa po OCR; `patron-przeglad-tabelaryczny` dla wielu umów"
-    wynik: "`analiza/_podsumowanie.md` (ryzyka klauzul); propozycje zmian jako redline"
-    dalej: [klauzule-kontraktowe-pl, redline-docx-pl]
+    wejscie: umowa po OCR; `patron-przeglad-tabelaryczny` dla wielu umów
+    wynik: '`analiza/_podsumowanie.md` (ryzyka klauzul); propozycje zmian jako redline'
+    dalej:
+    - klauzule-kontraktowe-pl
+    - redline-docx-pl
   klauzule-kontraktowe-pl:
     etap: E
-    wejscie: "umowa; wynik `analizator-umow-v1`"
-    wynik: "lista kontrolna klauzul w `analiza/_podsumowanie.md`"
-    dalej: [redline-docx-pl]
+    wejscie: umowa; wynik `analizator-umow-v1`
+    wynik: lista kontrolna klauzul w `analiza/_podsumowanie.md`
+    dalej:
+    - redline-docx-pl
   waliduj-podpis-pdf-pl:
     etap: E
-    wejscie: "przychodzący podpisany PDF"
-    wynik: "wynik w `analiza/_dokumenty.md`"
-    dalej: [akta-przeszukiwalne-pl]
+    wejscie: przychodzący podpisany PDF
+    wynik: wynik w `analiza/_dokumenty.md`
+    dalej:
+    - odczyt-dokumentow
+  odczyt-dokumentow:
+    etap: A
+    wejscie: plik lub folder dokumentów do odczytu
+    wynik: Markdown, kontrakt JSON i raport jakości w _robocze/odczyt/; rejestr dokumentów w analizie
+    dalej:
+    - chronologia-sprawy-v1
+    - analizator-dowodow-v3
+    - patron-przeglad-tabelaryczny
+    nie_dubluj: korzystaj z istniejącego wyniku dla tej samej treści i konfiguracji; OCR tylko odczyt-dokumentow, metodykę
+      ingestu czytaj w shared/BASIC-MEMORY.md

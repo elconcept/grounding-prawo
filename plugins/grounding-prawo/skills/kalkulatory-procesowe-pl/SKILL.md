@@ -15,6 +15,10 @@ metadata:
   attribution: '{"source": "crankshift/lawpowers", "license": "MIT", "relationship": "pattern-only", "note": "Dekompozycja na 4 kalkulatory i protokół „fetch przed obliczeniem”. Treść, tabele i rachunki napisane od zera na tekstach UKSC/KC/KPC; przy okazji poprawione 4 nieaktualne wartości źródła, m.in. limit opłaty stosunkowej po noweli z 2025 r.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Kalkulatory procesowe PL - żywe parametry, nigdy sama liczba
 
 ## Filozofia
@@ -169,4 +173,4 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wejście z:** dane o roszczeniu (kwota, daty) z `analiza/_brief.md`
 - **Wynik zapisz w:** wartości (opłata, WPS, odsetki, przedawnienie) wpisane do pisma i `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -12,6 +12,10 @@ metadata:
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.
 
 
@@ -871,4 +875,4 @@ Nie dubluj logiki shared w lokalnych plikach.
 - **Wynik zapisz w:** `analiza/_podsumowanie.md` (jeden raport końcowy; bez osobnych plików raportu) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`, `case-risk`, `adversarial-legal-review-pl`
 - **Nie dubluj:** to synteza; pojedyncze kroki (dowody, przepisy, chronologia) rób wyspecjalizowanymi skillami i tylko je zbieraj
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -16,7 +16,7 @@ Cel: mało plików, pełny ślad. Kolejny przebieg niczego nie dubluje - dopisuj
 
 | Plik | Co zawiera | Kto pisze |
 |---|---|---|
-| `analiza/_dokumenty.md` | indeks akt: plik, strona, rodzaj, status odczytu (OCR), luki | `the-ocr`, `akta-przeszukiwalne-pl`, `patron-przeglad-tabelaryczny` |
+| `analiza/_dokumenty.md` | indeks akt: plik, strona, rodzaj, status odczytu (OCR), luki | `odczyt-dokumentow`, `odczyt-dokumentow`, `patron-przeglad-tabelaryczny` |
 | `analiza/_brief.md` | stan sprawy w skrócie: strony, cel, żądania, terminy | `prawny-router-v3`, `analiza-sadowa-v6` |
 | `analiza/_chronologia.md` | oś zdarzeń z cytatem i stroną; niespójności | `chronologia-sprawy-v1`, `chronologia-stanowiska-pl` |
 | `analiza/_dowody-i-przepisy.md` | dowody, przepisy (z potwierdzeniem źródła), tezy orzeczeń | `analizator-dowodow-v3`, `analizator-przepisow-v2`, `orzeczenia-sadowe-v2` |

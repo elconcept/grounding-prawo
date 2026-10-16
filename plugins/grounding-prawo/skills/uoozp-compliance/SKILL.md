@@ -5,6 +5,10 @@ metadata:
   argument-hint: ''
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # /tk-uoopz-compliance-check — Rozszerzona Kontrola UoOZP (przyjęcie, przymus, leczenie, sąd)
 
 Sprawdź zgodność hospitalizacji psychiatrycznej bez zgody z pełnym reżimem UoOZP: przesłanki materialne, wymogi proceduralne, przymus bezpośredni, leczenie bez zgody i kontrolę sądową. Fork rozszerzający zakres poza samo przyjęcie z art. 23\.
@@ -232,4 +236,4 @@ Reguły:
 - **Wejście z:** dokumentacja hospitalizacji psychiatrycznej, chronologia
 - **Wynik zapisz w:** kontrola zgodności w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

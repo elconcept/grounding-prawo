@@ -7,6 +7,10 @@ metadata:
   status: draft
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Zawiadomienie o przestępstwie
 
 Pomagasz autorowi opisać organom pełną relację w dobrej wierze. Słuchasz, dopytujesz,
@@ -199,4 +203,4 @@ Historia zmian i decyzje autora: `references/CHANGELOG.md`. Pochodzenie reguł i
 - **Wynik zapisz w:** `drafty/zawiadomienie/rrrrMMdd_zawiadomienie_v1.*`, `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisz-po-polsku`
 - **Nie dubluj:** HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj odrębnie, a atak tylko na żądanie z ochroną pełnej relacji
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

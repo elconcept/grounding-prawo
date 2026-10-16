@@ -150,7 +150,7 @@ check("zbieznoscFragmentu >= 0.5 dla zwartego fragmentu",
     "sad uznal, ze klauzula waloryzacyjna w umowie kredytu jest dopuszczalna w swietle zasad") >= 0.5, true);
 
 // --- KONFORMANCJA NORMALIZACJI ------------------------------------------------
-// Regula normalizacji ma JEDEN DOM: tablice prawdy w doc-intel-contract-pl.
+// Regula normalizacji ma JEDEN DOM: tablice prawdy w odczyt-dokumentow.
 // Ten sam plik czyta test Pythona (test_normalizacja_kontrakt.py). Do 2026-08-30
 // kazda strona miala wlasna implementacje - tutejsza gubila SZESC z osmiu znakow,
 // ktore polski PDF wstawia naprawde, przez co poziom FRAGMENT potrafil orzec
@@ -162,8 +162,8 @@ check("zbieznoscFragmentu >= 0.5 dla zwartego fragmentu",
 const SKILL_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const KANDYDACI = [
   process.env.NORMALIZACJA_CASES,
-  join(SKILL_DIR, "..", "doc-intel-contract-pl", "contract", "normalizacja.cases.json"),
-  join(SKILL_DIR, "..", "..", "..", "dokumenty", "skills", "doc-intel-contract-pl",
+  join(SKILL_DIR, "..", "odczyt-dokumentow", "document_contract", "contract", "normalizacja.cases.json"),
+  join(SKILL_DIR, "..", "..", "..", "dokumenty", "skills", "odczyt-dokumentow",
        "contract", "normalizacja.cases.json"),
 ].filter(Boolean);
 const TABLICA = KANDYDACI.find((k) => existsSync(k)) || KANDYDACI[KANDYDACI.length - 1];
