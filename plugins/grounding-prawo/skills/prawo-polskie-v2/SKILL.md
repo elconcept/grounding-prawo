@@ -182,4 +182,5 @@ reforma; sync ROUTING-MAP.*
 - **Wejście z:** `prawny-router-v3` (krok kwalifikacji)
 - **Wynik zapisz w:** wskazanie modułu DR (w `analiza/_brief.md`) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `dr-02-prawo-cywilne-rodzinne-gospodarcze`, `dr-03-prawo-karne-wykroczenia-egzekucja`, `dr-05-prawo-administracyjne-sadowoadministracyjne`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

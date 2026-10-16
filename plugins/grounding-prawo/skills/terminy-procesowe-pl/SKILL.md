@@ -259,4 +259,5 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wejście z:** data doręczenia / zdarzenia i rodzaj terminu
 - **Wynik zapisz w:** termin z podstawą prawną w `analiza/_brief.md`; KPK/KPW oznacz do sprawdzenia (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`, `pisma-proste-v2`
+- **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

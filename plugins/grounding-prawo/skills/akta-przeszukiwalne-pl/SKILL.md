@@ -116,4 +116,5 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wynik zapisz w:** indeks akt: `analiza/_dokumenty.md` (strony nieczytelne, duplikaty); tekst i wyszukiwarka w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `chronologia-sprawy-v1`, `analizator-dowodow-v3`, `patron-przeglad-tabelaryczny`
 - **Nie dubluj:** `doc-intel-contract-pl` tylko gdy potrzeba bboxów, confidence lub podziału teczki na pisma; `the-ocr` robi samo OCR
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

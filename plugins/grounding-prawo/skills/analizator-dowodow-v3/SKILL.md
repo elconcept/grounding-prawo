@@ -1203,4 +1203,5 @@ Nie wolno domyślnie:
 - **Wejście z:** `analiza/_chronologia.md`, indeks akt; dla zeznań i nagrań także `przesluchanie-swiadkow-v2-min90`
 - **Wynik zapisz w:** `analiza/_dowody-i-przepisy.md` (siła dowodowa, sprzeczności, luki) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `analizator-przepisow-v2`, `case-risk`, `analiza-sadowa-v6`, `subsumpcja-pl`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

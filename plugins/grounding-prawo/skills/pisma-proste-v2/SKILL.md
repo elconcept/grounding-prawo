@@ -485,4 +485,5 @@ Pismo proste nie może ominąć walidacji tylko dlatego, że jest krótkie.
 - **Wejście z:** krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`
 - **Wynik zapisz w:** `drafty/<pismo>/rrrrMMdd_<nazwa>_v1.*`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `terminy-procesowe-pl`, `citation-grounding-pl`, `szturm-na-draft-pl`
+- **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

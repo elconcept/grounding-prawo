@@ -74,4 +74,5 @@ wyjątki). Brak tekstu źródła nigdy nie oznacza potwierdzenia.
 - **Wejście z:** odpowiedź modelu lub tabela z cytatami [N] i tekst źródłowy
 - **Wynik zapisz w:** wynik w `_robocze/`; błędy do `_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `citation-grounding-pl`
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

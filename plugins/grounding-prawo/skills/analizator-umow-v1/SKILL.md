@@ -570,4 +570,5 @@ na żądanie         → zawsze F.1 niezależnie od kwoty
 - **Wejście z:** umowa po OCR; `patron-przeglad-tabelaryczny` dla wielu umów
 - **Wynik zapisz w:** `analiza/_podsumowanie.md` (ryzyka klauzul); propozycje zmian jako redline (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `klauzule-kontraktowe-pl`, `redline-docx-pl`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

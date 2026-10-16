@@ -116,4 +116,5 @@ Plugin daje operacyjne narzędzia RODO (DPIA, naruszenie 72h, DSAR, RoPA/DPA). N
 - **Wejście z:** żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
 - **Wynik zapisz w:** `drafty/dsar/rrrrMMdd_dsar_v1.*` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `terminy-procesowe-pl`, `pisz-po-polsku`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

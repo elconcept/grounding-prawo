@@ -120,4 +120,5 @@ Plugin dostarcza wyszukiwanie i pobieranie źródeł prawa PL/UE. Nie zastępuje
 - **Wejście z:** pełny tekst orzeczenia z narzędzia MCP (`get_judgment`)
 - **Wynik zapisz w:** streszczenie ekstraktywne w `_robocze/`; użyta teza w `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `orzeczenia-sadowe-v2`, `citation-grounding-pl`
+- **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

@@ -470,4 +470,5 @@ sekcja MOSTY.
 - **Wynik zapisz w:** `analiza/_brief.md` (strony, cel, żądania, terminy, wybrana domena i ścieżka) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `prawo-polskie-v2`, `akta-przeszukiwalne-pl`, `pisma-procesowe-v3`, `analiza-sadowa-v6`
 - **Nie dubluj:** `przewodnik-prawny-v2` to fallback routera, nie osobna ścieżka; `prawo-polskie-v2` wywołuj przez router
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

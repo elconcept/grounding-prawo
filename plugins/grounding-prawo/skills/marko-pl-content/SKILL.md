@@ -194,4 +194,5 @@ Neutralny jurysdykcyjnie i tematycznie. Bez konektorów, nic nie wysyła na zewn
 - **Wejście z:** wywołany przez `szturm-na-draft-pl` jako soczewka stylu
 - **Wynik zapisz w:** uwagi w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisz-po-polsku`
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

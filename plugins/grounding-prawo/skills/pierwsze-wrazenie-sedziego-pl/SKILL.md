@@ -240,6 +240,7 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** draft po kontroli cytatów
-- **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma); uwagi to zadania: wdroż je w nowej wersji i uruchom soczewkę ponownie (pętla doskonalenia, `shared/ZASADY-PLUGINU.md`) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `atak-przeciwnika-pl`
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

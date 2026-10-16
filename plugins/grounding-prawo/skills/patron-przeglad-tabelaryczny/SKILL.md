@@ -103,4 +103,5 @@ z niezweryfikowanym cytatem wymagają przeczytania fragmentu źródłowego.
 - **Wejście z:** wiele dokumentów tego samego rodzaju (umowy, korespondencja) po OCR
 - **Wynik zapisz w:** tabela CSV/Excel w `_robocze/`; esencja i flagi ryzyka w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `chronologia-sprawy-v1`, `analizator-umow-v1`, `case-risk`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

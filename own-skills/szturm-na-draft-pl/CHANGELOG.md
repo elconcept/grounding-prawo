@@ -1,5 +1,13 @@
 # Changelog - szturm-na-draft-pl
 
+## 1.4.0 — 2026-10-16 — pętla do GOTOWE
+
+- E8 nie kończy się na limicie 5 rund ani na nowej wersji z wadami: pętla trwa do stanu `GOTOWE` (pełna runda bez 🔴/🟠,
+  E1 `PASS`, brak otwartych pytań); przerwać może tylko autor (`NIEGOTOWE`).
+- Pytania do autora padają w trakcie pętli (narzędzie pytań interaktywnych), odpowiedzi trafiają do rejestrów i następnej wersji.
+- Stagnacja i pogorszenie wersji nie kończą pętli: konflikt idzie do autora, pogorszona wersja wraca do najlepszej.
+- Stan pętli zapisywany także w Basic Memory (notatka pisma, teczka), więc ponowne wywołanie kontynuuje rundę.
+
 ## 1.3.0 — 2026-10-15 — recenzja rozszerzająca zawiadomienia
 
 - Dedykowany ZOP-R zamiast pełnomocnika przeciwnika: mikro-sekwencja, skutki, osoby, prawa pokrzywdzonego, organy i dodatkowe kwalifikacje.

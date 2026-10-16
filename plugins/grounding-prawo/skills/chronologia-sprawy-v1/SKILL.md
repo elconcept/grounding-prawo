@@ -859,4 +859,5 @@ Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprec
 - **Wynik zapisz w:** `analiza/_chronologia.md` (dopisywana, pozycje ze stałym ID) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `chronologia-stanowiska-pl`, `analizator-dowodow-v3`, `przesluchanie-swiadkow-v2-min90`
 - **Nie dubluj:** `chronologia-stanowiska-pl` to mechaniczna kontrola cytat-strona i zestawienie stanowisk stron; nie buduj drugiej osi czasu
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

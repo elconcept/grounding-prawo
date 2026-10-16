@@ -195,4 +195,5 @@ odesłaniami, bez duplikacji.
 - **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `analizator-przepisow-v2`, `orzeczenia-sadowe-v2`, `pisma-procesowe-v3`
 - **Nie dubluj:** domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

@@ -199,4 +199,5 @@ Historia zmian i decyzje autora: `references/CHANGELOG.md`. Pochodzenie reguł i
 - **Wynik zapisz w:** `drafty/zawiadomienie/rrrrMMdd_zawiadomienie_v1.*`, `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisz-po-polsku`
 - **Nie dubluj:** HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj odrębnie, a atak tylko na żądanie z ochroną pełnej relacji
+- **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

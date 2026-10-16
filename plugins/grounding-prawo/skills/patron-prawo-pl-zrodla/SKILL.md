@@ -84,4 +84,5 @@ oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill 
 - **Wejście z:** każde pytanie o przepis, orzeczenie, KRS, prawo UE, interpretację
 - **Wynik zapisz w:** odpowiedź ze źródłem; do sprawy: dopisek do `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `orzeczenia-sadowe-v2`, `analizator-przepisow-v2`, `webwright-legal-pl`
+- **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

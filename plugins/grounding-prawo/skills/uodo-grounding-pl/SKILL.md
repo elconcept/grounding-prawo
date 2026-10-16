@@ -118,4 +118,5 @@ Plugin dostarcza wyszukiwanie i pobieranie źródeł prawa PL/UE. Nie zastępuje
 - **Wejście z:** pismo cytujące decyzje Prezesa UODO
 - **Wynik zapisz w:** ustalenia do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `subsumpcja-pl`
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

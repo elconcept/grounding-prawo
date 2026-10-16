@@ -127,4 +127,5 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wejście z:** draft i zweryfikowane przepisy (`analizator-przepisow-v2`)
 - **Wynik zapisz w:** `drafty/<pismo>/_SUBSUMPCJA.md` (rejestr stały; dopisek przebiegu) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pierwsze-wrazenie-sedziego-pl`, `atak-przeciwnika-pl`
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

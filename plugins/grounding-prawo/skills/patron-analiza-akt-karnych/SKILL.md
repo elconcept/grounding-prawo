@@ -53,4 +53,5 @@ weryfikację cytatów (skill `patron-weryfikacja-cytatow`) przed użyciem fragme
 - **Wejście z:** akta sprawy karnej po OCR
 - **Wynik zapisz w:** analiza obrończa w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`, `analizator-dowodow-v3`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

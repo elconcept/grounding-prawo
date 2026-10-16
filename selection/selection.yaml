@@ -19,7 +19,7 @@ keep:
   - {name: chronologia-sprawy-v1, from: lex, why: "oś zdarzeń i niespójności między postępowaniami"}
   - {name: orzeczenia-sadowe-v2, from: lex, why: "ocena tez orzeczeń"}
   - {name: pisma-procesowe-v3, from: lex, why: "główny generator pism"}
-  - {name: pisma-proste-v2, from: lex, why: "21 odwołań z shared; zostaje jako część silnika, ale profil MAX wymusza pełną kontrolę (patrz profil-postepowan-wlasnych)"}
+  - {name: pisma-proste-v2, from: lex, why: "21 odwołań z shared; zostaje jako część silnika, ale profil MAX wymusza pełną kontrolę (patrz shared/ZASADY-PLUGINU.md)"}
   - {name: przesluchanie-swiadkow-v2-min90, from: lex, why: "pytania do świadków, sprzeczności"}
   - {name: audyt-systemu-v4, internal: true, from: lex, why: "shared odwołuje się do niego 33x; zostaje jako biblioteka (9 MB, głównie references i mcp-servers)"}
   - {name: przewodnik-prawny-v2, internal: true, from: lex, why: "FALLBACK routera w 5 ścieżkach; odcięcie wymagałoby przepisania routera"}
@@ -83,8 +83,8 @@ keep:
   - {name: zawiadomienie-o-przestepstwie, from: own, why: "pisane przez pokrzywdzonego obywatela"}
   - {name: zarzuty-do-opinii-bieglego, from: own, fold_into: pisma-procesowe-v3, typ: "zarzuty do opinii biegłego", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
   - {name: prowadnik-grounding-prawo, from: own, why: "skill wejściowy: wybór ścieżki A-E, mosty między skillami (graf w selection/bridges.yaml, opis w README.md)"}
-  - {name: profil-postepowan-wlasnych, from: own, why: "NOWY, mały skill nadrzędny (szkic do akceptacji): pełna ścieżka kontroli, brak anonimizacji, osobne przebiegi soczewek"}
 drop:
+  - {name: profil-postepowan-wlasnych, why: "scalony w shared/ZASADY-PLUGINU.md (sekcja profilu): prowadnik i tak wczytywał go zawsze, a jako plik shared obowiązuje także skille wywołane bez prowadnika", archive: true}
   - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ISAP)", archive: true}
   - {name: opendataloader-pdf, why: "scalony w the-ocr (references/opendataloader-pdf.md)"}
   - {name: humanizer-pl, why: "scalony w pisz-po-polsku"}

@@ -72,4 +72,5 @@ i `uv.lock` do katalogu tego skilla.
 - **Wejście z:** pliki PDF/JPG/PNG bez warstwy tekstowej; obcy dokument najpierw przez `patron-skan-dokumentu`
 - **Wynik zapisz w:** `<nazwa>.md` obok oryginału (strony `## Page N`); wpis w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `akta-przeszukiwalne-pl`, `patron-przeglad-tabelaryczny`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

@@ -28,7 +28,7 @@ for x in d["drop"]:
     L.append(f"| `{x['name']}` | {'archive/' if x.get('archive') else 'upstream'} | {x['why']} |")
 L += ["", "## Znane problemy i rzeczy niezrobione", "",
       "- Po usunięciu skilli zostają odwołania w prozie (ok. 150 miejsc, głównie w `shared`, `analizator-umow-v1`, `citation-grounding-pl`); nie są to ścieżki wczytywane przez router, ale wymagają stopniowego sprzątania.",
-      "- `profil-postepowan-wlasnych` to szkic do akceptacji właściciela.",
+      "- Profil postępowań własnych (`shared/ZASADY-PLUGINU.md`) to szkic do akceptacji właściciela.",
       "- Patche routera zmieniają pliki objęte `CHECKSUMS.sha256`; sumy w skillu się nie zgadzają.",
       "- `ekstraktor-cytatow-pl` ma tylko SKILL.md, bez kodu: ekstrakcja idzie promptem.",
       "- `doc-intel-contract-pl` jest wewnętrzny wyłącznie dla testu `citation-grounding-pl` (tablica prawdy normalizacji); ma nieużywane mechanizmy maskowania.",

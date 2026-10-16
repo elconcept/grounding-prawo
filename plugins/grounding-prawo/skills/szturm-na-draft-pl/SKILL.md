@@ -11,7 +11,7 @@ allowed-tools:
 - Agent
 metadata:
   author: GROUNDING-PRAWO / abogada
-  version: 1.3.0
+  version: 1.4.0
   plan: dokumentacja/06-PLAN-SKILL-SZTURM-NA-DRAFT.md
   companion_skills: redline-docx-pl, ocena-outputu-pl, citation-grounding-pl, patron-weryfikacja-cytatow, ekstraktor-cytatow-pl, mcp-saos, patron-identyfikatory-pl, deliverable-fidelity-pl, analizator-dowodow-v3, pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl, adversarial-legal-review-pl, subsumpcja-pl, zarzuty-do-opinii-bieglego, marko-pl-content, pisz-po-polsku
   data-residency: local
@@ -35,8 +35,8 @@ prokuratury i funkcjonariuszy oraz możliwe dodatkowe kwalifikacje. Nie wystarcz
 skreśleń ani raport „OK”. Pytaj, rozwijaj, wracaj po odpowiedziach i włączaj je do pisma.
 Hipotezy recenzenta pozostają pytaniami do czasu uzyskania relacji i sprawdzenia prawa.
 
-W tym trybie mandaty z `references/soczewki.md`, izolacja „sam draft”, profil MAX, limit
-E8 i format ustaleń/syntezy są zastąpione regułami ZOP-R. Każda rola otrzymuje pierwotną
+W tym trybie mandaty z `references/soczewki.md`, izolacja „sam draft”, profil MAX, kryterium
+wyjścia E8 i format ustaleń/syntezy są zastąpione regułami ZOP-R. Każda rola otrzymuje pierwotną
 relację, odpowiedzi, mapę krzywd oraz jawny mandat rozszerzający; izoluj jedynie cudze wnioski.
 Nie stosuj „wygraj przeciwko tekstowi”, redukcji do najmocniejszej tezy, diagnozy wiarygodności,
 ciężaru dowodu pokrzywdzonego ani rozmiękczania opisu. HARDGATE-ZOP obowiązuje zawsze.
@@ -45,7 +45,8 @@ Skille z różnych pluginów atakują pismo z różnych stron, więc znajdują r
 ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
 
 1. **Pętla się nie zamyka.** Dziesiątki raportów i propozycji zmian w .md, a dokument bez zmian;
-   kotwica, którą naprawiała jedna linia, wisi przez kilka dni. Tu wynikiem jest poprawiony .docx.
+   kotwica, którą naprawiała jedna linia, wisi przez kilka dni. Tu wynikiem jest poprawiony .docx,
+   a szturm wraca na każdą nową wersję, aż pismo jest `GOTOWE` (E8).
 2. **Duplikaty.** To samo ustalenie zgłaszają 2-4 skille, każdy inaczej. Tu jedna linia na ustalenie.
 3. **Koszt bez zysku.** Część skilli daje tylko „OK”. Tu bramka kosztu (niżej) i lista soczewek na żądanie.
 4. **Rozmywanie tezy.** Recenzent dopisuje „wyjaśnienie alternatywne”, które wykluczają fakty znane
@@ -63,8 +64,9 @@ reszta to dopiski do plików inkrementalnych.
    Zmiany DECYZJA_AUTORA **nie trafiają do kopii**: są wyłącznie propozycjami w REDLINE (zmiana śledzona z etykietą)
    i pytaniami w raporcie, dopóki autor ich nie zatwierdzi. Autor przyjmuje je w REDLINE.
    **Bez PDF** - PDF robi prawnik po własnej korekcie.
-3. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie, plus pytania do autora
-   wyłącznie tam, gdzie model nie może rozstrzygnąć (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane).
+3. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie. Pytania do autora
+   (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane) padają w trakcie pętli E8, a raport pokazuje tylko
+   te, na które autor jeszcze nie odpowiedział.
    Raport trafia jako tura do rejestru stałego sprawy i wpis w `drafty/<pismo>/_PRZEBIEGI.md`, nie jako
    nowy plik ani katalog raportów.
 
@@ -113,7 +115,8 @@ Każde pismo dostaje pełny zestaw soczewek: E1 + `marko-pl-content` + `atak-prz
 Nie ma stawek S/M/L ani limitu rund wynikającego z kosztu. Soczewki uruchamiaj jako osobne przebiegi, najlepiej w osobnych
 kontekstach (recenzent bez wniosków poprzednich); „OK" jednej nie zwalnia z następnej.
 
-Pętla E8: minimum 2 pełne przebiegi, maksimum 5; przerwij wcześniej tylko po dwóch kolejnych przebiegach bez nowych ustaleń.
+Pętla E8 trwa do stanu `GOTOWE` (kryterium niżej i w `shared/ZASADY-PLUGINU.md`, „Pętla doskonalenia pisma”), minimum 2 pełne
+przebiegi; nie ma limitu rund wynikającego z kosztu. Przerwać może tylko autor - wtedy stan `NIEGOTOWE`.
 Mandat każdej soczewki, jej wejście i klasy, które zgłasza: [references/soczewki.md](references/soczewki.md). Przeczytaj go przed E1.
 
 ## Przebieg
@@ -232,17 +235,34 @@ DECYZJA_AUTORA, oznaczoną w komentarzu) da się odrzucić. Zgodą jest samo wyw
 nadpisać plik w miejscu albo wysłać wynik na zewnątrz - wracają reguły redline-docx-pl (pokaż zmiany,
 „potwierdzam” przed accept-all na oryginale, `sanitize --keep-markup` przed wysyłką).
 
-### E8 - ponowna kontrola (pętla z limitem)
+### E8 - ponowna kontrola (pętla do `GOTOWE`)
 
-1. E1 na `<nowa>.clean.md` (wyciąg z nowej wersji). Kotwicę `ocena-outputu-pl` zdejmuje wyłącznie
+Nowa wersja nie kończy szturmu. Każda runda to E1-E7 na najnowszej wersji, a kolejna runda zaczyna się,
+dopóki kryterium wyjścia nie jest spełnione. Model nie oddaje autorowi wersji, o której wie, że ma wady.
+
+1. **Ponowna kontrola.** E1 na `<nowa>.clean.md` (wyciąg z nowej wersji) i wszystkie soczewki E2-E4 w świeżym
+   kontekście (recenzent nie widzi poprzednich ustaleń). Kotwicę `ocena-outputu-pl` zdejmuje wyłącznie
    ponowny przebieg narzędzia, które ją postawiło (reguła monotoniczności) - nie uzasadnienie.
-2. Karta `ocena-outputu-pl` z linią `REWIZJA #r` względem poprzedniej.
-3. Funkcja werdyktu `adversarial-legal-review-pl` (kroki A/B/C, sekcja 4b) i `wynik_zbiorczy`
-   (sekcja 4a).
-4. **Nigdy gorsza wersja:** jeżeli runda obniża `wynik_zbiorczy` albo otwiera nową kotwicę, wróć do
-   najlepszej wersji i zakończ ze stanem `wymuszone_wyjscie_na_v<najlepsza>`.
-5. Nowe ustalenia rundy → E5 z `--poprzednie` (stałe ID), E7 na wersji z poprzedniej rundy. Po osiągnięciu maksimum (5)
-   zostaje lista otwartych pozycji, nie kolejna runda.
+2. **Ocena rundy.** Karta `ocena-outputu-pl` z linią `REWIZJA #r` względem poprzedniej, funkcja werdyktu
+   `adversarial-legal-review-pl` (kroki A/B/C, sekcja 4b) i `wynik_zbiorczy` (sekcja 4a).
+3. **Pytania teraz, nie w raporcie.** Ustalenia DECYZJA_AUTORA, DOWOD, WSTRZYMANE i ZABLOKOWANE, których model
+   nie rozstrzygnie sam, zadaj autorowi w tej rundzie: narzędziem pytań interaktywnych, jeśli jest (do 4 pytań
+   naraz, każde z ID ustalenia, cytatem fragmentu i propozycjami brzmienia), inaczej w czacie, i czekaj na odpowiedź.
+   Odpowiedź zapisz w `RUN/rejestry.json` (nowy fakt potwierdzony ze źródłem „relacja autora, data” albo decyzja
+   autora) i w teczce Basic Memory (`## Decyzje użytkownika`), a zatwierdzoną zmianę wprowadź w następnej wersji.
+4. **Nowe ustalenia rundy** → E5 z `--poprzednie` (stałe ID), E7 na wersji z poprzedniej rundy, nowa `_vN+1`.
+5. **Kryterium wyjścia `GOTOWE`:** pełna runda na ostatniej wersji nie daje ustalenia 🔴 ani 🟠 (także od
+   sędziego, przeciwnika i debaty), E1 ma `PASS` dla każdego cytatu, sygnatury i przepisu, nie ma pytania bez
+   odpowiedzi ani zmiany po ostatniej kontroli, a 🟡/🟢 są wprowadzone albo odrzucone przez autora.
+   Ustalenie odrzucone przez autora decyzją zapisaną w rejestrze nie blokuje wyjścia; soczewka zgłasza je
+   ponownie tylko przy sprzeczności z nowym faktem.
+6. **Stagnacja.** To samo ustalenie (stałe ID) wraca drugą rundę z rzędu albo poprawki oscylują: nie redaguj
+   trzeci raz, tylko pokaż autorowi konflikt (obie wersje i powód soczewki) i poproś o rozstrzygnięcie.
+7. **Nigdy gorsza wersja:** jeżeli runda obniża `wynik_zbiorczy` albo otwiera nową kotwicę, wróć do
+   najlepszej wersji i spróbuj innej naprawy; pogorszenie nie jest powodem do zakończenia pętli.
+8. **Przerwanie przez autora** albo koniec sesji: stan `NIEGOTOWE` z listą otwartych ustaleń i pytań w
+   `_FINDINGS.md`, `_PRZEBIEGI.md` i notatce pisma w Basic Memory. Ponowne wywołanie szturmu na tym piśmie
+   czyta ten stan w E0 i kontynuuje pętlę od ostatniej wersji (jak ralph loop: ten sam prompt, nowa runda).
 
 ### E9 - raport i rejestr
 
@@ -250,21 +270,22 @@ Dopisz turę do pięciu plików rejestru stałego wg [references/rejestr-staly.m
 LOG (tura + status), FINDINGS (pozycje `[n]`, karta ocena-outputu-pl z REWIZJĄ, zmiany w pismach,
 pytania do autora), GROUNDING, ADVERSARIAL (werdykty, ciosy i ich stan), ANEKS w `_SUBSUMPCJA.md`.
 Dopisz też przebieg do `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, wynik = nowa wersja, decyzje autora, wskaźnik
-do `RUN/`). Pliki robocze zostają w `RUN/` (`_robocze/`); esencja jest w rejestrze - nie twórz osobnego raportu. Jeżeli sprawa jest w repozytorium git: commit
+do `RUN/`) i zaktualizuj Basic Memory wg `shared/BASIC-MEMORY.md`: notatka pisma (wersja, ścieżka, stan `GOTOWE`/`NIEGOTOWE`,
+otwarte ustalenia), teczka (`## Decyzje użytkownika`, `## Lekcje` - zarzuty, które wracały, i uwagi autora do formy). Pliki robocze zostają w `RUN/` (`_robocze/`); esencja jest w rejestrze - nie twórz osobnego raportu. Jeżeli sprawa jest w repozytorium git: commit
 z jawną listą plików (`git add` konkretnych ścieżek, nigdy `-A` - w repo z aktami nieśledzone
 katalogi dowodów wpadłyby do historii) i wpis do logu sesji, jeśli repo go wymaga.
 
 ## Raport dla użytkownika (odpowiedź w czacie)
 
 ```
-SZTURM <dokument(y)> | profil MAX | rundy <r>/5 | stan <…>
+SZTURM <dokument(y)> | profil MAX | rundy <r> | stan GOTOWE|NIEGOTOWE
 Ustalenia: <x> zgłoszonych → <y> po deduplikacji | WPROWADZONE <a> | DO DECYZJI <b> | PYTANIA <c> | ZABLOKOWANE <d>
 E1: cytaty <ok/✗> | sygnatury <…> | przepisy <…> | kotwice z poprzedniego przebiegu: <zdjęte/otwarte>
 Pliki: <nowa>_REDLINE.docx (w:ins i / w:del d, komentarzy k) | <nowa>.docx (wszystkie zmiany zastosowane) | RUN/raport_synteza.md
 Zmiany nieśledzone: <lista z format.json albo „brak”>
 Nieuruchomione / ograniczenia: <konektory offline, cache z datą, soczewki, których nie udało się uruchomić (podaj powód)>
 
-Pytania do autora (tylko to, czego model nie rozstrzyga):
+Pytania bez odpowiedzi (tylko przy NIEGOTOWE; pozostałe padły i zostały wdrożone w pętli):
 1. <S-ID> …
 ```
 
@@ -304,4 +325,5 @@ Bez tabel per skill i bez streszczeń raportów soczewek - one są w `RUN/ustale
 - **Wynik zapisz w:** `drafty/<pismo>/<nowa_wersja>.docx`; REDLINE w `_robocze/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `deliverable-fidelity-pl`, `pisz-po-polsku`, `redline-docx-pl`
 - **Nie dubluj:** pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

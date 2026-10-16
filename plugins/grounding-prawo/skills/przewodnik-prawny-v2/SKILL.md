@@ -887,4 +887,5 @@ warstwę UX (język laika, formatowanie odpowiedzi) — nie logikę prawną.
 - **Wejście z:** router nie znalazł ścieżki albo użytkownik nie wie, jakiego pisma potrzebuje
 - **Wynik zapisz w:** wskazana ścieżka i lista potrzebnych dokumentów (w odpowiedzi) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `prowadnik-grounding-prawo`, `pisma-proste-v2`, `pisma-procesowe-v3`
+- **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

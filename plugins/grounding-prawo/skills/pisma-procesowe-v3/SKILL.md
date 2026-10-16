@@ -877,4 +877,5 @@ też `theory-of-case-engine.md`.
 - **Wynik zapisz w:** `drafty/<pismo>/rrrrMMdd_<nazwa>_v1.docx|md`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `terminy-procesowe-pl`, `ekstraktor-cytatow-pl`, `szturm-na-draft-pl`
 - **Nie dubluj:** krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
+- **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

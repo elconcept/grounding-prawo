@@ -62,4 +62,5 @@ dodane w tym porcie.
 - **Wejście z:** tekst z sygnaturami, PESEL, NIP, KRS, ELI
 - **Wynik zapisz w:** wynik walidacji w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `ekstraktor-cytatow-pl`, `citation-grounding-pl`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy; zapisu nie wymaga (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

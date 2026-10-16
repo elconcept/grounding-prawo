@@ -257,4 +257,5 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wejście z:** `akta-przeszukiwalne-pl` (tekst akt) i `analiza/_chronologia.md`
 - **Wynik zapisz w:** dopisek do `analiza/_chronologia.md` (stanowiska stron: element roszczenia x twierdzenie x dowód x luka) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `analizator-dowodow-v3`, `subsumpcja-pl`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

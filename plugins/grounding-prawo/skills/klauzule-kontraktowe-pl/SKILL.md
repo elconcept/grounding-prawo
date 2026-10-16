@@ -178,4 +178,5 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wejście z:** umowa; wynik `analizator-umow-v1`
 - **Wynik zapisz w:** lista kontrolna klauzul w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `redline-docx-pl`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

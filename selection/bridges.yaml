@@ -7,17 +7,21 @@ default_dr:
   wynik: "dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci)"
   dalej: [analizator-przepisow-v2, orzeczenia-sadowe-v2, pisma-procesowe-v3]
   nie_dubluj: "domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają modułów - powiedz to wprost, nie zgaduj"
+# Basic Memory (projekt `legal`) w sekcji MOST: domyślnie według etapu, pole `wiki` skilla nadpisuje. Protokół: shared/BASIC-MEMORY.md.
+wiki_etap:
+  A: "czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu"
+  B: "czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status)"
+  C: "czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje`"
+  D: "najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/`"
+  E: "czytaj teczkę sprawy; decyzje i stan zapisz w teczce"
+  S: "czytaj teczkę sprawy; zapisu nie wymaga"
 skills:
-  profil-postepowan-wlasnych:
-    etap: S
-    wejscie: "zawsze razem z `prawny-router-v3`, od pierwszego kroku"
-    wynik: "brak pliku - zasady pracy (pełna kontrola, bez anonimizacji, wynik trójstanowy)"
-    dalej: [prawny-router-v3]
   prowadnik-grounding-prawo:
     etap: S
     wejscie: "początek każdej rozmowy o sprawie, gdy nie wiadomo, od czego zacząć"
     wynik: "wskazana ścieżka A-E i pierwszy skill"
     dalej: [prawny-router-v3, the-ocr, patron-prawo-pl-zrodla]
+    wiki: "na starcie odczytaj teczkę sprawy (`read_note`, `build_context`); brak teczki = załóż ją przed analizą lub pismem"
   prawny-router-v3:
     etap: A
     wejscie: "pytanie, akta albo draft pisma od użytkownika; `prowadnik-grounding-prawo`, gdy cel niejasny"
@@ -200,12 +204,12 @@ skills:
   pierwsze-wrazenie-sedziego-pl:
     etap: C
     wejscie: "draft po kontroli cytatów"
-    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma)"
+    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma); uwagi to zadania: wdroż je w nowej wersji i uruchom soczewkę ponownie (pętla doskonalenia, `shared/ZASADY-PLUGINU.md`)"
     dalej: [atak-przeciwnika-pl]
   atak-przeciwnika-pl:
     etap: C
     wejscie: "draft po pierwszym wrażeniu sędziego"
-    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md`"
+    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md`; uwagi to zadania: wdroż je w nowej wersji i uruchom soczewkę ponownie (pętla doskonalenia, `shared/ZASADY-PLUGINU.md`)"
     dalej: [szturm-na-draft-pl, adversarial-legal-review-pl]
   szturm-na-draft-pl:
     etap: C
@@ -216,7 +220,7 @@ skills:
   adversarial-legal-review-pl:
     etap: C
     wejscie: "pismo po `szturm-na-draft-pl` albo `atak-przeciwnika-pl`; profil MAX - bez bramki kosztu"
-    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md`"
+    wynik: "dopisek do `drafty/<pismo>/_FINDINGS.md`; uwagi to zadania: wdroż je w nowej wersji i uruchom soczewkę ponownie (pętla doskonalenia, `shared/ZASADY-PLUGINU.md`)"
     dalej: [deliverable-fidelity-pl]
   deliverable-fidelity-pl:
     etap: C

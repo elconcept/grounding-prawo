@@ -70,4 +70,5 @@ Pochodzenie: humanizer-pl (MIT, MateMatic), naturalne-pisanie (elconcept), pisz-
 - **Wejście z:** pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
 - **Wynik zapisz w:** nowa wersja `drafty/<pismo>/..._vN+1` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `redline-docx-pl`, `deliverable-fidelity-pl`
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

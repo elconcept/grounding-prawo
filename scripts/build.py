@@ -96,7 +96,7 @@ def scrub(sel, stats):
         for root, _, fs in os.walk(os.path.join(SKILLS, e["name"])):
             for f in fs:
                 p = os.path.join(root, f)
-                if f.endswith(".md") and not any(x in p for x in SKIP_PARTS) and not (e["name"] == "profil-postepowan-wlasnych"):
+                if f.endswith(".md") and not any(x in p for x in SKIP_PARTS):
                     scrub_file(p, removed, stats)
 
 
@@ -203,6 +203,8 @@ def add_bridges(sel):
                  "- **Następny krok:** " + ", ".join(f"`{d}`" for d in b.get("dalej", []))]
         if b.get("nie_dubluj"):
             lines.append(f"- **Nie dubluj:** {b['nie_dubluj']}")
+        wiki = b.get("wiki") or bridges["wiki_etap"][b["etap"]]
+        lines.append(f"- **Basic Memory (`legal`):** {wiki} (protokół: `shared/BASIC-MEMORY.md`)")
         lines.append("- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.")
         sm = os.path.join(SKILLS, name, "SKILL.md")
         text = open(sm, encoding="utf-8").read().rstrip("\n")

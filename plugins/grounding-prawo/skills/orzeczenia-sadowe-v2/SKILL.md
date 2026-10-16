@@ -1258,4 +1258,5 @@ Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprec
 - **Wejście z:** teza do poparcia orzecznictwem; `patron-prawo-pl-zrodla` (wybór konektora)
 - **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (sygnatura z narzędzia, teza, link) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `struktura-wyroku-pl`, `citation-grounding-pl`, `pisma-procesowe-v3`
+- **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

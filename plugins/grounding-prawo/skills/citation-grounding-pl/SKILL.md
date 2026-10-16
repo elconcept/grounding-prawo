@@ -313,4 +313,5 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wynik zapisz w:** wyniki ISTNIENIE/TREŚĆ/FRAGMENT: ustalenia do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `subsumpcja-pl`, `pierwsze-wrazenie-sedziego-pl`
 - **Nie dubluj:** `patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format [N]); `uodo-grounding-pl` - decyzje UODO; ten skill - cytaty w piśmie
+- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.

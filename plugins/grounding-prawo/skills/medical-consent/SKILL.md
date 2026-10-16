@@ -296,4 +296,5 @@ Gdy materiał dotyczy art. 192 k.k. i problemu zgody, odpowiedź MUSI zawierać:
 - **Wejście z:** dokumentacja medyczna po OCR, chronologia
 - **Wynik zapisz w:** ocena art. 192 k.k. w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `uoozp-compliance`, `zawiadomienie-o-przestepstwie`, `pisma-procesowe-v3`
+- **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
