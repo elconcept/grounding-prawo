@@ -28,6 +28,9 @@
 [submodule "vendor/general/enhance-workflows"]
 	path = vendor/general/enhance-workflows
 	url = https://github.com/elconcept/enhance-workflows.git
+[submodule "vendor/awesome-legaltech-pl"]
+	path = vendor/awesome-legaltech-pl
+	url = https://github.com/apiotrowski-afk/awesome-legaltech-pl.git
 #
 ## Serwery MCP `vendor/mcp/` (działają w Dockerze za portalem lex.xlap.pl)
 [submodule "vendor/mcp/mcp-cite"]
@@ -116,3 +119,50 @@
 [submodule "vendor/law/konstytucja-rp"]
 	path = vendor/law/konstytucja-rp
 	url = https://github.com/kbchojnacki/konstytucja-rp.git
+#
+## Komentarze do ustaw `vendor/law/` (LexaurinTheDog)
+[submodule "vendor/law/Komentar-PL-BRON-549-1999"]
+	path = vendor/law/Komentar-PL-BRON-549-1999
+	url = https://github.com/LexaurinTheDog/Komentar-PL-BRON-549-1999.git
+[submodule "vendor/law/Komentar-PL-CYB-1560-2018"]
+	path = vendor/law/Komentar-PL-CYB-1560-2018
+	url = https://github.com/LexaurinTheDog/Komentar-PL-CYB-1560-2018.git
+[submodule "vendor/law/Komentar-PL-DL-654-2011"]
+	path = vendor/law/Komentar-PL-DL-654-2011
+	url = https://github.com/LexaurinTheDog/Komentar-PL-DL-654-2011.git
+[submodule "vendor/law/Komentar-PL-OZP-535-1994"]
+	path = vendor/law/Komentar-PL-OZP-535-1994
+	url = https://github.com/LexaurinTheDog/Komentar-PL-OZP-535-1994.git
+[submodule "vendor/law/Komentar-PL-PASC-1741-2014"]
+	path = vendor/law/Komentar-PL-PASC-1741-2014
+	url = https://github.com/LexaurinTheDog/Komentar-PL-PASC-1741-2014.git
+[submodule "vendor/law/Komentar-PL-PF-1381-2001"]
+	path = vendor/law/Komentar-PL-PF-1381-2001
+	url = https://github.com/LexaurinTheDog/Komentar-PL-PF-1381-2001.git
+[submodule "vendor/law/Komentar-PL-POLI-179-1990"]
+	path = vendor/law/Komentar-PL-POLI-179-1990
+	url = https://github.com/LexaurinTheDog/Komentar-PL-POLI-179-1990.git
+[submodule "vendor/law/Komentar-PL-PPD-1493-2005"]
+	path = vendor/law/Komentar-PL-PPD-1493-2005
+	url = https://github.com/LexaurinTheDog/Komentar-PL-PPD-1493-2005.git
+[submodule "vendor/law/Komentar-PL-PRAS-24-1984"]
+	path = vendor/law/Komentar-PL-PRAS-24-1984
+	url = https://github.com/LexaurinTheDog/Komentar-PL-PRAS-24-1984.git
+[submodule "vendor/law/Komentar-PL-PRD-602-1997"]
+	path = vendor/law/Komentar-PL-PRD-602-1997
+	url = https://github.com/LexaurinTheDog/Komentar-PL-PRD-602-1997.git
+[submodule "vendor/law/Komentar-PL-RACH-591-1994"]
+	path = vendor/law/Komentar-PL-RACH-591-1994
+	url = https://github.com/LexaurinTheDog/Komentar-PL-RACH-591-1994.git
+[submodule "vendor/law/Komentar-PL-SOZ-2135-2004"]
+	path = vendor/law/Komentar-PL-SOZ-2135-2004
+	url = https://github.com/LexaurinTheDog/Komentar-PL-SOZ-2135-2004.git
+[submodule "vendor/law/Komentar-PL-STOW-104-1989"]
+	path = vendor/law/Komentar-PL-STOW-104-1989
+	url = https://github.com/LexaurinTheDog/Komentar-PL-STOW-104-1989.git
+[submodule "vendor/law/Komentar-PL-ZGR-1485-2015"]
+	path = vendor/law/Komentar-PL-ZGR-1485-2015
+	url = https://github.com/LexaurinTheDog/Komentar-PL-ZGR-1485-2015.git
+[submodule "vendor/law/Komentar-PL-ZL-152-1997"]
+	path = vendor/law/Komentar-PL-ZL-152-1997
+	url = https://github.com/LexaurinTheDog/Komentar-PL-ZL-152-1997.git
