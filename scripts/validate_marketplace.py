@@ -39,6 +39,12 @@ def validate(root):
         read_json(plugin / '.mcp.json')
         skills = list((plugin / 'skills').glob('*/SKILL.md'))
         selected = yaml.safe_load((root / 'selection/selection.yaml').read_text())
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("marketplace_build", root / "scripts/build.py")
+        builder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(builder)
+        for entry in selected['keep']:
+            check((Path(builder.source(entry)) / 'SKILL.md').is_file(), f"Missing source: {entry['name']}")
         expected = {e['name'] for e in selected['keep'] if not e.get('fold_into')}
         check({p.parent.name for p in skills} == expected, 'Built skill set differs from selection')
         for path in skills:

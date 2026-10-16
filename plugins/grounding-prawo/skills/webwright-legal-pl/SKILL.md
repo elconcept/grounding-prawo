@@ -9,6 +9,10 @@ metadata:
   pii-egress: none
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # webwright-legal-pl
 
 Skill do pobierania orzeczeń z polskich serwisów prawnych niedostępnych
@@ -164,4 +168,4 @@ Plugin dostarcza wyszukiwanie i pobieranie źródeł prawa PL/UE. Nie zastępuje
 - **Wejście z:** orzeczenie z ms.gov.pl, sn.pl, TK, gdy portal MCP go nie ma
 - **Wynik zapisz w:** tekst orzeczenia w `_robocze/`; sygnatura i teza w `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `citation-grounding-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

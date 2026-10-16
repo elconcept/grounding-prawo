@@ -3,6 +3,10 @@ name: patron-skan-dokumentu
 description: Deterministyczny skan dokumentu (PDF, DOCX, TXT) przed analizą - wykrywa ukryte polecenia dla AI (prompt injection PL/EN, jailbreak), znaki niewidoczne i sterujące kierunkiem, homoglify, zakodowaną treść base64 oraz niebezpieczne elementy PDF (/JavaScript, /Launch, osadzone pliki, ukryte warstwy). Użyj przed czytaniem dokumentów z niepewnego źródła - od strony przeciwnej, z maila, z internetu - albo gdy reakcja modelu na dokument wygląda podejrzanie.
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Skan dokumentu przed analizą
 
 Skrypt: `scripts/scan_document.py` w katalogu tego skilla (Python 3, bez zależności; treść PDF
@@ -40,5 +44,5 @@ wzorzec z flagą `i` dopasowuje polskie „Stan faktyczny”.
 
 - **Wejście z:** dokument od strony trzeciej (przeciwnik, instytucja) przed analizą
 - **Wynik zapisz w:** wynik skanu w `_robocze/`; tylko ostrzeżenia w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `the-ocr`, `akta-przeszukiwalne-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Następny krok:** `odczyt-dokumentow`
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -16,6 +16,10 @@ metadata:
   attribution: '[{"source": "FudanDISC/DISC-LawLLM (Fudan DISC Lab)", "url": "https://github.com/FudanDISC/DISC-LawLLM", "license": "Apache-2.0", "relationship": "clean-room", "note": "Metoda dwuwarstwowa (obiektywne dopasowanie plus subiektywna rubryka LLM-as-judge, skala 1-5) oparta na DISC-Law-Eval. Chińskie dane egzaminacyjne i model-sędzia porzucone; rubryka, wymiary i kotwice PL napisane od zera.\n"}, {"source": "AnttiHero/lavern", "license": "Apache-2.0", "relationship": "pattern-only", "note": "Wzorzec dodany w v1.1.0: NIEPEWNE jako ocena pierwszej klasy wraz z zakazem wymuszonej trójki. Podkategorie (NIEWYSTARCZAJĄCY_DOWÓD / DOKUMENT_NIEJEDNOZNACZNY), reguły decyzji i polska semantyka - od zera. Warstwa nieobecna w output-scoring-en, stąd rozjazd kredytów między bliźniakami.\n"}]'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Ocena outputu PL - karta ocen przed wysyłką
 
 ## Filozofia
@@ -182,4 +186,4 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wejście z:** tekst do oceny jakości przed wysyłką (używany przez `szturm-na-draft-pl`)
 - **Wynik zapisz w:** ocena w `_robocze/`; ustalenia do `_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `szturm-na-draft-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

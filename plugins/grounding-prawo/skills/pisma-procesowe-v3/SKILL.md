@@ -11,6 +11,10 @@ metadata:
   reread_gate: 'MRG — przed każdym [CP] i każdą odpowiedzią pipeline: view CP-GATE.md + view MOD-STEP-TRACKER.md (zakaz polegania na pamięci)'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.
 
 
@@ -836,7 +840,6 @@ Gdy typ pisma jest znany, wczytaj odpowiedni moduł i użyj go jako wzorca struk
 |---|---|
 | cofnięcie pozwu ze zrzeczeniem się roszczenia | `modules/typy/cofniecie-pozwu-ze-zrzeczeniem-roszczenia.md` |
 | wniosek o rozprawę w trybie zdalnym | `modules/typy/wniosek-o-rozprawe-zdalna.md` |
-| ocena decyzji procesowej prokuratora (wzorzec formy) | `modules/typy/decyzja-procesowa-prokuratora.md` |
 | notatka prawna (memo wewnętrzne) | `modules/typy/notatka-prawna.md` |
 | memo z prawa UE (TSUE, CELEX) | `modules/typy/eu-legal-memo.md` |
 | pozew w postępowaniu cywilnym | `modules/typy/pozew-cywilny.md` |
@@ -877,4 +880,4 @@ też `theory-of-case-engine.md`.
 - **Wynik zapisz w:** `drafty/<pismo>/rrrrMMdd_<nazwa>_v1.docx|md`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `terminy-procesowe-pl`, `ekstraktor-cytatow-pl`, `szturm-na-draft-pl`
 - **Nie dubluj:** krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

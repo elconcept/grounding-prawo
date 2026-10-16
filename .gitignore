@@ -25,3 +25,7 @@ node_modules/
 # --- wzory i materiały robocze użytkownika (prawdziwe pisma, dane osobowe) ---
 INBOX/
 _log/*.tar.gz
+
+.claude/worktrees/
+
+.pytest_cache/

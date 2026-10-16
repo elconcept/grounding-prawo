@@ -16,6 +16,10 @@ metadata:
   pii-egress: none
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # RODO DSAR PL - obsługa żądań podmiotów danych (art. 12, 15-22)
 
 ## Filozofia
@@ -116,4 +120,4 @@ Plugin daje operacyjne narzędzia RODO (DPIA, naruszenie 72h, DSAR, RoPA/DPA). N
 - **Wejście z:** żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
 - **Wynik zapisz w:** `drafty/dsar/rrrrMMdd_dsar_v1.*` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `terminy-procesowe-pl`, `pisz-po-polsku`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

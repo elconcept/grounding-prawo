@@ -14,6 +14,10 @@ metadata:
   attribution: '{"source": "lawvable/awesome-legal-skills", "url": "https://github.com/lawvable/awesome-legal-skills", "license": "Apache-2.0", "relationship": "adaptation", "note": "Adaptacja i przekład skilla judicial-first-impression autorstwa Larissy Meredith-Flister. Licencja wg frontmatteru autorki. Odpowiednik EN: judicial-first-impression-en.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Pierwsze wrażenie sędziego PL - test zimnego czytelnika
 
 ## WYJĄTEK: ZAWIADOMIENIE — rola „czytelnik rekonstruujący”
@@ -242,4 +246,4 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wejście z:** draft po kontroli cytatów
 - **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (nie przepisuje pisma) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `atak-przeciwnika-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

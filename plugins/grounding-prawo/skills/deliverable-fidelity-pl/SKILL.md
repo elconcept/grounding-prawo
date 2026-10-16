@@ -15,6 +15,10 @@ metadata:
   attribution: '{"source": "AnttiHero/lavern", "license": "Apache-2.0", "relationship": "pattern-only", "note": "Wzorzec weryfikatora uruchamianego po złożeniu deliverable: krytyczne ustalenia, wynik ważony, próg warunkowy. Kod i reguły napisane od zera.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Deliverable Fidelity PL - weryfikator wiernosci dokumentu
 
 ## WYJĄTEK: ZAWIADOMIENIE — rola „pełne pokrycie krzywdy”
@@ -191,4 +195,4 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wejście z:** ostateczna wersja pisma i `analiza/_podsumowanie.md`
 - **Wynik zapisz w:** wynik kontroli w `_PRZEBIEGI.md`; brakujące flagi RED blokują gotowość (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisz-po-polsku`, `redline-docx-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

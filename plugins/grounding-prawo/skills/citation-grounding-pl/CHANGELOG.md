@@ -56,7 +56,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), wersjonowanie [SemVer](
 
 ### Added
 - **Jeden dom reguły normalizacji.** Tablica prawdy
-  `doc-intel-contract-pl/contract/normalizacja.cases.json` (38 przypadków) jest teraz
+  `odczyt-dokumentow/document_contract/contract/normalizacja.cases.json` (38 przypadków) jest teraz
   jedynym źródłem reguły; ten skrypt i `evidence.py` po stronie Pythona są jej
   czytelnikami, nie dwiema niezależnymi implementacjami. Bramka konformancji w
   `test-grounding.mjs` (oraz `test_normalizacja_kontrakt.py` po stronie Pythona) mierzy

@@ -19,6 +19,10 @@ metadata:
   pii-egress: none
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Szturm na draft
 
 ## WYJĄTEK: ZAWIADOMIENIE — recenzja rozszerzająca zamiast ataku
@@ -304,4 +308,4 @@ Bez tabel per skill i bez streszczeń raportów soczewek - one są w `RUN/ustale
 - **Wynik zapisz w:** `drafty/<pismo>/<nowa_wersja>.docx`; REDLINE w `_robocze/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `deliverable-fidelity-pl`, `pisz-po-polsku`, `redline-docx-pl`
 - **Nie dubluj:** pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

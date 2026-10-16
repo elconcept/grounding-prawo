@@ -16,6 +16,10 @@ metadata:
   attribution: '{"source": "freelawproject/eyecite (Free Law Project)", "url": "https://github.com/freelawproject/eyecite", "license": "BSD-2-Clause", "relationship": "clean-room", "note": "Architektura ekstrakcja -> agregacja -> adnotacja idzie za eyecite. Amerykańskie wzorce reporterów porzucone; wzorce sygnatur PL, ECLI, Dz.U./ELI i logika antecedentów napisane od zera dla realiów polskich.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Ekstraktor cytatów PL - znajdź każdy cytat, zanim go zweryfikujesz
 
 ## Filozofia
@@ -137,4 +141,4 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wejście z:** draft pisma `drafty/<pismo>/..._vN`
 - **Wynik zapisz w:** lista powołań w `_robocze/` (wejście dla weryfikatorów) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `citation-grounding-pl`, `uodo-grounding-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

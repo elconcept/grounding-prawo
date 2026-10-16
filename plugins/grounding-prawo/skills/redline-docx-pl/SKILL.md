@@ -15,6 +15,10 @@ metadata:
   pii-egress: none
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Redline DOCX po polsku
 
 Wrapper nad **adeu** (MIT, Dealfluence Oy) - dwukierunkowy konwerter miedzy `.docx`
@@ -79,7 +83,7 @@ soffice --headless --convert-to docx --outdir KATALOG PLIK.odt
 
 Windows: `"/c/Program Files/LibreOffice/program/soffice.exe"`. Pandoc do tej
 konwersji **nie nadaje sie** - gubi formatowanie oryginalu, czyli wprowadza ten
-sam szum co rekonstrukcja. Bramka routingu `doc-intel-contract-pl` kieruje `.odt`
+sam szum co rekonstrukcja. Bramka routingu `odczyt-dokumentow` kieruje `.odt`
 na szczebel `1.5/anydoc`, ale anydoc daje markdown - do redline ta sciezka nie
 prowadzi.
 
@@ -320,4 +324,4 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wejście z:** draft `.docx` i lista zmian
 - **Wynik zapisz w:** REDLINE w `_robocze/`; kopia z zatwierdzonymi zmianami jako kolejna wersja (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `deliverable-fidelity-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

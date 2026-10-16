@@ -1,0 +1,18 @@
+{
+  "anthropics/claude-code": {
+    "commit": "03b5892ee77de289bcd5dfa39f541525ade74aff",
+    "skills": [
+      "plugin-structure",
+      "skill-development",
+      "mcp-integration"
+    ]
+  },
+  "openai/skills": {
+    "commit": "49f948faa9258a0c61caceaf225e179651397431",
+    "skills": [
+      "skill-creator",
+      "plugin-creator"
+    ]
+  },
+  "local_changes": "Anthropic frontmatter names normalized to directory slugs; version moved to metadata for host compatibility. Bodies unchanged."
+}

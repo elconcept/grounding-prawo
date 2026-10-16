@@ -3,6 +3,10 @@ name: profil-postepowan-wlasnych
 description: Profil pracy nad własnymi postępowaniami właściciela (sprawy karne i wykroczeniowe, działania Policji i prokuratury, hospitalizacja psychiatryczna, pozew przeciw szpitalowi, najem, RODO). Używaj przy KAŻDEJ pracy nad sprawą, pismem lub dowodem, razem z prawny-router-v3. Narzuca pełną ścieżkę kontroli bez tańszych wariantów, brak anonimizacji, pracę na oryginałach i rozdzielenie ustaleń od twierdzeń.
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Profil postępowań własnych
 
 > SZKIC DO AKCEPTACJI WŁAŚCICIELA. Zasady poniżej wynikają z wytycznych użytkownika i z analiz
@@ -48,4 +52,4 @@ Weryfikacja prawa i rzeczywistych cytatów pozostaje; nie przenoś jej progu na 
 - **Wejście z:** zawsze razem z `prawny-router-v3`, od pierwszego kroku
 - **Wynik zapisz w:** brak pliku - zasady pracy (pełna kontrola, bez anonimizacji, wynik trójstanowy) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `prawny-router-v3`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

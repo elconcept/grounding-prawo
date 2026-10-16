@@ -14,6 +14,10 @@ metadata:
   attribution: '{"source": "Fuzi.Mingcha (irlab-sdu)", "license": "not-stated", "relationship": "pattern-only", "note": "Subsumcja (sylogizm prawniczy) to klasyczna metoda polskiej dogmatyki prawa. Pomysł jawnego scaffoldu sylogizmu dla AI zainspirowany m.in. projektem Fuzi.Mingcha (podejście major/minor/conclusion). Bez użycia jego kodu ani modeli; implementacja, reguły i kotwice PL napisane od zera.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Subsumpcja PL - jawny sylogizm prawniczy
 
 ## WYJĄTEK: ZAWIADOMIENIE — rola „kwalifikacje rozszerzające”
@@ -127,4 +131,4 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Wejście z:** draft i zweryfikowane przepisy (`analizator-przepisow-v2`)
 - **Wynik zapisz w:** `drafty/<pismo>/_SUBSUMPCJA.md` (rejestr stały; dopisek przebiegu) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pierwsze-wrazenie-sedziego-pl`, `atak-przeciwnika-pl`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

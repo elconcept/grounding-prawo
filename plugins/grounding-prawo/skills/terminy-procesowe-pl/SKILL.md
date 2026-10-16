@@ -14,6 +14,10 @@ metadata:
   attribution: '{"relationship": "original", "note": "Brak źródła trzeciej strony do skredytowania. Idea „litigation deadline calendar” jest utrwalona w ekosystemie legal-AI; metodyka i treść PL napisane od zera.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Terminy procesowe PL - wyliczenie krok po kroku, nigdy sama data
 
 ## Filozofia
@@ -259,4 +263,4 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wejście z:** data doręczenia / zdarzenia i rodzaj terminu
 - **Wynik zapisz w:** termin z podstawą prawną w `analiza/_brief.md`; KPK/KPW oznacz do sprawdzenia (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`, `pisma-proste-v2`
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).
