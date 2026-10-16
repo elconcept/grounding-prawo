@@ -18,7 +18,7 @@ Repozytorium jest prywatnym marketplace z jednym pluginem (`grounding-prawo`). W
 |---|---|
 | **Claude Code** | `claude plugin marketplace add elconcept/grounding-prawo`, potem `claude plugin install grounding-prawo@grounding-prawo` |
 | **Claude Desktop / Cowork** | Ustawienia organizacji → Plugins → dodaj marketplace z GitHub (repo `elconcept/grounding-prawo`; repo prywatne, więc wymaga autoryzacji GitHub). Po synchronizacji plugin pojawia się w katalogu konta. Wymaga uprawnień zarządzania pluginami. |
-| **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo`, potem `codex plugin add grounding-prawo`. Aplikacja ChatGPT korzysta z tego samego manifestu `.codex-plugin`. |
+| **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo --ref main --sparse .agents/plugins --sparse plugins/grounding-prawo`, potem `codex plugin add grounding-prawo@grounding-prawo`. Aplikacja ChatGPT korzysta z tego samego manifestu `.codex-plugin`. |
 
 Po instalacji sprawdź w **nowej rozmowie**: „Użyj prawny-router-v3 i powiedz, co potrafi plugin”. Skille z błędem
 ładowania nie pojawią się na liście.
@@ -85,3 +85,11 @@ To narzędzia pracy nad repo, nie składniki publikowanego pluginu prawniczego.
 
 Walidacja odczytu: `python3 -m pytest -q tests/`. Testy providerów używają reprezentatywnych odpowiedzi;
 wywołania usług na żywo wymagają skonfigurowanego konta. Nie są częścią automatycznych testów.
+
+### Codex: brak katalogu pluginu po aktualizacji
+
+Jeśli aktualizacja zgłasza `plugin source path is not a directory`, sprawdź zakres sparse checkout marketplace.
+Musi obejmować zarówno `.agents/plugins`, jak i `plugins/grounding-prawo`. Starszą konfigurację pobierającą
+same manifesty można zastąpić: `codex plugin marketplace remove grounding-prawo`, następnie ponownie
+wykonać powyższe `marketplace add` z oboma `--sparse` i `plugin add`. To konfiguracja źródła marketplace;
+nie zmienia połączeń ani uprawnień konektorów. Potwierdź wersję w wyniku instalacji i rozpocznij nową sesję.
