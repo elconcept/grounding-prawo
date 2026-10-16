@@ -1,30 +1,28 @@
-# Awesome Legaltech PL [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-
-> **Prawo w kodzie** — polskie narzędzia, dane i modele dla prawa, otwarte i półotwarte.
+**Prawo w kodzie** — polskie narzędzia, dane i modele dla prawa, otwarte i półotwarte.
 
 Katalog obejmuje narzędzia, których przedmiotem jest samo prawo: akty prawne, orzecznictwo, umowy, procedura i praktyka kancelaryjna. Nie obejmuje operacji podatkowo-księgowych, bo KSeF, JPK i rejestry gospodarcze mają własne, liczne i dobrze utrzymane ekosystemy. Przy każdym wpisie widać, na jakich warunkach można go użyć w kancelarii.
 
-Produkty zamknięte, czyli SaaS-y, systemy wydawców i platformy, zbieramy osobno w [KOMERCYJNE.md](KOMERCYJNE.md).
-
 ## Contents
 
+- [Contents](#contents)
 - [Zasady](#zasady)
 - [Skala otwartości](#skala-otwartości)
 - [Źródła prawa i orzecznictwo](#źródła-prawa-i-orzecznictwo)
+    - [Dane i API państwowe](#dane-i-api-państwowe)
+    - [Akty prawne jako dane](#akty-prawne-jako-dane)
+    - [Konektory i klienty](#konektory-i-klienty)
+    - [Standardy i formaty](#standardy-i-formaty)
 - [Narzędzia i skille prawnicze](#narzędzia-i-skille-prawnicze)
 - [Anonimizacja dokumentów](#anonimizacja-dokumentów)
 - [Modele, korpusy, benchmarki](#modele-korpusy-benchmarki)
 - [Poza progiem świeżości](#poza-progiem-świeżości)
+- [Footnotes](#footnotes)
 
 ## Zasady
 
-**Pola automatyczne stwierdzają, pola ręczne opisują.** Gwiazdki, data ostatniego commita, flaga `archived` i licencja pochodzą z API GitHuba i noszą datę odczytu. Katalog nie pisze *porzucony* ani *martwy* — podaje datę i zostawia wniosek czytelnikowi. Skrypt `sprawdz_zywotnosc.py` odświeża te pola co tydzień.
+**Pola automatyczne stwierdzają, pola ręczne opisują.** Gwiazdki, data ostatniego commita, flaga `archived` i licencja pochodzą z API GitHuba i noszą datę odczytu.
 
-**Opisy własne.** Piszemy po otwarciu repozytorium. Nie kopiujemy pola `description` ani treści README.
-
-**Jeden utrzymujący, jeden wpis.** Serię powiązanych repozytoriów opisujemy w jednej linii. Lista nie jest czyimś dorobkiem, ale mapą krajobrazu.
-
-**Chcesz zniknąć z listy?** Zgłoś issue, usuwamy bez pytania o powód.
+**Jeden utrzymujący, jeden wpis.** Serię powiązanych repozytoriów opisuje w jednej linii. Lista nie jest czyimś dorobkiem, ale mapą krajobrazu.
 
 ## Skala otwartości
 
@@ -54,8 +52,6 @@ W polskim prawie najwięcej wartości siedzi w 🟡 i 🔵, czyli w otwartych da
 - [LexaurinTheDog](https://github.com/LexaurinTheDog) - 🟢 **106 komentarzy do polskich ustaw**, artykuł po artykule, w tym kodeks cywilny, karny, karny skarbowy, prawo o adwokaturze, AML i cyberbezpieczeństwo. Brzmienie przepisów przeniesione dosłownie z Dziennika Ustaw wraz z odnośnikami tekstu jednolitego. ⚠ Autor zaznacza wprost, że komentarz powstał **wyłącznie z urzędowego tekstu aktu, bez baz komercyjnych, a orzecznictwo nie jest jeszcze jego częścią** — to nie zastępuje komentarza z linią orzeczniczą.
 - [legalize-dev/legalize-pl](https://github.com/legalize-dev/legalize-pl) - ⚪ Polskie ustawodawstwo w Markdown, gdzie każda ustawa to plik, a każda nowelizacja to commit. Polska edycja [międzynarodowego projektu](https://github.com/legalize-dev) obejmującego 32 jurysdykcje, więc te same przepisy da się porównywać między krajami w jednym formacie.
 - [balwierz/sejm2git](https://github.com/balwierz/sejm2git) - ⚪ Pobiera akty z API Sejmu i nakłada nowelizacje, żeby odtworzyć tekst obowiązujący na daną datę. Historię materializuje w gicie: gałąź na nowelizację, scalenie w dniu wejścia w życie, wyniki głosowań w stopkach commitów.
-
-- [apatryda/polish-law](https://github.com/apatryda/polish-law) - 🟢 Tłumaczy akty prawne najpierw na Markdown, potem na Catalę, czyli język rules-as-code z Inrii. Układ katalogów odwzorowuje hierarchię źródeł prawa: konstytucja, ustawy, umowy międzynarodowe, rozporządzenia, akty prawa miejscowego.
 - [PolskiAgentW](https://github.com/PolskiAgentW) - 🟢 Akty, które API Sejmu daje tylko w PDF, w Markdown i JSON: Dziennik Ustaw od 2025 r. (w tym teksty jednolite kodeksów) i Monitor Polski od 2012 r., aktualizowane codziennie, a także luki Dziennika Ustaw z lat 2000–2011, komplet dwunastu roczników (stan 4.10.2026). Tekst pochodzi z nieoficjalnej konwersji, wiążący pozostaje PDF; konwerter eli2md ma licencję MIT.
 - [nalegaluorg/nalegalu](https://github.com/nalegaluorg/nalegalu) - 🟢 Zestawia akty z Dziennika Ustaw w Markdown z orzecznictwem z bazy SAOS. Przy każdym akcie stoi liczba powiązanych orzeczeń, więc od razu widać, które ustawy sądy cytują najczęściej. Osobna strona pod adresem [nalegalu.org](https://nalegalu.org).
 

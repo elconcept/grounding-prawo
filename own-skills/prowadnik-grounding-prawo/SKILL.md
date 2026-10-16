@@ -6,7 +6,7 @@ description: "Skill wejściowy pluginu grounding-prawo: ustala cel użytkownika 
 # Prowadnik grounding-prawo
 
 Ten skill nie wykonuje analizy prawnej. Wybiera ścieżkę i podaje następny skill. Pełny opis: `README.md` pluginu.
-Zawsze razem z `profil-postepowan-wlasnych`; reguły dowodowe i zasada „brak numeru lepszy niż błędny numer” z `CLAUDE.md`.
+Zawsze razem z `profil-postepowan-wlasnych`. Przed pierwszą czynnością przeczytaj `shared/ZASADY-PLUGINU.md` (model dowodowy, zasada „brak numeru lepszy niż błędny numer”, kolejność źródeł, człowiek decyduje) - marketplace nie instaluje CLAUDE.md, więc te reguły są częścią pluginu.
 
 ## Krok 1: ustal cel i stan materiału
 

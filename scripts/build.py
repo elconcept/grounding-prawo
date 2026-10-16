@@ -9,8 +9,8 @@ import os, re, shutil, subprocess, sys, json
 import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LEX = os.path.join(ROOT, "vendor/LexMachina/Wersja rozwojowa rozpakowana")
-AWE = os.path.join(ROOT, "vendor/awesome-matematic-skills-pl")
+LEX = os.path.join(ROOT, "vendor/packs/LexMachina/Wersja rozwojowa rozpakowana")
+AWE = os.path.join(ROOT, "vendor/packs/awesome-matematic-skills")
 PLUGIN = os.path.join(ROOT, "plugins/grounding-prawo")
 SKILLS = os.path.join(PLUGIN, "skills")
 IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc", "node_modules", ".git", ".DS_Store", "@eaDir")
@@ -333,7 +333,6 @@ def main():
     plugin = {
         "name": "grounding-prawo",
         "description": "Prawo polskie z weryfikacją źródeł: silnik LexMachina (router, DR-01…16), kontrola pism (MateMatic), skille własne do spraw karnych, medycznych i RODO.",
-        "version": sel.get("version", "0.1.0"),
         "author": {"name": "elconcept"},
     }
     os.makedirs(os.path.join(PLUGIN, ".claude-plugin"), exist_ok=True)
@@ -341,7 +340,9 @@ def main():
               ensure_ascii=False, indent=2)
     # adapter Codex: ten sam katalog pluginu, osobny manifest
     os.makedirs(os.path.join(PLUGIN, ".codex-plugin"), exist_ok=True)
-    codex = dict(plugin, skills="./skills/", mcpServers="./.mcp.json", interface={
+    # Claude Code bez pola version używa SHA commita, więc każda zmiana na main dociera do klientów;
+    # przypięte "version" blokowało aktualizacje (cache kluczowany wersją).
+    codex = dict(plugin, version=sel.get("version", "0.1.0"), skills="./skills/", mcpServers="./.mcp.json", interface={
         "displayName": "Grounding Prawo", "category": "Legal",
         "shortDescription": "Prawo polskie: analiza spraw, źródła i kontrola pism",
         "longDescription": plugin["description"], "developerName": "elconcept",

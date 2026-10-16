@@ -1,21 +1,118 @@
-[submodule "vendor/commercial-legal-pl"]
-	path = vendor/commercial-legal-pl
-	url = https://github.com/apiotrowski-afk/commercial-legal-pl.git
-[submodule "vendor/matematic-legal-verify-pl"]
-	path = vendor/matematic-legal-verify-pl
-	url = https://github.com/matematicsolutions/matematic-legal-verify-pl.git
-[submodule "vendor/md-to-docx"]
-	path = vendor/md-to-docx
-	url = https://github.com/elconcept/md-to-docx.git
-[submodule "vendor/prawo-pl-mcp"]
-	path = vendor/prawo-pl-mcp
-	url = https://github.com/matematicsolutions/prawo-pl-mcp.git
-[submodule "vendor/the-ocr"]
-	path = vendor/the-ocr
-	url = https://github.com/elconcept/the-ocr.git
-[submodule "vendor/LexMachina"]
-	path = vendor/LexMachina
+# Forki skilli i źródła do praktykowania prawa w Polsce
+
+#
+## Zbiory skilli prawnych `vendor/packs/`
+[submodule "vendor/packs/LexMachina"]
+	path = vendor/packs/LexMachina
 	url = https://github.com/elconcept/LexMachina.git
-[submodule "vendor/awesome-matematic-skills-pl"]
-	path = vendor/awesome-matematic-skills-pl
-	url = https://github.com/elconcept/awesome-matematic-skills-pl.git
+[submodule "vendor/packs/awesome-matematic-skills"]
+	path = vendor/packs/awesome-matematic-skills
+	url = https://github.com/elconcept/awesome-matematic-skills.git
+[submodule "vendor/packs/legal-verify"]
+	path = vendor/packs/legal-verify
+	url = https://github.com/elconcept/legal-verify.git
+#
+## Skille komercyjne, dokumenty, workflow
+[submodule "vendor/commercial-legal"]
+	path = vendor/commercial-legal
+	url = https://github.com/elconcept/commercial-legal.git
+[submodule "vendor/docs/md-to-docx"]
+	path = vendor/docs/md-to-docx
+	url = https://github.com/elconcept/md-to-docx.git
+[submodule "vendor/docs/naturalne-pisanie"]
+	path = vendor/docs/naturalne-pisanie
+	url = https://github.com/elconcept/naturalne-pisanie.git
+[submodule "vendor/docs/the-ocr"]
+	path = vendor/docs/the-ocr
+	url = https://github.com/elconcept/the-ocr.git
+[submodule "vendor/general/enhance-workflows"]
+	path = vendor/general/enhance-workflows
+	url = https://github.com/elconcept/enhance-workflows.git
+#
+## Serwery MCP `vendor/mcp/` (działają w Dockerze za portalem lex.xlap.pl)
+[submodule "vendor/mcp/mcp-cite"]
+	path = vendor/mcp/mcp-cite
+	url = https://github.com/elconcept/mcp-cite.git
+[submodule "vendor/mcp/mcp-eu-compliance"]
+	path = vendor/mcp/mcp-eu-compliance
+	url = https://github.com/elconcept/mcp-eu-compliance.git
+[submodule "vendor/mcp/mcp-eureka"]
+	path = vendor/mcp/mcp-eureka
+	url = https://github.com/elconcept/mcp-eureka.git
+[submodule "vendor/mcp/mcp-eu-sparql"]
+	path = vendor/mcp/mcp-eu-sparql
+	url = https://github.com/elconcept/mcp-eu-sparql.git
+[submodule "vendor/mcp/mcp-ip-rotator"]
+	path = vendor/mcp/mcp-ip-rotator
+	url = https://github.com/elconcept/mcp-ip-rotator.git
+[submodule "vendor/mcp/mcp-isap"]
+	path = vendor/mcp/mcp-isap
+	url = https://github.com/elconcept/mcp-isap.git
+[submodule "vendor/mcp/mcp-krs"]
+	path = vendor/mcp/mcp-krs
+	url = https://github.com/elconcept/mcp-krs.git
+[submodule "vendor/mcp/mcp-legalize"]
+	path = vendor/mcp/mcp-legalize
+	url = https://github.com/elconcept/mcp-legalize.git
+[submodule "vendor/mcp/mcp-nsa"]
+	path = vendor/mcp/mcp-nsa
+	url = https://github.com/elconcept/mcp-nsa.git
+[submodule "vendor/mcp/mcp-prawo-wrapper"]
+	path = vendor/mcp/mcp-prawo-wrapper
+	url = https://github.com/elconcept/mcp-prawo-wrapper.git
+[submodule "vendor/mcp/mcp-repertorium"]
+	path = vendor/mcp/mcp-repertorium
+	url = https://github.com/elconcept/mcp-repertorium.git
+[submodule "vendor/mcp/mcp-saos"]
+	path = vendor/mcp/mcp-saos
+	url = https://github.com/elconcept/mcp-saos.git
+[submodule "vendor/mcp/mcp-uodo"]
+	path = vendor/mcp/mcp-uodo
+	url = https://github.com/elconcept/mcp-uodo.git
+#
+## Git-as-law `vendor/law/` (kbchojnacki)
+[submodule "vendor/law/kodeks-cywilny"]
+	path = vendor/law/kodeks-cywilny
+	url = https://github.com/kbchojnacki/kodeks-cywilny.git
+[submodule "vendor/law/kodeks-karny"]
+	path = vendor/law/kodeks-karny
+	url = https://github.com/kbchojnacki/kodeks-karny.git
+[submodule "vendor/law/kodeks-karny-skarbowy"]
+	path = vendor/law/kodeks-karny-skarbowy
+	url = https://github.com/kbchojnacki/kodeks-karny-skarbowy.git
+[submodule "vendor/law/kodeks-karny-wykonawczy"]
+	path = vendor/law/kodeks-karny-wykonawczy
+	url = https://github.com/kbchojnacki/kodeks-karny-wykonawczy.git
+[submodule "vendor/law/kodeks-morski"]
+	path = vendor/law/kodeks-morski
+	url = https://github.com/kbchojnacki/kodeks-morski.git
+[submodule "vendor/law/kodeks-postepowania-administracyjnego"]
+	path = vendor/law/kodeks-postepowania-administracyjnego
+	url = https://github.com/kbchojnacki/kodeks-postepowania-administracyjnego.git
+[submodule "vendor/law/kodeks-postepowania-cywilnego"]
+	path = vendor/law/kodeks-postepowania-cywilnego
+	url = https://github.com/kbchojnacki/kodeks-postepowania-cywilnego.git
+[submodule "vendor/law/kodeks-postepowania-karnego"]
+	path = vendor/law/kodeks-postepowania-karnego
+	url = https://github.com/kbchojnacki/kodeks-postepowania-karnego.git
+[submodule "vendor/law/kodeks-postepowania-w-sprawach-o-wykroczenia"]
+	path = vendor/law/kodeks-postepowania-w-sprawach-o-wykroczenia
+	url = https://github.com/kbchojnacki/kodeks-postepowania-w-sprawach-o-wykroczenia.git
+[submodule "vendor/law/kodeks-pracy"]
+	path = vendor/law/kodeks-pracy
+	url = https://github.com/kbchojnacki/kodeks-pracy.git
+[submodule "vendor/law/kodeks-rodzinny-i-opiekunczy"]
+	path = vendor/law/kodeks-rodzinny-i-opiekunczy
+	url = https://github.com/kbchojnacki/kodeks-rodzinny-i-opiekunczy.git
+[submodule "vendor/law/kodeks-spolek-handlowych"]
+	path = vendor/law/kodeks-spolek-handlowych
+	url = https://github.com/kbchojnacki/kodeks-spolek-handlowych.git
+[submodule "vendor/law/kodeks-wyborczy"]
+	path = vendor/law/kodeks-wyborczy
+	url = https://github.com/kbchojnacki/kodeks-wyborczy.git
+[submodule "vendor/law/kodeks-wykroczen"]
+	path = vendor/law/kodeks-wykroczen
+	url = https://github.com/kbchojnacki/kodeks-wykroczen.git
+[submodule "vendor/law/konstytucja-rp"]
+	path = vendor/law/konstytucja-rp
+	url = https://github.com/kbchojnacki/konstytucja-rp.git

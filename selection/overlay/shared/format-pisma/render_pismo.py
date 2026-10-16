@@ -253,10 +253,10 @@ def core(title, author):
 
 def lint(stats, text):
     words = len(re.findall(r"\w+", text))
-    limit = max(2, words // 250)
+    limit = max(1, words // 250)
     if len(stats) > limit:
         print(f"UWAGA: {len(stats)} wyróżnień (pogrubienie/podkreślenie) na {words} słów; "
-              f"limit FORMAT-PISMA to ok. {limit}. Zostaw tylko tezy, o które toczy się spór.", file=sys.stderr)
+              f"limit FORMAT-PISMA to ok. {limit}. Zostaw tylko uchybienie organu lub kluczowy zarzut.", file=sys.stderr)
 
 
 def main():

@@ -60,10 +60,11 @@ Wnioskodawca:     Jan Kowalski
 
 ## Wyróżnienia: pogrubienie i podkreślenie
 
-- Pogrubienie i podkreślenie służą wyłącznie do wskazania sędziemu zdania, tezy lub fragmentu, na
-  którym opiera się pismo: odpowiedzi na pytanie sądu, wniosku, kluczowego zarzutu, rozstrzygającego słowa
-  w cytacie. Podkreślenie jest równorzędne z pogrubieniem (praktyka pism procesowych); w cytacie
-  podkreślaj pojedyncze słowa, na które zwracasz uwagę.
+- Pogrubienie i podkreślenie służą wyłącznie do wskazania sędziemu fragmentu, na którym opiera się
+  pismo: przede wszystkim uchybienia organu (brak protokołu, brak pouczenia, sprzeczność w dokumentacji),
+  kluczowego zarzutu albo rozstrzygającego słowa w cytacie. Nie wyróżniaj własnej odpowiedzi na pytanie
+  sądu ani własnej oceny. W krótkim piśmie strony wystarcza jedno wyróżnienie albo żadne. Podkreślenie
+  jest równorzędne z pogrubieniem (praktyka pism procesowych); w cytacie podkreślaj pojedyncze słowa.
 - Nie pogrubiaj elementów formalnych: nagłówka, nazwisk, nazwy sądu w nagłówku, tytułu, śródtytułów,
   etykiet („Sygn. akt”), numerów punktów, dat, kwot w petitum (chyba że kwota jest sporna).
 - Nie zastępuj struktury pogrubieniem: zamiast pogrubionego śródtytułu użyj numerowanego punktu
@@ -78,6 +79,21 @@ Wnioskodawca:     Jan Kowalski
 - Na końcu: wniosek końcowy, podpis z prawej (linia kropkowana, imię i nazwisko), pod nim „Załączniki:”
   z numerowaną listą, jeśli są.
 - Bez emoji, symboli i znaczników Markdown w gotowym piśmie.
+
+## Redakcja i dynamika (wzory: `INBOX/III_RNs_1279_25_*` - pisma adwokata)
+
+- Pierwsze zdanie punktu to odpowiedź na pytanie sądu albo teza. Potem „Wyjaśniam, że:” i podpunkty
+  `a)`, `b)`, `c)`: jedna myśl i jej dowód w nawiasie w każdym. Najmocniejszy fakt idzie na początek.
+- Krótkie zdania, bez zdań wielokrotnie złożonych. Każda myśl pada raz.
+- Treść wcześniejszego pisma, wniosku lub zawiadomienia powtarzaj tylko skrótowo i tylko wtedy, gdy jest
+  potrzebna; zwykle wystarczy odesłanie („wniosek, część …”, „pismo z 7 stycznia 2026 r.”).
+- „k. N” oznacza wyłącznie karty akt sprawy, w której składasz pismo. Dokument z innej sprawy powołuj jako
+  załącznik do wcześniejszego pisma („załącznik nr 4 do wniosku”) albo dołącz kopię jako nowy załącznik
+  z opisem „(k. N akt sprawy …)”, albo napisz wprost, że znajduje się w aktach tamtej sprawy.
+- Nie upraszczaj stanowiska strony do wersji organu: gdy strona kwestionuje podstawę czynności, nie pisz,
+  że czynność nastąpiła „na zgłoszenie o X” jako o jej przyczynie; opisz, co organ zrobił i co powiedział.
+- Kontrola przed wydaniem treści: `pisz-po-polsku` (z bramką `audyt_po_przepisaniu.py`),
+  `pierwsze-wrazenie-sedziego-pl`, przy tezie spornej `atak-przeciwnika-pl`.
 
 ## Kontrola przed wydaniem
 

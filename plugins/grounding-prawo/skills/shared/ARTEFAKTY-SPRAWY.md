@@ -10,6 +10,7 @@ Cel: mało plików, pełny ślad. Kolejny przebieg niczego nie dubluje - dopisuj
 | **Wersja wynikowa** pisma lub analizy | `drafty/<pismo>/rrrrMMdd_<nazwa>_vN.docx` (albo `.md`) | Jedyny plik tworzony od nowa w każdym przebiegu: kolejna wersja z podbitym `vN`. |
 | **Pliki inkrementalne** (prefiks `_`) | `drafty/<pismo>/_*.md` (dla pisma), `analiza/_*.md` (dla sprawy) | Tworzone raz, potem tylko uzupełniane dopiskiem przebiegu. Nigdy kopia, `_v2` ani nowy plik z datą. |
 | **Pliki jednorazowe** | `_robocze/` | Workspace modelu: wyciągi, JSON-y, wyniki skryptów, redline'y, notatki. Nikt ich nie czyta - model zbiera z nich esencję do plików inkrementalnych. |
+| **Wynik soczewki / skilla kontroli** | `<sprawa>/_robocze/rrrrMMdd_hhmm_<skill>_<wersja>.md` | Każdy przebieg skilla oceniającego pismo (Marko, recenzja, pierwsze wrażenie sędziego, atak przeciwnika, fidelity, karta ocen) zapisany od razu, w katalogu sprawy. `hhmm` to rzeczywisty czas zapisu (`date +%Y%m%d_%H%M`), nie szacunek. |
 
 ## Zestaw standardowy
 

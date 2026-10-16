@@ -1,2 +1,0 @@
-[console_scripts]
-the-ocr = the_ocr.cli:main

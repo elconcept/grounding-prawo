@@ -29,8 +29,8 @@ def validate(root):
         cm = read_json(plugin / '.claude-plugin/plugin.json')
         om = read_json(plugin / '.codex-plugin/plugin.json')
         check(cm['name'] == om['name'] == cp['name'] == op['name'] == plugin.name, 'Plugin names differ')
-        check(cm['version'] == om['version'], 'Plugin versions differ')
-        check(bool(re.fullmatch(r'\d+\.\d+\.\d+', cm['version'])), 'Expected release semver')
+        check('version' not in cm, 'Claude manifest must not pin version (SHA commita steruje aktualizacjami)')
+        check(bool(re.fullmatch(r'\d+\.\d+\.\d+', om['version'])), 'Expected release semver in Codex manifest')
         for key in ('displayName', 'shortDescription', 'longDescription', 'developerName'):
             check(isinstance(om['interface'].get(key), str) and bool(om['interface'][key]), f'Missing interface.{key}')
         check(bool(om['interface'].get('defaultPrompt')), 'Missing defaultPrompt')

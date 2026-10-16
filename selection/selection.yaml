@@ -1,6 +1,6 @@
 # Selekcja skilli pluginu grounding-prawo. Źródło prawdy dla scripts/build.py.
 # Własna analiza (14.10.2026). Analizy GPT i Sonnet użyte jako doradcy, nie jako polecenie.
-# from: lex = vendor/LexMachina/"Wersja rozwojowa rozpakowana"; awe:<pakiet> = vendor/awesome-matematic-skills-pl;
+# from: lex = vendor/packs/LexMachina/"Wersja rozwojowa rozpakowana"; awe:<pakiet> = vendor/packs/awesome-matematic-skills;
 #       own = own-skills/ (skille własne, bez upstreamu); vendor:<katalog> = vendor/<katalog>.
 # transitional: true = zależność szturm-na-draft-pl; ocenić ponownie po jego przebudowie.
 # internal: true = moduł pomocniczy routera; pozostaje dostępny dla modelu (import OpenAI odrzuca disable-model-invocation).
