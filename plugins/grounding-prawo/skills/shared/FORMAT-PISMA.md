@@ -90,6 +90,8 @@ Wnioskodawca:     Jan Kowalski
 - „k. N” oznacza wyłącznie karty akt sprawy, w której składasz pismo. Dokument z innej sprawy powołuj jako
   załącznik do wcześniejszego pisma („załącznik nr 4 do wniosku”) albo dołącz kopię jako nowy załącznik
   z opisem „(k. N akt sprawy …)”, albo napisz wprost, że znajduje się w aktach tamtej sprawy.
+- Załączniki tylko wtedy, gdy sąd ich potrzebuje do rozstrzygnięcia i nie ma ich w aktach; dokument z innej sprawy, którą sąd
+  może sam sprawdzić po sygnaturze, wystarczy wskazać. Nie powtarzaj adresu innego sądu, gdy jest taki sam jak adresata.
 - Nie upraszczaj stanowiska strony do wersji organu: gdy strona kwestionuje podstawę czynności, nie pisz,
   że czynność nastąpiła „na zgłoszenie o X” jako o jej przyczynie; opisz, co organ zrobił i co powiedział.
 - Kontrola przed wydaniem treści: `pisz-po-polsku` (z bramką `audyt_po_przepisaniu.py`),

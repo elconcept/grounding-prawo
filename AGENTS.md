@@ -1,7 +1,7 @@
 # grounding-prawo - praca nad pluginem
 
 To repo służy do **doskonalenia pluginu i refaktoru skilli**. Nie prowadzi się tu spraw prawnych: praca
-prawnicza odbywa się w katalogu `legal` (volume1/legal, Synology Drive), którego `CLAUDE.md` mówi,
+prawnicza odbywa się w katalogu `legal` (volume1/legal, Synology Drive): `CLAUDE.md` (zasady) i `PRZEWODNIK.md` (ścieżki, skille, MCP, komendy) mówią,
 jak używać zainstalowanego pluginu. Reguły dla modelu pracującego nad sprawą są w pluginie:
 `selection/overlay/shared/ZASADY-PLUGINU.md` (marketplace nie instaluje CLAUDE.md ani README.md).
 
@@ -15,7 +15,7 @@ jak używać zainstalowanego pluginu. Reguły dla modelu pracującego nad spraw�
 | `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify), `docs/`, `general/`, `commercial-legal`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (kodeksy kbchojnacki). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
 | `scripts/` | `build.py` (budowa), `validate_marketplace.py`, `lint_refs.py` (martwe odwołania), `report.py`. |
 | `archive/` | Kosz odroczonego usuwania; usuwa wyłącznie właściciel. |
-| `commands/`, `.claude-plugin/`, `.agents/plugins/` | Manifesty marketplace (Claude Code, Codex). |
+| `.claude-plugin/`, `.agents/plugins/` | Manifesty marketplace (Claude Code, Codex). |
 | `.claude/skills/`, `.agents/skills/` | Skille do pracy nad repo (`fastmcp-builder`, `marketplace-installer`), nie część pluginu. |
 
 ## Cykl zmiany
@@ -30,5 +30,7 @@ jak używać zainstalowanego pluginu. Reguły dla modelu pracującego nad spraw�
   nie do CLAUDE.md/README.md: tych plików marketplace nie dostarcza.
 - Decyzje właściciela (14.10.2026): brak anonimizacji i zakazu chmury w skillach, MCP tylko przez portal,
   profil MAX bez bramek kosztu, `zawiadomienie-o-przestepstwie` omija tor procesowy routera.
+- Materiał do doskonalenia skilli: transkrypcje sesji w `INBOX/` (poza gitem; komenda `/transkrypcja` w `legal`) i lekcje
+  w `legal/<sprawa>/_wiedza.md`. Uwagę ogólną przenoś do skilla albo `shared/`, uwagę jednej sprawy zostaw w `_wiedza.md`.
 - Git jest kopią zapasową: commituj wszystko, co brudne, także cudze zmiany.
 - Opis ścieżek i konektorów dla użytkownika: `README.md`.
