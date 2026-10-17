@@ -166,3 +166,12 @@
 [submodule "vendor/law/Komentar-PL-ZL-152-1997"]
 	path = vendor/law/Komentar-PL-ZL-152-1997
 	url = https://github.com/LexaurinTheDog/Komentar-PL-ZL-152-1997.git
+[submodule "vendor/general/claude-legal-persistent-memory-pl"]
+	path = vendor/general/claude-legal-persistent-memory-pl
+	url = https://github.com/elconcept/claude-legal-persistent-memory-pl.git
+[submodule "vendor/packs/awesome-legaltech"]
+	path = vendor/packs/awesome-legaltech
+	url = https://github.com/elconcept/awesome-legaltech.git
+[submodule "vendor/packs/awesome-legal-data"]
+	path = vendor/packs/awesome-legal-data
+	url = https://github.com/elconcept/awesome-legal-data.git
