@@ -56,3 +56,9 @@
 - Trwała pełna relacja MD, wejście z istniejącego pliku, historia korekt i wersje sesyjne.
 - Rejestr pism: nowe wersje niezłożonych projektów, uzupełnienia i wnioski po złożeniu,
   osobne zgłoszenia nowych krzywd; dobór do rzeczywistego etapu sprawy.
+
+## 0.6 — 2026-10-17
+
+- Rozdzielenie chronologicznej relacji i dopisywanego logu zeznań z sesji.
+- Nowe wspomnienia porządkują całą oś czasu; stałe ID pozostają po przeniesieniu epizodów.
+- Korekty zachowują historię w logu; import starszych relacji bez fikcyjnych dat sesji.

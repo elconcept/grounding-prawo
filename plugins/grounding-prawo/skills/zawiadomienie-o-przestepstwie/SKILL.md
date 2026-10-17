@@ -1,8 +1,8 @@
 ---
 name: zawiadomienie-o-przestepstwie
-description: 'Interaktywny, wielosesyjny wywiad z pokrzywdzonym: pytania o wcześniejsze zdarzenia, dokładny przebieg, osoby, powtarzalność i skutki, aż autor potrzebuje przerwy lub więcej nie pamięta. Zapisuje pełną relację MD, przyjmuje istniejący plik i rozwija go inkrementalnie. Tworzy kolejne wersje niezłożonych zawiadomień; po złożeniu dobiera uzupełnienia, wnioski i nowe zgłoszenia do zakresu krzywd i etapu sprawy. Zachowuje relację bez wymagania dowodów, rozróżnia źródła wiedzy, pamięć i hipotezy. Używaj przy „zawiadomienie o przestępstwie”, „zgłosić na policję”, „opisz, co mi zrobił”, „uzupełnienie zawiadomienia”, „kontynuuj relację”, także gdy autor chaotycznie opowiada o krzywdzie i chce zgłoszenia organom. Nie do samodzielnych zażaleń niezwiązanych z rozwijaniem relacji.'
+description: 'Interaktywny, wielosesyjny wywiad z pokrzywdzonym: pytania o wcześniejsze zdarzenia, dokładny przebieg, osoby, powtarzalność i skutki, aż autor potrzebuje przerwy lub więcej nie pamięta. Porządkuje pełną relację MD chronologicznie i osobno dopisuje log zeznań z każdej sesji. Przyjmuje istniejącą relację i aktualizuje ją po nowych wspomnieniach. Tworzy kolejne wersje niezłożonych zawiadomień; po złożeniu dobiera uzupełnienia, wnioski i nowe zgłoszenia do zakresu krzywd i etapu sprawy. Zachowuje relację bez wymagania dowodów, rozróżnia źródła wiedzy, pamięć i hipotezy. Używaj przy „zawiadomienie o przestępstwie”, „zgłosić na policję”, „opisz, co mi zrobił”, „uzupełnienie zawiadomienia”, „kontynuuj relację”, także gdy autor chaotycznie opowiada o krzywdzie i chce zgłoszenia organom. Nie do samodzielnych zażaleń niezwiązanych z rozwijaniem relacji.'
 metadata:
-  version: '0.5'
+  version: '0.6'
   status: draft
 ---
 
@@ -92,11 +92,11 @@ W repo abogada przeczytaj dostępne `00_sprawy/<sprawa>/analiza/_brief.md` i
 
 ### F1–F3. Pętla wywiadu i rozszerzania kwalifikacji
 Czytaj [wywiad](references/wywiad.md) oraz [mapę krzywd](references/mapa-krzywd.md).
-Przed pierwszym pytaniem wczytaj istniejącą relację i rejestr pism według
+Przed pierwszym pytaniem wczytaj istniejącą relację, log zeznań i rejestr pism według
 [ciągłości sesji](references/ciaglosc-sesji.md). Nowa relacja zaczyna się swobodną wypowiedzią;
 przy wznowieniu nie każ opowiadać wszystkiego od początku.
 
-**Pętla: odpowiedź → zapis narracji i nowych gałęzi → jedno istotne pytanie → oczekiwanie
+**Pętla: odpowiedź → dopisek do logu → aktualizacja chronologicznej relacji i gałęzi → jedno istotne pytanie → oczekiwanie
 na odpowiedź.** Domyślnie pytaj pojedynczo; najwyżej 2–3 ściśle związane pytania, jeśli autor
 woli taki rytm. Pytanie wynika z ostatniej odpowiedzi i luk w całym łańcuchu: wcześniej,
 dokładny przebieg, wcześniejsze podobne zachowania danej osoby, potem, skutki. Nowa osoba,
@@ -130,8 +130,10 @@ Brak dostępu odnotuj; nie uzależniaj złożenia od uzyskania akt. Pokaż róż
 zapytaj otwarcie i zachowaj odpowiedź lub brak pamięci. Nie wymuszaj jednej wersji.
 
 ### F5. Mapa wewnętrzna — prowadzona od wywiadu
-Pełną, szczegółową narrację zapisuj po każdej odpowiedzi w `_RELACJA_ZDARZEN.md` zgodnie
-z `references/ciaglosc-sesji.md`; tabela mapy nie zastępuje tego pliku.
+Po każdej odpowiedzi dopisz wpis do `_LOG_ZEZNAN.md`, a `_RELACJA_ZDARZEN.md` zredaguj
+ponownie w odpowiednich miejscach osi czasu. Relacja zachowuje chronologię zdarzeń; log —
+kolejność ujawniania wspomnień w sesjach. Tabela mapy nie zastępuje żadnego z tych plików.
+Szczegóły: `references/ciaglosc-sesji.md`.
 W repo zapisuj inkrementalnie w `drafty/<pismo>/_MAPA_KRZYWD.md`, poza nim w materiale roboczym.
 
 | # | Epizod / czas | Mikro-sekwencja | Relacja użytkownika | Typ epistemiczny | Pewność pamięci | Źródło wiedzy | Krzywda / skutek | Gałęzie kwalifikacyjne | Tropy dla organu | Pilność | Różnice z wcześniejszym zapisem | Decyzja autora |
@@ -164,7 +166,7 @@ nagłówku, braku podpisu lub niesprawdzonej drodze złożenia wskaż, co jeszcz
 uzupełnienia. Nie przedstawiaj takiego pliku jako w pełni gotowego do podpisania i złożenia.
 
 ### F8. Zapis (repo abogada, `shared/ARTEFAKTY-SPRAWY.md`)
-Obowiązkowo zapisuj również trwałe `_RELACJA_ZDARZEN.md` i `_REJESTR_PISM.md` oraz kopię
+Obowiązkowo zapisuj również trwałe `_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md` i `_REJESTR_PISM.md` oraz kopię
 relacji na zamknięcie sesji według `references/ciaglosc-sesji.md`. Dotyczy to też pracy poza
 repo abogada; te pliki nie są jednorazowymi notatkami `_robocze/`.
 - Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (i `.docx`, jeśli autor chce); kolejne wersje nie nadpisują poprzednich.
@@ -182,7 +184,7 @@ W trakcie wywiadu: krótkie podsumowanie tego, co już wiesz (2-5 linii), potem 
 o konkretny szczegół; zaczekaj na odpowiedź. Bez wstępów i pochwał.
 
 Przy oddaniu pisma:
-1. Link do zapisanej relacji MD, jej wersji sesyjnej oraz przygotowanych pism; krótko wskaż,
+1. Link do chronologicznej relacji MD, logu zeznań, wersji sesyjnej relacji oraz przygotowanych pism; krótko wskaż,
    co przybyło i które projekty zmieniły się od poprzedniej sesji.
 2. Status HARDGATE-A z lukami i decyzją autora; AUDYT-B ze znanymi różnicami lub informacją o braku materiału. Przy drafcie zaznacz, że wywiad nie został zakończony.
 3. Krótka lista: co jeszcze warto dopytać, decyzje do podjęcia (np. organ, załączniki).

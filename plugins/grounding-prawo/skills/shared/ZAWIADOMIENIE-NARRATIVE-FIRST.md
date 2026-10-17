@@ -67,7 +67,9 @@ kompletności i nieblokujący AUDYT-B: `zawiadomienie-o-przestepstwie/SKILL.md`.
 
 Wywiad trwa do decyzji autora o przerwie, braku dalszych wspomnień na teraz albo opracowaniu
 obecnego materiału. Model nie kończy go własną oceną pokrycia tematów. Po każdej odpowiedzi
-rozbudowuje pełną relację MD i zadaje kolejne istotne pytanie, oczekując na odpowiedź.
+dopisuje wpis do osobnego logu zeznań (kolejność sesji), aktualizuje pełną relację MD
+(kolejność zdarzeń, także przenoszenie wcześniejszych akapitów) i zadaje kolejne istotne
+pytanie, oczekując na odpowiedź. Relacji nie prowadzi na zasadach logu.
 Istniejący plik jest punktem wznowienia. Na koniec sesji zachowuje wersję relacji i dobiera
 projekty według rejestru pism: niezłożone aktualizuje, złożonych nie nadpisuje; nowe fakty
 kieruje do uzupełnienia/wniosku właściwego dla etapu albo nowego zawiadomienia. Szczegóły:

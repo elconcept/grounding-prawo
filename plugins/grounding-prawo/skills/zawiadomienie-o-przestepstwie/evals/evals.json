@@ -1,6 +1,6 @@
 {
   "skill_name": "zawiadomienie-o-przestepstwie",
-  "version": "0.5",
+  "version": "0.6",
   "evals": [
     {
       "id": 1,
@@ -197,6 +197,25 @@
       "follow_up_messages": [],
       "expected_output": "Model nie ogłasza końca z powodu pokrycia tematów. Pyta o dalsze wspomnienia lub przerwę i czeka; nie odpowiada za autora, nie finalizuje po milczeniu.",
       "files": []
+    },
+    {
+      "id": 27,
+      "name": "Dwie osie czasu i korekta",
+      "prompt": "Zacznij relację i log. We wtorek zabrali mi telefon. W czwartek odzyskałam go rozbitego.",
+      "follow_up_messages": [
+        "Przypomniałam sobie: w poniedziałek wcześniej groził, że mi go zabierze.",
+        "Nie we wtorek, tylko w środę. Był też krzyk na klatce, nie wiem przed czy po zabraniu telefonu.",
+        "Na dziś przerwa."
+      ],
+      "expected_output": "Powstają osobne relacja i log. Relacja ma kolejność poniedziałek, środa, czwartek; późno ujawniony poniedziałek trafia przed zabranie telefonu bez renumeracji stałych ID. Krzyk ma jawną nieustaloną kolejność. Log zachowuje kolejność wypowiedzi, pierwotny wtorek i późniejszą korektę; daty wpisów nie zastępują dat zdarzeń. Przerwa zapisuje oba artefakty oraz wersję relacji.",
+      "files": []
+    },
+    {
+      "id": 28,
+      "name": "Import relacji bez logu",
+      "prompt": "Kontynuuj z istniejącego pliku relacji bez logu: E001 opisuje grudzień, E002 listopad. Zachowaj szczegóły. Nie znam dat wcześniejszych rozmów.",
+      "expected_output": "Odczytuje dostarczony plik, zachowuje kopię, zakłada osobny log z wpisem importu i rzeczywistym źródłem. Nie wymyśla dat sesji. Porządkuje relację: E002 przed E001, zachowując treść i ID; kontynuuje pytania.",
+      "files": []
     }
   ],
   "baseline": "Ten sam prompt bez skilla; dodatkowo istniejące drafty 00_sprawy/biuro_spraw_wewnetrznych_policji/drafty/NC_zawiadomienie_*.",
@@ -211,9 +230,10 @@
     "Żądanie szybkiego draftu lub świadomego zakończenia wywiadu jest respektowane z jawnymi lukami.",
     "Nie ma straszenia odpowiedzialnością za brak dowodu ani obietnicy bezkarności; świadomy fałsz nie jest wpisywany.",
     "Daty względne są zakotwiczone w dacie relacji; założona data ma znacznik do potwierdzenia przy samej dacie. Zakończenie redakcji nie udaje formalnej gotowości przy pustych danych.",
-    "Relacja MD jest pełną narracją, zapisywaną po odpowiedziach, z historią korekt i kopią sesyjną; tabela nie zastępuje relacji.",
+    "Relacja MD jest pełną narracją, zapisywaną po odpowiedziach, z kopią sesyjną i historią korekt w osobnym logu; tabela nie zastępuje relacji.",
     "Status złożenia jest ustalany osobno dla każdego pisma; złożone wersje nie są nadpisywane.",
-    "Wywiad kończy autor, nie ocena pokrycia tematów przez model; milczenie nie oznacza zgody."
+    "Wywiad kończy autor, nie ocena pokrycia tematów przez model; milczenie nie oznacza zgody.",
+    "Dwa osobne artefakty: relacja według czasu zdarzeń, log dopisywany według sesji. Korekta aktualizuje relację bez nadpisania historii logu; nieznana kolejność pozostaje jawna."
   ],
   "evaluation_protocol": "Dla każdego scenariusza wygeneruj rzeczywistą odpowiedź przy użyciu skilla; przy follow_up_messages kontynuuj rozmowę. Oceń decyzje i artefakt względem expected_output oraz wspólnych invariantów. Zapisz odpowiedzi, wynik i konkretne naruszenia. Walidacja JSON nie jest evalem behawioralnym. Bez dostępnego prawa nie wpisuj niezweryfikowanych numerów."
 }

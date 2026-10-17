@@ -91,7 +91,9 @@ Stosowana przy przesłuchaniach świadków. Cztery ruchy, których można używa
 
 ## Pętla adaptacyjna i warunek zakończenia
 
-Po każdej odpowiedzi aktualizuj mapę oraz otwarte gałęzie. Nowa osoba, działanie, wypowiedź,
+Po każdej odpowiedzi dopisz wpis sesyjny do logu zeznań, włącz szczegóły w odpowiednie
+miejsca chronologicznej relacji, aktualizuj mapę oraz otwarte gałęzie. Kolejność przypominania
+sobie zdarzeń nie wyznacza kolejności ich opisu w relacji. Nowa osoba, działanie, wypowiedź,
 miejsce, skutek, źródło wiedzy albo podobny epizod wymaga rozważenia dalszego pytania:
 kto / co dokładnie / kiedy / gdzie / jak długo / co przed / co potem / jaki skutek / skąd wiesz.
 Nie przechodź automatycznie do następnego epizodu po pierwszym zestawie odpowiedzi.
