@@ -53,13 +53,16 @@ ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
 
 ## Wynik
 
-Zapis według `shared/ARTEFAKTY-SPRAWY.md`: nowym plikiem poza `_robocze/` jest tylko wersja wynikowa,
-reszta to dopiski do plików inkrementalnych.
+Zapis według `shared/ARTEFAKTY-SPRAWY.md`: poza `_robocze/` zapisz źródło `.md`, najnowszy DOCX
+i jego kopię DOCX w `<sprawa>/output/`; reszta to dopiski do plików inkrementalnych.
 
 1. `<nowa_wersja>_REDLINE.docx` (w `RUN/`, czyli `_robocze/`; autor otwiera go stamtąd, by odrzucić zmianę)
    - wszystkie poprawki jako zmiany śledzone Worda, przy każdej komentarz
    `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
-2. `drafty/<pismo>/<nowa_wersja>.docx` - kopia z zastosowanymi zmianami AUTO i REDAKCJA, bez śladów i komentarzy.
+2. `drafty/<pismo>/<nowa_wersja>.md` i odpowiadający mu `<nowa_wersja>.docx` - kopia z zastosowanymi
+   zmianami AUTO i REDAKCJA, bez śladów i komentarzy. Po weryfikacji usuń starsze DOCX tego pisma,
+   zachowując wszystkie wcześniejsze `.md`, a do `<sprawa>/output/` skopiuj tylko nowy DOCX i usuń
+   stamtąd jego starszą wersję oraz sidecar `.md`.
    Zmiany DECYZJA_AUTORA **nie trafiają do kopii**: są wyłącznie propozycjami w REDLINE (zmiana śledzona z etykietą)
    i pytaniami w raporcie, dopóki autor ich nie zatwierdzi. Autor przyjmuje je w REDLINE.
    **Bez PDF** - PDF robi prawnik po własnej korekcie.
