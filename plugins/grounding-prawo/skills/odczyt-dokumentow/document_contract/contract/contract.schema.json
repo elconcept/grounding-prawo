@@ -33,9 +33,12 @@
           "type": "string",
           "enum": [
             "datalab",
+            "llamaparse",
+            "azure",
+            "google_vision",
+            "rapidocr",
             "azure-di",
             "google-vision",
-            "llamaparse",
             "pymupdf",
             "markitdown",
             "text"

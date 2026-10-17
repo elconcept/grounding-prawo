@@ -1,16 +1,21 @@
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-from .providers import AzureDocumentIntelligenceProvider, DatalabProvider, GoogleVisionProvider, LlamaParseProvider
+from .providers import canonical_provider_name, AzureProvider, DatalabProvider, GoogleVisionProvider, LlamaParseProvider, RapidOCRProvider
 from .providers.base import OCRProvider
 
-DEFAULT_CHAIN_ORDER = ["datalab", "llamaparse", "azure-di", "google-vision"]
-# Override with THE_OCR_CHAIN="azure-di,google-vision,..." (e.g. to spend free tiers first:
-# Azure DI F0 500 pages/month + Google Vision 1000 units/month).
+DEFAULT_CHAIN_ORDER = ["datalab", "llamaparse", "azure", "google_vision"]
+
+#: Every provider the chain can use; ``rapidocr`` is local and opt-in.
+PROVIDER_NAMES = [*DEFAULT_CHAIN_ORDER, "rapidocr"]
+
+#: Comma-separated chain order override, e.g. ``azure,google_vision,rapidocr``.
+CHAIN_ENV_VAR = "THE_OCR_CHAIN"
 
 
 def load_env() -> None:
@@ -30,25 +35,32 @@ def _all_providers_by_name() -> dict[str, OCRProvider]:
     return {
         "datalab": DatalabProvider(),
         "llamaparse": LlamaParseProvider(),
-        "azure-di": AzureDocumentIntelligenceProvider(),
-        "google-vision": GoogleVisionProvider(),
+        "azure": AzureProvider(),
+        "google_vision": GoogleVisionProvider(),
+        "rapidocr": RapidOCRProvider(),
     }
 
 
-def _chain_order() -> list[str]:
-    import os
+def chain_order(order: list[str] | None = None) -> list[str]:
+    """Explicit order > $THE_OCR_CHAIN > DEFAULT_CHAIN_ORDER; unknown names raise."""
+    if order is None:
+        configured = os.environ.get(CHAIN_ENV_VAR, "").strip()
+        order = [name.strip() for name in configured.split(",") if name.strip()] if configured else DEFAULT_CHAIN_ORDER
+    order = [canonical_provider_name(name) for name in order]
+    unknown = [name for name in order if name not in PROVIDER_NAMES]
+    if unknown:
+        raise ValueError(f"unknown provider(s) {', '.join(unknown)}; choices: {', '.join(PROVIDER_NAMES)}")
+    return list(order)
 
-    configured = [name.strip() for name in os.getenv("THE_OCR_CHAIN", "").split(",") if name.strip()]
-    return configured or DEFAULT_CHAIN_ORDER
 
-
-def default_providers() -> list[OCRProvider]:
-    """Production provider chain: Datalab, LlamaParse, Azure DI, Google Vision (THE_OCR_CHAIN overrides)."""
+def default_providers(order: list[str] | None = None) -> list[OCRProvider]:
+    """Provider chain in configured order (default: Datalab, LlamaParse, Azure DI, Google Vision)."""
     by_name = _all_providers_by_name()
-    return [by_name[name] for name in _chain_order() if name in by_name]
+    return [by_name[name] for name in chain_order(order)]
 
 
 def all_providers() -> list[OCRProvider]:
-    """Every production provider, in fallback order."""
+    """Every provider, chain order first, then the rest."""
     by_name = _all_providers_by_name()
-    return [by_name[name] for name in DEFAULT_CHAIN_ORDER]
+    first = chain_order()
+    return [by_name[name] for name in first + [name for name in PROVIDER_NAMES if name not in first]]

@@ -34,7 +34,7 @@ class DatalabProvider(OCRProvider):
             try:
                 raw = self._convert(path, api_key, base_url)
                 document = datalab_document(raw, path)
-                document = replace(document, provider_metadata={**document.provider_metadata, "region": region})
+                document = replace(document, engine_variant=region)
                 return OCRResult(text=document.text, backend=self.name, raw=raw, document=document)
             except Exception as exc:
                 errors.append(f"{region}: {exc}")

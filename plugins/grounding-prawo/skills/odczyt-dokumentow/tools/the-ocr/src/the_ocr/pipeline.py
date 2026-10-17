@@ -14,8 +14,8 @@ import pikepdf
 
 from .chain import ChainResult, run_chain
 from .frontmatter import render_with_frontmatter
-from .models import OCRDocument, sha256_file
-from .pdf.text_layer import build_document_searchable_pdf
+from .models import OCRDocument
+from .pdf.searchable_pdf import build_document_searchable_pdf
 from .pdf.source_pdf import image_to_a4_pdf, strip_invisible_text
 from .providers.base import OCRProvider
 from .visual.scale_a4 import fit_pdf_to_a4, is_already_a4
@@ -23,22 +23,63 @@ from .visual.scale_a4 import fit_pdf_to_a4, is_already_a4
 
 SUPPORTED_SUFFIXES = {".pdf", ".jpg", ".jpeg", ".png"}
 
+ARCHIVE_DIR_ENV_VAR = "THE_OCR_ARCHIVE_DIR"
+
+
+def resolve_archive_dir(archive_dir: Path | str | None = None) -> Path:
+    """Katalog archiwum: parametr/CLI > zmienna THE_OCR_ARCHIVE_DIR > ~/archive."""
+    if archive_dir is not None:
+        return Path(archive_dir)
+    configured = os.environ.get(ARCHIVE_DIR_ENV_VAR, "").strip()
+    if configured:
+        return Path(configured)
+    return Path.home() / "archive"
+
 
 @dataclass
 class PipelineResult:
     chain_result: ChainResult
-    archive_path: Path
+    archive_path: Path | None = None
     pdf_path: Path | None = None
     markdown_path: Path | None = None
     json_path: Path | None = None
+    wanted_markdown: bool = False
+    wanted_json: bool = False
 
     @property
     def ok(self) -> bool:
-        return self.chain_result.ok and all((self.pdf_path, self.markdown_path, self.json_path))
+        return (
+            self.chain_result.ok
+            and self.pdf_path is not None
+            and (self.markdown_path is not None or not self.wanted_markdown)
+            and (self.json_path is not None or not self.wanted_json)
+        )
 
 
-def run_pipeline(input_path: Path, providers: list[OCRProvider], *, force: str | None = None) -> PipelineResult:
-    """Archive input, OCR through Datalab -> LlamaParse, publish PDF/MD/JSON."""
+def run_pipeline(
+    input_path: Path,
+    providers: list[OCRProvider],
+    *,
+    force: str | None = None,
+    output: Path | str | None = None,
+    markdown: bool = False,
+    json_output: bool = False,
+    archive: bool = False,
+    archive_dir: Path | str | None = None,
+    a4: bool = True,
+    layer: str = "auto",
+) -> PipelineResult:
+    """OCR (Datalab -> LlamaParse -> Azure -> Google Vision) -> wierny przeszukiwalny PDF.
+
+    Domyslnie powstaje tylko PDF: dla PDF w miejscu wejscia, dla obrazu obok
+    (<stem>.pdf, obraz zostaje). Opcjonalnie: `output` (inna sciezka PDF),
+    `markdown`/`json_output` (pliki obok PDF), `archive` lub `archive_dir`
+    (kopia oryginalu przed OCR; przy archiwizacji obraz wejsciowy jest
+    usuwany po sukcesie). Strony sa domyslnie dopasowywane do A4
+    (`a4=False` zachowuje geometrie). `layer` to tryb OCRmyPDF dla warstwy:
+    `auto` (domyslnie) = `redo` (oryginalna tresc stron bez rasteryzacji),
+    a dla PDF z formularzem AcroForm `skip`; `force` rasteryzuje strony.
+    """
     input_path = Path(input_path)
     suffix = input_path.suffix.lower()
     if suffix not in SUPPORTED_SUFFIXES:
@@ -46,18 +87,27 @@ def run_pipeline(input_path: Path, providers: list[OCRProvider], *, force: str |
     if not input_path.is_file():
         raise ValueError(f"input is not a file: {input_path}")
 
-    output_pdf = input_path.with_suffix(".pdf")
-    output_md = input_path.with_suffix(".md")
-    output_json = input_path.with_suffix(".json")
-    archive_path = _archive_input(input_path)
-    result = PipelineResult(chain_result=ChainResult(result=None), archive_path=archive_path)
-    if suffix != ".pdf" and output_pdf.exists():
-        raise ValueError(f"refusing to overwrite existing output PDF: {output_pdf}; input preserved as {archive_path}")
+    output_pdf = Path(output) if output is not None else input_path.with_suffix(".pdf")
+    output_md = output_pdf.with_suffix(".md")
+    output_json = output_pdf.with_suffix(".json")
+    archive_path = None
+    if archive or archive_dir is not None:
+        archive_path = _archive_input(input_path, resolve_archive_dir(archive_dir))
+    result = PipelineResult(
+        chain_result=ChainResult(result=None),
+        archive_path=archive_path,
+        wanted_markdown=markdown,
+        wanted_json=json_output,
+    )
+    if output is None and suffix != ".pdf" and output_pdf.exists():
+        kept = f"; input preserved as {archive_path}" if archive_path else ""
+        raise ValueError(f"refusing to overwrite existing output PDF: {output_pdf}{kept}")
+    source = archive_path or input_path
     temps: list[Path] = []
     try:
         prepared_pdf = _temporary_path(input_path.parent, ".prepared.pdf")
         temps.append(prepared_pdf)
-        _prepare_pdf(archive_path, prepared_pdf)
+        prepare_pdf(source, prepared_pdf, a4=a4)
 
         chain_result = run_chain(prepared_pdf, providers, force=force)
         result.chain_result = chain_result
@@ -66,32 +116,39 @@ def run_pipeline(input_path: Path, providers: list[OCRProvider], *, force: str |
 
         document = replace(
             chain_result.result.document,
+            doc_id=input_path.stem,
             source_name=input_path.name,
-            source_sha256=sha256_file(archive_path),
         )
         document.validate()
         chain_result.result.document = document
         chain_result.result.text = document.text
 
-        json_tmp = _temporary_path(input_path.parent, ".json.tmp")
-        md_tmp = _temporary_path(input_path.parent, ".md.tmp")
         pdf_tmp = _temporary_path(input_path.parent, ".pdf.tmp")
-        temps.extend((json_tmp, md_tmp, pdf_tmp))
-
-        _write_text_durable(json_tmp, json.dumps(document.to_dict(), ensure_ascii=False, indent=2) + "\n")
-        _write_text_durable(md_tmp, render_with_frontmatter(input_path, document))
-        build_document_searchable_pdf(prepared_pdf, pdf_tmp, document)
-        _validate_searchable_pdf(pdf_tmp, document)
+        temps.append(pdf_tmp)
+        build_document_searchable_pdf(prepared_pdf, pdf_tmp, document, mode=resolve_layer(layer, prepared_pdf))
+        validate_searchable_pdf(pdf_tmp, document)
         _fsync_file(pdf_tmp)
+        pairs: list[tuple[Path, Path]] = []
+        if json_output:
+            json_tmp = _temporary_path(input_path.parent, ".json.tmp")
+            temps.append(json_tmp)
+            _write_text_durable(json_tmp, json.dumps(document.to_dict(), ensure_ascii=False, indent=2) + "\n")
+            pairs.append((json_tmp, output_json))
+        if markdown:
+            md_tmp = _temporary_path(input_path.parent, ".md.tmp")
+            temps.append(md_tmp)
+            _write_text_durable(md_tmp, render_with_frontmatter(input_path, document))
+            pairs.append((md_tmp, output_md))
+        pairs.append((pdf_tmp, output_pdf))
 
-        _publish_outputs(((json_tmp, output_json), (md_tmp, output_md), (pdf_tmp, output_pdf)), temps)
-        result.json_path = output_json
-        result.markdown_path = output_md
+        output_pdf.parent.mkdir(parents=True, exist_ok=True)
+        _publish_outputs(tuple(pairs), temps)
         result.pdf_path = output_pdf
+        result.json_path = output_json if json_output else None
+        result.markdown_path = output_md if markdown else None
 
-        if suffix != ".pdf":
+        if suffix != ".pdf" and archive_path is not None and output is None:
             input_path.unlink()
-        _remove_legacy_outputs(input_path)
         return result
     finally:
         for path in temps:
@@ -102,15 +159,25 @@ def process_input(input_path: Path, providers: list[OCRProvider], **kwargs) -> P
     return run_pipeline(input_path, providers, **kwargs)
 
 
-def _prepare_pdf(archive_path: Path, destination: Path) -> None:
-    if archive_path.suffix.lower() != ".pdf":
-        image_to_a4_pdf(archive_path, destination)
+def resolve_layer(layer: str, pdf_path: Path) -> str:
+    """`auto` -> `redo`, chyba ze PDF ma formularz (OCRmyPDF odmawia redo) -> `skip`."""
+    if layer != "auto":
+        return layer
+    with pikepdf.open(pdf_path) as pdf:
+        return "skip" if "/AcroForm" in pdf.Root else "redo"
+
+
+def prepare_pdf(source: Path, destination: Path, *, a4: bool = True) -> None:
+    """Obraz trafia na strone A4; PDF traci stara niewidzialna warstwe tekstu
+    i jest dopasowywany do A4, chyba ze a4=False (geometria bez zmian)."""
+    if source.suffix.lower() != ".pdf":
+        image_to_a4_pdf(source, destination)
         return
 
     clean = destination.with_suffix(".clean.pdf")
     try:
-        strip_invisible_text(archive_path, clean)
-        if is_already_a4(clean) or _requires_original_geometry(clean):
+        strip_invisible_text(source, clean)
+        if not a4 or is_already_a4(clean) or _requires_original_geometry(clean):
             clean.replace(destination)
         else:
             fit_pdf_to_a4(clean, destination)
@@ -118,9 +185,8 @@ def _prepare_pdf(archive_path: Path, destination: Path) -> None:
         clean.unlink(missing_ok=True)
 
 
-def _archive_input(input_path: Path) -> Path:
-    archive_dir = input_path.parent / "archive"
-    archive_dir.mkdir(parents=True, exist_ok=True)
+def _archive_input(input_path: Path, archive_dir: Path) -> Path:
+    _ensure_writable_dir(archive_dir)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     candidate = archive_dir / f"{input_path.stem}_{stamp}{input_path.suffix.lower()}"
     counter = 2
@@ -128,9 +194,21 @@ def _archive_input(input_path: Path) -> Path:
         candidate = archive_dir / f"{input_path.stem}_{stamp}-{counter}{input_path.suffix.lower()}"
         counter += 1
     _durable_copy(input_path, candidate)
-    if sha256_file(input_path) != sha256_file(candidate):
-        raise RuntimeError("archive copy checksum mismatch")
     return candidate
+
+
+def _ensure_writable_dir(directory: Path) -> None:
+    """Proba zapisu przed OCR: brak dostepu = czytelny blad, OCR sie nie zaczyna."""
+    try:
+        directory.mkdir(parents=True, exist_ok=True)
+        probe = directory / ".the-ocr-write-test"
+        with probe.open("wb") as handle:
+            handle.write(b"ok")
+            handle.flush()
+            os.fsync(handle.fileno())
+        probe.unlink()
+    except OSError as exc:
+        raise OSError(f"archive directory is not writable: {directory} ({exc})") from exc
 
 
 def _durable_copy(source: Path, destination: Path) -> None:
@@ -158,7 +236,7 @@ def _fsync_file(path: Path) -> None:
         os.fsync(handle.fileno())
 
 
-def _validate_searchable_pdf(path: Path, document: OCRDocument) -> None:
+def validate_searchable_pdf(path: Path, document: OCRDocument) -> None:
     with pymupdf.open(path) as pdf:
         if len(pdf) != len(document.pages):
             raise RuntimeError("generated PDF page count differs from OCR document")
@@ -207,23 +285,43 @@ def _replace_or_copy(source: Path, destination: Path) -> None:
         _durable_copy(source, destination)
 
 
-def _remove_legacy_outputs(input_path: Path) -> None:
-    for suffix in (".searchable.pdf", ".a4.pdf", ".contract.json"):
-        legacy = input_path.with_name(input_path.stem + suffix)
-        if legacy != input_path:
-            legacy.unlink(missing_ok=True)
-
-
 def _requires_original_geometry(path: Path) -> bool:
-    """Avoid an unsafe A4 transform for rotated pages or internal links."""
+    """Avoid an unsafe A4 transform for rotated pages or internal links.
+
+    Every value read here comes from an untrusted PDF, so nothing is assumed
+    to have the type the specification prescribes: /Rotate may not be a
+    number, /Annots may not be an array, an annotation or its /A action may
+    not be a dictionary. A malformed object must not raise -- when the
+    structure cannot be understood, the page keeps its original geometry.
+    """
     with pikepdf.open(path) as pdf:
         for page in pdf.pages:
-            if int(page.obj.get("/Rotate", 0)) % 360:
+            if _rotated(page.obj.get("/Rotate")):
                 return True
-            for annotation in page.obj.get("/Annots", []):
+            annotations = page.obj.get("/Annots")
+            if not isinstance(annotations, pikepdf.Array):
+                if annotations is not None:
+                    return True
+                continue
+            for annotation in annotations:
+                if not isinstance(annotation, pikepdf.Dictionary):
+                    return True
                 if "/Dest" in annotation:
                     return True
                 action = annotation.get("/A")
-                if action is not None and action.get("/S") == "/GoTo":
+                if action is None:
+                    continue
+                if not isinstance(action, pikepdf.Dictionary):
+                    return True
+                if str(action.get("/S", "")) == "/GoTo":
                     return True
     return False
+
+
+def _rotated(value: object) -> bool:
+    if value is None:
+        return False
+    try:
+        return int(value) % 360 != 0
+    except (TypeError, ValueError):
+        return True

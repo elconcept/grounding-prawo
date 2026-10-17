@@ -18,7 +18,8 @@ sys.path.insert(0, str(BASE / 'tools/the-ocr/src'))
 from contract import Block, build_contract, validate
 
 VERSION = '0.3.0'
-PROVIDERS = ('datalab', 'llamaparse', 'azure-di', 'google-vision')
+# the-ocr names; azure-di and google-vision stay accepted as aliases
+PROVIDERS = ('datalab', 'llamaparse', 'azure', 'google_vision', 'rapidocr', 'azure-di', 'google-vision')
 TEXT = {'.txt', '.md', '.csv', '.json', '.xml', '.log', '.yaml', '.yml'}
 IMAGES = {'.jpg', '.jpeg', '.png', '.tif', '.tiff', '.bmp', '.webp'}
 OFFICE = {'.docx', '.xlsx', '.pptx', '.html', '.htm', '.rtf', '.epub'}

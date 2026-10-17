@@ -82,7 +82,7 @@ keep:
   - {name: profil-postepowan-wlasnych, from: own, why: "NOWY, mały skill nadrzędny (szkic do akceptacji): pełna ścieżka kontroli, brak anonimizacji, osobne przebiegi soczewek"}
 drop:
   - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ISAP)", archive: true}
-  - {name: opendataloader-pdf, why: "scalony w the-ocr (references/opendataloader-pdf.md)"}
+  - {name: opendataloader-pdf, why: "scalony w odczyt-dokumentow (references/opendataloader-pdf.md)"}
   - {name: humanizer-pl, why: "scalony w pisz-po-polsku"}
   - {name: naturalne-pisanie, why: "scalony w pisz-po-polsku (vendor/naturalne-pisanie zostaje jako źródło)"}
   - {name: patron-pisz-po-ludzku, why: "scalony w pisz-po-polsku", archive: true}

@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from .providers import canonical_provider_name
 from .providers.base import ChainAttempt, OCRProvider, OCRResult
 
 
@@ -23,6 +24,7 @@ def run_chain(path: Path, providers: list[OCRProvider], force: str | None = None
 
     candidates = providers
     if force:
+        force = canonical_provider_name(force)
         matches = [p for p in providers if p.name == force]
         if not matches:
             names = ", ".join(p.name for p in providers)

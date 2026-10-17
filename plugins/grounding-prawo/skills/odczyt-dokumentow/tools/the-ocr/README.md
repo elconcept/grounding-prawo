@@ -1,294 +1,204 @@
 # the-ocr
 
-Prywatny pipeline OCR dla polskich dokumentów. Ten plik jest jedynym
-aktualnym opisem architektury, decyzji i stanu repozytorium. Katalog
-`Resources/` zawiera wyłącznie materiały referencyjne i historyczne projekty;
-nie opisuje aktywnego pipeline'u.
+Prywatny pipeline OCR dla polskich dokumentów. Z PDF albo obrazu robi **wierny przeszukiwalny PDF A4**,
+a na życzenie także Markdown i kanoniczny JSON z bboxami. Rozpoznają tekst zewnętrzni providerzy
+(Datalab, LlamaParse, Azure Document Intelligence, Google Cloud Vision; opcjonalnie lokalny RapidOCR),
+warstwę tekstu stawia OCRmyPDF 17 przez własny silnikowy plugin. Ten plik jest jedynym aktualnym opisem
+projektu; `Resources/` to wyłącznie materiały referencyjne i historyczne.
 
-## Stan
+Używają go: CLI `the-ocr`, Paperless-ngx (`paperless-stack`, parser `paperless_theocr`), serwer
+REST/MCP `elconcept/mcp-ocr` (submoduł) i plugin `grounding-prawo` (skill `odczyt-dokumentow`).
 
-Aktywny pipeline obsługuje `.pdf`, `.jpg`, `.jpeg` i `.png`:
-
-```text
-archiwizacja wejścia
-  -> bezstratne przygotowanie PDF A4
-  -> Datalab API
-  -> fallback LlamaParse przy błędzie lub niepełnym wyniku
-  -> kanoniczny dokument OCR z bboxami
-  -> <stem>.json + <stem>.md + <stem>.pdf
-```
-
-Azure Document Intelligence, Google Vision, Apple Vision, Tesseract,
-consensus/scoring, wykrywanie PII, redaction candidates i human-review gating
-zostały usunięte z kodu produkcyjnego. Ich historyczne implementacje pozostają
-jedynie w `Resources/` i historii Git.
-
-## Uruchomienie
-
-```powershell
-uv sync
-uv run the-ocr dokument.pdf
-uv run the-ocr skan.jpg
-```
-
-### Wydania binarne
-
-PyInstaller nie obsługuje cross-compilacji, dlatego wydania są niezależne:
+## Przebieg
 
 ```text
-bin/windows/the-ocr.exe
-bin/macos/the-ocr
+wejście PDF / JPG / PNG
+  -> [--archive] kopia oryginału do archiwum (krok 0, także gdy OCR zawiedzie)
+  -> przygotowanie stron
+       PDF: usunięcie starej niewidzialnej warstwy OCR (Tr 3, także w Form XObject),
+            wektorowe dopasowanie stron do A4 (bez rasteryzacji)
+       obraz: obrót wg EXIF, proporcjonalnie na stronę A4
+  -> łańcuch providerów: Datalab -> LlamaParse -> Azure DI -> Google Vision (pierwszy poprawny wynik wygrywa)
+  -> kanoniczny dokument (doc-intel-contract-pl 1.2.0) + geometria słów
+  -> OCRmyPDF --mode redo + plugin the-ocr (generate_ocr, renderer fpdf2): warstwa tekstu na oryginalnych stronach
+  -> kontrola: liczba stron, tekst do wyciągnięcia, >= 80% słów providera w PDF
+  -> publikacja atomowa z rollbackiem: <stem>.pdf [+ <stem>.md, <stem>.json]
 ```
 
-Windows buduje się na Windows:
+Tesseract nie rozpoznaje tekstu; jego binarka musi istnieć tylko dlatego, że sprawdza ją OCRmyPDF.
+Żadne współrzędne słów nie są wymyślane: blok z ramką, ale bez słów, trafia do warstwy całym tekstem
+w swojej ramce; blok bez geometrii trafia tylko do JSON/Markdown (`gating.ungroundable`).
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/build_release_windows.ps1
-```
+## Instalacja i uruchomienie
 
-macOS buduje się na macOS:
+Wymagania: Python 3.11+, binarki `tesseract` i `gs` (Ghostscript) na PATH.
 
 ```bash
-sh scripts/build_release_macos.sh
+uv sync                       # albo: pip install .        (lokalny RapidOCR: pip install ".[local]")
+uv run the-ocr dokument.pdf                    # PDF nadpisany w miejscu (wynik zweryfikowany przed podmianą)
+uv run the-ocr skan.jpg                        # skan.pdf obok obrazu, obraz zostaje
+uv run the-ocr dokument.pdf -o wynik/ocr.pdf   # wejście nietknięte
+uv run the-ocr dokument.pdf --markdown --json  # dodatkowo .md i .json obok PDF
+uv run the-ocr dokument.pdf --archive          # kopia oryginału przed OCR
+uv run the-ocr dokument.pdf --keep-geometry    # bez dopasowania do A4
+uv run the-ocr dokument.pdf --force-provider azure   # tylko jeden provider (diagnostyka)
 ```
 
-Build macOS jest natywny dla architektury Pythona użytego podczas budowy.
-Universal2 wymaga interpretera Python universal2; w przeciwnym razie należy
-zbudować osobne pliki na Apple Silicon i Intel.
+## Flagi CLI
 
-Repozytorium zawiera aktualnie zbudowany i sprawdzony wariant Windows.
-Binarium macOS musi zostać wygenerowane na macOS, ponieważ PyInstaller nie
-obsługuje cross-kompilacji z Windows.
-Każdy skrypt budujący zapisuje obok executable plik `SHA256SUMS.txt`.
+| Flaga | Działanie |
+|---|---|
+| `INPUT` | PDF, JPG, JPEG lub PNG |
+| `-o`, `--output PLIK` | PDF wynikowy w innym miejscu; wejście nietknięte |
+| `--json` | dodatkowo `<wynik>.json` (kanoniczny JSON kontraktu) |
+| `--archive` | kopia oryginału przed OCR do `$THE_OCR_ARCHIVE_DIR` albo `~/archive`; obraz wejściowy usuwany po sukcesie |
+| `--archive-dir KATALOG` | jak `--archive`, do wskazanego katalogu |
+| `--keep-geometry` | bez dopasowania stron do A4 |
+| `--layer auto\|redo\|skip\|force` | tryb warstwy OCRmyPDF (niżej); domyślnie `auto` |
+| `--force-provider NAZWA` | tylko ten provider: `datalab`, `llamaparse`, `azure`, `google_vision`, `rapidocr` (aliasy: `azure-di`, `google-vision`) |
 
-Do diagnostyki można wymusić jeden z dwóch aktywnych providerów:
+Kody wyjścia: `0` sukces, `1` błąd wejścia/zapisu, `2` żaden provider nie dał wyniku (wejście nietknięte;
+przy `--archive` kopia zostaje w archiwum). Kolejne próby providerów są wypisywane na stderr.
 
-```powershell
-uv run the-ocr dokument.pdf --force-provider datalab
-uv run the-ocr dokument.pdf --force-provider llamaparse
-```
+## Tryby warstwy tekstu (`--layer`)
 
-Wymagane sekrety:
+| Tryb | OCRmyPDF | Skutek |
+|---|---|---|
+| `auto` | `redo`, a dla PDF z formularzem AcroForm `skip` | domyślnie: oryginalna treść stron bez rasteryzacji |
+| `redo` | usuwa starą warstwę OCR, zachowuje wektory i widoczny tekst | wymiana wadliwego OCR |
+| `skip` | strony z tekstem zostają bez zmian | PDF mieszane (natywne + skany) |
+| `force` | **rasteryzuje** każdą stronę, potem warstwa | tylko świadomie: wektory i tekst natywny stają się obrazem |
 
-```text
-DATALAB_API_KEY=...
-LLAMA_CLOUD_API_KEY=...
-```
+## Konfiguracja
 
-Można równolegle skonfigurować regiony EU i US. Domyślna kolejność prób to
-EU, następnie US:
+Zmienne procesu albo `.env` w katalogu uruchomienia (w wydaniu binarnym: obok pliku wykonywalnego);
+zmienne procesu mają pierwszeństwo. Wzór: `env.example`. W tym prywatnym repo prawdziwe klucze są
+świadomie w `.env` i `.secrets/` (synchronizacja między hostami autora; darmowe tiery).
 
-```text
-DATALAB_API_KEY_EU=...
-DATALAB_API_KEY_US=...
-LLAMA_CLOUD_API_KEY_EU=...
-LLAMA_CLOUD_API_KEY_US=...
-DATALAB_REGION_ORDER=eu,us
-LLAMA_CLOUD_REGION_ORDER=eu,us
-```
-
-W wersji źródłowej `.env` jest czytany z bieżącego katalogu. W wersji binarnej
-`.env` jest czytany wyłącznie z katalogu zawierającego executable, czyli
-`bin/windows/.env` albo `bin/macos/.env`. Zmienne procesu mają pierwszeństwo.
-Szablon znajduje się w `bin/env.example` i jest kopiowany przy budowaniu.
-Opcjonalne `LLAMA_CLOUD_REGION=eu|us`, `LLAMA_CLOUD_BASE_URL`,
-`DATALAB_API_URL` zmienia konfigurację. Sekretów nie
-wolno commitować.
-
-## Artefakty
-
-Dla `dokument.pdf` po sukcesie pozostają:
-
-```text
-dokument.pdf
-dokument.md
-dokument.json
-archive/dokument_YYYYMMDD_HHMMSS.pdf
-```
-
-Dla `skan.jpg` lub `skan.png` źródłowy obraz jest najpierw trwale kopiowany
-do `archive/`, a po opublikowaniu kompletu wyników usuwany z katalogu
-roboczego. Pozostają `skan.pdf`, `skan.md`, `skan.json` oraz kopia obrazu w
-`archive/`.
-
-Archiwizacja jest krokiem 0 i zachodzi również wtedy, gdy OCR później zawiedzie.
-Kopia jest zapisywana z `fsync` i kontrolą SHA-256. Kolizje sekundowego
-timestampu otrzymują sufiks `-2`, `-3` itd.
-
-## PDF i obrazy
-
-PDF jest odczytywany z kopii archiwalnej. Pipeline usuwa poprzednią niewidzialną
-warstwę OCR zapisaną trybem PDF `Tr 3`, również wewnątrz Form XObjectów, po czym
-wektorowo dopasowuje strony nie-A4 do A4. Obrazy i grafika nie są
-rasteryzowane ponownie. Widoczna treść, adnotacje i AcroForm są zachowywane.
-Jeżeli strona ma aktywną rotację albo wewnętrzne linki `GoTo`, pipeline
-zachowuje jej pierwotną geometrię zamiast ryzykować uszkodzenie odsyłaczy.
-
-JPG/PNG jest obracany wyłącznie zgodnie z EXIF i umieszczany proporcjonalnie na
-stronie A4. Nie ma binaryzacji, odszumiania, zmiany kolorów ani agresywnego
-cropowania. JPG bez korekty orientacji jest osadzany bez ponownej kompresji.
-
-Finalny PDF otrzymuje dokładnie jedną lokalnie wygenerowaną, niewidzialną
-warstwę tekstową. Warstwa OCR nie osadza żadnego pliku fontu: używa standardowej
-czcionki Base-14 `/Helvetica` i własnej mapy `/ToUnicode`, dzięki czemu polskie
-znaki pozostają poprawnie ekstrahowalne. Słowa są scalane w linie, a cała
-warstwa strony trafia do jednego strumienia. Zapis pikepdf włącza Object Streams,
-kompresję i linearyzację. Fonty już obecne w dokumencie źródłowym pozostają
-nietknięte, ponieważ ich usunięcie uszkodziłoby widoczną treść.
-
-Przetwarzanie podpisanego cyfrowo PDF zmienia jego bajty i unieważnia podpis
-kryptograficzny; oryginał pozostaje w `archive/`.
+| Zmienna | Znaczenie |
+|---|---|
+| `DATALAB_API_KEY` (albo `DATALAB_API_KEY_EU`/`_US`), `DATALAB_REGION_ORDER`, `DATALAB_API_URL[_EU/_US]` | Datalab |
+| `LLAMA_CLOUD_API_KEY` (albo `_EU`/`_US`), `LLAMA_CLOUD_REGION_ORDER`, `LLAMA_CLOUD_REGION`, `LLAMA_CLOUD_BASE_URL[_EU/_US]` | LlamaParse |
+| `AZURE_DOCUMENT_ENDPOINT` + `AZURE_DOCUMENT_KEY`, albo `AZURE_DOCUMENT_RESOURCE` [+ `AZURE_DOCUMENT_RESOURCE_GROUP`] z zalogowanym `az` | Azure DI |
+| `AZURE_DOCUMENT_PAGES_PER_REQUEST` | stron na żądanie Azure (domyślnie 2 = limit F0) |
+| `GOOGLE_VISION_API_KEY`, albo `GOOGLE_VISION_CREDENTIALS` (JSON konta usługi, ścieżka względem katalogu `.env`), albo ADC `gcloud` (+ `GOOGLE_CLOUD_PROJECT`) | Google Vision |
+| `THE_OCR_RAPIDOCR_DPI` | rozdzielczość renderu dla RapidOCR (domyślnie 200) |
+| `THE_OCR_CHAIN` | kolejność łańcucha, np. `azure,google_vision,rapidocr` |
+| `THE_OCR_ARCHIVE_DIR` | katalog archiwum dla `--archive` |
 
 ## Providerzy
 
-### Datalab
+Provider bez kluczy jest pomijany. Następny jest próbowany przy błędzie sieci/API, pustym wyniku,
+brakujących stronach albo braku geometrii. Nie ma głosowania ani łączenia wyników.
 
-Datalab jest pierwszym providerem. Żądanie `/api/v1/convert` używa:
+- **Datalab** - `/api/v1/convert` (`output_format=json`, `mode=accurate`, `word_bboxes=true`,
+  `add_block_ids=true`, `extras=new_block_types`, `disable_image_extraction=true`); asynchroniczny
+  `request_check_url`, odrzucenie `metadata.failed_pages`; regiony wg `DATALAB_REGION_ORDER` (EU, potem US).
+- **LlamaParse** - `items`, `markdown_full`, `metadata`; bboxy elementów z `items.pages[]`, nigdy z promptu;
+  regiony wg `LLAMA_CLOUD_REGION_ORDER`.
+- **Azure Document Intelligence** - REST `prebuilt-read` (API `2024-11-30`): linie jako bloki, słowa z wielokątów
+  i offsetów. F0 analizuje 2 strony na żądanie, więc PDF idzie paczkami i jest składany; paczka z brakującą stroną
+  to błąd providera (bez cichej utraty stron). HTTP 429 jest ponawiany wg `Retry-After`. Klucz z env albo z `az`.
+- **Google Cloud Vision** - `files:annotate` z `DOCUMENT_TEXT_DETECTION` i podpowiedzią `pl`, paczki po 5 stron;
+  klucz API, konto usługi albo Application Default Credentials zalogowanego `gcloud`.
+- **RapidOCR** (lokalnie, CPU, extra `local`) - linie z ramkami jako bloki; poza domyślnym łańcuchem
+  (`THE_OCR_CHAIN=...,rapidocr`). Fallback, gdy chmura jest niedostępna.
 
-```text
-output_format=json
-mode=accurate
-word_bboxes=true
-add_block_ids=true
-extras=new_block_types
-disable_image_extraction=true
-```
+## PDF i obrazy
 
-Provider obsługuje asynchroniczny `request_check_url`, sprawdza jednocześnie
-`status=complete` i `success=true`, pobiera podpisany `result_url` bez nagłówka
-API oraz odrzuca wyniki z `metadata.failed_pages`. JSON Datalab zawiera strony,
-typy bloków, Markdown, bboxy bloków oraz HTML ze spanami słów i ich bboxami.
-Przy regionalnych kluczach próbuje kolejno konfiguracji wskazanych przez
-`DATALAB_REGION_ORDER`; błąd EU uruchamia próbę US przed przejściem do
-LlamaParse.
+Strony nie-A4 są dopasowywane do A4 wektorowo (transformacja treści, bez rasteryzacji), przed OCR - więc
+provider i warstwa tekstu widzą tę samą geometrię. Strona z aktywną rotacją albo wewnętrznymi linkami `GoTo`
+zachowuje pierwotną geometrię. Widoczna treść, adnotacje i AcroForm zostają. JPG/PNG: tylko obrót wg EXIF
+i umieszczenie na A4; bez binaryzacji, odszumiania ani cropowania. Przetworzenie podpisanego PDF zmienia jego
+bajty i unieważnia podpis - oryginał zachowuje `--archive`.
 
-### LlamaParse
+## Artefakty
 
-LlamaParse jest fallbackiem. Żądanie rozwija `items`, `markdown_full` i
-`metadata`. `items.pages[]` dostarcza wymiar strony oraz bboxy elementów.
-Nie używamy bboxów wymyślanych przez prompt. Wynik strony oznaczonej jako
-nieudana albo dokument bez geometrii jest błędem providera.
-Klucze `LLAMA_CLOUD_API_KEY_EU` i `LLAMA_CLOUD_API_KEY_US` są próbane według
-`LLAMA_CLOUD_REGION_ORDER`. Każdy region używa własnego endpointu LlamaCloud.
-
-Fallback zachodzi przy braku konfiguracji, błędzie sieci/API, pustym wyniku,
-brakujących stron lub niepoprawnej geometrii. Nie ma głosowania ani wyboru
-„zwycięzcy” spośród równoległych odpowiedzi.
+Domyślnie tylko PDF (w miejscu wejścia; dla obrazu `<stem>.pdf` obok). `--markdown`/`--json` dokładają
+pliki obok PDF wynikowego, także przy `-o`. Publikacja jest atomowa: przy błędzie którejkolwiek części
+wcześniej podmienione pliki są przywracane. Archiwum: sufiksy `-2`, `-3` przy kolizji znacznika czasu, `fsync`.
 
 ## Kanoniczny JSON
 
-`<stem>.json` jest źródłem dla chunkowania, embeddings, Markdown i warstwy
-PDF. Najważniejszy kształt:
+Kształt `doc-intel-contract-pl` 1.2.0 (`contract/contract.schema.json`): płaskie `blocks[]` z numerem strony,
+bbox `[x0,y0,x1,y1]` w `0..1`, taksonomia bloków referencji, `doc_id` = stem pliku, `gating` (wyłącznie dane,
+bez kolejek). Rozszerzenia wobec upstreamu: `source.engine` zna prawdziwe nazwy providerów (`datalab`,
+`llamaparse`, `azure`, `google_vision`, `rapidocr`) oraz opcjonalne `blocks[].words[]`.
 
 ```json
-{
-  "schema_version": "1.0",
-  "source": {"name": "dokument.pdf", "sha256": "..."},
-  "ocr": {"provider": "datalab"},
-  "pages": [
-    {
-      "number": 1,
-      "width": 1596.0,
-      "height": 2240.0,
-      "blocks": [
-        {
-          "id": "p0001-b0001",
-          "page": 1,
-          "block_type": "paragraph",
-          "text": "Treść",
-          "markdown": "Treść",
-          "bbox": [0.1, 0.1, 0.5, 0.2],
-          "confidence": 0.99,
-          "words": []
-        }
-      ]
-    }
-  ]
-}
+{"doc_id": "umowa", "contract_version": "1.2.0",
+ "source": {"path": "umowa.pdf", "engine": "datalab", "engine_variant": "eu", "pages": 1},
+ "blocks": [{"id": "p0001-b0001", "page": 1, "bbox": [0.1, 0.1, 0.5, 0.15], "block_type": "paragraph",
+             "text": "Treść", "confidence": 0.98, "flags": []}],
+ "gating": {"threshold": 0.0, "review_required": [], "auto_approved": ["p0001-b0001"], "ungroundable": [],
+            "verdict": "ok", "counts": {"total": 1, "review_required": 0, "auto_approved": 1, "ungroundable": 0}},
+ "meta": {"created_at": "2026-09-10T12:00:00Z"}}
 ```
 
-Bbox ma zawsze format `[x0, y0, x1, y1]`, zakres `0..1` i początek w lewym
-górnym rogu. Nie ma pól PII, redakcji, gatingu ani ręcznej weryfikacji.
+CLI zapisuje JSON bez słów. `OCRDocument.to_dict(include_words=True)` dodaje `blocks[].words[]`
+(`text`, `bbox`, `confidence`) - edytowalną geometrię. `OCRDocument.from_dict(payload, page_sizes)` czyta
+poprawiony JSON z powrotem (walidacja schematu, stron, bboxów, słów w ramce bloku), a
+`build_document_searchable_pdf` stawia z niego warstwę bez ponownego OCR (tak robi `reapply` w mcp-ocr).
 
 ## Markdown
 
-`<stem>.md` jest budowany lokalnie z kanonicznego JSON, a nie kopiowany wprost
-z odpowiedzi modelu. Tekst i bboxy pochodzą od providera, natomiast struktura
-jest deterministycznie normalizowana pod dalszą analizę LLM:
+Budowany lokalnie z kanonicznego dokumentu, nie kopiowany z odpowiedzi modelu: `## Page N` na stronę,
+nagłówki `###`, poprawne tabele Markdown (tabele-formularze jako `Etykieta: wartość`), listy `-`, stopki i
+nagłówki typowane z etykiet providera oraz powtarzalności i położenia, bez HTML i zwykłej kursywy,
+przekreślenia `~~tekst~~`. Frontmatter: `source_file`, `converted_at`, `ocr_backend`; pierwszy nagłówek
+`# <stem>`. Tagi: `*[handnote: …]*`, `*[signature: …]*`, `*[stamp: …]*`, `*[footer: …]*`, `*[header: …]*`,
+`*[logo: …]*`, `*[photo: …]*`, `*[graphic: …]*`.
 
-- każda strona ma nagłówek `## Page N`,
-- nagłówki dokumentu używają poziomu `###`,
-- tabele są zamieniane na listę rekordów `- Table row N: pole: wartość`,
-- wszystkie listy są normalizowane do `-`,
-- stopki i nagłówki są typowane z etykiety providera oraz z powtarzalności i
-  położenia geometrycznego,
-- HTML, bold i zwykłe italic są usuwane,
-- surowy `block.markdown` providera nie steruje finalną strukturą poza lokalnym
-  odczytem komórek tabel i elementów list.
+## API Python (dla integratorów)
 
-Frontmatter zawiera wyłącznie:
-
-```yaml
-source_file: dokument.pdf
-converted_at: 2026-09-10T12:00:00Z
-ocr_backend: datalab
+```python
+from the_ocr.config import default_providers          # łańcuch wg THE_OCR_CHAIN
+from the_ocr.chain import run_chain                     # -> ChainResult(result.document, attempts)
+from the_ocr.pipeline import prepare_pdf, run_pipeline, validate_searchable_pdf
+from the_ocr.pdf.searchable_pdf import build_document_searchable_pdf   # mode=force|redo|skip
+from the_ocr.models import OCRDocument                  # to_dict(include_words=), from_dict()
 ```
 
-Pierwszy nagłówek to zawsze `# dokument`, bez rozszerzenia. Renderer usuwa HTML,
-bold i zwykłe italic, normalizuje listy nieuporządkowane do `-` i zachowuje
-przekreślenia jako `~~tekst~~`.
+## Struktura projektu
 
-Dozwolone specjalne tagi:
-
-```text
-*[handnote: treść]*
-*[signature: imię i nazwisko lub illegible]*
-*[stamp: treść]*
-*[footer: treść]*
-*[header: treść]*
-*[logo: opis]*
-*[photo: opis]*
-*[graphic: opis]*
-```
-
-## Układ kodu
-
-| Plik | Odpowiedzialność |
-| --- | --- |
-| `src/the_ocr/cli.py` | minimalne CLI |
-| `src/the_ocr/pipeline.py` | archiwizacja, orkiestracja i publikacja z rollbackiem |
-| `src/the_ocr/models.py` | kanoniczny dokument OCR i walidacja bbox |
-| `src/the_ocr/adapters.py` | normalizacja odpowiedzi Datalab/LlamaParse |
-| `src/the_ocr/providers/datalab_provider.py` | Convert API i polling |
-| `src/the_ocr/providers/llamaparse_provider.py` | fallback LlamaParse z `items` |
-| `src/the_ocr/pdf/source_pdf.py` | stripping starego OCR i obraz do PDF |
-| `src/the_ocr/pdf/text_layer.py` | nieosadzana, liniowa warstwa OCR i optymalizacja PDF |
+| Ścieżka | Odpowiedzialność |
+|---|---|
+| `src/the_ocr/cli.py` | CLI |
+| `src/the_ocr/pipeline.py` | archiwum, przygotowanie, łańcuch, warstwa, kontrola, publikacja z rollbackiem |
+| `src/the_ocr/chain.py` | kolejne próby providerów |
+| `src/the_ocr/config.py` | `.env`, kolejność łańcucha, aliasy nazw |
+| `src/the_ocr/models.py` | kontrakt, walidacja, `to_dict` / `from_dict` |
+| `src/the_ocr/adapters.py` | odpowiedzi Datalab/LlamaParse/Azure/Google -> kontrakt |
+| `src/the_ocr/providers/` | `datalab`, `llamaparse`, `azure`, `google_vision`, `rapidocr` |
+| `src/the_ocr/pdf/source_pdf.py` | usunięcie starej warstwy `Tr 3`, obraz -> A4 |
+| `src/the_ocr/pdf/searchable_pdf.py` | wywołanie OCRmyPDF z pluginem (`mode`, `optimize`) |
+| `src/the_ocr/pdf/ocrmypdf_plugin.py` | silnik OCRmyPDF (`get_ocr_engine`, `generate_ocr`) |
+| `src/the_ocr/pdf/ocr_words.py` | sidecar geometrii słów, drzewo `OcrElement` |
 | `src/the_ocr/visual/scale_a4.py` | wektorowe dopasowanie do A4 |
-| `scripts/build_release_windows.ps1` (brak w pluginie) | natywny build Windows |
-| `scripts/build_release_macos.sh` (brak w pluginie) | natywny build macOS |
-| `.opencode/skills/the-ocr/SKILL.md` | instrukcja obsługi dla LLM |
+| `contract/contract.schema.json` | schemat JSON |
+| `tests/` | testy (pytest), PDF przez prawdziwy OCRmyPDF |
+| `scripts/` | buildy wydań PyInstaller (Windows, macOS) |
+| `Resources/` | materiały referencyjne, poza pipeline'em |
+| `.env`, `.secrets/` | klucze providerów (prywatne repo) |
 
-## Testy i development
+## Testy
 
-```powershell
+```bash
 uv run pytest
-npx --yes markdownlint-cli2 README.md CLAUDE.md SampleData/<timestamp>/*.md
 ```
 
-Testy jednostkowe używają `tmp_path`. Każdy ręczny smoke test lub próbne
-wywołanie providera musi pozostawić trwały ślad w
-`SampleData/<YYYYMMDD_HHMMSS>/`; `SampleData/` jest ignorowany przez Git i
-może zawierać dokumenty prywatne.
+Testy PDF przechodzą przez prawdziwy OCRmyPDF i sprawdzają pozycje słów, pokrycie highlightu, polskie znaki,
+zachowanie wektorów w `redo` i rasteryzację w `force`. `test_unwritable_archive_fails_before_provider`
+wymaga uruchomienia jako zwykły użytkownik (root ignoruje `chmod 555`).
 
-Aktualna zweryfikowana baza: 38 testów jednostkowych oraz live E2E z
-2026-09-10: Datalab w `SampleData/20260910_100054/`, LlamaParse w
-`SampleData/20260910_100136/` i wejście PNG w
-`SampleData/20260910_095406/`. Materiały z wcześniejszych architektur
-pozostają w `Resources/`, ale nie są częścią runtime ani źródłem aktualnych
-decyzji.
+## Wydania binarne
 
-Test `sample8.pdf`: `SampleData/20260912_191824/`. Wynik ma 4 jawne sekcje
-stron, zero tabel Markdown, jedną dodatkową warstwę OCR na stronę, 59 obiektów
-PDF, linearyzację i rozmiar około 61% pliku wejściowego. OCR nie dodał żadnego
-osadzonego fontu; fonty Calibri widoczne w inspekcji pochodzą z dokumentu
-źródłowego.
+PyInstaller nie kompiluje krzyżowo; buduje się na docelowym systemie (z `tesseract` i `gs` na hoście):
+
+```bash
+sh scripts/build_release_macos.sh                                         # -> bin/macos/the-ocr
+powershell -ExecutionPolicy Bypass -File scripts/build_release_windows.ps1 # -> bin/windows/the-ocr.exe
+```
+
+Binarki nie są trzymane w repo (stare z 09.2026 sprzed obecnego pipeline'u zostały usunięte). Wydanie
+czyta `.env` z katalogu pliku wykonywalnego; skrypt kopiuje tam `env.example`.

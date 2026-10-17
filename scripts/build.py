@@ -290,7 +290,12 @@ def normalize_skill(sm, entry):
 # A single document skill owns OCR tools and the reusable contract library.
 def bundle_documents():
     base = os.path.join(SKILLS, "odczyt-dokumentow")
-    shutil.copytree(os.path.join(ROOT, "tools/the-ocr"), os.path.join(base, "tools/the-ocr"), ignore=IGNORE)
+    # the-ocr comes from its own repo (submodule, private): code and docs only - never .env/.secrets,
+    # because this plugin is published from a public repository.
+    the_ocr, tool = os.path.join(ROOT, "vendor/docs/the-ocr"), os.path.join(base, "tools/the-ocr")
+    shutil.copytree(os.path.join(the_ocr, "src"), os.path.join(tool, "src"), ignore=IGNORE)
+    for name in ("pyproject.toml", "README.md", "env.example"):
+        shutil.copy(os.path.join(the_ocr, name), tool)
     upstream = os.path.join(AWE, "dokumenty/skills/doc-intel-contract-pl")
     target = os.path.join(base, "document_contract")
     os.makedirs(os.path.join(target, "scripts"), exist_ok=True)
@@ -304,7 +309,8 @@ def bundle_documents():
     with open(schema_path, encoding="utf-8") as f:
         schema = json.load(f)
     schema["properties"]["source"]["properties"]["engine"]["enum"] = [
-        "datalab", "azure-di", "google-vision", "llamaparse", "pymupdf", "markitdown", "text"]
+        "datalab", "llamaparse", "azure", "google_vision", "rapidocr", "azure-di", "google-vision",
+        "pymupdf", "markitdown", "text"]
     with open(schema_path, "w", encoding="utf-8") as f:
         json.dump(schema, f, ensure_ascii=False, indent=2)
         f.write("\n")

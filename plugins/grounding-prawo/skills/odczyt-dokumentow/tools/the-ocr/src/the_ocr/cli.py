@@ -4,20 +4,56 @@ import argparse
 import sys
 from pathlib import Path
 
-from .config import all_providers, default_providers
+from .config import PROVIDER_NAMES, all_providers, default_providers
+from .providers import PROVIDER_ALIASES
 from .pipeline import process_input
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="the-ocr",
-        description="Create searchable PDF, Markdown, and spatial JSON using Datalab, Azure DI, Google Vision or LlamaParse.",
+        description=(
+            "Create a faithful searchable PDF (Datalab -> LlamaParse -> Azure Document "
+            "Intelligence -> Google Vision). Markdown, JSON and an archive copy are optional."
+        ),
     )
     parser.add_argument("input", type=Path, help="path to a PDF, JPG, JPEG, or PNG file")
     parser.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        default=None,
+        help="output PDF path (default: PDF in place, image -> <stem>.pdf beside it)",
+    )
+    parser.add_argument("--markdown", action="store_true", help="also write <output>.md")
+    parser.add_argument("--json", action="store_true", dest="json_output", help="also write <output>.json (doc-intel-contract-pl)")
+    parser.add_argument(
+        "--archive",
+        action="store_true",
+        help="copy the original to the archive before OCR (default dir: $THE_OCR_ARCHIVE_DIR or ~/archive)",
+    )
+    parser.add_argument(
+        "--archive-dir",
+        type=Path,
+        default=None,
+        help="archive directory; implies --archive",
+    )
+    parser.add_argument(
+        "--keep-geometry",
+        action="store_false",
+        dest="a4",
+        help="keep original PDF page sizes (default: fit pages to A4)",
+    )
+    parser.add_argument(
+        "--layer",
+        choices=["auto", "redo", "skip", "force"],
+        default="auto",
+        help="OCRmyPDF text-layer mode (default auto: redo, skip for PDF forms; force rasterizes pages)",
+    )
+    parser.add_argument(
         "--force-provider",
-        choices=("datalab", "llamaparse", "azure-di", "google-vision"),
-        help="use only this provider; otherwise use THE_OCR_CHAIN",
+        choices=[*PROVIDER_NAMES, *PROVIDER_ALIASES],
+        help="diagnostic override; run only this provider",
     )
     return parser
 
@@ -31,7 +67,18 @@ def main(argv: list[str] | None = None) -> int:
 
     providers = all_providers() if args.force_provider else default_providers()
     try:
-        result = process_input(input_path, providers, force=args.force_provider)
+        result = process_input(
+            input_path,
+            providers,
+            force=args.force_provider,
+            output=args.output,
+            markdown=args.markdown,
+            json_output=args.json_output,
+            archive=args.archive,
+            archive_dir=args.archive_dir,
+            a4=args.a4,
+            layer=args.layer,
+        )
     except (OSError, RuntimeError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
@@ -40,13 +87,17 @@ def main(argv: list[str] | None = None) -> int:
         detail = f" -- {attempt.reason}" if attempt.reason else ""
         print(f"[{attempt.provider}] {attempt.outcome}{detail}", file=sys.stderr)
     if not result.ok:
-        print(f"error: OCR failed; original preserved as {result.archive_path}", file=sys.stderr)
+        kept = f"; original preserved as {result.archive_path}" if result.archive_path else "; input left unchanged"
+        print(f"error: OCR failed{kept}", file=sys.stderr)
         return 2
 
-    print(f"archive: {result.archive_path}")
+    if result.archive_path:
+        print(f"archive: {result.archive_path}")
     print(f"pdf: {result.pdf_path}")
-    print(f"markdown: {result.markdown_path}")
-    print(f"json: {result.json_path}")
+    if result.markdown_path:
+        print(f"markdown: {result.markdown_path}")
+    if result.json_path:
+        print(f"json: {result.json_path}")
     return 0
 
 
