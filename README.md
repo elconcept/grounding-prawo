@@ -65,7 +65,8 @@ Historia selekcji: `_log/selekcja.md`, `_log/skill-triage.md`, `_log/source-map.
 
 Jedyny punkt wyboru ścieżki: `prawny-router-v3`. Mapa celów dawnego prowadnika jest jego referencją
 `shared/SCIEZKI-PRACY.md`. Dokumenty obsługuje `odczyt-dokumentow`: konwersja do Markdown,
-kontrakt JSON, duplikaty i raport jakości. `the-ocr` jest narzędziem w `tools/the-ocr`, dołączanym do skilla.
+kontrakt JSON, duplikaty i raport jakości. `the-ocr` (repo `elconcept/the-ocr`, submoduł `vendor/docs/the-ocr`) jest
+kopiowany przez `build.py` do skilla jako `tools/the-ocr` (sam kod i README, bez `.env`/`.secrets`).
 Datalab, Azure DI i Google Vision kończą się wspólnym kontraktem; lokalne silniki OCR nie są dołączane.
 PDF z tekstem odczytuje PyMuPDF, formaty biurowe i HTML — MarkItDown. Nieobsługiwane formaty zgłaszają błąd.
 

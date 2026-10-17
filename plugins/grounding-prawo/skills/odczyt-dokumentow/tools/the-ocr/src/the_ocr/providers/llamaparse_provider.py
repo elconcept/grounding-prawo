@@ -121,7 +121,7 @@ class LlamaParseProvider(OCRProvider):
                 if not str(markdown).strip():
                     raise ValueError("empty markdown")
                 document = llamaparse_document(result, path)
-                document = replace(document, provider_metadata={**document.provider_metadata, "region": region})
+                document = replace(document, engine_variant=region)
                 return OCRResult(text=document.text, backend=self.name, raw=result, document=document)
             except Exception as exc:
                 errors.append(f"{region}: {exc}")

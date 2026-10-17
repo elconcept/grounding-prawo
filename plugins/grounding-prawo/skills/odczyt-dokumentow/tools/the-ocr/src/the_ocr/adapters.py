@@ -9,20 +9,35 @@ from typing import Any, Iterable
 
 import pymupdf
 
-from .models import OCRBlock, OCRDocument, OCRPage, OCRWord, normalize_bbox, sha256_file
+from .models import OCRBlock, OCRDocument, OCRPage, OCRWord, VALID_BLOCK_TYPES, doc_id_for, normalize_bbox
 
 
+#: Provider labels mapped onto the exact doc-intel-contract-pl taxonomy.
+#: Anything visual without its own reference type becomes "figure";
+#: handwriting stays a "paragraph" (the reference has no handwriting type).
 _DATALAB_TYPES = {
-    "sectionheader": "heading",
+    "sectionheader": "title",
+    "title": "title",
+    "heading": "title",
     "pageheader": "header",
     "pagefooter": "footer",
-    "picture": "photo",
-    "figure": "graphic",
-    "handwriting": "handnote",
-    "handwritten": "handnote",
+    "header": "header",
+    "footer": "footer",
+    "picture": "figure",
+    "figure": "figure",
+    "image": "figure",
+    "handwriting": "paragraph",
+    "handwritten": "paragraph",
     "signature": "signature",
     "stamp": "stamp",
     "listgroup": "list",
+    "listitem": "list",
+    "list": "list",
+    "table": "table",
+    "tablegroup": "table",
+    "equation": "equation",
+    "text": "paragraph",
+    "paragraph": "paragraph",
 }
 
 
@@ -86,7 +101,9 @@ def datalab_document(raw: dict[str, Any], source_path: Path) -> OCRDocument:
             text = _html_text(html) if html else _plain_markdown(markdown)
             if not text and not markdown:
                 continue
-            block_type = _DATALAB_TYPES.get(str(item.get("block_type", "")).lower(), str(item.get("block_type", "unknown")).lower())
+            block_type = _DATALAB_TYPES.get(str(item.get("block_type", "")).lower(), "unknown")
+            if block_type not in VALID_BLOCK_TYPES:
+                block_type = "unknown"
             bbox = None
             if item.get("bbox"):
                 bbox = normalize_bbox(item["bbox"], width, height)
@@ -111,15 +128,10 @@ def datalab_document(raw: dict[str, Any], source_path: Path) -> OCRDocument:
     if metadata.get("failed_pages"):
         raise ValueError(f"Datalab did not process pages: {metadata['failed_pages']}")
     document = OCRDocument(
-        source_name=source_path.name,
-        source_sha256=sha256_file(source_path),
+        doc_id=doc_id_for(source_path),
         provider="datalab",
         pages=tuple(pages),
-        provider_metadata={
-            key: raw[key]
-            for key in ("parse_quality_score", "cost_breakdown")
-            if raw.get(key) is not None
-        },
+        source_name=source_path.name,
     )
     document = _normalize_layout(document)
     document.validate()
@@ -174,10 +186,10 @@ def llamaparse_document(raw: Any, source_path: Path) -> OCRDocument:
             )
         pages.append(OCRPage(output_number, width, height, tuple(blocks)))
     document = OCRDocument(
-        source_name=source_path.name,
-        source_sha256=sha256_file(source_path),
+        doc_id=doc_id_for(source_path),
         provider="llamaparse",
         pages=tuple(pages),
+        source_name=source_path.name,
     )
     document = _normalize_layout(document)
     document.validate()
@@ -208,16 +220,16 @@ def _walk_llama_items(items: Iterable[dict[str, Any]]) -> Iterable[dict[str, Any
 def _llama_type(item: dict[str, Any]) -> str:
     kind = str(item.get("type") or "unknown").lower()
     markdown = str(item.get("md") or "").lower()
-    aliases = {"image": "photo", "text": "paragraph", "list": "list", "heading": "heading"}
+    aliases = {"image": "figure", "text": "paragraph", "list": "list", "heading": "title", "title": "title"}
     for marker, block_type in (
         ("signature:", "signature"), ("podpis:", "signature"),
         ("stamp:", "stamp"), ("pieczęć:", "stamp"), ("pieczec:", "stamp"),
-        ("handnote:", "handnote"), ("odręcz", "handnote"),
-        ("logo:", "logo"), ("photo:", "photo"), ("graphic:", "graphic"),
+        ("handnote:", "paragraph"), ("odręcz", "paragraph"),
+        ("logo:", "figure"), ("photo:", "figure"), ("graphic:", "figure"),
     ):
         if marker in markdown:
             return block_type
-    return aliases.get(kind, kind)
+    return aliases.get(kind, "unknown")
 
 
 def _union_boxes(boxes: list[tuple[float, float, float, float]]) -> tuple[float, float, float, float]:
@@ -266,7 +278,7 @@ def _normalize_layout(document: OCRDocument) -> OCRDocument:
         blocks = []
         for block in page.blocks:
             block_type = block.block_type
-            if block.bbox is not None and block_type not in {"signature", "stamp", "logo", "photo", "graphic", "handnote"}:
+            if block.bbox is not None and block_type not in {"signature", "stamp", "figure"}:
                 repeated = repeated_candidates[_repetition_key(block.text)] >= 2
                 if repeated and block.bbox[1] >= 0.78:
                     block_type = "footer"
@@ -282,67 +294,148 @@ def _repetition_key(text: str) -> str:
     return re.sub(r"\W+", " ", normalized).strip()
 
 
-def polygon_document(pages_raw: list[dict[str, Any]], source_path: Path, *, provider: str,
-                     metadata: dict[str, Any] | None = None) -> OCRDocument:
-    """Neutral polygon pages -> OCRDocument (Azure Document Intelligence, Google Vision).
-
-    Each page: {"width", "height", "lines": [{"text", "polygon": [x0, y0, x1, y1, ...],
-    "words": [{"text", "polygon", "confidence"}]}]}, coordinates in the page's own unit.
-    One OCR line (Azure) or paragraph (Google) becomes one block.
-    """
+def azure_document(raw: dict[str, Any], source_path: Path) -> OCRDocument:
+    """Azure Document Intelligence (prebuilt-read): linie jako bloki, slowa z ramkami."""
+    result = raw.get("analyzeResult") or raw
+    pages_raw = result.get("pages") or []
     expected_pages = _source_page_count(source_path)
     if len(pages_raw) != expected_pages:
-        raise ValueError(f"{provider} returned {len(pages_raw)} of {expected_pages} pages")
+        raise ValueError(f"Azure returned {len(pages_raw)} of {expected_pages} pages")
     pages: list[OCRPage] = []
-    for page_number, page in enumerate(pages_raw, start=1):
-        width, height = float(page["width"]), float(page["height"])
+    for page_index, page in enumerate(pages_raw, start=1):
+        width = float(page.get("width") or 0)
+        height = float(page.get("height") or 0)
         if width <= 0 or height <= 0:
-            raise ValueError(f"{provider} page {page_number} has no dimensions")
+            raise ValueError(f"Azure page {page_index} has no dimensions")
+        words = [
+            (int((word.get("span") or {}).get("offset", -1)), word)
+            for word in page.get("words") or []
+            if str(word.get("content") or "").strip() and word.get("polygon")
+        ]
         blocks: list[OCRBlock] = []
-        for block_index, line in enumerate(page.get("lines") or [], start=1):
-            text = str(line.get("text") or "").strip()
-            if not text:
+        for line_index, line in enumerate(page.get("lines") or [], start=1):
+            text = str(line.get("content") or "").strip()
+            if not text or not line.get("polygon"):
                 continue
-            words = []
-            for word in line.get("words") or []:
-                box = _polygon_box(word.get("polygon") or [], width, height)
-                if box is not None and str(word.get("text") or "").strip():
-                    conf = word.get("confidence")
-                    words.append(OCRWord(str(word["text"]), box, float(conf) if conf is not None else None))
-            bbox = _polygon_box(line.get("polygon") or [], width, height)
-            if bbox is None and words:
-                bbox = _union_boxes([word.bbox for word in words])
-            confidences = [word.confidence for word in words if word.confidence is not None]
+            spans = [(int(span["offset"]), int(span["offset"]) + int(span["length"])) for span in line.get("spans") or []]
+            line_words = tuple(
+                OCRWord(str(word["content"]).strip(), box, word.get("confidence"))
+                for offset, word in words
+                if any(start <= offset < end for start, end in spans)
+                and (box := _polygon_bbox(word["polygon"], width, height)) is not None
+            )
+            confidences = [word.confidence for word in line_words if word.confidence is not None]
             blocks.append(
                 OCRBlock(
-                    id=f"p{page_number:04d}-b{block_index:04d}",
-                    page=page_number,
-                    block_type="text",
+                    id=f"p{page_index:04d}-b{line_index:04d}",
+                    page=page_index,
+                    block_type="paragraph",
                     text=text,
                     markdown=text,
-                    bbox=bbox,
+                    bbox=_polygon_bbox(line["polygon"], width, height),
                     confidence=min(confidences) if confidences else None,
-                    words=tuple(words),
+                    words=line_words,
                 )
             )
-        pages.append(OCRPage(page_number, width, height, tuple(blocks)))
+        pages.append(OCRPage(page_index, width, height, tuple(blocks)))
     document = OCRDocument(
-        source_name=source_path.name,
-        source_sha256=sha256_file(source_path),
-        provider=provider,
+        doc_id=doc_id_for(source_path),
+        provider="azure",
         pages=tuple(pages),
-        provider_metadata=dict(metadata or {}),
+        source_name=source_path.name,
     )
     document = _normalize_layout(document)
     document.validate()
     return document
 
 
-def _polygon_box(polygon: list[float], width: float, height: float):
-    if len(polygon) < 4:
-        return None
+def google_vision_document(responses: list[dict[str, Any]], source_path: Path) -> OCRDocument:
+    """Google Cloud Vision files:annotate (DOCUMENT_TEXT_DETECTION), odpowiedzi stron w kolejnosci."""
+    expected_pages = _source_page_count(source_path)
+    if len(responses) != expected_pages:
+        raise ValueError(f"Google Vision returned {len(responses)} of {expected_pages} pages")
+    pages: list[OCRPage] = []
+    for page_index, response in enumerate(responses, start=1):
+        if response.get("error"):
+            raise ValueError(f"Google Vision failed on page {page_index}: {response['error'].get('message', '')}")
+        annotation_pages = (response.get("fullTextAnnotation") or {}).get("pages") or []
+        page = annotation_pages[0] if annotation_pages else {}
+        width = float(page.get("width") or 1)
+        height = float(page.get("height") or 1)
+        blocks: list[OCRBlock] = []
+        for block_index, block in enumerate(page.get("blocks") or [], start=1):
+            # Vision tnie interpunkcje na osobne "slowa" bez odstepu (detectedBreak
+            # brak) - doklejamy je do poprzedniego slowa razem z ramka.
+            words: list[OCRWord] = []
+            parts: list[str] = []
+            glue = False
+            for paragraph in block.get("paragraphs") or []:
+                for word in paragraph.get("words") or []:
+                    symbols = word.get("symbols") or []
+                    value = "".join(str(symbol.get("text") or "") for symbol in symbols).strip()
+                    box = _vision_bbox(word.get("boundingBox") or {}, width, height)
+                    if not value or box is None:
+                        continue
+                    if glue and words:
+                        previous = words[-1]
+                        words[-1] = OCRWord(previous.text + value, _union_boxes([previous.bbox, box]), previous.confidence)
+                        parts[-1] += value
+                    else:
+                        words.append(OCRWord(value, box, word.get("confidence")))
+                        parts.append(value)
+                    breaks = ((symbols[-1].get("property") or {}).get("detectedBreak") or {}).get("type", "")
+                    glue = not breaks
+                    if breaks in {"LINE_BREAK", "EOL_SURE_SPACE"}:
+                        parts[-1] += "\n"
+                    elif breaks:
+                        parts[-1] += " "
+            text = "".join(parts).strip()
+            if not text:
+                continue
+            blocks.append(
+                OCRBlock(
+                    id=f"p{page_index:04d}-b{block_index:04d}",
+                    page=page_index,
+                    block_type="paragraph",
+                    text=text,
+                    markdown=text,
+                    bbox=_vision_bbox(block.get("boundingBox") or {}, width, height),
+                    confidence=block.get("confidence"),
+                    words=tuple(words),
+                )
+            )
+        pages.append(OCRPage(page_index, width, height, tuple(blocks)))
+    document = OCRDocument(
+        doc_id=doc_id_for(source_path),
+        provider="google_vision",
+        pages=tuple(pages),
+        source_name=source_path.name,
+    )
+    document = _normalize_layout(document)
+    document.validate()
+    return document
+
+
+def _polygon_bbox(polygon: list[float], width: float, height: float) -> tuple[float, float, float, float] | None:
+    """Wielokat Azure [x1, y1, ..., x4, y4] -> ramka; zdegenerowany (zerowe pole) -> None."""
     xs, ys = polygon[0::2], polygon[1::2]
     try:
         return normalize_bbox([min(xs), min(ys), max(xs), max(ys)], width, height)
+    except ValueError:
+        return None
+
+
+def _vision_bbox(box: dict[str, Any], width: float, height: float) -> tuple[float, float, float, float] | None:
+    """PDF-y daja normalizedVertices (0..1), obrazy vertices w pikselach; brak x/y znaczy 0."""
+    if box.get("normalizedVertices"):
+        vertices, scale_x, scale_y = box["normalizedVertices"], 1.0, 1.0
+    elif box.get("vertices"):
+        vertices, scale_x, scale_y = box["vertices"], width, height
+    else:
+        return None
+    xs = [float(vertex.get("x", 0)) for vertex in vertices]
+    ys = [float(vertex.get("y", 0)) for vertex in vertices]
+    try:
+        return normalize_bbox([min(xs), min(ys), max(xs), max(ys)], scale_x, scale_y)
     except ValueError:
         return None

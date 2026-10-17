@@ -11,77 +11,117 @@ from typing import Any
 import httpx
 import pymupdf
 
-from ..adapters import polygon_document
+from ..adapters import google_vision_document
 from .base import OCRProvider, OCRResult
 
-ENDPOINT = "https://vision.googleapis.com/v1/images:annotate"
-BREAKS = {"SPACE": " ", "SURE_SPACE": " ", "EOL_SURE_SPACE": "\n", "LINE_BREAK": "\n", "HYPHEN": "-\n"}
+ENDPOINT = "https://vision.googleapis.com/v1/files:annotate"
+PAGES_PER_REQUEST = 5  # limit synchronicznego files:annotate
 
 
 class GoogleVisionProvider(OCRProvider):
-    """Google Cloud Vision DOCUMENT_TEXT_DETECTION over REST (free tier: 1000 units/month).
+    """Google Cloud Vision DOCUMENT_TEXT_DETECTION przez REST.
 
-    Every PDF page is rendered (GOOGLE_VISION_DPI, default 200) and sent as an image, a few per
-    request. Auth: GOOGLE_VISION_API_KEY, otherwise an access token from Application Default
-    Credentials (`gcloud auth application-default print-access-token`); the quota project comes
-    from GOOGLE_CLOUD_PROJECT, the ADC file or `gcloud config get-value project`.
+    Uwierzytelnienie: klucz API (GOOGLE_VISION_API_KEY) albo plik JSON konta
+    uslugi (GOOGLE_VISION_CREDENTIALS, sciezka wzgledna wobec katalogu .env),
+    albo Application Default Credentials zalogowanego `gcloud` (projekt
+    rozliczeniowy: GOOGLE_CLOUD_PROJECT, quota_project_id z ADC albo projekt gcloud).
+    Darmowe 1000 jednostek/miesiac; PDF idzie paczkami po 5 stron.
     """
 
-    name = "google-vision"
-    per_request = 4
+    name = "google_vision"
 
     def is_available(self) -> tuple[bool, str]:
-        if os.getenv("GOOGLE_VISION_API_KEY"):
+        if os.getenv("GOOGLE_VISION_API_KEY", "").strip():
+            return True, ""
+        credentials = _credentials_path()
+        if credentials is not None:
+            if not credentials.is_file():
+                return False, f"Google Vision credentials file not found: {credentials}"
             return True, ""
         if shutil.which("gcloud") and _adc_file():
             return True, ""
-        return False, "no GOOGLE_VISION_API_KEY and no gcloud Application Default Credentials"
+        return False, ("no Google Vision credentials (GOOGLE_VISION_API_KEY, GOOGLE_VISION_CREDENTIALS "
+                       "or gcloud Application Default Credentials)")
 
     def recognize(self, path: Path) -> OCRResult:
         available, reason = self.is_available()
         if not available:
             return OCRResult(text="", backend=self.name, error=reason)
         try:
-            dpi = int(os.getenv("GOOGLE_VISION_DPI", "200"))
-            images = _render_pages(path, dpi)
-            headers, params = self._auth()
-            responses: list[dict[str, Any]] = []
-            with httpx.Client(timeout=180.0) as client:
-                for start in range(0, len(images), self.per_request):
-                    batch = images[start:start + self.per_request]
-                    body = {"requests": [
-                        {
-                            "image": {"content": base64.b64encode(png).decode()},
-                            "features": [{"type": "DOCUMENT_TEXT_DETECTION"}],
-                            "imageContext": {"languageHints": ["pl", "en"]},
-                        }
-                        for png, _, _ in batch
-                    ]}
-                    response = client.post(ENDPOINT, headers=headers, params=params, json=body)
-                    response.raise_for_status()
-                    for item in response.json().get("responses", []):
-                        if item.get("error"):
-                            raise RuntimeError(json.dumps(item["error"], ensure_ascii=False))
-                        responses.append(item)
-            pages = [_vision_page(item, width, height) for item, (_, width, height) in zip(responses, images)]
-            document = polygon_document(pages, path, provider=self.name, metadata={"dpi": dpi})
-            return OCRResult(text=document.text, backend=self.name, raw={"responses": responses}, document=document)
+            responses = self._annotate(path)
+            document = google_vision_document(responses, path)
+            return OCRResult(text=document.text, backend=self.name, raw=responses, document=document)
         except Exception as exc:
-            return OCRResult(text="", backend=self.name, error=f"Google Vision failed: {exc}")
+            return OCRResult(text="", backend=self.name, error=f"Google Vision: {exc}")
 
-    def _auth(self) -> tuple[dict[str, str], dict[str, str]]:
-        key = os.getenv("GOOGLE_VISION_API_KEY", "").strip()
-        if key:
-            return {}, {"key": key}
-        token = subprocess.run(["gcloud", "auth", "application-default", "print-access-token"],
-                               capture_output=True, text=True, timeout=60)
-        if token.returncode != 0 or not token.stdout.strip():
-            raise RuntimeError(f"gcloud token failed: {token.stderr.strip()[-300:]}")
-        headers = {"Authorization": f"Bearer {token.stdout.strip()}"}
-        project = os.getenv("GOOGLE_CLOUD_PROJECT", "").strip() or _adc_quota_project() or _gcloud_project()
-        if project:
-            headers["x-goog-user-project"] = project
-        return headers, {}
+    def _annotate(self, path: Path) -> list[dict[str, Any]]:
+        with pymupdf.open(path) as pdf:
+            page_count = len(pdf)
+        content = base64.b64encode(path.read_bytes()).decode("ascii")
+        params, headers = _auth()
+        pages: list[dict[str, Any]] = []
+        with httpx.Client(timeout=300.0) as client:
+            for first in range(1, page_count + 1, PAGES_PER_REQUEST):
+                numbers = list(range(first, min(first + PAGES_PER_REQUEST, page_count + 1)))
+                body = {
+                    "requests": [
+                        {
+                            "inputConfig": {"content": content, "mimeType": "application/pdf"},
+                            "features": [{"type": "DOCUMENT_TEXT_DETECTION"}],
+                            "imageContext": {"languageHints": ["pl"]},
+                            "pages": numbers,
+                        }
+                    ]
+                }
+                response = client.post(ENDPOINT, params=params, headers=headers, json=body)
+                response.raise_for_status()
+                batch = (response.json().get("responses") or [{}])[0]
+                if batch.get("error"):
+                    raise RuntimeError(batch["error"].get("message", "request failed"))
+                pages.extend(sorted(batch.get("responses") or [], key=lambda item: (item.get("context") or {}).get("pageNumber", 0)))
+        return pages
+
+
+def _credentials_path() -> Path | None:
+    configured = os.getenv("GOOGLE_VISION_CREDENTIALS", "").strip()
+    if not configured:
+        return None
+    path = Path(configured).expanduser()
+    if not path.is_absolute():
+        from ..config import runtime_directory
+
+        path = runtime_directory() / path
+    return path
+
+
+def _auth() -> tuple[dict[str, str], dict[str, str]]:
+    """Parametry zapytania i naglowki: klucz API albo token konta uslugi."""
+    key = os.getenv("GOOGLE_VISION_API_KEY", "").strip()
+    if key:
+        return {"key": key}, {}
+    if _credentials_path() is None:
+        return {}, _gcloud_headers()
+    from google.auth.transport.requests import Request
+    from google.oauth2 import service_account
+
+    credentials = service_account.Credentials.from_service_account_file(
+        str(_credentials_path()), scopes=["https://www.googleapis.com/auth/cloud-vision"]
+    )
+    credentials.refresh(Request())
+    return {}, {"Authorization": f"Bearer {credentials.token}"}
+
+
+def _gcloud_headers() -> dict[str, str]:
+    """Bearer token from `gcloud auth application-default` plus the quota project header."""
+    token = subprocess.run(["gcloud", "auth", "application-default", "print-access-token"],
+                           capture_output=True, text=True, timeout=60)
+    if token.returncode != 0 or not token.stdout.strip():
+        raise RuntimeError(f"gcloud token failed: {token.stderr.strip()[-300:]}")
+    headers = {"Authorization": f"Bearer {token.stdout.strip()}"}
+    project = os.getenv("GOOGLE_CLOUD_PROJECT", "").strip() or _adc_quota_project() or _gcloud_project()
+    if project:
+        headers["x-goog-user-project"] = project
+    return headers
 
 
 def _adc_file() -> Path | None:
@@ -107,36 +147,3 @@ def _adc_quota_project() -> str:
 def _gcloud_project() -> str:
     out = subprocess.run(["gcloud", "config", "get-value", "project"], capture_output=True, text=True, timeout=60)
     return out.stdout.strip() if out.returncode == 0 else ""
-
-
-def _render_pages(path: Path, dpi: int) -> list[tuple[bytes, float, float]]:
-    out = []
-    with pymupdf.open(path) as document:
-        for page in document:
-            pix = page.get_pixmap(dpi=dpi)
-            out.append((pix.tobytes("png"), float(pix.width), float(pix.height)))
-    return out
-
-
-def _vision_page(item: dict[str, Any], width: float, height: float) -> dict[str, Any]:
-    """Vision blocks (pixel vertices) -> neutral page for polygon_document; one line per paragraph."""
-    lines = []
-    for page in (item.get("fullTextAnnotation") or {}).get("pages") or []:
-        for block in page.get("blocks") or []:
-            for paragraph in block.get("paragraphs") or []:
-                words, text = [], ""
-                for word in paragraph.get("words") or []:
-                    word_text = "".join(symbol.get("text", "") for symbol in word.get("symbols") or [])
-                    last = (word.get("symbols") or [{}])[-1]
-                    brk = ((last.get("property") or {}).get("detectedBreak") or {}).get("type", "")
-                    text += word_text + BREAKS.get(brk, "")
-                    words.append({"text": word_text, "polygon": _vertices(word), "confidence": word.get("confidence")})
-                lines.append({"text": text.strip(), "polygon": _vertices(paragraph), "words": words})
-    return {"width": width, "height": height, "lines": lines}
-
-
-def _vertices(item: dict[str, Any]) -> list[float]:
-    flat: list[float] = []
-    for vertex in (item.get("boundingBox") or {}).get("vertices") or []:
-        flat += [float(vertex.get("x", 0)), float(vertex.get("y", 0))]
-    return flat

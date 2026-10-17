@@ -2,13 +2,21 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
+
 import yaml
 
 from .markdown_sanitize import render_document_body
 from .models import OCRDocument
 
 
-def build_frontmatter(source_path: Path, document: OCRDocument) -> dict[str, str]:
+def document_plain_text(document: OCRDocument) -> str:
+    return "\n".join(
+        block.text for page in document.pages for block in page.blocks if block.text.strip()
+    )
+
+
+def build_frontmatter(source_path: Path, document: OCRDocument) -> dict[str, Any]:
     return {
         "source_file": source_path.name,
         "converted_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
