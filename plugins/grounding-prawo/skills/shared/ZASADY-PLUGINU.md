@@ -26,7 +26,7 @@ interpretacje podatkowe przez EUREKA) nazywaj w odpowiedzi wprost.
 1. Obowiązujące brzmienie przepisu: MCP `cite_verify_article` (dosłowny artykuł z t.j.), a gdy odmówi -
    `skills/shared/MOD-TEKST-JEDNOLITY.md` (`isap_get_act_text`, odczyt `pdf_url`).
 2. Konektory MCP portalu `lex` (`lex.xlap.pl/mcp`, `.mcp.json`): `isap`, `cite`, `saos`, `nsa`, `uodo`, `krs`, `eu-sparql`,
-   `eu-compliance`, `repertorium`, `basic-memory`. Który do czego: skill `patron-prawo-pl-zrodla`
+   `eu-compliance`, `repertorium`, `basic-memory`, `ocr` (odczyt skanów i dokumentów: skill `odczyt-dokumentow`). Który do czego: skill `patron-prawo-pl-zrodla`
    (metodyka: `patron-prawo-pl-zrodla/references/iura-metodyka.md`), kolejność warstw: `shared/HIERARCHIA-ZRODEL.md`.
 3. Serwisy bez konektora: skill `webwright-legal-pl`.
 

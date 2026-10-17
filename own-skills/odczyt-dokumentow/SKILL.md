@@ -20,6 +20,19 @@ Pierwsze uruchomienie: `python -m pip install -r requirements.txt`. Następnie `
 Nie uruchamiaj kolejnego OCR na gotowym wyniku. Narzędzie ponownie wykorzystuje wynik dla tej samej treści i ustawień.
 Flaga `--refresh` wymusza ponowne przetworzenie. Dostęp do providerów: `references/providers.md`.
 
+## Konektor `ocr` (serwer mcp-ocr)
+
+Gdy nie da się uruchomić skryptu (claude.ai, Cowork, brak Pythona) albo plik leży w aktach na NAS, użyj narzędzi
+konektora `ocr` z portalu `lex` (ten sam łańcuch providerów, strony wektorowo dopasowane do A4):
+- wejście: `path="/mnt/legal/<ścieżka w udziale legal>"` albo `content_base64` + `filename`; ścieżka z dysku
+  klienta nie zadziała,
+- `parse_document` (router: tekst natywny bez OCR, skany przez OCR), `ocr_document` (wymuszony OCR; `layer="redo"`
+  wymienia wadliwą warstwę), `generate_searchable_pdf`,
+- `done: false` -> `get_job_status`; `complete: false` -> `get_document_text(offset=next_offset)`; strona z bboxami:
+  `get_document_page`,
+- korekta bez ponownego OCR: popraw JSON z `get_document_result` i wywołaj `reapply_ocr_json` (ten sam `document_id`),
+- `enhance_scan` tworzy nowy, zmodyfikowany dokument; dowodem pozostaje oryginał.
+
 ## Kontrola i ingest
 
 1. Odczytaj manifest: błędy, strony bez tekstu, bloki o niskiej lub nieznanej pewności oraz duplikaty.
