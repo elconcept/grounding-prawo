@@ -79,9 +79,12 @@ przerwanie aplikacji nadal może przerwać bieżący zapis. Aktualizacja pluginu
 ## Skille do rozwijania tego repo
 
 W `.agents/skills/`: OpenAI `skill-creator`, `plugin-creator`; Anthropic `plugin-structure`,
-`skill-development`, `mcp-integration`. `.claude/skills/` i `.opencode/skills/` wskazują te same źródła.
+`skill-development`, `mcp-integration`; enhance-workflows `feature-factory`,
+`peer-agent-collaboration`, `whitepaper-audit` i `release`. `.claude/skills/` i
+`.opencode/skills/` wskazują te same źródła.
 Pochodzenie, przypięte commity i lokalne dostosowania: `.agents/skills/SOURCES.json`.
 To narzędzia pracy nad repo, nie składniki publikowanego pluginu prawniczego.
+Ocena pozostałych kandydatów z enhance-workflows: `docs/enhance-workflows-assessment.md`.
 
 Walidacja odczytu: `python3 -m pytest -q tests/`. Testy providerów używają reprezentatywnych odpowiedzi;
 wywołania usług na żywo wymagają skonfigurowanego konta. Nie są częścią automatycznych testów.
