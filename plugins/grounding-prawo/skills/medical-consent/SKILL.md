@@ -5,6 +5,10 @@ metadata:
   argument-hint: <czynność / dokument / stan faktyczny do analizy zgody>
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # /tk-medical-consent-check — Filtr Zgody i Odpowiedzialności Karnej (art. 192 k.k.)
 
 Analizuj, czy konkretna czynność medyczna wykonana bez skutecznej zgody albo mimo sprzeciwu może mieć znaczenie karnoprawne (art. 192 k.k.), oraz jakie są równoległe skutki w warstwie praw pacjenta i odpowiedzialności cywilnej.
@@ -297,4 +301,4 @@ Gdy materiał dotyczy art. 192 k.k. i problemu zgody, odpowiedź MUSI zawierać:
 - **Wynik zapisz w:** ocena art. 192 k.k. w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `uoozp-compliance`, `zawiadomienie-o-przestepstwie`, `pisma-procesowe-v3`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

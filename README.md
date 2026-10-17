@@ -18,9 +18,9 @@ Repozytorium jest prywatnym marketplace z jednym pluginem (`grounding-prawo`). W
 |---|---|
 | **Claude Code** | `claude plugin marketplace add elconcept/grounding-prawo`, potem `claude plugin install grounding-prawo@grounding-prawo` |
 | **Claude Desktop / Cowork** | Ustawienia organizacji → Plugins → dodaj marketplace z GitHub (repo `elconcept/grounding-prawo`; repo prywatne, więc wymaga autoryzacji GitHub). Po synchronizacji plugin pojawia się w katalogu konta. Wymaga uprawnień zarządzania pluginami. |
-| **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo`, potem `codex plugin add grounding-prawo`. Aplikacja ChatGPT korzysta z tego samego manifestu `.codex-plugin`. |
+| **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo --ref main --sparse .agents/plugins --sparse plugins/grounding-prawo`, potem `codex plugin add grounding-prawo@grounding-prawo`. Aplikacja ChatGPT korzysta z tego samego manifestu `.codex-plugin`. |
 
-Po instalacji sprawdź w **nowej rozmowie**: „Użyj prowadnik-grounding-prawo i powiedz, co potrafi plugin”. Skille z błędem
+Po instalacji sprawdź w **nowej rozmowie**: „Użyj prawny-router-v3 i powiedz, co potrafi plugin”. Skille z błędem
 ładowania nie pojawią się na liście.
 
 Konektory prawnicze ładuje `.mcp.json` pluginu: jeden serwer `lex` → `https://lex.xlap.pl/mcp` (portal Cloudflare z
@@ -60,3 +60,40 @@ claude plugin validate plugins/grounding-prawo
 | reguła generująca (np. oznaczanie odwołań) | `scripts/build.py` |
 
 Historia selekcji: `_log/selekcja.md`, `_log/skill-triage.md`, `_log/source-map.md`.
+
+## Odczyt dokumentów i pamięć (0.3.0)
+
+Jedyny punkt wyboru ścieżki: `prawny-router-v3`. Mapa celów dawnego prowadnika jest jego referencją
+`shared/SCIEZKI-PRACY.md`. Dokumenty obsługuje `odczyt-dokumentow`: konwersja do Markdown,
+kontrakt JSON, duplikaty i raport jakości. `the-ocr` (repo `elconcept/the-ocr`, submoduł `vendor/docs/the-ocr`) jest
+kopiowany przez `build.py` do skilla jako `tools/the-ocr` (sam kod i README, bez `.env`/`.secrets`).
+Datalab, Azure DI i Google Vision kończą się wspólnym kontraktem; lokalne silniki OCR nie są dołączane.
+PDF z tekstem odczytuje PyMuPDF, formaty biurowe i HTML — MarkItDown. Nieobsługiwane formaty zgłaszają błąd.
+
+Basic Memory: recap każdej sesji/etapu do `main`, dokumenty i ustalenia do `legal`. Każdy skill
+wczytuje protokół przed pracą i wymaga potwierdzenia zapisu. Instrukcje nie zastępują hooków hosta;
+przerwanie aplikacji nadal może przerwać bieżący zapis. Aktualizacja pluginu wymaga nowej sesji.
+
+`own-skills` oznacza źródła utrzymywane lokalnie (także adaptacje i scalenia), `vendor` — przypięty upstream,
+`plugins` — wynik budowania. Typy pism z `fold_into` są modułami, nie dodatkowymi skillami do wyboru.
+
+## Skille do rozwijania tego repo
+
+W `.agents/skills/`: OpenAI `skill-creator`, `plugin-creator`; Anthropic `plugin-structure`,
+`skill-development`, `mcp-integration`; enhance-workflows `feature-factory`,
+`peer-agent-collaboration`, `whitepaper-audit` i `release`. `.claude/skills/` i
+`.opencode/skills/` wskazują te same źródła.
+Pochodzenie, przypięte commity i lokalne dostosowania: `.agents/skills/SOURCES.json`.
+To narzędzia pracy nad repo, nie składniki publikowanego pluginu prawniczego.
+Ocena pozostałych kandydatów z enhance-workflows: `docs/enhance-workflows-assessment.md`.
+
+Walidacja odczytu: `python3 -m pytest -q tests/`. Testy providerów używają reprezentatywnych odpowiedzi;
+wywołania usług na żywo wymagają skonfigurowanego konta. Nie są częścią automatycznych testów.
+
+### Codex: brak katalogu pluginu po aktualizacji
+
+Jeśli aktualizacja zgłasza `plugin source path is not a directory`, sprawdź zakres sparse checkout marketplace.
+Musi obejmować zarówno `.agents/plugins`, jak i `plugins/grounding-prawo`. Starszą konfigurację pobierającą
+same manifesty można zastąpić: `codex plugin marketplace remove grounding-prawo`, następnie ponownie
+wykonać powyższe `marketplace add` z oboma `--sparse` i `plugin add`. To konfiguracja źródła marketplace;
+nie zmienia połączeń ani uprawnień konektorów. Potwierdź wersję w wyniku instalacji i rozpocznij nową sesję.

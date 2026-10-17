@@ -14,6 +14,10 @@ metadata:
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Analizator Dowodów Procesowych v5
 
 ## WYJĄTEK: ZAWIADOMIENIE — rola „osoby, role i perspektywy”
@@ -1204,4 +1208,4 @@ Nie wolno domyślnie:
 - **Wynik zapisz w:** `analiza/_dowody-i-przepisy.md` (siła dowodowa, sprzeczności, luki) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `analizator-przepisow-v2`, `case-risk`, `analiza-sadowa-v6`, `subsumpcja-pl`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

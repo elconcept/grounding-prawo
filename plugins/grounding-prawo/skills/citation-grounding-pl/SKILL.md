@@ -19,6 +19,10 @@ metadata:
   attribution: '[{"source": "AnttiHero/lavern", "license": "Apache-2.0", "relationship": "pattern-only", "note": "Wzorzec mechanicznego weryfikatora grounding (v1). Kod i prompty napisane od zera.\n"}, {"source": "jeannesulzer/international-criminal-tribunals-skills", "license": "CC-BY-4.0", "relationship": "adaptation", "note": "Gradient weryfikacji ISTNIENIE/TREŚĆ/FRAGMENT (v2) to adaptacja trójstopniowego Existence/Content/Paragraph.\n"}, {"source": "john-walkoe/courtlistener_citations_mcp", "license": "MIT", "relationship": "pattern-only", "note": "Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.\n"}]'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Citation Grounding PL - mechaniczny weryfikator cytatu (gradient)
 
 ## Filozofia
@@ -195,10 +199,10 @@ Normalizacja NIE zmienia treści merytorycznej - jeśli słowo nośne jest inne,
 
 ### Reguła normalizacji ma JEDEN DOM (od 2026-08-30)
 
-Tablica prawdy: `contract/normalizacja.cases.json` w skillu `doc-intel-contract-pl`
-(w tym repo: `dokumenty/skills/doc-intel-contract-pl/`).
+Tablica prawdy: `contract/normalizacja.cases.json` w skillu `odczyt-dokumentow`
+(w tym repo: `dokumenty/skills/odczyt-dokumentow/document_contract/`).
 Czytają ją **oba** runtime'y - ten skrypt (Node) i `evidence.py` (Python) po stronie
-`doc-intel-contract-pl`. Zgodność jest bramkowana w obu zestawach testów; zmiana samej
+`odczyt-dokumentow`. Zgodność jest bramkowana w obu zestawach testów; zmiana samej
 tablicy zapala oba naraz (sprawdzone mutacją).
 
 Dlaczego to powstało: do 08-30 każda strona miała własną implementację tej samej reguły.
@@ -314,4 +318,4 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 - **Następny krok:** `subsumpcja-pl`, `pierwsze-wrazenie-sedziego-pl`
 - **Nie dubluj:** `patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format [N]); `uodo-grounding-pl` - decyzje UODO; ten skill - cytaty w piśmie
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

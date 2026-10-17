@@ -3,6 +3,10 @@ name: patron-weryfikacja-cytatow
 description: Cytowanie dokumentów w formacie [N] + blok CITATIONS i mechaniczna (bez LLM) weryfikacja, czy cytaty z odpowiedzi, z przeglądu tabelarycznego albo z wyników konektorów MCP naprawdę występują w tekście źródłowym. Użyj, gdy odpowiedź opiera się na dokumentach, przed wykorzystaniem cytatów w piśmie albo gdy użytkownik prosi „zweryfikuj cytaty”.
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Weryfikacja cytatów
 
 Skrypt: `scripts/verify_citations.py` w katalogu tego skilla (Python 3, bez zależności).
@@ -75,4 +79,4 @@ wyjątki). Brak tekstu źródła nigdy nie oznacza potwierdzenia.
 - **Wynik zapisz w:** wynik w `_robocze/`; błędy do `_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `citation-grounding-pl`
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

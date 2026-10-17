@@ -20,7 +20,7 @@
 ## v0.2.1 (2026-10-10)
 - Wspólne pożycie: uchwała 7 sędziów SN z 25.02.2016, I KZP 20/15 i postanowienie SN z 4.03.2015,
   IV KO 98/14 - zweryfikowane w SAOS przez Tor (rotator), citator ręczny; doktryna: M. Kubica,
-  OSAP XV/3 (2017), OCR w `04_opracowania/` (the-ocr, Azure DI). task014 zamknięty.
+  OSAP XV/3 (2017), OCR w `04_opracowania/` (odczyt-dokumentow, Azure DI). task014 zamknięty.
 
 ## v0.2 (2026-10-09) - decyzje autora
 - Nazwa: `zawiadomienie-o-przestepstwie` (bez `-pl`).

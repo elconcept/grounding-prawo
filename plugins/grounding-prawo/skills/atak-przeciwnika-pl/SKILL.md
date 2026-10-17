@@ -14,6 +14,10 @@ metadata:
   attribution: '{"source": "lawvable/awesome-legal-skills", "url": "https://github.com/lawvable/awesome-legal-skills", "license": "Apache-2.0", "relationship": "adaptation", "note": "Adaptacja i przekład skilla opposing-counsel-review autorstwa Larissy Meredith-Flister. Licencja wg frontmatteru autorki. Odpowiednik EN: opposing-counsel-attack-en.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Atak przeciwnika PL - jednoprzebiegowy sparing procesowy
 
 ## WYJĄTEK: ZAWIADOMIENIE — rola „poszukujący pominiętych krzywd”
@@ -231,7 +235,7 @@ Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie su
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** draft po pierwszym wrażeniu sędziego
-- **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md`; uwagi to zadania: wdroż je w nowej wersji i uruchom soczewkę ponownie (pętla doskonalenia, `shared/ZASADY-PLUGINU.md`) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** dopisek do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `szturm-na-draft-pl`, `adversarial-legal-review-pl`
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -1,13 +1,14 @@
 # Selekcja skilli pluginu grounding-prawo. Źródło prawdy dla scripts/build.py.
 # Własna analiza (14.10.2026). Analizy GPT i Sonnet użyte jako doradcy, nie jako polecenie.
 # from: lex = vendor/packs/LexMachina/"Wersja rozwojowa rozpakowana"; awe:<pakiet> = vendor/packs/awesome-matematic-skills;
-#       own = own-skills/ (skille własne, bez upstreamu); vendor:<katalog> = vendor/<katalog>.
+#       own = own-skills/ (źródła utrzymywane lokalnie, również adaptacje); vendor:<katalog> = vendor/<katalog>.
 # transitional: true = zależność szturm-na-draft-pl; ocenić ponownie po jego przebudowie.
 # internal: true = moduł pomocniczy routera; pozostaje dostępny dla modelu (import OpenAI odrzuca disable-model-invocation).
 # Zasada: LexMachina jest spleciona (shared odwołuje się do audyt-systemu 33x, do DR-04..15 16x),
 # więc jest zachowana jako zamknięty silnik; wycinamy tylko moduły, które da się odciąć patchem.
-version: "0.2.0"
+version: "0.3.0"
 keep:
+  - {name: odczyt-dokumentow, from: own, why: "Jeden odczyt dokumentów do Markdown i kontraktu; the-ocr jako narzędzie, bez lokalnego OCR"}
   # --- silnik: LexMachina (wersja rozwojowa, przypięta do commita w submodule) ---
   - {name: prawny-router-v3, from: lex, why: "jedyny router; patch: KROK 0A zamknięty na stałe bez anonimizacji, requires przycięte"}
   - {name: shared, internal: true, from: lex, why: "biblioteka hard-gate'ów, wymagana przez wszystkie skille silnika; nie jest agentem"}
@@ -47,7 +48,6 @@ keep:
   - {name: terminy-procesowe-pl, from: "awe:dokumenty", why: "terminy; liczy wg KC, dla KPK/KPW wynik oznaczać do sprawdzenia"}
   - {name: kalkulatory-procesowe-pl, from: "awe:dokumenty", why: "opłata, WPS, odsetki, przedawnienie w pozwach cywilnych"}
   - {name: waliduj-podpis-pdf-pl, from: "awe:dokumenty", why: "integralność podpisanych PDF od szpitali, sądów, prokuratury; tylko odczyt"}
-  - {name: akta-przeszukiwalne-pl, from: "awe:dokumenty", why: "niezależny drugi odczyt akt, duplikaty, strony nieczytelne"}
   - {name: chronologia-stanowiska-pl, from: "awe:dokumenty", why: "mechaniczna kontrola chronologii i stanowisk wobec cytatu i strony"}
   - {name: redline-docx-pl, from: "awe:dokumenty", why: "Track Changes; sanitize metadanych jest jawną komendą, nie domyślną operacją"}
   - {name: klauzule-kontraktowe-pl, from: "awe:dokumenty", why: "umowa zarządzania najmem"}
@@ -55,19 +55,16 @@ keep:
   - {name: marko-pl-content, from: "awe:jakosc-tresci", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny", description_append: "W zawiadomieniu o przestępstwie zachowuje emocje i skutki, dopytuje o szczegóły krzywdy."}
   - {name: ocena-outputu-pl, from: "awe:fundament-weryfikacyjny", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: patron-weryfikacja-cytatow, from: "own", internal: true, transitional: true, why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
-  - {name: doc-intel-contract-pl, description: "Normalizuje OCR/PDF do kontraktu dokumentu: bloki tekstu, bbox, confidence, flagi PII i powiązanie cytatu z regionem strony. Używaj do normalizacji OCR, oceny bloków wymagających przeglądu, przygotowania redakcji PII oraz dzielenia teczki akt na pisma. Obsługuje pdftotext, Chandra OCR, LiteParse i OCR PATRONa/Gaius-Lex; działa deterministycznie w Python stdlib bez LLM. Współpracuje z citation-grounding-pl.", from: "awe:dokumenty", internal: true, transitional: true, why: "jedyny dom tablicy prawdy normalizacji, którą testuje citation-grounding-pl (test-grounding.mjs 34/34). Ma mechanizmy maskowania - nieużywane, moduł pomocniczy routera"}
   - {name: patron-przeglad-tabelaryczny, from: own, why: "tabelaryczny przegląd dokumentów (z pipeline Patrona); do wzbogacenia o klauzule/kolumny pod Twoje sprawy"}
   - {name: pisz-po-polsku, from: own, why: "JEDEN skill redakcji: scala humanizer-pl + naturalne-pisanie + patron-pisz-po-ludzku (pliki skopiowane do own-skills, zmiany upstreamu trzeba przenosić ręcznie)"}
   # --- wiedza z pluginu IURA scalona w moduły (nie osobne skille) ---
   - {name: cofniecie-pozwu-ze-zrzeczeniem-roszczenia, from: own, fold_into: pisma-procesowe-v3, typ: "cofnięcie pozwu ze zrzeczeniem się roszczenia", why: "IURA: moduł typu pisma"}
   - {name: wniosek-o-rozprawe-zdalna, from: own, fold_into: pisma-procesowe-v3, typ: "wniosek o rozprawę w trybie zdalnym", why: "IURA: moduł typu pisma (cywilne, karne)"}
-  - {name: decyzja-procesowa-prokuratora, from: own, fold_into: pisma-procesowe-v3, typ: "ocena decyzji procesowej prokuratora (wzorzec formy)", why: "IURA: wiedza o formie decyzji, używana do oceny cudzej decyzji i budowy zażalenia"}
   - {name: notatka-prawna, from: own, fold_into: pisma-procesowe-v3, typ: "notatka prawna (memo wewnętrzne)", why: "IURA: struktura notatki; zastępuje osobny skill, wynik do analiza/_podsumowanie.md"}
   - {name: eu-legal-memo, from: own, fold_into: pisma-procesowe-v3, typ: "memo z prawa UE (TSUE, CELEX)", why: "IURA-EU: memo prawa UE na eu-sparql i eu-compliance"}
   - {name: przeglad-umow, from: own, fold_into: klauzule-kontraktowe-pl, as: reference, typ: "przegląd umowy wg playbooka (klasyfikacja wagi odstępstw, propozycje zmian)", why: "IURA: metodyka przeglądu umów; referencja zamiast osobnego skilla"}
   # --- źródła zewnętrzne ---
-  - {name: the-ocr, from: own, why: "własny OCR (Datalab/Azure DI/Google Vision); kopia skilla z aplikacją w środku, źródło: agents/skills/the-ocr"}
-  # --- skille własne, bez upstreamu (own-skills/) ---
+  # --- skille utrzymywane lokalnie (own-skills/) ---
   - {name: szturm-na-draft-pl, from: own, why: "główny mechanizm wielokrotnej kontroli pisma; WYMAGA przebudowy (profil S/M/L i limit rund) - propozycja diffu, nie zastosowana"}
   - {name: case-risk, from: own, why: "ryzyka dowodowe, medyczne, UoOZP, art. 192 kk; skrojony pod Twoje sprawy"}
   - {name: medical-consent, from: own, why: "zgoda na czynność medyczną, art. 192 kk"}
@@ -82,11 +79,10 @@ keep:
   - {name: zazalenie-na-postanowienie-prokuratora, from: own, fold_into: pisma-procesowe-v3, typ: "zażalenie na postanowienie prokuratora", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
   - {name: zawiadomienie-o-przestepstwie, from: own, why: "pisane przez pokrzywdzonego obywatela"}
   - {name: zarzuty-do-opinii-bieglego, from: own, fold_into: pisma-procesowe-v3, typ: "zarzuty do opinii biegłego", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
-  - {name: prowadnik-grounding-prawo, from: own, why: "skill wejściowy: wybór ścieżki A-E, mosty między skillami (graf w selection/bridges.yaml, opis w README.md)"}
 drop:
   - {name: profil-postepowan-wlasnych, why: "scalony w shared/ZASADY-PLUGINU.md (sekcja profilu): prowadnik i tak wczytywał go zawsze, a jako plik shared obowiązuje także skille wywołane bez prowadnika", archive: true}
   - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ISAP)", archive: true}
-  - {name: opendataloader-pdf, why: "scalony w the-ocr (references/opendataloader-pdf.md)"}
+  - {name: opendataloader-pdf, why: "scalony w odczyt-dokumentow (references/opendataloader-pdf.md)"}
   - {name: humanizer-pl, why: "scalony w pisz-po-polsku"}
   - {name: naturalne-pisanie, why: "scalony w pisz-po-polsku (vendor/naturalne-pisanie zostaje jako źródło)"}
   - {name: patron-pisz-po-ludzku, why: "scalony w pisz-po-polsku", archive: true}

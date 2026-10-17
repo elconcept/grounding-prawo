@@ -1,6 +1,6 @@
 ---
 name: chronologia-stanowiska-pl
-description: 'Dla prawnika prowadzącego spór. Z tekstu akt (wynik akta-przeszukiwalne-pl) buduje chronologię zdarzeń albo zestawienie stanowisk stron (element roszczenia x twierdzenie x stanowisko przeciwnika x dowody x luka), a mechaniczna bramka sprawdza, czy każdy wpis wskazuje istniejący plik i stronę akt i czy cytat naprawdę na niej stoi. Wpis bez kotwicy w aktach nie przechodzi. Z perspektywy powoda albo pozwanego (także oskarżyciela i obrony). Nie ocenia, kto ma rację, nie rozstrzyga sprzeczności i nie liczy terminów. Używaj gdy: "zrób chronologię z akt", "oś czasu sprawy", "co się działo kiedy", "zestawienie stanowisk stron", "co przyznał pozwany", "czego nam brakuje do udowodnienia", "stan faktyczny do pisma", "chronologia dla świadka".
+description: 'Dla prawnika prowadzącego spór. Z tekstu akt (wynik odczyt-dokumentow) buduje chronologię zdarzeń albo zestawienie stanowisk stron (element roszczenia x twierdzenie x stanowisko przeciwnika x dowody x luka), a mechaniczna bramka sprawdza, czy każdy wpis wskazuje istniejący plik i stronę akt i czy cytat naprawdę na niej stoi. Wpis bez kotwicy w aktach nie przechodzi. Z perspektywy powoda albo pozwanego (także oskarżyciela i obrony). Nie ocenia, kto ma rację, nie rozstrzyga sprzeczności i nie liczy terminów. Używaj gdy: "zrób chronologię z akt", "oś czasu sprawy", "co się działo kiedy", "zestawienie stanowisk stron", "co przyznał pozwany", "czego nam brakuje do udowodnienia", "stan faktyczny do pisma", "chronologia dla świadka".
 
   '
 metadata:
@@ -8,9 +8,13 @@ metadata:
   version: 0.2.0
   license: Apache-2.0
   cost: bramka bez LLM i bez sieci (stdlib); budowa wpisów - model w sesji
-  companion_skills: akta-przeszukiwalne-pl, citation-grounding-pl, adversarial-legal-review-pl
+  companion_skills: odczyt-dokumentow, citation-grounding-pl, adversarial-legal-review-pl
   attribution: '[{"source": "anthropics/claude-for-legal", "url": "https://github.com/anthropics/claude-for-legal", "license": "Apache-2.0", "relationship": "adaptation", "note": "skille litigation-legal chronology i claim-chart, commit d541734"}, {"source": "b1rdmania/chronology", "url": "https://github.com/b1rdmania/chronology", "license": "Apache-2.0", "relationship": "adaptation", "note": "Andrew Bird, commit 628e807"}, {"source": "legalquants/lq-skills", "url": "https://github.com/legalquants/lq-skills", "license": "Apache-2.0", "relationship": "adaptation", "note": "skill building-chronologies, commit 70ebcea"}, {"source": "rohasnagpal/legal-ai-skills", "url": "https://github.com/rohasnagpal/legal-ai-skills", "license": "MIT", "relationship": "adaptation", "note": "skille chronology-builder i pleadings-analyst, commit 20fbad1"}]'
 ---
+
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 # Chronologia akt i zestawienie stanowisk
 
@@ -23,9 +27,9 @@ Wynik jest szkicem: `[SZKIC AI - wymaga analizy i nadzoru uprawnionego prawnika]
 
 ## Krok 0 - tekst akt
 
-Skill czyta katalog `akta-tekst` z `akta-przeszukiwalne-pl` (pliki `.txt` z nagłówkami
+Skill czyta katalog `akta-tekst` z `odczyt-dokumentow` (pliki `.txt` z nagłówkami
 `===== strona N =====`). Akta masz już jako tekst z nagłówkami stron? Pomiń ten krok.
-Masz PDF-y albo skany? Najpierw osobny skill `akta-przeszukiwalne-pl` - poniższe polecenie
+Masz PDF-y albo skany? Najpierw osobny skill `odczyt-dokumentow` - poniższe polecenie
 uruchamia się w JEGO katalogu, nie w tym:
 
 ```bash
@@ -254,8 +258,8 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 
 ## MOST - miejsce w przepływie grounding-prawo
 
-- **Wejście z:** `akta-przeszukiwalne-pl` (tekst akt) i `analiza/_chronologia.md`
+- **Wejście z:** `odczyt-dokumentow` (tekst akt) i `analiza/_chronologia.md`
 - **Wynik zapisz w:** dopisek do `analiza/_chronologia.md` (stanowiska stron: element roszczenia x twierdzenie x dowód x luka) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `analizator-dowodow-v3`, `subsumpcja-pl`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

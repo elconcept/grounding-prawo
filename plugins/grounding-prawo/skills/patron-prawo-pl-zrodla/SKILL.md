@@ -3,12 +3,16 @@ name: patron-prawo-pl-zrodla
 description: Research prawa polskiego i unijnego przez konektory MCP (SAOS, NSA/CBOSA, ISAP/ELI, KRS, EUR-Lex SPARQL, EU-Compliance offline, EUREKA). Użyj, gdy pytanie dotyczy orzecznictwa, treści przepisu, aktu prawnego, danych spółki z KRS, prawa UE lub TSUE, regulacji RODO/AI Act/DORA/NIS2, interpretacji podatkowych albo gdy trzeba podać weryfikowalne źródło (sygnatura, ELI, CELEX, link).
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Źródła prawa PL i UE
 
 Konektory działają przez portal MCP (`lex.xlap.pl/mcp`, plik `.mcp.json` pluginu). Narzędzia mają w hoście
 nazwy z prefiksem portalu (np. `isap_get_act_text`, `nsa_search`); poniżej podano samą nazwę narzędzia.
 Składnia zapytań, drabinka do tekstu jednolitego, pokrycie czasowe i standardy cytowania: `references/iura-metodyka.md`
-oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prowadnik-grounding-prawo`.
+oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prawny-router-v3`.
 
 ## Który konektor do czego
 
@@ -85,4 +89,4 @@ oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill 
 - **Wynik zapisz w:** odpowiedź ze źródłem; do sprawy: dopisek do `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `orzeczenia-sadowe-v2`, `analizator-przepisow-v2`, `webwright-legal-pl`
 - **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -1,50 +1,56 @@
-# Basic Memory w pracy nad sprawą
+# Pamięć sesji i sprawy
 
-Basic Memory (projekt `legal`) to wiki spraw wspólna dla wszystkich postępowań i sesji: teczki spraw,
-postępowania, zdarzenia, osoby, nieprawidłowości, zweryfikowane orzeczenia i lekcje. Pliki w teczce sprawy
-(`shared/ARTEFAKTY-SPRAWY.md`) trzymają pracę nad jednym pismem; wiki trzyma to, co ma przetrwać sesję i przydać się
-w innej sprawie. Każdy skill pracujący nad sprawą czyta wiki na wejściu i aktualizuje ją na wyjściu - sekcja MOST
-skilla podaje, co dokładnie.
+Dwa projekty mają odrębne role. Zawsze podawaj projekt jawnie; domyślny projekt serwera nie rozstrzyga miejsca zapisu.
 
-Narzędzia: MCP `basic-memory` (lokalnie) albo `pilot-basic-memory_*` w portalu `lex`; zawsze z `project="legal"`.
-Zapis tylko narzędziami MCP (`write_note`, `edit_note`), nigdy plikiem do katalogu danych. Konektor niedostępny:
-pracuj dalej, a w `_PRZEBIEGI.md` zapisz „Basic Memory: NOT_CHECKED” i zaległy zapis do wykonania.
-
-## Teczka sprawy
-
-Każda sprawa ma folder `sprawy/<katalog teczki>/` z notatką `Teczka — <katalog teczki>` (`type: sprawa`, schemat
-`_schemat/Schemat — sprawa`; frontmatter `teczka: legal/<katalog>`, `status`, `sygnatury` tylko z dokumentów).
-Brak teczki przy pierwszej pracy nad sprawą: załóż ją przed analizą lub pismem. Sekcje:
-
-| Sekcja | Wpis |
+| Projekt | Zawartość |
 |---|---|
-| `## Stan` | `- [stan] ... (data, źródło)` |
-| `## Terminy` | `- [termin] ... @due:RRRR-MM-DD` |
-| `## Decyzje użytkownika` | `- [decyzja] ...` |
-| `## Lekcje` | `- [lekcja] ...` (pełna lista w `_wiedza.md`) |
-| `## Pisma` / `## Relacje` | `- pismo [[...]]`, `- postepowanie [[postepowania/...]]` |
+| `main` | Recap sesji: cel, wykonane działania, decyzje, wyniki kontroli, pliki, otwarte kwestie i następny krok |
+| `legal` | Dokumenty źródłowe, postępowania, zdarzenia, osoby, teczki spraw, pisma, ustalenia i ich źródła |
 
-Pisma: `sprawy/<katalog>/pisma/` (`type: pismo`, `status: szkic | do-podpisu | zlozone`, `dotyczy` = postępowanie):
-wersja, ścieżka pliku, stan pętli doskonalenia (runda, otwarte uwagi, pytania do autora), wynik kontroli.
+## Dostęp i początek pracy
 
-## Odczyt na wejściu
+1. Użyj dostępnego konektora Basic Memory. Gdy nie jest widoczny, wyszukaj narzędzia `basic-memory` w portalu Lex.
+   Nazwa hosta/prefix narzędzia może się różnić. `list_memory_projects` potwierdza `main` i `legal`.
+2. W `main` wyszukaj ostatni recap dotyczący zadania; w `legal` odczytaj teczkę `sprawy/<katalog>/`, jej relacje
+   i lekcje (`read_note`, `build_context`, `search_notes` po sygnaturze). Brak teczki: utwórz przed analizą.
+3. Dla ingestu przeczytaj w `legal` `_metodologia/Metodologia ingestu` i `_metodologia/Zasady języka wiki`.
+   Jeśli nazwa nie rozwiązuje się, wyszukaj notatkę. Nie udawaj odczytu niedostępnej metodyki.
+4. Wznowienie zaczynaj od zaległych zapisów i stanu pisma. Wiki wskazuje źródła; nie zastępuje akt ani aktualnego prawa.
 
-1. `read_note` teczki i `build_context` z niej (postępowania, pisma); `search_notes` po sygnaturze i nazwiskach.
-2. Decyzje użytkownika i lekcje z teczki obowiązują w tej pracy, tak jak `_wiedza.md`.
-3. Przed szukaniem orzeczenia w MCP sprawdź `orzeczenia/`; przed analizą przepisu `ustawy/` i `zagadnienia/`.
-4. Ustalenie wiki to relacja do sprawdzenia w aktach (`potwierdzone_dokumentem`), nie dowód ani źródło brzmienia przepisu.
+## Zapis w `legal` po każdym zakończonym etapie
 
-## Zapis na wyjściu
+- **Dokument:** przetwarzaj pojedynczo. Sprawdź istniejący wpis po identyfikatorze źródła i ścieżce.
+  Zapisz tożsamość dokumentu, ścieżkę oryginału i Markdown, strony/segmenty, jakość odczytu i powiązania.
+  Pełny tekst i wyciąg zapisuj według odczytanej metodyki ingestu; nie zastępuj źródła streszczeniem.
+- **Ustalenie:** wskaż dokument i stronę/blok albo autora i datę relacji. Oddziel twierdzenie strony od ustalenia,
+  zachowaj sprzeczności. Przebieg postępowania zapisuj w `postepowania/`, nie tylko w recapach.
+- **Teczka `sprawy/<katalog>/`:** Stan, Terminy, Decyzje użytkownika, Lekcje, Pisma, Relacje.
+- **Pismo `sprawy/<katalog>/pisma/`:** wersja, ścieżka, runda, otwarte uwagi, pytania, wyniki kontroli i status.
+- **Orzeczenie:** zweryfikowane źródło, sygnatura i relacja do sprawy; sprawdź `orzeczenia/` przed kolejnym researchem.
 
-Zapisuj po każdej istotnej zmianie (`edit_note`, append albo replace_section), nie na koniec sesji:
+Nie kończ ingestu na „zgłoszeniu do ingestu”. Zakończenie oznacza zapis dokumentu, ustaleń i relacji oraz odczyt
+potwierdzający. Gdy brakuje metodyki lub źródła, oznacz etap NIEZAKOŃCZONY i zapisz dokładnie zaległą czynność.
 
-| Zmiana | Gdzie |
-|---|---|
-| nowa wersja pisma, runda pętli, wynik kontroli | notatka pisma |
-| decyzja użytkownika, termin, stan sprawy | teczka: `## Decyzje użytkownika`, `## Terminy`, `## Stan` |
-| lekcja do kolejnych pism (zarzut, który wracał, uwaga autora do formy) | teczka `## Lekcje` + `_wiedza.md` |
-| zweryfikowane orzeczenie przydatne w innych sprawach | `orzeczenia/` (`type: orzeczenie`, `sygnatura`, `zrodlo_url`), relacja z teczką |
-| nowy fakt z akt spoza wiki | zgłoszenie do ingestu (`_metodologia/Metodologia ingestu`, jeden dokument naraz); wiki nie przepisuj hurtem |
+## Recap w `main` — przed każdą odpowiedzią kończącą etap
 
-Fakty o przebiegu postępowań należą do notatek `postepowania/`, nie do teczki. Każdy wpis ma źródło
-(`— źródło: [[<dokument>]] (s. N)` albo `(relacja <kto>, <data>)`). Język i oznaczenia: `_metodologia/Zasady języka wiki`.
+Użyj jednej notatki sesji w `sesje/grounding-prawo/`: tytuł `RRRR-MM-DD — <temat> — <id sesji>`.
+Użyj identyfikatora hosta, jeśli dostępny; w przeciwnym razie utwórz stabilny identyfikator przy pierwszym zapisie
+(np. znacznik czasu UTC) i zachowaj go w kolejnych aktualizacjach. Przy wznowieniu odszukaj istniejącą notatkę.
+
+Zapisz: cel użytkownika; wykonane działania; decyzje i ich przyczyny; pliki/wyniki z odnośnikami;
+kontrole faktycznie wykonane; nierozstrzygnięte kwestie; następny krok; odnośniki do notatek `legal`.
+Aktualizuj tę samą notatkę po istotnym etapie, przed długą operacją i przed odpowiedzią końcową.
+Nie czekaj na komendę „zamknij” ani na zakończenie aplikacji. Sam recap nie zastępuje ingestu do `legal`.
+
+## Potwierdzenie i awaria
+
+Zapisy tylko przez MCP (`write_note`, `edit_note`). Przed zmianą istniejącej notatki odczytaj ją; stosuj dopisek
+lub zmianę konkretnej sekcji, nie nadpisuj cudzych ustaleń. Przed ponowieniem niepewnego zapisu sprawdź, czy już istnieje.
+Po zapisie wykonaj `read_note` i sprawdź treść ostatniej zmiany. Sukces to odczyt zgodny z zamierzeniem, nie samo wywołanie.
+
+W odpowiedzi końcowej podaj krótko: `Pamięć: main — zapisano <identyfikator>; legal — zapisano <identyfikator>
+/albo bez nowych ustaleń`. Gdy zapis się nie udał, podaj `NIEZAPISANE` i przyczynę.
+Zaległość dopisz do `_PRZEBIEGI.md` pisma lub `_robocze/pamiec-zalegle.md` w folderze sprawy, z projektem,
+identyfikatorem notatki i treścią do zapisu. Przy następnym wejściu ponów po sprawdzeniu duplikatów.
+Można kontynuować pracę merytoryczną; nie deklaruj pełnego zakończenia ingestu ani skutecznego zapisu pamięci.
+Nagłe zamknięcie procesu może uniemożliwić zapis; checkpointy ograniczają tę stratę, instrukcja nie jest hookiem hosta.

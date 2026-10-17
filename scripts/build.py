@@ -205,7 +205,7 @@ def add_bridges(sel):
             lines.append(f"- **Nie dubluj:** {b['nie_dubluj']}")
         wiki = b.get("wiki") or bridges["wiki_etap"][b["etap"]]
         lines.append(f"- **Basic Memory (`legal`):** {wiki} (protokół: `shared/BASIC-MEMORY.md`)")
-        lines.append("- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.")
+        lines.append("- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).")
         sm = os.path.join(SKILLS, name, "SKILL.md")
         text = open(sm, encoding="utf-8").read().rstrip("\n")
         open(sm, "w", encoding="utf-8").write(text + "\n".join(lines) + "\n")
@@ -288,8 +288,82 @@ def normalize_skill(sm, entry):
         shutil.rmtree(os.path.join(os.path.dirname(sm), name), ignore_errors=True)
 
 
+
+# A single document skill owns OCR tools and the reusable contract library.
+def bundle_documents():
+    base = os.path.join(SKILLS, "odczyt-dokumentow")
+    # the-ocr comes from its own repo (submodule, private): code and docs only - never .env/.secrets,
+    # because this plugin is published from a public repository.
+    the_ocr, tool = os.path.join(ROOT, "vendor/docs/the-ocr"), os.path.join(base, "tools/the-ocr")
+    shutil.copytree(os.path.join(the_ocr, "src"), os.path.join(tool, "src"), ignore=IGNORE)
+    for name in ("pyproject.toml", "README.md", "env.example"):
+        shutil.copy(os.path.join(the_ocr, name), tool)
+    upstream = os.path.join(AWE, "dokumenty/skills/doc-intel-contract-pl")
+    target = os.path.join(base, "document_contract")
+    os.makedirs(os.path.join(target, "scripts"), exist_ok=True)
+    shutil.copytree(os.path.join(upstream, "contract"), os.path.join(target, "contract"))
+    for name in ("contract.py", "evidence.py", "grounding_bridge.py", "split_packet.py"):
+        shutil.copy(os.path.join(upstream, "scripts", name), os.path.join(target, "scripts", name))
+    for name in ("LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md"):
+        if os.path.isfile(os.path.join(upstream, name)):
+            shutil.copy(os.path.join(upstream, name), target)
+    schema_path = os.path.join(target, "contract/contract.schema.json")
+    with open(schema_path, encoding="utf-8") as f:
+        schema = json.load(f)
+    schema["properties"]["source"]["properties"]["engine"]["enum"] = [
+        "datalab", "llamaparse", "azure", "google_vision", "rapidocr", "azure-di", "google-vision",
+        "pymupdf", "markitdown", "text"]
+    with open(schema_path, "w", encoding="utf-8") as f:
+        json.dump(schema, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+
+def migrate_document_references():
+    for root, _, files in os.walk(SKILLS):
+        for name in files:
+            if not name.endswith((".md", ".mjs", ".json", ".yaml")):
+                continue
+            path = os.path.join(root, name)
+            # Do not rewrite tool identity or contract implementation provenance.
+            if "/odczyt-dokumentow/tools/" in path or "/document_contract/" in path:
+                continue
+            text = open(path, encoding="utf-8").read()
+            text = text.replace('"doc-intel-contract-pl", "contract"', '"odczyt-dokumentow", "document_contract", "contract"')
+            text = text.replace("doc-intel-contract-pl/", "odczyt-dokumentow/document_contract/")
+            for old, new in (("doc-intel-contract-pl", "odczyt-dokumentow"),
+                             ("akta-przeszukiwalne-pl", "odczyt-dokumentow"),
+                             ("the-ocr", "odczyt-dokumentow"),
+                             ("prowadnik-grounding-prawo", "prawny-router-v3")):
+                # New skill legitimately names its internal OCR tool.
+                if old == "the-ocr" and "/odczyt-dokumentow/" in path:
+                    continue
+                text = text.replace(old, new)
+            open(path, "w", encoding="utf-8").write(text)
+
+
+def add_session_protocol():
+    for name in os.listdir(SKILLS):
+        path = os.path.join(SKILLS, name, "SKILL.md")
+        if not os.path.isfile(path) or name in ("shared", "audyt-systemu-v4"):
+            continue
+        text = open(path, encoding="utf-8").read()
+        fm = re.match(r"---\n.*?\n---\n", text, re.S)
+        directive = ("\n## Pamięć sesji — przed pracą i przed odpowiedzią końcową\n\n"
+            "Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. "
+            "Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową "
+            "zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. "
+            "Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. "
+            "Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.\n")
+        if name == "prawny-router-v3":
+            directive += "\nNajpierw wybierz cel według `shared/SCIEZKI-PRACY.md`; to jedyny punkt wejścia pluginu.\n"
+        open(path, "w", encoding="utf-8").write(text[:fm.end()] + directive + text[fm.end():])
+
+
 def main():
     sel = yaml.safe_load(open(os.path.join(ROOT, "selection/selection.yaml"), encoding="utf-8"))
+    missing = [source(e) for e in sel["keep"] if not os.path.isfile(os.path.join(source(e), "SKILL.md"))]
+    if missing:
+        raise SystemExit("Brak źródeł (istniejący plugin zachowany): " + ", ".join(missing))
     if os.path.isdir(SKILLS):
         shutil.rmtree(SKILLS)
     os.makedirs(SKILLS)
@@ -314,6 +388,8 @@ def main():
             print("patch", p)
 
     fold(sel)
+    bundle_documents()
+    migrate_document_references()
     import collections
     stats = collections.Counter()
     scrub(sel, stats)
@@ -321,6 +397,7 @@ def main():
     print("odwołania poza pluginem oznaczone:", tag_out_of_plugin(sel))
     print("ścieżki zakwalifikowane / brakujące oznaczone:", qualify_paths(sel))
     errors = add_bridges(sel)
+    add_session_protocol()
     for e in [x for x in sel["keep"] if not x.get("fold_into")]:
         sm = os.path.join(SKILLS, e["name"], "SKILL.md")
         fm, t, m = frontmatter(sm)
@@ -363,4 +440,5 @@ def main():
     sys.exit(1 if errors else 0)
 
 
-main()
+if __name__ == "__main__":
+    main()

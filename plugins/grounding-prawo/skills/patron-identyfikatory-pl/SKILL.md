@@ -3,6 +3,10 @@ name: patron-identyfikatory-pl
 description: Walidacja sum kontrolnych PESEL, NIP i REGON oraz formatu KRS, data urodzenia z PESEL, a także wyciąganie z tekstu polskich sygnatur akt (SN, NSA, WSA, KIO, TK, sądy powszechne), numerów CELEX i ELI, odwołań do Dz.U., nazw spółek z formą prawną i osób z rolą procesową. Użyj przy analizie umów, pism i akt - do wyłapania błędnych numerów, zebrania stron i powołanych orzeczeń albo ustalenia, do którego pionu sądów należy sygnatura.
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Identyfikatory i encje prawa polskiego
 
 Skrypt: `scripts/pl_entities.py` w katalogu tego skilla (Python 3, bez zależności, offline).
@@ -63,4 +67,4 @@ dodane w tym porcie.
 - **Wynik zapisz w:** wynik walidacji w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `ekstraktor-cytatow-pl`, `citation-grounding-pl`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy; zapisu nie wymaga (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -16,6 +16,10 @@ metadata:
   attribution: '{"source": "OpenNyAI/Opennyai (Legal-NLP-EkStep)", "url": "https://github.com/OpenNyAI/Opennyai", "license": "MIT", "relationship": "clean-room", "note": "Metoda: strukturyzacja wyroku przez role retoryczne zdań plus extractive summarization. Indyjskie role i modele porzucone; role retoryczne polskiego orzeczenia i reguły ekstrakcji napisane od zera.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Struktura wyroku PL - rozłóż orzeczenie i streść ekstraktywnie
 
 ## Filozofia
@@ -121,4 +125,4 @@ Plugin dostarcza wyszukiwanie i pobieranie źródeł prawa PL/UE. Nie zastępuje
 - **Wynik zapisz w:** streszczenie ekstraktywne w `_robocze/`; użyta teza w `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `orzeczenia-sadowe-v2`, `citation-grounding-pl`
 - **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

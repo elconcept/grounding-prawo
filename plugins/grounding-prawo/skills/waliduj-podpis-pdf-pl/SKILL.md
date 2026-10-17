@@ -9,12 +9,16 @@ metadata:
   author: Wiesław Mazur / MateMatic
   version: 0.1.0
   cost: zero LLM (walidacja kryptograficzna)
-  companion_skills: doc-intel-contract-pl
+  companion_skills: odczyt-dokumentow
   attribution: '[{"source": "MatthiasValvekens/pyHanko", "url": "https://github.com/MatthiasValvekens/pyHanko", "license": "MIT", "relationship": "dependency", "note": "Biblioteka walidacji PAdES wolana lokalnie. Skill ja opakowuje i tlumaczy wynik na werdykt laczony - nie wywodzi sie z jej kodu.\n"}]'
   data-residency: local
   requires-human-approval: 'false'
   pii-egress: none
 ---
+
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 # Walidacja podpisu elektronicznego w PDF
 
@@ -37,7 +41,7 @@ tym, co podpisano. Skill to wykrywa.
 na zewnątrz - zostaje człowiekowi. Narzędzie jest wyłącznie odczytowe.
 
 **Kolejność w pipeline OCR:** jeśli dokument idzie potem do skanowania lub OCR
-(drabinka PDF, silnik `vlm-html` z [[doc-intel-contract-pl]]), walidację podpisu
+(drabinka PDF, silnik `vlm-html` z [[odczyt-dokumentow]]), walidację podpisu
 rób NAJPIERW, na oryginale. Przygotowanie skanu spłaszcza PDF przed renderem,
 żeby pola formularza nie zniknęły z obrazu - i przy okazji NISZCZY podpis
 kryptograficznie. Po spłaszczeniu nie ma już czego walidować.
@@ -165,6 +169,6 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 
 - **Wejście z:** przychodzący podpisany PDF
 - **Wynik zapisz w:** wynik w `analiza/_dokumenty.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `akta-przeszukiwalne-pl`
+- **Następny krok:** `odczyt-dokumentow`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -16,6 +16,10 @@ metadata:
   attribution: '{"source": "CUAD (Contract Understanding Atticus Dataset), The Atticus Project", "url": "https://www.atticusprojectai.org/cuad", "license": "CC-BY-4.0", "relationship": "adaptation", "note": "Taksonomia 41 kategorii klauzul pochodzi z CUAD. Opisy kategorii, kotwice do prawa polskiego i logika red-flag napisane od zera dla realiów PL/UE.\n"}'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 # Klauzule kontraktowe PL - lista kontrolna pojedynczej umowy
 
 ## Filozofia
@@ -179,4 +183,4 @@ Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i 
 - **Wynik zapisz w:** lista kontrolna klauzul w `analiza/_podsumowanie.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `redline-docx-pl`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

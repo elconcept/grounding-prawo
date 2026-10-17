@@ -12,6 +12,10 @@ metadata:
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
 
+## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.
 
 
@@ -886,6 +890,6 @@ warstwę UX (język laika, formatowanie odpowiedzi) — nie logikę prawną.
 
 - **Wejście z:** router nie znalazł ścieżki albo użytkownik nie wie, jakiego pisma potrzebuje
 - **Wynik zapisz w:** wskazana ścieżka i lista potrzebnych dokumentów (w odpowiedzi) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `prowadnik-grounding-prawo`, `pisma-proste-v2`, `pisma-procesowe-v3`
+- **Następny krok:** `prawny-router-v3`, `pisma-proste-v2`, `pisma-procesowe-v3`
 - **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** skill `prowadnik-grounding-prawo`.
+- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).
