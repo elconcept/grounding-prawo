@@ -31,7 +31,8 @@ Wejście: <draft.docx> (+ <załączniki>), akta <katalog>, rejestry: fakty_potwi
 Soczewki: E1 <lista> | E2 <lista> | E3 <lista> | E4 <lista>. Nieuruchomione i dlaczego: <…>.
 Wynik: ustaleń <x> -> po deduplikacji <y>; WPROWADZONE <a>, ZMIANA_DO_DECYZJI <b>, PYTANIE/WSTRZYMANE <c>, ZABLOKOWANE <d>.
 Rundy E8: <r>; wynik_zbiorczy <v1> -> <vN>; stan końcowy <GOTOWE|NIEGOTOWE>; pytania zadane/odpowiedziane <k>/<m>.
-Pliki: drafty/<pismo>/<rrrrMMdd>_<nazwa>_vN.docx; robocze: _robocze/<rrrrMMdd>_<pismo>__szturm/ (REDLINE, wyciągi, JSON-y).
+Pliki: historia `drafty/<pismo>/<rrrrMMdd>_<nazwa>_vN.md`, DOCX tylko najnowszej wersji oraz jego
+kopia w `output/`; robocze: `_robocze/<rrrrMMdd>_<pismo>__szturm/` (REDLINE, wyciągi, JSON-y).
 
 ## STATUS TURY N: ZAKOŃCZONA - <y> pozycji [p]-[q]. Łącznie w sprawie: <q> pozycji. Obowiązuje: <plik(i)> (do decyzji autora: <k> pytań w FINDINGS, tura N).
 ```
