@@ -42,8 +42,7 @@ konieczność tworzenia jej wątku. Wzmianka o kontakcie uruchamia tę rolę nie
 czy autor sam uważa funkcjonariusza za sprawcę.
 
 **R2 — synteza pytań.** Połącz tylko pytania o tę samą osobę, epizod i okoliczność. Nie łącz
-różnych sprawców ani kilku skutków w ogólne „czy coś jeszcze?”. Wybierz krótką serię, zwykle
-3–6 pytań o jeden epizod, zaczynając od aktualnego bezpieczeństwa i zanikających śladów,
+różnych sprawców ani kilku skutków w ogólne „czy coś jeszcze?”. Wybierz jedno pytanie o konkretny szczegół epizodu, zaczynając od aktualnego bezpieczeństwa i zanikających śladów,
 gdy sytuacja tego wymaga. Pytania o ślady nie są warunkiem dopuszczenia relacji.
 Zachowaj pozostałe pytania do kolejnych rund — limit wiadomości nie jest limitem wywiadu.
 

@@ -27,3 +27,16 @@ A6 źródła przenoszonej kwoty, A7 pracy bez repo. Te punkty uzasadniają kontr
 Dawne A9 „bez zmian” nie ogranicza późniejszej instrukcji użytkownika: ochrona musi działać
 również przy ataku i syntezie. Sankcje z A1 oraz techniczne błędy formatowania A4/A5 nie były
 przedmiotem tego refaktoru i nie są tu oznaczane jako naprawione.
+
+## 2026-10-17 — wzorce interview-me
+
+Przejrzano źródła GitHub:
+- https://github.com/jonaselkabouli/interview-me/blob/main/SKILL.md — wejście tekstowe lub plik,
+  rozbudowywana mapa tematów i pojedyncze pytania zależne od odpowiedzi.
+- https://github.com/addyosmani/agent-skills/blob/main/skills/interview-me/SKILL.md — oczekiwanie
+  na odpowiedź przed kolejnym pytaniem i podsumowanie do korekty.
+
+Adaptacja własna: trwała relacja i przyrosty między sesjami, wersjonowanie oraz rozdział pism
+według złożenia i etapu. Nie przejęto GUESS, podpowiadanych odpowiedzi, oceny procentowej
+pewności modelu, kwestionowania decyzji autora ani automatycznego końca po pokryciu tematów.
+W zbieraniu wspomnień pytania pozostają otwarte, a przerwę wyznacza autor.

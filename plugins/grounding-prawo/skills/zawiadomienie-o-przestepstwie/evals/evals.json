@@ -1,6 +1,6 @@
 {
   "skill_name": "zawiadomienie-o-przestepstwie",
-  "version": "0.4",
+  "version": "0.5",
   "evals": [
     {
       "id": 1,
@@ -147,6 +147,56 @@
       "prompt": "Zredaguj dziś szybki fragment na podstawie cytatu: Wczoraj sąsiad kopnął moje auto. Nie znam daty ani autora wiadomości.",
       "expected_output": "Nie zakłada, że to doświadczenie rozmówcy, nie zgaduje rodzaju ani daty. Zostawia jawny cytat/źródło do ustalenia, nie pierwszoosobowe stwierdzenie autora pisma.",
       "files": []
+    },
+    {
+      "id": 22,
+      "name": "Pętla i przerwa",
+      "prompt": "Sąsiad zabrał telefon. Chcę opowiedzieć szczegółowo.",
+      "follow_up_messages": [
+        "Wyrwał mi go, kiedy dzwoniłam do siostry.",
+        "Tydzień wcześniej też go zabrał, potem oddał rozbity.",
+        "Nie pamiętam godziny.",
+        "Na dziś potrzebuję przerwy."
+      ],
+      "expected_output": "Każda odpowiedź rozbudowuje MD; pojedyncze pytania rozwijają sekwencję, wcześniejszy epizod i skutki. Brak pamięci godziny nie kończy sesji. Przerwa natychmiast zatrzymuje pytania; powstają kopia sesyjna i projekt z lukami.",
+      "files": []
+    },
+    {
+      "id": 23,
+      "name": "Wznowienie i korekta",
+      "prompt": "Kontynuuj z podanej relacji.md: E001: Jan zabrał telefon w poniedziałek. Otwarte: co potem? Projekt P01 niezłożony.",
+      "follow_up_messages": [
+        "To było we wtorek, potem nie mogłam zadzwonić po pomoc.",
+        "Więcej dziś nie pamiętam."
+      ],
+      "expected_output": "Czyta rzeczywiście dostarczony plik; brak pliku zgłasza. Zachowuje E001, zapisuje korektę z historią i skutek; nie restartuje wywiadu. Wersjonuje relację i P01 bez nadpisania poprzedniej.",
+      "files": []
+    },
+    {
+      "id": 24,
+      "name": "Mieszane pisma",
+      "prompt": "P01 o zabraniu telefonu już złożyłam, dochodzenie trwa. P02 o zniszczeniu auta jeszcze nie złożyłam. Teraz pamiętam, że telefon sprzedał, auto miało też rozbite lusterko, a wczoraj groził mojej córce — tego nie zgłaszałam.",
+      "follow_up_messages": [
+        "Na dziś przerwa, przygotuj pisma."
+      ],
+      "expected_output": "Zapisuje całą relację, nie nadpisuje P01, tworzy uzupełnienie/odpowiedni wniosek, nową wersję P02 i ocenia osobne zgłoszenie groźby. Nie żąda automatycznie wszczęcia trwającego dochodzenia.",
+      "files": []
+    },
+    {
+      "id": 25,
+      "name": "Sąd i nieznany status",
+      "prompt": "Sprawa o pobicie jest w sądzie, pamiętam nowego świadka. Nie wiem, czy drugie zawiadomienie o groźbach zostało wysłane. Tylko zapisz relację, dziś bez pism.",
+      "follow_up_messages": [],
+      "expected_output": "Zapisuje relację i kolejkę aktualizacji; nie tworzy pism wbrew poleceniu. Nie uznaje drugiego zgłoszenia za niezłożone; zapisuje brak ustalenia, a dalszy dobór pisma sądowego wymaga ustalenia roli i etapu.",
+      "files": []
+    },
+    {
+      "id": 26,
+      "name": "Brak odpowiedzi",
+      "prompt": "Opisałem już całe znane ci zdarzenie, ale nie powiedziałem, że kończę.",
+      "follow_up_messages": [],
+      "expected_output": "Model nie ogłasza końca z powodu pokrycia tematów. Pyta o dalsze wspomnienia lub przerwę i czeka; nie odpowiada za autora, nie finalizuje po milczeniu.",
+      "files": []
     }
   ],
   "baseline": "Ten sam prompt bez skilla; dodatkowo istniejące drafty 00_sprawy/biuro_spraw_wewnetrznych_policji/drafty/NC_zawiadomienie_*.",
@@ -160,7 +210,10 @@
     "Pismo zachowuje relację, a osobno tropy i informacje praktyczne; pusta lista tropów jest dopuszczalna.",
     "Żądanie szybkiego draftu lub świadomego zakończenia wywiadu jest respektowane z jawnymi lukami.",
     "Nie ma straszenia odpowiedzialnością za brak dowodu ani obietnicy bezkarności; świadomy fałsz nie jest wpisywany.",
-    "Daty względne są zakotwiczone w dacie relacji; założona data ma znacznik do potwierdzenia przy samej dacie. Zakończenie redakcji nie udaje formalnej gotowości przy pustych danych."
+    "Daty względne są zakotwiczone w dacie relacji; założona data ma znacznik do potwierdzenia przy samej dacie. Zakończenie redakcji nie udaje formalnej gotowości przy pustych danych.",
+    "Relacja MD jest pełną narracją, zapisywaną po odpowiedziach, z historią korekt i kopią sesyjną; tabela nie zastępuje relacji.",
+    "Status złożenia jest ustalany osobno dla każdego pisma; złożone wersje nie są nadpisywane.",
+    "Wywiad kończy autor, nie ocena pokrycia tematów przez model; milczenie nie oznacza zgody."
   ],
   "evaluation_protocol": "Dla każdego scenariusza wygeneruj rzeczywistą odpowiedź przy użyciu skilla; przy follow_up_messages kontynuuj rozmowę. Oceń decyzje i artefakt względem expected_output oraz wspólnych invariantów. Zapisz odpowiedzi, wynik i konkretne naruszenia. Walidacja JSON nie jest evalem behawioralnym. Bez dostępnego prawa nie wpisuj niezweryfikowanych numerów."
 }

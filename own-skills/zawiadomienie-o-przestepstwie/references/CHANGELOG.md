@@ -48,3 +48,11 @@
 - K4 według korekty autora: przed odpowiedzialnością za fałszywe zawiadomienie chroni dobra wiara,
   nie ostrożność sformułowań; rozróżnienie fakt / wniosek / hipoteza służy czytelności.
 - Plan i materiał źródłowy: `dokumentacja/20261009_plan_skill_zawiadomienie_o_przestepstwie.md`.
+
+## 0.5 — 2026-10-17
+
+- Pojedyncze pytania i zapis po odpowiedzi; wywiad trwa do decyzji autora o przerwie,
+  braku dalszych wspomnień lub opracowaniu obecnego materiału.
+- Trwała pełna relacja MD, wejście z istniejącego pliku, historia korekt i wersje sesyjne.
+- Rejestr pism: nowe wersje niezłożonych projektów, uzupełnienia i wnioski po złożeniu,
+  osobne zgłoszenia nowych krzywd; dobór do rzeczywistego etapu sprawy.

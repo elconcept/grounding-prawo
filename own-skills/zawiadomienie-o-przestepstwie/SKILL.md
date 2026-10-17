@@ -1,21 +1,18 @@
 ---
 name: zawiadomienie-o-przestepstwie
 metadata:
-  version: "0.4"
+  version: "0.5"
   status: draft
 description: >
-  Zawiadomienie o przestępstwie lub jego uzupełnienie pisane z relacji osoby, która doznała
-  krzywdy: wielorundowy wywiad rozszerzający (przed, w trakcie, po zdarzeniu, osoby, skutki,
-  wzorzec, organy), lejek krzywd wydobywający wszystko, co wobec niej zrobiono, także czyny,
-  których sama nie nazywa przestępstwem, i nieblokujący audyt rozbieżności z wcześniejszymi
-  relacjami. Pismo w pierwszej osobie z rozróżnieniem faktu, wniosku, hipotezy i informacji
-  od innych osób, z wnioskiem o ściganie i zweryfikowanymi przepisami. Relację przyjmuje jako
-  prawdziwą, nie pomija ani nie osłabia krzywd z braku dowodów, nie pisze językiem aktu
-  oskarżenia. Używaj gdy: "zawiadomienie o przestępstwie", "zawiadomienie do prokuratury",
-  "zgłosić na policję", "doniesienie", "chcę to zgłosić", "opisz, co mi zrobił",
-  "uzupełnienie zawiadomienia", "zawiadomienie przeciwko funkcjonariuszowi", także gdy
-  użytkownik chaotycznie opowiada o krzywdzie i chce, żeby organy się tym zajęły. Nie do
-  zażaleń i późniejszych wniosków procesowych.
+  Interaktywny, wielosesyjny wywiad z pokrzywdzonym: pytania o wcześniejsze zdarzenia,
+  dokładny przebieg, osoby, powtarzalność i skutki, aż autor potrzebuje przerwy lub więcej
+  nie pamięta. Zapisuje pełną relację MD, przyjmuje istniejący plik i rozwija go inkrementalnie.
+  Tworzy kolejne wersje niezłożonych zawiadomień; po złożeniu dobiera uzupełnienia, wnioski
+  i nowe zgłoszenia do zakresu krzywd i etapu sprawy. Zachowuje relację bez wymagania dowodów,
+  rozróżnia źródła wiedzy, pamięć i hipotezy. Używaj przy „zawiadomienie o przestępstwie”,
+  „zgłosić na policję”, „opisz, co mi zrobił”, „uzupełnienie zawiadomienia”, „kontynuuj relację”,
+  także gdy autor chaotycznie opowiada o krzywdzie i chce zgłoszenia organom. Nie do
+  samodzielnych zażaleń niezwiązanych z rozwijaniem relacji.
 ---
 
 # Zawiadomienie o przestępstwie
@@ -63,7 +60,9 @@ dowodów lub niespójności; pytaj rzeczowo, żeby rozwinąć jego opis. Nie og�
 że ustalono obiektywną prawdę.
 
 **K2 — pełnia krzywdy.** Każdy epizod i skutek z mapy ma trafić do pisma, chyba że autor
-świadomie wybierze pominięcie. Zapisz jego decyzję; nie sugeruj pominięcia z braku dowodu.
+świadomie wybierze pominięcie. Przy wielu pismach każdemu epizodowi przypisz pismo
+złożone lub projekt; uzupełnienie może odsyłać do wcześniejszego opisu zamiast go powtarzać.
+Pełna narracja zawsze pozostaje w relacji MD. Zapisz jego decyzję; nie sugeruj pominięcia z braku dowodu.
 
 **K3 — forma relacji.** Pierwsza osoba, konkretne działania, słowa i skutki, bez stylu aktu
 oskarżenia. Zachowaj preferowane otwarcie „Zawiadamiam o popełnieniu na moją szkodę
@@ -71,7 +70,8 @@ przestępstwa … i wnoszę o wszczęcie postępowania”, wniosek o ściganie i
 zweryfikowanych przepisów. To konwencja skilla, nie twierdzenie, że obywatel musi znać
 kwalifikację prawną. Nie wpisuj niezweryfikowanych przepisów, by wypełnić szablon;
 brak kwalifikacji nie blokuje pisma. Wniosek o ściganie nie zastępuje drogi prywatnoskargowej.
-Szczegóły formy i uprawnienia składającego: [forma](references/forma.md).
+Dla uzupełnienia lub wniosku dobierz otwarcie i żądanie do etapu sprawy, bez ponownego
+żądania wszczęcia już prowadzonego postępowania. Szczegóły formy i uprawnienia składającego: [forma](references/forma.md).
 
 **K4 — wierność i dobra wiara.** Rozdziel obserwację, własne odczucie, skutek, informację
 od innej osoby, wniosek i podejrzenie. Nie wymuszaj stanowczości przy niepewnej pamięci ani
@@ -97,15 +97,24 @@ W repo abogada przeczytaj dostępne `00_sprawy/<sprawa>/analiza/_brief.md` i
 
 ### F1–F3. Pętla wywiadu i rozszerzania kwalifikacji
 Czytaj [wywiad](references/wywiad.md) oraz [mapę krzywd](references/mapa-krzywd.md).
-Najpierw swobodna relacja, potem sam podziel ją na epizody. Dla każdego przeprowadź co najmniej
-jedną rundę rozszerzającą, zwykle 3–6 pytań wokół jednego wątku. Każda nowa osoba, czynność,
-wypowiedź, miejsce, skutek lub wcześniejsze zdarzenie otwiera dalsze pytania. Nie ma limitu rund.
-Po mikro-sekwencji zbadaj fakty odróżniające sąsiednie lub kumulatywne kwalifikacje.
-Po epizodach sprawdź skutki, wzorzec i relację sił, następstwa, kontakty z instytucjami oraz
-bezpieczeństwo i zanikające ślady. Zakończ podsumowaniem do korekty i pytaniem o pominięcia.
-Kończ, gdy nie ma nowych gałęzi albo autor świadomie kończy wywiad. Pozwól pominąć pytanie,
-odpowiedzieć fragmentarycznie lub zrobić przerwę. Na żądanie szybkiego draftu napisz go od razu
-z jawnymi lukami i krótką listą najważniejszych pytań; nie udawaj zakończonego wywiadu.
+Przed pierwszym pytaniem wczytaj istniejącą relację i rejestr pism według
+[ciągłości sesji](references/ciaglosc-sesji.md). Nowa relacja zaczyna się swobodną wypowiedzią;
+przy wznowieniu nie każ opowiadać wszystkiego od początku.
+
+**Pętla: odpowiedź → zapis narracji i nowych gałęzi → jedno istotne pytanie → oczekiwanie
+na odpowiedź.** Domyślnie pytaj pojedynczo; najwyżej 2–3 ściśle związane pytania, jeśli autor
+woli taki rytm. Pytanie wynika z ostatniej odpowiedzi i luk w całym łańcuchu: wcześniej,
+dokładny przebieg, wcześniejsze podobne zachowania danej osoby, potem, skutki. Nowa osoba,
+czynność, wypowiedź lub skutek otwiera dalsze pytania. Nie ma limitu rund ani progu pewności
+modelu kończącego rozmowę. Nie zastępuj rozmowy listą pytań „na później” ani gotowym pismem.
+
+**Wywiad kończy lub przerywa autor:** „potrzebuję przerwy”, „na dziś wystarczy”, „więcej
+nie pamiętam” albo wyraźne żądanie opracowania obecnego materiału. Wyczerpanie listy pytań
+nie jest zgodą na zakończenie: krótko podsumuj i zapytaj o dalsze wspomnienia lub przerwę.
+„Nie pamiętam godziny” zamyka tylko tę lukę; nie naciskaj, przejdź do innego szczegółu.
+Brak odpowiedzi pozostawia pytanie otwarte, nie uprawnia do domysłów ani finalizacji.
+Na przerwę reaguj od razu zapisem i przygotowaniem projektów z zebranego materiału, bez
+kolejnej rundy pytań. Na żądanie szybkiego draftu napisz go od razu z jawnymi lukami.
 
 ### F4. HARDGATE-A i AUDYT-B
 Przed wersją do złożenia sprawdź HARDGATE-A:
@@ -126,6 +135,8 @@ Brak dostępu odnotuj; nie uzależniaj złożenia od uzyskania akt. Pokaż róż
 zapytaj otwarcie i zachowaj odpowiedź lub brak pamięci. Nie wymuszaj jednej wersji.
 
 ### F5. Mapa wewnętrzna — prowadzona od wywiadu
+Pełną, szczegółową narrację zapisuj po każdej odpowiedzi w `_RELACJA_ZDARZEN.md` zgodnie
+z `references/ciaglosc-sesji.md`; tabela mapy nie zastępuje tego pliku.
 W repo zapisuj inkrementalnie w `drafty/<pismo>/_MAPA_KRZYWD.md`, poza nim w materiale roboczym.
 
 | # | Epizod / czas | Mikro-sekwencja | Relacja użytkownika | Typ epistemiczny | Pewność pamięci | Źródło wiedzy | Krzywda / skutek | Gałęzie kwalifikacyjne | Tropy dla organu | Pilność | Różnice z wcześniejszym zapisem | Decyzja autora |
@@ -136,6 +147,9 @@ Nie stosuj „potwierdzone/niepotwierdzone” jako kryterium obecności w piśmi
 zapisz przepis i ślad weryfikacji albo „do sprawdzenia”; brak przepisu nie usuwa wiersza.
 
 ### F6. Redakcja i prawo
+Najpierw przypisz nowe informacje do pism i ustal ich status według
+[ciągłości sesji](references/ciaglosc-sesji.md). Szablon zawiadomienia stosuj wyłącznie do
+zawiadomienia; dla innych pism użyj właściwej formy i zweryfikuj etap oraz uprawnienia.
 Czytaj [szablon](assets/szablon.md), [styl](references/styl.md) i [formę](references/forma.md).
 Pisz pewnie tam, gdzie autor jest pewny; przybliżone słowa oznacz jako przybliżone.
 Emocje są doświadczeniem i skutkiem. Źródło cudzej informacji nazwij w znanym zakresie,
@@ -155,8 +169,10 @@ nagłówku, braku podpisu lub niesprawdzonej drodze złożenia wskaż, co jeszcz
 uzupełnienia. Nie przedstawiaj takiego pliku jako w pełni gotowego do podpisania i złożenia.
 
 ### F8. Zapis (repo abogada, `shared/ARTEFAKTY-SPRAWY.md`)
-- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (i `.docx`, jeśli autor chce) - jedyny nowy plik
-  przebiegu poza `_robocze/`.
+Obowiązkowo zapisuj również trwałe `_RELACJA_ZDARZEN.md` i `_REJESTR_PISM.md` oraz kopię
+relacji na zamknięcie sesji według `references/ciaglosc-sesji.md`. Dotyczy to też pracy poza
+repo abogada; te pliki nie są jednorazowymi notatkami `_robocze/`.
+- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (i `.docx`, jeśli autor chce); kolejne wersje nie nadpisują poprzednich.
 - Pliki inkrementalne pisma (tworzone raz, potem dopisywane): `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, wynik,
   decyzje autora), `_MAPA_KRZYWD.md` (mapa wewnętrzna F5, wiersze ze stałym `#`, zmiany statusu zamiast kopii),
   `_HARDGATE.md` (rejestr relacji i raport bramki, dopisek per przebieg).
@@ -167,11 +183,12 @@ uzupełnienia. Nie przedstawiaj takiego pliku jako w pełni gotowego do podpisan
 
 ## Format odpowiedzi
 
-W trakcie wywiadu: krótkie podsumowanie tego, co już wiesz (2-5 linii), potem pytania pogrupowane
-wokół jednego epizodu. Bez wstępów i pochwał.
+W trakcie wywiadu: krótkie podsumowanie tego, co już wiesz (2-5 linii), potem jedno otwarte pytanie
+o konkretny szczegół; zaczekaj na odpowiedź. Bez wstępów i pochwał.
 
 Przy oddaniu pisma:
-1. Pismo.
+1. Link do zapisanej relacji MD, jej wersji sesyjnej oraz przygotowanych pism; krótko wskaż,
+   co przybyło i które projekty zmieniły się od poprzedniej sesji.
 2. Status HARDGATE-A z lukami i decyzją autora; AUDYT-B ze znanymi różnicami lub informacją o braku materiału. Przy drafcie zaznacz, że wywiad nie został zakończony.
 3. Krótka lista: co jeszcze warto dopytać, decyzje do podjęcia (np. organ, załączniki).
 4. Informacje praktyczne poza pismem: jak złożyć, potwierdzenie, co dalej (`references/forma.md`).
@@ -185,13 +202,16 @@ Przy oddaniu pisma:
 | `zazalenie-na-postanowienie-prokuratora` | wiedza, na co patrzy prokurator i co się zaskarża po odmowie | styl uzasadnienia, zarzuty, „każde twierdzenie zakotwiczone w dowodzie” |
 | `szturm-na-draft-pl`, `adversarial-legal-review-pl`, `atak-przeciwnika-pl` | na wyraźne życzenie autora, wyłącznie w trybie recenzji rozszerzającej (`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`): pominięte krzywdy, osoby i naruszenia przez organy, czyny, których autor nie nazwał (R4a), pytania i rozbudowa pisma | mandat przeciwnika, rozmywanie tez alternatywami, dopisywanie zastrzeżeń, „korygowanie” relacji autora, ciężar dowodu |
 
-Pismo procesowe w już toczącym się postępowaniu (wniosek dowodowy, zażalenie) to inny skill:
-`pisma-procesowe-v3`, `zazalenie-na-postanowienie-prokuratora`.
+Po wywiadzie w już toczącej się sprawie użyj `pisma-procesowe-v3` lub
+`zazalenie-na-postanowienie-prokuratora` do formy adekwatnego pisma. Ten skill nadal prowadzi
+relację, zapis i rozdział nowych informacji. Reguły formalne i terminowe pozostają właściwe
+dla danego pisma; pomocniczy skill nie usuwa relacji z braku dowodu ani nie restartuje wywiadu.
 
 ## Pliki skilla
 
 | Plik | Kiedy czytać |
 |---|---|
+| `references/ciaglosc-sesji.md` | zawsze: wejście z pliku, zapis, wznowienie i dobór pism |
 | `references/wywiad.md` | zawsze, od F2 |
 | `references/mapa-krzywd.md` | zawsze, w F3 (otwarty katalog pytań i historyczne punkty wyjścia do weryfikacji prawa) |
 | `references/hardgate-spojnosc.md` | gdy istnieją wcześniejsze zeznania, wyjaśnienia lub pisma; audyt nie blokuje złożenia |

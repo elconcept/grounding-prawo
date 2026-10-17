@@ -62,3 +62,13 @@ Nie ponawiaj pytań dowodowych, na które autor już odpowiedział, że nie ma m
 W raporcie: pominięte krzywdy/przywrócone treści, pytania rozszerzające, tropy, ewentualne
 poprawki prawa/cytatów/formy. Brak dowodu nie jest błędem autora. Pełny wywiad, HARDGATE-A
 kompletności i nieblokujący AUDYT-B: `zawiadomienie-o-przestepstwie/SKILL.md`.
+
+## Ciągłość wywiadu
+
+Wywiad trwa do decyzji autora o przerwie, braku dalszych wspomnień na teraz albo opracowaniu
+obecnego materiału. Model nie kończy go własną oceną pokrycia tematów. Po każdej odpowiedzi
+rozbudowuje pełną relację MD i zadaje kolejne istotne pytanie, oczekując na odpowiedź.
+Istniejący plik jest punktem wznowienia. Na koniec sesji zachowuje wersję relacji i dobiera
+projekty według rejestru pism: niezłożone aktualizuje, złożonych nie nadpisuje; nowe fakty
+kieruje do uzupełnienia/wniosku właściwego dla etapu albo nowego zawiadomienia. Szczegóły:
+`zawiadomienie-o-przestepstwie/references/ciaglosc-sesji.md`.

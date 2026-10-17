@@ -7,8 +7,8 @@ nieistotne albo czego nie umie udowodnić. Relacja bywa chaotyczna. Porządkowan
 
 - **Najpierw swobodna relacja.** Poproś: „Opowiedz wszystko po kolei, tak jak pamiętasz, nawet
   drobiazgi. Nie musisz pilnować kolejności ani dowodów.” Nie przerywaj pytaniami w trakcie.
-- **Potem epizod po epizodzie.** Wybierz jedno zdarzenie, zadaj 3-6 pytań wokół niego, zapisz
-  odpowiedzi w mapie, przejdź dalej. Nie wysyłaj formularza z trzydziestoma pytaniami.
+- **Potem epizod po epizodzie.** Wybierz jedno zdarzenie, zadaj jedno pytanie o konkretny szczegół i zaczekaj. Po odpowiedzi
+  rozbuduj narrację MD i mapę, dobierz następne pytanie z nowej informacji. Nie wysyłaj formularza z trzydziestoma pytaniami.
 - **Bez pytań sugerujących.** „Co zrobił potem?”, nie „Czy potem cię uderzył?”. Wyjątek: lejek
   krzywd (F3), gdzie pytasz o konkretne kategorie, ale bez podsuwania odpowiedzi.
 - **Sprawdzaj przesłankę pytania.** „Teraz pamiętam dwa, a nie raz” nie oznacza, że
@@ -95,7 +95,7 @@ Po każdej odpowiedzi aktualizuj mapę oraz otwarte gałęzie. Nowa osoba, dzia�
 miejsce, skutek, źródło wiedzy albo podobny epizod wymaga rozważenia dalszego pytania:
 kto / co dokładnie / kiedy / gdzie / jak długo / co przed / co potem / jaki skutek / skąd wiesz.
 Nie przechodź automatycznie do następnego epizodu po pierwszym zestawie odpowiedzi.
-Wybierz kilka pytań o najważniejszą otwartą gałąź; nie powtarzaj pytań już wyjaśnionych.
+Wybierz jedno pytanie o najważniejszą otwartą gałąź; nie powtarzaj pytań już wyjaśnionych.
 Wewnętrzne cele pytań: `[SEKWENCJA]`, `[ŹRÓDŁO WIEDZY]`, `[SKUTEK]`, `[WZORZEC]`,
 `[KWALIFIKACJA+]`, `[BEZPIECZEŃSTWO]`, `[PILNE ZABEZPIECZENIE]`.
 
@@ -115,8 +115,9 @@ Po epizodach zrób przegląd:
   znikające wiadomości, świeże obrażenia, dane o ograniczonej retencji i ryzyko zbycia rzeczy.
 
 Zakończ krótkim „Tak rozumiem…”: przebieg, skutki, źródła i jawne luki. Daj możliwość
-skorygowania i zapytaj o to, co ważne, choć nie padło pytanie. Koniec następuje, gdy nie ma
-nowych gałęzi albo autor świadomie kończy/żąda draftu. Nie ustalaj maksymalnej liczby rund
+skorygowania i zapytaj o to, co ważne, choć nie padło pytanie. Koniec lub przerwa następuje dopiero, gdy autor mówi, że potrzebuje przerwy, na ten moment
+więcej nie pamięta albo świadomie kończy/żąda draftu. Sama ocena modelu, że nie ma nowych
+gałęzi, nie kończy wywiadu. Brak odpowiedzi oznacza oczekiwanie, nie zgodę. Nie ustalaj maksymalnej liczby rund
 ani nie przedłużaj wywiadu po świadomej decyzji autora. Otwarte gałęzie zapisz jako luki,
 nie zamieniaj ich w domyślne odpowiedzi.
 
@@ -146,3 +147,16 @@ bezpośrednich świadków. Ustal dysponenta i lokalizację materiału, okres/ide
 znany termin nadpisania, bez wymyślania retencji. Przy pilności można zaproponować krótki,
 konkretny wniosek o zabezpieczenie; nie zmienia to pisma w obowiązkowy katalog wniosków dowodowych.
 Nie każ zdobywać materiału przez konfrontację ze sprawcą. Brak znanych tropów jest poprawnym wynikiem.
+
+## Przykład kolejnych tur — nie wysyłaj całej sekwencji naraz
+
+Autor: „Potem zabrali mi telefon”. Pytanie: „Co dokładnie działo się od chwili, gdy
+telefon był jeszcze przy Tobie, do momentu, kiedy już go nie było?”. Po odpowiedzi o osobie
+Y pytaj o jej konkretne działanie; po wzmiance „znowu” wróć do wcześniejszego zdarzenia:
+„Co pamiętasz z poprzedniej takiej sytuacji z Y?”. Następnie wróć do przerwanej osi czasu:
+„Co wydarzyło się po zabraniu telefonu?”. Gdy autor mówi o skutku, rozwiń jego początek,
+przebieg i stan obecny. Używaj wyłącznie szczegółów podanych przez autora.
+
+Pytania o wspomnienia są otwarte, bez proponowanych odpowiedzi ani własnego GUESS. Jeśli
+narzędzie pytań wymusza wybór, użyj zwykłej rozmowy lub pola swobodnego tekstu. To robocze
+zbieranie relacji, nie urzędowy protokół przesłuchania; nie nazywaj pliku formalnymi zeznaniami.
