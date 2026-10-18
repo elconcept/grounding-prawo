@@ -359,6 +359,51 @@ def add_session_protocol():
         open(path, "w", encoding="utf-8").write(text[:fm.end()] + directive + text[fm.end():])
 
 
+
+def generate_skill_index(sel):
+    """Generate the canonical, human-usable skill inventory from selection."""
+    out = [
+        "# Indeks kanonicznych skilli grounding-prawo",
+        "",
+        "Plik generowany automatycznie przez \`scripts/build.py\` z \`selection/selection.yaml\`.",
+        "Nie edytuj go ręcznie. \`why\` to krótkie uzasadnienie/charakterystyka wyboru.",
+        "",
+        "| Skill | Rola / krótki opis | Źródło | Tryb |",
+        "|---|---|---|---|",
+    ]
+    count = 0
+    folded = []
+    for entry in sel["keep"]:
+        name = entry["name"]
+        if entry.get("fold_into"):
+            folded.append(entry)
+            continue
+        path = os.path.join(SKILLS, name, "SKILL.md")
+        fm, _, _ = frontmatter(path)
+        description = (entry.get("why") or (fm or {}).get("description") or "brak opisu").strip()
+        description = re.sub(r"\\s+", " ", description).replace("|", "\\|")
+        desc_limit = 190
+        if len(description) > desc_limit:
+            description = description[:desc_limit].rsplit(" ", 1)[0] + "…"
+        role = "wewnętrzny" if entry.get("internal") else "wywoływany"
+        out.append(
+            f"| [\\`{name}\\`](../{name}/SKILL.md) | {description} | "
+            f"\\`{entry['from']}\\` | {role} |"
+        )
+        count += 1
+    out.insert(5, f"**Skille dostępne:** {count}. Dołączone typy i moduły: {len(folded)}.\\n")
+    if folded:
+        out.extend(["", "## Moduły włączone do innych skilli", "", "| Moduł | Skill nadrzędny | Opis |", "|---|---|---|"])
+        for e in folded:
+            why = str(e.get("why") or e.get("typ") or "").replace("|", "\\|")
+            out.append(f"| \`{e['name']}\` | \`{e['fold_into']}\` | {why} |")
+    path = os.path.join(SKILLS, "shared", "INDEKS-SKILLI.md")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as file:
+        file.write("\\n".join(out).replace("\\\`", "`") + "\\n")
+
+
+
 def main():
     sel = yaml.safe_load(open(os.path.join(ROOT, "selection/selection.yaml"), encoding="utf-8"))
     missing = [source(e) for e in sel["keep"] if not os.path.isfile(os.path.join(source(e), "SKILL.md"))]
@@ -408,6 +453,8 @@ def main():
             if not os.path.isdir(os.path.join(SKILLS, dep)):
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
         normalize_skill(sm, e)
+
+    generate_skill_index(sel)
 
     plugin = {
         "name": "grounding-prawo",
