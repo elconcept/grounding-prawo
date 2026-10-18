@@ -9,7 +9,7 @@ on:
     branches: [main]
   push:
     branches: [main]
-    paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules"]
+    paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr"]
   schedule:
     - cron: "17 5 * * 1"
   workflow_dispatch:
