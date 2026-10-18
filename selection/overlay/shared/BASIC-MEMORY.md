@@ -17,6 +17,19 @@ Dwa projekty mają odrębne role. Zawsze podawaj projekt jawnie; domyślny proje
    Jeśli nazwa nie rozwiązuje się, wyszukaj notatkę. Nie udawaj odczytu niedostępnej metodyki.
 4. Wznowienie zaczynaj od zaległych zapisów i stanu pisma. Wiki wskazuje źródła; nie zastępuje akt ani aktualnego prawa.
 
+## Ingest wykonywany na serwerze
+
+Pełny przebieg prowadzi skill `ingest-wiki` przez narzędzia `wiki_ingest` i `wiki_plan`.
+Odczytaj podręcznik serwera `man(page="wiki-ingest")`; zawiera aktualny kontrakt.
+Źródła, kolejka, OCR, weryfikacja zapisu i plany są dostępne przez MCP również w
+claude.ai i chatgpt.com. Katalog projektu legal nie dostarcza silnika wykonawczego.
+Submoduł `vendor/mcp/basic-memory` w repo pluginu przypina kompatybilne źródło
+serwera; uruchomienie i aktualizacja serwera pozostają osobnym krokiem wdrożenia.
+
+Rozbieżność techniczną wyjaśnij najpierw samodzielnie dostępnymi narzędziami i źródłami
+(np. Git, gh, konfiguracja, logi). Pytaj autora dopiero, gdy nie udało się jej rozstrzygnąć.
+Kanoniczne repozytorium to `elconcept/basic-memory`; `elconcept/mcp-basic-memory` jest starą nazwą.
+
 ## Zapis w `legal` po każdym zakończonym etapie
 
 - **Dokument:** przetwarzaj pojedynczo. Sprawdź istniejący wpis po identyfikatorze źródła i ścieżce.
