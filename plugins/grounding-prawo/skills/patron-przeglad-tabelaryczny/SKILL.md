@@ -37,7 +37,7 @@ python3 scripts/doc_to_text.py teczka/*.pdf teczka/*.docx teczka/*.md --out-dir 
 ```
 Numer strony w cytacie to kolejny `[Page N]`, nie numer ze stopki dokumentu.
 
-Markdown po OCR (odczyt-dokumentow, Chandra/Datalab, LlamaParse) jest przyjmowany bezpośrednio: strony
+Markdown po OCR (the-ocr, Chandra/Datalab, LlamaParse) jest przyjmowany bezpośrednio: strony
 rozpoznawane po `## Page N`, `[Page N]`, `<!-- page N -->`, `{N}------` i `\f`, frontmatter (poza pluginem)
 pomijany. Przy parze `umowa.pdf` + `umowa.md` brany jest `.md` (`--no-md` wyłącza). Plik bez
 znaczników stron to jedna strona (skrypt ostrzega); własny separator: `--page-sep hr` albo regex.

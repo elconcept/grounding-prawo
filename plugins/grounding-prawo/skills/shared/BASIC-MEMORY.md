@@ -21,7 +21,7 @@ Trzy projekty pełnią odrębne role. Projekt `model-memory` jest współdzielon
 ## Ingest PDF — wyłącznie przez model LLM
 
 Ingest do `legal` prowadzi wyłącznie model, wykonując po jednej stronie PDF:
-`ingest-wiki` → `odczyt-dokumentow-ingest-page` (Google Vision/Azure) → kontrola OCR i obrazu
+`ingest-wiki` → `the-ocr-ingest-page` (Google Vision/Azure) → kontrola OCR i obrazu
 → ewentualnie ponowny odczyt Datalab/LlamaParse → zatwierdzenie strony.
 Nie korzystaj z `wiki_ingest` (refresh, start, extract, index) ani
 kolejki z dawnych bind mountów. Na serwerze Basic Memory nie ma już
