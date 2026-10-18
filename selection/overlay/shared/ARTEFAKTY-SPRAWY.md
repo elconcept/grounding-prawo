@@ -3,12 +3,17 @@
 Reguła kanoniczna dla każdego skilla, który analizuje akta, draftuje albo kontroluje pismo w teczce sprawy.
 Cel: mało plików, pełny ślad. Kolejny przebieg niczego nie dubluje - dopisuje do plików, które już istnieją.
 
-## Trzy rodzaje plików
+`<projekt>` oznacza katalog projektu prawnego (np. `legal`), `<sprawa>` jego teczkę sprawy.
+Używaj istniejącej teczki (także pod `NC/` lub `TK/`), nie zakładaj drugiej kopii w `sprawy/`.
+Wspólny katalog odbioru to `legal/output/`; nazwa pliku musi identyfikować sprawę i pismo,
+aby identyczne tytuły w różnych sprawach nie nadpisywały się.
+
+## Rodzaje plików
 
 | Rodzaj | Gdzie | Zasada |
 |---|---|---|
 | **Wersja wynikowa** pisma | `drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` oraz, tylko dla najnowszej wersji, odpowiadający mu `.docx` | Każdy przebieg tworzy historyczne źródło `.md` z podbitym `vN`. W katalogu pisma pozostaje dokładnie jeden wynikowy DOCX: najnowszy. |
-| **Kopia do odbioru** | `<sprawa>/output/rrrrMMdd_<nazwa>_vN.docx` | Kopia wyłącznie najnowszego DOCX. Dla tego pisma nie przechowuj tu Markdown ani starszych wersji DOCX. |
+| **Kopia do odbioru** | `<projekt>/output/rrrrMMdd_<nazwa>_vN.docx` | Kopia wyłącznie najnowszego DOCX. Dla tego pisma nie przechowuj tu Markdown ani starszych wersji DOCX. |
 | **Pliki inkrementalne** (prefiks `_`) | `drafty/<pismo>/_*.md` (dla pisma), `analiza/_*.md` (dla sprawy) | Tworzone raz, potem tylko uzupełniane dopiskiem przebiegu. Nigdy kopia, `_v2` ani nowy plik z datą. |
 | **Pliki jednorazowe** | `_robocze/` | Workspace modelu: wyciągi, JSON-y, wyniki skryptów, redline'y, notatki. Nikt ich nie czyta - model zbiera z nich esencję do plików inkrementalnych. |
 | **Wynik soczewki / skilla kontroli** | `<sprawa>/_robocze/rrrrMMdd_hhmm_<skill>_<wersja>.md` | Każdy przebieg skilla oceniającego pismo (Marko, recenzja, pierwsze wrażenie sędziego, atak przeciwnika, fidelity, karta ocen) zapisany od razu, w katalogu sprawy. `hhmm` to rzeczywisty czas zapisu (`date +%Y%m%d_%H%M`), nie szacunek. |
@@ -45,14 +50,20 @@ Po utworzeniu wersji `vN` doprowadź oba katalogi do następującego stanu:
    plik nie istnieje i nie przejdzie właściwej kontroli końcowej.
 2. Zachowaj wszystkie wcześniejsze pliki wersji `*.md` w `drafty/<pismo>/` jako historię. Nie
    nadpisuj ich i nie usuwaj.
-3. Po pomyślnej weryfikacji nowej pary usuń z `drafty/<pismo>/` wynikowe DOCX wcześniejszych wersji
-   tego samego pisma. Nie usuwaj wejściowych dokumentów użytkownika, załączników, redline'ów z
-   `_robocze/` ani DOCX innych pism.
-4. Skopiuj najnowszy DOCX do `<sprawa>/output/`. Następnie usuń z `output/` starsze wersje tego
+3. Przed usunięciem starego wynikowego DOCX potwierdź, że jego kompletna treść i ręczne poprawki
+   są zachowane w odpowiednim historycznym `.md`. Jeżeli nie są, najpierw zachowaj wierną wersję
+   Markdown; przy niepewności pozostaw DOCX i zgłoś nierozstrzygniętą różnicę.
+4. Skopiuj najnowszy DOCX do `<projekt>/output/`. Zweryfikuj zgodność kopii z DOCX w teczce.
+   Przed usunięciem starego pliku z `output/` sprawdź jego zgodność z zachowaną kopią w teczce
+   (`cmp` dla kopii binarnej); historię MD z `output/` najpierw zachowaj w teczce bez nadpisywania.
+   Następnie usuń z `output/` starsze wersje tego
    samego pisma oraz jego pliki `.md`; nie naruszaj wyników innych pism lub innych spraw.
+5. Po publikacji i sprawdzeniu kopii usuń z `drafty/<pismo>/` wynikowe DOCX wcześniejszych wersji
+   tego samego pisma, których treść zachowano w kroku 3. Dokumenty wejściowe użytkownika,
+   załączniki, redline'y z `_robocze/` i DOCX innych pism pozostają nietknięte.
 
 Stan końcowy dla jednego pisma: w `drafty/<pismo>/` wszystkie wersje `.md` i tylko najnowsza
-wersja `.docx`; w `<sprawa>/output/` tylko kopia najnowszej wersji `.docx`.
+wersja `.docx`; w `<projekt>/output/` tylko kopia najnowszej wersji `.docx`.
 
 ## Zakazy
 

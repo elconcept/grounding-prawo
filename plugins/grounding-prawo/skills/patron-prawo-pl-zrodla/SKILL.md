@@ -5,7 +5,7 @@ description: Research prawa polskiego i unijnego przez konektory MCP (SAOS, NSA/
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
 
-Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 # Źródła prawa PL i UE
 
@@ -14,10 +14,18 @@ nazwy z prefiksem portalu (np. `isap_get_act_text`, `nsa_search`); poniżej poda
 Składnia zapytań, drabinka do tekstu jednolitego, pokrycie czasowe i standardy cytowania: `references/iura-metodyka.md`
 oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prawny-router-v3`.
 
+## Kolejność obowiązkowa
+
+Najpierw wyszukiwanie semantyczne ustaw i orzeczeń przez `repertorium_szukaj_repertorium`
+(`q`: zagadnienie, `jurysdykcja`: `pl` albo `eu`), potem pełne brzmienie pozostałymi MCP.
+Stosuj `shared/ZASADY-PLUGINU.md`, sekcja „Gdzie szukać”; poniższe ścieżki wykonuj po tym kroku.
+Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
+
 ## Który konektor do czego
 
 | Pytanie | Serwer | Narzędzia | Czego tu NIE ma |
 |---|---|---|---|
+| Semantyczne rozpoznanie ustaw i orzeczeń PL/UE | `repertorium` | `szukaj_repertorium` | potwierdzenia kompletnego, aktualnego brzmienia cytatu |
 | Orzeczenia SN, sądów powszechnych, TK, KIO | `saos` | `search`, `search_by_case`, `get_judgment`, `saos_cite_check` | WSA i NSA - brak orzecznictwa administracyjnego (podatki, UODO, decyzje organów) |
 | Orzeczenia NSA i 16 WSA (CBOSA): administracja, podatki, cła, ochrona danych | `nsa` | `search`, `search_by_case`, `get_judgment` | sądy powszechne, SN |
 | Akty prawne PL (Dz.U., M.P., od 1918 r.) | `isap` | `search_acts`, `get_act`, `get_act_text` | orzecznictwo, komentarze |

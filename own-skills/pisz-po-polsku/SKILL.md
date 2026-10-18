@@ -32,6 +32,8 @@ brak zmiany jest prawidłowym wynikiem redakcji. Nie obiecuj niewykrywalności d
 - Nie zastępuj naturalnego słowa rzadszym synonimem dla pozornej różnorodności.
 - Nie ruszaj petitum, zarzutów, wniosków dowodowych ani ustaleń faktycznych w piśmie. Redagujesz uzasadnienie i opis, nie stanowisko.
 
+Przy redakcji pisma wczytaj `shared/STYLE.md`; jego rejestr formalny doprecyzowuje poniższe tryby.
+
 ## Tryby
 
 | Tryb | Kiedy | Co robisz |

@@ -5,12 +5,18 @@ name: build-plugin
 # - tygodniowo: podbicie przypiętych commitów upstreamu na osobnej gałęzi i PR (patche mogą się nie nałożyć,
 #   więc zmiana upstreamu nigdy nie trafia na main bez przeglądu)
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
     paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules"]
   schedule:
     - cron: "17 5 * * 1"
   workflow_dispatch:
+
+concurrency:
+  group: grounding-prawo-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -23,7 +29,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Submoduły źródłowe potrzebne do budowy
-        run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr
+        run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
+      - name: Przypięta wersja the-ocr
+        id: ocr-ref
+        run: echo "sha=$(git rev-parse HEAD:vendor/docs/the-ocr)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          repository: elconcept/the-ocr
+          ref: ${{ steps.ocr-ref.outputs.sha }}
+          path: vendor/docs/the-ocr
+          ssh-key: ${{ secrets.THE_OCR_READ_KEY }}
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install pyyaml
@@ -37,12 +53,45 @@ jobs:
         uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
+      - run: python3 -m unittest discover -s tests -p test_sync_legal.py -v
       - name: Commit wyniku
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "build-plugin"
           git config user.email "actions@users.noreply.github.com"
           git add plugins .agents
           git diff --cached --quiet || (git commit -m "build: przebudowa pluginu z selekcji" && git push)
+
+      - name: Checkout legal do synchronizacji
+        if: github.event_name != 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          repository: elconcept/legal
+          ref: main
+          path: legal-checkout
+          ssh-key: ${{ secrets.LEGAL_SYNC_KEY }}
+          lfs: false
+      - name: Kanoniczne reguły do legal
+        if: github.event_name != 'pull_request'
+        env:
+          GIT_LFS_SKIP_SMUDGE: '1'
+        run: |
+          set -euo pipefail
+          git -C legal-checkout worktree add -b sync/canonical "${RUNNER_TEMP}/legal-sync" HEAD
+          python3 scripts/sync_legal.py "${RUNNER_TEMP}/legal-sync"
+          cd "${RUNNER_TEMP}/legal-sync"
+          git config user.name "grounding-prawo-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add AGENTS.md CLAUDE.md .agents/grounding-prawo
+          git diff --cached --quiet && exit 0
+          git -c core.hooksPath=/dev/null commit -s -m "docs: sync canonical grounding-prawo rules"
+          # A concurrent NAS backup is rebased; a real conflict fails visibly without force-push.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git -c core.hooksPath=/dev/null push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
 
   upstream-bump:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
@@ -51,8 +100,18 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr
-      - run: git submodule update --remote --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr
+      - run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
+      - run: git submodule update --remote --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
+      - name: Przypięta wersja the-ocr
+        id: ocr-ref
+        run: echo "sha=$(git rev-parse HEAD:vendor/docs/the-ocr)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          repository: elconcept/the-ocr
+          ref: ${{ steps.ocr-ref.outputs.sha }}
+          path: vendor/docs/the-ocr
+          ssh-key: ${{ secrets.THE_OCR_READ_KEY }}
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install pyyaml

@@ -7,6 +7,9 @@ Nie dotyczy notatek i analiz wewnętrznych.
 
 Wzór: rzeczywiste pismo adwokata złożone w sądzie (`INBOX/sample_pismo_w_sprawie.pdf`, poza repozytorium).
 
+Przed redakcją wczytaj `shared/STYLE.md`. Publikację i historię wersji prowadź według
+`shared/ARTEFAKTY-SPRAWY.md`: sidecar Markdown zostaje w teczce, do `output/` trafia tylko DOCX.
+
 ## Narzędzie
 
 Pismo powstaje z pliku źródłowego `.md` przez renderer, nie przez ręczny HTML ani ad hoc DOCX:

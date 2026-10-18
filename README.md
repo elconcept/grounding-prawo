@@ -147,3 +147,22 @@ Konektor Lex wymaga autoryzacji; dostępność serwera i obrazy MCP zależą od 
 Walidacja paczki sprawdza dostarczenie plików i odsyłaczy. Aktywację na konkretnym
 koncie potwierdza dopiero nowa rozmowa w claude.ai/chatgpt.com: wywołaj `ingest-wiki`,
 poproś o regułę porównania sidecara z PDF i sprawdź dostępność `inspect_page`.
+
+## Reguły kanoniczne i synchronizacja do legal
+
+`selection/overlay/shared/ZASADY-PLUGINU.md` ustala kolejność: semantyczne Repertorium,
+następnie pełne brzmienie przez pozostałe MCP. `STYLE.md` zawiera styl autora dla pism;
+`ARTEFAKTY-SPRAWY.md` ustala historię MD w teczce oraz jeden najnowszy DOCX w teczce i w `legal/output/`.
+Każdy skill ładuje wspólne reguły przez protokół dodawany podczas budowy.
+
+Po pomyślnym buildzie CI uruchamia `scripts/sync_legal.py` na worktree repo `elconcept/legal`.
+Kopiuje wygenerowane `shared/` do `.agents/grounding-prawo/shared/`, zapisuje manifest SHA-256
+oraz zarządzane odsyłacze w `AGENTS.md` i `CLAUDE.md`. Zachowuje lokalne instrukcje i pliki spraw;
+usuwane są tylko znane, sprzeczne dawne instrukcje publikowania MD w output.
+Zmiana jest commitowana i wypychana bez force-push; konflikt z backupem NAS zatrzymuje CI.
+Istniejący `legal-autosync` pobiera zmiany na NAS co 900 sekund, a Synology Drive rozsyła pliki hostom.
+
+Sekrety Actions: `LEGAL_SYNC_KEY` — klucz deploy z zapisem tylko do legal;
+`THE_OCR_READ_KEY` — klucz odczytu prywatnego źródła OCR. Build pobiera przypięte rewizje submodułów.
+Ręczny test: `python3 scripts/sync_legal.py <worktree-legal>`; skrypt nie dotyka plików w `output/` ani teczek.
+MCP Paperless: konfiguracja i rollback w `deploy/paperless-mcp/README.md`.
