@@ -332,7 +332,6 @@ def migrate_document_references():
             text = text.replace("doc-intel-contract-pl/", "odczyt-dokumentow/document_contract/")
             for old, new in (("doc-intel-contract-pl", "odczyt-dokumentow"),
                              ("akta-przeszukiwalne-pl", "odczyt-dokumentow"),
-                             ("the-ocr", "odczyt-dokumentow"),
                              ("prowadnik-grounding-prawo", "prawny-router-v3")):
                 # New skill legitimately names its internal OCR tool.
                 if old == "the-ocr" and "/odczyt-dokumentow/" in path:
