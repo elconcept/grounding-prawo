@@ -17,3 +17,21 @@ serwera przez skonfigurowany konektor. Lokalny shell klienta nie jest wymagany d
 Aktualizacja checkoutu: `git submodule update --init vendor/general/basic-memory`.
 Przy zmianie przypięcia uruchom testy ingestu w Basic Memory i walidatory pluginu.
 Nie kopiuj do tego repo dokumentów ani danych konkretnych spraw.
+
+## Wdrożenie kontroli PDF — 2026-10-18
+
+Basic Memory PR #2 scalony jako `15c7f157f1fdbfabbfcae5c0515f85a7d47093a2`.
+Aktywny kontener NAS: `mcp-basic-memory:pdf-review-15c7f157`, status healthy.
+Obraz zbudowano z dotychczasowego obrazu wdrożeniowego oraz źródeł i lockfile tej
+rewizji; `uv sync --locked --python 3.13` doinstalował PyMuPDF. Poprzedni obraz
+`mcp-basic-memory:wiki-ingest-f834fbbe` i kopia konfiguracji compose
+`docker-compose.yml.before-pdf-review-20261018` pozostały do wycofania zmiany.
+
+Przez działające MCP, w osobnym projekcie `wiki-ingest-smoke`, sprawdzono syntetyczny
+PDF bez warstwy tekstowej: oryginał zawierał 123 PLN, sidecar błędne 999 PLN i komentarz.
+`start` zatrzymał publikację; `inspect_page` dostarczył obraz; `verify_page` przyjął
+poprawioną transkrypcję. Kolejne start/read/finish/index potwierdziły zapis 123 PLN
+bez komentarza. To test techniczny ze znaną treścią, nie kontrola rzeczywistych akt.
+
+Nowa rozmowa klienta musi odświeżyć plugin i schemat narzędzi. Synchronizacji konta
+claude.ai/chatgpt.com nie potwierdza test bezpośredniego endpointu MCP.
