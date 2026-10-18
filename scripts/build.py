@@ -398,6 +398,33 @@ def generate_skill_index(sel):
         fh.write("\n".join(out) + "\n")
 
 
+def bundle_claude_commands_and_hooks():
+    """Ship the selected workspace's commands and hooks as portable plugin parts.
+
+    Sources live in selection/claude; build never depends on a user workspace.
+    Replace only generated directories, never arbitrary files under plugin root.
+    """
+    root = os.path.join(ROOT, "selection", "claude")
+    for name in ("commands", "hooks"):
+        src = os.path.join(root, name)
+        dest = os.path.join(PLUGIN, name)
+        if not os.path.isdir(src):
+            raise SystemExit("Missing canonical plugin component: " + src)
+        if os.path.isdir(dest):
+            shutil.rmtree(dest)
+        shutil.copytree(src, dest, ignore=IGNORE)
+    hooks = json.load(open(os.path.join(PLUGIN, "hooks", "hooks.json"), encoding="utf-8"))
+    if not isinstance(hooks.get("hooks"), dict):
+        raise SystemExit("hooks/hooks.json has no hooks map")
+    for event in ("SessionStart", "PreCompact"):
+        if not hooks["hooks"].get(event):
+            raise SystemExit("Required plugin event missing: " + event)
+    commands = sorted(p for p in os.listdir(os.path.join(PLUGIN, "commands")) if p.endswith(".md"))
+    if len(commands) < 9:
+        raise SystemExit("Expected nine canonical commands; found " + str(len(commands)))
+    print("plugin client components:", len(commands), "commands, SessionStart/PreCompact hooks")
+
+
 def main():
     sel = yaml.safe_load(open(os.path.join(ROOT, "selection/selection.yaml"), encoding="utf-8"))
     missing = [source(e) for e in sel["keep"] if not os.path.isfile(os.path.join(source(e), "SKILL.md"))]
@@ -449,6 +476,7 @@ def main():
         normalize_skill(sm, e)
 
     generate_skill_index(sel)
+    bundle_claude_commands_and_hooks()
 
     plugin = {
         "name": "grounding-prawo",
