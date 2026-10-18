@@ -22,6 +22,7 @@ local = ["rapidocr-onnxruntime>=1.4.4"]
 
 [project.scripts]
 the-ocr = "the_ocr.cli:main"
+the-ocr-ingest-page = "the_ocr.ingest_cli:main"
 the-ocr-archive = "the_ocr.archive_pdf:main"
 
 [dependency-groups]

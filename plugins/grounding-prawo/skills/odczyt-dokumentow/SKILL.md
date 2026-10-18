@@ -10,14 +10,14 @@ Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `sh
 # Odczyt dokumentów i ingest do Basic Memory
 
 **Oddziel analizę plików od ingestu wiki.** W analizie można czytać inne
-formaty; ingest do projektu `legal` przyjmuje **wyłącznie PDF**,
+formaty, a główne CLI `the-ocr` zachowuje PDF/JPG/JPEG/PNG i historyczne opcje; tylko ingest do projektu `legal` przyjmuje **wyłącznie PDF**,
 wskazany jawnie przez użytkownika/model prowadzący. Nie używaj skanowania
 katalogów, istniejących sidecarów jako dowodu, automatycznego refresh
 `wiki_ingest` ani wsadowej konwersji folderów.
 
 Dla ingestu PDF bezwzględnie uruchom skill `ingest-wiki`:
 
-1. Uruchom `the-ocr PDF --page N --force-provider google_vision`
+1. Uruchom `the-ocr-ingest-page PDF --page N --force-provider google_vision`
    albo `azure`, dla **jednej strony**.
 2. Model sprawdza cały wynik z obrazem oryginału przed następną stroną.
    Wątpliwości i artefakty → nowy odczyt tej samej strony przez `datalab`
@@ -30,9 +30,9 @@ Dla ingestu PDF bezwzględnie uruchom skill `ingest-wiki`:
    prywatnego MinIO i R2, nie do Basic Memory. Dopiero po weryfikacji
    obu kopii model zapisuje oryginalne Markdown do `legal/dokumenty`.
    Notatki wtórne są osobne i powiązane linkami.
-5. Bez flag `the-ocr` produkuje Markdown. `--fixme` tworzy pochodną
+5. **Tylko `the-ocr-ingest-page`** domyślnie produkuje Markdown. `--fixme` tworzy pochodną
    A4, a `--searchable-pdf --from-json` nowy PDF z zastąpioną warstwą
-   OCR. Nigdy nie nadpisuj oryginału.
+   OCR. Nigdy nie nadpisuj oryginału podczas ingestu. Globalne `the-ocr` pozostaje wstecznie zgodne z istniejącymi aplikacjami.
 
 Do analizy **poza ingestem** mogą pozostać narzędzia
 `scripts/read_documents.py` i różne formaty. Ich automatyczny router

@@ -1,14 +1,27 @@
 # the-ocr
 
-**Aktualny kontrakt CLI (2026-10-19):** `the-ocr dokument.pdf` zapisuje
-domyślnie **Markdown**, nie modyfikuje oryginalnego PDF. Wielostronicowy PDF
-wymaga `--page N` dla każdej strony; LLM ocenia jakość OCR przed następnym
-wywołaniem. `--fixme` tworzy osobny PDF A4,
-`--searchable-pdf --from-json zatwierdzony.json` generuje osobny przeszukiwalny
-PDF z wymienioną warstwą OCR. **Stare przykłady nadpisywania oryginalnego PDF
-poniżej dotyczą wyłącznie historii i nie opisują obecnego CLI.**
-Kompletny nowy opis: [docs/INGEST-LLM.md](docs/INGEST-LLM.md).
+**Uwaga na integracje:** główne polecenie `the-ocr` zachowuje oryginalny
+interfejs i tryb działania. Obsługuje PDF, JPG, JPEG i PNG, a dotychczasowe
+flagi (`-o`, `--markdown`, `--json`, `--keep-geometry`, `--archive`,
+`--from-json`, `--force-provider` itd.) mają poprzednią semantykę.
+Domyślne uruchomienie `the-ocr dokument.pdf` **nie zostało zmienione**
+— nadal tworzy przeszukiwalny PDF według poprzedniego kontraktu.
 
+**Tylko ingest do wiki Basic Memory** używa osobnej komendy
+`the-ocr-ingest-page`, której wejściem jest wyłącznie PDF i która zapisuje
+kandydat Markdown jednej strony. Nie ma automatycznego przechodzenia
+do kolejnej strony — ocenę wykonuje LLM.
+
+```bash
+the-ocr skan.jpg                         # stary interfejs bez zmian
+the-ocr dokument.pdf --markdown          # stary interfejs bez zmian
+the-ocr-ingest-page akta.pdf --page 1 --force-provider google_vision
+the-ocr-ingest-page akta.pdf --page 2 --force-provider datalab
+the-ocr-ingest-page akta.pdf --page 2 --fixme
+the-ocr-ingest-page akta.pdf --searchable-pdf --from-json reviewed.json
+```
+
+Szczegóły workflow modelu: [docs/INGEST-LLM.md](docs/INGEST-LLM.md).
 
 Prywatny pipeline OCR dla polskich dokumentów. Z PDF albo obrazu robi **wierny przeszukiwalny PDF A4**,
 a na życzenie także Markdown i kanoniczny JSON z bboxami. Rozpoznają tekst zewnętrzni providerzy
