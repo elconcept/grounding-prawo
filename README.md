@@ -5,7 +5,7 @@ Lex Machina, skille weryfikacji MateMatic, skille własne i wiedzę z pluginu IU
 jest narzędzie MCP albo dokument, nigdy pamięć modelu.**
 
 To repo służy do rozwijania pluginu. **Jak pracować ze skillami nad sprawą** (ścieżki A-E, katalog skilli, konektory MCP, kolizje,
-komendy): `legal/PRZEWODNIK.md` i `legal/CLAUDE.md` w katalogu spraw. Reguły, które model dostaje razem z pluginem:
+komendy): `legal/PRZEWODNIK.md` i `legal/AGENTS.md` w katalogu spraw. Wejście do pracy prawnej: `prawny-router-v3`. Reguły, które model dostaje razem z pluginem:
 `plugins/grounding-prawo/skills/shared/ZASADY-PLUGINU.md`, `ARTEFAKTY-SPRAWY.md`, `FORMAT-PISMA.md`.
 
 Plugin jest **generowany** - nie edytuj `plugins/grounding-prawo/` ręcznie (sekcja [Utrzymanie](#utrzymanie)); zasady pracy nad repo: `AGENTS.md`.
@@ -61,7 +61,7 @@ claude plugin validate plugins/grounding-prawo
 
 Historia selekcji: `_log/selekcja.md`, `_log/skill-triage.md`, `_log/source-map.md`.
 
-## Odczyt dokumentów i pamięć (0.3.0)
+## Odczyt dokumentów i pamięć
 
 Jedyny punkt wyboru ścieżki: `prawny-router-v3`. Mapa celów dawnego prowadnika jest jego referencją
 `shared/SCIEZKI-PRACY.md`. Dokumenty obsługuje `odczyt-dokumentow`: konwersja do Markdown,
@@ -105,6 +105,12 @@ oraz indeks/graf do nawigacji. `legal` przechowuje wiedzę spraw; `main` przecho
 recapy. Silnik serwerowy `wiki_ingest` utrzymuje kolejkę, odczyt porcjami, kontrolę
 kompletności i powiązań, OCR brakujących sidecarów oraz indeks. `wiki_plan` przechowuje
 stan planu niezależnie od klienta. Kontrakt narzędzi: `man(page="wiki-ingest")`.
+
+Stan ingestu jest w Basic Memory i skaluje się do całego korpusu (~8,6 tys. źródeł): mała notatka
+`_ingest/wiki-ingest-state` (aktywny dokument i offsety), inwentarz w 64 shardach `_ingest/inventory/`.
+`refresh` hashuje tylko nowe lub zmienione pliki i kończy po ok. 40 s z `complete: false` — wtedy
+wywołaj go ponownie. Dawne lokalne migawki wiki, plany i narzędzia z `legal` są w `_ingest/legacy/`
+(typ `legacy_snapshot`, dosłownie, z `source_path` i SHA-256); lokalne katalogi usunięto 18.10.2026.
 
 - **Dokumenty:** skill `ingest-wiki`. Przed zapisem ustaleń wyszukuje istniejące
   osoby i tematy, aktualizuje właściwe notatki, zachowuje sprzeczne wersje ze źródłami.

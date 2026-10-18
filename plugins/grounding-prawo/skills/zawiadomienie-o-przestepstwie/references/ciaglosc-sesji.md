@@ -122,9 +122,11 @@ przed ich użyciem; ta tabela kieruje pracą, nie zastępuje analizy konkretnego
   planowany dzień wysyłki albo dzisiejsza) i dopytaj; korekta trafia do kolejnej wersji. Luki
   **faktów** nie zapełniaj domysłem: fragment bez odpowiedzi pomiń w piśmie, zostaje w relacji
   i na liście pytań otwartych.
-- Każda nowa informacja dotycząca niezłożonego pisma daje `vN+1` (md + docx). W `output/`
-  dokładnie jedna, najnowsza wersja; poprzednią usuń dopiero po porównaniu (`cmp`) z kopią w `drafty/`.
-- **Edycja autora ma pierwszeństwo.** Przed nową wersją porównaj plik w `output/` z kopią w `drafty/`.
+- Każda nowa informacja dotycząca niezłożonego pisma daje `vN+1` (md + docx). Stan po wersji:
+  w `drafty/<pismo>/` wszystkie wersje `.md` i tylko najnowszy `.docx`, w `output/` tylko kopia
+  najnowszego `.docx` (`shared/ARTEFAKTY-SPRAWY.md`). Starsze DOCX usuń dopiero po weryfikacji nowej
+  pary i po porównaniu (`cmp`) kopii w `output/` z `drafty/`.
+- **Edycja autora ma pierwszeństwo.** Przed nową wersją porównaj DOCX w `output/` z kopią w `drafty/`.
   Ręczne zmiany autora (usunięta sekcja, inna data, dopisek) przenieś do `.md` kolejnej wersji,
   a edytowany plik zachowaj w `drafty/` jako `…_edycja_autora_HHMM.docx`. Nie przywracaj usuniętej
   przez autora treści bez jego decyzji.

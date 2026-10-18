@@ -180,9 +180,11 @@ Relację, log zeznań, rejestr pism, pytania otwarte i kopię relacji na zamkni�
 w Basic Memory (`legal`, `relacje/<autor-slug>/`) według `references/basic-memory-relacja.md`,
 z odczytem potwierdzającym. Nie twórz ich jako plików w katalogu sprawy ani w projekcie claude.ai;
 pliki są formatem awaryjnym tylko bez dostępu do Basic Memory. Nie są jednorazowymi notatkami `_robocze/`.
-- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` i `.docx`; kolejne wersje nie nadpisują poprzednich.
-  W `output/` jedna, najnowsza wersja, bez placeholderów; edycja autora w `.docx` ma pierwszeństwo
-  (`references/ciaglosc-sesji.md`, „Pisma w `output/` i wersje”).
+- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (i `.docx`, jeśli autor chce).
+  Zachowuj wszystkie wersje `.md`, lecz po zweryfikowaniu nowej wersji pozostaw w katalogu pisma
+  tylko jej DOCX. Do `00_sprawy/<sprawa>/output/` kopiuj wyłącznie najnowszy DOCX, zgodnie z
+  `shared/ARTEFAKTY-SPRAWY.md`. Pismo w `output/` bez placeholderów; ręczna edycja autora w DOCX
+  ma pierwszeństwo (`references/ciaglosc-sesji.md`, „Pisma w `output/` i wersje”).
 - Pliki inkrementalne pisma (tworzone raz, potem dopisywane): `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, wynik,
   decyzje autora), `_MAPA_KRZYWD.md` (mapa wewnętrzna F5, wiersze ze stałym `#`, zmiany statusu zamiast kopii),
   `_HARDGATE.md` (rejestr relacji i raport bramki, dopisek per przebieg).

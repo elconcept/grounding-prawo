@@ -8,7 +8,7 @@ description: Research prawa polskiego i unijnego przez konektory MCP (SAOS, NSA/
 Konektory działają przez portal MCP (`lex.xlap.pl/mcp`, plik `.mcp.json` pluginu). Narzędzia mają w hoście
 nazwy z prefiksem portalu (np. `isap_get_act_text`, `nsa_search`); poniżej podano samą nazwę narzędzia.
 Składnia zapytań, drabinka do tekstu jednolitego, pokrycie czasowe i standardy cytowania: `references/iura-metodyka.md`
-oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prowadnik-grounding-prawo`.
+oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prawny-router-v3` (mapa celów `shared/SCIEZKI-PRACY.md`).
 
 ## Który konektor do czego
 
