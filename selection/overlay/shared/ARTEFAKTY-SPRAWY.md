@@ -38,21 +38,32 @@ pozycja ze stałym ID zmieniająca status. Brak szumu: jeden plik na rodzaj info
 
 ## Wersjonowanie pisma i publikacja do `output`
 
-Po utworzeniu wersji `vN` doprowadź oba katalogi do następującego stanu:
+Każda runda korzysta z **ostatniego DOCX autora**, a nie z dokumentu
+sprzed jego poprawek. Runda rozpoczyna się od wykonanej na **kopii**
+automatycznej akceptacji pozostawionych zmian śledzonych (przypięty
+`redline-docx-pl`, adeu `accept-all`); użytkownik nie musi osobno
+zatwierdzać zmian własnego pisma, które poprzednia runda pozostawiła
+w śledzeniu. Nie nadpisuj oryginalnego wejścia.
 
-1. Zapisz i zweryfikuj `drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` oraz wygenerowany z niego
-   `drafty/<pismo>/rrrrMMdd_<nazwa>_vN.docx`. Nie usuwaj jeszcze poprzedniego DOCX, dopóki nowy
-   plik nie istnieje i nie przejdzie właściwej kontroli końcowej.
-2. Zachowaj wszystkie wcześniejsze pliki wersji `*.md` w `drafty/<pismo>/` jako historię. Nie
-   nadpisuj ich i nie usuwaj.
-3. Po pomyślnej weryfikacji nowej pary usuń z `drafty/<pismo>/` wynikowe DOCX wcześniejszych wersji
-   tego samego pisma. Nie usuwaj wejściowych dokumentów użytkownika, załączników, redline'ów z
-   `_robocze/` ani DOCX innych pism.
-4. Skopiuj najnowszy DOCX do `<sprawa>/output/`. Następnie usuń z `output/` starsze wersje tego
-   samego pisma oraz jego pliki `.md`; nie naruszaj wyników innych pism lub innych spraw.
+1. Po akceptacji dotychczasowego redline odczytaj pełną bazę i przeprowadź
+   nowy przegląd.
+2. Zapisz kompletny wynikowy tekst nowej wersji jako
+   `drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md`. Wszystkie historyczne MD pozostają
+   nietknięte.
+3. Utwórz **jeden DOCX wynikowy z aktywnymi Track Changes** pokazującymi
+   poprawki tej rundy. Zweryfikuj śledzenie i odczyt treści; nie dodawaj
+   drugiego DOCX bez redline.
+4. Skopiuj nowy DOCX do `<sprawa>/output/`. Po sprawdzeniu kopii usuń
+   starszy DOCX **tego samego pisma** z katalogu draftów i output.
+   Nie naruszaj innych pism, załączników ani oryginału dostarczonego przez
+   autora.
 
-Stan końcowy dla jednego pisma: w `drafty/<pismo>/` wszystkie wersje `.md` i tylko najnowsza
-wersja `.docx`; w `<sprawa>/output/` tylko kopia najnowszej wersji `.docx`.
+Stan końcowy: historia pełnych wersji `*.md`, jeden wynikowy
+`*.docx` z redline oraz jego kopia w `output/`. Na początku następnej
+rundy zaakceptuj ten redline w kopii roboczej.
+
+Wyjątek: cudze dokumenty i negocjowane redline kontrahenta wymagają
+osobnej decyzji przed zaakceptowaniem wszystkich zmian.
 
 ## Zakazy
 
