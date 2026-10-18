@@ -9,6 +9,16 @@ default_dr:
   nie_dubluj: domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance)
     nie mają modułów - powiedz to wprost, nie zgaduj
 skills:
+  ingest-wiki:
+    wejscie: "Dokumenty do ingestu albo wznowienie kolejki Basic Memory."
+    wynik: "Basic Memory legal: dokumenty, ustalenia i relacje; recap w main."
+    dalej: [analizator-dowodow-v3]
+    wiki: "wiki_ingest finish potwierdza zapis pełnego źródła i powiązanych notatek."
+  teczka-sprawy:
+    wejscie: "Aktualna teczka sprawy i jej rejestr dokumentów."
+    wynik: "Dokumenty kancelaryjne w teczce wskazanej przez użytkownika."
+    dalej: [pisma-procesowe-v3]
+    wiki: "Zaktualizuj notatkę teczki po potwierdzeniu wygenerowanych dokumentów."
   prawny-router-v3:
     etap: A
     wejscie: pytanie, akta albo draft pisma; jedyny punkt wyboru ścieżki

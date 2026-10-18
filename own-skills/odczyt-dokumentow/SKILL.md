@@ -6,6 +6,8 @@ description: Odczytuje pliki i foldery dokumentów do Markdown z numerami stron 
 # Odczyt dokumentów
 
 Najpierw sprawdź istniejący sidecar `.md` obok źródła; jeśli jest, czytaj go i sprawdzaj w oryginale tylko wątpliwości.
+Przy ingestowaniu do Basic Memory użyj skilla `ingest-wiki`: serwer odczyta sidecar,
+przeprowadzi potrzebny OCR i zachowa stan między hostami. Ten przebieg nie wymaga lokalnego skryptu.
 Przy braku sidecara uruchom `scripts/read_documents.py PLIK_LUB_FOLDER --output KATALOG_WYNIKU` z katalogu tego skilla.
 Wynik: `manifest.json`, osobny Markdown i kontrakt JSON dla każdego dokumentu. Źródła pozostają niezmienione.
 Jeśli zasady folderu sprawy wymagają sidecara, skopiuj gotowy Markdown obok źródła (bez nadpisywania istniejącego).
