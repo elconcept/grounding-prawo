@@ -1,0 +1,27 @@
+{
+  "description": "Basic Memory session context and pre-compaction checkpoint",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/model_memory_context.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/model_memory_context.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
