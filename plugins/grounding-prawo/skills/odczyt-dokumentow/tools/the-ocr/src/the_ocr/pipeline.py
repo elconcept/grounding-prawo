@@ -15,6 +15,7 @@ import pikepdf
 from .chain import ChainResult, run_chain
 from .frontmatter import render_with_frontmatter
 from .models import OCRDocument
+from .providers.base import ChainAttempt, OCRResult
 from .pdf.searchable_pdf import build_document_searchable_pdf
 from .pdf.source_pdf import image_to_a4_pdf, strip_invisible_text
 from .providers.base import OCRProvider
@@ -68,6 +69,11 @@ def run_pipeline(
     archive_dir: Path | str | None = None,
     a4: bool = True,
     layer: str = "auto",
+    from_json: Path | str | None = None,
+    words: bool = False,
+    optimize: int = 1,
+    clean_final: bool = False,
+    pdfa: bool = False,
 ) -> PipelineResult:
     """OCR (Datalab -> LlamaParse -> Azure -> Google Vision) -> wierny przeszukiwalny PDF.
 
@@ -109,7 +115,10 @@ def run_pipeline(
         temps.append(prepared_pdf)
         prepare_pdf(source, prepared_pdf, a4=a4)
 
-        chain_result = run_chain(prepared_pdf, providers, force=force)
+        if from_json is not None:
+            chain_result = chain_from_json(Path(from_json), prepared_pdf)
+        else:
+            chain_result = run_chain(prepared_pdf, providers, force=force)
         result.chain_result = chain_result
         if not chain_result.ok:
             return result
@@ -125,14 +134,23 @@ def run_pipeline(
 
         pdf_tmp = _temporary_path(input_path.parent, ".pdf.tmp")
         temps.append(pdf_tmp)
-        build_document_searchable_pdf(prepared_pdf, pdf_tmp, document, mode=resolve_layer(layer, prepared_pdf))
+        build_document_searchable_pdf(
+            prepared_pdf,
+            pdf_tmp,
+            document,
+            mode=resolve_layer(layer, prepared_pdf),
+            optimize=optimize,
+            clean_final=clean_final,
+            pdfa=pdfa,
+        )
         validate_searchable_pdf(pdf_tmp, document)
         _fsync_file(pdf_tmp)
         pairs: list[tuple[Path, Path]] = []
         if json_output:
             json_tmp = _temporary_path(input_path.parent, ".json.tmp")
             temps.append(json_tmp)
-            _write_text_durable(json_tmp, json.dumps(document.to_dict(), ensure_ascii=False, indent=2) + "\n")
+            payload = document.to_dict(include_words=words or from_json is not None)
+            _write_text_durable(json_tmp, json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
             pairs.append((json_tmp, output_json))
         if markdown:
             md_tmp = _temporary_path(input_path.parent, ".md.tmp")
@@ -157,6 +175,19 @@ def run_pipeline(
 
 def process_input(input_path: Path, providers: list[OCRProvider], **kwargs) -> PipelineResult:
     return run_pipeline(input_path, providers, **kwargs)
+
+
+def chain_from_json(json_path: Path, prepared_pdf: Path) -> ChainResult:
+    """Corrected contract JSON in place of a provider run; defects raise ValueError."""
+    with pymupdf.open(prepared_pdf) as pdf:
+        sizes = [(page.rect.width, page.rect.height) for page in pdf]
+    try:
+        payload = json.loads(json_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"{json_path}: invalid JSON ({exc})") from exc
+    document = OCRDocument.from_dict(payload, sizes)
+    result = OCRResult(text=document.text, backend="json", document=document)
+    return ChainResult(result=result, attempts=[ChainAttempt(provider="json", outcome="success", reason=str(json_path))])
 
 
 def resolve_layer(layer: str, pdf_path: Path) -> str:
