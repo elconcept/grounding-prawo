@@ -367,7 +367,7 @@ def generate_skill_index(sel):
     out = [
         "# Indeks kanonicznych skilli grounding-prawo",
         "",
-        "Generowany przez `scripts/build.py` z `selection/selection.yaml`.",
+        "Generowany przez [skrypt budowania](https://github.com/elconcept/grounding-prawo/blob/main/scripts/build.py) z selekcji pluginu.",
         "Opis pochodzi z pola `why` selekcji lub frontmatter skilla.",
         "",
         f"**Skille:** {len(entries)}. **Scalone moduły:** {len(folded)}.",
@@ -380,6 +380,9 @@ def generate_skill_index(sel):
         fm, _, _ = frontmatter(os.path.join(SKILLS, name, "SKILL.md"))
         desc = str(e.get("why") or (fm or {}).get("description") or "brak opisu")
         desc = " ".join(desc.split()).replace("|", "/")
+        for removed in sel.get("drop", []):
+            desc = re.sub(r"(?<![\\w-])" + re.escape(removed["name"]) + r"(?![\\w-])",
+                          "moduł poza pluginem", desc)
         if len(desc) > 190:
             desc = desc[:190].rsplit(" ", 1)[0] + "…"
         typ = "wewnętrzny" if e.get("internal") else "wywoływany"
