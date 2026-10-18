@@ -42,6 +42,10 @@ Przy ingescie, pytaniach do wiki i kontroli jej jakości przeczytaj `shared/WIKI
 - **Teczka `sprawy/<katalog>/`:** Stan, Terminy, Decyzje użytkownika, Lekcje, Pisma, Relacje.
 - **Pismo `sprawy/<katalog>/pisma/`:** wersja, ścieżka, runda, otwarte uwagi, pytania, wyniki kontroli i status.
 - **Orzeczenie:** zweryfikowane źródło, sygnatura i relacja do sprawy; sprawdź `orzeczenia/` przed kolejnym researchem.
+- **Relacja pokrzywdzonego / świadka `relacje/<autor-slug>/`:** relacja zdarzeń, log zeznań, rejestr pism,
+  pytania otwarte, `wersje/`, `archiwum/`. To jedyne miejsce tych danych: nie twórz ich plików w katalogu
+  sprawy ani w projekcie claude.ai (tam tylko pisma). Szczegóły: skill `zawiadomienie-o-przestepstwie`,
+  `zawiadomienie-o-przestepstwie/references/basic-memory-relacja.md`.
 
 Nie kończ ingestu na „zgłoszeniu do ingestu”. Zakończenie oznacza zapis dokumentu, ustaleń i relacji oraz odczyt
 potwierdzający. Gdy brakuje metodyki lub źródła, oznacz etap NIEZAKOŃCZONY i zapisz dokładnie zaległą czynność.

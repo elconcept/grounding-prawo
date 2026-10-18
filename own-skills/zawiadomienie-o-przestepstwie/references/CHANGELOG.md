@@ -57,6 +57,20 @@
 - Rejestr pism: nowe wersje niezłożonych projektów, uzupełnienia i wnioski po złożeniu,
   osobne zgłoszenia nowych krzywd; dobór do rzeczywistego etapu sprawy.
 
+## 0.7 — 2026-10-18 (decyzje autorki z sesji relacji N.C.)
+
+- Basic Memory jako baza danych relacji: `legal`, `relacje/<autor-slug>/` (relacja, log, rejestr,
+  pytania otwarte, wersje, archiwum); pliki relacji tylko awaryjnie bez dostępu do bazy; procedura
+  migracji plików. Nowy plik `references/basic-memory-relacja.md`.
+- Pełna lista pytań otwartych w każdej odpowiedzi sesji relacji; ponawianie i przeformułowanie
+  pytań bez odpowiedzi; odpowiedzi zbiorcze przypisywane po treści.
+- Pisma w `output/` bez placeholderów: najbardziej prawdopodobna wartość danej formalnej i pytanie;
+  luk faktów nie zapełnia się domysłem. Jedna wersja w `output/`, usunięcie po `cmp` z `drafty/`.
+- Ręczna edycja autora w `.docx` ma pierwszeństwo; zachowanie edytowanego pliku w `drafty/`.
+- „Nie obciążaj mnie”, dane o zdrowiu osób trzecich tylko za zgodą, skutki w każdym piśmie, którego dotyczą.
+- Pisma towarzyszące torem procesowym (weryfikacja przepisów); zawiadomienie bez HYBRID-VALIDATION.
+- `forma.md`: oświadczenie o zgodzie na e-doręczenia (art. 119 § 1 pkt 2 lit. a k.p.k.) dopiero od wejścia w życie brzmienia.
+
 ## 0.6 — 2026-10-17
 
 - Rozdzielenie chronologicznej relacji i dopisywanego logu zeznań z sesji.

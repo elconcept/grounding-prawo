@@ -76,7 +76,7 @@ wskaż zweryfikowaną drogę złożenia. Niepewność właściwości nie blokuje
 | Element | Uwagi |
 |---|---|
 | Miejscowość, data | „9 października 2026 r.” |
-| Autor | imię, nazwisko, adres, telefon, e-mail (albo oświadczenie o ich nieposiadaniu), oświadczenie o zgodzie / braku zgody na doręczenia elektroniczne z adresem do doręczeń (art. 119 § 1 pkt 2); `⬛ [UZUPEŁNIJ]`, gdy brak |
+| Autor | imię, nazwisko, adres, telefon, e-mail (albo oświadczenie o ich nieposiadaniu). Oświadczenie o zgodzie na doręczenia elektroniczne (art. 119 § 1 pkt 2 lit. a k.p.k.) stosuj dopiero od daty wejścia w życie tego brzmienia (wg odczytu t.j. Dz.U. 2026 poz. 490 z 18.10.2026: 1.10.2029) — sprawdź przed użyciem. Bez placeholdera: brak danej = najbardziej prawdopodobna wartość i pytanie do autora (`ciaglosc-sesji.md`) |
 | Organ | pełna nazwa i adres **sprawdzone wyszukiwaniem** (jak POV-B w `pisma-proste-v2`), nie z pamięci; przy sprawie toczącej się - sygnatura |
 | Tytuł | „Zawiadomienie o popełnieniu przestępstwa” (wzór Policji); przy uzupełnieniu: „Uzupełnienie zawiadomienia o popełnieniu przestępstwa z dnia …” |
 | Otwarcie | według wzoru: „Zawiadamiam o popełnieniu na moją szkodę przestępstwa [potocznie: pobicia, gróźb, …] przez [osobę / nieznaną mi osobę] w dniu … w … i wnoszę o wszczęcie postępowania.” Bez „podejrzenia”, „możliwości popełnienia”, „mogło dojść” |

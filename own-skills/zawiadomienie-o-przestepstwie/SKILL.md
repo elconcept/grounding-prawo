@@ -1,12 +1,13 @@
 ---
 name: zawiadomienie-o-przestepstwie
 metadata:
-  version: "0.6"
+  version: "0.7"
   status: draft
 description: >
   Interaktywny, wielosesyjny wywiad z pokrzywdzonym: pytania o wcześniejsze zdarzenia,
   dokładny przebieg, osoby, powtarzalność i skutki, aż autor potrzebuje przerwy lub więcej
-  nie pamięta. Porządkuje pełną relację MD chronologicznie i osobno dopisuje log zeznań z każdej sesji.
+  nie pamięta. Porządkuje pełną relację chronologicznie i osobno dopisuje log zeznań z każdej sesji
+  w Basic Memory (projekt legal).
   Przyjmuje istniejącą relację i aktualizuje ją po nowych wspomnieniach.
   Tworzy kolejne wersje niezłożonych zawiadomień; po złożeniu dobiera uzupełnienia, wnioski
   i nowe zgłoszenia do zakresu krzywd i etapu sprawy. Zachowuje relację bez wymagania dowodów,
@@ -98,9 +99,10 @@ W repo abogada przeczytaj dostępne `00_sprawy/<sprawa>/analiza/_brief.md` i
 
 ### F1–F3. Pętla wywiadu i rozszerzania kwalifikacji
 Czytaj [wywiad](references/wywiad.md) oraz [mapę krzywd](references/mapa-krzywd.md).
-Przed pierwszym pytaniem wczytaj istniejącą relację, log zeznań i rejestr pism według
-[ciągłości sesji](references/ciaglosc-sesji.md). Nowa relacja zaczyna się swobodną wypowiedzią;
-przy wznowieniu nie każ opowiadać wszystkiego od początku.
+Przed pierwszym pytaniem wczytaj z Basic Memory (`legal`, `relacje/<autor-slug>/`) relację,
+log zeznań, rejestr pism i pytania otwarte według [ciągłości sesji](references/ciaglosc-sesji.md)
+i [Basic Memory](references/basic-memory-relacja.md). Zastane pliki relacji na dysku najpierw migruj.
+Nowa relacja zaczyna się swobodną wypowiedzią; przy wznowieniu nie każ opowiadać wszystkiego od początku.
 
 **Pętla: odpowiedź → dopisek do logu → aktualizacja chronologicznej relacji i gałęzi → jedno istotne pytanie → oczekiwanie
 na odpowiedź.** Domyślnie pytaj pojedynczo; najwyżej 2–3 ściśle związane pytania, jeśli autor
@@ -108,6 +110,8 @@ woli taki rytm. Pytanie wynika z ostatniej odpowiedzi i luk w całym łańcuchu:
 dokładny przebieg, wcześniejsze podobne zachowania danej osoby, potem, skutki. Nowa osoba,
 czynność, wypowiedź lub skutek otwiera dalsze pytania. Nie ma limitu rund ani progu pewności
 modelu kończącego rozmowę. Nie zastępuj rozmowy listą pytań „na później” ani gotowym pismem.
+Pytanie bez odpowiedzi zostaje otwarte i wraca; niezrozumiane przeformułuj prościej i powiedz,
+czego dotyczy. Autor może odpowiadać zbiorczo po ID; przypisuj odpowiedzi po treści, nie po etykiecie.
 
 **Wywiad kończy lub przerywa autor:** „potrzebuję przerwy”, „na dziś wystarczy”, „więcej
 nie pamiętam” albo wyraźne żądanie opracowania obecnego materiału. Wyczerpanie listy pytań
@@ -136,10 +140,10 @@ Brak dostępu odnotuj; nie uzależniaj złożenia od uzyskania akt. Pokaż róż
 zapytaj otwarcie i zachowaj odpowiedź lub brak pamięci. Nie wymuszaj jednej wersji.
 
 ### F5. Mapa wewnętrzna — prowadzona od wywiadu
-Po każdej odpowiedzi dopisz wpis do `_LOG_ZEZNAN.md`, a `_RELACJA_ZDARZEN.md` zredaguj
-ponownie w odpowiednich miejscach osi czasu. Relacja zachowuje chronologię zdarzeń; log —
-kolejność ujawniania wspomnień w sesjach. Tabela mapy nie zastępuje żadnego z tych plików.
-Szczegóły: `references/ciaglosc-sesji.md`.
+Po każdej odpowiedzi dopisz wpis do notatki `Log zeznań — <Autor>`, a `Relacja zdarzeń — <Autor>`
+zredaguj ponownie w odpowiednich miejscach osi czasu (Basic Memory, `relacje/<autor-slug>/`).
+Relacja zachowuje chronologię zdarzeń; log — kolejność ujawniania wspomnień w sesjach. Tabela mapy
+nie zastępuje żadnej z tych notatek. Szczegóły: `references/ciaglosc-sesji.md`, `references/basic-memory-relacja.md`.
 W repo zapisuj inkrementalnie w `drafty/<pismo>/_MAPA_KRZYWD.md`, poza nim w materiale roboczym.
 
 | # | Epizod / czas | Mikro-sekwencja | Relacja użytkownika | Typ epistemiczny | Pewność pamięci | Źródło wiedzy | Krzywda / skutek | Gałęzie kwalifikacyjne | Tropy dla organu | Pilność | Różnice z wcześniejszym zapisem | Decyzja autora |
@@ -172,10 +176,13 @@ nagłówku, braku podpisu lub niesprawdzonej drodze złożenia wskaż, co jeszcz
 uzupełnienia. Nie przedstawiaj takiego pliku jako w pełni gotowego do podpisania i złożenia.
 
 ### F8. Zapis (repo abogada, `shared/ARTEFAKTY-SPRAWY.md`)
-Obowiązkowo zapisuj również trwałe `_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md` i `_REJESTR_PISM.md` oraz kopię
-relacji na zamknięcie sesji według `references/ciaglosc-sesji.md`. Dotyczy to też pracy poza
-repo abogada; te pliki nie są jednorazowymi notatkami `_robocze/`.
-- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (i `.docx`, jeśli autor chce); kolejne wersje nie nadpisują poprzednich.
+Relację, log zeznań, rejestr pism, pytania otwarte i kopię relacji na zamknięcie sesji zapisuj
+w Basic Memory (`legal`, `relacje/<autor-slug>/`) według `references/basic-memory-relacja.md`,
+z odczytem potwierdzającym. Nie twórz ich jako plików w katalogu sprawy ani w projekcie claude.ai;
+pliki są formatem awaryjnym tylko bez dostępu do Basic Memory. Nie są jednorazowymi notatkami `_robocze/`.
+- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` i `.docx`; kolejne wersje nie nadpisują poprzednich.
+  W `output/` jedna, najnowsza wersja, bez placeholderów; edycja autora w `.docx` ma pierwszeństwo
+  (`references/ciaglosc-sesji.md`, „Pisma w `output/` i wersje”).
 - Pliki inkrementalne pisma (tworzone raz, potem dopisywane): `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, wynik,
   decyzje autora), `_MAPA_KRZYWD.md` (mapa wewnętrzna F5, wiersze ze stałym `#`, zmiany statusu zamiast kopii),
   `_HARDGATE.md` (rejestr relacji i raport bramki, dopisek per przebieg).
@@ -187,7 +194,9 @@ repo abogada; te pliki nie są jednorazowymi notatkami `_robocze/`.
 ## Format odpowiedzi
 
 W trakcie wywiadu: krótkie podsumowanie tego, co już wiesz (2-5 linii), potem jedno otwarte pytanie
-o konkretny szczegół; zaczekaj na odpowiedź. Bez wstępów i pochwał.
+o konkretny szczegół, a pod nim **pełna lista wszystkich pytań otwartych** (ID z logu) — w każdej
+odpowiedzi, dopóki trwa sesja relacji, także po oddaniu nowej wersji pisma. Zaczekaj na odpowiedź.
+Bez wstępów i pochwał.
 
 Przy oddaniu pisma:
 1. Link do chronologicznej relacji MD, logu zeznań, wersji sesyjnej relacji oraz przygotowanych pism; krótko wskaż,
@@ -200,7 +209,7 @@ Przy oddaniu pisma:
 
 | Skill | Co z niego bierzesz | Czego NIE stosujesz |
 |---|---|---|
-| `pisma-proste-v2` | WYŁĄCZNIE wzorzec nagłówka (M4) i `⬛ [UZUPEŁNIJ: …]` dla danych formalnych; tor pisma prostego nie jest uruchamiany | cała reszta toru, w tym `shared/CLAIM-VALIDATION.md` (zastępowanie relacji dokumentami, usuwanie twierdzeń bez oparcia), „jedno pytanie zbiorcze”, moduł opłat |
+| `pisma-proste-v2` | WYŁĄCZNIE wzorzec nagłówka (M4); tor pisma prostego nie jest uruchamiany. Zamiast `⬛ [UZUPEŁNIJ: …]` — najbardziej prawdopodobna wartość i pytanie do autora (pismo w `output/` bez placeholderów) | cała reszta toru, w tym `shared/CLAIM-VALIDATION.md` (zastępowanie relacji dokumentami, usuwanie twierdzeń bez oparcia), „jedno pytanie zbiorcze”, moduł opłat |
 | `pisz-po-polsku` | wzorce anty-AI, rytm, czasowniki, zakres emocji, typografia, pisownia 2026, zachowanie faktów | tryb „Pismo prawnicze”: formuły procesowe są tu wadą (poza otwarciem, wnioskiem o ściganie i listą przepisów); używaj trybu „Relacja pokrzywdzonego” |
 | `zazalenie-na-postanowienie-prokuratora` | wiedza, na co patrzy prokurator i co się zaskarża po odmowie | styl uzasadnienia, zarzuty, „każde twierdzenie zakotwiczone w dowodzie” |
 | `szturm-na-draft-pl`, `adversarial-legal-review-pl`, `atak-przeciwnika-pl` | na wyraźne życzenie autora, wyłącznie w trybie recenzji rozszerzającej (`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`): pominięte krzywdy, osoby i naruszenia przez organy, czyny, których autor nie nazwał (R4a), pytania i rozbudowa pisma | mandat przeciwnika, rozmywanie tez alternatywami, dopisywanie zastrzeżeń, „korygowanie” relacji autora, ciężar dowodu |
@@ -214,7 +223,8 @@ dla danego pisma; pomocniczy skill nie usuwa relacji z braku dowodu ani nie rest
 
 | Plik | Kiedy czytać |
 |---|---|
-| `references/ciaglosc-sesji.md` | zawsze: wejście z pliku, zapis, wznowienie i dobór pism |
+| `references/ciaglosc-sesji.md` | zawsze: wejście, zapis, wznowienie, wersje pism w `output/` i dobór pism |
+| `references/basic-memory-relacja.md` | zawsze: notatki relacji w Basic Memory, kolejność zapisu, awaria, migracja plików |
 | `references/wywiad.md` | zawsze, od F2 |
 | `references/mapa-krzywd.md` | zawsze, w F3 (otwarty katalog pytań i historyczne punkty wyjścia do weryfikacji prawa) |
 | `references/hardgate-spojnosc.md` | gdy istnieją wcześniejsze zeznania, wyjaśnienia lub pisma; audyt nie blokuje złożenia |

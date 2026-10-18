@@ -202,7 +202,8 @@ skills:
   zawiadomienie-o-przestepstwie:
     etap: B
     wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
-    wynik: '`drafty/zawiadomienie/rrrrMMdd_zawiadomienie_v1.*`, `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`'
+    wynik: '`drafty/zawiadomienie/rrrrMMdd_zawiadomienie_vN.*` (kopia w `output/`, bez placeholderów), `_MAPA_KRZYWD.md`,
+      wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/`'
     dalej:
     - pisz-po-polsku
     nie_dubluj: 'HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty
