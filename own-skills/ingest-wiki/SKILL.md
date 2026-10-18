@@ -5,7 +5,7 @@ description: "Ingest prawnych dokumentów PDF inicjowany wyłącznie przez LLM: 
 
 # Ingest PDF przez model — kontrakt kanoniczny
 
-**Jedynym wykonawcą ingestu jest model LLM.** Nie skanuj folderów,
+**Jedynym wykonawcą ingestu jest model LLM.** Ta restrykcja PDF dotyczy wyłącznie ingestu do wiki, **nie aplikacji ogólnego przeznaczenia `the-ocr`**, która nadal obsługuje PDF/JPG/PNG oraz dotychczasowe flagi. Nie skanuj folderów,
 nie uruchamiaj refresh / start / extract / auto-queue starego `wiki_ingest`,
 nie uruchamiaj wsadowej automatyzacji. Wymagaj wskazania konkretnego PDF
 przez użytkownika lub model wykonujący jego jawne zlecenie. Format wejściowy:
@@ -14,7 +14,7 @@ przez użytkownika lub model wykonujący jego jawne zlecenie. Format wejściowy:
 1. Pobierz pojedynczy PDF. Zachowaj oryginalne bajty; nie poprawiaj,
    nie skaluj i nie nadpisuj źródła. Nie zaczynaj od niezweryfikowanego
    sidecara. Ustal liczbę fizycznych stron PDF.
-2. **Jedna strona na jedno wywołanie OCR.** Użyj `the-ocr` z
+2. **Jedna strona na jedno wywołanie OCR.** Użyj **osobnego** `the-ocr-ingest-page` z
    `--page N --force-provider google_vision` albo `azure`. Nie stosuj
    automatycznej kaskady providerów. Następne wywołanie dopiero po ocenie
    bieżącej strony przez model.
