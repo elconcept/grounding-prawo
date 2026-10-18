@@ -9,6 +9,11 @@ default_dr:
   nie_dubluj: domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance)
     nie mają modułów - powiedz to wprost, nie zgaduj
 skills:
+  wiki-basic-memory:
+    wejscie: pytanie do wiki, synteza lub kontrola jakości
+    wynik: istniejąca notatka tematyczna i recap sesji
+    dalej: [ingest-wiki]
+    wiki: źródła odpowiedzi, synteza, sprzeczności i wykryte braki
   ingest-wiki:
     wejscie: "Dokumenty do ingestu albo wznowienie kolejki Basic Memory."
     wynik: "Basic Memory legal: dokumenty, ustalenia i relacje; recap w main."

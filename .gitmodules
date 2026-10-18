@@ -175,6 +175,10 @@
 [submodule "vendor/packs/awesome-legal-data"]
 	path = vendor/packs/awesome-legal-data
 	url = https://github.com/elconcept/awesome-legal-data.git
-[submodule "vendor/mcp/basic-memory"]
-	path = vendor/mcp/basic-memory
+[submodule "vendor/general/basic-memory"]
+	path = vendor/general/basic-memory
 	url = https://github.com/elconcept/basic-memory.git
+
+[submodule "vendor/general/llm-wiki-plugin"]
+	path = vendor/general/llm-wiki-plugin
+	url = https://github.com/praneybehl/llm-wiki-plugin.git

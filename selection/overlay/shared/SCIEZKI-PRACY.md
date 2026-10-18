@@ -5,6 +5,7 @@ Ustal cel z rozmowy; pytaj tylko o brakującą informację. Odczyt i zapis pami�
 | Cel | Działanie |
 |---|---|
 | Dokumenty do odczytu lub ingestu | `odczyt-dokumentow`; potem ingest według `shared/BASIC-MEMORY.md` |
+| Pytania do wiki, synteza wiedzy, kontrola jakości wiki | `wiki-basic-memory` |
 | Analiza akt | odczyt dokumentów, `chronologia-sprawy-v1`, `analizator-dowodow-v3`, domena DR, `analiza-sadowa-v6` |
 | Nowe pismo | kwalifikacja routera, `pisma-procesowe-v3` lub `pisma-proste-v2`, kontrola w `szturm-na-draft-pl` |
 | Zawiadomienie pokrzywdzonego | bezpośrednio `zawiadomienie-o-przestepstwie`; wyjątek od toru procesowego routera |

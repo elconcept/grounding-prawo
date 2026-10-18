@@ -22,8 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Submoduły źródłowe (tylko dwa potrzebne do budowy)
-        run: git submodule update --init --depth 1 vendor/LexMachina vendor/awesome-matematic-skills-pl
+      - name: Submoduły źródłowe potrzebne do budowy
+        run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install pyyaml
@@ -51,8 +51,8 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - run: git submodule update --init --depth 1 vendor/LexMachina vendor/awesome-matematic-skills-pl
-      - run: git submodule update --remote --depth 1 vendor/LexMachina vendor/awesome-matematic-skills-pl
+      - run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr
+      - run: git submodule update --remote --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install pyyaml
