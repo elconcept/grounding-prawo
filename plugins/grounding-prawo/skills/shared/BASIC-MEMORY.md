@@ -18,20 +18,28 @@ Trzy projekty pełnią odrębne role. Projekt `model-memory` jest współdzielon
    Jeśli nazwa nie rozwiązuje się, wyszukaj notatkę. Nie udawaj odczytu niedostępnej metodyki.
 4. Wznowienie zaczynaj od zaległych zapisów i stanu pisma. Wiki wskazuje źródła; nie zastępuje akt ani aktualnego prawa.
 
-## Ingest wykonywany na serwerze
+## Ingest PDF — wyłącznie przez model LLM
 
-Pełny przebieg prowadzi skill `ingest-wiki` przez narzędzia `wiki_ingest` i `wiki_plan`.
-Odczytaj podręcznik serwera `man(page="wiki-ingest")`; zawiera aktualny kontrakt.
-Źródła, kolejka, OCR, weryfikacja zapisu i plany są dostępne przez MCP również w
-claude.ai i chatgpt.com. Katalog projektu legal nie dostarcza silnika wykonawczego.
-Submoduł `vendor/general/basic-memory` w repo pluginu przypina kompatybilne źródło
-serwera; uruchomienie i aktualizacja serwera pozostają osobnym krokiem wdrożenia.
+Ingest do `legal` prowadzi wyłącznie model, wykonując po jednej stronie PDF:
+`ingest-wiki` → `odczyt-dokumentow` (Google Vision/Azure) → kontrola OCR i obrazu
+→ ewentualnie ponowny odczyt Datalab/LlamaParse → zatwierdzenie strony.
+Nie korzystaj z `wiki_ingest` (refresh, start, extract, index) ani
+kolejki z dawnych bind mountów. Na serwerze Basic Memory nie ma już
+`/dokumentacja`, a model tworzy źródła Markdown tylko po weryfikacji
+całego PDF. Rozdziel dokumenty zawarte w jednym PDF na osobne notatki;
+źródłowy tekst pozostaje bez modyfikacji i każdą stronę zaczyna
+`==< plik.pdf (Page n/total_document_pages) >==`.
 
-Rozbieżność techniczną wyjaśnij najpierw samodzielnie dostępnymi narzędziami i źródłami
-(np. Git, gh, konfiguracja, logi). Pytaj autora dopiero, gdy nie udało się jej rozstrzygnąć.
-Kanoniczne repozytorium to `elconcept/basic-memory`; `elconcept/mcp-basic-memory` jest starą nazwą.
+Binarne PDF nie trafiają do Basic Memory: model wywołuje archiwizację
+niezmienionego źródła do dwóch prywatnych bucketów MinIO i R2 i dopiero
+po potwierdzeniu obu kopii zapisuje notatkę źródłową w `legal/dokumenty`.
+Notatki wtórne tworzy lub aktualizuje osobno i łączy linkami do źródła.
+`wiki_plan` pozostaje niezależnym narzędziem planowania, nie uruchamia OCR.
 
-Przy ingescie, pytaniach do wiki i kontroli jej jakości przeczytaj `shared/WIKI.md`.
+Niedostępność OCR, obrazów lub jednej z kopii źródła oznacza przerwany
+ingest, nie status „zweryfikowany”. Wymagaj faktycznego zapisu
+`write_note` i kontroli przez `read_note`.
+
 
 ## Zapis w `legal` po każdym zakończonym etapie
 
