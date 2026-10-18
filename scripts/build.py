@@ -349,9 +349,9 @@ def add_session_protocol():
         text = open(path, encoding="utf-8").read()
         fm = re.match(r"---\n.*?\n---\n", text, re.S)
         directive = ("\n## Pamięć sesji — przed pracą i przed odpowiedzią końcową\n\n"
-            "Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. "
-            "Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową "
-            "zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. "
+            "Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. "
+            "Na wejściu odczytaj adekwatny kontekst z projektu `model-memory` i sprawy z `legal`; "
+            "przed odpowiedzią końcową zapisz lub zaktualizuj recap w `model-memory` i sprawdź odczytem. "
             "Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. "
             "Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.\n")
         if name == "prawny-router-v3":
