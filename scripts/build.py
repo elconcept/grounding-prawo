@@ -349,14 +349,53 @@ def add_session_protocol():
         text = open(path, encoding="utf-8").read()
         fm = re.match(r"---\n.*?\n---\n", text, re.S)
         directive = ("\n## Pamięć sesji — przed pracą i przed odpowiedzią końcową\n\n"
-            "Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. "
-            "Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową "
-            "zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. "
+            "Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. "
+            "Na wejściu odczytaj adekwatny kontekst z projektu `model-memory` i sprawy z `legal`; "
+            "przed odpowiedzią końcową zapisz lub zaktualizuj recap w `model-memory` i sprawdź odczytem. "
             "Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. "
             "Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.\n")
         if name == "prawny-router-v3":
             directive += "\nNajpierw wybierz cel według `shared/SCIEZKI-PRACY.md`; to jedyny punkt wejścia pluginu.\n"
         open(path, "w", encoding="utf-8").write(text[:fm.end()] + directive + text[fm.end():])
+
+
+
+def generate_skill_index(sel):
+    """Generate a short canonical catalog from selection.yaml and the built skills."""
+    entries = [e for e in sel["keep"] if not e.get("fold_into")]
+    folded = [e for e in sel["keep"] if e.get("fold_into")]
+    out = [
+        "# Indeks kanonicznych skilli grounding-prawo",
+        "",
+        "Generowany przez [skrypt budowania](https://github.com/elconcept/grounding-prawo/blob/main/scripts/build.py) z selekcji pluginu.",
+        "Opis pochodzi z pola `why` selekcji lub frontmatter skilla.",
+        "",
+        f"**Skille:** {len(entries)}. **Scalone moduły:** {len(folded)}.",
+        "",
+        "| Skill | Krótki opis | Źródło | Typ |",
+        "|---|---|---|---|",
+    ]
+    for e in entries:
+        name = e["name"]
+        fm, _, _ = frontmatter(os.path.join(SKILLS, name, "SKILL.md"))
+        desc = str(e.get("why") or (fm or {}).get("description") or "brak opisu")
+        desc = " ".join(desc.split()).replace("|", "/")
+        for removed in sel.get("drop", []):
+            desc = re.sub(r"(?<![\\w-])" + re.escape(removed["name"]) + r"(?![\\w-])",
+                          "moduł poza pluginem", desc)
+        if len(desc) > 190:
+            desc = desc[:190].rsplit(" ", 1)[0] + "…"
+        typ = "wewnętrzny" if e.get("internal") else "wywoływany"
+        out.append(f"| [`{name}`](../{name}/SKILL.md) | {desc} | `{e['from']}` | {typ} |")
+    if folded:
+        out.extend(["", "## Moduły scalone z innymi skillami", "",
+                    "| Moduł | Włączony do | Opis |", "|---|---|---|"])
+        for e in folded:
+            out.append(f"| `{e['name']}` | `{e['fold_into']}` | {str(e.get('why') or '').replace('|', '/')} |")
+    path = os.path.join(SKILLS, "shared", "INDEKS-SKILLI.md")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(out) + "\n")
 
 
 def main():
@@ -408,6 +447,8 @@ def main():
             if not os.path.isdir(os.path.join(SKILLS, dep)):
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
         normalize_skill(sm, e)
+
+    generate_skill_index(sel)
 
     plugin = {
         "name": "grounding-prawo",
