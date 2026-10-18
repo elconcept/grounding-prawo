@@ -361,47 +361,38 @@ def add_session_protocol():
 
 
 def generate_skill_index(sel):
-    """Generate the canonical, human-usable skill inventory from selection."""
+    """Generate a short canonical catalog from selection.yaml and the built skills."""
+    entries = [e for e in sel["keep"] if not e.get("fold_into")]
+    folded = [e for e in sel["keep"] if e.get("fold_into")]
     out = [
         "# Indeks kanonicznych skilli grounding-prawo",
         "",
-        "Plik generowany automatycznie przez \`scripts/build.py\` z \`selection/selection.yaml\`.",
-        "Nie edytuj go ręcznie. \`why\` to krótkie uzasadnienie/charakterystyka wyboru.",
+        "Generowany przez `scripts/build.py` z `selection/selection.yaml`.",
+        "Opis pochodzi z pola `why` selekcji lub frontmatter skilla.",
         "",
-        "| Skill | Rola / krótki opis | Źródło | Tryb |",
+        f"**Skille:** {len(entries)}. **Scalone moduły:** {len(folded)}.",
+        "",
+        "| Skill | Krótki opis | Źródło | Typ |",
         "|---|---|---|---|",
     ]
-    count = 0
-    folded = []
-    for entry in sel["keep"]:
-        name = entry["name"]
-        if entry.get("fold_into"):
-            folded.append(entry)
-            continue
-        path = os.path.join(SKILLS, name, "SKILL.md")
-        fm, _, _ = frontmatter(path)
-        description = (entry.get("why") or (fm or {}).get("description") or "brak opisu").strip()
-        description = re.sub(r"\\s+", " ", description).replace("|", "\\|")
-        desc_limit = 190
-        if len(description) > desc_limit:
-            description = description[:desc_limit].rsplit(" ", 1)[0] + "…"
-        role = "wewnętrzny" if entry.get("internal") else "wywoływany"
-        out.append(
-            f"| [\\`{name}\\`](../{name}/SKILL.md) | {description} | "
-            f"\\`{entry['from']}\\` | {role} |"
-        )
-        count += 1
-    out.insert(5, f"**Skille dostępne:** {count}. Dołączone typy i moduły: {len(folded)}.\\n")
+    for e in entries:
+        name = e["name"]
+        fm, _, _ = frontmatter(os.path.join(SKILLS, name, "SKILL.md"))
+        desc = str(e.get("why") or (fm or {}).get("description") or "brak opisu")
+        desc = " ".join(desc.split()).replace("|", "/")
+        if len(desc) > 190:
+            desc = desc[:190].rsplit(" ", 1)[0] + "…"
+        typ = "wewnętrzny" if e.get("internal") else "wywoływany"
+        out.append(f"| [`{name}`](../{name}/SKILL.md) | {desc} | `{e['from']}` | {typ} |")
     if folded:
-        out.extend(["", "## Moduły włączone do innych skilli", "", "| Moduł | Skill nadrzędny | Opis |", "|---|---|---|"])
+        out.extend(["", "## Moduły scalone z innymi skillami", "",
+                    "| Moduł | Włączony do | Opis |", "|---|---|---|"])
         for e in folded:
-            why = str(e.get("why") or e.get("typ") or "").replace("|", "\\|")
-            out.append(f"| \`{e['name']}\` | \`{e['fold_into']}\` | {why} |")
+            out.append(f"| `{e['name']}` | `{e['fold_into']}` | {str(e.get('why') or '').replace('|', '/')} |")
     path = os.path.join(SKILLS, "shared", "INDEKS-SKILLI.md")
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as file:
-        file.write("\\n".join(out).replace("\\\`", "`") + "\\n")
-
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(out) + "\n")
 
 
 def main():
