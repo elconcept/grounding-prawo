@@ -6,8 +6,9 @@
 # internal: true = moduł pomocniczy routera; pozostaje dostępny dla modelu (import OpenAI odrzuca disable-model-invocation).
 # Zasada: LexMachina jest spleciona (shared odwołuje się do audyt-systemu 33x, do DR-04..15 16x),
 # więc jest zachowana jako zamknięty silnik; wycinamy tylko moduły, które da się odciąć patchem.
-version: "0.4.0"
+version: "0.4.1"
 keep:
+  - {name: wiki-basic-memory, from: own, why: "pytania, syntezy i kontrola jakości wiki przez istniejące MCP"}
   - {name: ingest-wiki, from: own, why: "pełny ingest przez narzędzia MCP basic-memory, także w klientach przeglądarkowych"}
   - {name: teczka-sprawy, from: own, why: "narzędzia teczki przeniesione z legal do pluginu"}
   - {name: odczyt-dokumentow, from: own, why: "Jeden odczyt dokumentów do Markdown i kontraktu; the-ocr jako narzędzie, bez lokalnego OCR"}

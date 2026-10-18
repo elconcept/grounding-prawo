@@ -97,3 +97,53 @@ Musi obejmować zarówno `.agents/plugins`, jak i `plugins/grounding-prawo`. Sta
 same manifesty można zastąpić: `codex plugin marketplace remove grounding-prawo`, następnie ponownie
 wykonać powyższe `marketplace add` z oboma `--sparse` i `plugin add`. To konfiguracja źródła marketplace;
 nie zmienia połączeń ani uprawnień konektorów. Potwierdź wersję w wyniku instalacji i rozpocznij nową sesję.
+
+## Wiki Karpathy w Basic Memory
+
+Wiki ma trzy warstwy: dokument pierwotny, opracowane notatki z odwołaniami do źródeł
+oraz indeks/graf do nawigacji. `legal` przechowuje wiedzę spraw; `main` przechowuje
+recapy. Silnik serwerowy `wiki_ingest` utrzymuje kolejkę, odczyt porcjami, kontrolę
+kompletności i powiązań, OCR brakujących sidecarów oraz indeks. `wiki_plan` przechowuje
+stan planu niezależnie od klienta. Kontrakt narzędzi: `man(page="wiki-ingest")`.
+
+- **Dokumenty:** skill `ingest-wiki`. Przed zapisem ustaleń wyszukuje istniejące
+  osoby i tematy, aktualizuje właściwe notatki, zachowuje sprzeczne wersje ze źródłami.
+- **PDF i sidecar Markdown:** sidecar to robocza transkrypcja. Serwer wymaga obrazu
+  każdej strony (`inspect_page`) i poprawionej transkrypcji (`verify_page`). Dopiero
+  potem `start` publikuje źródło w wiki. Komentarze nieobecne na PDF pozostają poza
+  transkrypcją; dopiski widoczne na PDF są częścią dokumentu. Oryginalny sidecar nie
+  jest nadpisywany. Serwer sprawdza pokrycie stron i wersje plików; zgodność treści
+  ocenia model oglądający obrazy. Bez obsługi obrazów klient zatrzymuje publikację.
+- **Pytania, syntezy i jakość:** skill `wiki-basic-memory` korzysta z indeksu,
+  `search_notes` i `build_context`; wraca do źródeł, zapisuje nowe syntezy i sprawdza
+  brakujące odnośniki, duplikaty, sprzeczności oraz luki w materiale.
+
+Adaptacja workflow Praneya Behla (`praneybehl/llm-wiki-plugin`, MIT): rozpoznanie
+wpływu nowego źródła, aktualizacja powiązanych stron, jawne sprzeczności, zapis syntez
+oraz rozdzielenie kontroli struktury i treści. Nie kopiujemy lokalnego silnika
+wyszukiwania, drugiej bazy grafu ani pętli uruchamiających zewnętrzne modele — te
+zadania obsługują istniejące MCP i Basic Memory. Ocena: `docs/llm-wiki-assessment.md`.
+
+Źródła przypięte jako submoduły: `vendor/general/llm-wiki-plugin` oraz
+`vendor/general/basic-memory` (repo `elconcept/basic-memory`; przeniesione z
+`vendor/mcp/basic-memory`). Aktualizacja pluginu nie wdraża serwera. Bramka PDF
+wymaga serwera z akcjami `inspect_page` i `verify_page` oraz zależnością PyMuPDF.
+Wcześniej ukończone błędne importy wymagają osobnej naprawy; nie zmieniamy ich automatycznie.
+
+### Co dociera przez marketplace do claude.ai i chatgpt.com
+
+**Nie ma automatycznej synchronizacji całego README.md do kontekstu modelu.**
+Manifesty obu klientów wskazują katalog `plugins/grounding-prawo`; samo README
+repozytorium nie jest instrukcją sesji. Mechanizm dystrybucji reguł już istnieje:
+
+1. `scripts/build.py` kopiuje `own-skills/` oraz `selection/overlay/` do skilli pluginu.
+2. `add_session_protocol()` dodaje do skilli polecenie odczytu `shared/BASIC-MEMORY.md`
+   i `shared/ZASADY-PLUGINU.md`. Protokół pamięci kieruje operacje wiki do `shared/WIKI.md`.
+3. `ingest-wiki` i `wiki-basic-memory` dostarczają właściwe procedury. Zasady opisane
+   powyżej są więc także w instalowanej paczce, bez zależności od lokalnego README.
+
+To instrukcje odczytywane przy użyciu skilla, nie gwarantowany hook każdej rozmowy.
+Konektor Lex wymaga autoryzacji; dostępność serwera i obrazy MCP zależą od klienta.
+Walidacja paczki sprawdza dostarczenie plików i odsyłaczy. Aktywację na konkretnym
+koncie potwierdza dopiero nowa rozmowa w claude.ai/chatgpt.com: wywołaj `ingest-wiki`,
+poproś o regułę porównania sidecara z PDF i sprawdź dostępność `inspect_page`.
