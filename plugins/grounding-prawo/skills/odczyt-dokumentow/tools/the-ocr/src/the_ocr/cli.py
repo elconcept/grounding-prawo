@@ -28,6 +28,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--markdown", action="store_true", help="also write <output>.md")
     parser.add_argument("--json", action="store_true", dest="json_output", help="also write <output>.json (doc-intel-contract-pl)")
     parser.add_argument(
+        "--words",
+        action="store_true",
+        help="JSON with editable word geometry (blocks[].words[]) for --from-json; implies --json",
+    )
+    parser.add_argument(
+        "--from-json",
+        type=Path,
+        default=None,
+        metavar="JSON",
+        help="no OCR provider: build the text layer from this (corrected) JSON with blocks[].words[]",
+    )
+    parser.add_argument(
         "--archive",
         action="store_true",
         help="copy the original to the archive before OCR (default dir: $THE_OCR_ARCHIVE_DIR or ~/archive)",
@@ -50,6 +62,20 @@ def build_parser() -> argparse.ArgumentParser:
         default="auto",
         help="OCRmyPDF text-layer mode (default auto: redo, skip for PDF forms; force rasterizes pages)",
     )
+    ocrmypdf = parser.add_argument_group("OCRmyPDF")
+    ocrmypdf.add_argument(
+        "--optimize",
+        type=int,
+        choices=[0, 1, 2, 3],
+        default=1,
+        help="OCRmyPDF --optimize: 0 off, 1 lossless (default), 2-3 lossy (need pngquant, jbig2enc)",
+    )
+    ocrmypdf.add_argument(
+        "--clean-final",
+        action="store_true",
+        help="OCRmyPDF --clean-final: unpaper-cleaned page images in the output (needs --layer force and unpaper)",
+    )
+    ocrmypdf.add_argument("--pdfa", action="store_true", help="OCRmyPDF --output-type pdfa (PDF/A-2b)")
     parser.add_argument(
         "--force-provider",
         choices=[*PROVIDER_NAMES, *PROVIDER_ALIASES],
@@ -65,7 +91,17 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: no such file: {input_path}", file=sys.stderr)
         return 1
 
-    providers = all_providers() if args.force_provider else default_providers()
+    if args.from_json is not None and args.force_provider:
+        print("error: --from-json and --force-provider exclude each other", file=sys.stderr)
+        return 1
+    if args.from_json is not None and not args.from_json.is_file():
+        print(f"error: no such file: {args.from_json}", file=sys.stderr)
+        return 1
+    if args.clean_final and args.layer != "force":
+        print("error: --clean-final needs --layer force (OCRmyPDF refuses it with redo; skip leaves text pages)", file=sys.stderr)
+        return 1
+
+    providers = [] if args.from_json is not None else all_providers() if args.force_provider else default_providers()
     try:
         result = process_input(
             input_path,
@@ -73,11 +109,16 @@ def main(argv: list[str] | None = None) -> int:
             force=args.force_provider,
             output=args.output,
             markdown=args.markdown,
-            json_output=args.json_output,
+            json_output=args.json_output or args.words,
             archive=args.archive,
             archive_dir=args.archive_dir,
             a4=args.a4,
             layer=args.layer,
+            from_json=args.from_json,
+            words=args.words,
+            optimize=args.optimize,
+            clean_final=args.clean_final,
+            pdfa=args.pdfa,
         )
     except (OSError, RuntimeError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)

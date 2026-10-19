@@ -44,7 +44,7 @@ kopia w `output/`; robocze: `_robocze/<rrrrMMdd>_<pismo>__szturm/` (REDLINE, wyc
 Kotwica: <plik:linia>. Dowód: <…>. Działanie: <AUTO|REDAKCJA|DECYZJA_AUTORA|DOWOD> -> <stan>.
 
 ## TURA N - ZMIANY W PISMACH (zmiany śledzone z komentarzem przy każdej)
-- `<draft>_REDLINE.docx`: <k> zmian (w:ins <i> / w:del <d>), autor „<etykieta>”.
+- Snapshot `drafty/<pismo>/<wersja>.md`; DOCX `legal/output/<wersja>.docx`: <k> zmian (w:ins <i> / w:del <d>), autor „<etykieta>”.
 - Zmiany nieśledzone (fix_format.py): <lista: akapit, zmiana>.
 - Karta ocena-outputu-pl: <WARSTWA 1 / 2 / KOTWICE / DECYZJA>
   REWIZJA #<r>: decyzja <X> -> <Y>. <uzasadnienie albo odrzucone podniesienie>.

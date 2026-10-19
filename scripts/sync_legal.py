@@ -58,8 +58,8 @@ def sync(source, target):
         text = path.read_text() if path.exists() else ''
         text = text.replace(LEGACY_CLAUDE, '').replace(LEGACY_AGENTS,
             '13. Publikacja i historia pism: `.agents/grounding-prawo/shared/ARTEFAKTY-SPRAWY.md`.\n'
-            '    To wyjątek od zasady 5 dla zastępowanych wynikowych DOCX i kopii w `output/`,\n'
-            '    po zachowaniu historii i ręcznych zmian zgodnie z regułą kanoniczną.\n')
+            '    To wyjątek od zasady 5 dla zastępowanego DOCX pisma w `output/`,\n'
+            '    po zapisaniu snapshotu MD zgodnie z regułą kanoniczną.\n')
         updates[path] = update_pointer(text)
     # Build and validate the entire payload before touching the destination.
     with tempfile.TemporaryDirectory() as temp:

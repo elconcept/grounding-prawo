@@ -8,7 +8,7 @@ metadata:
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
 
-Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 # Zawiadomienie o przestępstwie
 
@@ -169,10 +169,9 @@ uzupełnienia. Nie przedstawiaj takiego pliku jako w pełni gotowego do podpisan
 Obowiązkowo zapisuj również trwałe `_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md` i `_REJESTR_PISM.md` oraz kopię
 relacji na zamknięcie sesji według `references/ciaglosc-sesji.md`. Dotyczy to też pracy poza
 repo abogada; te pliki nie są jednorazowymi notatkami `_robocze/`.
-- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (i `.docx`, jeśli autor chce).
-  Zachowuj wszystkie wersje `.md`, lecz po zweryfikowaniu nowej wersji pozostaw w katalogu pisma
-  tylko jej DOCX. Do `00_sprawy/<sprawa>/output/` kopiuj wyłącznie najnowszy DOCX, zgodnie z
-  `shared/ARTEFAKTY-SPRAWY.md`.
+- Pismo: wersje `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD) i jeden
+  DOCX pisma w `legal/output/` (tylko DOCX), w cyklu akceptacja redline → snapshot MD → redline sesji,
+  zgodnie z `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”.
 - Pliki inkrementalne pisma (tworzone raz, potem dopisywane): `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, wynik,
   decyzje autora), `_MAPA_KRZYWD.md` (mapa wewnętrzna F5, wiersze ze stałym `#`, zmiany statusu zamiast kopii),
   `_HARDGATE.md` (rejestr relacji i raport bramki, dopisek per przebieg).

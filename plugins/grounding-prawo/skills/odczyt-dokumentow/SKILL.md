@@ -5,26 +5,39 @@ description: Odczytuje pliki i foldery dokumentów do Markdown z numerami stron 
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
 
-Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
-# Odczyt dokumentów
+# Odczyt dokumentów i ingest do Basic Memory
 
-Najpierw sprawdź istniejący sidecar `.md` obok źródła; jeśli jest, czytaj go i sprawdzaj w oryginale tylko wątpliwości.
-Przy ingestowaniu do Basic Memory użyj skilla `ingest-wiki`: serwer odczyta sidecar,
-przeprowadzi potrzebny OCR i zachowa stan między hostami. Ten przebieg nie wymaga lokalnego skryptu.
-Przy braku sidecara uruchom `scripts/read_documents.py PLIK_LUB_FOLDER --output KATALOG_WYNIKU` z katalogu tego skilla.
-Wynik: `manifest.json`, osobny Markdown i kontrakt JSON dla każdego dokumentu. Źródła pozostają niezmienione.
-Jeśli zasady folderu sprawy wymagają sidecara, skopiuj gotowy Markdown obok źródła (bez nadpisywania istniejącego).
-W sprawie używaj `_robocze/odczyt/`; rejestr wyników dopisz do `analiza/_dokumenty.md`.
+**Oddziel analizę plików od ingestu wiki.** W analizie można czytać inne
+formaty, a główne CLI `the-ocr` zachowuje PDF/JPG/JPEG/PNG i historyczne opcje; tylko ingest do projektu `legal` przyjmuje **wyłącznie PDF**,
+wskazany jawnie przez użytkownika/model prowadzący. Nie używaj skanowania
+katalogów, istniejących sidecarów jako dowodu, automatycznego refresh
+`wiki_ingest` ani wsadowej konwersji folderów.
 
-PDF z tekstem odczytywany jest bez OCR. Skany i obrazy obsługuje narzędzie the-ocr:
-- bez flagi: skonfigurowany łańcuch providerów (`THE_OCR_CHAIN`),
-- `--provider datalab`, `--provider azure-di` lub `--provider google-vision`: wyłącznie wybrany provider,
-- `--ocr`: wymuś OCR także dla PDF z uszkodzoną warstwą tekstową.
+Dla ingestu PDF bezwzględnie uruchom skill `ingest-wiki`:
 
-Pierwsze uruchomienie: `python -m pip install -r requirements.txt`. Następnie `python scripts/read_documents.py --help`.
-Nie uruchamiaj kolejnego OCR na gotowym wyniku. Narzędzie ponownie wykorzystuje wynik dla tej samej treści i ustawień.
-Flaga `--refresh` wymusza ponowne przetworzenie. Dostęp do providerów: `references/providers.md`.
+1. Uruchom `the-ocr-ingest-page PDF --page N --force-provider google_vision`
+   albo `azure`, dla **jednej strony**.
+2. Model sprawdza cały wynik z obrazem oryginału przed następną stroną.
+   Wątpliwości i artefakty → nowy odczyt tej samej strony przez `datalab`
+   lub `llamaparse`. Nie akceptuj niezweryfikowanych sidecarów.
+3. Wynik każdej zaakceptowanej strony poprzedź dokładnie
+   `==< source_filename.pdf (Page n/total_document_pages) >==`.
+   Przy wielu dokumentach w jednym PDF powstaje wiele plików Markdown;
+   każda strona zachowuje numerację oryginalnego PDF.
+4. Oryginał PDF pozostaje nietknięty. Kopie binarne trafiają do
+   prywatnego MinIO i R2, nie do Basic Memory. Dopiero po weryfikacji
+   obu kopii model zapisuje oryginalne Markdown do `legal/dokumenty`.
+   Notatki wtórne są osobne i powiązane linkami.
+5. **Tylko `the-ocr-ingest-page`** domyślnie produkuje Markdown. `--fixme` tworzy pochodną
+   A4, a `--searchable-pdf --from-json` nowy PDF z zastąpioną warstwą
+   OCR. Nigdy nie nadpisuj oryginału podczas ingestu. Globalne `the-ocr` pozostaje wstecznie zgodne z istniejącymi aplikacjami.
+
+Do analizy **poza ingestem** mogą pozostać narzędzia
+`scripts/read_documents.py` i różne formaty. Ich automatyczny router
+nie może samoczynnie publikować treści do wiki. Opisy niżej dotyczą
+pomocniczej analizy, nie zatwierdzonego ingestu PDF.
 
 ## Konektor `ocr` (serwer mcp-ocr)
 

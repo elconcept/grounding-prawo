@@ -184,7 +184,7 @@ skills:
   pisma-procesowe-v3:
     etap: B
     wejscie: '`analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM'
-    wynik: '`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.docx|md`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
+    wynik: '`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.md`, DOCX w `legal/output/`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - terminy-procesowe-pl
@@ -278,7 +278,7 @@ skills:
   szturm-na-draft-pl:
     etap: C
     wejscie: draft `.docx` z aktami; wariant domyślny pełnej kontroli (zastępuje ręczne przepuszczanie przez soczewki)
-    wynik: '`drafty/<pismo>/<nowa_wersja>.docx`; REDLINE w `_robocze/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md`'
+    wynik: 'snapshot `drafty/<pismo>/<wersja>.md`; DOCX z redline sesji w `legal/output/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md`'
     dalej:
     - deliverable-fidelity-pl
     - pisz-po-polsku

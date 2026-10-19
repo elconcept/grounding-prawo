@@ -9,7 +9,7 @@ on:
     branches: [main]
   push:
     branches: [main]
-    paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules"]
+    paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr"]
   schedule:
     - cron: "17 5 * * 1"
   workflow_dispatch:
@@ -28,12 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Submoduły źródłowe potrzebne do budowy
+      - name: Submoduły jawne potrzebne do budowy
         run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
-      - name: Przypięta wersja the-ocr
+      - name: Przypięty commit prywatnego the-ocr
         id: ocr-ref
         run: echo "sha=$(git rev-parse HEAD:vendor/docs/the-ocr)" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
+      - name: Checkout prywatnego the-ocr przez ograniczony deploy key
+        uses: actions/checkout@v4
         with:
           repository: elconcept/the-ocr
           ref: ${{ steps.ocr-ref.outputs.sha }}
@@ -102,7 +103,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
       - run: git submodule update --remote --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
-      - name: Przypięta wersja the-ocr
+      - name: Przypięty commit prywatnego the-ocr
         id: ocr-ref
         run: echo "sha=$(git rev-parse HEAD:vendor/docs/the-ocr)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4

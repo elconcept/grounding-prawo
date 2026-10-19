@@ -45,9 +45,10 @@ semantycznym; nie zastępuje pierwszego kroku w Repertorium.
 
 Przed redakcją lub poprawianiem pisma przeczytaj `shared/STYLE.md`; przed utworzeniem plików
 przeczytaj `shared/ARTEFAKTY-SPRAWY.md` i `shared/FORMAT-PISMA.md`.
-W katalogu sprawy zachowuj historię wszystkich wersji pisma w Markdown oraz najnowszy DOCX.
-W `legal/output/` pozostaje wyłącznie najnowszy DOCX każdego pisma. Zasady bezpiecznej wymiany,
-rozróżnienia pism i ochrony ręcznych zmian określa `shared/ARTEFAKTY-SPRAWY.md`.
+W `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/` powstają kolejne wersje pisma `_v1`, `_v2`... wyłącznie w Markdown.
+W `legal/output/` jest dokładnie jeden DOCX każdego pisma i nic poza DOCX. Sesja zaczyna się od akceptacji
+niezaakceptowanych zmian w tym DOCX i snapshotu MD, a kończy zmianami tej sesji jako redline w DOCX
+(`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”).
 
 Wiedza wielosprawowa, teczka sprawy w wiki i lekcje do doskonalenia pism: Basic Memory, projekt `legal`
 (protokół odczytu i zapisu: `shared/BASIC-MEMORY.md`), a lekcje jednej sprawy także `_wiedza.md` w teczce.

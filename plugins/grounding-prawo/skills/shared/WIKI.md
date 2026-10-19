@@ -1,3 +1,7 @@
+# WIKI — ingest wyłącznie PDF przez model
+
+Nie uruchamiaj kolejek ani `wiki_ingest refresh/index` na dawnych mountach. Każdy nowy dokument źródłowy wymaga kontroli OCR strona po stronie przez LLM, powtórnego odczytu podejrzanych stron, potwierdzenia archiwum oryginału PDF w MinIO i R2 oraz odczytowego potwierdzenia zapisu pełnego Markdown w Basic Memory. Szczegóły: `ingest-wiki`.
+
 # Wiki oparta na źródłach w Basic Memory
 
 Model Karpathy LLM Wiki: oryginały, opracowane notatki i nawigacja tworzą odrębne
@@ -16,12 +20,12 @@ PDF rozstrzyga zgodność transkrypcji: wykonaj kontrolę stron ze skilla `inges
 4. Sprzeczność zapisz wraz z obydwoma źródłami, datami i zakresem rozbieżności.
    Rozróżniaj zmianę stanu faktycznego, wersję strony i błąd odczytu. Nie wybieraj
    jednej wersji bez podstaw. Nowa relacja grafu wymaga oparcia w treści dokumentu.
-5. Odśwież indeks przez `wiki_ingest(action="index")`; recap wymienia zmienione
-   notatki, sprzeczności i zaległości. Dla batch ingestu wykonuj ten cykl per dokument.
+5. Po zatwierdzeniu przez LLM wszystkich stron PDF i potwierdzeniu kopii MinIO/R2 zapisz źródło Markdown oraz notatki wtórne; recap wymienia zmienione
+   notatki, sprzeczności i zaległości. Zabroniony jest automatyczny batch ingest oraz skan folderów.
 
 ## Pytanie i synteza
 
-Zacznij od teczki i indeksu źródeł `_ingest/wiki-ingest-index`; uzupełnij nawigację
+Zacznij od teczki i wyszukiwania istniejących notatek w `legal/dokumenty`; uzupełnij nawigację
 przez `search_notes` i `build_context`. Czytaj tylko trafne notatki i ich istotne
 powiązania. Dla tezy prawnej lub faktycznej wróć do dokumentu pierwotnego i konkretnej
 strony/bloku; aktualne prawo sprawdź odpowiednim MCP. Relacja grafu pomaga znaleźć

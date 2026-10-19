@@ -5,7 +5,7 @@ description: Masowa ekstrakcja danych z pakietu dokumentów (umowy, NDA, SPA, na
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
 
-Przeczytaj `shared/BASIC-MEMORY.md` i `shared/ZASADY-PLUGINU.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kontekst sprawy z projektu `legal`; przed odpowiedzią końcową zapisz lub zaktualizuj recap tej sesji w projekcie `main` i sprawdź odczytem zapis. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 # Przegląd tabelaryczny
 
@@ -37,7 +37,7 @@ python3 scripts/doc_to_text.py teczka/*.pdf teczka/*.docx teczka/*.md --out-dir 
 ```
 Numer strony w cytacie to kolejny `[Page N]`, nie numer ze stopki dokumentu.
 
-Markdown po OCR (odczyt-dokumentow, Chandra/Datalab, LlamaParse) jest przyjmowany bezpośrednio: strony
+Markdown po OCR (the-ocr, Chandra/Datalab, LlamaParse) jest przyjmowany bezpośrednio: strony
 rozpoznawane po `## Page N`, `[Page N]`, `<!-- page N -->`, `{N}------` i `\f`, frontmatter (poza pluginem)
 pomijany. Przy parze `umowa.pdf` + `umowa.md` brany jest `.md` (`--no-md` wyłącza). Plik bez
 znaczników stron to jedna strona (skrypt ostrzega); własny separator: `--page-sep hr` albo regex.

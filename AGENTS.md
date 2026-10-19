@@ -1,9 +1,11 @@
 # grounding-prawo - praca nad pluginem
 
 To repo służy do **doskonalenia pluginu i refaktoru skilli**. Nie prowadzi się tu spraw prawnych: praca
-prawnicza odbywa się w katalogu `legal` (volume1/legal, Synology Drive): `CLAUDE.md` (zasady) i `PRZEWODNIK.md` (ścieżki, skille, MCP, komendy) mówią,
-jak używać zainstalowanego pluginu. Reguły dla modelu pracującego nad sprawą są w pluginie:
-`selection/overlay/shared/ZASADY-PLUGINU.md` (marketplace nie instaluje CLAUDE.md ani README.md).
+prawnicza odbywa się w katalogu `legal` (volume1/legal, Synology Drive, repo `elconcept/legal`): `AGENTS.md` (zasady;
+`CLAUDE.md` tylko go dołącza) i `PRZEWODNIK.md` (ścieżki, skille, MCP, komendy) mówią, jak używać zainstalowanego pluginu.
+Wiki spraw jest w Basic Memory (projekt `legal`), nie w plikach `legal`. Reguły dla modelu pracującego nad sprawą są w
+pluginie: `selection/overlay/shared/ZASADY-PLUGINU.md` (marketplace nie instaluje CLAUDE.md ani README.md). Wejście do
+pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim scalony; `build.py` przepisuje stare odwołania).
 
 ## Układ repo
 | Ścieżka | Rola |
@@ -12,7 +14,7 @@ jak używać zainstalowanego pluginu. Reguły dla modelu pracującego nad spraw�
 | `selection/selection.yaml` | Źródło prawdy: które skille, skąd (`lex`, `awe:<pakiet>`, `own`, `vendor:`), opisy dopisywane. |
 | `selection/patches/`, `selection/overlay/` | Patche na kopię upstreamu i pliki dopisane do pluginu (`shared/`). |
 | `own-skills/` | Skille własne (bez upstreamu). Tu się je edytuje. |
-| `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify), `docs/`, `general/`, `commercial-legal`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (kodeksy kbchojnacki). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
+| `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify, commercial-legal, awesome-legaltech, awesome-legal-data), `docs/`, `general/`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (kodeksy kbchojnacki). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
 | `scripts/` | `build.py` (budowa), `validate_marketplace.py`, `lint_refs.py` (martwe odwołania), `report.py`. |
 | `archive/` | Kosz odroczonego usuwania; usuwa wyłącznie właściciel. |
 | `.claude-plugin/`, `.agents/plugins/` | Manifesty marketplace (Claude Code, Codex). |
@@ -31,6 +33,6 @@ jak używać zainstalowanego pluginu. Reguły dla modelu pracującego nad spraw�
 - Decyzje właściciela (14.10.2026): brak anonimizacji i zakazu chmury w skillach, MCP tylko przez portal,
   profil MAX bez bramek kosztu, `zawiadomienie-o-przestepstwie` omija tor procesowy routera.
 - Materiał do doskonalenia skilli: transkrypcje sesji w `INBOX/` (poza gitem; komenda `/transkrypcja` w `legal`) i lekcje
-  w `legal/<sprawa>/_wiedza.md`. Uwagę ogólną przenoś do skilla albo `shared/`, uwagę jednej sprawy zostaw w `_wiedza.md`.
+  w `legal/sprawy/<sprawa>/_wiedza.md`. Uwagę ogólną przenoś do skilla albo `shared/`, uwagę jednej sprawy zostaw w `_wiedza.md`.
 - Git jest kopią zapasową: commituj wszystko, co brudne, także cudze zmiany.
 - Opis ścieżek i konektorów dla użytkownika: `README.md`.

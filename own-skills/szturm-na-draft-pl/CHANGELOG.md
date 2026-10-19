@@ -1,5 +1,14 @@
 # Changelog - szturm-na-draft-pl
 
+## 1.5.0 — 2026-10-19 — snapshot MD i jeden DOCX z redline
+
+- Cykl sesji wg `shared/ARTEFAKTY-SPRAWY.md`: akceptacja niezaakceptowanych zmian w DOCX pisma z `legal/output/`,
+  snapshot MD w `drafty/<pismo>/`, na końcu jeden DOCX z redline zmian sesji w `legal/output/`.
+- Bez osobnego `_REDLINE.docx` i czystej kopii; w `drafty/` tylko MD. Nieodrzucona DECYZJA_AUTORA jest przyjmowana
+  na początku następnej sesji.
+- Rundy E8 nakładają zmiany na redline poprzedniej rundy; `fix_format.py` działa na bazie przed zmianami śledzonymi.
+- `weryfikuj_wynik.py`: bez `--czysty`, nowe `--drafty` (brak DOCX w drafty); test dymny obejmuje cały cykl.
+
 ## 1.4.0 — 2026-10-16 — pętla do GOTOWE
 
 - E8 nie kończy się na limicie 5 rund ani na nowej wersji z wadami: pętla trwa do stanu `GOTOWE` (pełna runda bez 🔴/🟠,
