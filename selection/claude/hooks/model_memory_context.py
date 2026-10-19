@@ -17,21 +17,22 @@ def main() -> None:
     name = event.get("hook_event_name", "")
     if name == "SessionStart":
         print(
-            "Wspólna pamięć LLM: użyj połączonego MCP Basic Memory, "
-            "wyszukaj stosowny kontekst projektu model-memory "
-            "(UUID 50c6d08c-2e2f-4c94-9afb-5d2478ae821b), "
-            "niezależnie od legal. Starsze recapy można odczytać z main. "
-            "W trakcie sesji zapisuj trwałe preferencje i decyzje do model-memory, "
-            "materiały prawne i źródła wyłącznie do legal; po zapisie sprawdź odczytem. "
-            "Nie przesyłaj całych rozmów i nie zapisuj sekretów."
+            "Basic Memory: odczytaj z model-memory tylko kuratorowane, kluczowe i trwałe ustalenia "
+            "(UUID 50c6d08c-2e2f-4c94-9afb-5d2478ae821b), a z main najnowszy "
+            "recap odpowiedni do bieżącej sesji. W legal są źródła, sprawy i notatki dowodowe. "
+            "Prowadź dziennik zmian i recapy sesji wyłącznie w main/sesje/. "
+            "Model-memory aktualizuj selektywnie tylko przy nowych key takeaways "
+            "przydatnych w przyszłości, nigdy automatycznie całym recapem. "
+            "Po zapisie potwierdź odczytem, nie zapisuj sekretów."
         )
     elif name == "PreCompact":
         print(
-            "Przed kompakcją utrwal ważne decyzje, niezakończone kroki i wyniki "
-            "tej sesji w Basic Memory model-memory przez dostępne narzędzia MCP, "
-            "w legal umieszczaj tylko materiały sprawy. Potwierdź odczyt."
+            "Przed kompakcją zapisz/uzupełnij recap bieżącej sesji wyłącznie "
+            "w Basic Memory main/sesje/ (działania, decyzje, wyniki, błędy, kolejny krok). "
+            "Sprawdź odczytem. Model-memory to curated key takeaways: aktualizuj "
+            "tylko jeśli sesja wnosi wartościową trwałą zasadę lub preferencję; "
+            "nie zapisuj tam dziennika. Legal zawiera fakty i źródła spraw."
         )
-
 
 if __name__ == "__main__":
     main()

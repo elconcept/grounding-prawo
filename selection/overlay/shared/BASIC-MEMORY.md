@@ -4,15 +4,15 @@ Trzy projekty pełnią odrębne role. Projekt `model-memory` jest współdzielon
 
 | Projekt | Zawartość |
 |---|---|
-| `main` | Projekt starszych recapów (odczyt archiwalny, nie zapisuj nowych). |
-| `model-memory` | Przekrojowe preferencje użytkownika, decyzje, kontekst techniczny, cele i recapy sesji różnych modeli; bez powielania akt i materiałów źródłowych. |
+| `main` | **Dziennik sesji i recapów**: cel, wykonane działania, zmiany, testy, wyniki, błędy, otwarte sprawy i następny krok. Jedna aktualizowana notatka na sesję, także gdy nie ma trwałych wniosków. |
+| `model-memory` | **Kuratorowana pamięć**: krótka lista kluczowych, trwałych ustaleń i preferencji wartych zapamiętania między sesjami i modelami. Nie przechowuje zwykłych recapów, dzienników działań ani kopii materiałów źródłowych. |
 | `legal` | Dokumenty źródłowe, postępowania, zdarzenia, osoby, teczki spraw, pisma, ustalenia i ich źródła |
 
 ## Dostęp i początek pracy
 
 1. Użyj dostępnego konektora Basic Memory. Gdy nie jest widoczny, wyszukaj narzędzia `basic-memory` w portalu Lex.
    Nazwa hosta/prefix narzędzia może się różnić. `list_memory_projects` powinno potwierdzić `model-memory`, `main` i `legal`.
-2. W `model-memory` wyszukaj ostatni recap i wspólne preferencje dotyczące zadania; starsze recapy można doczytać z `main`. W `legal` odczytaj teczkę `sprawy/<katalog>/`, jej relacje
+2. W `model-memory` wyszukaj najważniejsze ustalenia i preferencje związane z zadaniem. W `main` przeczytaj ostatni odpowiedni recap, aby wznowić pracę. W `legal` odczytaj teczkę `sprawy/<katalog>/`, jej relacje
    i lekcje (`read_note`, `build_context`, `search_notes` po sygnaturze). Brak teczki: utwórz przed analizą.
 3. Dla ingestu przeczytaj w `legal` `_metodologia/Metodologia ingestu` i `_metodologia/Zasady języka wiki`.
    Jeśli nazwa nie rozwiązuje się, wyszukaj notatkę. Nie udawaj odczytu niedostępnej metodyki.
@@ -55,9 +55,9 @@ ingest, nie status „zweryfikowany”. Wymagaj faktycznego zapisu
 Nie kończ ingestu na „zgłoszeniu do ingestu”. Zakończenie oznacza zapis dokumentu, ustaleń i relacji oraz odczyt
 potwierdzający. Gdy brakuje metodyki lub źródła, oznacz etap NIEZAKOŃCZONY i zapisz dokładnie zaległą czynność.
 
-## Recap w `model-memory` — przed każdą odpowiedzią kończącą etap
+## Recap w `main` — dziennik każdej sesji zmian
 
-Użyj jednej notatki sesji w projekcie `model-memory`, katalog `sesje/grounding-prawo/`: tytuł `RRRR-MM-DD — <temat> — <id sesji>`.
+Użyj jednej notatki sesji w projekcie `main`, katalog `sesje/grounding-prawo/`: tytuł `RRRR-MM-DD — <temat> — <id sesji>`.
 Użyj identyfikatora hosta, jeśli dostępny; w przeciwnym razie utwórz stabilny identyfikator przy pierwszym zapisie
 (np. znacznik czasu UTC) i zachowaj go w kolejnych aktualizacjach. Przy wznowieniu odszukaj istniejącą notatkę.
 
@@ -66,14 +66,17 @@ kontrole faktycznie wykonane; nierozstrzygnięte kwestie; następny krok; odnoś
 Aktualizuj tę samą notatkę po istotnym etapie, przed długą operacją i przed odpowiedzią końcową.
 Nie czekaj na komendę „zamknij” ani na zakończenie aplikacji. Sam recap nie zastępuje ingestu do `legal`.
 
+## Aktualizacja `model-memory` — tylko gdy naprawdę warto zapamiętać
+
+Nie zapisuj tu przebiegu sesji. Po recapowaniu w `main` oceń, czy ujawniła się **trwała, istotna informacja**, która poprawi przyszłe działania wielu modeli: np. potwierdzona preferencja autora, przyjęta zasada architektury albo decyzja o długim horyzoncie. Jeśli nie ma takiej informacji, **nie zapisuj niczego do `model-memory`**. Jeśli jest: najpierw wyszukaj istniejącą notatkę i uaktualnij krótkie ustalenie z kontekstem, zamiast tworzyć kopię recapu. Nie przenoś automatycznie całych podsumowań, logów, transkryptów czy sekretów.
+
 ## Potwierdzenie i awaria
 
 Zapisy tylko przez MCP (`write_note`, `edit_note`). Przed zmianą istniejącej notatki odczytaj ją; stosuj dopisek
 lub zmianę konkretnej sekcji, nie nadpisuj cudzych ustaleń. Przed ponowieniem niepewnego zapisu sprawdź, czy już istnieje.
 Po zapisie wykonaj `read_note` i sprawdź treść ostatniej zmiany. Sukces to odczyt zgodny z zamierzeniem, nie samo wywołanie.
 
-W odpowiedzi końcowej podaj krótko: `Pamięć: model-memory — zapisano <identyfikator>; legal — zapisano <identyfikator>
-/albo bez nowych ustaleń`. Gdy zapis się nie udał, podaj `NIEZAPISANE` i przyczynę.
+W odpowiedzi końcowej podaj krótko: `Pamięć: main — recap <identyfikator>; model-memory — zaktualizowano <identyfikator> / bez nowych trwałych ustaleń; legal — zapisano <identyfikator> / bez nowych ustaleń`. Gdy zapis się nie udał, podaj `NIEZAPISANE` i przyczynę.
 Zaległość dopisz do `_PRZEBIEGI.md` pisma lub `_robocze/pamiec-zalegle.md` w folderze sprawy, z projektem,
 identyfikatorem notatki i treścią do zapisu. Przy następnym wejściu ponów po sprawdzeniu duplikatów.
 Można kontynuować pracę merytoryczną; nie deklaruj pełnego zakończenia ingestu ani skutecznego zapisu pamięci.
@@ -81,4 +84,4 @@ Nagłe zamknięcie procesu może uniemożliwić zapis; checkpointy ograniczają 
 
 ## Przenośność i hooki
 
-Reguły odczytu/zapisu są konfigurowane per klient lub w pluginie. Na starcie każdej sesji host, który ma dostęp do MCP, powinien wyszukać odpowiedni kontekst `model-memory`; po istotnych zmianach zapisywać notatki i sprawdzać odczytem. Dla Claude Code można dołożyć hook z poleceniem odczytu/zapisu, ale sam plik instrukcji nie uruchamia hooka. **Wbudowana Memory ChatGPT nie może zostać przekierowana na MCP**; można ją uzupełniać o Basic Memory, o ile narzędzia są dostępne. Nie synchronizuj automatycznie całych rozmów ani sekretów.
+Reguły odczytu/zapisu są konfigurowane per klient lub w pluginie. Na starcie sesji odczytaj adekwatne *trwałe ustalenia* z `model-memory` i właściwy *ostatni recap* z `main`. Po znaczącym etapie zapisz dziennik sesji do `main`; do `model-memory` dopisz wyłącznie wybrane key takeaways, jeśli wystąpiły. Każdy zapis sprawdź odczytem. Dla Claude Code można dołożyć hook z poleceniem odczytu/zapisu, ale sam plik instrukcji nie uruchamia hooka. **Wbudowana Memory ChatGPT nie może zostać przekierowana na MCP**; można ją uzupełniać o Basic Memory, o ile narzędzia są dostępne. Nie synchronizuj automatycznie całych rozmów ani sekretów.
