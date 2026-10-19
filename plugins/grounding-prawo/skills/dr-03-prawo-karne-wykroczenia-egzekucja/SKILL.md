@@ -2,7 +2,7 @@
 name: dr-03-prawo-karne-wykroczenia-egzekucja
 description: 'Prawo karne, wykroczenia i egzekucja: KK, KPK, KKW, KW, KPW, KKS, kwalifikacja karnomaterialna, tryby ścigania i wykonanie orzeczeń.'
 metadata:
-  version: '3.64'
+  version: '3.66'
   dependencies: '{"requires": ["shared"]}'
 ---
 

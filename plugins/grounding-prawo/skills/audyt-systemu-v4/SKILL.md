@@ -3,7 +3,7 @@ name: audyt-systemu-v4
 description: 'Audyt jakości, spójności i bezpieczeństwa systemu prawnych skilli: zależności, wersje, mapy Dz.U., treść merytoryczna, propagacja zmian, deduplikacja i bramki jakości.'
 metadata:
   dependencies: '{"requires": ["shared"]}'
-  version: '6.229'
+  version: '6.235'
   type: governance-audit
   compatibility: host-neutral; file read/write, fresh legal-source lookup and optional archive/UI operations mapped by the runtime adapter
   entrypoint: SKILL.md
@@ -1241,4 +1241,4 @@ audyt-systemu-v4/                               ← 89 plików (stan 2026-09-09b
 
 ---
 
-*Wersja: 6.229 | Ostatnia aktualizacja: 2026-10-13 (AUDYT-2026-10-13d). Stopkę aktualizuj razem z polem `version`.*
+*Wersja: 6.235 | Ostatnia aktualizacja: 2026-10-17 (AUDYT-2026-10-17b). Stopkę aktualizuj razem z polem `version`.*

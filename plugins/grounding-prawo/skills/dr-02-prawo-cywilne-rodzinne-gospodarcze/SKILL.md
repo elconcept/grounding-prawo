@@ -2,7 +2,7 @@
 name: dr-02-prawo-cywilne-rodzinne-gospodarcze
 description: 'Prawo cywilne, rodzinne i gospodarcze: KC, KPC, spadki, rodzina, spółki, upadłość, restrukturyzacja, windykacja i odpowiedzialność kontraktowa/deliktowa.'
 metadata:
-  version: '3.95'
+  version: '3.96'
   dependencies: '{"requires": ["shared"]}'
 ---
 

@@ -2,7 +2,7 @@
 name: pisma-procesowe-v3
 description: 'Zaawansowane pisma procesowe: pozwy, odpowiedzi, apelacje, zażalenia i inne pisma wymagające strategii, faktów, dowodów, weryfikacji prawa i finalnej walidacji dokumentu.'
 metadata:
-  version: '5.42'
+  version: '5.44'
   type: executive-pisma
   status: production
   dependencies: '{"requires": ["shared"]}'
@@ -67,7 +67,7 @@ Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Metodolog
 
 > Ten blok jest WIĄŻĄCY i NADRZĘDNY wobec „pamięci" modelu o treści plików
 > oraz wobec chęci szybkiego dostarczenia pisma.
-> Powstał po sprawie VII P 94/25: brak ponownego wczytania = brak wiedzy o krokach.
+> Powstał po sprawie [SYGN-SPRAWY]: brak ponownego wczytania = brak wiedzy o krokach.
 > Cel: przed każdym krokiem [CP] i przed każdą odpowiedzią w pipeline pisma
 > stan checkpointów oraz rejestr kroków są odczytywane ze ŚWIEŻEJ wersji z dysku —
 > nigdy z pamięci modelu, która może zawierać poprzednią wersję pliku.
@@ -120,7 +120,7 @@ UZASADNIENIE (dlaczego tylko view() gwarantuje poprawność):
 ## ⛔⛔⛔ HARD GATE STEP-DISCLOSURE — INFORMACJA WARUNKOWA ⛔⛔⛔
 
 > Ten blok jest WIĄŻĄCY i NADRZĘDNY wobec chęci szybkiego dostarczenia pisma.
-> Powstał po sprawie VII P 94/25 (2026-06-24), w której pismo zostało wydane
+> Powstał po sprawie [SYGN-SPRAWY] (2026-06-24), w której pismo zostało wydane
 > z pominięciem kilkunastu kroków kontroli jakości — BEZ poinformowania użytkownika.
 > Cel: każde pominięcie lub krok jeszcze-do-zrobienia MUSI być ujawniony, zanim
 > użytkownik dostanie plik. Żaden krok nie może zostać „cicho" przeskoczony.
@@ -482,7 +482,7 @@ KROK ET: Eliminacja tez i weryfikacja przepisów
 > ⛔ HARD GATE — wykonaj natychmiast po SD-VER = KOMPLET, PRZED jakąkolwiek
 > pracą na macierzy lub kartach dowodowych.
 >
-> DIAGNOZA DLACZEGO FSL-D JEST KONIECZNE (sprawa VII P 94/25, 2026-06-27):
+> DIAGNOZA DLACZEGO FSL-D JEST KONIECZNE (sprawa [SYGN-SPRAWY], 2026-06-27):
 > Po SD-VER (wszystkie pliki odczytane ✅) model budował macierz D×T z PAMIĘCI
 > zamiast z per-teza przeszukania SD-FAKTY. Skutek: teza gotowości do pracy
 > miała 1 dowód zamiast 4. Teza pracodawcy faktycznego — argumenty ogólne
@@ -549,6 +549,15 @@ KROK ŁD: Zbuduj łańcuchy dowodowe z kart
   → Scoring ★-★★★★★ per teza główna
   → OUTPUT łańcucha ŁD-XX → wejście do W1.3
 
+KROK PRZ: Związek przyczynowy (⛔ OBOWIĄZKOWE, gdy teza ma przesłankę związku przyczynowego:
+  szkoda, krzywda, rozstrój zdrowia, skutek, odszkodowanie, zadośćuczynienie)
+  view shared/MOD-GRAF-PRZYCZYNOWY.md
+  → Per połączenie fakt F-nn → skutek: dowód mechanizmu (nie sama kolejność dat), csqn,
+    flaga post hoc, przerwanie związku, wyjaśnienia alternatywne (w tym wersja przeciwnika
+    jako OSLABIA/PRZERYWA); oś czasu sprawy (chronologia) jako materiał
+  → Wynik USTALONY → przesłanka do W1.3 z dowodem połączenia;
+    NIEWYKAZANY → W1.5 jako ⬛ BRAK KRYTYCZNY lub ISTOTNY; WYKLUCZONY → teza do eliminacji
+
 KROK MT: Macierz Dowód × Teza (⛔ OBOWIĄZKOWE gdy ≥2 dowody i ≥2 tezy)
   view shared/MOD-MACIERZ-DOWOD-TEZA.md
   → MT1: inwentaryzacja — lista T1..Tn z przesłankami + lista D1..Dm z kategorią A/B/C/D
@@ -586,6 +595,7 @@ KROK MT: Macierz Dowód × Teza (⛔ OBOWIĄZKOWE gdy ≥2 dowody i ≥2 tezy)
 ⛔ Generator pisma nie pyta "jakie dowody mam?"
    Pyta: "jakie FAKTY F-nn prowadzą do TEZY T-X i w jakim łańcuchu?"
 ⛔ ZAKAZ: sekcja "Na dowód" bez powiązania z F-nn z rejestru.
+⛔ ZAKAZ: przesłanka związku przyczynowego oparta na samej kolejności dat (bez KROKU PRZ).
 ⛔ ZAKAZ: W1.3 bez gotowych łańcuchów ŁD-XX dla tez głównych.
 ⛔ ZAKAZ: W1.3 bez gotowej macierzy D×T (gdy ≥2 dowody i ≥2 tezy).
 ⛔ ZAKAZ: wnioski dowodowe jako lista en bloc — każdy wniosek wskazuje tezę Tn.
@@ -653,7 +663,7 @@ Jeśli warunek aktywacji NIE jest spełniony — pomiń ten krok, przejdź do W1
 >
 > **Przykłady błędów wyeliminowanych przez ten gate:**
 > - SR Katowice-Zachód VII Wydział Pracy: ul. Warszawska 45 (nie ul. Lompy 14)
-> - KRS 0000796445 = Human Park sp. z o.o.; HPG ma KRS 0001025052 — bez
+> - KRS [KRS-A] = [SPÓŁKA-A] sp. z o.o.; [SPÓŁKA-B] ma KRS [KRS-B] — bez
 >   sprawdzenia rejestru model błędnie zbudował argument "ten sam KRS"
 
 ---
@@ -682,6 +692,8 @@ Jeśli warunek aktywacji NIE jest spełniony — pomiń ten krok, przejdź do W1
 
 ```
 view pisma-procesowe-v3/modules/MOD-SZABLONY.md   (zawsze)
+view shared/MOD-DLUGIE-PISMO.md                   (pismo ponad ok. 10 stron: === CIĄG DALSZY ===;
+                                                                     W3 na długim projekcie: tylko ZMIANA SEKCJI)
 view pisma-procesowe-v3/modules/MOD-DOWODY.md     (gdy są dowody)
 view pisma-procesowe-v3/modules/MOD-OBAL.md       (gdy riposta/odpowiedź)
 view pisma-procesowe-v3/modules/MOD-OPLATY.md     (gdy pismo wszczynające)
