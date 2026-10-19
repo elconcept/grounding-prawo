@@ -14,7 +14,7 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 | `selection/selection.yaml` | Źródło prawdy: które skille, skąd (`lex`, `awe:<pakiet>`, `own`, `vendor:`), opisy dopisywane. |
 | `selection/patches/`, `selection/overlay/` | Patche na kopię upstreamu i pliki dopisane do pluginu (`shared/`). |
 | `own-skills/` | Skille własne (bez upstreamu). Tu się je edytuje. |
-| `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify), `docs/`, `general/`, `commercial-legal`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (kodeksy kbchojnacki). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
+| `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify, commercial-legal, awesome-legaltech, awesome-legal-data), `docs/`, `general/`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (kodeksy kbchojnacki). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
 | `scripts/` | `build.py` (budowa), `validate_marketplace.py`, `lint_refs.py` (martwe odwołania), `report.py`. |
 | `archive/` | Kosz odroczonego usuwania; usuwa wyłącznie właściciel. |
 | `.claude-plugin/`, `.agents/plugins/` | Manifesty marketplace (Claude Code, Codex). |

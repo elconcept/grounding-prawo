@@ -13,7 +13,7 @@ Presja terminu nie zwalnia z tej ścieżki - skraca tylko liczbę iteracji.
 3. Przepisy tylko z MCP portalu `lex` (`cite_verify_article`, `isap_*`), orzeczenia z `saos`/`nsa`; termin: `grounding-prawo:terminy-procesowe-pl`
    (dla k.p.k./k.p.w. wynik ręcznie sprawdzony z t.j.).
 4. Format: `shared/FORMAT-PISMA.md` pluginu - źródło `.md` + `.docx` z `render_pismo.py`, bez PDF. Wynik:
-   `<teczka>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md|.docx`. Telefon i e-mail nadawcy: zapytaj, jeśli nie są znane.
+   `<teczka>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` i jedyny DOCX pisma w `legal/output/` (`shared/ARTEFAKTY-SPRAWY.md`). Telefon i e-mail nadawcy: zapytaj, jeśli nie są znane.
 5. Redakcja: teza i najmocniejszy fakt na początku punktu, krótkie zdania, każda myśl raz, bez powtarzania wcześniejszych pism,
    „k. N” tylko dla akt tej sprawy, stanowisko strony bez przejmowania wersji organu.
 6. Kontrola: `/kontrola` na gotowej wersji (co najmniej `pisz-po-polsku`, `pierwsze-wrazenie-sedziego-pl`, przy tezie spornej `atak-przeciwnika-pl`).

@@ -1,0 +1,16 @@
+services:
+  mcp-paperless:
+    image: ghcr.io/orellbuehler/paperless-mcp:1.4.1@sha256:086d6e25e98cee29bad688be46754fb8850d1d5016e96b37f97de60ee78252ae
+    container_name: mcp-paperless
+    restart: unless-stopped
+    environment:
+      MCP_TRANSPORT: http
+      PORT: '3001'
+      PAPERLESS_URL: http://10.0.10.201:8010
+      PAPERLESS_TOKEN: ${PAPERLESS_TOKEN:?Provide the mcp-reader API token}
+      EMBEDDINGS_ENABLED: 'false'
+      MCP_ALLOWED_HOSTS: mcp-paperless.xlap.pl,mcp-paperless:3001,localhost:3001
+    networks: [cf_paperless]
+networks:
+  cf_paperless:
+    external: true

@@ -175,10 +175,9 @@ uzupełnienia. Nie przedstawiaj takiego pliku jako w pełni gotowego do podpisan
 Obowiązkowo zapisuj również trwałe `_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md` i `_REJESTR_PISM.md` oraz kopię
 relacji na zamknięcie sesji według `references/ciaglosc-sesji.md`. Dotyczy to też pracy poza
 repo abogada; te pliki nie są jednorazowymi notatkami `_robocze/`.
-- Pismo: `00_sprawy/<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (i `.docx`, jeśli autor chce).
-  Zachowuj wszystkie wersje `.md`, lecz po zweryfikowaniu nowej wersji pozostaw w katalogu pisma
-  tylko jej DOCX. Do `00_sprawy/<sprawa>/output/` kopiuj wyłącznie najnowszy DOCX, zgodnie z
-  `shared/ARTEFAKTY-SPRAWY.md`.
+- Pismo: wersje `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD) i jeden
+  DOCX pisma w `legal/output/` (tylko DOCX), w cyklu akceptacja redline → snapshot MD → redline sesji,
+  zgodnie z `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”.
 - Pliki inkrementalne pisma (tworzone raz, potem dopisywane): `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, wynik,
   decyzje autora), `_MAPA_KRZYWD.md` (mapa wewnętrzna F5, wiersze ze stałym `#`, zmiany statusu zamiast kopii),
   `_HARDGATE.md` (rejestr relacji i raport bramki, dopisek per przebieg).

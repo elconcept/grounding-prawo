@@ -14,6 +14,10 @@ on:
     - cron: "17 5 * * 1"
   workflow_dispatch:
 
+concurrency:
+  group: grounding-prawo-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pull-requests: write
@@ -50,6 +54,7 @@ jobs:
         uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
+      - run: python3 -m unittest discover -s tests -p test_sync_legal.py -v
       - name: Commit wyniku
         if: github.event_name != 'pull_request'
         run: |
@@ -57,6 +62,37 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add plugins .agents
           git diff --cached --quiet || (git commit -m "build: przebudowa pluginu z selekcji" && git push)
+
+      - name: Checkout legal do synchronizacji
+        if: github.event_name != 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          repository: elconcept/legal
+          ref: main
+          path: legal-checkout
+          ssh-key: ${{ secrets.LEGAL_SYNC_KEY }}
+          lfs: false
+      - name: Kanoniczne reguły do legal
+        if: github.event_name != 'pull_request'
+        env:
+          GIT_LFS_SKIP_SMUDGE: '1'
+        run: |
+          set -euo pipefail
+          git -C legal-checkout worktree add -b sync/canonical "${RUNNER_TEMP}/legal-sync" HEAD
+          python3 scripts/sync_legal.py "${RUNNER_TEMP}/legal-sync"
+          cd "${RUNNER_TEMP}/legal-sync"
+          git config user.name "grounding-prawo-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add AGENTS.md CLAUDE.md .agents/grounding-prawo
+          git diff --cached --quiet && exit 0
+          git -c core.hooksPath=/dev/null commit -s -m "docs: sync canonical grounding-prawo rules"
+          # A concurrent NAS backup is rebased; a real conflict fails visibly without force-push.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git -c core.hooksPath=/dev/null push origin HEAD:main; then exit 0; fi
+          done
+          exit 1
 
   upstream-bump:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

@@ -4,14 +4,15 @@
 exit 0 i "applied" przy kazdej pozycji nie dowodza, ze Word pokaze zmiany jako sledzone
 (redline-docx-pl, krok 3). Ten skrypt sprawdza plik, nie log:
 
-  REDLINE  w:ins + w:del > 0, usuniety tekst w w:delText, komentarzy >= liczba edycji z edits.json
-  CZYSTY   0 w:ins / 0 w:del / 0 komentarzy (sanitize --accept-all zadzialal)
-  OBA      skan_placeholder.py z redline-docx-pl (dziury typu [DO UZUPELNIENIA], NN/RR, 0,00 zl)
+  REDLINE  w:ins + w:del > 0, usuniety tekst w w:delText, komentarzy == liczba edycji wszystkich rund
+           (jedyny DOCX pisma, shared/ARTEFAKTY-SPRAWY.md: drugiej, czystej kopii nie ma)
+  SKAN     skan_placeholder.py z redline-docx-pl (dziury typu [DO UZUPELNIENIA], NN/RR, 0,00 zl)
   KATALOG  brak plikow .pdf w katalogu wyniku (PDF robi prawnik po wlasnej korekcie)
+  DRAFTY   brak plikow .docx w drafty/<pismo>/ (tam tylko snapshoty MD)
 
 Uzycie:
-  python3 weryfikuj_wynik.py --redline X_REDLINE.docx --czysty X.docx \
-      [--edits edits.X.json edits.X.decyzje.json] [--katalog DIR]
+  python3 weryfikuj_wynik.py --redline RUN/runda2.docx \
+      [--edits edits.runda1.json edits.runda2.json] [--katalog legal/output] [--drafty DIR]
 
 Exit: 0 = wszystko zgodne, 1 = niezgodnosc (lista), 2 = blad IO.
 """
@@ -48,9 +49,9 @@ def struktura(docx: Path) -> dict:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--redline", type=Path, required=True)
-    ap.add_argument("--czysty", type=Path)
-    ap.add_argument("--edits", type=Path, nargs="+", help="edits.<DOK>.json [edits.<DOK>.decyzje.json] - oczekiwana liczba komentarzy")
+    ap.add_argument("--edits", type=Path, nargs="+", help="edits.<DOK>.redline.json kazdej rundy - oczekiwana liczba komentarzy")
     ap.add_argument("--katalog", type=Path, help="katalog wyniku (kontrola braku PDF)")
+    ap.add_argument("--drafty", type=Path, help="drafty/<pismo>/ (kontrola braku DOCX)")
     a = ap.parse_args()
     bledy = []
     try:
@@ -64,19 +65,11 @@ def main() -> int:
             n = sum(len(json.loads(e.read_text(encoding="utf-8"))) for e in a.edits)
             if r["komentarze"] != n:
                 bledy.append(f"REDLINE: komentarzy {r['komentarze']} != edycji {n} - kazda zmiana ma miec jeden komentarz z ID")
-        if a.czysty:
-            c = struktura(a.czysty)
-            print(f"CZYSTY  {a.czysty.name}: " + " | ".join(f"{k} {v}" for k, v in c.items()))
-            if c["w:ins"] or c["w:del"] or c["komentarze"]:
-                bledy.append("CZYSTY: zostaly zmiany sledzone albo komentarze - sanitize --accept-all nie zadzialal")
-            if c["wpisy_comments_xml"]:
-                bledy.append(f"CZYSTY: {c['wpisy_comments_xml']} osieroconych wpisow w comments.xml (wyciek tresci komentarzy)")
     except (OSError, KeyError, zipfile.BadZipFile, json.JSONDecodeError) as e:
         print(f"BLAD: {e}", file=sys.stderr)
         return 2
-    pliki = [p for p in (a.redline, a.czysty) if p]
     if SKAN.exists():
-        wynik = subprocess.run([sys.executable, str(SKAN), *map(str, pliki)], capture_output=True, text=True)
+        wynik = subprocess.run([sys.executable, str(SKAN), str(a.redline)], capture_output=True, text=True)
         print(wynik.stdout.strip() or "skan_placeholder: czysto")
         if wynik.returncode == 1:
             bledy.append("placeholdery w wyniku - uzupelnij albo odnotuj swiadomie w raporcie")
@@ -86,6 +79,10 @@ def main() -> int:
     pdf = sorted(katalog.glob("*.pdf"))
     if pdf:
         bledy.append("PDF w katalogu wyniku: " + ", ".join(p.name for p in pdf))
+    if a.drafty:
+        docx = sorted(a.drafty.glob("*.docx"))
+        if docx:
+            bledy.append("DOCX w drafty/ (tam tylko snapshoty MD): " + ", ".join(p.name for p in docx))
     for b in bledy:
         print(f"NIEZGODNE: {b}")
     print("WYNIK: " + ("OK" if not bledy else f"{len(bledy)} niezgodnosci"))

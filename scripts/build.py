@@ -349,6 +349,7 @@ def add_session_protocol():
         fm = re.match(r"---\n.*?\n---\n", text, re.S)
         directive = ("\n## Pamięć sesji — przed pracą i przed odpowiedzią końcową\n\n"
             "Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. "
+            "Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. "
             "Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; "
             "po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. "
             "Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. "
