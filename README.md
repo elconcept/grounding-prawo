@@ -146,6 +146,7 @@ Historia selekcji: `_log/selekcja.md`, `_log/skill-triage.md`, `_log/source-map.
 ## Skille do rozwijania tego repo
 
 W `.agents/skills/` (te same źródła w `.claude/skills/` i `.opencode/skills/`): `skill-creator`, `plugin-creator`,
-`plugin-structure`, `skill-development`, `mcp-integration`, `feature-factory`, `peer-agent-collaboration`,
-`whitepaper-audit`, `release`. Pochodzenie i przypięte commity: `.agents/skills/SOURCES.json`. To narzędzia pracy nad
+`plugin-structure`, `skill-development`, `mcp-integration`, `feature-factory`, `whitepaper-audit`, `release`,
+`interview-me` (wzorzec wywiadu dla `zawiadomienie-o-przestepstwie`). `peer-agent-collaboration` jest globalny w HolyClaude
+(`~/.agents/skills`). Pochodzenie i przypięte commity: `.agents/skills/SOURCES.json`. To narzędzia pracy nad
 repo, nie składniki pluginu.
