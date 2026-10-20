@@ -1,8 +1,8 @@
 ---
 name: orzeczenia-sadowe-v2
-description: 'Research orzecznictwa: wyszukiwanie, weryfikacja sygnatur i tez, hierarchia źródeł, porównanie orzeczeń oraz dobór judykatury do argumentacji prawnej.'
+description: 'Research orzecznictwa: wyszukiwanie, weryfikacja sygnatur i tez, porównanie orzeczeń, dobór do argumentacji. Moduł: rozbiór wyroku na sentencję, ratio i obiter.'
 metadata:
-  version: '2.31'
+  version: '2.32'
   type: executive-analiza
   status: production
   compatibility: live_web_lookup, file_read, cross_skill_file_read, optional_code_execution, optional_document_and_interactive_ui
@@ -1007,7 +1007,26 @@ rozjazd = runda korekty, potem ostrzeżenie przy odpowiedzi) oraz znaczeniowo
 orzeczenie, interpretacja, inne orzeczenie z sygnaturą (TK, KIO, TSUE, UODO,
 ETPC) lub zweryfikowany przepis dotyczy pytania i czy opis w odpowiedzi wynika
 z tekstu; ocena musi cytować dokument dosłownie, aplikacja sprawdza cytat).
-To kontrola następcza — punkty 1–4 wykonujesz sam przed oddaniem odpowiedzi.
+7. **Stanowisko organu, nie strony** — teza przypisana orzeczeniu lub
+   interpretacji musi pochodzić z rozstrzygnięcia, tezy albo oceny właściwego
+   organu (sąd, Dyrektor KIS, KIO, TK, UODO). Zarzut skargi lub apelacji,
+   wniosek, stanowisko wnioskodawcy w interpretacji, argument rządu,
+   prokuratora czy uczestnika i zdanie odrębne nie są stanowiskiem organu.
+   W interpretacji indywidualnej najpierw wynik oceny („stanowisko
+   wnioskodawcy jest prawidłowe/nieprawidłowe”), potem uzasadnienie organu.
+8. **Określenie sprawy przed tekstem** — przedmiot sprawy z metryki („w
+   przedmiocie…”, hasła tematyczne, temat interpretacji) porównaj z pytaniem
+   przed lekturą uzasadnienia; wyraźnie inny przedmiot = nie jest trafieniem.
+   Przy liście kandydatów najpierw odsiej po przedmiocie, pełny tekst czytaj
+   tylko dla pozostałych.
+
+Aplikacja dodatkowo: oznacza role fragmentów (ROZSTRZYGNIĘCIE, TEZA, OCENA
+ORGANU ORZEKAJĄCEGO, STANOWISKO STRONY, ZDANIE ODRĘBNE) i przypina
+[OKREŚLENIE SPRAWY] na początku tekstu dla kontrolera; poprawia odpowiedź tylko
+przy temacie NO_MATCH lub twierdzeniu nie w pełni wspartym; sprawdza sąd
+przypisany sygnaturze (`CASE_COURT_ATTRIBUTION`: np. sygnatura NSA podana
+jako wyrok SN).
+To kontrola następcza — punkty 1–4, 7 i 8 wykonujesz sam przed oddaniem odpowiedzi.
 
 ---
 
@@ -1257,10 +1276,18 @@ Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprec
 > exact-match sygnatur NSA/WSA, pełny odczyt sentencji/uzasadnienia oraz
 > statusy FOUND / NOT_FOUND / AMBIGUOUS / OUT_OF_SCOPE z fallbackiem V-SYG-0.5.
 
+## MODUŁY SCALONE
+
+Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy; reguły tego skilla obowiązują także w module.
+
+| Moduł | Zastosowanie | Plik |
+|---|---|---|
+| `struktura-wyroku-pl` | rozbiór orzeczenia na sentencję, ratio decidendi, obiter dicta i votum separatum | `modules/struktura-wyroku-pl/MODULE.md` |
+
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** teza do poparcia orzecznictwem; `patron-prawo-pl-zrodla` (wybór konektora)
 - **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (sygnatura z narzędzia, teza, link) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `struktura-wyroku-pl`, `citation-grounding-pl`, `pisma-procesowe-v3`
+- **Następny krok:** `citation-grounding-pl`, `pisma-procesowe-v3`
 - **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -1,6 +1,6 @@
 ---
 name: dr-13-sluzby-bezpieczenstwo-informacje-niejawne
-description: 'Służby, bezpieczeństwo i informacje niejawne: Policja, ABW/AW i inne służby, obrona, ochrona informacji niejawnych oraz publicznoprawne ramy bezpieczeństwa.'
+description: 'Moduł wewnętrzny DR-13: Policja i inne służby, uprawnienia funkcjonariuszy. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.18'
   dependencies: '{"requires": ["shared"]}'

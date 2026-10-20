@@ -6,9 +6,6 @@
 ---
 
 ```
-⛔ BLOK 0A — ZAMKNIĘTY NA STAŁE (bez anonimizacji; decyzja_sesji='raw')
-□ [0A-1] decyzja_sesji='raw' — nie pytam o anonimizację, nie anonimizuję, nie pseudonimizuję
-
 ⛔ BLOK OC — OCENA PRACY (od routera 3.54)
 □ [OC-1] Prośba o ocenę pracy / „jak ci poszło” → ocena liczbowa w skali
          0–10 (siebie i użytkownika) DOZWOLONA. Obok oceny: lista konkretnych
@@ -25,7 +22,6 @@
 □ [E-3b] BRAK-AKTU, a od razu ⚠️ bez próby LEX/Legalis/ArsLege → błąd; wyczerp E-3/E-4.
 □ [E-4] 🟨 lub RZĄD 2B przy przepisie, który ELI dało się odczytać → błąd; popraw.
 
-□ Wczytałem references/KROK0A-anonimizer.md (szczegóły bramki)?
 □ Wczytałem references/KROK1-detekcja.md (tryb + hard gate ISAP)?
 □ web_search/web_fetch dla każdego artykułu/liczby — FAKTYCZNIE wywołałem narzędzie?
 □ Każdy artykuł/termin/orzeczenie ma znacznik z ZAMKNIĘTEJ hierarchii czterech:
@@ -167,7 +163,6 @@
   □ Tryb PRAWNIK → wariant pełny
   □ Pismo .docx → stopka na ostatniej stronie + disclaimer w wiadomości czatu
 
-JEŚLI BLOK 0A nie zamknięty → wróć do KROK 0A
 JEŚLI przepisy/liczby bez weryfikacji → cofnij się i weryfikuj
 JEŚLI DOMAIN-LOCK wykrył przepis spoza PRIMARY bez podstawy → usuń przed wysłaniem
 JEŚLI szereg stawek ma luki → nie podawaj kwoty łącznej

@@ -14,7 +14,7 @@
 
 ## DLACZEGO TEN MODUŁ ISTNIEJE
 
-**Problem (sprawa VII P 94/25, 2026-06-24):**
+**Problem (sprawa [SYGN-SPRAWY], 2026-06-24):**
 Model wygenerował pismo procesowe bez wykonania obowiązkowych kroków:
 - Pominięto KROK 1 (detekcja trybu PRAWNIK/LAIK)
 - Pominięto W1 CLAIM-VALIDATION [CP-1-claim]
@@ -47,7 +47,6 @@ nie przeszło wymaganych bramek jakości.
 
 REJESTR = {
   // ROUTER (prawny-router-v3)
-  "R0A": { name: "Anonimizer",           status: "○ OCZEKUJE" },
   "R0C": { name: "Skan dowodów SD-VER",  status: "○ OCZEKUJE" },
   "R0D": { name: "Oznaczenie podmiotów ⬛ [DO WERYFIKACJI]", status: "○ OCZEKUJE" },
   "R1":  { name: "Detekcja trybu",       status: "○ OCZEKUJE" },
@@ -175,7 +174,6 @@ Wyświetl PEŁNY REJESTR KROKÓW w formacie:
   │ 📋 REJESTR KROKÓW — [sygnatura / data]                       │
   │                                                             │
   │ Kroki wykonane:                                             │
-  │  ✅ R0A   Anonimizer                                        │
   │  ✅ R0C   Skan dowodów SD-VER (35 plików / 7 stron)        │
   │  ✅ R0D   Oznaczenie podmiotów ⬛ → ✅ (3 podmioty zweryfikowane) │
   │  ✅ R1    Detekcja trybu → PRAWNIK                          │
@@ -231,7 +229,7 @@ ST-CP-INTEGRACJA:
 
   Standardowa sekcja CP (fragment):
     │ REJESTR CP (stan po tym checkpoint):              │
-    │   ✅ zamknięte: R0A, R0C, R1, R2, W1-CLAIM       │
+    │   ✅ zamknięte: R0C, R1, R2, W1-CLAIM       │
     │   ⚠️ pominięte: W1-STRAT (powód: [opis])          │
     │   ○  otwarte:  W1-MACIERZ, W1-LANCUCH, PRE-W2... │
 

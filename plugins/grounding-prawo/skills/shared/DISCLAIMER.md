@@ -57,7 +57,6 @@ ZAWSZE — przy każdej odpowiedzi zawierającej:
 WYJĄTEK — pominąć gdy:
   □ Odpowiedź dotyczy wyłącznie technikaliów (np. "jak wgrać plik")
   □ Pytanie jest czysto administracyjne (np. "jaki jest adres sądu")
-  □ Rozmowa to wyłącznie KROK 0A (anonimizacja) — dodaj DOPIERO przy analizie
 ```
 
 ---

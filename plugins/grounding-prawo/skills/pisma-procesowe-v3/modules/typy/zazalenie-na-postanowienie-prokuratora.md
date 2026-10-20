@@ -218,10 +218,8 @@ za pośrednictwem
 [ulica]
 [kod pocztowy, miejscowość]
 
-[Imię i Nazwisko pełnomocnika]
-[tytuł zawodowy — adwokat / radca prawny]
-[numer wpisu na listę]
-[adres kancelarii]
+[Imię i Nazwisko]
+[adres]
 [tel./e-mail]
 pełnomocnik pokrzywdzonego/pokrzywdzonej [Imię i Nazwisko]
 ```
@@ -546,7 +544,6 @@ Zażalenie kończy się na konkluzji lub petitum końcowym. NIE dodaje się:
 Podpis:
 ```
 [Imię Nazwisko]
-[tytuł zawodowy — adwokat / radca prawny]
 ```
 
 ---

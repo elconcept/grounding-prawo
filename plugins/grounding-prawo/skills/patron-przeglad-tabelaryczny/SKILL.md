@@ -1,6 +1,6 @@
 ---
 name: patron-przeglad-tabelaryczny
-description: Masowa ekstrakcja danych z pakietu dokumentów (umowy, NDA, SPA, najmy, umowy o pracę, kredytowe, korespondencja) do tabeli - kolumna po kolumnie, z cytatem i stroną w każdej komórce oraz flagą ryzyka - i eksport do CSV/Excela. Użyj, gdy trzeba przejrzeć wiele dokumentów według tych samych pytań, zrobić due diligence, change of control review albo zestawienie warunków umów.
+description: 'Masowa ekstrakcja danych z wielu dokumentów do tabeli: kolumna po kolumnie, cytat i strona w komórce, flaga ryzyka, eksport CSV lub Excel.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -79,7 +79,7 @@ przed „Not Found”).
 
 ## 4. Kontrola cytatów
 ```bash
-python3 ../patron-weryfikacja-cytatow/scripts/verify_citations.py wyniki/<dokument>.jsonl --tabular --source teksty/<dokument>.txt
+python3 ../citation-grounding-pl/modules/patron-weryfikacja-cytatow/scripts/verify_citations.py wyniki/<dokument>.jsonl --tabular --source teksty/<dokument>.txt
 ```
 Komórkę z cytatem NIEZWERYFIKOWANY popraw albo zmień jej flagę na yellow z adnotacją
 w `reasoning`.

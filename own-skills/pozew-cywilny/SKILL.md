@@ -29,7 +29,7 @@ Zanim zaczniesz cokolwiek pisać, musisz zebrać kompletny stan faktyczny. Użyj
 
 1. **Strony postępowania:**
    - Dane powoda: imię, nazwisko/firma, adres, PESEL/KRS/NIP, status (konsument, przedsiębiorca, osoba prawna)
-   - Dane pełnomocnika (jeśli jest): imię, nazwisko, tytuł zawodowy (radca prawny/adwokat), adres kancelarii, email, telefon
+   - Dane pełnomocnika (tylko jeśli jest): imię, nazwisko, adres, email, telefon
    - Dane pozwanego: nazwa/imię nazwisko, adres/siedziba, KRS/NIP
 
 2. **Stan faktyczny** — co się wydarzyło, kiedy, jakie dokumenty istnieją, jakie działania podjęły strony
@@ -102,7 +102,7 @@ PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowią
 
 **SAOS — citator** (`saos_cite_check`) — **obowiązkowo na każdej sygnaturze, która trafi do pozwu**. Werdykt `przelamanie_wykryte` → sprawdź pełny tekst trafienia przez `get_judgment`, zanim oprzesz na nim roszczenie. `brak_cytowan_w_saos` **nie potwierdza** aktualności.
 
-**Sądy administracyjne (WSA/NSA)** — **SAOS ich nie indeksuje**. Jeśli sprawa ma wątek administracyjnoprawny, a konektor `nsa` nie jest podłączony, powiedz to użytkownikowi i odeślij do `orzeczenia.nsa.gov.pl`. **Nie cytuj sygnatur WSA/NSA z pamięci.** Interpretacji podatkowych nie weryfikuje żaden podłączony konektor (`eureka.mf.gov.pl`).
+**Sądy administracyjne (WSA/NSA)** — **SAOS ich nie indeksuje**. Jeśli sprawa ma wątek administracyjnoprawny, a konektor `nsa` nie jest podłączony, powiedz to użytkownikowi i odeślij do `orzeczenia.nsa.gov.pl`. **Nie cytuj sygnatur WSA/NSA z pamięci.**
 
 ### Co wyciągasz z badania:
 
@@ -214,7 +214,7 @@ Strona Powodowa:               [imię i nazwisko / firma]
                                e-mail: [email]
 
                                reprezentowany/-a przez:
-                               [tytuł zawodowy] [imię nazwisko]
+                               [imię nazwisko pełnomocnika]
                                e-mail pełnomocnika: [email]
                                tel. pełnomocnika: [tel]
                                adres dla doręczeń: [adres kancelarii]
@@ -629,8 +629,8 @@ Schemat argumentacyjny:
 
 ```
                                         ____________________________
-                                        [tytuł zawodowy] [imię nazwisko]
-                                        Pełnomocnik Strony Powodowej
+                                        [imię i nazwisko]
+                                        Powód
 
 Załączniki:
 1. Pełnomocnictwo wraz z dowodem uiszczenia opłaty skarbowej

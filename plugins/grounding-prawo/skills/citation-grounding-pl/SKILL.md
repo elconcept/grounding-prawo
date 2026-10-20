@@ -1,9 +1,6 @@
 ---
 name: citation-grounding-pl
-description: 'Mechaniczny weryfikator cytatu dla tekstów prawnych po polsku z GRADIENTEM weryfikacji (ISTNIENIE / TREŚĆ / FRAGMENT) - sprawdza string-matchem, czy każdy cytat z orzeczenia, ustawy, umowy lub pisma faktycznie istnieje w dokumencie źródłowym, czy sygnatura jest realna i czy parafraza oddaje stanowisko sądu, zamiast wierzyć modelowi "na oko". Przeciwdziała halucynacjom modelu (w tym problemowi "prawdziwy-cytat-fałszywa-teza"), RODO-safe (działa lokalnie), spina się z saos-orzecznictwo (poza pluginem) i eu-sparql-search (poza pluginem). Używaj gdy: weryfikacja cytatów w opinii prawnej / memo / piśmie procesowym, sprawdzenie czy AI nie zmyśliło fragmentu wyroku, przepisu lub sygnatury, czy parafraza nie przekręca holdingu, kontrola cytatu przed wysłaniem deliverable do klienta, audyt grounding outputu LLM, "sprawdź czy ten cytat jest prawdziwy", "zweryfikuj cytaty", "czy ten fragment wyroku istnieje", "grounding", "anti-halucynacja", "citation check", "czy AI to zmyśliło", "czy
-  SN to naprawdę orzekł".
-
-  '
+description: 'Mechaniczna weryfikacja cytatów i identyfikatorów: ekstrakcja wszystkich powołań, sprawdzenie cytatu w źródle (ISTNIENIE, TREŚĆ, FRAGMENT), format [N] z blokiem CITATIONS, sumy PESEL, NIP i REGON. Używaj przed użyciem cytatu w piśmie.'
 license: Apache-2.0
 allowed-tools:
 - Bash
@@ -12,7 +9,7 @@ allowed-tools:
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 2.6.0
-  companion_skills: adversarial-legal-review-pl, deliverable-fidelity-pl
+  companion_skills: szturm-na-draft-pl/modules/adversarial-legal-review-pl, szturm-na-draft-pl/modules/deliverable-fidelity-pl
   data-residency: local
   requires-human-approval: 'false'
   pii-egress: none
@@ -244,7 +241,7 @@ do `legal-ai-audit-bundle (poza pluginem)` obok deliverable.
 
 ## Integracja z innymi skillami
 
-- **`deliverable-fidelity-pl`** pyta „czy nic nie wypadło z podsumowania"; ten skill pyta „czy to,
+- **`szturm-na-draft-pl/modules/deliverable-fidelity-pl`** pyta „czy nic nie wypadło z podsumowania"; ten skill pyta „czy to,
   co zostało, jest prawdziwe". Komplementarne - oba przed wysłaniem high-stakes.
 - 🟡 `WYMAGA_OSADU` to dokładnie wejście dla warstwy paraphrase-judge (kaskada PATRON) -
   mechanika robi tani pre-filtr, osąd substancji robi człowiek lub model.
@@ -279,43 +276,22 @@ do `legal-ai-audit-bundle (poza pluginem)` obok deliverable.
   silnik string-match pod lokalne źródła PL (RODO, zero-egress). Kod, prompty i reguły normalizacji
   napisane od zera pod polskie realia (cudzysłowy „…", sygnatury SN/NSA/TSUE, CELEX).
 
-<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
-## Wspólne reguły wtyczki fundament-weryfikacyjny (Fundament weryfikacyjny)
 
-Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla. Pełniejszy standard: https://github.com/matematicsolutions/awesome-matematic-skills-pl/tree/main/references
+## MODUŁY SCALONE
 
-### Pięć warstw ochrony (przed każdym disclaimerem)
+Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy; reguły tego skilla obowiązują także w module.
 
-1. **Weryfikacja źródła** - przepisy i orzecznictwo z baz, nie z pamięci modelu.
-2. **Klasa pewności** - każda teza prawna oznaczona: zweryfikowane / do sprawdzenia / nie używać.
-3. **Kontrola przesłanek** - fakty od użytkownika sprawdza się przed analizą.
-4. **Jawny zakres ujemny** - każdy skill mówi, czego NIE robi.
-5. **Bramka człowieka** - uprawniona osoba sprawdza i zatwierdza wynik.
-
-Jeśli błąd przeszedłby bez zatrzymania przez warstwy 1-5, wina jest w skillu. Naprawiamy narzędzie, nie dopisujemy noty. Nota "to nie porada prawna" nie zatrzymuje błędu i nie przenosi odpowiedzialności.
-
-### Tagi pewności
-
-- **Zweryfikowane** - źródło sprawdzone w sesji, z pełną sygnaturą: `(kodeks cywilny art. 415)`, `(wyrok SN II CSK NN/RR, SAOS)`.
-- **Do sprawdzenia** - prawdopodobne, niezweryfikowane: `[sprawdź w SAOS]`.
-- **Nie używać** - zmyślona sygnatura lub przepis. Pomiń, nigdy nie wymyślaj numeru.
-
-Tag stoi przy linii, której dotyczy. Samo istnienie sygnatury nie wystarcza - treść trzeba sprawdzić.
-
-### Bramka człowieka
-
-Nic nie zostaje wysłane, złożone, podpisane ani opublikowane, zanim sprawdzi i zatwierdzi to uprawniony człowiek. Wynik skilla to projekt, nie gotowy dokument.
-
-### Zakres pluginu
-
-Fundament weryfikacyjny jest neutralny jurysdykcyjnie - to rdzeń metody, nie substancja prawa. Nie łączy się z żadnym źródłem zewnętrznym (brak konektorów MCP) i nie wysyła danych na zewnątrz. Substancję dostarczają osobne pluginy (orzecznictwo, dokumenty).
-<!-- shared-rules:end -->
+| Moduł | Zastosowanie | Plik |
+|---|---|---|
+| `ekstraktor-cytatow-pl` | ekstrakcja wszystkich powołań (sygnatury, ECLI, Dz.U., ELI, przepisy, tamże/op. cit.) przed weryfikacją | `modules/ekstraktor-cytatow-pl/MODULE.md` |
+| `patron-weryfikacja-cytatow` | format cytowania [N] + blok CITATIONS i mechaniczna weryfikacja cytatów z dokumentów i wyników MCP | `modules/patron-weryfikacja-cytatow/MODULE.md` |
+| `patron-identyfikatory-pl` | sumy kontrolne PESEL/NIP/REGON, format KRS, ekstrakcja sygnatur, CELEX, ELI, stron i ról procesowych | `modules/patron-identyfikatory-pl/MODULE.md` |
 
 ## MOST - miejsce w przepływie grounding-prawo
 
-- **Wejście z:** lista powołań (`ekstraktor-cytatow-pl`) i tekst źródeł z MCP
+- **Wejście z:** lista powołań (`citation-grounding-pl/modules/ekstraktor-cytatow-pl`) i tekst źródeł z MCP
 - **Wynik zapisz w:** wyniki ISTNIENIE/TREŚĆ/FRAGMENT: ustalenia do `drafty/<pismo>/_FINDINGS.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `subsumpcja-pl`, `pierwsze-wrazenie-sedziego-pl`
-- **Nie dubluj:** `patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format [N]); `uodo-grounding-pl` - decyzje UODO; ten skill - cytaty w piśmie
+- **Następny krok:** `szturm-na-draft-pl`
+- **Nie dubluj:** `citation-grounding-pl/modules/patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format [N]); `patron-prawo-pl-zrodla/modules/uodo-grounding-pl` - decyzje UODO; ten skill - cytaty w piśmie
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

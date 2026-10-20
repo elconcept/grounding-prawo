@@ -55,7 +55,7 @@ Tokeny szacowane przy ≈3,7 B/token (polski tekst z diakrytykami) — szacunek,
 | Warstwa | Kiedy w kontekście | Rozmiar |
 |---|---|---:|
 | `name` + `description` 32 skilli | **zawsze**, niezależnie od sprawy | ≈5,9 kB ≈ 1,5 tys. tokenów |
-| Rdzeń R-1…R-5 (router, KROK 0A, KROK 1, PRAWO-HARDGATE, SELF-CHECK) | po wyzwoleniu routera — **bezwarunkowo, w każdej sprawie** | ≈102,8 kB ≈ 28 tys. tokenów |
+| Rdzeń R-1…R-4 (router, KROK 1, PRAWO-HARDGATE, SELF-CHECK) | po wyzwoleniu routera — **bezwarunkowo, w każdej sprawie** | ≈102,8 kB ≈ 28 tys. tokenów |
 | `MOD-STEP-TRACKER` | ⛔ **praktycznie bezwarunkowo** — router KROK 0-ST (ST-INIT w każdej sesji) | ≈12,4 kB ≈ 3,4 tys. tokenów |
 | Rdzeń + CN-GATE + REM-GATE (UP-6: każda sprawa) | w praktyce w każdej sprawie z rozstrzygnięciem i oddaniem wyniku | ≈126 kB ≈ 34 tys. tokenów |
 | Zasoby warunkowe (CN, REM, WYJ, OŚ, HIERARCHIA, DISCLAIMER, …) | wyłącznie po padnięciu wyzwalacza | 0–103 kB |
@@ -102,8 +102,14 @@ warunkowych), i to on, a nie ten plik, zmniejszył koszt.
 
 ## RDZEŃ NIEREDUKOWALNY — odczyt zawsze, przed analizą
 
-Pięć pozycji. Kolejność wiążąca.
+Cztery pozycje. Kolejność wiążąca.
 
+```
+R-1  prawny-router-v3/SKILL.md          — jesteś tutaj, routing i reguły
+R-2  references/KROK1-detekcja.md       — tryb, jurysdykcja, hard gate
+R-3  shared/PRAWO-HARDGATE.md           — zakaz cytowania z pamięci
+R-4  references/SELF-CHECK.md           — przed wysłaniem odpowiedzi
+```
 
 ⛔ Żadna z tych pięciu pozycji NIE PODLEGA odroczeniu w żadnym profilu.
 Brak którejkolwiek → `⛔ TRYB ZDEGRADOWANY`, nie „profil jeszcze lżejszy”.

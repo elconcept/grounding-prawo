@@ -47,7 +47,7 @@ U Sulzer każdy trybunał ma listę „classic traps" - błędów, których gene
 zakodowanych jako twarde reguły. Przykłady z oryginału: `Article 28(a)` vs niestatutowy `28(1)`;
 ten sam oskarżony nosi numer ICTY *i* późniejszy MICT; nigdy nie ujawniaj chronionego świadka.
 
-To jest **dokładnie wzorzec `marko-pl-content` / `matematic-patron-pr-review-pl (poza pluginem)`** zastosowany do
+To jest **dokładnie wzorzec `szturm-na-draft-pl/modules/marko-pl-content` / `matematic-patron-pr-review-pl (poza pluginem)`** zastosowany do
 weryfikacji cytatów: „regresje specyficzne dla domeny". Dla każdej polskiej domeny wypisz 3-7 pułapek:
 
 **Przykłady pułapek PL (do `traps.md` konkretnej domeny):**

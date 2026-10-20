@@ -90,8 +90,6 @@ narzędzia. **Rozpoznawaj narzędzie, gdy nazwa KOŃCZY SIĘ nazwą z tabeli** (
 | `saos_cytator` (`sygnatura`) | późniejsze orzeczenia cytujące (fraza w cudzysłowie, pełne treści) + sygnały odstąpienia w TYM SAMYM zdaniu, z kierunkiem (cytowane orzeczenie jako przedmiot vs aktor odstąpienia) | ocena aktualności linii orzeczniczej | KANDYDACI; próba 27t: 6/6 trafień z sygnałem prawdziwych; ⚠️ SN po 2016 i TK po 2015 niewidoczne — brak sygnału nie wyklucza zmiany linii |
 | `cbosa_sprawdz_sygnature` | istnienie sygnatury NSA/WSA (exact-match, fail-closed) | KROK 0A pkt 1 (MCP-FIRST) | FOUND = snapshot 🟨 bez awansu; OUT_OF_SCOPE → KROK 0A pkt 2 |
 | `cbosa_szukaj`, `cbosa_pobierz` | research NSA/WSA, treść orzeczenia | research, nie weryfikacja | KANDYDAT |
-| `eureka_sprawdz_sygnature` | istnienie i AKTUALNOŚĆ interpretacji podatkowej | weryfikacja interpretacji | FOUND+`uchylony` → nie powołuj jako aktualnego stanowiska |
-| `eureka_szukaj`, `eureka_pobierz` | research interpretacji, treść | research | KANDYDAT ze statusem |
 | `eurlex_tsue` (sygnatura C-/T-/F-, ECLI, CELEX, fraza) | orzeczenia TSUE: wyrok + opinia RG/postanowienia, tytuł PL, strony | powołanie orzecznictwa TSUE | FOUND = identyfikacja sprawy; treść wyroku — EUR-Lex (`url_zrodlowy`) |
 | `eurlex_lookup` (CELEX) | akt UE: status obowiązywania, data końca | ŹRÓDŁO-0 dla prawa UE | FOUND+`uchylony` → nie powołuj jako obowiązującego |
 | `krs_lookup` | podmiot w KRS — rejestr P **i S** (fundacje, stowarzyszenia) | KROK 0D / PODMIOT-GATE | NOT_FOUND dopiero po P i S |

@@ -69,7 +69,7 @@ Przed wygenerowaniem pisma musisz ustalić z użytkownikiem następujące dane. 
 | Adres | TAK | Adres siedziby lub zamieszkania |
 | PESEL / KRS / NIP | TAK | Identyfikator — PESEL dla osób fizycznych, KRS i/lub NIP dla podmiotów gospodarczych |
 | E-mail | NIE | Adres e-mail strony (jeśli dostępny) |
-| Pełnomocnik | NIE | Imię, nazwisko, tytuł zawodowy pełnomocnika (radca prawny / adwokat) |
+| Pełnomocnik | NIE | Tylko gdy stronę reprezentuje pełnomocnik: imię i nazwisko |
 | E-mail pełnomocnika | NIE | Adres e-mail pełnomocnika |
 | Telefon pełnomocnika | NIE | Numer telefonu do kontaktu z sądem |
 | Adres do doręczeń | NIE | Jeśli inny niż adres strony (zwykle adres kancelarii pełnomocnika) |
@@ -123,7 +123,7 @@ Strona Powodowa: [Pełna nazwa / imię i nazwisko]
   e-mail: [adres e-mail]
 
 reprezentowany przez:
-  [tytuł zawodowy] [imię i nazwisko]
+  [imię i nazwisko pełnomocnika]
   e-mail pełnomocnika: [adres]
   tel. do kontaktu z sądem: [numer]
 
@@ -269,8 +269,7 @@ Dostosowania wariantowe:
 
 Linia podpisu zawiera:
 - Kreskę/linię na podpis
-- Imię i nazwisko podpisującego
-- Tytuł zawodowy (radca prawny / adwokat) — jeśli pismo składa pełnomocnik
+- Imię i nazwisko podpisującego (strona działająca osobiście: bez tytułu zawodowego i numeru wpisu)
 
 ### 9. LISTA ZAŁĄCZNIKÓW
 

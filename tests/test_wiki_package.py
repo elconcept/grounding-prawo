@@ -10,10 +10,13 @@ def test_wiki_rules_are_bundled_and_reachable():
         assert (SKILLS / 'shared' / name).read_bytes() == (
             ROOT / 'selection/overlay/shared' / name
         ).read_bytes()
-    for name in ('ingest-wiki', 'wiki-basic-memory', 'prawny-router-v3'):
+    for name in ('wiki-basic-memory', 'prawny-router-v3'):
         text = (SKILLS / name / 'SKILL.md').read_text()
         assert 'shared/BASIC-MEMORY.md' in text
     assert 'shared/WIKI.md' in (SKILLS / 'shared/BASIC-MEMORY.md').read_text()
-    ingest = (SKILLS / 'ingest-wiki/SKILL.md').read_text()
-    assert 'inspect_page' in ingest and 'verify_page' in ingest
+    # ingest-wiki jest modułem skilla wiki-basic-memory (merge_into), nie osobnym skillem
+    assert not (SKILLS / 'ingest-wiki').exists()
+    ingest = (SKILLS / 'wiki-basic-memory/modules/ingest-wiki/MODULE.md').read_text()
+    assert 'modules/ingest-wiki/MODULE.md' in (SKILLS / 'wiki-basic-memory/SKILL.md').read_text()
+    assert 'the-ocr-ingest-page' in ingest and 'R2' in ingest
     assert 'wiki-basic-memory' in (SKILLS / 'shared/SCIEZKI-PRACY.md').read_text()

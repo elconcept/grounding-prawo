@@ -1,6 +1,6 @@
 ---
 name: przewodnik-prawny-v2
-description: 'Przewodnik prawny i fallback routera: pomaga zidentyfikować problem, właściwą ścieżkę postępowania, potrzebne dokumenty i kolejny specjalistyczny skill.'
+description: 'Moduł wewnętrzny routera: fallback, gdy problemu nie da się jeszcze zakwalifikować. Wywoływany przez prawny-router-v3.'
 metadata:
   version: '2.11'
   type: ux-guide

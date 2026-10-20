@@ -433,7 +433,7 @@ NOT_FOUND:  „Nie znaleziono żadnego wyniku pasującego do zapytania"
 ```
 
 Zmierzone: `I C 100/15` → 9 trafień (poprawny **AMBIGUOUS** — sygnatura SR/SO
-nie jest unikalna krajowo); `I C 999999/15` → NOT_FOUND; `XI P 27/26` → NOT_FOUND.
+nie jest unikalna krajowo); `I C 999999/15` → NOT_FOUND; `[SYGN-SPRAWY-2]` → NOT_FOUND.
 Odtworzone niezależnie 2026-09-13d: `I C 100/15` → `big_number=9`, 18 odnośników
 `/details/` — liczba zgadza się co do jednostki.
 
@@ -666,7 +666,6 @@ weryfikacji razem z datą.
 | **BZP** | `bzp.uzp.gov.pl/Default.aspx` | ⚠️ ~20% żądań → 404, ponawiaj |
 | **EUR-Lex** | `eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:…` | HTML |
 | **Cellar SPARQL** | ✅ `publications.europa.eu/webapi/rdf/sparql` | ⛔ tylko ta ścieżka; root → 301 poza listę |
-| **EUREKA (interpretacje MF)** | ✅ **zmierzone 2026-09-27k** | Wyszukiwarka: **POST** `eureka.mf.gov.pl/api/public/v1/wyszukiwarka/informacje/?size=&page=&sort=DT_WYD%2Cdesc` z ciałem JSON (`filter`, `columns`, `searchQuery`) — sesje F-158(b) próbowały GET i dostawały powłokę SPA. Dokument: GET `/informacje/{ID}` (treść w `dokument.fields[]`). ⛔ Filtr `SYG` jest **prefiksowy** („…678.2026” trafia „…678.2026.1.WK”) — kontrola istnienia wymaga post-checku tożsamości. ⛔ `STATUS_INFORMACJI`: 27 Aktualna, 29 Nieaktualna/Zmieniona/Wygaszona/Archiwalna (**22 328** dok.), 30 Nieaktualna, 33 Usunięta — sprawdzaj przed powołaniem. Konektor: `audyt-systemu-v4/mcp-servers/eureka-example`. |
 | **RCL** | ⛔ `legislacja.rcl.gov.pl` | 503 `connection timeout` (2026-09-13c) — host NA liście, nie odpowiada. **Brak zamiennika** dla przebiegu prac legislacyjnych |
 
 ---

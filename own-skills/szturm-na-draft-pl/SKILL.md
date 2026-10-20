@@ -124,6 +124,18 @@ kontekstach (recenzent bez wniosków poprzednich); „OK" jednej nie zwalnia z n
 Pętla E8 trwa do stanu `GOTOWE` (kryterium niżej i w `shared/ZASADY-PLUGINU.md`, „Pętla doskonalenia pisma”), minimum 2 pełne
 przebiegi; nie ma limitu rund wynikającego z kosztu. Przerwać może tylko autor - wtedy stan `NIEGOTOWE`.
 Mandat każdej soczewki, jej wejście i klasy, które zgłasza: [references/soczewki.md](references/soczewki.md). Przeczytaj go przed E1.
+Soczewki są modułami tego skilla (`modules/<soczewka>/MODULE.md`, tabela „Moduły scalone” na końcu), a skrypty weryfikacji cytatów
+należą do `citation-grounding-pl`.
+
+### Pojedyncza soczewka na żądanie
+
+Gdy użytkownik prosi o jedną kontrolę („co powie druga strona”, „jak to przeczyta sędzia”, „sprawdź cytaty”), uruchom tylko ją,
+w tej samej pętli: uwagi wdroż w nowej wersji `_vN+1` i powtórz soczewkę. Skróty: `marko` = `marko-pl-content`,
+`sedzia` = `pierwsze-wrazenie-sedziego-pl`, `atak` = `atak-przeciwnika-pl`, `debata` = `adversarial-legal-review-pl`,
+`fidelity` = `deliverable-fidelity-pl`, `ocena` = `ocena-outputu-pl`, `subsumpcja` = `subsumpcja-pl`,
+`cytaty` = `citation-grounding-pl` (ekstrakcja i weryfikacja), `styl` = `pisz-po-polsku`.
+Wynik każdej soczewki zapisz od razu w `<teczka>/_robocze/$(date +%Y%m%d_%H%M)_<soczewka>_<wersja>.md` (rzeczywisty czas).
+Po każdej rundzie dopisz przebieg do `drafty/<pismo>/_PRZEBIEGI.md` i notatki pisma w Basic Memory.
 
 ## Przebieg
 

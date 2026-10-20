@@ -39,7 +39,10 @@ for skill in sorted(present):
                     dead_skill[n].append(rel)
             for m in PATH_RE.finditer(FENCE.sub("", text)):
                 t = m.group(1)
-                cands = [os.path.join(root, t), os.path.join(base, t), os.path.join(SKILLS, t),
+                mod = root  # moduł scalony (merge_into) ma własny korzeń z MODULE.md
+                while mod.startswith(base) and mod != base and not os.path.isfile(os.path.join(mod, "MODULE.md")):
+                    mod = os.path.dirname(mod)
+                cands = [os.path.join(root, t), os.path.join(mod, t), os.path.join(base, t), os.path.join(SKILLS, t),
                          os.path.join(SKILLS, "shared", t.split("/", 1)[-1]) if t.startswith("shared/") else ""]
                 if not any(c and os.path.exists(c) for c in cands):
                     dead_path[t].append(rel)

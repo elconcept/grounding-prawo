@@ -11,10 +11,11 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 | Ścieżka | Rola |
 |---|---|
 | `plugins/grounding-prawo/` | **Generowane** przez `scripts/build.py`. Nie edytuj ręcznie. |
-| `selection/selection.yaml` | Źródło prawdy: które skille, skąd (`lex`, `awe:<pakiet>`, `own`, `vendor:`), opisy dopisywane. |
+| `selection/selection.yaml` | Źródło prawdy: które skille, skąd (`lex`, `awe:<pakiet>`, `own`, `vendor:`), opisy, scalenia (`merge_into`: cały skill jako moduł `<host>/modules/<nazwa>/MODULE.md`; `fold_into`: typ pisma lub referencja). |
 | `selection/patches/`, `selection/overlay/` | Patche na kopię upstreamu i pliki dopisane do pluginu (`shared/`). |
 | `own-skills/` | Skille własne (bez upstreamu). Tu się je edytuje. |
-| `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify, commercial-legal, awesome-legaltech, awesome-legal-data), `docs/`, `general/`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (kodeksy kbchojnacki). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
+| `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify, commercial-legal, awesome-legaltech, awesome-legal-data), `docs/`, `general/`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (37 ustaw z komentarzem do każdego artykułu, źródło bazy ustaw). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
+| `deploy/` | Wdrożenia na NAS: `mcp-ustawy/` (serwer MCP bazy ustaw). |
 | `scripts/` | `build.py` (budowa), `validate_marketplace.py`, `lint_refs.py` (martwe odwołania), `report.py`. |
 | `archive/` | Kosz odroczonego usuwania; usuwa wyłącznie właściciel. |
 | `.claude-plugin/`, `.agents/plugins/` | Manifesty marketplace (Claude Code, Codex). |
@@ -32,6 +33,10 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
   nie do CLAUDE.md/README.md: tych plików marketplace nie dostarcza.
 - Decyzje właściciela (14.10.2026): brak anonimizacji i zakazu chmury w skillach, MCP tylko przez portal,
   profil MAX bez bramek kosztu, `zawiadomienie-o-przestepstwie` omija tor procesowy routera.
+- Decyzje właściciela (20.10.2026): bez Paperless, MinIO i EUREKA; ingest PDF do R2, Markdown do Basic Memory;
+  pisma bez tytułu zawodowego i numeru wpisu; skille o tej samej funkcji scalone w moduły; komendy tylko tam, gdzie
+  nie zastępuje ich skill (`/transkrypcja`).
+- Nowa funkcja skilla, który już istnieje: dopisz ją do niego albo jako moduł (`merge_into`), nie jako nowy skill.
 - Materiał do doskonalenia skilli: transkrypcje sesji w `INBOX/` (poza gitem; komenda `/transkrypcja` w `legal`) i lekcje
   w `legal/sprawy/<sprawa>/_wiedza.md`. Uwagę ogólną przenoś do skilla albo `shared/`, uwagę jednej sprawy zostaw w `_wiedza.md`.
 - Git jest kopią zapasową: commituj wszystko, co brudne, także cudze zmiany.

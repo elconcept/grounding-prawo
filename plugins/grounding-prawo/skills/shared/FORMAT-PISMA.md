@@ -59,7 +59,7 @@ Wnioskodawca:     Jan Kowalski
   pustych pól. Oświadczenie o nieposiadaniu telefonu lub e-maila wpisuj tylko na polecenie użytkownika.
 - Blok adresata w całości wyrównany do prawej (Align Right), bez wcięcia.
 - Adres organu sprawdź w dokumentach sprawy albo wyszukiwaniem, nie z pamięci.
-- Pełnomocnik: pod podpisem rola („Za uczestnika - pełnomocnik”), nazwisko i nr wpisu.
+- Podpis: imię i nazwisko autora pod miejscem na podpis; bez tytułu zawodowego i numeru wpisu.
 
 ## Wyróżnienia: pogrubienie i podkreślenie
 
@@ -98,7 +98,7 @@ Wnioskodawca:     Jan Kowalski
 - Nie upraszczaj stanowiska strony do wersji organu: gdy strona kwestionuje podstawę czynności, nie pisz,
   że czynność nastąpiła „na zgłoszenie o X” jako o jej przyczynie; opisz, co organ zrobił i co powiedział.
 - Kontrola przed wydaniem treści: `pisz-po-polsku` (z bramką `audyt_po_przepisaniu.py`),
-  `pierwsze-wrazenie-sedziego-pl`, przy tezie spornej `atak-przeciwnika-pl`.
+  `szturm-na-draft-pl/modules/pierwsze-wrazenie-sedziego-pl`, przy tezie spornej `szturm-na-draft-pl/modules/atak-przeciwnika-pl`.
 
 ## Kontrola przed wydaniem
 

@@ -1,6 +1,6 @@
 ---
 name: prawny-router-v3
-description: UŻYWAJ ZAWSZE, gdy użytkownik prosi o analizę prawną, pismo lub ocenę materiału prawnego, w każdej jurysdykcji. Nie przy wzmiankach prawnych w pracy nad kodem (licencje, RODO).
+description: 'Punkt wejścia do pracy prawnej: otwiera sprawę (teczka, Basic Memory), kwalifikuje problem i wybiera ścieżkę: analiza akt, nowe pismo, kontrola pisma, zawiadomienie, źródła prawa, umowa, RODO. Używaj zawsze przy analizie prawnej, piśmie lub ocenie materiału prawnego.'
 metadata:
   version: '3.71'
   type: orchestration
@@ -15,7 +15,7 @@ metadata:
     nie kontynuuj cicho", "sprawa transgraniczna / prawo obce → pomiń prawo-polskie-v2 i ISAP, ale NIE pomijaj weryfikacji — view shared/MIEDZYNARODOWE-GATES.md + shared/HIERARCHIA-ZRODEL-MIEDZYNARODOWE.md, kanał RZĘDU 1 przełączony na depozytariusza/EUR-Lex/bazy organów; pozostałe zasady HG aktywne (UP-5)", "użytkownik zagubiony / brak klasyfikacji → [7] FALLBACK, nie zgadywanie dziedziny", "podmiot (spółka/organ/sąd) oznaczony ⬛ [DO WERYFIKACJI] i brak dostępu do rejestru (KRS/CEIDG) → STOP, poinformuj użytkownika, ZAKAZ generowania pisma z podmiotem w statusie ⬛. ⚠️ Wcześniej sprawdź shared/DOSTEP-MASZYNOWY-API.md §4: KRS działa bez klucza przez api-krs.ms.gov.pl (odpis JSON jest ZANONIMIZOWANY względem PDF), a CEIDG zwraca 401 bez tokenu — to nie jest brak dostępu do rejestru", "weryfikacja rachunku kontrahenta (biała lista VAT) → ✅ OSIĄGALNA maszynowo od 2026-09-13c (F-157b): wl-api.mf.gov.pl, bez klucza, /api/search/nip/{NIP}?date=RRRR-MM-DD oraz /api/search/nip-bank-account/ {NIP}/{26_CYFR}?date=...
     ⛔ data = dzień transakcji, nie dzisiejszy; requestId z odpowiedzi zapisz do śladu weryfikacji. Parametry: shared/DOSTEP-MASZYNOWY-API.md §4. ⚠️ Poprzedni zapis ''NIEOSIĄGALNA, brak zamiennika'' był prawdziwy do 2026-09-04 i przestał być prawdziwy bez zmiany w tym pliku — statusy osiągalności odtwarzaj testem T25"]'
   limitations: '["nie zastępuje porady radcy prawnego/adwokata — patrz shared/DISCLAIMER.md (KROK 7, obowiązkowy)", "jakość i czas odpowiedzi zależą od dostępności i jakości web_search/web_fetch", "nie ingeruje w kontrolę jakości pipeline''u pisma-procesowe-v3 (tylko deleguje)"]'
-  required_modules: '["shared/MCP-INTEGRACJA.md", "shared/PRAWO-HARDGATE.md", "shared/HIERARCHIA-ZRODEL.md", "shared/DOSTEP-MASZYNOWY-API.md", "shared/PORTALE-BRANZOWE-RZAD-2B.md", "shared/MOD-STEP-TRACKER.md", "shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md", "shared/MOD-KONTEKST-SESJI.md", "shared/MOD-OS-CZASU-PRZESLANEK.md", "shared/MOD-WYJATEK-GATE.md", "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md", "shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md", "shared/MOD-PORCJOWANIE-DOWODOW.md", "shared/PRE-W2-VERIFICATION-GATE.md", "shared/CP-GATE.md", "shared/DISCLAIMER.md", "references/KROK0A-anonimizer.md", "references/KROK1-detekcja.md", "shared/TABELE-OPLAT.md", "references/PROFIL-LEKKI.md", "references/ZRODLA-AKTOW-FALLBACK.md", "dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md", "references/AUDYT-KLUCZA-ODPOWIEDZI.md", "shared/MOD-CN-GATE.md", "shared/MOD-REM-GATE.md", "dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md"]'
+  required_modules: '["shared/MCP-INTEGRACJA.md", "shared/PRAWO-HARDGATE.md", "shared/HIERARCHIA-ZRODEL.md", "shared/DOSTEP-MASZYNOWY-API.md", "shared/PORTALE-BRANZOWE-RZAD-2B.md", "shared/MOD-STEP-TRACKER.md", "shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md", "shared/MOD-KONTEKST-SESJI.md", "shared/MOD-OS-CZASU-PRZESLANEK.md", "shared/MOD-WYJATEK-GATE.md", "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md", "shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md", "shared/MOD-PORCJOWANIE-DOWODOW.md", "shared/PRE-W2-VERIFICATION-GATE.md", "shared/CP-GATE.md", "shared/DISCLAIMER.md", "references/KROK1-detekcja.md", "shared/TABELE-OPLAT.md", "references/PROFIL-LEKKI.md", "references/ZRODLA-AKTOW-FALLBACK.md", "dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md", "references/AUDYT-KLUCZA-ODPOWIEDZI.md", "shared/MOD-CN-GATE.md", "shared/MOD-REM-GATE.md", "dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md"]'
   changelog: 'Wersja bieżąca: 3.71 (2026-10-10b, AUDYT-2026-10-10b): Opis: router przy sprawach prawnych, nie przy wzmiankach prawnych w pracy nad kodem; preferencje użytkownika w zakresie sprawy prawnej; PROFIL-LEKKI 1.3 z kosztami zmierzonymi (rdzeń ≈103 kB ≈28 tys. tokenów, typowa sprawa ≈221 kB ≈55-60 tys.); HARD-GATES-ORZECZNICTWO i ZRODLA-AKTOW-FALLBACK bez obchodzenia WAF.
 
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
@@ -32,19 +32,18 @@ Najpierw wybierz cel według `shared/SCIEZKI-PRACY.md`; to jedyny punkt wejścia
 W każdej sprawie prawnej, przed analizą:
 
 1. `view shared/PRAWO-HARDGATE.md` — świeża weryfikacja każdego powołania w tej turze.
-2. `view references/KROK0A-anonimizer.md` — zamknij bramkę anonimizera.
-3. `view references/KROK1-detekcja.md` — ustal tryb i jurysdykcję.
+2. `view references/KROK1-detekcja.md` — ustal tryb i jurysdykcję.
    Gdy w tej turze użytkownik dostarczył dokument, akta, korespondencję lub wklejony
    tekst: `view shared/MOD-WEJSCIE-DOKUMENTU.md` — WD-1 przed analizą, WD-2 przy każdym
    cytacie z materiału, WD-3 przed wynikiem (F-200; treści reguł nie kopiuje się — T35).
-4. Wykonaj routing [1]–[11], wczytaj PRIMARY i wypisz ślad KROKU 3A.
-5. Przy pierwszym URL: `view shared/HIERARCHIA-ZRODEL.md`; każdy URL musi mieć RZĄD 1/2A/2B/3.
+3. Wykonaj routing [1]–[11], wczytaj PRIMARY i wypisz ślad KROKU 3A.
+4. Przy pierwszym URL: `view shared/HIERARCHIA-ZRODEL.md`; każdy URL musi mieć RZĄD 1/2A/2B/3.
    Dla aktów polskich wykonaj też `view references/ZRODLA-AKTOW-FALLBACK.md`.
-6. Przed wysłaniem: `view references/SELF-CHECK.md` i wykonaj inwentarz VER-GRAIN.
-7. Ostatnim elementem odpowiedzi prawnej musi być disclaimer z `shared/DISCLAIMER.md`.
+5. Przed wysłaniem: `view references/SELF-CHECK.md` i wykonaj inwentarz VER-GRAIN.
+6. Ostatnim elementem odpowiedzi prawnej musi być disclaimer z `shared/DISCLAIMER.md`.
 
-⛔ **KOLEJNOŚĆ ODCZYTU — `view references/PROFIL-LEKKI.md`.** Rdzeń R-1…R-5
-(ten plik, KROK 0A, KROK 1, PRAWO-HARDGATE, SELF-CHECK) jest nieredukowalny.
+⛔ **KOLEJNOŚĆ ODCZYTU — `view references/PROFIL-LEKKI.md`.** Rdzeń R-1…R-4
+(ten plik, KROK 1, PRAWO-HARDGATE, SELF-CHECK) jest nieredukowalny.
 Pozostałe zasoby `required_modules` czyta się na wyzwalacz mechaniczny, najpóźniej
 przed pierwszą czynnością, którą regulują. Odroczenie odczytu NIE jest pominięciem
 bramki i NIE zwalnia z żadnej reguły — profil zmienia moment `view`, nigdy zakres
@@ -126,9 +125,9 @@ UP-6: KAŻDA sprawa → CN-GATE przed analizą (shared/MOD-CN-GATE.md) i REM-GAT
 ## KONFIGURACJA PLUGINU grounding-prawo (nadrzędna wobec ogólnych zapisów poniżej)
 
 - **Źródła prawa:** najpierw konektory MCP z portalu `lex.xlap.pl/mcp` (ISAP, SAOS z lokalnym dumpem, NSA/CBOSA, KRS, UODO,
-  EUR-Lex/SPARQL, EUREKA). `web_search`/`web_fetch` tylko gdy konektor nie pokrywa źródła. Granice pokrycia podawaj wprost.
+  EUR-Lex/SPARQL). `web_search`/`web_fetch` tylko gdy konektor nie pokrywa źródła. Granice pokrycia podawaj wprost.
   Brak cache lokalnego: nie ma już skilla `lexcache`.
-- **Dane osobowe:** pracujemy na oryginałach, bez anonimizacji i bez ograniczeń „nie do chmury” (KROK 0A zamknięty).
+- **Dane osobowe:** pracujemy na oryginałach, bez ograniczeń „nie do chmury”; dane zostają w treści.
 - **Typy pism:** pozew, odpowiedź na pozew, apelacja karna, zażalenie na postanowienie prokuratora, zarzuty do opinii biegłego
   obsługuje `pisma-procesowe-v3` przez `modules/typy/`. Zawiadomienie o przestępstwie: wyjątek poniżej.
 - **Po wygenerowaniu pisma:** zaproponuj `szturm-na-draft-pl` (profil MAX, bez tańszych wariantów) i `pisz-po-polsku` do redakcji.
@@ -155,9 +154,85 @@ nie jest pismem procesowym i nie przechodzi toru pism:
 
 ## SEKWENCJA GŁÓWNA
 
-
-> ⛔ KROK 0A jest BRAMKĄ TWARDĄ. Żaden kolejny krok nie może być wykonany
-> jeśli KROK 0A nie jest zamknięty (decyzja_sesji ≠ null).
+```
+KROK 0  → Wczytaj ten plik → ⛔ HG-ACTIVE (blok powyżej) — potwierdź przed kontynuacją
+KROK 0-ST → ⛔ [ST-INIT — STEP-TRACKER] (zaraz po HG-ACTIVE, przed jakimkolwiek krokiem):
+          view shared/MOD-STEP-TRACKER.md → zainicjuj REJESTR kroków
+          (FAZA 0). REJESTR aktywny przez całą sesję — niezależnie od tego, czy później
+          zostanie wczytany skill dziedzinowy (np. pisma-procesowe-v3).
+          ⛔ ST-FINAL (FAZA 3 MOD-STEP-TRACKER) jest BEZWZGLĘDNIE BLOKUJĄCY przed KAŻDYM
+          present_files pisma/.docx — także gdy pismo generowane jest bezpośrednio z routera
+          bez pełnego pipeline pisma-procesowe-v3. Polecenia „dalej"/„kontynuuj"/„generuj"
+          NIE zwalniają z ST-FINAL ani z obowiązku raportowania pominięć (FAZA 2).
+KROK 0-RPK → Gdy zakres obejmuje ≥10 ponumerowanych jednostek albo pracę
+          partiami nad wyliczoną listą: view shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md
+          i wykonaj RPK-INIT/RPK-COMMIT/RPK-RESUME zgodnie z modułem.
+KROK 0B → [KONTEKST SESJI] → wykryj czy użytkownik wkleił/wgrał plik
+          kontekstu (# KONTEKST SESJI...) lub czy napisał "masz kontekst" /
+          "wczytaj sesję" / "plik z poprzedniej sesji" — jeśli TAK:
+          view shared/MOD-KONTEKST-SESJI.md → wykonaj
+          TRYB IMPORT (§4). IMPORT_AKTYWNY = true dla tej sesji.
+          Jeśli NIE — pomiń, kontynuuj do KROK 1.
+KROK 0C → Gdy są pliki lub wzmianka o załącznikach: najpierw view
+          shared/MOD-SKAN-DOWODOW-KOMPLETNY.md i wykonaj pełny SD-VER.
+          Po raporcie SD-VER zakończ turę. Dla dużych materiałów wykonaj też
+          shared/MOD-PORCJOWANIE-DOWODOW.md; jego STOP/checkpointy są blokujące.
+KROK 0D → [STATUS PODMIOTÓW — OZNACZENIE ⬛] → obowiązkowy gdy w materiałach widoczne
+          dane podmiotów (spółki, organy, sądy, fundusze):
+          ⛔ Każdy podmiot niebędący osobą prywatną = natychmiast ⬛ [DO WERYFIKACJI]
+          ⛔ Status ⬛ utrzymuje się aż do faktycznego web_search/web_fetch w tej sesji
+          ⛔ ZAKAZ wstawiania danych ⬛ do pisma / argumentacji bez weryfikacji
+          Szczegóły + STATUS-LIFECYCLE: view shared/PRE-W2-VERIFICATION-GATE.md (PRE-W2.0)
+          Wyjątki (NIE oznaczaj): imię/nazwisko, adres, PESEL osoby fizycznej
+KROK 1  → [DETEKCJA TRYBU + HARD GATE] → view references/KROK1-detekcja.md
+KROK 2  → [ROUTING [1]–[11]] → poniżej w tym pliku
+KROK 3  → Załaduj PRIMARY → SECONDARY → FALLBACK
+          ⛔ [R-3.54-a] Skill dziedzinowy (DR-01…DR-16) wczytuj PRZED weryfikacją
+          przepisów, nie po niej — to on wskazuje, które przepisy weryfikować.
+          Odroczenie DR-xx „do czasu weryfikacji” jest niedopuszczalne.
+          ⛔ [R-3.54-b] Gdy sprawa dotyczy odpowiedzi na wezwanie / zarządzenie
+          sądu: przed decyzją PRIMARY / ODRZUCONE odczytaj treść wezwania.
+          Wezwanie żądające stanowiska, twierdzeń lub wniosków dowodowych →
+          pisma-procesowe-v3; wyłącznie uzupełnienie braku formalnego lub
+          przedłożenie dokumentu → pisma-proste-v2. Powód odrzucenia w KROKU 3A
+          musi wskazywać, co wynika z treści wezwania.
+KROK 3A → [ŚLAD ROUTINGU — OBOWIĄZKOWY]
+          Bezpośrednio po KROK 3, PRZED przejściem do KROK 4, wypisz blok:
+          ```
+          TRYB: [LAIK / PRAWNIK]
+          PRIMARY: [nazwa skilla] — ROUTER-WCZYTANY: [TAK: ścieżka view / NIE]
+          SECONDARY: [nazwa(-y) skilla] — ROUTER-WCZYTANY: [TAK / NIE / N-D]
+          ODRZUCONE: [skille rozważone i odrzucone] — powód: [jedno zdanie]
+          PROFIL: [PEŁNY / LEKKI] — rdzeń R-1…R-5: [TAK]
+          ODROCZONE: [zasób — wyzwalacz, który jeszcze nie padł / BRAK]
+          WERSJA ROUTERA: [numer z YAML frontmatter (poza pluginem) tego pliku]
+          RESOLVER: shared → [katalog] (v[wersja]); DUPLIKATY: [BRAK / skill v1 i v2]
+          ```
+          ⛔ Gdy `ROUTER-WCZYTANY: NIE` dla PRIMARY (np. z powodu braku
+          dostępu do narzędzi plikowych w danym środowisku) — poprzedź
+          resztę odpowiedzi nagłówkiem `⛔ TRYB ZDEGRADOWANY — router
+          niewczytany`. Efekt uboczny pożądany: rozbraja sprzeczność
+          „zakaz narzędzi plikowych + wykonaj routing" — brak wczytania
+          staje się zadeklarowanym, jawnym stanem, nie milczącym
+          pominięciem karanym jako uchybienie (patrz F-113 zakres (a)).
+          `ROUTER-WCZYTANY: TAK` wymaga faktycznego odczytu w tej turze;
+          kontrolę antyfasadową wykonaj z `references/SELF-CHECK.md`.
+KROK 4  → Wykonaj analizę / zbierz dane
+KROK 5  → Sprawdź TYP WYJŚCIA → SEKWENCJA END-TO-END → poniżej
+KROK 5B → [EXPORT KONTEKSTU] → po KROK 5 jeśli sesja zawierała KROK 3B
+           (analizator-dowodow-v3) lub W3 (pisma-procesowe-v3):
+           view shared/MOD-KONTEKST-SESJI.md → wykonaj
+           TRYB EXPORT (§3) — generuj plik .md i present_files.
+KROK 6  → Jeśli pismo → generuj .docx
+          Kontrola jakości i statusu DRAFT/FINAL zarządzana przez pisma-procesowe-v3
+          (shared/CP-GATE.md). Router nie ingeruje w pipeline CP — tylko deleguje.
+          ⛔ KROK 6-ST — ST-FINAL (BLOKUJĄCY): przed present_files KAŻDEGO pisma/.docx
+          wyświetl PEŁNY REJESTR KROKÓW (FAZA 3 MOD-STEP-TRACKER). Jeśli STATUS =
+          ⚠️ DRAFT — NIEZWERYFIKOWANY → pokaż raport pominięć (FAZA 2) i czekaj na decyzję
+          a/b. ZAKAZ present_files bez uprzedniego ST-FINAL — także gdy router generuje
+          pismo bez pełnego pipeline pisma-procesowe-v3.
+KROK 7  → DISCLAIMER → view shared/DISCLAIMER.md
+```
 
 ---
 
@@ -371,6 +446,7 @@ została poprawnie zamknięta.
 
 - **Reguła 1 — wejście:** router jest pierwszym krokiem; wczytaj PRIMARY przed analizą.
 - **Reguła 1C — pliki:** wykonaj KROK 0C i PD0; status krytyczny blokuje analizę.
+- **Reguła 2 — dane:** pracuj na oryginałach; dane osobowe zostają w treści.
 - **Reguła 3 — HARD GATE:** przed analizą wykonaj KROK 1B.
 - **Reguła 4 — niejednoznaczność:** zadaj jedno pytanie, nie zakładaj trybu.
 - **Reguła 5 — kreator:** żądanie kreatora uruchamia go natychmiast.
@@ -436,7 +512,6 @@ Wykonaj w całości: `view prawny-router-v3/references/SELF-CHECK.md`.
 
 Bramki blokujące:
 
-- anonimizacja zamknięta;
 - PRIMARY faktycznie wczytany i ślad KROKU 3A zgodny z wywołaniami;
 - każdy URL ma znacznik RZĄD;
 - każde powołanie ma świeżą weryfikację lub własne `⚠️ [NIEWERYFIKOWANE]`;
@@ -454,8 +529,6 @@ jawny TRYB ZDEGRADOWANY.
 > Pliki `.jsx` przez `present_files` NIE renderują się w claude.ai.
 > Jedyna poprawna metoda inline: `show_widget` z HTML (vanilla JS).
 > Pliki .docx / .pdf → present_files (dokumenty do pobrania — tu zasada nie dotyczy).
-
-**Anonimizacja:** wyłączona w tym pluginie (KROK 0A zamknięty, decyzja_sesji='raw').
 
 ---
 

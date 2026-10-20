@@ -1,6 +1,6 @@
 ---
 name: kalkulatory-procesowe-pl
-description: 'Cztery kalkulatory procesu cywilnego w jednym skillu - opłata sądowa (UKSC), przedawnienie roszczeń (art. 117-125 KC), odsetki (ustawowe, za opóźnienie, w transakcjach handlowych) i WPS - wartość przedmiotu sporu (art. 19-26 KPC). Każdy kalkulator zaczyna od tabeli "Aktualne parametry - POBIERZ przed obliczeniem": stopy NBP i tabele opłat zmieniają się szybciej niż ten plik, więc żywa wartość ma pierwszeństwo przed fallbackiem. Nigdy sama liczba - zawsze pełny rachunek z podstawą prawną każdego kroku i kartą obliczenia DO ZATWIERDZENIA PRZEZ CZŁOWIEKA. Używaj gdy: "ile wynosi opłata od pozwu", "policz opłatę sądową", "opłata od apelacji", "czy roszczenie się przedawniło", "termin przedawnienia", "policz odsetki ustawowe", "odsetki za opóźnienie", "odsetki w transakcjach handlowych", "rekompensata 40 euro", "oblicz WPS", "wartość przedmiotu sporu", "który sąd właściwy według WPS".'
+description: 'Obliczenia procesowe z kartą do zatwierdzenia: terminy (KC, KPC, KPK, KPW), opłaty sądowe, przedawnienie, odsetki, WPS. Każdy krok ma podstawę prawną; niepewna reguła zatrzymuje wynik.'
 license: Apache-2.0
 allowed-tools:
 - Read
@@ -144,29 +144,14 @@ skilla bez rachunku i podstaw prawnych.
   zewnątrz to odpytanie publicznych źródeł (ISAP/ELI, NBP, Monitor Polski)
   o treść przepisów i wysokość stóp.
 
-<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
-## Wspólne reguły wtyczki dokumenty (Dokumenty)
 
-Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
+## MODUŁY SCALONE
 
-Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimizację danych osobowych. Część operacji dotyka danych wrażliwych, więc reguła ochrony danych jest tu pierwsza.
+Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy; reguły tego skilla obowiązują także w module.
 
-### Ochrona danych
-
-- **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
-- **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
-
-### Operacje nieodwracalne
-
-
-### Bramka człowieka
-
-Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to uprawniony człowiek. Plugin przygotowuje plik, nie wykonuje aktu wysyłki.
-
-### Zakres pluginu
-
-Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
-<!-- shared-rules:end -->
+| Moduł | Zastosowanie | Plik |
+|---|---|---|
+| `terminy-procesowe-pl` | terminy procesowe i materialne krok po kroku (KC art. 110-116, KPC, KPK, KPW) z kartą terminu | `modules/terminy-procesowe-pl/MODULE.md` |
 
 ## MOST - miejsce w przepływie grounding-prawo
 

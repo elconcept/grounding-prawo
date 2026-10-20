@@ -1,6 +1,6 @@
 ---
 name: redline-docx-pl
-description: Redlining polskich umow i pism w .docx z natywnymi Word Track Changes - bez niszczenia formatowania OOXML. Czyta .docx do Markdown (CriticMarkup) dla LLM, aplikuje zmiany jako sledzone (w:ins/w:del) + komentarze, i robi sanitize przed wyslaniem (strip metadanych autora, last-modified-by, rsid, timestampy - RODO przy wysylce pisma). Silnik = adeu (MIT). Use when the user wants to nanosic poprawki w umowie/pismie .docx, zrobic redline/tryb sledzenia zmian, czytac docx dla LLM bez utraty formatowania, przygotowac pismo do wyslania (usunac metadane autora z Worda), porownac dwie wersje .docx, lub mentions track changes / sledzenie zmian / redline / .docx / DOCX.
+description: 'Redline .docx z natywnymi zmianami śledzonymi bez niszczenia formatowania: odczyt do Markdown, zmiany i komentarze, akceptacja zmian, porównanie wersji; usunięcie metadanych autora tylko na polecenie.'
 license: MIT
 allowed-tools:
 - Bash
@@ -245,11 +245,10 @@ uvx --from adeu==1.30.0 adeu diff v1.docx v2.docx          # wizualny diff dwoch
 uvx --from adeu==1.30.0 adeu apply --live edits.json       # edycja zywego dokumentu w Word (Windows + MS Word)
 ```
 
+## Metadane przed wysłaniem
 
-
-2. praca/redline na zpseudonimizowanej wersji
-3. `adeu sanitize` -> domkniecie metadanych przed wyslaniem
-
+`adeu sanitize` czyści metadane Worda (autor, last-modified-by, rsid, znaczniki czasu). Uruchamiaj go wyłącznie
+na polecenie autora; treść pisma zostaje bez zmian.
 
 ## Ograniczenia
 
@@ -295,34 +294,10 @@ Komplet liczb i rekomendacja: [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRAT
 (sekcja o genoffice) oraz [vendor/docx-engine/README.md](vendor/docx-engine/README.md).
 Decyzja o jakimkolwiek wpieciu nalezy do WM.
 
-<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
-## Wspólne reguły wtyczki dokumenty (Dokumenty)
-
-Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
-
-Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimizację danych osobowych. Część operacji dotyka danych wrażliwych, więc reguła ochrony danych jest tu pierwsza.
-
-### Ochrona danych
-
-- **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
-- **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
-
-### Operacje nieodwracalne
-
-
-### Bramka człowieka
-
-Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to uprawniony człowiek. Plugin przygotowuje plik, nie wykonuje aktu wysyłki.
-
-### Zakres pluginu
-
-Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
-<!-- shared-rules:end -->
-
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** draft `.docx` i lista zmian
 - **Wynik zapisz w:** REDLINE w `_robocze/`; kopia z zatwierdzonymi zmianami jako kolejna wersja (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `deliverable-fidelity-pl`
+- **Następny krok:** `szturm-na-draft-pl`
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -1,6 +1,6 @@
 ---
 name: case-risk
-description: Wielodomenowa ocena ryzyk w sprawie — dowodowe, proceduralne, dokumentacyjno-medyczne, interwencji Policji/ZRM, karnoprocesowe, cywilne, ryzyko nadmiernego twierdzenia (overclaiming) i ryzyko strategicznego czasu. Integruje mapy UoOZP, KC, art. 192 k.k. i skargi nadzorczej. Używaj do oceny konkretnego zarzutu albo całościowego przeglądu materiału pod kątem ryzyka procesowego.
+description: 'Ocena ryzyk sprawy: dowodowe, proceduralne, medyczne, interwencji Policji i ZRM, karnoprocesowe, cywilne, nadmierne twierdzenia, czas. Moduły: czynność medyczna bez zgody (art. 192 k.k.) i hospitalizacja psychiatryczna (UoOZP).'
 metadata:
   argument-hint: <kwestia / zarzut / dokument do oceny ryzyka>
 ---
@@ -157,6 +157,15 @@ Upływ terminu zażalenia (7 dni od doręczenia); upływ terminu zastrzeżenia a
 `mental_health_article_map.md` (bezzasadność/bezprawność, red flags Policja/ZRM)
 
 Na podstawie kanonicznego Anthropic`legal-risk-assessment` (art. 23)
+
+## MODUŁY SCALONE
+
+Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy; reguły tego skilla obowiązują także w module.
+
+| Moduł | Zastosowanie | Plik |
+|---|---|---|
+| `medical-consent` | czynność medyczna bez zgody lub mimo sprzeciwu (art. 192 k.k., skutki pacjenckie i cywilne) | `modules/medical-consent/MODULE.md` |
+| `uoozp-compliance` | kontrola zgodności hospitalizacji psychiatrycznej z ustawą o ochronie zdrowia psychicznego | `modules/uoozp-compliance/MODULE.md` |
 
 ## MOST - miejsce w przepływie grounding-prawo
 

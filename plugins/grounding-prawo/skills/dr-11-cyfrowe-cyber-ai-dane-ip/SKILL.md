@@ -1,6 +1,6 @@
 ---
 name: dr-11-cyfrowe-cyber-ai-dane-ip
-description: 'Prawo cyfrowe, cyber, AI, dane i IP: RODO, KSC/NIS2, AI Act, usługi cyfrowe, prywatność, cyberbezpieczeństwo, prawo autorskie i własność intelektualna.'
+description: 'Moduł wewnętrzny DR-11: RODO, dowody cyfrowe, cyberbezpieczeństwo, prawo autorskie. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.28'
   dependencies: '{"requires": ["shared"]}'

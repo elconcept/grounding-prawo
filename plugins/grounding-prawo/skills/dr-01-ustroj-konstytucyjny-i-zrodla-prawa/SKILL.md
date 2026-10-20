@@ -1,6 +1,6 @@
 ---
 name: dr-01-ustroj-konstytucyjny-i-zrodla-prawa
-description: 'Prawo konstytucyjne i ustrojowe: Konstytucja, organy państwa, TK, źródła prawa, legislacja i skarga konstytucyjna; analiza z aktualną weryfikacją źródeł.'
+description: 'Moduł wewnętrzny DR-01: Konstytucja, TK, źródła prawa, skarga konstytucyjna. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.19'
   dependencies: '{"requires": ["shared"]}'
