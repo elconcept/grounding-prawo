@@ -106,10 +106,12 @@ python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py szukaj "obrona konie
 python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py cytat kk 148 "Kto zabija człowieka"
 ```
 
-Serwer MCP tej bazy (`ustawy_mcp.py`, narzędzia `akty`, `szukaj`, `artykul`, `cytat`) ma zastąpić konektory `cite` i
-`isap`; wdrożenie: `deploy/mcp-ustawy/` (obraz klonuje ustawy według `.gitmodules`). Orzeczenia
-SAOS i NSA ma obsługiwać jeden wrapper `elconcept/mcp-prawo-wrapper`. Do przełączenia portalu `lex` reguły pluginu
-korzystają z `cite`, `isap`, `saos` i `nsa`. Akty spoza korpusu: ELI (`api.sejm.gov.pl`).
+Serwer MCP `ustawy_mcp.py` jest wdrożony w `deploy/mcp-ustawy/`: `https://ustawy.xlap.pl/mcp`,
+portal `lex.xlap.pl/mcp`, narzędzia `akty`, `szukaj`, `artykul`, `cytat`. Zastępuje usunięty
+serwer `mcp-cite` jako podstawowa ścieżka brzmienia przepisów z 37 ustaw. `mcp-isap` pozostaje
+fallbackiem dla aktów spoza korpusu oraz pomocniczym kanałem ELI; nowelizacje po zindeksowanym
+t.j. muszą być weryfikowane w urzędowym ELI (`api.sejm.gov.pl`). Orzeczenia obsługują SAOS i NSA;
+planowany wrapper `elconcept/mcp-prawo-wrapper` nie jest jeszcze częścią tej migracji.
 
 ## Utrzymanie
 
