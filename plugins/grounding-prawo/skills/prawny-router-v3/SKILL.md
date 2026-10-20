@@ -124,8 +124,10 @@ UP-6: KAŻDA sprawa → CN-GATE przed analizą (shared/MOD-CN-GATE.md) i REM-GAT
 
 ## KONFIGURACJA PLUGINU grounding-prawo (nadrzędna wobec ogólnych zapisów poniżej)
 
-- **Źródła prawa:** najpierw konektory MCP z portalu `lex.xlap.pl/mcp` (ISAP, SAOS z lokalnym dumpem, NSA/CBOSA, KRS, UODO,
-  EUR-Lex/SPARQL). `web_search`/`web_fetch` tylko gdy konektor nie pokrywa źródła. Granice pokrycia podawaj wprost.
+- **Źródła prawa:** najpierw Repertorium (semantycznie), następnie `ustawy` z portalu `lex.xlap.pl/mcp`
+  (`artykul` / `cytat`, 37 aktów); późniejsze nowelizacje obowiązkowo w ELI. Poza korpusem `isap`/ELI.
+  Orzecznictwo: SAOS z lokalnym dumpem, NSA/CBOSA; ponadto KRS, UODO i EUR-Lex/SPARQL.
+  `web_search`/`web_fetch` tylko gdy konektor nie pokrywa źródła. Granice pokrycia podawaj wprost.
   Brak cache lokalnego: nie ma już skilla `lexcache`.
 - **Dane osobowe:** pracujemy na oryginałach, bez ograniczeń „nie do chmury”; dane zostają w treści.
 - **Typy pism:** pozew, odpowiedź na pozew, apelacja karna, zażalenie na postanowienie prokuratora, zarzuty do opinii biegłego
