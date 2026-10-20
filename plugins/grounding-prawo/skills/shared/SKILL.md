@@ -1,8 +1,8 @@
 ---
 name: shared
-description: 'Kanoniczna biblioteka Lex Machina: hardgate, walidacja, definicje, terminy i moduły wspólne. Nie odpowiada użytkownikowi samodzielnie; zasoby wczytują inne skille.'
+description: Biblioteka wspólnych reguł i bramek pluginu (źródła, cytaty, pamięć, format pism). Wczytywana przez inne skille; nie wywołuj bezpośrednio.
 metadata:
-  version: 3.99.34
+  version: 3.99.39
   type: library
   entrypoint: SKILL.md
   compatibility: wszystkie skille prawne systemu
@@ -14,7 +14,15 @@ metadata:
   limitations: '["ZNANE ODSTĘPSTWO od zasady ''shared = warstwa bazowa bez zależności zwrotnych'', zweryfikowane ręcznie 2026-07-04 (FAZA 2E audyt-systemu-v4): 4 pliki zawierają instrukcję `view` wprost do konkretnego skilla nadrzędnego — MOD-METODY-BADAWCZE.md → analizator-dowodow-v3/SKILL.md; PRE-W2-VERIFICATION-GATE.md i MOD-IDENTYFIKACJA-STRONY-UMOWY.md → pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md; MOD-MAPA-PRZEPISOW.md → analizator-przepisow-v2/SKILL.md; raport-sytuacyjny-integracja.md → raport-sytuacyjny-v2/SKILL.md. (poza pluginem) NIE scalone/wydzielone w tej sesji — pole `dependencies.requires` zostawione jako [] (zgodnie z zasadą architektoniczną), ODSTĘPSTWO opisane tu jawnie, żeby FAZA 2E w trybie deklarowanym go NIE zgubiła. Decyzja architektoniczna (uznać jako świadomy wzorzec ''plik-most'' czy wydzielić poza shared/) pozostaje OTWARTA — do następnego audytu.", "rozmiar (176 plików — stan 2026-10-09f po przeniesieniu 15 plików z jednym konsumentem do skilli; 190
     — stan 2026-10-04b po usunięciu 7 reliktów, F-225; wcześniej 197 — stan 2026-10-01b, z .claude-plugin/plugin.json) — każda zmiana pliku kanonicznego ma potencjalnie systemowy promień rażenia; edytować tylko przez audyt-systemu-v4 z pełną weryfikacją CHECKLIST-DEDUP.md"]'
   required_modules: '[]'
-  changelog: 'Wersja bieżąca: 3.99.34 (2026-10-13c, AUDYT-2026-10-13c): PRAWO-HARDGATE ŹRÓDŁO-3 bez ✅ [VER: web-fallback] (RZĄD 2B: 🟨/⚠️), tropy z wyszukiwarki/LEX/Legalis weryfikowane w ELI; HIERARCHIA-ZRODEL: CBOSA jako 🟨 snapshot.
+  changelog: 'Wersja bieżąca: 3.99.39 (2026-10-17b, AUDYT-2026-10-17b): MOD-DLUGIE-PISMO 1.1.0 — do 30 części (pismo ponad 65 000 tokenów), rozmiar części zależny od modelu (lokalny ok. 2 strony), DP-1b (ponad 30 części: osobne dokumenty), DP-1c (część ucięta: zwięźlej), DP-6 (numer punktu zachowany w pliku).
+
+    3.99.38 (2026-10-17a, AUDYT-2026-10-17a): terminy.md: KPW — nowy t.j. Dz.U. 2026 poz. 1336 (obwieszczenie z 2.10.2026, ogłoszone 15.10.2026; stan prawny na 27.09.2026; obejmuje Dz.U. 2025 poz. 1178, 1661, 1814, 1818, 1872 i 2026 poz. 473; brak zmian po t.j. — ELI 2026-10-17).
+
+    3.99.37 (2026-10-16a, AUDYT-2026-10-16a): MOD-DLUGIE-PISMO 1.0.0 — pismo, regulamin lub umowa ponad ok. 10 stron w częściach według planu (plan-pisma, [CZĘŚĆ k/N]); potok pisma procesowego: ciąg dalszy w tym samym kroku i zmiany sekcji długiego projektu; ucięty blok nie jest zapisywany.
+
+    3.99.36 (2026-10-15c, AUDYT-2026-10-15c): ISAP-METRYKI-AKTOW: Prawo wodne — nowy t.j. Dz.U. 2026 poz. 1335 (obejmuje 2025/1535, 2026/445, 605, 815, 1033 i 1156 — brzmienie od 1.01.2027); brak zmian po t.j. ELI 2026-10-15.
+
+    3.99.35 (2026-10-15b, AUDYT-2026-10-15b): MOD-GRAF-PRZYCZYNOWY 1.2.0 — wywołania krokowe (analiza-sadowa-v6 Przejście II krok 8, pisma-procesowe-v3 W1.2c KROK PRZ, chronologia-sprawy-v1 KROK A5a).
 
     3.99.32 (2026-10-12b, AUDYT-2026-10-12b): ISAP-METRYKI-AKTOW, LEGAL-REGISTRY, terminy.md: UPEA t.j. 2026/1311 (⏳ 2026/1003 — art. 17 § 1a, od 28.10.2026), ochrona przyrody t.j. 2026/1315, megaustawa t.j. 2026/562, zmiany z 2026/815 (KSC, PKE, Prawo wodne, ochrona ludności); orka-bas-leksykon: metryki obrony Ojczyzny i UDP.
 
@@ -196,6 +204,7 @@ Nie wczytuj wszystkich naraz — tylko te potrzebne dla danego kroku.
 | `MOD-PEER-REVIEW.md` | Weryfikacja krzyżowa pisma — 4 role (adwokat diabła, sędzia, klient, spójność) |
 | `MOD-INTRO.md` | Executive summary pisma (str. 1) — 2–5 zdań, max 150 słów, killer argument na str. 1 |
 | `MOD-KONCENTRACJA.md` | Metryka długości pisma per typ — limity orientacyjne, algorytm K1–K4, reguły skracania |
+| `MOD-DLUGIE-PISMO.md` | Pismo ponad jedną odpowiedź: części według planu (DP-1–DP-5), ciąg dalszy i zmiany sekcji w potoku W2–W3, umowa z części po AU-HYBRID/AU-STRIP |
 | `MOD-WIDGET-IO.md` | ⭐ Obligatoryjny pasek Import/Export dla widgetów analitycznych — matryca per skill, wzorzec HTML/CSS/JS, reguły IO-1–IO-8 |
 | `MOD-KARTA-DOWODU.md` | ⛔ Karta dowodowa i graf faktów — pisma-procesowe-v3 W1.2c-PRE (po SD-SKAN, przed macierzą MT1); MOD-METODY-BADAWCZE (analizator-dowodow-v3 nie ma bloku B2 — deklaracja usunięta 2026-10-09) |
 | Przeniesione z `shared/` 2026-10-09 (jedyny konsument) | `pisma-procesowe-v3/modules/`: MOD-AUDIT-BUNDLE, MOD-DOKTRYNA, MOD-ELIMINACJA-TEZ, MOD-BUDOWA-ARGUMENTU, MOD-KOSZT-ODPOWIEDZI, MOD-MIKROPODSUMOWANIA, MOD-SKUTEK-PROCESOWY, MOD-STRESS-TEST; `prawny-router-v3/references/`: KANCELARIA-WORKFLOW, SOCIAL-SECURITY-LAW-STANDARD, DISCIPLINARY-PROCEEDINGS-STANDARD, JUDICIARY-LEGAL-STANDARD; `orzeczenia-sadowe-v2/references/`: ORZECZENIA-OUTPUT-SCHEMA; `analizator-umow-v1/scripts/`: kontrakt_rachunek.py + test (T39) |
@@ -229,6 +238,7 @@ Gdy pismo wymaga executive summary, metryki długości lub peer review:
 ```text
 view shared/MOD-INTRO.md           (pozew/apelacja/pismo >3 str.)
 view shared/MOD-KONCENTRACJA.md    (kontrola długości — zawsze)
+view shared/MOD-DLUGIE-PISMO.md    (pismo ponad ok. 10 stron — części, ciąg dalszy)
 view shared/MOD-PEER-REVIEW.md     (gdy WPS>50k / ≥3 żądania / apelacja)
 view pisma-procesowe-v3/modules/MOD-DOKTRYNA.md   (lokalny; gdy cytowanie komentarzy w W2)
 view shared/MOD-TIMING.md          (gdy pytanie o timing złożenia)

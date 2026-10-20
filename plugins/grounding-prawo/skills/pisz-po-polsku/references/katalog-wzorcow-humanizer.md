@@ -49,7 +49,7 @@ W tym rejestrze usuwasz tylko artefakty czatbota (#20-#22), oczywisty filler (#2
 
 ## Miejsce w procesie
 
-`draft .md` -> **humanizer-pl (poza pluginem)** -> recenzja (np. `marko-pl-content`, jesli go masz) -> poprawki -> publikacja.
+`draft .md` -> **humanizer-pl (poza pluginem)** -> recenzja (np. `szturm-na-draft-pl/modules/marko-pl-content`, jesli go masz) -> poprawki -> publikacja.
 
 
 ## Kalibracja glosu (opcjonalna)
@@ -364,25 +364,8 @@ Polska adaptacja blader/humanizer (https://github.com/blader/humanizer, MIT). Or
 - v1.5.0 (2026-10-13) - minimalna ingerencja: inwentarz przed przepisaniem (wartosci, sila normy, pewnosc, powody, kto co robi, terminy), "brak zmiany to poprawny wynik", sekcja "czego nie wolno zmienic", tryb rejestru prawniczego. Nowa bramka `scripts/audyt_po_przepisaniu.py` (stdlib, testy w `tests/`): wartosci wrazliwe, profil deontyczny, pewnosc, slady czatu, terminy chronione i zdefiniowane, limit skrocenia; trojstan OK/UWAGI/BLOKADA. #7, #13 i #14 reaguja na skupienie, nie na pojedynczy sygnal. #30-#34 bez liczb i obietnic o detektorach, bez wymuszania rytmu. Format wyjscia z sekcja "znalezione, swiadomie niezmienione".
 - v1.4.1 (2026-10-05) - z `allowed-tools` usuniete Write i Edit: skill nie zatwierdza z gory zapisu plikow, Claude pyta uzytkownika o zgode przy kazdej zmianie pliku (uwaga skanera katalogu Claude ALLOWED_TOOLS_UNSCOPED_WRITE).
 - v1.4.0 (2026-10-05) - neutralizacja pod publikacje poza MateMatic: reguly domowe (jedna kreska, glos) wydzielone jako STYL DOMOWY z pierwszenstwem przewodnika stylu autora; usuniete odwolania do wewnetrznych skilli i notatek. Wzorce slop bez zmian.
-- v1.3.0 (2026-09-16) - dodany wzorzec #43: pisownia sprzed reformy RJP 2026 ("nie" z imieslowem i przymiotnikiem, przedrostki, wielkie litery) z wyjatkami, w ktorych rozdzielnie zostaje. Pelna sciaga i skaner kandydatow sa w marko-pl-content.
+- v1.3.0 (2026-09-16) - dodany wzorzec #43: pisownia sprzed reformy RJP 2026 ("nie" z imieslowem i przymiotnikiem, przedrostki, wielkie litery) z wyjatkami, w ktorych rozdzielnie zostaje. Pelna sciaga i skaner kandydatow sa w szturm-na-draft-pl/modules/marko-pl-content.
 - v1.2.0 (2026-08-17) - dodany TRYB DOKUMENTACJA (#35-#42): jeden dom na fakt, narracja historii, adnotacje statusu, reczne inwentarze, transkrypt rozumowania, emfaza inflacyjna, spec-speak w opisie wdrozonego, slowa-worki; plus regula skracania „zachowaj kompletna propozycje”. Komplementarny do wzorcow prozy 1-34.
 - v1.1.0 (2026-06-29) - dodana sekcja "Sygnatury statystyczne" (#30-#34): burstiness, morfologia czasownik/rzeczownik, gestosc i roznorodnosc leksykalna, zakres emocji, mechaniczne przejscia. Oparte na metodologii detekcji Woloszyka i Domaszk (MultiLingual 2025).
 - v1.0.0 (2026-05-18) - pierwsze postawienie. Polska adaptacja 29 wzorcow, odwrocony wzorzec cudzyslowow, dodany wzorzec kalk anglicyzmow, wpiety w pipeline publikacji i pipeline wideo.
 
-<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
-## Wspólne reguły wtyczki jakosc-tresci (Jakość treści)
-
-Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
-
-Te skille edytują polski tekst - usuwają wzorce pisania AI (humanizer-pl (poza pluginem)) i recenzują copy pod kątem treści i tonu (marko-pl-content). To narzędzia redakcyjne, nie porada prawna i nie źródło faktów.
-
-### Reguły
-
-- **Zero zmyślania.** Skille zmieniają słowa i strukturę, nigdy faktów, liczb, cytatów ani źródeł. Jeśli teza nie ma źródła, naprawą jest podanie źródła, nie pewniejsze sformułowanie.
-- **Brand-safety.** Humanizer poprawia prozę; nie jest narzędziem do omijania detektorów AI. MateMatic uczy transparentności AI - celem jest lepszy tekst, nie ukrywanie, że użyto AI.
-- **Bramka człowieka.** Wynik to draft. Zanim pójdzie na zewnątrz, sprawdza go człowiek.
-
-### Zakres pluginu
-
-Neutralny jurysdykcyjnie i tematycznie. Bez konektorów, nic nie wysyła na zewnątrz. Do weryfikacji prawnej (grounding, czerwony zespół, scoring) użyj pluginu `fundament-weryfikacyjny`.
-<!-- shared-rules:end -->

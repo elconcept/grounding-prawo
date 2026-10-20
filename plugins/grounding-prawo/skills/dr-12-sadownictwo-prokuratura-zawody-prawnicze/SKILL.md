@@ -1,6 +1,6 @@
 ---
 name: dr-12-sadownictwo-prokuratura-zawody-prawnicze
-description: 'Sądownictwo, prokuratura i zawody prawnicze: ustrój sądów, prokuratura, adwokaci, radcowie, notariusze, komornicy, koszty i odpowiedzialność zawodowa.'
+description: 'Moduł wewnętrzny DR-12: ustrój sądów, prokuratura, zawody prawnicze, koszty. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
   version: '4.27'
   dependencies: '{"requires": ["shared"]}'

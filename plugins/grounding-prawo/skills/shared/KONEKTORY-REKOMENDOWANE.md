@@ -167,7 +167,6 @@ kolumna podaje WYNIK POMIARU TREŚCI (`audyt-systemu-v4/mcp-servers/test_na_zywo
 | `sudop-example` | SUDOP/UOKiK (pomoc publiczna) | Nie | ⚠️ 1.1.0 bez crasha, ale kolejka nie oddała wyniku w >30 min (F-210) |
 | `ceidg-example` | CEIDG (jednoosobowe działalności) | **Tak** | ⚠️ bez klucza poprawny ERROR; z kluczem niezmierzony |
 | `eurlex-example` | EUR-Lex/CELLAR (prawo UE) | Nie | ✅ po naprawie 1.1.0 (było: 406, a pod spodem NOT_FOUND dla RODO) |
-| `eureka-example` | EUREKA (interpretacje podatkowe MF) | Nie | ✅ nowy w 3.91 (27k) |
 
 Każdy katalog ma własny README z pełnym statusem testów i ograniczeniami.
 Priorytety wdrożenia wg wpływu: **EUR-Lex** (32 odwołania w dr-*/, największy
@@ -337,7 +336,6 @@ wyszukiwarki urzędowe (sn.pl, CBOSA, UZP); sn.pl zablokowany → SAOS tylko spr
 | `wl-api.mf.gov.pl` (biała lista VAT) | ✅ 27s: `date` obowiązkowy; NIP spoza wykazu = 200 + `subject: null` + requestId; `check` TAK/NIE; rachunki wirtualne | `wl-example` 1.0.0 |
 | `orzeczenia.uodo.gov.pl` (UODO) | ✅ 27r: loadery React Router (`/search.data`, `/document/{URN}/content.data`, turbo-stream) | `uodo-example` 1.0.0 — prawomocność z metryki, post-check sygnatury |
 | `orzeczenia.nsa.gov.pl` (CBOSA) | ⚠️ z sandboxa Claude: 503 bramy egress (27m) — pomiar z sieci użytkownika (F-213) | `cbosa-example` 1.0.0 (parser równoważny z referencyjnym) |
-| `eureka.mf.gov.pl` (interpretacje) | ✅ 27k (POST; post-check sygnatury; status aktualności) | `eureka-example` 1.0.0 |
 | `api.stat.gov.pl` (REGON/BIR) | ⚠️ wymaga UserKey | brak |
 
 ### ⭐ PORÓWNANIE Z `matematicsolutions` — uruchomione na tych samych przypadkach (2026-09-27k)
@@ -347,7 +345,6 @@ Paczki npm `@matematicsolutions/*` (MIT) uruchomione przez protokół MCP obok p
 
 | Kanał | Ich przewaga | Nasza przewaga | Przypadek rozstrzygający |
 |---|---|---|---|
-| EUREKA (`mcp-eureka` 0.2.0) | `list_categories`, strona wyników | post-check sygnatury; status aktualności | ucięta `…678.2026` → u nich „Znaleziono: 1” (inna sygnatura), u nas NOT_FOUND; status 29 → u nich bez słowa, u nas ⛔ |
 | SAOS (`mcp-saos` 1.2.0) | ⭐ **`saos_cite_check`** (cytator: późniejsze orzeczenia powołujące sygnaturę); filtry `judgeName`, `referencedRegulation` | — (NSA/WSA: obie strony poprawnie) | 27q: `saos_cytator` (ścisłe dopasowanie sygnatury w treści, wykluczenie fałszywych trafień) — ⚠️ wzorce niezmierzone na żywo (SAOS w przerwie) |
 | EUR-Lex (`mcp-eu-sparql` 1.2.0) | ⭐ **TSUE** (`search_cjeu`, `search_cjeu_by_ecli`), zakres dat, GDPRhub | status obowiązywania, data końca, tytuł PL | 31995L0046 → u nich bez „uchylona”; 27q: `eurlex_tsue` — dodatkowo po SYGNATURZE sprawy (C-131/12), której oni nie wyszukują |
 | ISAP (`mcp-isap` 1.3.0) | ⭐ `get_act`, `get_act_text` (treść, wyszukiwanie w akcie, odesłanie do PDF), filtr `in_force` | — w przykładzie (mapowanie statusu było w pluginie 27h — F-211) | KC `DU/1964/93` → u nich „Stan: IN_FORCE” przy istniejącym t.j.; treść t.j. u nich tylko jako link do PDF (text.html t.j. pusty) — 27q: `isap_tekst` zwraca obowiązujące brzmienie z PDF |

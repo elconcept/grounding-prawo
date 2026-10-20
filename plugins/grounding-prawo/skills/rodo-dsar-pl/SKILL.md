@@ -1,15 +1,13 @@
 ---
 name: rodo-dsar-pl
-description: 'Obsługa żądań osób, których dane dotyczą (DSAR) po polsku, w oparciu o art. 12 oraz 15-22 RODO. Identyfikuje typ żądania (dostęp 15, sprostowanie 16, usunięcie 17, ograniczenie 18, przenoszenie 20, sprzeciw 21, decyzje zautomatyzowane 22), pilnuje TERMINU (najpóźniej 1 miesiąc od otrzymania, art. 12 ust. 3; przedłużenie o maks. 2 miesiące z uwagi na skomplikowany charakter lub liczbę żądań), bramkuje wyjątki i podstawy odmowy (np. art. 17 ust. 3, żądania ewidentnie nieuzasadnione lub nadmierne - art. 12 ust. 5), składa draft odpowiedzi i rejestr. Weryfikacja tożsamości wnioskodawcy (art. 12 ust. 6) jako pierwszy krok. Wysyłkę odpowiedzi oraz usunięcie lub eksport danych zostawia człowiekowi. Nie dodaje konektorów i sam niczego nie wysyła; treść wniosku trafia do modelu, który masz skonfigurowany. Używaj gdy: "wniosek o dostęp do danych", "żądanie usunięcia", "prawo do bycia zapomnianym", "sprzeciw RODO", "termin na odpowiedź DSAR".
-
-  '
+description: 'Żądania z art. 15-22 RODO: dostęp, sprostowanie, usunięcie, ograniczenie, sprzeciw; terminy i podstawy odmowy. Używaj do przygotowania własnego żądania wobec administratora i oceny jego odpowiedzi.'
 license: Apache-2.0
 allowed-tools:
 - Read
 metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.3.0
-  companion_skills: uodo-grounding-pl, gaius-api-anonymization
+  companion_skills: patron-prawo-pl-zrodla/modules/uodo-grounding-pl, gaius-api-anonymization
   parity: gdpr-dsar-en
   data-residency: local
   requires-human-approval: 'true'
@@ -61,7 +59,7 @@ to akt nieodwracalny/na zewnątrz => zawsze człowiek (granica governance).
 Sprawdź wyjątki specyficzne dla prawa (zwłaszcza art. 17 ust. 3 i ograniczenia krajowe). Gdy
 administrator nie podejmuje działań, informuje osobę niezwłocznie, najpóźniej w ciągu miesiąca od
 otrzymania żądania, o powodach oraz o możliwości skargi do UODO i drodze sądowej (art. 12 ust. 4). Powołania na
-decyzje UODO => [[uodo-grounding-pl]].
+decyzje UODO => [[patron-prawo-pl-zrodla/modules/uodo-grounding-pl]].
 
 ## Krok 3 - Draft odpowiedzi + rejestr
 
@@ -91,34 +89,13 @@ na zewnątrz nigdy nie są automatyczne.
 
 ## Companion
 
-Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl (poza pluginem)]]. Anonimizacja przy kopii: `gaius-api-anonymization`.
+Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl (poza pluginem)]].
 Parytet: `gdpr-dsar-en`.
-
-<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
-## Wspólne reguły wtyczki ochrona-danych (Ochrona danych)
-
-Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
-
-Plugin prowadzi operacje RODO kancelarii i inspektora ochrony danych: ocenę skutków, obsługę naruszenia, żądania osób, rejestr czynności i przegląd umów powierzenia. To procesy zakończone projektem do decyzji, nie gotowe akty.
-
-### Reguły
-
-- **Wynik to projekt do decyzji.** Draft OSOD, zgłoszenia naruszenia, odpowiedzi na żądanie, rejestru czy redline umowy są punktem wyjścia dla administratora / IOD. Zatwierdza i wykonuje człowiek.
-- **Granica governance - akt na zewnątrz zostaje człowiekowi.** Złożenie wniosku do UODO, wysyłka zgłoszenia naruszenia, wysyłka odpowiedzi na DSAR, usunięcie lub eksport danych, podpis umowy - plugin przygotowuje draft, nie wykonuje aktu.
-- **Brak gwiazdkowania ryzyka.** Ocena ryzyka (DPIA, naruszenie) wymaga danych wejściowych; brak danych to luka do uzupełnienia, nie pole do zgadywania.
-- **Bez porady prawnej.** Plugin porządkuje obowiązki RODO i mapuje je na artykuły; nie zastępuje analizy prawnej konkretnej sprawy.
-- **Dane organizacji i osób.** Traktuj dane realnej kancelarii i osób, których dane dotyczą, jak poufne - nie wynoś poza uzgodniony obieg. Te skille nie dodają własnego kanału wychodzącego; co trafia do modelu, decyduje Twoja konfiguracja (patrz https://github.com/matematicsolutions/awesome-matematic-skills-pl/blob/main/TRUST.md).
-- **Powołania na decyzje UODO** weryfikuj mechanicznie przez `uodo-grounding-pl` (bundel orzecznictwo-zrodla) przed wpisaniem do dokumentu.
-
-### Zakres pluginu
-
-Plugin daje operacyjne narzędzia RODO (DPIA, naruszenie 72h, DSAR, RoPA/DPA). Nie weryfikuje cytatu ani nie pobiera źródeł prawa - do tego są pluginy "fundament weryfikacyjny" i "orzecznictwo i źródła". Redline umowy powierzenia korzysta z `redline-docx-pl` i `klauzule-kontraktowe-pl` (bundel dokumenty).
-<!-- shared-rules:end -->
 
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
 - **Wynik zapisz w:** `drafty/dsar/rrrrMMdd_dsar_v1.*` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `terminy-procesowe-pl`, `pisz-po-polsku`
+- **Następny krok:** `kalkulatory-procesowe-pl`, `pisz-po-polsku`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

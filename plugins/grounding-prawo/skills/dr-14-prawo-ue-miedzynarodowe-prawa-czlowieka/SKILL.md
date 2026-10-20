@@ -1,6 +1,6 @@
 ---
 name: dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka
-description: 'Prawo UE, międzynarodowe i prawa człowieka: prawo pierwotne i wtórne UE, TSUE, EKPC/ETPC, traktaty, kolizje jurysdykcji i standardy praw człowieka.'
+description: 'Moduł wewnętrzny DR-14: prawo UE, TSUE, EKPC i ETPC. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.15'
   dependencies: '{"requires": ["shared"]}'

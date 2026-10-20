@@ -1,8 +1,8 @@
 ---
 name: dr-02-prawo-cywilne-rodzinne-gospodarcze
-description: 'Prawo cywilne, rodzinne i gospodarcze: KC, KPC, spadki, rodzina, spółki, upadłość, restrukturyzacja, windykacja i odpowiedzialność kontraktowa/deliktowa.'
+description: 'Moduł wewnętrzny DR-02: prawo cywilne, rodzinne i gospodarcze, KC, KPC, KRO. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.95'
+  version: '3.96'
   dependencies: '{"requires": ["shared"]}'
 ---
 

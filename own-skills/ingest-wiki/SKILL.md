@@ -31,13 +31,12 @@ przez użytkownika lub model wykonujący jego jawne zlecenie. Format wejściowy:
    go logicznie i tworzy osobny Markdown dla każdego dokumentu.
    W obrębie każdego z nich zachowaj oryginalne numery i sumę
    wszystkich stron źródłowego PDF.
-5. Kopię niezmienionego PDF wyślij do **prywatnego bucketu MinIO**
-   oraz osobnego prywatnego bucketu **Cloudflare R2**. To operacja
+5. Kopię niezmienionego PDF wyślij do **prywatnego bucketu Cloudflare R2**
+   (`the-ocr-archive plik.pdf --key <sprawa>/<plik>.pdf`). To operacja
    jawnie wykonywana przez model po kontroli; nigdy daemon lub cron.
-   Dwie kopie muszą zostać potwierdzone niezależnym HEAD/stat i
-   udokumentowane w notatce jako `s3://bucket/key` oraz `r2://bucket/key`.
-   Nie publikuj publicznych URL ani kluczy dostępu. Przy niepowodzeniu
-   którejkolwiek kopii nie oznaczaj ingestu jako zakończony.
+   Kopia musi zostać potwierdzona niezależnym HEAD i udokumentowana
+   w notatce jako `r2://bucket/key`. Nie publikuj publicznych URL ani
+   kluczy dostępu. Bez potwierdzonej kopii nie oznaczaj ingestu jako zakończony.
 6. W Basic Memory, projekt `legal`, folder `dokumenty/`: zapisz
    **dokładną, niezmodyfikowaną treść zatwierdzonego Markdown**.
    Osobno, w dowolnej liczbie notatek wtórnych, zapisz osoby,

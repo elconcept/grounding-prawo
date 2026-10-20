@@ -59,7 +59,7 @@ Wnioskodawca:     Jan Kowalski
   pustych pól. Oświadczenie o nieposiadaniu telefonu lub e-maila wpisuj tylko na polecenie użytkownika.
 - Blok adresata w całości wyrównany do prawej (Align Right), bez wcięcia.
 - Adres organu sprawdź w dokumentach sprawy albo wyszukiwaniem, nie z pamięci.
-- Pełnomocnik: pod podpisem rola („Za uczestnika - pełnomocnik”), nazwisko i nr wpisu.
+- Podpis: imię i nazwisko autora pod miejscem na podpis; bez tytułu zawodowego i numeru wpisu.
 
 ## Wyróżnienia: pogrubienie i podkreślenie
 

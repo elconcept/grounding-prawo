@@ -1,6 +1,6 @@
 ---
 name: dr-16-pisma-strategia-dowody-orzecznictwo
-description: 'Pisma, strategia, dowody i orzecznictwo: routing narzędzi procesowych, analiza dowodowa, research orzeczeń, kalkulatory i wsparcie budowy strategii sprawy.'
+description: 'Moduł wewnętrzny DR-16: warsztat pism, strategia, dowody, orzecznictwo. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.13'
   dependencies: '{"requires": ["shared"]}'

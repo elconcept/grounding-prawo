@@ -116,7 +116,9 @@ def wczytaj_ustalenia(sciezki: list[Path]) -> list[dict]:
             for u in dane:
                 u = dict(u)
                 s = u.pop("soczewka", None)
-                u["soczewki"] = list(dict.fromkeys((u.get("soczewki") or []) + ([s] if s else [])))
+                # nazwa soczewki moze przyjsc jako sciezka modulu (np. citation-grounding-pl/modules/ekstraktor-cytatow-pl)
+                u["soczewki"] = list(dict.fromkeys(str(x).rstrip("/").rsplit("/", 1)[-1]
+                                                   for x in (u.get("soczewki") or []) + ([s] if s else [])))
                 u["_plik"] = f.name
                 # jedno ustalenie naprawiane w kilku miejscach: "edycje": [{target_text, new_text,
                 # [kotwica], [dokument]}] - kazda edycja przechodzi bramki osobno, raport ma jedna linie

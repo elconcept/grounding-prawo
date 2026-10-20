@@ -1,6 +1,6 @@
 ---
 name: zawiadomienie-o-przestepstwie
-description: 'Interaktywny, wielosesyjny wywiad z pokrzywdzonym: pytania o wcześniejsze zdarzenia, dokładny przebieg, osoby, powtarzalność i skutki, aż autor potrzebuje przerwy lub więcej nie pamięta. Porządkuje pełną relację MD chronologicznie i osobno dopisuje log zeznań z każdej sesji. Przyjmuje istniejącą relację i aktualizuje ją po nowych wspomnieniach. Tworzy kolejne wersje niezłożonych zawiadomień; po złożeniu dobiera uzupełnienia, wnioski i nowe zgłoszenia do zakresu krzywd i etapu sprawy. Zachowuje relację bez wymagania dowodów, rozróżnia źródła wiedzy, pamięć i hipotezy. Używaj przy „zawiadomienie o przestępstwie”, „zgłosić na policję”, „opisz, co mi zrobił”, „uzupełnienie zawiadomienia”, „kontynuuj relację”, także gdy autor chaotycznie opowiada o krzywdzie i chce zgłoszenia organom. Nie do samodzielnych zażaleń niezwiązanych z rozwijaniem relacji.'
+description: 'Zawiadomienie o przestępstwie pisane przez pokrzywdzonego: wywiad, pełna relacja zdarzeń i krzywd, kwalifikacja czynów, pismo do prokuratury lub Policji. Omija tor procesowy routera; kontrola rozszerza relację zamiast ją atakować.'
 metadata:
   version: '0.6'
   status: draft
@@ -199,7 +199,7 @@ Przy oddaniu pisma:
 | `pisma-proste-v2` | WYŁĄCZNIE wzorzec nagłówka (M4) i `⬛ [UZUPEŁNIJ: …]` dla danych formalnych; tor pisma prostego nie jest uruchamiany | cała reszta toru, w tym `shared/CLAIM-VALIDATION.md` (zastępowanie relacji dokumentami, usuwanie twierdzeń bez oparcia), „jedno pytanie zbiorcze”, moduł opłat |
 | `pisz-po-polsku` | wzorce anty-AI, rytm, czasowniki, zakres emocji, typografia, pisownia 2026, zachowanie faktów | tryb „Pismo prawnicze”: formuły procesowe są tu wadą (poza otwarciem, wnioskiem o ściganie i listą przepisów); używaj trybu „Relacja pokrzywdzonego” |
 | `zazalenie-na-postanowienie-prokuratora` | wiedza, na co patrzy prokurator i co się zaskarża po odmowie | styl uzasadnienia, zarzuty, „każde twierdzenie zakotwiczone w dowodzie” |
-| `szturm-na-draft-pl`, `adversarial-legal-review-pl`, `atak-przeciwnika-pl` | na wyraźne życzenie autora, wyłącznie w trybie recenzji rozszerzającej (`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`): pominięte krzywdy, osoby i naruszenia przez organy, czyny, których autor nie nazwał (R4a), pytania i rozbudowa pisma | mandat przeciwnika, rozmywanie tez alternatywami, dopisywanie zastrzeżeń, „korygowanie” relacji autora, ciężar dowodu |
+| `szturm-na-draft-pl`, `szturm-na-draft-pl/modules/adversarial-legal-review-pl`, `szturm-na-draft-pl/modules/atak-przeciwnika-pl` | na wyraźne życzenie autora, wyłącznie w trybie recenzji rozszerzającej (`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`): pominięte krzywdy, osoby i naruszenia przez organy, czyny, których autor nie nazwał (R4a), pytania i rozbudowa pisma | mandat przeciwnika, rozmywanie tez alternatywami, dopisywanie zastrzeżeń, „korygowanie” relacji autora, ciężar dowodu |
 
 Po wywiadzie w już toczącej się sprawie użyj `pisma-procesowe-v3` lub
 `zazalenie-na-postanowienie-prokuratora` do formy adekwatnego pisma. Ten skill nadal prowadzi

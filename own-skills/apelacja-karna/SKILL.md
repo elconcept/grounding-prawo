@@ -86,7 +86,7 @@ Wyszukaj orzeczenia sądów apelacyjnych i okręgowych dotyczące:
 
 ### Inne kierunki
 - `search` z `courtType: "CONSTITUTIONAL_TRIBUNAL"` — jeśli sprawa dotyczy konstytucyjności przepisu
-- Zagadnienia administracyjne powiązane z karnym (np. decyzje podatkowe w sprawach kks): **SAOS nie indeksuje WSA/NSA**. Jeśli konektor `nsa` nie jest podłączony, powiedz to i odeślij do `orzeczenia.nsa.gov.pl` — nie cytuj sygnatur WSA/NSA z pamięci. Interpretacji podatkowych nie weryfikuje żaden podłączony konektor (`eureka.mf.gov.pl`).
+- Zagadnienia administracyjne powiązane z karnym (np. decyzje podatkowe w sprawach kks): **SAOS nie indeksuje WSA/NSA**. Jeśli konektor `nsa` nie jest podłączony, powiedz to i odeślij do `orzeczenia.nsa.gov.pl` — nie cytuj sygnatur WSA/NSA z pamięci.
 
 ---
 

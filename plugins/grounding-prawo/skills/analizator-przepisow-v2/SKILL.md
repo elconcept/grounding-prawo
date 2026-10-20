@@ -636,7 +636,7 @@ Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprec
 
 - **Wejście z:** wskazany moduł DR albo przepis z dokumentu
 - **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ISAP) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `orzeczenia-sadowe-v2`, `subsumpcja-pl`, `pisma-procesowe-v3`
+- **Następny krok:** `orzeczenia-sadowe-v2`, `szturm-na-draft-pl`, `pisma-procesowe-v3`
 - **Nie dubluj:** brzmienie przepisu bierz wg `shared/MOD-TEKST-JEDNOLITY.md`, nie z pamięci
 - **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

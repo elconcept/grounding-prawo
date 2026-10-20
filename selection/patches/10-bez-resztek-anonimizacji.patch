@@ -1,0 +1,290 @@
+diff -ruN a/prawny-router-v3/CHECKSUMS.sha256 b/prawny-router-v3/CHECKSUMS.sha256
+--- a/prawny-router-v3/CHECKSUMS.sha256	2026-10-20 01:48:38.857157756 +0200
++++ b/prawny-router-v3/CHECKSUMS.sha256	2026-10-20 02:08:17.415378831 +0200
+@@ -1,11 +1,6 @@
+ a4d5b7f60e1df0bd92022e17562ffe71ae38c1405990bb68fc1b72c482d0d5a0  ./PORTABILITY-MANIFEST.md
+ be039edc413976c9dc11112133e4de9a82da35601bd37278854db54423835e16  ./SKILL.md
+ c2d8962aca28d642fc09c4d79ac6086d5c5b8a198d365e9e062e49be489ecbdf  ./agents/openai.yaml
+-5f87e24059d9d42ef23764f0c551bc5187ea725fa0b14723f9f7268a64ec0fb4  ./anonimizer/anonimizer-skill.md
+-2635ecd95e5e3c3277d040e0cd30ae97eb2aba70876fd2329aea36eee62b3d37  ./anonimizer/assets/AnonimizerPrawny.jsx
+-2b8b0d95a381e8979c0047f21acc5f8a1e5d7349b0778b304ab2f6506a55a930  ./anonimizer/assets/anonimizer-widget.legacy.html
+-5d6d9738eec0a7d30b080ed71917652eaa974c628c35977b7bee737043a9a00e  ./anonimizer/references/BLUEPRINT-SCHEMA.md
+-5348f025f750504047af050dba27dd0b26d67eefc3b3b8ac80092b2350eed732  ./anonimizer/references/REGULY-ANONIMIZACJI.md
+ 8936b24f674a1250d999e2c2b5901374fb4240426f32bd1ae340c352a90d617d  ./assets/icon.svg
+ 0026370ab9ecf6a1f9859add62daa808e6abdeb985a4facca593cd9512684b33  ./references/AUDYT-KLUCZA-ODPOWIEDZI.md
+ e4586ab6f006992d271444152def6227d375bead0093f030268ec4391798c415  ./references/CHANGELOG.md
+@@ -15,7 +10,6 @@
+ cf15b1cd09c8227ed50943e65705c11a86c4801950e5e392e9ad25037d73ed84  ./references/ISAP-METRYKI-AKTOW.md
+ 95b8d3efac09e25df074c54b206fb3f367073fd4f63d6fb12a1012f56ddf843b  ./references/JUDICIARY-LEGAL-STANDARD.md
+ 3d4c268271cdec331258f0f8e1a93ceb76fa0b85cae7bdf0069bc1c68e74a98d  ./references/KANCELARIA-WORKFLOW.md
+-79a41073735eb34f3c1a5c5b0171729045eaf63731577984379e357b5c3bb7b7  ./references/KROK0A-anonimizer.md
+ 48913b92738cbdf0e53a94e4c935c18b839f244e15e18547bb0bec73dc009118  ./references/KROK1-detekcja.md
+ beaa53c47d3d15153544736fb52164e722ffd89233c54ca9c8b8fe4d0573dec5  ./references/PROFIL-LEKKI.md
+ 698fdc860839861f4e8602787326b826a48ccd181ba18dd300759259bfa68026  ./references/ROUTING-BJ-BW.md
+diff -ruN a/prawny-router-v3/SKILL.md b/prawny-router-v3/SKILL.md
+--- a/prawny-router-v3/SKILL.md	2026-10-20 02:07:08.012018984 +0200
++++ b/prawny-router-v3/SKILL.md	2026-10-20 02:08:17.413422399 +0200
+@@ -108,7 +108,6 @@
+   - shared/PRE-W2-VERIFICATION-GATE.md
+   - shared/CP-GATE.md
+   - shared/DISCLAIMER.md
+-  - references/KROK0A-anonimizer.md
+   - references/KROK1-detekcja.md
+   - shared/TABELE-OPLAT.md   # kolejnosc siegania po kwoty; KROK 0 = czy strona
+                             # w ogole placi (art. 94-103 KSCU)
+@@ -129,19 +128,18 @@
+ W każdej sprawie prawnej, przed analizą:
+ 
+ 1. `view shared/PRAWO-HARDGATE.md` — świeża weryfikacja każdego powołania w tej turze.
+-2. `view references/KROK0A-anonimizer.md` — zamknij bramkę anonimizera.
+-3. `view references/KROK1-detekcja.md` — ustal tryb i jurysdykcję.
++2. `view references/KROK1-detekcja.md` — ustal tryb i jurysdykcję.
+    Gdy w tej turze użytkownik dostarczył dokument, akta, korespondencję lub wklejony
+    tekst: `view shared/MOD-WEJSCIE-DOKUMENTU.md` — WD-1 przed analizą, WD-2 przy każdym
+    cytacie z materiału, WD-3 przed wynikiem (F-200; treści reguł nie kopiuje się — T35).
+-4. Wykonaj routing [1]–[11], wczytaj PRIMARY i wypisz ślad KROKU 3A.
+-5. Przy pierwszym URL: `view shared/HIERARCHIA-ZRODEL.md`; każdy URL musi mieć RZĄD 1/2A/2B/3.
++3. Wykonaj routing [1]–[11], wczytaj PRIMARY i wypisz ślad KROKU 3A.
++4. Przy pierwszym URL: `view shared/HIERARCHIA-ZRODEL.md`; każdy URL musi mieć RZĄD 1/2A/2B/3.
+    Dla aktów polskich wykonaj też `view references/ZRODLA-AKTOW-FALLBACK.md`.
+-6. Przed wysłaniem: `view references/SELF-CHECK.md` i wykonaj inwentarz VER-GRAIN.
+-7. Ostatnim elementem odpowiedzi prawnej musi być disclaimer z `shared/DISCLAIMER.md`.
++5. Przed wysłaniem: `view references/SELF-CHECK.md` i wykonaj inwentarz VER-GRAIN.
++6. Ostatnim elementem odpowiedzi prawnej musi być disclaimer z `shared/DISCLAIMER.md`.
+ 
+-⛔ **KOLEJNOŚĆ ODCZYTU — `view references/PROFIL-LEKKI.md`.** Rdzeń R-1…R-5
+-(ten plik, KROK 0A, KROK 1, PRAWO-HARDGATE, SELF-CHECK) jest nieredukowalny.
++⛔ **KOLEJNOŚĆ ODCZYTU — `view references/PROFIL-LEKKI.md`.** Rdzeń R-1…R-4
++(ten plik, KROK 1, PRAWO-HARDGATE, SELF-CHECK) jest nieredukowalny.
+ Pozostałe zasoby `required_modules` czyta się na wyzwalacz mechaniczny, najpóźniej
+ przed pierwszą czynnością, którą regulują. Odroczenie odczytu NIE jest pominięciem
+ bramki i NIE zwalnia z żadnej reguły — profil zmienia moment `view`, nigdy zakres
+@@ -265,7 +263,6 @@
+ KROK 0-RPK → Gdy zakres obejmuje ≥10 ponumerowanych jednostek albo pracę
+           partiami nad wyliczoną listą: view shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md
+           i wykonaj RPK-INIT/RPK-COMMIT/RPK-RESUME zgodnie z modułem.
+-KROK 0A → [ANONIMIZER] → view references/KROK0A-anonimizer.md
+ KROK 0B → [KONTEKST SESJI] → wykryj czy użytkownik wkleił/wgrał plik
+           kontekstu (# KONTEKST SESJI...) lub czy napisał "masz kontekst" /
+           "wczytaj sesję" / "plik z poprzedniej sesji" — jeśli TAK:
+@@ -333,9 +330,6 @@
+ KROK 7  → DISCLAIMER → view shared/DISCLAIMER.md
+ ```
+ 
+-> ⛔ KROK 0A jest BRAMKĄ TWARDĄ. Żaden kolejny krok nie może być wykonany
+-> jeśli KROK 0A nie jest zamknięty (decyzja_sesji ≠ null).
+-
+ ---
+ 
+ ## KROK 2 — ROUTING [1]–[11]
+@@ -548,7 +542,7 @@
+ 
+ - **Reguła 1 — wejście:** router jest pierwszym krokiem; wczytaj PRIMARY przed analizą.
+ - **Reguła 1C — pliki:** wykonaj KROK 0C i PD0; status krytyczny blokuje analizę.
+-- **Reguła 2 — anonimizacja:** zamknij KROK 0A przed analizą.
++- **Reguła 2 — dane:** pracuj na oryginałach; dane osobowe zostają w treści.
+ - **Reguła 3 — HARD GATE:** przed analizą wykonaj KROK 1B.
+ - **Reguła 4 — niejednoznaczność:** zadaj jedno pytanie, nie zakładaj trybu.
+ - **Reguła 5 — kreator:** żądanie kreatora uruchamia go natychmiast.
+@@ -614,7 +608,6 @@
+ 
+ Bramki blokujące:
+ 
+-- anonimizacja zamknięta;
+ - PRIMARY faktycznie wczytany i ślad KROKU 3A zgodny z wywołaniami;
+ - każdy URL ma znacznik RZĄD;
+ - każde powołanie ma świeżą weryfikację lub własne `⚠️ [NIEWERYFIKOWANE]`;
+@@ -633,8 +626,6 @@
+ > Jedyna poprawna metoda inline: `show_widget` z HTML (vanilla JS).
+ > Pliki .docx / .pdf → present_files (dokumenty do pobrania — tu zasada nie dotyczy).
+ 
+-**Anonimizacja:** wyłączona w tym pluginie (KROK 0A zamknięty, decyzja_sesji='raw').
+-
+ ---
+ 
+ ## POKRYCIE DZIEDZINOWE (wczytuj tylko gdy potrzebne)
+diff -ruN a/prawny-router-v3/references/KROK0A-anonimizer.md b/prawny-router-v3/references/KROK0A-anonimizer.md
+--- a/prawny-router-v3/references/KROK0A-anonimizer.md	2026-10-20 02:07:08.006739551 +0200
++++ b/prawny-router-v3/references/KROK0A-anonimizer.md	1970-01-01 01:00:00.000000000 +0100
+@@ -1,23 +0,0 @@
+-# KROK 0A — zamknięty na stałe (polityka właściciela: BEZ anonimizacji i pseudonimizacji)
+-
+-> Lokalna zmiana grounding-prawo. Oryginał upstream wymuszał pytanie anonimizacyjne (a/b),
+-> widżet i skrypt anonimizujący. Tu nic z tego nie obowiązuje.
+-
+-## ZASADA
+-
+-Dokumenty sprawy są przetwarzane w oryginale. Nie anonimizuj, nie pseudonimizuj, nie
+-zastępuj danych znacznikami ([ADRES], [PESEL], inicjały), nie twórz zanonimizowanych kopii
+-roboczych i nie pytaj o to użytkownika, w żadnym trybie (LAIK, PRAWNIK, ścieżka folderu).
+-
+-## WYKONANIE
+-
+-```
+-KROK 0A.1 → decyzja_sesji = 'raw'   (stała; nie zależy od znaczników ani od sygnałów danych osobowych)
+-KROK 0A.2 → bramka 0A jest zamknięta (decyzja_sesji ≠ null) → przejdź od razu do KROK 1
+-```
+-
+-- Nie skanuj wejścia pod kątem danych osobowych w celu wyzwolenia pytania.
+-- Znaczniki `##ANON_START##` i `##PLIK_ORYGINALNY##` są ignorowane; obowiązuje 'raw'.
+-- Gdy użytkownik wprost poprosi o anonimizację ("zanonimizuj", "ukryj dane"): odpowiedz, że ten
+-  plugin jej nie wykonuje, i kontynuuj na oryginale. Nie uruchamiaj żadnego widżetu.
+-- Katalog `anonimizer/` został usunięty z pluginu.
+diff -ruN a/prawny-router-v3/references/KROK1-detekcja.md b/prawny-router-v3/references/KROK1-detekcja.md
+--- a/prawny-router-v3/references/KROK1-detekcja.md	2026-10-20 01:40:26.041281500 +0200
++++ b/prawny-router-v3/references/KROK1-detekcja.md	2026-10-20 02:08:17.413993915 +0200
+@@ -1,7 +1,7 @@
+ # KROK 1 — Detekcja Trybu i Hard Gate Weryfikacji
+ 
+ > Plik wydzielony z prawny-router-v3/SKILL.md (R1).
+-> Wczytaj po KROK 0A, przed KROK 2 (klasyfikacja [1]–[10]).
++> Wczytaj na początku, przed KROK 2 (klasyfikacja [1]–[10]).
+ > Wywołanie: `view prawny-router-v3/references/KROK1-detekcja.md`
+ 
+ ---
+diff -ruN a/prawny-router-v3/references/PROFIL-LEKKI.md b/prawny-router-v3/references/PROFIL-LEKKI.md
+--- a/prawny-router-v3/references/PROFIL-LEKKI.md	2026-10-20 01:40:26.041281500 +0200
++++ b/prawny-router-v3/references/PROFIL-LEKKI.md	2026-10-20 02:08:17.413874534 +0200
+@@ -55,7 +55,7 @@
+ | Warstwa | Kiedy w kontekście | Rozmiar |
+ |---|---|---:|
+ | `name` + `description` 32 skilli | **zawsze**, niezależnie od sprawy | ≈5,9 kB ≈ 1,5 tys. tokenów |
+-| Rdzeń R-1…R-5 (router, KROK 0A, KROK 1, PRAWO-HARDGATE, SELF-CHECK) | po wyzwoleniu routera — **bezwarunkowo, w każdej sprawie** | ≈102,8 kB ≈ 28 tys. tokenów |
++| Rdzeń R-1…R-4 (router, KROK 1, PRAWO-HARDGATE, SELF-CHECK) | po wyzwoleniu routera — **bezwarunkowo, w każdej sprawie** | ≈102,8 kB ≈ 28 tys. tokenów |
+ | `MOD-STEP-TRACKER` | ⛔ **praktycznie bezwarunkowo** — router KROK 0-ST (ST-INIT w każdej sesji) | ≈12,4 kB ≈ 3,4 tys. tokenów |
+ | Rdzeń + CN-GATE + REM-GATE (UP-6: każda sprawa) | w praktyce w każdej sprawie z rozstrzygnięciem i oddaniem wyniku | ≈126 kB ≈ 34 tys. tokenów |
+ | Zasoby warunkowe (CN, REM, WYJ, OŚ, HIERARCHIA, DISCLAIMER, …) | wyłącznie po padnięciu wyzwalacza | 0–103 kB |
+@@ -102,14 +102,13 @@
+ 
+ ## RDZEŃ NIEREDUKOWALNY — odczyt zawsze, przed analizą
+ 
+-Pięć pozycji. Kolejność wiążąca.
++Cztery pozycje. Kolejność wiążąca.
+ 
+ ```
+ R-1  prawny-router-v3/SKILL.md          — jesteś tutaj, routing i reguły
+-R-2  references/KROK0A-anonimizer.md    — bramka twarda, blokuje wszystko dalej
+-R-3  references/KROK1-detekcja.md       — tryb, jurysdykcja, hard gate
+-R-4  shared/PRAWO-HARDGATE.md           — zakaz cytowania z pamięci
+-R-5  references/SELF-CHECK.md           — przed wysłaniem odpowiedzi
++R-2  references/KROK1-detekcja.md       — tryb, jurysdykcja, hard gate
++R-3  shared/PRAWO-HARDGATE.md           — zakaz cytowania z pamięci
++R-4  references/SELF-CHECK.md           — przed wysłaniem odpowiedzi
+ ```
+ 
+ ⛔ Żadna z tych pięciu pozycji NIE PODLEGA odroczeniu w żadnym profilu.
+diff -ruN a/prawny-router-v3/references/SELF-CHECK.md b/prawny-router-v3/references/SELF-CHECK.md
+--- a/prawny-router-v3/references/SELF-CHECK.md	2026-10-20 02:07:08.006887540 +0200
++++ b/prawny-router-v3/references/SELF-CHECK.md	2026-10-20 02:08:17.413719902 +0200
+@@ -6,9 +6,6 @@
+ ---
+ 
+ ```
+-⛔ BLOK 0A — ZAMKNIĘTY NA STAŁE (bez anonimizacji; decyzja_sesji='raw')
+-□ [0A-1] decyzja_sesji='raw' — nie pytam o anonimizację, nie anonimizuję, nie pseudonimizuję
+-
+ ⛔ BLOK OC — OCENA PRACY (od routera 3.54)
+ □ [OC-1] Prośba o ocenę pracy / „jak ci poszło” → ocena liczbowa w skali
+          0–10 (siebie i użytkownika) DOZWOLONA. Obok oceny: lista konkretnych
+@@ -25,7 +22,6 @@
+ □ [E-3b] BRAK-AKTU, a od razu ⚠️ bez próby LEX/Legalis/ArsLege → błąd; wyczerp E-3/E-4.
+ □ [E-4] 🟨 lub RZĄD 2B przy przepisie, który ELI dało się odczytać → błąd; popraw.
+ 
+-□ Wczytałem references/KROK0A-anonimizer.md (szczegóły bramki)?
+ □ Wczytałem references/KROK1-detekcja.md (tryb + hard gate ISAP)?
+ □ web_search/web_fetch dla każdego artykułu/liczby — FAKTYCZNIE wywołałem narzędzie?
+ □ Każdy artykuł/termin/orzeczenie ma znacznik z ZAMKNIĘTEJ hierarchii czterech:
+@@ -167,7 +163,6 @@
+   □ Tryb PRAWNIK → wariant pełny
+   □ Pismo .docx → stopka na ostatniej stronie + disclaimer w wiadomości czatu
+ 
+-JEŚLI BLOK 0A nie zamknięty → wróć do KROK 0A
+ JEŚLI przepisy/liczby bez weryfikacji → cofnij się i weryfikuj
+ JEŚLI DOMAIN-LOCK wykrył przepis spoza PRIMARY bez podstawy → usuń przed wysłaniem
+ JEŚLI szereg stawek ma luki → nie podawaj kwoty łącznej
+diff -ruN a/redline-docx-pl/SKILL.md b/redline-docx-pl/SKILL.md
+--- a/redline-docx-pl/SKILL.md	2026-10-20 01:40:26.272135778 +0200
++++ b/redline-docx-pl/SKILL.md	2026-10-20 02:08:17.414992298 +0200
+@@ -259,17 +259,10 @@
+ uvx --from adeu==1.30.0 adeu apply --live edits.json       # edycja zywego dokumentu w Word (Windows + MS Word)
+ ```
+ 
+-## Integracja z let-it-be (PII PL)
++## Metadane przed wysłaniem
+ 
+-`sanitize` czysci **metadane** Worda, ale NIE tresc. Do anonimizacji tresci (PESEL,
+-NIP, nazwiska w fleksji) najpierw przepusc tekst przez `let-it-be`, potem redline:
+-
+-1. `let-it-be` -> pseudonimizuj tresc pisma (PII -> tokeny)
+-2. praca/redline na zpseudonimizowanej wersji
+-3. `adeu sanitize` -> domkniecie metadanych przed wyslaniem
+-
+-let-it-be = tresc (RODO art. 4 dane osobowe w tekscie); adeu sanitize = metadane pliku.
+-Dwie rozne warstwy wycieku, obie trzeba domknac.
++`adeu sanitize` czyści metadane Worda (autor, last-modified-by, rsid, znaczniki czasu). Uruchamiaj go wyłącznie
++na polecenie autora; treść pisma zostaje bez zmian.
+ 
+ ## Ograniczenia
+ 
+diff -ruN a/rodo-dsar-pl/SKILL.md b/rodo-dsar-pl/SKILL.md
+--- a/rodo-dsar-pl/SKILL.md	2026-10-20 01:40:26.283996930 +0200
++++ b/rodo-dsar-pl/SKILL.md	2026-10-20 02:08:17.415111611 +0200
+@@ -93,7 +93,7 @@
+ 
+ ## Companion
+ 
+-Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl]]. Anonimizacja przy kopii: `gaius-api-anonymization`.
++Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl]].
+ Parytet: `gdpr-dsar-en`.
+ 
+ <!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
+diff -ruN a/shared/DISCLAIMER.md b/shared/DISCLAIMER.md
+--- a/shared/DISCLAIMER.md	2026-10-20 01:40:26.047530730 +0200
++++ b/shared/DISCLAIMER.md	2026-10-20 02:08:17.414108932 +0200
+@@ -57,7 +57,6 @@
+ WYJĄTEK — pominąć gdy:
+   □ Odpowiedź dotyczy wyłącznie technikaliów (np. "jak wgrać plik")
+   □ Pytanie jest czysto administracyjne (np. "jaki jest adres sądu")
+-  □ Rozmowa to wyłącznie KROK 0A (anonimizacja) — dodaj DOPIERO przy analizie
+ ```
+ 
+ ---
+diff -ruN a/shared/MOD-STEP-TRACKER.md b/shared/MOD-STEP-TRACKER.md
+--- a/shared/MOD-STEP-TRACKER.md	2026-10-20 01:48:38.873157756 +0200
++++ b/shared/MOD-STEP-TRACKER.md	2026-10-20 02:08:17.414815351 +0200
+@@ -47,7 +47,6 @@
+ 
+ REJESTR = {
+   // ROUTER (prawny-router-v3)
+-  "R0A": { name: "Anonimizer",           status: "○ OCZEKUJE" },
+   "R0C": { name: "Skan dowodów SD-VER",  status: "○ OCZEKUJE" },
+   "R0D": { name: "Oznaczenie podmiotów ⬛ [DO WERYFIKACJI]", status: "○ OCZEKUJE" },
+   "R1":  { name: "Detekcja trybu",       status: "○ OCZEKUJE" },
+@@ -175,7 +174,6 @@
+   │ 📋 REJESTR KROKÓW — [sygnatura / data]                       │
+   │                                                             │
+   │ Kroki wykonane:                                             │
+-  │  ✅ R0A   Anonimizer                                        │
+   │  ✅ R0C   Skan dowodów SD-VER (35 plików / 7 stron)        │
+   │  ✅ R0D   Oznaczenie podmiotów ⬛ → ✅ (3 podmioty zweryfikowane) │
+   │  ✅ R1    Detekcja trybu → PRAWNIK                          │
+@@ -231,7 +229,7 @@
+ 
+   Standardowa sekcja CP (fragment):
+     │ REJESTR CP (stan po tym checkpoint):              │
+-    │   ✅ zamknięte: R0A, R0C, R1, R2, W1-CLAIM       │
++    │   ✅ zamknięte: R0C, R1, R2, W1-CLAIM       │
+     │   ⚠️ pominięte: W1-STRAT (powód: [opis])          │
+     │   ○  otwarte:  W1-MACIERZ, W1-LANCUCH, PRE-W2... │
+ 
+diff -ruN a/shared/UNIVERSAL-RUNTIME-ADAPTER.md b/shared/UNIVERSAL-RUNTIME-ADAPTER.md
+--- a/shared/UNIVERSAL-RUNTIME-ADAPTER.md	2026-10-20 01:40:26.053169028 +0200
++++ b/shared/UNIVERSAL-RUNTIME-ADAPTER.md	2026-10-20 02:08:17.414223599 +0200
+@@ -120,7 +120,6 @@
+   z uwzględnieniem dostawcy, zakresu danych i retencji.
+ - Akta sprawy, tajemnica zawodowa i dane osobowe nie mogą zostać wysłane do
+   zewnętrznej usługi tylko dlatego, że historyczny widget zawierał endpoint API.
+-- Domyślny fallback anonimizacji: lokalny/deterministyczny, bez transmisji danych.
+ - Kontrola: `python3 shared/tools/check_widget_no_ai_egress.py` (kod 1 = endpoint
+   dostawcy AI w `*.html`/`*.js`/`*.jsx`/`*.mjs`).
+ 

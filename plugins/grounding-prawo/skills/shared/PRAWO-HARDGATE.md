@@ -68,7 +68,7 @@ Dotyczy KAŻDEJ dziedziny prawa: cywilnego, karnego, pracy, administracyjnego, p
 ```
 POZIOM A — konektor MCP (gdy skonfigurowany w środowisku; mapa: shared/MCP-INTEGRACJA.md):
   isap_lookup (eli | query)       (Lex Machina, lex-isap)     → akty Dz.U./M.P.: status + aktualny t.j.
-  sn_sprawdz_sygnature / cbosa_sprawdz_sygnature / kio_sprawdz_sygnature / eureka_sprawdz_sygnature (Lex Machina) → sygnatury SN, NSA/WSA, KIO, interpretacje (sygnatura znana → baza urzędowa po repertorium)
+  sn_sprawdz_sygnature / cbosa_sprawdz_sygnature / kio_sprawdz_sygnature (Lex Machina) → sygnatury SN, NSA/WSA, KIO, interpretacje (sygnatura znana → baza urzędowa po repertorium)
   saos_search (Lex Machina)       → SP bieżąco; SN do 2016, TK do 2015, KIO do 2018 — zastępczo/discovery (orzeczenia-sadowe-v2 Faza 1-0)
   eurlex_lookup                   (Lex Machina, lex-eurlex)   → akty UE: status obowiązywania
   get_act / verify_article        (mcp-isap, legal-cite-pl)  → akty Dz.U./M.P. (konektory obce)
@@ -430,6 +430,14 @@ KROK 2C-3: Przy blokadzie źródła na KROK 2C-1 → status 🟨 [KOTWICA-URZĘD
 ```
 
 Pełna procedura i uzasadnienie: `shared/TEMPORAL-LAW-CHECK.md`.
+
+**W aplikacji (verify_legal_reference, 2026-10-16):** KROK 2C wykonuje narzędzie;
+model przepisuje wynik, nie szuka sam. `freshness.amendments` = pełna lista
+z Dz.U., datą i statusem `WESZLA_W_ZYCIE` / `OCZEKUJE` / `DATA_NIEUSTALONA`
+(z terminami etapowymi ELI) → to jest lista z KROK 2C-2; `evidence` = brzmienie
+obowiązujące w dniu sprawdzenia (wybrane po odnośnikach t.j.), `pendingWording` =
+brzmienie na później z datą. Szczegóły: `shared/TEMPORAL-LAW-CHECK.md`, sekcja
+„W aplikacji”.
 
 ### GDZIE SZUKAĆ NOWELIZACJI PO t.j. — adresy (dodano 2026-09-01k, F-156)
 

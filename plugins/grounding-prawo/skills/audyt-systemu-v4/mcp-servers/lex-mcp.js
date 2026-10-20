@@ -8,7 +8,6 @@ const SERWERY = {
   krs: () => import("./krs-example/krs-mcp-server.js"),
   nbp: () => import("./nbp-example/nbp-mcp-server.js"),
   eurlex: () => import("./eurlex-example/eurlex-mcp-server.js"),
-  eureka: () => import("./eureka-example/eureka-mcp-server.js"),
   sudop: () => import("./sudop-example/sudop-mcp-server.js"),
   ceidg: () => import("./ceidg-example/ceidg-mcp-server.js"),
   cbosa: () => import("./cbosa-example/cbosa-mcp-server.js"),

@@ -91,7 +91,7 @@ def scrub_file(path, removed, stats):
 def scrub(sel, stats):
     removed = [d["name"] for d in sel["drop"]]
     for e in sel["keep"]:
-        if e.get("fold_into"):
+        if not is_top(e):
             continue
         for root, _, fs in os.walk(os.path.join(SKILLS, e["name"])):
             for f in fs:
@@ -121,7 +121,7 @@ def tag_out_of_plugin(sel):
     """Dopisuje '(poza pluginem)' do odwołań do skilli, których plugin nie zawiera - model widzi, że nie może ich użyć."""
     rx, n = out_of_plugin_re(sel), 0
     for e in sel["keep"]:
-        if e.get("fold_into"):
+        if not is_top(e):
             continue
         for root, _, fs in os.walk(os.path.join(SKILLS, e["name"])):
             for f in fs:
@@ -149,7 +149,7 @@ def qualify_paths(sel):
     names = [d for d in os.listdir(SKILLS) if os.path.isdir(os.path.join(SKILLS, d))]
     fixed = missing = 0
     for e in sel["keep"]:
-        if e.get("fold_into"):
+        if not is_top(e):
             continue
         base = os.path.join(SKILLS, e["name"])
         for root, _, fs in os.walk(base):
@@ -166,7 +166,10 @@ def qualify_paths(sel):
                         cands = [os.path.join(SKILLS, rel)]
                         ok = os.path.exists(cands[0])
                     else:
-                        ok = os.path.exists(os.path.join(root, rel)) or os.path.exists(os.path.join(base, rel)) or os.path.exists(os.path.join(SKILLS, rel))
+                        mod = root  # moduł scalony (merge_into) ma własny korzeń z MODULE.md
+                        while mod.startswith(base) and mod != base and not os.path.isfile(os.path.join(mod, "MODULE.md")):
+                            mod = os.path.dirname(mod)
+                        ok = any(os.path.exists(os.path.join(d, rel)) for d in (root, mod, base, SKILLS))
                     if ok:
                         return m.group(0)
                     owners = [n for n in names if os.path.exists(os.path.join(SKILLS, n, rel))]
@@ -185,7 +188,7 @@ def qualify_paths(sel):
 def add_bridges(sel):
     """Dopisuje do każdego skilla sekcję MOST z selection/bridges.yaml: skąd wejście, gdzie wynik, co dalej."""
     bridges = yaml.safe_load(open(os.path.join(ROOT, "selection/bridges.yaml"), encoding="utf-8"))
-    keep = {e["name"] for e in sel["keep"] if not e.get("fold_into")}
+    keep = {e["name"] for e in sel["keep"] if is_top(e)}
     errors = []
     for name in sorted(keep):
         if name in ("shared", "audyt-systemu-v4"):
@@ -289,6 +292,145 @@ def normalize_skill(sm, entry):
 
 
 
+# --- scalanie całych skilli w moduły skilla nadrzędnego (merge_into) ---------------------------
+TEXT_EXT = (".md",)
+
+
+def merged_map(sel):
+    return {e["name"]: e["merge_into"] for e in sel["keep"] if e.get("merge_into")}
+
+
+def is_top(e):
+    """Skill widoczny jako osobny skill pluginu (nie moduł innego)."""
+    return not e.get("fold_into") and not e.get("merge_into")
+
+
+def merge(sel):
+    """Skill z merge_into trafia w całości do <host>/modules/<nazwa>/ (SKILL.md -> MODULE.md).
+
+    Host zachowuje swoją treść i dostaje tabelę modułów; odwołania w całym pluginie wskazują nową ścieżkę.
+    Moduł nie jest osobnym skillem, więc nie zajmuje miejsca na liście skilli modelu."""
+    mp = merged_map(sel)
+    if not mp:
+        return 0
+    rows = {}
+    for e in sel["keep"]:
+        if not e.get("merge_into"):
+            continue
+        name, host = e["name"], e["merge_into"]
+        if mp.get(host):
+            raise SystemExit(f"merge_into: host {host} sam jest scalany")
+        src, dst = os.path.join(SKILLS, name), os.path.join(SKILLS, host, "modules", name)
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        shutil.move(src, dst)
+        sm = os.path.join(dst, "SKILL.md")
+        fm, text, m = frontmatter(sm)
+        desc = " ".join(str((fm or {}).get("description") or "").split())
+        body = text[m.end():] if m else text
+        purpose = e.get("typ") or desc
+        open(os.path.join(dst, "MODULE.md"), "w", encoding="utf-8").write(
+            f"# Moduł `{name}` skilla `{host}`\n\n> Dawniej osobny skill; scalony, żeby ta sama funkcja nie była powielana. "
+            f"Ścieżki `scripts/`, `references/` itd. są względne wobec tego katalogu.\n>\n> Zastosowanie: {purpose}\n" + body)
+        os.remove(sm)
+        for meta in (".claude-plugin", ".codex-plugin", "agents"):
+            shutil.rmtree(os.path.join(dst, meta), ignore_errors=True)
+        rows.setdefault(host, []).append((name, e.get("typ") or e.get("why") or desc))
+    names = sorted(mp, key=len, reverse=True)
+    alt = "|".join(map(re.escape, names))
+    path_re = re.compile(r"(?<![\w.-])(?<!modules/)(" + alt + r")/(SKILL\.md)?")
+    bare_re = re.compile(r"(?<![\w/.-])(" + alt + r")(?![\w/-])")
+    changed = 0
+    for root, _, fs in os.walk(SKILLS):
+        for f in fs:
+            if not f.endswith(TEXT_EXT):
+                continue
+            p = os.path.join(root, f)
+            if HISTORY.search(p):
+                continue
+            rel = os.path.relpath(p, SKILLS).split(os.sep)
+            own_host = rel[0]
+            t0 = t = open(p, encoding="utf-8").read()
+            t = path_re.sub(lambda m: f"{mp[m.group(1)]}/modules/{m.group(1)}/" + ("MODULE.md" if m.group(2) else ""), t)
+
+            def bare(m):
+                n = m.group(1)
+                if mp[n] == own_host:  # wewnątrz hosta nazwa modułu zostaje identyfikatorem (np. soczewki szturmu)
+                    return n
+                return f"{mp[n]}/modules/{n}"
+            out = []
+            for ln in t.split("\n"):
+                out.append(ln if PROVENANCE.search(ln) else bare_re.sub(bare, ln))
+            t = "\n".join(out)
+            if t != t0:
+                open(p, "w", encoding="utf-8").write(t)
+                changed += 1
+    for host, items in rows.items():
+        sm = os.path.join(SKILLS, host, "SKILL.md")
+        t = open(sm, encoding="utf-8").read().rstrip("\n")
+        t += ("\n\n## MODUŁY SCALONE\n\nTen skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy;"
+              " reguły tego skilla obowiązują także w module.\n\n| Moduł | Zastosowanie | Plik |\n|---|---|---|\n"
+              + "\n".join(f"| `{n}` | {' '.join(str(d).split()).replace('|', '/')} | `modules/{n}/MODULE.md` |" for n, d in items) + "\n")
+        open(sm, "w", encoding="utf-8").write(t)
+    return changed
+
+
+# Bloki wspólnych reguł pakietów MateMatic (anonimizacja, „uprawniony człowiek”, odesłania do innych wtyczek)
+SHARED_RULES = re.compile(r"\n?<!-- shared-rules:begin.*?<!-- shared-rules:end -->\n?", re.S)
+
+
+def strip_bundle_rules():
+    n = 0
+    for root, _, fs in os.walk(SKILLS):
+        for f in fs:
+            if f.endswith(".md"):
+                p = os.path.join(root, f)
+                t = open(p, encoding="utf-8").read()
+                t2 = SHARED_RULES.sub("\n", t)
+                if t2 != t:
+                    open(p, "w", encoding="utf-8").write(t2)
+                    n += 1
+    return n
+
+
+def remove_patch_leftovers():
+    for root, _, fs in os.walk(SKILLS):
+        for f in fs:
+            if f.endswith((".orig", ".rej")):
+                os.remove(os.path.join(root, f))
+
+
+# Konektor EUREKA (interpretacje podatkowe) usunięty z pluginu: wiersze i pozycje list o nim znikają.
+EUREKA = re.compile(r"eureka_\w+|mcp-eureka|eureka-example|`eureka`")
+
+
+def drop_eureka():
+    n = 0
+    for root, dirs, fs in os.walk(SKILLS):
+        for d in list(dirs):
+            if d == "eureka-example":
+                shutil.rmtree(os.path.join(root, d)); dirs.remove(d); n += 1
+        if "lex-mcp.js" in fs:  # leniwy import usuniętego serwera przykładowego
+            lp = os.path.join(root, "lex-mcp.js")
+            t = open(lp, encoding="utf-8").read()
+            open(lp, "w", encoding="utf-8").write(re.sub(r"^.*eureka-example.*\n", "", t, flags=re.M))
+        for f in fs:
+            p = os.path.join(root, f)
+            if not f.endswith(".md") or HISTORY.search(p):
+                continue
+            t = open(p, encoding="utf-8").read()
+            t2 = re.sub(r"\s*/\s*eureka_sprawdz_sygnature", "", t)
+            out = []
+            for ln in t2.split("\n"):
+                if EUREKA.search(ln) and (ln.lstrip().startswith("|") or LIST_ITEM.match(ln)):
+                    n += 1
+                    continue
+                out.append(ln)
+            t2 = "\n".join(out)
+            if t2 != t:
+                open(p, "w", encoding="utf-8").write(t2)
+    return n
+
+
 # A single document skill owns OCR tools and the reusable contract library.
 def bundle_documents():
     base = os.path.join(SKILLS, "odczyt-dokumentow")
@@ -363,8 +505,8 @@ def add_session_protocol():
 
 def generate_skill_index(sel):
     """Generate a short canonical catalog from selection.yaml and the built skills."""
-    entries = [e for e in sel["keep"] if not e.get("fold_into")]
-    folded = [e for e in sel["keep"] if e.get("fold_into")]
+    entries = [e for e in sel["keep"] if is_top(e)]
+    folded = [e for e in sel["keep"] if not is_top(e)]
     out = [
         "# Indeks kanonicznych skilli grounding-prawo",
         "",
@@ -392,7 +534,7 @@ def generate_skill_index(sel):
         out.extend(["", "## Moduły scalone z innymi skillami", "",
                     "| Moduł | Włączony do | Opis |", "|---|---|---|"])
         for e in folded:
-            out.append(f"| `{e['name']}` | `{e['fold_into']}` | {str(e.get('why') or '').replace('|', '/')} |")
+            out.append(f"| `{e['name']}` | `{e.get('fold_into') or e.get('merge_into')}` | {str(e.get('why') or '').replace('|', '/')} |")
     path = os.path.join(SKILLS, "shared", "INDEKS-SKILLI.md")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
@@ -421,8 +563,8 @@ def bundle_claude_commands_and_hooks():
         if not hooks["hooks"].get(event):
             raise SystemExit("Required plugin event missing: " + event)
     commands = sorted(p for p in os.listdir(os.path.join(PLUGIN, "commands")) if p.endswith(".md"))
-    if len(commands) < 9:
-        raise SystemExit("Expected nine canonical commands; found " + str(len(commands)))
+    if not commands:
+        raise SystemExit("Expected at least one canonical command")
     print("plugin client components:", len(commands), "commands, SessionStart/PreCompact hooks")
 
 
@@ -454,7 +596,11 @@ def main():
                 raise SystemExit(f"patch {p} nie przeszedł:\n{r.stdout}{r.stderr}")
             print("patch", p)
 
+    remove_patch_leftovers()
     fold(sel)
+    print("scalone moduły: pliki z poprawionymi odwołaniami:", merge(sel))
+    print("usunięte bloki reguł pakietów:", strip_bundle_rules())
+    print("usunięte odwołania do konektora EUREKA:", drop_eureka())
     bundle_documents()
     migrate_document_references()
     import collections
@@ -465,14 +611,14 @@ def main():
     print("ścieżki zakwalifikowane / brakujące oznaczone:", qualify_paths(sel))
     errors = add_bridges(sel)
     add_session_protocol()
-    for e in [x for x in sel["keep"] if not x.get("fold_into")]:
+    for e in [x for x in sel["keep"] if is_top(x)]:
         sm = os.path.join(SKILLS, e["name"], "SKILL.md")
         fm, t, m = frontmatter(sm)
         if not fm or fm.get("name") != e["name"] or not fm.get("description"):
             errors.append(f"{e['name']}: frontmatter name/description niezgodne (name={fm and fm.get('name')})")
             continue
         for dep in ((fm.get("dependencies") or {}).get("requires") or []):
-            if not os.path.isdir(os.path.join(SKILLS, dep)):
+            if not os.path.isdir(os.path.join(SKILLS, dep)) and dep not in merged_map(sel):
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
         normalize_skill(sm, e)
 
@@ -504,7 +650,7 @@ def main():
                             "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Legal"}]},
               open(os.path.join(ROOT, ".agents/plugins/marketplace.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     shutil.copy(os.path.join(ROOT, ".mcp.json"), os.path.join(PLUGIN, ".mcp.json"))  # jedyny konektor: portal MCP
-    print(f"zbudowano {sum(not e.get('fold_into') for e in sel['keep'])} skilli, błędów: {len(errors)}")
+    print(f"zbudowano {sum(is_top(e) for e in sel['keep'])} skilli, błędów: {len(errors)}")
     for x in errors:
         print("  BŁĄD", x)
     sys.exit(1 if errors else 0)

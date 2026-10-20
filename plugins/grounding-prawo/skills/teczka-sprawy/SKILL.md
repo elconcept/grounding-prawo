@@ -24,13 +24,13 @@ katalog względny wobec niego, na przykład `sprawy/nazwa_sprawy`.
    z `shared/BASIC-MEMORY.md`.
 
 To składanie dokumentów lokalnych, nie ingest. Do odczytu i ingestu przez sam MCP
-używaj `ingest-wiki`. Host bez dostępu do plików wynikowych nie może deklarować,
+używaj `wiki-basic-memory/modules/ingest-wiki`. Host bez dostępu do plików wynikowych nie może deklarować,
 że zapisał dokumenty DOCX w lokalnej teczce użytkownika.
 
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** Aktualna teczka sprawy i jej rejestr dokumentów.
-- **Wynik zapisz w:** Dokumenty kancelaryjne w teczce wskazanej przez użytkownika. (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** Brief, spis treści i podsumowanie teczki w katalogu sprawy. (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisma-procesowe-v3`
 - **Basic Memory (`legal`):** Zaktualizuj notatkę teczki po potwierdzeniu wygenerowanych dokumentów. (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

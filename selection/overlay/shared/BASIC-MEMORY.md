@@ -20,8 +20,10 @@ Trzy projekty pełnią odrębne role. Projekt `model-memory` jest współdzielon
 
 ## Ingest PDF — wyłącznie przez model LLM
 
+Zasady wiki (źródła, syntezy, kontrola jakości): `shared/WIKI.md`.
+
 Ingest do `legal` prowadzi wyłącznie model, wykonując po jednej stronie PDF:
-`ingest-wiki` → `the-ocr-ingest-page` (Google Vision/Azure) → kontrola OCR i obrazu
+`wiki-basic-memory/modules/ingest-wiki` → `the-ocr-ingest-page` (Google Vision/Azure) → kontrola OCR i obrazu
 → ewentualnie ponowny odczyt Datalab/LlamaParse → zatwierdzenie strony.
 Nie korzystaj z `wiki_ingest` (refresh, start, extract, index) ani
 kolejki z dawnych bind mountów. Na serwerze Basic Memory nie ma już
@@ -30,13 +32,14 @@ całego PDF. Rozdziel dokumenty zawarte w jednym PDF na osobne notatki;
 źródłowy tekst pozostaje bez modyfikacji i każdą stronę zaczyna
 `==< plik.pdf (Page n/total_document_pages) >==`.
 
-Binarne PDF nie trafiają do Basic Memory: model wywołuje archiwizację
-niezmienionego źródła do dwóch prywatnych bucketów MinIO i R2 i dopiero
-po potwierdzeniu obu kopii zapisuje notatkę źródłową w `legal/dokumenty`.
+Binarne PDF nie trafiają do Basic Memory: model wysyła niezmieniony PDF
+do prywatnego bucketu Cloudflare R2 (`the-ocr-archive`) i dopiero po
+potwierdzeniu kopii zapisuje Markdown jako notatkę źródłową w `legal/dokumenty`.
+PDF trafia wyłącznie do R2, Markdown wyłącznie do Basic Memory.
 Notatki wtórne tworzy lub aktualizuje osobno i łączy linkami do źródła.
 `wiki_plan` pozostaje niezależnym narzędziem planowania, nie uruchamia OCR.
 
-Niedostępność OCR, obrazów lub jednej z kopii źródła oznacza przerwany
+Niedostępność OCR, obrazów lub kopii źródła w R2 oznacza przerwany
 ingest, nie status „zweryfikowany”. Wymagaj faktycznego zapisu
 `write_note` i kontroli przez `read_note`.
 

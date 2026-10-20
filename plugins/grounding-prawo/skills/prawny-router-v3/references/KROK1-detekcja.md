@@ -1,7 +1,7 @@
 # KROK 1 — Detekcja Trybu i Hard Gate Weryfikacji
 
 > Plik wydzielony z prawny-router-v3/SKILL.md (R1).
-> Wczytaj po KROK 0A, przed KROK 2 (klasyfikacja [1]–[10]).
+> Wczytaj na początku, przed KROK 2 (klasyfikacja [1]–[10]).
 > Wywołanie: `view prawny-router-v3/references/KROK1-detekcja.md`
 
 ---

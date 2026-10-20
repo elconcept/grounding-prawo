@@ -27,7 +27,7 @@ Odpowiedź na pozew jest pismem procesowym składanym przed sądem. Każda niepr
 - **KAŻDY** cytowany przepis MUSI być potwierdzony tekstem z ISAP `get_act_text` — i to na **najnowszym tekście jednolitym**, nie na akcie bazowym
 - **KAŻDA** sygnatura MUSI pochodzić z SAOS `search` / `search_by_case`, a przed użyciem przejść `saos_cite_check`
 - Pamięć wolno użyć **wyłącznie** do postawienia hipotezy, czego szukać (który artykuł, która ustawa) — nigdy jako źródła treści
-- **Interpretacji podatkowych i orzeczeń WSA/NSA nie weryfikuje żaden podłączony konektor** — nie cytuj ich; jeśli są potrzebne, powiedz to wprost (`eureka.mf.gov.pl`, `orzeczenia.nsa.gov.pl`) **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
+- **Orzeczenia WSA/NSA weryfikuje tylko konektor `nsa`** — bez niego nie cytuj ich; powiedz to wprost i odeślij do `orzeczenia.nsa.gov.pl`. **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
 - Jeśli nie znajdziesz źródła — **napisz argument bez cytatu**, ale NIGDY nie wymyślaj sygnatury
 - Lepiej napisać "jak wskazuje się w orzecznictwie" bez sygnatury niż podać fałszywą sygnaturę
 

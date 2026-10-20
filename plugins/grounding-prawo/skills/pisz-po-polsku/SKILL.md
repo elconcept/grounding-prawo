@@ -1,6 +1,6 @@
 ---
 name: pisz-po-polsku
-description: Pisanie i redakcja tekstów po polsku tak, by brzmiały naturalnie, konkretnie i bez manier generycznego stylu AI, z zachowaniem faktów, cytatów, przepisów, sygnatur i stopnia pewności. Używaj przy redakcji pism, notatek, relacji i opisów po polsku oraz gdy tekst brzmi sztucznie. Łączy minimalną ingerencję (naturalne-pisanie (poza pluginem)), katalog 36 wzorców AI-slop z bramką wierności po przepisaniu (humanizer-pl (poza pluginem)) i zasady z Patrona (pisz-po-ludzku). Nie zmienia petitum, zarzutów ani ustaleń faktycznych.
+description: 'Redakcja tekstów po polsku: naturalnie, konkretnie, bez manier stylu AI, z zachowaniem faktów, cytatów, przepisów i sygnatur. Nie zmienia petitum, zarzutów ani ustaleń faktycznych.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -75,6 +75,6 @@ Pochodzenie: humanizer-pl (MIT, MateMatic), naturalne-pisanie (elconcept), pisz-
 
 - **Wejście z:** pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
 - **Wynik zapisz w:** nowa wersja `drafty/<pismo>/..._vN+1` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `redline-docx-pl`, `deliverable-fidelity-pl`
+- **Następny krok:** `redline-docx-pl`, `szturm-na-draft-pl`
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -1,6 +1,6 @@
 ---
 name: odczyt-dokumentow
-description: Odczytuje pliki i foldery dokumentów do Markdown z numerami stron oraz kontraktu JSON do cytowania. PDF tekstowy, skany, obrazy, DOCX, HTML i formaty obsługiwane przez MarkItDown; raportuje duplikaty i strony wymagające sprawdzenia. Użyj przed analizą lub ingestem dokumentów.
+description: 'Przyjęcie dokumentu: skan bezpieczeństwa (ukryte polecenia, znaki niewidoczne), weryfikacja podpisu PDF, odczyt do Markdown ze stronami i kontrakt JSON do cytowania. Używaj przed analizą lub ingestem dokumentu.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -15,7 +15,7 @@ wskazany jawnie przez użytkownika/model prowadzący. Nie używaj skanowania
 katalogów, istniejących sidecarów jako dowodu, automatycznego refresh
 `wiki_ingest` ani wsadowej konwersji folderów.
 
-Dla ingestu PDF bezwzględnie uruchom skill `ingest-wiki`:
+Dla ingestu PDF bezwzględnie uruchom skill `wiki-basic-memory/modules/ingest-wiki`:
 
 1. Uruchom `the-ocr-ingest-page PDF --page N --force-provider google_vision`
    albo `azure`, dla **jednej strony**.
@@ -26,9 +26,9 @@ Dla ingestu PDF bezwzględnie uruchom skill `ingest-wiki`:
    `==< source_filename.pdf (Page n/total_document_pages) >==`.
    Przy wielu dokumentach w jednym PDF powstaje wiele plików Markdown;
    każda strona zachowuje numerację oryginalnego PDF.
-4. Oryginał PDF pozostaje nietknięty. Kopie binarne trafiają do
-   prywatnego MinIO i R2, nie do Basic Memory. Dopiero po weryfikacji
-   obu kopii model zapisuje oryginalne Markdown do `legal/dokumenty`.
+4. Oryginał PDF pozostaje nietknięty. Kopia binarna trafia wyłącznie do
+   prywatnego bucketu Cloudflare R2, nie do Basic Memory. Dopiero po
+   weryfikacji kopii model zapisuje oryginalny Markdown do `legal/dokumenty`.
    Notatki wtórne są osobne i powiązane linkami.
 5. **Tylko `the-ocr-ingest-page`** domyślnie produkuje Markdown. `--fixme` tworzy pochodną
    A4, a `--searchable-pdf --from-json` nowy PDF z zastąpioną warstwą
@@ -66,6 +66,15 @@ konektora `ocr` z portalu `lex` (ten sam łańcuch providerów, strony wektorowo
 
 `document_contract/scripts/grounding_bridge.py` lokalizuje cytaty w kontrakcie. Reguły normalizacji i schemat
 znajdują się w `document_contract/contract/`. To biblioteka pomocnicza, bez własnego OCR.
+
+## MODUŁY SCALONE
+
+Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy; reguły tego skilla obowiązują także w module.
+
+| Moduł | Zastosowanie | Plik |
+|---|---|---|
+| `waliduj-podpis-pdf-pl` | weryfikacja podpisów elektronicznych i integralności PDF (sądy, prokuratura, szpitale) | `modules/waliduj-podpis-pdf-pl/MODULE.md` |
+| `patron-skan-dokumentu` | skan dokumentu z niepewnego źródła: ukryte polecenia, znaki niewidoczne, homoglify, niebezpieczne elementy PDF | `modules/patron-skan-dokumentu/MODULE.md` |
 
 ## MOST - miejsce w przepływie grounding-prawo
 

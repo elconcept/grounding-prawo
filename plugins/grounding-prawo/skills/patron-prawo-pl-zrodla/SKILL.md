@@ -1,6 +1,6 @@
 ---
 name: patron-prawo-pl-zrodla
-description: Research prawa polskiego i unijnego przez konektory MCP (SAOS, NSA/CBOSA, ISAP/ELI, KRS, EUR-Lex SPARQL, EU-Compliance offline, EUREKA). Użyj, gdy pytanie dotyczy orzecznictwa, treści przepisu, aktu prawnego, danych spółki z KRS, prawa UE lub TSUE, regulacji RODO/AI Act/DORA/NIS2, interpretacji podatkowych albo gdy trzeba podać weryfikowalne źródło (sygnatura, ELI, CELEX, link).
+description: 'Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ISAP, cite), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -32,7 +32,7 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 | Spółki w KRS | `krs` | `get_entity`, `get_entity_full`, `get_board` | CEIDG |
 | Prawo UE, TSUE, decyzje organów ochrony danych (GDPRhub) | `eu-sparql` | `search_by_celex`, `search_by_date_range`, `search_cjeu`, `search_cjeu_by_ecli`, `search_gdprhub` | prawo krajowe |
 | 14 regulacji UE offline (RODO, AI Act, DORA, NIS2, eIDAS 2.0, CRA, DSA, DMA, Data Act, DGA, LED, ePrivacy, Cybersecurity Act i in.) | `eu-compliance` | `eu_search`, `eu_article`, `eu_compare`, `eu_check_applicability`, `eu_evidence` | akty spoza korpusu |
-| Interpretacje podatkowe KIS/MF, objaśnienia | `eureka` | `search`, `search_by_signature`, `get_interpretation`, `list_categories` | orzecznictwo |
+| Komentarz do artykułu ustawy (32 ustawy, w tym kodeksy, Konstytucja, ustawa o Policji, UoOZP, prawa pacjenta) | baza lokalna `scripts/ustawy.py` | `art <akt> <nr> --komentarz`, `szukaj` | brzmienia urzędowego (komentarz to opracowanie) |
 
 ## Struktura sądownictwa - nie myl pionów
 - Sądy powszechne: rejonowe, okręgowe, apelacyjne. Sprawy cywilne, karne, rodzinne, prawa
@@ -47,7 +47,7 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 ## Typowe ścieżki
 - **Znana sygnatura:** „I ACa 772/13”, „IV CSK 123/15”, „KIO 100/12” → `saos` `search_by_case`;
   „II FSK 1234/20”, „II SA/Wa 100/26” → `nsa` `search_by_case`. Brak wyniku - spróbuj drugiej
-  bazy. Pion rozpoznasz skryptem ze skilla `patron-identyfikatory-pl` (`pl_entities.py extract`).
+  bazy. Pion rozpoznasz skryptem `pl_entities.py extract` (skill `citation-grounding-pl`, moduł `citation-grounding-pl/modules/patron-identyfikatory-pl`).
 - **Czy wyrok „żyje”:** `saos_cite_check` - późniejsze orzeczenia cytujące sygnaturę. Przeczytaj,
   w jakim kontekście ją przywołują (aprobata, krytyka, odmienny pogląd).
 - **Treść przepisu:** `isap` `search_acts` (fragment tytułu, rok, status) → `get_act` (ELI,
@@ -61,8 +61,13 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
   (np. `32016R0679` RODO, `62018CJ0311` Schrems II) albo `search_cjeu_by_ecli`.
 - **Spółka:** kto reprezentuje → `krs` `get_board`; pełne dane (kapitał, PKD, status) →
   `get_entity`; historia zarządów i wpisów → `get_entity_full`.
-- **Podatki:** `eureka` `search` (fraza, filtry kategorii z `list_categories`) → `get_interpretation`;
-  znana sygnatura interpretacji → `search_by_signature`.
+- **Komentarz do artykułu:** `python3 scripts/ustawy.py art kk 148 --komentarz` (indeks: `ustawy.py buduj` w repo
+  `grounding-prawo`, akty z `vendor/law/`). Komentarz cytuj jako opracowanie, nigdy jako treść przepisu.
+- **Orzeczenia spoza konektorów** (SN po 2016 spoza dumpu SAOS, orzeczenia.ms.gov.pl, TK, akt UE po CELEX):
+  moduł `webwright-legal-pl` (komendy `orzeczenie`, `szukaj`, `eurlex` w jego katalogu). W kontenerze na NAS przy
+  blokadzie (CGNAT) uruchom `shared/scripts/tor_rotator.sh`. Wynik zapisz w `_robocze/` teczki z prefiksem
+  `rrrrMMdd_hhmm_`, w odpowiedzi podaj URL źródła i datę pobrania.
+- **Decyzje Prezesa UODO:** konektor `uodo`, weryfikacja według modułu `uodo-grounding-pl`.
 
 ## Dyscyplina
 - Sygnaturę, sąd i datę podawaj DOSŁOWNIE z wyniku narzędzia. Nigdy nie wymyślaj sygnatury
@@ -76,7 +81,7 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 - Konektory mogą mieć opóźnienie względem Dziennika Ustaw. Przed cytowaniem przepisu w piśmie
   zaznacz, że bieżące brzmienie trzeba potwierdzić w oficjalnym źródle.
 - Cytat dosłowny (blockquote, cudzysłów) bierz z tego, co narzędzie faktycznie zwróciło. Wynik
-  narzędzia możesz zapisać do pliku i sprawdzić cytaty skryptem ze skilla `patron-weryfikacja-cytatow`
+  narzędzia możesz zapisać do pliku i sprawdzić cytaty skryptem modułu `citation-grounding-pl/modules/patron-weryfikacja-cytatow` skilla `citation-grounding-pl`
   (tryb `--quotes`).
 - Treści GDPRhub mają licencję CC BY-NC-SA 4.0 - zaznacz to przy dłuższych cytatach.
 
@@ -91,10 +96,19 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 Źródło: Patron (MateMatic Solutions, AGPL-3.0) - `backend/src/lib/chat/prompts.ts`
 (COURTS_PL, SAOS_DISCIPLINE_PL, DRAFTING_PL), `docs/BAZA_WIEDZY.md`. Konektory MCP: MIT.
 
+## MODUŁY SCALONE
+
+Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy; reguły tego skilla obowiązują także w module.
+
+| Moduł | Zastosowanie | Plik |
+|---|---|---|
+| `uodo-grounding-pl` | decyzje Prezesa UODO: wyszukiwanie i weryfikacja w sprawach RODO | `modules/uodo-grounding-pl/MODULE.md` |
+| `webwright-legal-pl` | orzeczenia i akty spoza MCP przez przeglądarkę: sn.pl, orzeczenia.ms.gov.pl, trybunal.gov.pl, EUR-Lex po CELEX | `modules/webwright-legal-pl/MODULE.md` |
+
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** każde pytanie o przepis, orzeczenie, KRS, prawo UE, interpretację
 - **Wynik zapisz w:** odpowiedź ze źródłem; do sprawy: dopisek do `analiza/_dowody-i-przepisy.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `orzeczenia-sadowe-v2`, `analizator-przepisow-v2`, `webwright-legal-pl`
+- **Następny krok:** `orzeczenia-sadowe-v2`, `analizator-przepisow-v2`
 - **Basic Memory (`legal`):** najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

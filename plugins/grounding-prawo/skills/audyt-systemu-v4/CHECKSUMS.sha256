@@ -1,6 +1,6 @@
 f1306e7d29cbbac14d14f7a3c096c646d340ab41c8bae37f1250c6c3916e5978  ./PORTABILITY-MANIFEST.md
 2cf33abe59a4fc8cfb7ca289790b86a818eaf6c885379d4ef2fa5c63d749ac3b  ./README.md
-78fe2816c1a4ac619c5f2ca6e4c5c1b891c76e8499a3cdf83d4bbf5f38e0e395  ./SKILL.md
+8080aa89b714c86e89f6f3c7d76ef19de02b6fa07c9f28b0fa2adbc2d575bcb2  ./SKILL.md
 6ab72bd687f07b8de1615a237b2c3813b4375c88775ae09e9c16136a424cb68b  ./agents/openai.yaml
 e9301497fa98ef56aaca7ede0857b9a18dc06c34040f0679c609a6bf49b1d38b  ./assets/icon.svg
 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986  ./mcp-servers/LICENSE
@@ -92,9 +92,9 @@ bb692d5e777e49ac05c434e1fa7b570e08191f5a166b39ccf68d97c49f0db24e  ./mcp-servers/
 f06c3969a5625a2560967736e6ff8646e822d6af40573c4a77910816f281cf7d  ./modules/MOD-PROPAGACJA-NOWELIZACJI.md
 c35f4cd69cbc0927216a9121554bb8b2167e2db6cfe507900f38a8639893dd56  ./modules/MOD-TRESC-MERYTORYCZNA.md
 1e9a008f510d7c111cf383cc8d189de424c03d1b319d7261dbf05001aeabd803  ./modules/MOD-WSTAWKI.md
-06b1685238b9f96774f4a28f40eaa225847a28e7b0a15f981d4079447d61ef8a  ./references/ALIASY-NAZW-AKTOW.md
-9ecd45075bc657c55437e742cf4b46b4d5a3ee2ae6ebae8b3ff5ef5439808692  ./references/AUDIT-JOURNAL.md
-e7ce886531ac356417c5bbed5c98c3989cf4dfa6b996eb37d8d5844c1ad004f1  ./references/CHANGELOG.md
+d305f6452748a329b1e6a8741e639ad7c06f5d57e923dee64988b5714c82b8f7  ./references/ALIASY-NAZW-AKTOW.md
+167144b386f010c66a1b88d1c9d06f0423038f29c31c908cd466d26e47f24a12  ./references/AUDIT-JOURNAL.md
+39a089f028769d4996810151e82e1383304e90ae5a326ade12a1e93982f56780  ./references/CHANGELOG.md
 c692dd9b7d29da90c5c0af56b4ae742abdb52712e93df35517dd3c2b259a309f  ./references/CHECKLIST-DEDUP.md
 07e3147e3888c7e81ff3f7ca82de4434653787ce1ff03f5be03f05736c86fcf0  ./references/COWORK-HARMONOGRAM-NATYWNY.md
 77f0985c652b148932668bbad675c927ab1649a1e1bde87cab6701abe888ad8a  ./references/F-108-lista-MS-egzamin-2026.md
@@ -117,7 +117,7 @@ c679e729f656a190e7f28f8322bd4b4787fa239fdce03fbe5d2ffaf2fdc1b990  ./references/P
 82a72e5ef250fdbbbd184bd943bfc2a408d5b6a459a8a3d913624c48573dc4b9  ./references/SYNC-DZU-AUTOMATYCZNY.md
 aeef1d2a5e59a6c6e649115bc63b5a452a56a8467fbcb42a562bb3e0c8a0b259  ./references/WARN-OTWARTE.md
 b53258f9480de7129bdc392b9fbd403dde496cfa6e17720c70b21a6a99b417b3  ./references/mapa_dzu_2026-08-28.md
-4d7eb1e8f019900a3aed0cc7fdd1005eae56f44b1678c4b31c60ebef8f6520bb  ./references/mapa_dzu_2026-10-04.md
+689383220fe4797dca692b2235a46a18486007c79cb3cf0e979816867b9ec5f2  ./references/mapa_dzu_2026-10-04.md
 24e8f5b4e4230b0d790a4bd12fd8a42abfe8cea7486a63d0dbb3f80fe30988ee  ./references/raporty-pokrycia-2026-08-13/00-indeks-raportow-pokrycia.md
 641c3646c2a480cf0425f959157cc132ffe0f3655a4d08408d6881a01ab80584  ./references/raporty-pokrycia-2026-08-13/raport-pokrycia-KKW.md
 1b72486e7a61ec8a05af195bc16d06de252d08a686d3809ac5e114a51fb3d35e  ./references/raporty-pokrycia-2026-08-13/raport-pokrycia-KPC.md
@@ -187,7 +187,7 @@ d3f9d6aabbf6cac99a86a8772aa6f0be54635e4e1672ce4d1af94c5c863be8b5  ./scripts/test
 1da5c2fa1271a9b9dbeae0b485bf267644d52374b20bbf4c4dda85513ace80b3  ./scripts/test_moved_to_shared.py
 7992b04af44b70588f41aaa5d9c030f9bb0d2cb62364a0dd666c578a2574896c  ./scripts/test_mutacje_zestawu.py
 27b78a6117408c5f490298c82dbd0098aa3b3f0b7e6769fb93e99d5b403698c7  ./scripts/test_pokrycie_orkiestratora.py
-07302abf1b9afd9a5dfc0a31fef1948a08ef51855bfd0a03c2cdb018ded7f0b8  ./scripts/test_router_contract.py
+70159ed5682178d8fe6ec27f0e4aec8e4005e68e621f6cad4d69a03ba1194aa0  ./scripts/test_router_contract.py
 7819f3628026a9e1334f7f3ee934b4483be33c4c3caa1fc1f37d16f167dbe934  ./scripts/test_title_scope_match.py
 393c321f51d70f2534a736449b1cc6369aecc50855c8de5ffda678d09e4cff10  ./scripts/weryfikator_sygnatur.py
 ce06119d06e4443a4f3de6a2684def3c3bb37e2471cc8e1b5344b22325b07023  ./widgets/WIDGET-MENU.md

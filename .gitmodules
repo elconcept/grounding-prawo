@@ -34,9 +34,6 @@
 [submodule "vendor/mcp/mcp-eu-compliance"]
 	path = vendor/mcp/mcp-eu-compliance
 	url = https://github.com/elconcept/mcp-eu-compliance.git
-[submodule "vendor/mcp/mcp-eureka"]
-	path = vendor/mcp/mcp-eureka
-	url = https://github.com/elconcept/mcp-eureka.git
 [submodule "vendor/mcp/mcp-eu-sparql"]
 	path = vendor/mcp/mcp-eu-sparql
 	url = https://github.com/elconcept/mcp-eu-sparql.git
@@ -114,8 +111,6 @@
 [submodule "vendor/law/konstytucja-rp"]
 	path = vendor/law/konstytucja-rp
 	url = https://github.com/kbchojnacki/konstytucja-rp.git
-#
-## Komentarze do ustaw `vendor/law/` (LexaurinTheDog)
 [submodule "vendor/general/claude-legal-persistent-memory-pl"]
 	path = vendor/general/claude-legal-persistent-memory-pl
 	url = https://github.com/elconcept/claude-legal-persistent-memory-pl.git
@@ -132,3 +127,101 @@
 [submodule "vendor/general/llm-wiki-plugin"]
 	path = vendor/general/llm-wiki-plugin
 	url = https://github.com/praneybehl/llm-wiki-plugin.git
+#
+## Komentarze do każdego artykułu ustaw (forki elconcept, źródło LexaurinTheDog) - baza ustaw: own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py
+[submodule "vendor/law/komentarze/kodeks-cywilny"]
+	path = vendor/law/komentarze/kodeks-cywilny
+	url = https://github.com/elconcept/kodeks-cywilny.git
+[submodule "vendor/law/komentarze/kodeks-karny"]
+	path = vendor/law/komentarze/kodeks-karny
+	url = https://github.com/elconcept/kodeks-karny.git
+[submodule "vendor/law/komentarze/kodeks-karny-wykonawczy"]
+	path = vendor/law/komentarze/kodeks-karny-wykonawczy
+	url = https://github.com/elconcept/kodeks-karny-wykonawczy.git
+[submodule "vendor/law/komentarze/kodeks-postepowania-administracyjnego"]
+	path = vendor/law/komentarze/kodeks-postepowania-administracyjnego
+	url = https://github.com/elconcept/kodeks-postepowania-administracyjnego.git
+[submodule "vendor/law/komentarze/kodeks-postepowania-cywilnego"]
+	path = vendor/law/komentarze/kodeks-postepowania-cywilnego
+	url = https://github.com/elconcept/kodeks-postepowania-cywilnego.git
+[submodule "vendor/law/komentarze/kodeks-postepowania-karnego"]
+	path = vendor/law/komentarze/kodeks-postepowania-karnego
+	url = https://github.com/elconcept/kodeks-postepowania-karnego.git
+[submodule "vendor/law/komentarze/kodeks-postepowania-w-sprawach-o-wykroczenia"]
+	path = vendor/law/komentarze/kodeks-postepowania-w-sprawach-o-wykroczenia
+	url = https://github.com/elconcept/kodeks-postepowania-w-sprawach-o-wykroczenia.git
+[submodule "vendor/law/komentarze/kodeks-rodzinny-i-opiekunczy"]
+	path = vendor/law/komentarze/kodeks-rodzinny-i-opiekunczy
+	url = https://github.com/elconcept/kodeks-rodzinny-i-opiekunczy.git
+[submodule "vendor/law/komentarze/kodeks-wykroczen"]
+	path = vendor/law/komentarze/kodeks-wykroczen
+	url = https://github.com/elconcept/kodeks-wykroczen.git
+[submodule "vendor/law/komentarze/konstytucja-rzeczypospolitej-polskiej"]
+	path = vendor/law/komentarze/konstytucja-rzeczypospolitej-polskiej
+	url = https://github.com/elconcept/konstytucja-rzeczypospolitej-polskiej.git
+[submodule "vendor/law/komentarze/o-dostepie-do-informacji-publicznej"]
+	path = vendor/law/komentarze/o-dostepie-do-informacji-publicznej
+	url = https://github.com/elconcept/o-dostepie-do-informacji-publicznej.git
+[submodule "vendor/law/komentarze/o-dzialalnosci-leczniczej"]
+	path = vendor/law/komentarze/o-dzialalnosci-leczniczej
+	url = https://github.com/elconcept/o-dzialalnosci-leczniczej.git
+[submodule "vendor/law/komentarze/o-komornikach-sadowych"]
+	path = vendor/law/komentarze/o-komornikach-sadowych
+	url = https://github.com/elconcept/o-komornikach-sadowych.git
+[submodule "vendor/law/komentarze/o-krajowym-rejestrze-sadowym"]
+	path = vendor/law/komentarze/o-krajowym-rejestrze-sadowym
+	url = https://github.com/elconcept/o-krajowym-rejestrze-sadowym.git
+[submodule "vendor/law/komentarze/o-krajowym-systemie-cyberbezpieczenstwa"]
+	path = vendor/law/komentarze/o-krajowym-systemie-cyberbezpieczenstwa
+	url = https://github.com/elconcept/o-krajowym-systemie-cyberbezpieczenstwa.git
+[submodule "vendor/law/komentarze/o-ochronie-danych-osobowych"]
+	path = vendor/law/komentarze/o-ochronie-danych-osobowych
+	url = https://github.com/elconcept/o-ochronie-danych-osobowych.git
+[submodule "vendor/law/komentarze/o-ochronie-zdrowia-psychicznego"]
+	path = vendor/law/komentarze/o-ochronie-zdrowia-psychicznego
+	url = https://github.com/elconcept/o-ochronie-zdrowia-psychicznego.git
+[submodule "vendor/law/komentarze/o-oplacie-skarbowej"]
+	path = vendor/law/komentarze/o-oplacie-skarbowej
+	url = https://github.com/elconcept/o-oplacie-skarbowej.git
+[submodule "vendor/law/komentarze/o-podatku-od-spadkow-i-darowizn"]
+	path = vendor/law/komentarze/o-podatku-od-spadkow-i-darowizn
+	url = https://github.com/elconcept/o-podatku-od-spadkow-i-darowizn.git
+[submodule "vendor/law/komentarze/o-policji"]
+	path = vendor/law/komentarze/o-policji
+	url = https://github.com/elconcept/o-policji.git
+[submodule "vendor/law/komentarze/o-pomocy-spolecznej"]
+	path = vendor/law/komentarze/o-pomocy-spolecznej
+	url = https://github.com/elconcept/o-pomocy-spolecznej.git
+[submodule "vendor/law/komentarze/o-prawach-pacjenta-i-rzeczniku-praw-pacjenta"]
+	path = vendor/law/komentarze/o-prawach-pacjenta-i-rzeczniku-praw-pacjenta
+	url = https://github.com/elconcept/o-prawach-pacjenta-i-rzeczniku-praw-pacjenta.git
+[submodule "vendor/law/komentarze/o-przeciwdzialaniu-przemocy-domowej"]
+	path = vendor/law/komentarze/o-przeciwdzialaniu-przemocy-domowej
+	url = https://github.com/elconcept/o-przeciwdzialaniu-przemocy-domowej.git
+[submodule "vendor/law/komentarze/o-swiadczeniach-opieki-zdrowotnej-finansowanych-ze-srodkow-publicznych"]
+	path = vendor/law/komentarze/o-swiadczeniach-opieki-zdrowotnej-finansowanych-ze-srodkow-publicznych
+	url = https://github.com/elconcept/o-swiadczeniach-opieki-zdrowotnej-finansowanych-ze-srodkow-publicznych.git
+[submodule "vendor/law/komentarze/o-zawodach-lekarza-i-lekarza-dentysty"]
+	path = vendor/law/komentarze/o-zawodach-lekarza-i-lekarza-dentysty
+	url = https://github.com/elconcept/o-zawodach-lekarza-i-lekarza-dentysty.git
+[submodule "vendor/law/komentarze/o_rachunkowosci"]
+	path = vendor/law/komentarze/o_rachunkowosci
+	url = https://github.com/elconcept/o_rachunkowosci.git
+[submodule "vendor/law/komentarze/prawo-farmaceutyczne"]
+	path = vendor/law/komentarze/prawo-farmaceutyczne
+	url = https://github.com/elconcept/prawo-farmaceutyczne.git
+[submodule "vendor/law/komentarze/prawo-o-adwokaturze"]
+	path = vendor/law/komentarze/prawo-o-adwokaturze
+	url = https://github.com/elconcept/prawo-o-adwokaturze.git
+[submodule "vendor/law/komentarze/prawo-o-prokuraturze"]
+	path = vendor/law/komentarze/prawo-o-prokuraturze
+	url = https://github.com/elconcept/prawo-o-prokuraturze.git
+[submodule "vendor/law/komentarze/prawo-o-ruchu-drogowym"]
+	path = vendor/law/komentarze/prawo-o-ruchu-drogowym
+	url = https://github.com/elconcept/prawo-o-ruchu-drogowym.git
+[submodule "vendor/law/komentarze/prawo-o-ustroju-sadow-administracyjnych"]
+	path = vendor/law/komentarze/prawo-o-ustroju-sadow-administracyjnych
+	url = https://github.com/elconcept/prawo-o-ustroju-sadow-administracyjnych.git
+[submodule "vendor/law/komentarze/prawo-o-ustroju-sadow-powszechnych"]
+	path = vendor/law/komentarze/prawo-o-ustroju-sadow-powszechnych
+	url = https://github.com/elconcept/prawo-o-ustroju-sadow-powszechnych.git

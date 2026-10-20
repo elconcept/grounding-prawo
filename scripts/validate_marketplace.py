@@ -45,7 +45,11 @@ def validate(root):
         spec.loader.exec_module(builder)
         for entry in selected['keep']:
             check((Path(builder.source(entry)) / 'SKILL.md').is_file(), f"Missing source: {entry['name']}")
-        expected = {e['name'] for e in selected['keep'] if not e.get('fold_into')}
+        expected = {e['name'] for e in selected['keep'] if not e.get('fold_into') and not e.get('merge_into')}
+        for e in selected['keep']:
+            if e.get('merge_into'):
+                check((plugin / 'skills' / e['merge_into'] / 'modules' / e['name'] / 'MODULE.md').is_file(),
+                      f"{e['name']}: brak modułu w {e['merge_into']}/modules/")
         check({p.parent.name for p in skills} == expected, 'Built skill set differs from selection')
         for path in skills:
             label = path.parent.name

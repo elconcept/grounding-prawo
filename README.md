@@ -1,44 +1,114 @@
 # grounding-prawo
 
-Prywatny marketplace z jednym pluginem do praktyki prawa polskiego (Claude Desktop, Cowork, Code; ChatGPT/Codex). Łączy silnik
-Lex Machina, skille weryfikacji MateMatic, skille własne i wiedzę z pluginu IURA; zasada: **źródłem tezy o przepisie lub orzeczeniu
-jest narzędzie MCP albo dokument, nigdy pamięć modelu.**
+Prywatny marketplace z jednym pluginem do prowadzenia własnych spraw według prawa polskiego (Claude Desktop, Cowork,
+Code; ChatGPT/Codex). Łączy silnik Lex Machina, skille weryfikacji MateMatic i skille własne. Zasada: **źródłem tezy
+o przepisie lub orzeczeniu jest narzędzie MCP albo dokument, nigdy pamięć modelu.**
 
-To repo służy do rozwijania pluginu. **Jak pracować ze skillami nad sprawą** (ścieżki A-E, katalog skilli, konektory MCP, kolizje,
-komendy): `legal/PRZEWODNIK.md` i `legal/AGENTS.md` w katalogu spraw. Wejście do pracy prawnej: `prawny-router-v3`. Reguły, które model dostaje razem z pluginem:
-`plugins/grounding-prawo/skills/shared/ZASADY-PLUGINU.md`, `ARTEFAKTY-SPRAWY.md`, `FORMAT-PISMA.md`.
+To repo służy do rozwijania pluginu. Praca nad sprawami odbywa się w repo `elconcept/legal` (`legal/AGENTS.md`,
+`legal/PRZEWODNIK.md`). Wejście do pracy prawnej: skill `prawny-router-v3`. Reguły, które model dostaje razem z
+pluginem: `plugins/grounding-prawo/skills/shared/ZASADY-PLUGINU.md`, `SCIEZKI-PRACY.md`, `ARTEFAKTY-SPRAWY.md`,
+`FORMAT-PISMA.md`, `BASIC-MEMORY.md`.
 
-Plugin jest **generowany** - nie edytuj `plugins/grounding-prawo/` ręcznie (sekcja [Utrzymanie](#utrzymanie)); zasady pracy nad repo: `AGENTS.md`.
+Plugin jest **generowany** - nie edytuj `plugins/grounding-prawo/` ręcznie (sekcja [Utrzymanie](#utrzymanie));
+zasady pracy nad repo: `AGENTS.md`.
 
 ## 1. Instalacja
 
-Repozytorium jest prywatnym marketplace z jednym pluginem (`grounding-prawo`). Wersja semver (tylko manifest Codex): `selection/selection.yaml`.
+Wersja semver (tylko manifest Codex): `selection/selection.yaml`.
 
 | Klient | Jak |
 |---|---|
 | **Claude Code** | `claude plugin marketplace add elconcept/grounding-prawo`, potem `claude plugin install grounding-prawo@grounding-prawo` |
-| **Claude Desktop / Cowork** | Ustawienia organizacji → Plugins → dodaj marketplace z GitHub (repo `elconcept/grounding-prawo`; repo prywatne, więc wymaga autoryzacji GitHub). Po synchronizacji plugin pojawia się w katalogu konta. Wymaga uprawnień zarządzania pluginami. |
-| **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo --ref main --sparse .agents/plugins --sparse plugins/grounding-prawo`, potem `codex plugin add grounding-prawo@grounding-prawo`. Aplikacja ChatGPT korzysta z tego samego manifestu `.codex-plugin`. |
+| **Claude Desktop / Cowork** | Ustawienia organizacji → Plugins → dodaj marketplace z GitHub (repo `elconcept/grounding-prawo`; repo prywatne, więc wymaga autoryzacji GitHub). Po synchronizacji plugin pojawia się w katalogu konta. |
+| **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo --ref main --sparse .agents/plugins --sparse plugins/grounding-prawo`, potem `codex plugin add grounding-prawo@grounding-prawo`. |
 
 Po instalacji sprawdź w **nowej rozmowie**: „Użyj prawny-router-v3 i powiedz, co potrafi plugin”. Skille z błędem
 ładowania nie pojawią się na liście.
 
-Konektory prawnicze ładuje `.mcp.json` pluginu: jeden serwer `lex` → `https://lex.xlap.pl/mcp` (portal Cloudflare z
-logowaniem OAuth). Przy pierwszym użyciu host poprosi o autoryzację. Bez niej skille działają, ale nie mogą podawać
-przepisów ani sygnatur (zob. [10. Problemy](#10-rozwiązywanie-problemów)).
-
-Pełna lista kontroli instalacji i granice testów: `_log/marketplace-validation.md`. Test CLI nie dowodzi synchronizacji konta
-Claude/Cowork ani aktywacji w ChatGPT - to potwierdza dopiero odczyt skilla w nowej rozmowie.
+Konektory ładuje `.mcp.json` pluginu: jeden serwer `lex` → `https://lex.xlap.pl/mcp` (portal Cloudflare z logowaniem
+OAuth). Bez autoryzacji skille działają, ale nie mogą podawać przepisów ani sygnatur. Pełna lista kontroli instalacji:
+`_log/marketplace-validation.md`.
 
 ### Aktualizacje
 
 - Manifest pluginu nie ma pola `version`, więc każda zmiana na `main` to nowa wersja (SHA commita).
-- Claude Desktop / Cowork (marketplace w claude.ai): aktualizacja automatyczna; nowa wersja działa w nowej rozmowie.
-- Claude Code z marketplace GitHub: auto-update jest domyślnie **wyłączony** dla marketplace spoza Anthropic. Włącz: `/plugin` →
-  Marketplaces → grounding-prawo → Enable auto-update, albo `"autoUpdate": true` przy `grounding-prawo` w `extraKnownMarketplaces`
-  (`~/.claude/settings.json`). Ręcznie: `claude plugin update grounding-prawo@grounding-prawo`.
+- Claude Desktop / Cowork: aktualizacja automatyczna; nowa wersja działa w nowej rozmowie.
+- Claude Code: auto-update dla marketplace spoza Anthropic jest domyślnie wyłączony. Włącz: `/plugin` → Marketplaces →
+  grounding-prawo → Enable auto-update, albo ręcznie `claude plugin update grounding-prawo@grounding-prawo`.
+- Codex: jeśli aktualizacja zgłasza `plugin source path is not a directory`, sparse checkout musi obejmować
+  `.agents/plugins` i `plugins/grounding-prawo` (usuń marketplace i dodaj go ponownie poleceniem z tabeli).
 
----
+## 2. Co jest w pluginie
+
+**23 skille do wywołania** i 14 modułów wewnętrznych (`shared`, `prawo-polskie-v2`, `przewodnik-prawny-v2`,
+`audyt-systemu-v4`, DR-01…16 bez DR-04, 06-09, 15). Katalog generuje build: `skills/shared/INDEKS-SKILLI.md`.
+
+Skille robiące to samo są scalone: dawny osobny skill jest modułem skilla nadrzędnego (`<skill>/modules/<moduł>/MODULE.md`),
+więc nie zajmuje miejsca na liście skilli modelu, a jego treść i skrypty zostają.
+
+| Skill | Moduły scalone |
+|---|---|
+| `szturm-na-draft-pl` (kontrola pisma w pętli) | `atak-przeciwnika-pl`, `adversarial-legal-review-pl`, `pierwsze-wrazenie-sedziego-pl`, `subsumpcja-pl`, `deliverable-fidelity-pl`, `ocena-outputu-pl`, `marko-pl-content` |
+| `citation-grounding-pl` (weryfikacja cytatów) | `ekstraktor-cytatow-pl`, `patron-weryfikacja-cytatow`, `patron-identyfikatory-pl` |
+| `odczyt-dokumentow` (przyjęcie dokumentu) | `patron-skan-dokumentu`, `waliduj-podpis-pdf-pl` |
+| `wiki-basic-memory` (wiki spraw) | `ingest-wiki` |
+| `patron-prawo-pl-zrodla` (źródła prawa) | `webwright-legal-pl`, `uodo-grounding-pl` |
+| `kalkulatory-procesowe-pl` (terminy i obliczenia) | `terminy-procesowe-pl` |
+| `analizator-umow-v1` | `klauzule-kontraktowe-pl` |
+| `chronologia-sprawy-v1` | `chronologia-stanowiska-pl` |
+| `orzeczenia-sadowe-v2` | `struktura-wyroku-pl` |
+| `analiza-sadowa-v6` | `patron-analiza-akt-karnych` |
+| `case-risk` | `medical-consent`, `uoozp-compliance` |
+
+Pozostałe: `prawny-router-v3`, `analizator-dowodow-v3`, `analizator-przepisow-v2`, `pisma-procesowe-v3` (typy pism jako
+moduły `modules/typy/`), `pisma-proste-v2`, `przesluchanie-swiadkow-v2-min90`, `zawiadomienie-o-przestepstwie`,
+`teczka-sprawy`, `rodo-dsar-pl`, `redline-docx-pl`, `pisz-po-polsku`, `patron-przeglad-tabelaryczny`.
+
+Komendy: tylko `/transkrypcja` (zapis sesji do doskonalenia skilli). Dawne komendy `/sprawa`, `/pismo`, `/kontrola`,
+`/zamknij` są sekcjami `shared/SCIEZKI-PRACY.md` routera i skilla `szturm-na-draft-pl`; `/orzeczenie`, `/szukaj`,
+`/eurlex` to moduł `webwright-legal-pl`; `/teczka` to skill `teczka-sprawy`. W Claude Code każdy skill wywołasz też
+bezpośrednio (`/grounding-prawo:<skill>`).
+
+Profil spraw (decyzje właściciela, `shared/ZASADY-PLUGINU.md`): praca na oryginałach danych, pisma wnoszone osobiście
+(podpis autora, bez tytułu zawodowego i numeru wpisu), pełna kontrola każdego pisma bez bramek kosztu, zawiadomienie
+o przestępstwie poza torem procesowym routera.
+
+## 3. Dokumenty, wiki i pamięć
+
+- **Odczyt:** `odczyt-dokumentow` - skan bezpieczeństwa, podpis PDF, the-ocr (Markdown ze stronami `## Page N`),
+  PyMuPDF i MarkItDown, kontrakt JSON do cytowania. the-ocr pochodzi z prywatnego repo `elconcept/the-ocr`
+  (submoduł `vendor/docs/the-ocr`, kopiowany przez build do `tools/the-ocr`, bez `.env`).
+- **Ingest do wiki:** wyłącznie przez model, PDF strona po stronie (`the-ocr-ingest-page`, kontrola obrazu, ewentualnie
+  ponowny odczyt strony innym silnikiem). Markdown trafia do Basic Memory (projekt `legal`, `dokumenty/`), niezmieniony PDF
+  wyłącznie do prywatnego bucketu Cloudflare R2 (`the-ocr-archive`). Bez kolejek, skanów folderów i `wiki_ingest`.
+  Procedura: `wiki-basic-memory` (moduł `ingest-wiki`) i `shared/BASIC-MEMORY.md`.
+- **Pamięć:** projekty Basic Memory `legal` (sprawy, źródła, ustalenia), `main` (recap każdej sesji w `sesje/`),
+  `model-memory` (wyłącznie kuratorowane trwałe ustalenia). Hooki pluginu `SessionStart` i `PreCompact` przypominają
+  o odczycie i zapisie; zapis zawsze potwierdza `read_note`.
+
+## 4. Źródła prawa
+
+Kolejność (`shared/ZASADY-PLUGINU.md`): semantycznie Repertorium, potem pełne brzmienie i weryfikacja właściwym MCP
+portalu `lex`. Mapa konektorów: skill `patron-prawo-pl-zrodla`.
+
+**Baza ustaw z komentarzem** (`own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py`, SQLite FTS5, bez zależności):
+
+- teksty jednolite 15 kodeksów i Konstytucji jako git-as-law (`vendor/law/<kodeks>`, jeden commit = jedna nowelizacja
+  w dacie wejścia w życie), więc także brzmienie na wskazany dzień;
+- komentarz do każdego artykułu 32 ustaw (`vendor/law/komentarze/<ustawa>`, forki `elconcept`).
+
+```bash
+python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py buduj            # indeks ustawy.sqlite
+python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py art kpk 168a --komentarz
+python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py art kk 148 --na-dzien 2019-06-01   # wymaga pełnej historii
+python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py szukaj "obrona konieczna" --akt kk
+python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py cytat kk 148 "Kto zabija człowieka"
+```
+
+Serwer MCP tej bazy (`ustawy_mcp.py`, narzędzia `akty`, `szukaj`, `artykul`, `cytat`) ma zastąpić konektory `cite` i
+`isap`; wdrożenie: `deploy/mcp-ustawy/` (obraz klonuje akty według `.gitmodules`, kodeksy z pełną historią). Orzeczenia
+SAOS i NSA ma obsługiwać jeden wrapper `elconcept/mcp-prawo-wrapper`. Do przełączenia portalu `lex` reguły pluginu
+korzystają z `cite`, `isap`, `saos` i `nsa`. Akty spoza korpusu: ELI (`api.sejm.gov.pl`).
 
 ## Utrzymanie
 
@@ -47,129 +117,34 @@ python3 -I scripts/build.py              # generuje plugins/grounding-prawo z se
 python3 -I scripts/validate_marketplace.py
 python3 -I scripts/lint_refs.py          # martwe odwołania do skilli i plików
 node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
-claude plugin validate plugins/grounding-prawo
+python3 -m unittest discover -s tests
 ```
 
 | Co zmienić | Gdzie |
 |---|---|
-| lista skilli, wersja | `selection/selection.yaml` |
+| lista skilli, opisy, scalenia (`merge_into`), typy pism (`fold_into`) | `selection/selection.yaml` |
 | przepływ i mosty między skillami | `selection/bridges.yaml` |
-| skill własny, typ pisma | `own-skills/<nazwa>/` (+ wpis `fold_into` w selekcji dla typów pism) |
-| plik dopisany do pluginu (np. `shared/ARTEFAKTY-SPRAWY.md`) | `selection/overlay/` |
+| skill własny, typ pisma | `own-skills/<nazwa>/` |
+| plik dopisany do pluginu (np. `shared/ZASADY-PLUGINU.md`) | `selection/overlay/` |
+| komendy i hooki pluginu | `selection/claude/` |
 | zmiana skilla z upstreamu | `selection/patches/NN-*.patch` (nigdy w `vendor/`) |
-| reguła generująca (np. oznaczanie odwołań) | `scripts/build.py` |
+| reguła generująca (scalanie, czyszczenie, oznaczanie odwołań) | `scripts/build.py` |
+
+Build: kopiuje skille z `vendor/` i `own-skills/`, nakłada overlay i patche, scala moduły (`merge_into`, `fold_into`),
+usuwa bloki wspólnych reguł pakietów MateMatic i odwołania do konektora EUREKA, czyści dawne instrukcje anonimizacji,
+oznacza odwołania poza pluginem, dopisuje mosty (`MOST`) i protokół pamięci, generuje indeks skilli, komendy i hooki.
+
+CI (`.github/workflows/build-plugin.yml`): build, walidacja, lint, test groundingu, commit wyniku na `main`, synchronizacja
+reguł `shared/` do `elconcept/legal` (`scripts/sync_legal.py`, klucz `LEGAL_SYNC_KEY`; `legal-autosync` pobiera je na NAS
+co 900 s). Co tydzień job `upstream-bump` buduje plugin na nowych wersjach LexMachina i awesome-matematic-skills i
+wypycha gałąź `upstream-bump-RRRRMMDD` i próbuje otworzyć PR; jeśli ustawienia repo nie pozwalają Actions
+tworzyć PR, job kończy się błędem po wypchnięciu gałęzi i PR otwiera człowiek.
 
 Historia selekcji: `_log/selekcja.md`, `_log/skill-triage.md`, `_log/source-map.md`.
 
-## Odczyt dokumentów i pamięć
-
-Jedyny punkt wyboru ścieżki: `prawny-router-v3`. Mapa celów dawnego prowadnika jest jego referencją
-`shared/SCIEZKI-PRACY.md`. Dokumenty obsługuje `odczyt-dokumentow`: konwersja do Markdown,
-kontrakt JSON, duplikaty i raport jakości. `the-ocr` (repo `elconcept/the-ocr`, submoduł `vendor/docs/the-ocr`) jest
-kopiowany przez `build.py` do skilla jako `tools/the-ocr` (sam kod i README, bez `.env`/`.secrets`).
-Datalab, Azure DI i Google Vision kończą się wspólnym kontraktem; lokalne silniki OCR nie są dołączane.
-PDF z tekstem odczytuje PyMuPDF, formaty biurowe i HTML — MarkItDown. Nieobsługiwane formaty zgłaszają błąd.
-
-Basic Memory: recap każdej sesji/etapu do `main`, dokumenty i ustalenia do `legal`. Każdy skill
-wczytuje protokół przed pracą i wymaga potwierdzenia zapisu. Instrukcje nie zastępują hooków hosta;
-przerwanie aplikacji nadal może przerwać bieżący zapis. Aktualizacja pluginu wymaga nowej sesji.
-
-`own-skills` oznacza źródła utrzymywane lokalnie (także adaptacje i scalenia), `vendor` — przypięty upstream,
-`plugins` — wynik budowania. Typy pism z `fold_into` są modułami, nie dodatkowymi skillami do wyboru.
-
 ## Skille do rozwijania tego repo
 
-W `.agents/skills/`: OpenAI `skill-creator`, `plugin-creator`; Anthropic `plugin-structure`,
-`skill-development`, `mcp-integration`; enhance-workflows `feature-factory`,
-`peer-agent-collaboration`, `whitepaper-audit` i `release`. `.claude/skills/` i
-`.opencode/skills/` wskazują te same źródła.
-Pochodzenie, przypięte commity i lokalne dostosowania: `.agents/skills/SOURCES.json`.
-To narzędzia pracy nad repo, nie składniki publikowanego pluginu prawniczego.
-Ocena pozostałych kandydatów z enhance-workflows: `docs/enhance-workflows-assessment.md`.
-
-Walidacja odczytu: `python3 -m pytest -q tests/`. Testy providerów używają reprezentatywnych odpowiedzi;
-wywołania usług na żywo wymagają skonfigurowanego konta. Nie są częścią automatycznych testów.
-
-### Codex: brak katalogu pluginu po aktualizacji
-
-Jeśli aktualizacja zgłasza `plugin source path is not a directory`, sprawdź zakres sparse checkout marketplace.
-Musi obejmować zarówno `.agents/plugins`, jak i `plugins/grounding-prawo`. Starszą konfigurację pobierającą
-same manifesty można zastąpić: `codex plugin marketplace remove grounding-prawo`, następnie ponownie
-wykonać powyższe `marketplace add` z oboma `--sparse` i `plugin add`. To konfiguracja źródła marketplace;
-nie zmienia połączeń ani uprawnień konektorów. Potwierdź wersję w wyniku instalacji i rozpocznij nową sesję.
-
-## Wiki Karpathy w Basic Memory
-
-Wiki ma trzy warstwy: dokument pierwotny, opracowane notatki z odwołaniami do źródeł
-oraz indeks/graf do nawigacji. `legal` przechowuje wiedzę spraw; `main` przechowuje
-recapy. Silnik serwerowy `wiki_ingest` utrzymuje kolejkę, odczyt porcjami, kontrolę
-kompletności i powiązań, OCR brakujących sidecarów oraz indeks. `wiki_plan` przechowuje
-stan planu niezależnie od klienta. Kontrakt narzędzi: `man(page="wiki-ingest")`.
-
-Stan ingestu jest w Basic Memory i skaluje się do całego korpusu (~8,6 tys. źródeł): mała notatka
-`_ingest/wiki-ingest-state` (aktywny dokument i offsety), inwentarz w 64 shardach `_ingest/inventory/`.
-`refresh` hashuje tylko nowe lub zmienione pliki i kończy po ok. 40 s z `complete: false` — wtedy
-wywołaj go ponownie. Dawne lokalne migawki wiki, plany i narzędzia z `legal` są w `_ingest/legacy/`
-(typ `legacy_snapshot`, dosłownie, z `source_path` i SHA-256); lokalne katalogi usunięto 18.10.2026.
-
-- **Dokumenty:** skill `ingest-wiki`. Przed zapisem ustaleń wyszukuje istniejące
-  osoby i tematy, aktualizuje właściwe notatki, zachowuje sprzeczne wersje ze źródłami.
-- **PDF i sidecar Markdown:** sidecar to robocza transkrypcja. Serwer wymaga obrazu
-  każdej strony (`inspect_page`) i poprawionej transkrypcji (`verify_page`). Dopiero
-  potem `start` publikuje źródło w wiki. Komentarze nieobecne na PDF pozostają poza
-  transkrypcją; dopiski widoczne na PDF są częścią dokumentu. Oryginalny sidecar nie
-  jest nadpisywany. Serwer sprawdza pokrycie stron i wersje plików; zgodność treści
-  ocenia model oglądający obrazy. Bez obsługi obrazów klient zatrzymuje publikację.
-- **Pytania, syntezy i jakość:** skill `wiki-basic-memory` korzysta z indeksu,
-  `search_notes` i `build_context`; wraca do źródeł, zapisuje nowe syntezy i sprawdza
-  brakujące odnośniki, duplikaty, sprzeczności oraz luki w materiale.
-
-Adaptacja workflow Praneya Behla (`praneybehl/llm-wiki-plugin`, MIT): rozpoznanie
-wpływu nowego źródła, aktualizacja powiązanych stron, jawne sprzeczności, zapis syntez
-oraz rozdzielenie kontroli struktury i treści. Nie kopiujemy lokalnego silnika
-wyszukiwania, drugiej bazy grafu ani pętli uruchamiających zewnętrzne modele — te
-zadania obsługują istniejące MCP i Basic Memory. Ocena: `docs/llm-wiki-assessment.md`.
-
-Źródła przypięte jako submoduły: `vendor/general/llm-wiki-plugin` oraz
-`vendor/general/basic-memory` (repo `elconcept/basic-memory`; przeniesione z
-`vendor/mcp/basic-memory`). Aktualizacja pluginu nie wdraża serwera. Bramka PDF
-wymaga serwera z akcjami `inspect_page` i `verify_page` oraz zależnością PyMuPDF.
-Wcześniej ukończone błędne importy wymagają osobnej naprawy; nie zmieniamy ich automatycznie.
-
-### Co dociera przez marketplace do claude.ai i chatgpt.com
-
-**Nie ma automatycznej synchronizacji całego README.md do kontekstu modelu.**
-Manifesty obu klientów wskazują katalog `plugins/grounding-prawo`; samo README
-repozytorium nie jest instrukcją sesji. Mechanizm dystrybucji reguł już istnieje:
-
-1. `scripts/build.py` kopiuje `own-skills/` oraz `selection/overlay/` do skilli pluginu.
-2. `add_session_protocol()` dodaje do skilli polecenie odczytu `shared/BASIC-MEMORY.md`
-   i `shared/ZASADY-PLUGINU.md`. Protokół pamięci kieruje operacje wiki do `shared/WIKI.md`.
-3. `ingest-wiki` i `wiki-basic-memory` dostarczają właściwe procedury. Zasady opisane
-   powyżej są więc także w instalowanej paczce, bez zależności od lokalnego README.
-
-To instrukcje odczytywane przy użyciu skilla, nie gwarantowany hook każdej rozmowy.
-Konektor Lex wymaga autoryzacji; dostępność serwera i obrazy MCP zależą od klienta.
-Walidacja paczki sprawdza dostarczenie plików i odsyłaczy. Aktywację na konkretnym
-koncie potwierdza dopiero nowa rozmowa w claude.ai/chatgpt.com: wywołaj `ingest-wiki`,
-poproś o regułę porównania sidecara z PDF i sprawdź dostępność `inspect_page`.
-
-## Reguły kanoniczne i synchronizacja do legal
-
-`selection/overlay/shared/ZASADY-PLUGINU.md` ustala kolejność: semantyczne Repertorium,
-następnie pełne brzmienie przez pozostałe MCP. `STYLE.md` zawiera styl autora dla pism;
-`ARTEFAKTY-SPRAWY.md` ustala cykl pisma: wersje wyłącznie MD w `legal/sprawy/<sprawa>/drafty/`, jeden DOCX
-na pismo w `legal/output/`; sesja zaczyna się akceptacją redline i snapshotem MD, kończy redline w DOCX.
-Każdy skill ładuje wspólne reguły przez protokół dodawany podczas budowy.
-
-Po pomyślnym buildzie CI uruchamia `scripts/sync_legal.py` na worktree repo `elconcept/legal`.
-Kopiuje wygenerowane `shared/` do `.agents/grounding-prawo/shared/`, zapisuje manifest SHA-256
-oraz zarządzane odsyłacze w `AGENTS.md` i `CLAUDE.md`. Zachowuje lokalne instrukcje i pliki spraw;
-usuwane są tylko znane, sprzeczne dawne instrukcje publikowania MD w output.
-Zmiana jest commitowana i wypychana bez force-push; konflikt z backupem NAS zatrzymuje CI.
-Istniejący `legal-autosync` pobiera zmiany na NAS co 900 sekund, a Synology Drive rozsyła pliki hostom.
-
-Sekrety Actions: `LEGAL_SYNC_KEY` — klucz deploy z zapisem tylko do legal;
-`THE_OCR_READ_KEY` — klucz odczytu prywatnego źródła OCR. Build pobiera przypięte rewizje submodułów.
-Ręczny test: `python3 scripts/sync_legal.py <worktree-legal>`; skrypt nie dotyka plików w `output/` ani teczek.
-MCP Paperless: konfiguracja i rollback w `deploy/paperless-mcp/README.md`.
+W `.agents/skills/` (te same źródła w `.claude/skills/` i `.opencode/skills/`): `skill-creator`, `plugin-creator`,
+`plugin-structure`, `skill-development`, `mcp-integration`, `feature-factory`, `peer-agent-collaboration`,
+`whitepaper-audit`, `release`. Pochodzenie i przypięte commity: `.agents/skills/SOURCES.json`. To narzędzia pracy nad
+repo, nie składniki pluginu.

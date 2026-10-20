@@ -1,8 +1,8 @@
 ---
 name: analizator-umow-v1
-description: 'Analiza, redakcja, negocjacje i generowanie umów oraz dokumentów korporacyjnych, HR i RODO: ryzyka klauzul, B2B/B2C, praca, najem, IT/SaaS, IP, founders, finansowanie i PZP.'
+description: 'Analiza, redakcja i negocjacja umów: ryzyka klauzul, lista kontrolna 41 kategorii, przegląd według playbooka, najem, B2B/B2C, RODO w umowach.'
 metadata:
-  version: '1.49'
+  version: '1.50'
   type: executive-umowy
   status: production
   dependencies: '{"requires": ["shared"]}'
@@ -303,6 +303,8 @@ ST-INIT: zainicjuj podzbiór REJESTRU właściwy dla wykrytego trybu:
 > J20/J21.
 > Wczytaj `references/generator/rdzen-generowania.md` na starcie KAŻDEGO
 > z poniższych workflow.
+> Umowa lub regulamin ponad ok. 10 stron: `view shared/MOD-DLUGIE-PISMO.md` —
+> części według planu (AU-GENBUILD); AU-HYBRID i AU-STRIP obejmują całość.
 
 | Sygnał od użytkownika | Workflow | Essentialia z |
 |---|---|---|
@@ -569,10 +571,18 @@ na żądanie         → zawsze F.1 niezależnie od kwoty
 *             ręczna — patrz `benchmark/posiane-wady/README.md` i*
 *             `audyt-systemu-v4/references/REGRESSION-TEST-PLAN.md` (T37).*
 
+## MODUŁY SCALONE
+
+Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie go dotyczy; reguły tego skilla obowiązują także w module.
+
+| Moduł | Zastosowanie | Plik |
+|---|---|---|
+| `klauzule-kontraktowe-pl` | lista kontrolna 41 kategorii klauzul (CUAD PL/UE) i przegląd umowy wg playbooka | `modules/klauzule-kontraktowe-pl/MODULE.md` |
+
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** umowa po OCR; `patron-przeglad-tabelaryczny` dla wielu umów
 - **Wynik zapisz w:** `analiza/_podsumowanie.md` (ryzyka klauzul); propozycje zmian jako redline (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `klauzule-kontraktowe-pl`, `redline-docx-pl`
+- **Następny krok:** `redline-docx-pl`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -1,8 +1,8 @@
 ---
 name: dr-03-prawo-karne-wykroczenia-egzekucja
-description: 'Prawo karne, wykroczenia i egzekucja: KK, KPK, KKW, KW, KPW, KKS, kwalifikacja karnomaterialna, tryby ścigania i wykonanie orzeczeń.'
+description: 'Moduł wewnętrzny DR-03: prawo karne i wykroczeń, KK, KPK, KKW, KW, KPW. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.64'
+  version: '3.66'
   dependencies: '{"requires": ["shared"]}'
 ---
 

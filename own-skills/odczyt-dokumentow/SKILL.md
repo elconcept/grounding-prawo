@@ -22,9 +22,9 @@ Dla ingestu PDF bezwzględnie uruchom skill `ingest-wiki`:
    `==< source_filename.pdf (Page n/total_document_pages) >==`.
    Przy wielu dokumentach w jednym PDF powstaje wiele plików Markdown;
    każda strona zachowuje numerację oryginalnego PDF.
-4. Oryginał PDF pozostaje nietknięty. Kopie binarne trafiają do
-   prywatnego MinIO i R2, nie do Basic Memory. Dopiero po weryfikacji
-   obu kopii model zapisuje oryginalne Markdown do `legal/dokumenty`.
+4. Oryginał PDF pozostaje nietknięty. Kopia binarna trafia wyłącznie do
+   prywatnego bucketu Cloudflare R2, nie do Basic Memory. Dopiero po
+   weryfikacji kopii model zapisuje oryginalny Markdown do `legal/dokumenty`.
    Notatki wtórne są osobne i powiązane linkami.
 5. **Tylko `the-ocr-ingest-page`** domyślnie produkuje Markdown. `--fixme` tworzy pochodną
    A4, a `--searchable-pdf --from-json` nowy PDF z zastąpioną warstwą
