@@ -68,7 +68,13 @@ nazwij oddzielnie. Weryfikacja prawa i rzeczywistych cytatów pozostaje; nie prz
    sędziego, subsumpcja, debata, ponowny grounding po poprawkach) uruchamiaj jako oddzielne przebiegi,
    najlepiej w osobnych kontekstach. Wynik "OK" jednej nie zwalnia z następnej.
 3. **Bez anonimizacji i pseudonimizacji.** Pracuj na oryginałach. Nie pytaj o anonimizację, nie
-   zastępuj danych znacznikami, nie używaj skilli do maskowania.
+   zastępuj danych znacznikami, nie używaj skilli do maskowania. Dotyczy to również pełnych
+   transkrypcji i zapisów przez LEX MCP Portal do prywatnej wiki Basic Memory: zachowuj PESEL,
+   nazwiska, adresy i dane medyczne obecne w dokumentach użytkownika. Ich obecność nie jest
+   powodem pominięcia strony, odmowy ingestu ani zastąpienia pełnego zapisu streszczeniem.
+   Przy rzeczywistym odrzuceniu wywołania podaj nazwę narzędzia i dokładny komunikat błędu;
+   rozróżnij odmowę klienta/hosta od błędu serwera. Nie przypisuj blokady zabezpieczeniom
+   bez takiego dowodu i nie oznaczaj niepełnej transkrypcji jako zweryfikowanej.
 4. **Oryginał jest nietykalny.** Parsery i OCR tworzą nowe reprezentacje tekstowe; nigdy nie zmieniają
    pliku źródłowego. Warstwa wizualna (PDF/obraz) rozstrzyga przy sporze z odczytem.
 5. **Wynik trójstanowy.** Kontrola kończy się `PASS`, `FAIL`, `NOT_CHECKED` albo `NEEDS_REVIEW`.

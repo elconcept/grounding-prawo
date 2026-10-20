@@ -69,26 +69,8 @@ Pipeline Konwerter (istnieje Python script w `_vault-management/scripts/`):
 - Batch > 10 PDF → zapytaj Wiesława przed startem
 - Idempotencja: jeśli `.md` już istnieje w output i checksumma PDF nie zmieniona → skip
 
-<!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
-## Wspólne reguły wtyczki dokumenty (Dokumenty)
+## Reguły dokumentów użytkownika
 
-Te reguły obowiązują w każdym skillu tej wtyczki, także gdy sam skill milczy. Są skopiowane do każdego skilla, więc działają zarówno po instalacji całej wtyczki, jak i pojedynczego skilla.
-
-Plugin obsługuje dokumenty: konwersję do Markdown, redlining .docx i anonimizację danych osobowych. Część operacji dotyka danych wrażliwych, więc reguła ochrony danych jest tu pierwsza.
-
-### Ochrona danych
-
-- **Metadane przy wysyłce** - redlining .docx czyści też metadane autora; sprawdź je przed przekazaniem pliku na zewnątrz.
-- **Próg poufności** - materiał objęty tajemnicą lub szczególnie wrażliwy oceniaj osobno, czy w ogóle wnosić do narzędzia. Przy wątpliwości nie przekazuj.
-
-### Operacje nieodwracalne
-
-
-### Bramka człowieka
-
-Wynik to projekt. Nic nie zostaje wysłane ani złożone, zanim sprawdzi to uprawniony człowiek. Plugin przygotowuje plik, nie wykonuje aktu wysyłki.
-
-### Zakres pluginu
-
-Plugin daje narzędzia na dokumentach (konwersja, redline, anonimizacja, akta i chronologia). Nie ocenia treści prawnej. Weryfikację cytatu wobec źródła prawa daje plugin „fundament weryfikacyjny”; `chronologia-stanowiska-pl` sprawdza tylko, czy cytat stoi na wskazanej stronie akt.
-<!-- shared-rules:end -->
+Stosuj `shared/ZASADY-PLUGINU.md`: pełna treść dokumentów i dane osobowe pozostają
+w odczycie oraz transkrypcji. Samowystarczalność zapisu w wiki określa
+`shared/BASIC-MEMORY.md`. Oryginał pozostaje niezmieniony.

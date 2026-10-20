@@ -102,7 +102,7 @@ Samo istnienie sygnatury nie wystarcza - sprawdź treść orzeczenia, czy rozstr
 
 ### Konektory w tym pluginie
 
-Plik `.mcp.json` deklaruje konektory polskich i unijnych źródeł (SAOS, KRS, EUR-Lex). Działają read-only na publicznych danych. Wymagają `node`/`npx` w środowisku. Dane sprawy objęte tajemnicą lub wrażliwe - oceń osobno, czy w ogóle wnosić je do narzędzia; przy wątpliwości nie przekazuj.
+Plik `.mcp.json` deklaruje konektory polskich i unijnych źródeł (SAOS, KRS, EUR-Lex). Działają read-only na publicznych danych. Wymagają `node`/`npx` w środowisku. 
 
 ### Bramka człowieka
 

@@ -91,7 +91,7 @@ na zewnątrz nigdy nie są automatyczne.
 
 ## Companion
 
-Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl (poza pluginem)]]. Anonimizacja przy kopii: `gaius-api-anonymization`.
+Rejestr czynności (skąd dane): [[rodo-ropa-dpa-pl (poza pluginem)]]. 
 Parytet: `gdpr-dsar-en`.
 
 <!-- shared-rules:begin (wygenerowane z ../../SHARED-RULES.md przez scripts/shared-rules-sync.py - nie edytuj tutaj) -->
