@@ -36,6 +36,9 @@ Przejrzano źródła GitHub:
   rozbudowywana mapa tematów i pojedyncze pytania zależne od odpowiedzi.
 - https://github.com/addyosmani/agent-skills/blob/main/skills/interview-me/SKILL.md — oczekiwanie
   na odpowiedź przed kolejnym pytaniem i podsumowanie do korekty.
+- Lokalna kopia rozbudowanego wariantu (pętla wywiadu, presety stylu, weryfikacja dryfu):
+  `.agents/skills/interview-me/` (`SKILL.md`, `STYLE_PRESETS.md`, `VERIFY.md`); skill do pracy nad repo,
+  nie część pluginu.
 
 Adaptacja własna: trwała relacja i przyrosty między sesjami, wersjonowanie oraz rozdział pism
 według złożenia i etapu. Nie przejęto GUESS, podpowiadanych odpowiedzi, oceny procentowej

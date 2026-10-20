@@ -7,7 +7,7 @@ dołączane do marketplace pluginu.
 | Skill | Decyzja | Uzasadnienie |
 |---|---|---|
 | `feature-factory` | włączony do repo | Kompletny, przenośny workflow ograniczonej zmiany z testami i audytem. |
-| `peer-agent-collaboration` | włączony do repo | Przydatny przy jawnym przekazywaniu pracy między hostami; nie wymusza delegacji. |
+| `peer-agent-collaboration` | przeniesiony do globalnych skilli HolyClaude (2026-10-20) | Rozszerzony o tryb delegowania: drogi model planuje, darmowe modele OpenCode wykonują (`~/.agents/bin/delegate`). |
 | `whitepaper-audit` | włączony tylko do repo | Deterministyczny audyt dokumentacji technicznej. Nie służy do audytu pism prawnych. |
 | `release` | włączony do repo | Dostarcza sprawdzalny mechanizm planowania wersji i kompatybilności. |
 | `rag-eval` | P0: adaptacja później | Model gold-setów jest trafny, ale upstream nie zawiera deklarowanego `eval_sweep.py` i zakłada klasyczny vector store. Potrzebny adapter do Repertorium, SAOS, LEGAL-CITE i testów odpowiedzi negatywnych. |
