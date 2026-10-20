@@ -7876,7 +7876,7 @@ faktycznej tezy pisma. Naprawa: BLOK D0 TEZA-GATE dodany przed D1-D6.
 chronologię BEZPOŚREDNIO z dokumentów ("Sekwencja dla każdego dokumentu"),
 ale nie wywoływał NIGDZIE (grep 0 wyników) `shared/MOD-SKAN-DOWODOW-
 KOMPLETNY.md` jako bramki kompletności — dokładnie ten sam mechanizm luki,
-co udokumentowany incydent AUDYT-2026-07-14b (sprawa [SYGN-SPRAWY-2]): częściowo
+co udokumentowany incydent AUDYT-2026-07-14b (sprawa XI P 27/26): częściowo
 odczytany dokument generuje chronologię z CICHĄ LUKĄ, nieodróżnialną od
 braku zdarzenia w źródle. Naprawa: SD-GATE dodany jako HARD GATE przed
 sekwencją ekstrakcji. Wzorce (a)/(b)/(d) nieistotne w tym samym stopniu dla
@@ -7912,7 +7912,7 @@ reaktywne i (d) milczące-przyjmowanie były systematycznie dobrze pokryte
 CG-GATE, ST-INIT, MOD-STEP-TRACKER). Wzorce (b) rekonstrukcja-tezy i (c)
 skan-dokumentów były NIEOBECNE w większości skilli (grep 0 wyników) — to
 są dokładnie te dwa wzorce, które ujawnił oryginalny incydent w
-przesluchanie-swiadkow-v2 (sprawa [SYGN-SPRAWY-2]) i które nie zostały
+przesluchanie-swiadkow-v2 (sprawa XI P 27/26) i które nie zostały
 automatycznie odziedziczone przez inne skille, bo każdy implementuje
 własną ścieżkę obsługi "materiału gotowego" niezależnie.
 
@@ -8210,7 +8210,7 @@ wybrał wyłącznie F-12 do objęcia w tej rundzie).
 **Zakres:** Skill proceduralny `przesluchanie-swiadkow-v2-min90` +
 zależność `shared/MOD-SKAN-DOWODOW-KOMPLETNY.md`. Nie dotyczy mapy Dz.U.
 
-**Sprawa:** [SYGN-SPRAWY-2], świadek [ŚWIADEK-K].
+**Sprawa:** XI P 27/26, świadek [ŚWIADEK-K].
 
 ### 1. INCYDENT
 
@@ -9314,7 +9314,7 @@ NOTA-11.
 
 **Status:** ZAMKNIĘTE (oba punkty).
 
-## AUDYT-2026-07-12e — Reguła 22: TWARDY trigger słowny "pytania do świadka" (naprawa F-8b, kontynuacja F-8) — sprawa [SYGN-SPRAWY-2]
+## AUDYT-2026-07-12e — Reguła 22: TWARDY trigger słowny "pytania do świadka" (naprawa F-8b, kontynuacja F-8) — sprawa XI P 27/26
 
 **Zakres:** Naprawa strukturalna (CRIT — ścieżka routingu pominięta mimo istniejącej
 reguły 21), na wyraźne polecenie użytkownika: model dostarczył pytania do świadka
@@ -9350,11 +9350,11 @@ zleceniach złożonych) — reguła 22 jest zabezpieczeniem niezależnym, nie za
 **Status:** ZAMKNIĘTE. Flaga F-8b niewymagana w WARN-OTWARTE.md (naprawiona w tej
 samej sesji, w której została wykryta).
 
-## AUDYT-2026-07-12d — Nowy moduł: MOD-REJESTR-ZALACZNIKOW-CHECKPOINT (widoczność skanu dowodów + checkpoint kontynuacji) — sprawa [SYGN-SPRAWY-2]
+## AUDYT-2026-07-12d — Nowy moduł: MOD-REJESTR-ZALACZNIKOW-CHECKPOINT (widoczność skanu dowodów + checkpoint kontynuacji) — sprawa XI P 27/26
 
 **Zakres:** Naprawa punktowa (WARN — brak mechanizmu widoczności, nie CRIT
 strukturalny), na wyraźne polecenie użytkownika po incydencie w sprawie
-[SYGN-SPRAWY-2]: model przeanalizował materiał dowodowy wybiórczo i nie
+XI P 27/26: model przeanalizował materiał dowodowy wybiórczo i nie
 zasygnalizował tego użytkownikowi — 2 kluczowe zrzuty WhatsApp (zwroty
 pieniędzy dla cudzoziemców) ujawniły się dopiero po pytaniu kontrolnym
 użytkownika.
@@ -9748,12 +9748,12 @@ jako string). Dostarczono jako kompletne archiwum `.zip`.
 
 
 **Zakres:** kontynuacja audytu tej samej sesji, na wyraźne polecenie
-użytkownika po analizie protokołów rozpraw ([SYGN-SPRAWY]) i pisma
+użytkownika po analizie protokołów rozpraw (VII P 94/25) i pisma
 procesowego dot. Sharmy/rekrutacji.
 
 ### Zidentyfikowane luki
 
-1. **[KRYTYCZNA]** Sąd w postępowaniu [SYGN-SPRAWY] systematycznie uchylał
+1. **[KRYTYCZNA]** Sąd w postępowaniu VII P 94/25 systematycznie uchylał
    pytania o upomnienie/kary porządkowe jako wykraczające poza tezę
    dowodową ("nie jest to przedmiotem tego postępowania") — mechanizm nie
    sprawdzał wcześniej, czy przygotowywane pytania mieszczą się w
@@ -9761,7 +9761,7 @@ procesowego dot. Sharmy/rekrutacji.
    to kryterium konsekwentnie i bezwzględnie, niezależnie od jakości
    pytania.
 2. Brak rozróżnienia między wieloma równolegle toczącymi się
-   postępowaniami ([SYGN-SPRAWY], [SYGN-SPRAWY-2], V P 566/24, I C 1200/25, VIII
+   postępowaniami (VII P 94/25, XI P 27/26, V P 566/24, I C 1200/25, VIII
    W 633/25) — pytania właściwe w jednym mogą być nieadmisyjne w innym.
 3. Ocena przesłanki "czy oferowanie pracy było w zakresie obowiązków"
    pominęła własne pismo procesowe użytkownika oraz transkrypt zeznań
@@ -9866,8 +9866,8 @@ w tej samej, wieloetapowej sesji.
    zwrotu należności opisane w piśmie z 7.10.2024 jako "szantaż"/"groźba
    bezprawna" (art. 191 §1 KK) — niezgodność ze znamionami przepisu
    możliwa do zauważenia bez dodatkowych dokumentów.
-5. **Brak systematycznego rozróżnienia powiązanych podmiotów** ([SPÓŁKA-A]
-   vs. [SPÓŁKA-B], różne NIP) — analizowano dokumenty pod kątem
+5. **Brak systematycznego rozróżnienia powiązanych podmiotów** (Human Park
+   vs. Human Park Global, różne NIP) — analizowano dokumenty pod kątem
    treści bez prowadzenia zestawienia, który dokument pochodzi od którego
    podmiotu.
 
@@ -9906,8 +9906,8 @@ potwierdzona przed spakowaniem. Dostarczono jako kompletne archiwum `.zip`.
 
 
 **Zakres:** na wyraźne polecenie użytkownika, po zakończeniu wielogodzinnej,
-wieloetapowej sesji przygotowania przesłuchań świadków (sprawa Nowakowski /
-[SPÓŁKA-B]) — pełna retrospektywna analiza całej sesji pod kątem:
+wieloetapowej sesji przygotowania przesłuchań świadków (sprawa Wiatrak /
+Human Park Global) — pełna retrospektywna analiza całej sesji pod kątem:
 gdzie skill zadziałał reaktywnie zamiast proaktywnie, jakich bramek
 zabrakło, jakie sygnały zignorowano. To jest **częściowa realizacja flagi
 F-7** (patrz WARN-OTWARTE.md) — dla jednego konkretnego skilla
@@ -17289,7 +17289,7 @@ scalenie duplikatu, aktualizacja CHECKLIST-DEDUP.
 
 **CRIT-18 — Brak triggera MOD-PRACODAWCA-RZECZYWISTY w PRE-W2-VERIFICATION-GATE:**
 
-Root cause wykryty przez dewelopera w sesji [SYGN-SPRAWY] (2026-06-27):
+Root cause wykryty przez dewelopera w sesji VII P 94/25 (2026-06-27):
 PRE-W2.C/D wykrywały rozbieżność podmiotową (T1-T4) i zatrzymywały pipeline (GATE-STOP),
 ale nie wskazywały na MOD-PRACODAWCA-RZECZYWISTY — moduł który buduje właściwy
 4-warstwowy argument prawny. Skutek: pismo v3 opierało tezę 1 na "ten sam KRS we wszystkich
@@ -17303,7 +17303,7 @@ Naprawa 1 — `pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md` (v1.0.0
 - Warstwa 3 — venire contra factum proprium (art. 8 KP) — nowa
 - Warstwa 4 — dowody tożsamości operacyjnej (ZUS/PIT-11/przelewy) — nowa
 - ZAKAZ-R1: zakaz argumentu "ten sam KRS" gdy KRS błędny
-- Przykład [SYGN-SPRAWY] jako case study błędu i korekty
+- Przykład VII P 94/25 jako case study błędu i korekty
 - Scalono z duplikatem `/home/claude/MOD-PRACODAWCA-RZECZYWISTY.md`
 
 Naprawa 2 — `shared/PRE-W2-VERIFICATION-GATE.md` (v1.2.0→v1.3.0):
@@ -17372,7 +17372,7 @@ budowana z pamięci zamiast z per-teza przeszukania SD-FAKTY.
 
 **Przyczyna naprawy:**
 
-Sprawa [SYGN-SPRAWY] (sesja 2026-06-27). Diagnoza dewelopera: po SD-VER = KOMPLET
+Sprawa VII P 94/25 (sesja 2026-06-27). Diagnoza dewelopera: po SD-VER = KOMPLET
 (wszystkie 35 plików odczytane) model budował macierz D×T z pamięci bez per-teza
 przeszukiwania SD-FAKTY. Dwie tezy nie miały adekwatnych dowodów w piśmie:
 
@@ -17380,7 +17380,7 @@ przeszukiwania SD-FAKTY. Dwie tezy nie miały adekwatnych dowodów w piśmie:
   do prezesa, odpowiedź na Lorica, zeznania Nawrota o dostępie do maila).
 - Teza pracodawcy faktycznego: argumenty ogólne (art. 23¹ KP) zamiast dowodów
   dokumentowych (XLSX Pracownicy13.08.2024 z powodem jako aktywnym pracownikiem
-  [SPÓŁKA-B] w VIII.2024, Eksport-Pracownicy z [SPÓŁKA-B] jako agencją pracy).
+  HPG w VIII.2024, Eksport-Pracownicy z HPG jako agencją pracy).
 
 Root cause: pliki Szef.odt, Zatrudnienie.odt, Pracownicy13.08.2024.xlsx miały
 mylące nazwy — model nie przeszukiwał ich per tezę gotowości/pracodawcy bo
@@ -17414,7 +17414,7 @@ Trzy poziomy gwarancji kompletności (wzorzec projektowy):
 **Naprawa 2 — `pisma-procesowe-v3/SKILL.md` (v5.8 → v5.9):**
 
 Dodano sekcję W1.2c-FSL-D przed KROK KD w W1.2c-PRE:
-- Opis root cause ([SYGN-SPRAWY], 2026-06-27)
+- Opis root cause (VII P 94/25, 2026-06-27)
 - KROK FSL-D z pełną sekwencją (FSL-D-INIT → FSL-D-SCAN → FSL-D-ORPHAN →
   FSL-D-REPORT → rozgałęzienie)
 - ⛔ ZAKAZ-FSL-D: nie przystępuj do KROK KD bez FSL-D-REPORT
@@ -17471,7 +17471,7 @@ Zalecenia na kolejny audyt:
 
 ## AUDYT-2026-06-25 — Wzmocnienie weryfikacji podmiotów online [POV-B][POV-C]
 
-**Zakres:** Targeted — naprawa pominięcia weryfikacji online danych podmiotów w piśmie procesowym [SYGN-SPRAWY].
+**Zakres:** Targeted — naprawa pominięcia weryfikacji online danych podmiotów w piśmie procesowym VII P 94/25.
 
 ### 1. STATUS OGÓLNY
 
@@ -17485,7 +17485,7 @@ Zalecenia na kolejny audyt:
 ### 2. NAPRAWY WYKONANE
 
 **Przyczyna naprawy:**
-Pismo procesowe w sprawie [SYGN-SPRAWY] wygenerowano bez wywołania `web_search`/`web_fetch`
+Pismo procesowe w sprawie VII P 94/25 wygenerowano bez wywołania `web_search`/`web_fetch`
 dla danych podmiotowych i sądu — mimo istniejącego PRE-W2-VERIFICATION-GATE.
 Model potraktował dane z dokumentów akt (umowy, protokoły, SUDOP) jako wystarczające.
 
@@ -17622,7 +17622,7 @@ shared/MOD-ATAK-NA-SWIADKA.md: v1.0.0 → v1.0.1 (WARN-15 ✅ → CRIT → napra
 --- — MOD-STEP-TRACKER + MOD-ATAK-NA-SWIADKA + pisma-procesowe-v3 v5.1
 
 **Zakres:** Targeted — naprawa krytyczna systemu checkpointów + 2 nowe moduły shared + ZAKAZ-13.  
-Przyczyna: Sesja [SYGN-SPRAWY] (2026-06-24) — model wygenerował pismo procesowe pomijając
+Przyczyna: Sesja VII P 94/25 (2026-06-24) — model wygenerował pismo procesowe pomijając
 10+ obowiązkowych kroków pipeline (CLAIM-VALIDATION, STRATEGIA, MACIERZ, PRE-W2, PODMIOT-GATE,
 LEGAL-QUALITY-GATE, AUDYT-KOŃCOWY, PEER-REVIEW) bez żadnej informacji dla użytkownika.
 Drugie pominięcie: ogniwa zeznaniowe w łańcuchu (świadek Nawrot — zeznanie o premii PFRON)
@@ -20740,7 +20740,7 @@ Po wdrożeniu ZIP-ów i naprawach: prognoza 9.0+.
 **Zakres:** (1) Nowy moduł shared MOD-SKAN-DOWODOW-KOMPLETNY; (2) Integracja w 3 skillach;
 (3) Naprawy ślepych linków AI Act i UP-3; (4) Przebudowa pokrycie-dziedzinowe.md;
 (5) Ocena komercyjna silnika 8.1/10; (6) Generacja ZIP wszystkich zmienionych skilli.
-**Trigger:** Błąd krytyczny w sprawie [SYGN-SPRAWY] — pominięcie stron ODT i zeznań
+**Trigger:** Błąd krytyczny w sprawie VII P 94/25 — pominięcie stron ODT i zeznań
 świadka Nawrota o premii PFRON → pismo wygenerowane z błędną kwotą roszczenia.
 
 ---
@@ -20899,13 +20899,13 @@ Pełna ocena wszystkich 28 skilli pod kątem gotowości do wdrożenia B2B
 ## AUDYT-2026-06-23 — MOD-POSZLAKI-KONTEKST: warstwy 2/3 dowodów + universalizacja D6/D7 + CV-ALT
 
 **Zakres:** Na żądanie dewelopera — analiza porównawcza pisma generowanego (AI, D1)
-vs pisma poprawionego przez dewelopera (AI+człowiek, D2) w sprawie [SYGN-SPRAWY]
+vs pisma poprawionego przez dewelopera (AI+człowiek, D2) w sprawie VII P 94/25
 wykazała, że system operuje wyłącznie na Warstwie 1 dokumentów (fakty wprost).
 Wdrożono model trójwarstwowy (fakty / kontekst / poszlaki) jako standard universalny.
 
-**Trigger:** Sesja porównawcza 4 pism procesowych w sprawie [SYGN-SPRAWY].
+**Trigger:** Sesja porównawcza 4 pism procesowych w sprawie VII P 94/25.
 Oceny: D1=7,0 / D2=8,7 (AI+człowiek) / D3=7,6 / D4=7,8.
-Delta D1→D2: tabele graniczne [SPÓŁKA-A]→[SPÓŁKA-B], walory 1/2/3 aktu Prezesa, antycypacja
+Delta D1→D2: tabele graniczne HP→HPG, walory 1/2/3 aktu Prezesa, antycypacja
 zarzutów, ścieżka alternatywna art. 23¹+25¹ §3 KP, walor PRZYZNANIA z dok. pozwanej.
 
 ### 1. NOWE PLIKI
@@ -20953,11 +20953,11 @@ problematyki pracodawcy rzeczywistego.
 - Trigger zmieniony: z "XLS/komunikatory" na "≥1 dokument w materiale — ZAWSZE"
 - Cel zmieniony: z "pracodawca rzeczywisty/gotowość do pracy" na "trzy warstwy każdego dok."
 - D6.1: "tożsamość pracodawcy" → "ciągłość operacyjna i schematy" (dowolna sprawa)
-- D6.2: "rekrutacja/zezwolenia" → "tabele operacyjne" (bez specyfiki [SPÓŁKA-A]/[SPÓŁKA-B])
+- D6.2: "rekrutacja/zezwolenia" → "tabele operacyjne" (bez specyfiki HP/HPG)
 - D6.3: "WhatsApp/RCS" → "korespondencja dowolnym kanałem"; dodano walor PRZYZNANIA i ORGANU
 - D6.4: "akta osobowe" → "spisy/rejestry/protokoły" (dowolny typ)
 - D6.5: zasilenie W1.3 uogólnione; pointer do MOD-POSZLAKI-KONTEKST dla pełnego protokołu
-- Usunięte: wszystkie referencje do [SPÓŁKA-A] sp. z o.o., [SPÓŁKA-B], [OSOBA-Q], nazwy konkretnych świadków
+- Usunięte: wszystkie referencje do HP sp. z o.o., HPG, Kwangjin, nazwy konkretnych świadków
 
 **MOD-DOWODY D7 v1.2 — universalizacja:**
 - Trigger zmieniony: z "≥2 ścieżki LUB atak 🔴/🟠" na "ZAWSZE — każde pismo"
@@ -24148,11 +24148,11 @@ odpowiednikami (Python, iteracyjna weryfikacja do zera pozostałości):
 - Wszystkie imiona/nazwiska (7 osób) → fikcyjne polskie/koreańskie/
   nepalskie odpowiedniki, zachowujące spójność (w tym warianty
   błędnych zapisów nazwisk, które były same w sobie dowodem w sprawie
-  — np. "Michał Nowak" vs "Jan Nowakowski" → zachowano analogiczną
+  — np. "Michał Wiatr" vs "Michał Wiatrak" → zachowano analogiczną
   parę "Jan Kowal" vs "Jan Kowalski", żeby NIE ZNISZCZYĆ merytorycznej
   wartości demonstracyjnej pliku jako przykładu wykrywania
   niespójności nazwisk)
-- Nazwa spółki pozwanej ([SPÓŁKA-B] / [SPÓŁKA-A] / skrót [SPÓŁKA-B])
+- Nazwa spółki pozwanej (Human Park Global / Human Park / skrót HPG)
   → Alpha Solutions / ALPHA
 - Nazwa i adres kancelarii przeciwnej + domena e-mail
 - Nazwa trzeciej spółki (Trabahante) → Fictus Sp. z o.o.
@@ -35416,7 +35416,7 @@ przeciwnego "Ciecierski", konkretny numer KRS, ścieżka "przejście
 zakładu pracy — art. 23¹ KP") — TO NIE błąd systemowy, tylko
 oczekiwana personalizacja tego systemu jako NARZĘDZIA do zarządzania
 WŁASNĄ sprawą użytkownika (spójne z wcześniej analizowanymi w tej
-sesji protokołami rozpraw [SYGN-SPRAWY] / [SYGN-SPRAWY-2]). Sam przepis
+sesji protokołami rozpraw VII P 94/25 / XI P 27/26). Sam przepis
 art. 23¹ KP już wielokrotnie zweryfikowany wcześniej w tej sesji
 (mod-PRACODAWCA-RZECZYWISTY.md) — zgodny.
 
@@ -70920,53 +70920,3 @@ Liczby plików bez zmian (prawo-polskie-v2 8, audyt 189). Podbicia: prawo-polski
 - ⛔ Uchwała SN I KZP 3/24 zweryfikowana R1, a G8 MISSING_LEDGER_RECORD i zamknięta sesja: rekord pod brzmieniem modelu („uchwała SN, sygn. …”), odpowiedź „sygn. …”. Aplikacja: dopasowanie po sygnaturze znormalizowanej przy weryfikacji (tylko rekord pełnego tekstu).
 - Odpowiedzi-zapowiedzi („Szukam teraz…”, „Przeszukuję bazę pomocniczą SAOS…”) bez wyniku: aplikacja wykonuje dodatkową rundę z narzędziami. Skrócony disclaimer modelu zastępowany tekstem z shared/DISCLAIMER.md. Historia wątku niesie rejestr aplikacji każdej odpowiedzi.
 - Wersje: orzeczenia-sadowe-v2 2.31, audyt-systemu-v4 6.229.
-
-## AUDYT-2026-10-13e — kontrola trafienia: stanowisko organu, określenie sprawy, sąd z sygnatury (6.230)
-
-- Źródło: kalibracja kontroli zgodności dokumentu z tezą na 1000 syntetycznych przypadkach (orzeczenia SN/NSA/WSA/SA/SO/TK/KIO/TSUE, interpretacje KIS, decyzje UODO; 11 typów twierdzeń, 5 kodowań tekstu) oraz 30 rzeczywistych tez (portale urzędowe vs web search/fetch).
-- ⛔ Pułapka „twierdzenie strony jako stanowisko organu” (zarzut skargi, stanowisko wnioskodawcy, zdanie odrębne): orzeczenia-sadowe-v2 2.32 Faza 1-Z pkt 7. Aplikacja: role fragmentów w tekście dla kontrolera i reguła stanowiska organu.
-- Określenie sprawy przed tekstem: pkt 8 (odsiew kandydatów po przedmiocie). Aplikacja: przypięte [OKREŚLENIE SPRAWY]; osobne wywołanie triage nie opłaca się w kontroli następczej (oszczędność < koszt przy ok. 13% trafień nie na temat).
-- ⛔ Sąd przypisany sygnaturze niezgodny z sygnaturą (np. NSA jako SN): aplikacja CASE_COURT_ATTRIBUTION. Polityka korekty: tylko temat NO_MATCH lub twierdzenie nie w pełni wsparte.
-- Wynik: trafność decyzji o korekcie 0,993, pominięte korekty 0/590, fałszywe alarmy 7/410.
-- Wersje: orzeczenia-sadowe-v2 2.32, audyt-systemu-v4 6.230.
-
-## AUDYT-2026-10-14a — wypowiedzenie umowy jako pismo proste (6.231)
-
-- Źródło: seria 200 testów aplikacji (2026-10-14): „Napisz wypowiedzenie tej umowy najmu” z dostarczoną umową trafiało do analizator-umow-v1 i pipeline'u umowy (409), bo żaden schemat pism prostych ani wiersz routera [3]/[4] nie obejmował wypowiedzenia.
-- pisma-proste-v2 2.31: schemat SPN (`references/SPN-wypowiedzenie.md`) — warianty P (z zachowaniem terminu), W-L (wynajmujący lokalu mieszkalnego, art. 11 u.o.p.l.: forma pisemna i przyczyna pod rygorem nieważności), U (uprzedzenie o zaległości: art. 687 KC, art. 11 ust. 2 pkt 2 u.o.p.l.), N (art. 682 KC); termin liczony od doręczenia (art. 61 KC); forma (art. 77 § 2–3 KC).
-- RZĄD 1 (ELI, 2026-10-14): KC t.j. Dz.U. 2026 poz. 795 — art. 61, 77, 365¹, 673, 682, 687, 688, 704, 746, 750 (odczyt brzmienia); u.o.p.l. t.j. Dz.U. 2023 poz. 725 — art. 2, 11; `zmiany_po_tj` puste.
-- Rozszerzenie (2026-10-15, RZĄD 1): KC art. 644, 715, 716, 723, 730, 764¹–764⁴, 812, 830, 844, 869; pr. aut. art. 68 (t.j. Dz.U. 2025 poz. 24; po t.j. Dz.U. 2026 poz. 1296); Prawo energetyczne art. 4j (t.j. Dz.U. 2026 poz. 43; po t.j. Dz.U. 2026 poz. 516, 607, 900 — schemat nakazuje odczyt przed redakcją); Prawo komunikacji elektronicznej art. 304 (Dz.U. 2024 poz. 1221). Aplikacja: wypowiedzenie dostarczonej umowy bez nazwy rodzaju w wiadomości kierowane do wiersza wypowiedzenia z katalogu.
-- Warianty katalogu dwuwyrazowe („Wypowiedzenie najmu”, „Wypowiedz najem”…): wiersz z „Wypowiedzenie umowy najmu” przejmowałby „napisz umowę najmu” (aplikacja dopuszcza pominięcie rzeczownika odczasownikowego), a „wypowiedzenie umowy o świadczenie usług” — „wypowiedzenie umowy o pracę”. Umowa o pracę poza zakresem (dr-04).
-- Orzecznictwo nie powołane w schemacie (sn.pl z automatu: ochrona przed botami; SAOS tylko jako trop) — odesłanie do orzeczenia-sadowe-v2.
-- SPO / SPR (2026-10-15): reklamacja, rękojmia, niezgodność z umową i odstąpienie („zerwanie umowy”) trafiały do pisma-proste-v2 bez żadnego schematu (model bez struktury pisma), „chcę odstąpić od umowy” bez decyzji, „zerwanie umowy z firmą” do analizator-umow-v1. RZĄD 1: u.p.k. t.j. Dz.U. 2026 poz. 1244 — art. 7a, 7aa, 27, 28, 30, 32, 34, 38, 43a–43g, 43m; KC — art. 395, 491, 492, 494, 556, 556¹, 556², 556⁴, 558, 560, 561, 563, 568, 577, 635, 636, 644, 656. Wiersze SPO / SPO-R / SPO-N osobno: parser katalogu w aplikacji pomija jednowyrazowy wariant w wierszu z kilkoma wariantami. Aplikacja: prośba o napisanie samej umowy („napisz umowę … z prawem odstąpienia”) nie wybiera schematu pisma.
-- Wersje: pisma-proste-v2 2.31, audyt-systemu-v4 6.231.
-
-## AUDYT-2026-10-15a — anonimizacja danych sprawy użytkownika w treściach skilli (6.231)
-
-- Źródło: wyszukiwanie na prośbę użytkownika. Przykłady i wpisy historyczne zawierały dane jednej rzeczywistej sprawy: nazwy dwóch spółek, KRS, NIP, REGON, sygnatury dwóch postępowań, imię i nazwisko powoda, adres e-mail i domenę, nazwiska i telefon świadka, imiona z korespondencji.
-- Zamiana na znaczniki: [SPÓŁKA-A], [SPÓŁKA-B], [KRS-A], [KRS-B], [NIP-A], [NIP-B], [REGON-B], [SYGN-SPRAWY], [SYGN-SPRAWY-2], [E-MAIL-POWODA], [DOMENA-POZWANEJ], [ŚWIADEK-K], [ŚWIADEK-P], [TELEFON], [OSOBA-…]; nazwisko w przykładach wariantów pisowni — nazwiska fikcyjne.
-- Zakres: wersja rozwojowa i stabilne (07.10.2026, 26.09.2026) w obu repozytoriach, paczki ZIP (z zachowaniem listy plików), paczki dostawcze z 04.10.2026 (pliki wewnątrz zagnieżdżonych archiwów, CHECKSUMS i SHA256SUMS). `test_router_contract.py`: wzorzec „bez narracji incydentów” na znacznikach. Słowniki prywatności aplikacji (nazwiska PESEL, TERYT) bez zmian — dane referencyjne, nie dane sprawy.
-- Historia commitów na GitHubie zachowuje poprzednie brzmienie; jej przepisanie wymaga osobnej decyzji właściciela.
-
-## AUDYT-2026-10-15b — związek przyczynowy krokowo w skillach (6.232)
-
-- Źródło: przegląd na prośbę użytkownika (2026-10-15): metodę `shared/MOD-GRAF-PRZYCZYNOWY.md` wywoływały tylko analizator-dowodow-v3 (MP13 §13.2a, warunkowo) i chronologia-sprawy-v1 (TRYB C wyłącznie na pytanie użytkownika). Skille, w których związek przyczynowy jest najczęściej przesłanką — analiza-sadowa-v6 (kwalifikacja prawna) i pisma-procesowe-v3 (teza pisma) — nie wywoływały jej wcale; oś czasu mogła zastąpić badanie połączeń samą kolejnością dat.
-- analiza-sadowa-v6 6.17: Przejście II krok 8, linia ZWIĄZEK PRZYCZYNOWY w macierzy fakt-norma, pytanie w PUNKCIE STOP.
-- pisma-procesowe-v3 5.43: W1.2c KROK PRZ przed W1.3 (NIEWYKAZANY → W1.5 ⬛ BRAK) i zakaz przesłanki z samej kolejności dat.
-- chronologia-sprawy-v1 1.18: KROK A5a (obowiązkowy przy ≥2 wątkach ze wspólnymi węzłami, szkodzie/skutku/odpowiedzialności albo pytaniu o przyczynę) i sekcja raportu ZALEŻNOŚCI PRZYCZYNOWE.
-- shared 3.99.35: MOD-GRAF-PRZYCZYNOWY 1.2.0 — lista wywołań; treść metody bez zmian.
-- Aplikacja Lex Machina (osobno): krok ZWIAZEK-PRZYCZYNOWY i OS-CZASU-SPRAWY w rejestrze ścieżki obowiązkowej (warstwa SKILL), runda poprawki przy braku; moduł wczytywany z góry przy pytaniu o związek przyczynowy.
-- Wersje: analiza-sadowa-v6 6.17, pisma-procesowe-v3 5.43, chronologia-sprawy-v1 1.18, shared 3.99.35, audyt-systemu-v4 6.232.
-
-## AUDYT-2026-10-15c — mapy aktów: nowe t.j. 2026 i DU/2026/507 (6.233)
-
-- Źródło: ELI (`api.sejm.gov.pl/eli`, odczyt 2026-10-15, RZĄD 1; obwieszczenia text.pdf i tekst DU/2026/507 odczytane).
-- Transport kolejowy: t.j. Dz.U. 2026 poz. 1324 (obwieszczenie 1.09.2026, ogł. 13.10.2026) zastępuje 2025/1234; obejmuje 2026/41, 815, 912; brak zmian po t.j.
-- Prawo wodne: t.j. Dz.U. 2026 poz. 1335 (obwieszczenie 17.09.2026, ogł. 14.10.2026) zastępuje 2025/960; obejmuje 2025/1535, 2026/445, 605, 815, 1033, 1156 (1156 w tekście jako brzmienie od 1.01.2027); brak zmian po t.j.
-- Ustawa o odpadach: t.j. Dz.U. 2026 poz. 1328 (obwieszczenie 1.09.2026, ogł. 14.10.2026) zastępuje 2023/1587; obejmuje 12 ustaw zmieniających, m.in. 2025/1812, 2026/174, 815, 875 (875 od 1.01.2027); brak zmian po t.j.
-- ⛔ KOREKTA: DU/2026/507 art. 6 (VAT art. 96 ust. 3e–3f) wchodzi w życie 1.11.2028 (art. 31 pkt 4), nie 14.10.2026 — dr-06 (MAPA-AKTOW, 5 modułów VAT, BAZA-AKTOW-OKOLOPODATKOWYCH), ROUTING-MAP, mapa_dzu (wiersz 2026/1263 i MONITORING).
-- DU/2026/507 — tytuł i zakres w mapa_dzu (dwa wiersze: „Prawo przedsiębiorców — zmiana” i „Ustawa SUS — zmiana … zakres do doprecyzowania” zastąpione tytułem urzędowym i zakresem art. 1–11); MONITORING: etapy 1.11.2026, 18.12.2026, 1.11.2028.
-- Nowy wiersz ustawy o CEIDG (t.j. 2026/30; zm. 2026/734, 507) w dr-02 MAPA-AKTOW, ROUTING-MAP i mapa_dzu (TJ, T11); KC ⏳ art. 860 § 3–4 od 1.11.2028 (już w t.j. 2026/795); SUS ⏳ 507 art. 5 od 1.11.2028; rynek pracy 507 art. 11 od 14.10.2026; mod-KSH-spolki-handlowe — spółka cywilna od 1.11.2028 (art. 26 ustawy 507 odczytany).
-- Parser mapy RAG aplikacji (`extractCoreActs`): DU/2026/1324, 1335, 1328, 30 jako t.j. (consolidated); 2025/1234, 2025/960, 2023/1587 nie są już pozycjami głównymi.
-- Wersje: dr-02 3.96, dr-04 3.50, dr-06 3.99.1, dr-09 3.49, prawo-polskie-v2 6.62, shared 3.99.36, audyt-systemu-v4 6.233.
-

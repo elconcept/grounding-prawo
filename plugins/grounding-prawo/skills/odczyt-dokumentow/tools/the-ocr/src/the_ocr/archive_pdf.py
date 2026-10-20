@@ -1,8 +1,7 @@
-"""On-demand archival of ONE unchanged PDF to a private Cloudflare R2 bucket.
+"""On-demand archival of ONE unchanged PDF to private MinIO and R2 buckets.
 
 Invoked explicitly by the LLM after reviewing all OCR pages. No watch,
 scheduler, automatic ingest, public URL or mutation of the source.
-The Markdown transcription goes to Basic Memory; the PDF itself goes only here.
 Install with: pip install 'the-ocr[archive]'.
 """
 from __future__ import annotations
@@ -14,24 +13,31 @@ from pathlib import Path
 BUCKET = "legal-pdf-originals"
 
 
-def _client():
+def _client(service: str):
     try:
         import boto3
         from botocore.config import Config
     except ImportError as exc:
         raise RuntimeError("Install archive extra: pip install 'the-ocr[archive]'") from exc
 
-    account = os.environ.get("R2_ACCOUNT_ID")
-    endpoint = os.environ.get("R2_S3_ENDPOINT") or (f"https://{account}.r2.cloudflarestorage.com" if account else "")
-    access = os.environ.get("R2_ACCESS_KEY_ID")
-    secret = os.environ.get("R2_SECRET_ACCESS_KEY")
-    if not endpoint.startswith("https://"):
-        raise ValueError("R2 requires a configured HTTPS S3 endpoint")
+    if service == "minio":
+        endpoint = os.environ.get("MINIO_S3_ENDPOINT", "http://127.0.0.1:9000")
+        access = os.environ.get("MINIO_ACCESS_KEY_ID") or os.environ.get("MINIO_ROOT_USER")
+        secret = os.environ.get("MINIO_SECRET_ACCESS_KEY") or os.environ.get("MINIO_ROOT_PASSWORD")
+        if not endpoint.startswith(("http://127.0.0.1:", "http://localhost:", "http://minio:", "https://")):
+            raise ValueError("MinIO endpoint must be localhost or HTTPS")
+    else:
+        account = os.environ.get("R2_ACCOUNT_ID")
+        endpoint = os.environ.get("R2_S3_ENDPOINT") or (f"https://{account}.r2.cloudflarestorage.com" if account else "")
+        access = os.environ.get("R2_ACCESS_KEY_ID")
+        secret = os.environ.get("R2_SECRET_ACCESS_KEY")
+        if not endpoint.startswith("https://"):
+            raise ValueError("R2 requires a configured HTTPS S3 endpoint")
     if not access or not secret:
-        raise ValueError("Missing R2 S3 credentials in environment")
+        raise ValueError(f"Missing {service} S3 credentials in environment")
     return boto3.client("s3", endpoint_url=endpoint,
                         aws_access_key_id=access, aws_secret_access_key=secret,
-                        region_name="auto",
+                        region_name="auto" if service == "r2" else "us-east-1",
                         config=Config(signature_version="s3v4",
                                       retries={"max_attempts": 3, "mode": "standard"}))
 
@@ -50,7 +56,7 @@ def _check_object(client, bucket: str, key: str, expected_size: int) -> bool:
 
 
 def archive_verified_pdf(source: Path, key: str, bucket: str = BUCKET) -> dict[str, str]:
-    """Store the PDF in R2; report success only after an independent HEAD check."""
+    """Store both replicas; report success only after independent HEAD checks."""
     source = Path(source)
     if not source.is_file() or source.suffix.lower() != ".pdf":
         raise ValueError("Source must be an existing original PDF")
@@ -61,18 +67,30 @@ def archive_verified_pdf(source: Path, key: str, bucket: str = BUCKET) -> dict[s
         raise ValueError("Empty PDF")
     from .config import load_env
     load_env()
-    client = _client()
-    client.head_bucket(Bucket=bucket)  # R2 bucket pre-created privately
-    if not _check_object(client, bucket, key, size):
-        # This is called explicitly by LLM, never by a background scanner.
-        client.upload_file(str(source), bucket, key, ExtraArgs={"ContentType": "application/pdf"})
-    if not _check_object(client, bucket, key, size):
-        raise RuntimeError("r2: uploaded object not found/size mismatch")
-    return {"r2": f"r2://{bucket}/{key}"}
+    for service in ("minio", "r2"):
+        client = _client(service)
+        if service == "minio":
+            from botocore.exceptions import ClientError
+            try:
+                client.head_bucket(Bucket=bucket)
+            except ClientError as exc:
+                code = exc.response.get("Error", {}).get("Code")
+                if code in ("404", "NoSuchBucket", "NotFound"):
+                    client.create_bucket(Bucket=bucket)
+                else:
+                    raise
+        else:
+            client.head_bucket(Bucket=bucket)  # R2 bucket pre-created privately
+        if not _check_object(client, bucket, key, size):
+            # This is called explicitly by LLM, never by a background scanner.
+            client.upload_file(str(source), bucket, key, ExtraArgs={"ContentType": "application/pdf"})
+        if not _check_object(client, bucket, key, size):
+            raise RuntimeError(f"{service}: uploaded object not found/size mismatch")
+    return {"minio": f"s3://{bucket}/{key}", "r2": f"r2://{bucket}/{key}"}
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Archive one unchanged PDF to private Cloudflare R2")
+    parser = argparse.ArgumentParser(description="Archive one unchanged PDF to private MinIO and R2")
     parser.add_argument("pdf", type=Path)
     parser.add_argument("--key", required=True, help="immutable object key including .pdf")
     parser.add_argument("--bucket", default=BUCKET)

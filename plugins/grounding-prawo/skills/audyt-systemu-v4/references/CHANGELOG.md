@@ -1,15 +1,5 @@
 # CHANGELOG — audyt-systemu-v4
 
-- 6.235 (2026-10-17b, AUDYT-2026-10-17b): mapa_dzu: 2026/1306 (TJ, ochrona pokrzywdzonego i świadka, stan prawny 30.09.2026), 2026/1340 (NW, ZZ i informowanie pracowników, w życie 30.10.2026 — MONITORING); 2026/549 z adnotacją ⏳ po t.j.; 2015/21 — odesłanie do t.j. Przegląd ELI DU/2026 poz. 1301–1340.
-- 6.234 (2026-10-17a, AUDYT-2026-10-17a): mapa_dzu — KPW t.j. 2026/1336 (TJ, obwieszczenie z 2.10.2026, stan prawny 27.09.2026; obejmuje 2025/1178, 1661, 1814, 1818, 1872 i 2026/473; brak zmian po t.j. — ELI 2026-10-17), 2025/860 → PREV. Wykryte przez T15 (NEWER_TJ).
-- 6.233 (2026-10-15c, AUDYT-2026-10-15c): mapy aktów — t.j. 2026/1324 (transport kolejowy), 1335 (Prawo wodne), 1328 (odpady) w mapa_dzu (TJ + PREV) i ALIASY-NAZW-AKTOW; DU/2026/507 — tytuł i zakres w mapa_dzu, ⛔ korekta daty VAT (1.11.2028), MONITORING etapów; dr-02 3.96, dr-04 3.50, dr-06 3.99.1, dr-09 3.49, prawo-polskie-v2 6.62, shared 3.99.36; wpis w AUDIT-JOURNAL.
-
-- 6.232 (2026-10-15b, AUDYT-2026-10-15b): przyczynowość krokowo — analiza-sadowa-v6 6.17, pisma-procesowe-v3 5.43, chronologia-sprawy-v1 1.18, shared 3.99.35 (MOD-GRAF-PRZYCZYNOWY 1.2.0); wpis w AUDIT-JOURNAL.
-
-- 6.231 (2026-10-14a, AUDYT-2026-10-14a, 2026-10-15a): pisma-proste-v2 2.31 — nowe schematy SPN, SPO, SPR; anonimizacja danych sprawy użytkownika w treściach skilli i paczkach (AUDYT-2026-10-15a); wpisy w AUDIT-JOURNAL.
-
-- 6.230 (2026-10-13e, AUDYT-2026-10-13e): kalibracja kontroli trafienia (1000 przypadków) — orzeczenia-sadowe-v2 2.32 Faza 1-Z pkt 7–8 (stanowisko właściwego organu, nie strony; określenie sprawy przed tekstem); wpis w AUDIT-JOURNAL.
-
 - 6.229 (2026-10-13d, AUDYT-2026-10-13d): błędy wyszukiwania orzeczeń z aplikacji 0.1.27 — orzeczenia-sadowe-v2 2.31 Faza 1-Z (zgodność trafienia z pytaniem, treść tylko z pobranego dokumentu, brak dopasowania zastępczego, zakaz zapowiedzi zamiast wyniku, analiza błędu z rejestru aplikacji); wpis w AUDIT-JOURNAL.
 
 - 6.228 (2026-10-13c, AUDYT-2026-10-13c): wyszukiwanie orzeczeń i przepisów — wyniki wyszukiwarki, LEX, Legalis i portali jako tropy weryfikowane według gradacji źródeł; usunięty ✅ [VER: web-fallback]; NSA/WSA jako snapshot w orzeczenia-sadowe-v2 i HIERARCHIA-ZRODEL; fixture `wl-example/test_normalizacja.mjs` z PESEL o niepoprawnej sumie kontrolnej (T40/T49 z 6.226); wpis w AUDIT-JOURNAL.
