@@ -28,8 +28,10 @@ nazywaj w odpowiedzi wprost.
    Dotyczy ustaw, przepisów i orzeczeń, także gdy znasz już artykuł lub sygnaturę.
    Szukaj zagadnienia i stanu faktycznego, nie tylko dosłownej frazy.
 2. **Potem pełne brzmienie i weryfikacja:** identyfikatory trafień wykorzystaj w pozostałych MCP.
-   Przepisy: `cite_verify_article`, następnie drabinka `shared/MOD-TEKST-JEDNOLITY.md`
-   (`isap_get_act_text`, odczyt `pdf_url`). Orzeczenia: `saos`, `nsa` lub `eu-sparql`,
+   Przepisy z korpusu 37 aktów: `ustawy_artykul(akt, art)`, następnie `ustawy_cytat(akt, art, fragment)`
+   dla cytatów dosłownych. Porównaj `tekst_jednolity` oraz `eli` z wyniku i sprawdź późniejsze nowelizacje
+   według `shared/MOD-TEKST-JEDNOLITY.md` (ELI / publikator urzędowy). Akty spoza korpusu:
+   `isap_get_act_text` lub bezpośrednie ELI. Orzeczenia: `saos`, `nsa` lub `eu-sparql`,
    zależnie od sądu. Odczytaj pełny potrzebny fragment, metrykę i stan prawny na właściwą datę.
    Ranking, skrót lub fragment wyniku semantycznego nie zastępuje weryfikacji źródła cytatu.
 3. **Brak trafień, brak pokrycia lub awaria Repertorium:** zapisz zapytanie i wynik/błąd,
