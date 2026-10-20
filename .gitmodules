@@ -28,9 +28,6 @@
 [submodule "vendor/general/enhance-workflows"]
 	path = vendor/general/enhance-workflows
 	url = https://github.com/elconcept/enhance-workflows.git
-[submodule "vendor/mcp/mcp-cite"]
-	path = vendor/mcp/mcp-cite
-	url = https://github.com/elconcept/mcp-cite.git
 [submodule "vendor/mcp/mcp-eu-compliance"]
 	path = vendor/mcp/mcp-eu-compliance
 	url = https://github.com/elconcept/mcp-eu-compliance.git
