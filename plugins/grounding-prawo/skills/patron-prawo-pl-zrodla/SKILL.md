@@ -1,6 +1,6 @@
 ---
 name: patron-prawo-pl-zrodla
-description: 'Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ISAP, cite), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło.'
+description: 'Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ustawy, ELI/ISAP jako kontrola aktualności), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -10,7 +10,7 @@ Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `sh
 # Źródła prawa PL i UE
 
 Konektory działają przez portal MCP (`lex.xlap.pl/mcp`, plik `.mcp.json` pluginu). Narzędzia mają w hoście
-nazwy z prefiksem portalu (np. `isap_get_act_text`, `nsa_search`); poniżej podano samą nazwę narzędzia.
+nazwy z prefiksem portalu (np. `ustawy_artykul`, `nsa_search`); poniżej podano samą nazwę narzędzia.
 Składnia zapytań, drabinka do tekstu jednolitego, pokrycie czasowe i standardy cytowania: `references/iura-metodyka.md`
 oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prawny-router-v3` (mapa celów `shared/SCIEZKI-PRACY.md`).
 
@@ -28,7 +28,8 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 | Semantyczne rozpoznanie ustaw i orzeczeń PL/UE | `repertorium` | `szukaj_repertorium` | potwierdzenia kompletnego, aktualnego brzmienia cytatu |
 | Orzeczenia SN, sądów powszechnych, TK, KIO | `saos` | `search`, `search_by_case`, `get_judgment`, `saos_cite_check` | WSA i NSA - brak orzecznictwa administracyjnego (podatki, UODO, decyzje organów) |
 | Orzeczenia NSA i 16 WSA (CBOSA): administracja, podatki, cła, ochrona danych | `nsa` | `search`, `search_by_case`, `get_judgment` | sądy powszechne, SN |
-| Akty prawne PL (Dz.U., M.P., od 1918 r.) | `isap` | `search_acts`, `get_act`, `get_act_text` | orzecznictwo, komentarze |
+| Polskie akty z korpusu 37 ustaw: przepis, komentarz i cytat | `ustawy` | `akty`, `szukaj`, `artykul`, `cytat` | nowelizacji ogłoszonych po zindeksowanym t.j.; aktów poza korpusem |
+| Akty poza korpusem i kontrola aktualnego publikatora (Dz.U., M.P.) | `isap` / ELI | `search_acts`, `get_act`, `get_act_text`, `api.sejm.gov.pl/eli` | komentarza autorskiego |
 | Spółki w KRS | `krs` | `get_entity`, `get_entity_full`, `get_board` | CEIDG |
 | Prawo UE, TSUE, decyzje organów ochrony danych (GDPRhub) | `eu-sparql` | `search_by_celex`, `search_by_date_range`, `search_cjeu`, `search_cjeu_by_ecli`, `search_gdprhub` | prawo krajowe |
 | 14 regulacji UE offline (RODO, AI Act, DORA, NIS2, eIDAS 2.0, CRA, DSA, DMA, Data Act, DGA, LED, ePrivacy, Cybersecurity Act i in.) | `eu-compliance` | `eu_search`, `eu_article`, `eu_compare`, `eu_check_applicability`, `eu_evidence` | akty spoza korpusu |
@@ -50,10 +51,14 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
   bazy. Pion rozpoznasz skryptem `pl_entities.py extract` (skill `citation-grounding-pl`, moduł `citation-grounding-pl/modules/patron-identyfikatory-pl`).
 - **Czy wyrok „żyje”:** `saos_cite_check` - późniejsze orzeczenia cytujące sygnaturę. Przeczytaj,
   w jakim kontekście ją przywołują (aprobata, krytyka, odmienny pogląd).
-- **Treść przepisu:** `isap` `search_acts` (fragment tytułu, rok, status) → `get_act` (ELI,
-  np. `DU/2018/1000`: status obowiązywania, wejście w życie, linki do tekstu) → `get_act_text`
-  stronami (`page`, aż `has_more=false`) do szukanego artykułu. Sprawdź, czy akt obowiązuje
-  i czy to tekst jednolity.
+- **Treść przepisu:** w korpusie 37 aktów wywołaj `ustawy_artykul(akt, art, komentarz=false)`;
+  gdy nie znasz artykułu, najpierw `ustawy_szukaj(q, akt?)`. Cytat dosłowny sprawdź
+  `ustawy_cytat(akt, art, fragment)`. Sprawdź `tekst_jednolity` i `eli` z wyniku.
+  **Baza nie uwzględnia późniejszych nowelizacji:** przed użyciem jako aktualnego prawa
+  zweryfikuj zmiany po dacie t.j. w ELI (`api.sejm.gov.pl/eli`) i w razie zmian odczytaj
+  aktualne brzmienie z publikatora. Gdy akt nie należy do korpusu (OUT_OF_SCOPE),
+  użyj `isap` (`search_acts`, `get_act`, `get_act_text`) i/lub API ELI. Komentarz
+  jest opracowaniem, nie brzmieniem urzędowym.
 - **Prawo UE:** artykuł z 14 regulacji → `eu_article` (dosłowny tekst offline) zamiast pamięci;
   ten sam obowiązek w kilku aktach → `eu_compare` (np. zgłaszanie incydentu: DORA vs NIS2 vs CRA);
   czy regulacja dotyczy sektora → `eu_check_applicability` (wskazówka, nie wiążąca ocena);
@@ -87,7 +92,7 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 
 ## Format odwołań
 - Akt: pełna nazwa + (Dz.U. ROK poz. NUMER) przy pierwszym przywołaniu, dalej skrót
-  („art. 6 ust. 1 lit. f RODO”, „art. 415 k.c.”). ELI z wyniku `isap` jako referencja.
+  („art. 6 ust. 1 lit. f RODO”, „art. 415 k.c.”). ELI z wyniku `ustawy` lub `isap` jako referencja; status i nowelizacje zawsze potwierdź w ELI.
 - Orzeczenie: „wyrok NSA z 12.05.2026 r., III OSK 1377/23” + link.
 - Akt UE: „rozporządzenie 2016/679 (RODO)” + link EUR-Lex.
 - Daty w treści: DD.MM.RRRR r.
