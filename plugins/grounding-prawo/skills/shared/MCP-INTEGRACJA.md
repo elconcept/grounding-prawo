@@ -69,7 +69,7 @@ wiedząc o tym (bramka samoraportująca — rodzina F-119).
 Narzędzie pochodzi z MCP, gdy jego nazwa ma postać:
     mcp__<nazwa-serwera>__<nazwa-narzędzia>
 Przykłady zmierzone w środowisku: mcp__memory__memory_list,
-    mcp__mcp-isap__search_acts
+    mcp__ustawy__artykul
 ⛔ NIE zgaduj nazw narzędzi. Wypisz te, które SĄ, i dopasuj po ZDOLNOŚCI
    (co narzędzie robi wg swojego opisu), nie po nazwie własnej.
 ```
@@ -102,7 +102,12 @@ narzędzia. **Rozpoznawaj narzędzie, gdy nazwa KOŃCZY SIĘ nazwą z tabeli** (
 | `sudop_szukaj_pomocy` / `sudop_odbierz_wynik` | pomoc publiczna / de minimis | analiza pomocy | ERROR/`PENDING` ≠ brak pomocy |
 | `ceidg_szukaj_firmy` | JDG w CEIDG (wymaga klucza) | PODMIOT-GATE | bez klucza ERROR = kanał niedostępny |
 
-Konektory obce (`mcp-isap`, `mcp-nsa`, `legal-cite-pl`, …) — dopasowanie po zdolności jak wyżej;
+Główny konektor ustaw w portalu `lex`: `ustawy` (37 aktów; `akty`, `szukaj`, `artykul`, `cytat`).
+`artykul(akt, art)` zwraca brzmienie według zindeksowanego t.j. i ELI; `cytat(akt, art, fragment)`
+weryfikuje zgodność frazy. Aktualność po t.j. sprawdzaj w urzędowym ELI. Akty spoza korpusu:
+`isap`/ELI; nie używaj wycofanego serwera `cite`.
+
+Konektory obce (`mcp-isap`, `mcp-nsa`, …) — dopasowanie po zdolności jak wyżej;
 nazwy z tabeli mają pierwszeństwo, bo ich zachowanie jest zmierzone (`test_na_zywo.mjs`, walidator
 schematu).
 
