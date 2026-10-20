@@ -16,15 +16,20 @@ wspomnienia osobno, zachowując je do późniejszego połączenia.
 ## Trwały zapis po każdej odpowiedzi
 
 Obowiązkowe są dwa osobne artefakty obok pism:
-- `relacja/_RELACJA_ZDARZEN.md` — aktualna, spójna narracja według **czasu zdarzeń**;
-- `relacja/_LOG_ZEZNAN.md` — dopisywany rejestr według **czasu ujawnienia informacji**,
+- **relacja zdarzeń** — aktualna, spójna narracja według **czasu zdarzeń**;
+- **log zeznań** — dopisywany rejestr według **czasu ujawnienia informacji**,
   z wpisami pogrupowanymi według sesji. To roboczy log rozmowy, nie urzędowy protokół.
 
-Osobno prowadź pomocniczy `relacja/_REJESTR_PISM.md`. W repo abogada katalogiem jest
-`00_sprawy/<sprawa>/relacja/`; poza nim użyj katalogu wskazanego przez autora lub katalogu
-roboczego sprawy. Gdy autor wskazał istniejącą relację, aktualizuj właśnie ten plik;
-przed pierwszą zmianą zachowaj kopię źródłową. Nie nadpisuj pisma złożonego. Jedna sprawa
-ma wspólną relację i log, nawet gdy powstaje kilka zawiadomień.
+Osobno prowadź pomocniczy **rejestr pism** i listę **pytań otwartych**.
+
+**Miejsce zapisu (od v0.7): Basic Memory, projekt `legal`, `relacje/<autor-slug>/`** —
+notatki, kolejność zapisu, awaria i migracja: [basic-memory-relacja](basic-memory-relacja.md).
+Nie zapisuj relacji, logu ani rejestru jako plików w katalogu sprawy ani w projekcie claude.ai;
+tam zostają tylko pisma. Pliki `relacja/_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md`, `_REJESTR_PISM.md`
+i `relacja/wersje/` to format awaryjny wyłącznie wtedy, gdy na hoście nie ma żadnego dostępu do
+Basic Memory; zastane pliki tego typu migruj do bazy. Gdy autor wskazał istniejącą relację,
+aktualizuj właśnie ją; przed pierwszą zmianą zachowaj kopię źródłową (wersja w `wersje/`).
+Nie nadpisuj pisma złożonego. Jedna osoba ma wspólną relację i log, nawet gdy powstaje kilka zawiadomień.
 
 ### Relacja: redakcja chronologiczna, nie dopisywanie sesji
 
@@ -78,8 +83,8 @@ korekt można przenieść do logu z podaniem pochodzenia i dostępnych dat; nie 
 nie sprawdzisz zachowania treści. Następnie uporządkuj relację chronologicznie.
 
 Przy przerwie, „więcej nie pamiętam”, żądaniu draftu lub końcu sesji zapisz dodatkowo
-niezmienną kopię `relacja/wersje/RRRRMMDD_relacja_vN.md` (kolejny wolny numer, także przy
-kilku sesjach tego dnia). Zapisuj postęp na bieżąco: nagłe urwanie rozmowy nie może oznaczać
+niezmienną kopię relacji w `relacje/<autor-slug>/wersje/` (kolejny wolny numer, także przy
+kilku sesjach tego dnia; w formacie awaryjnym `relacja/wersje/RRRRMMDD_relacja_vN.md`). Zapisuj postęp na bieżąco: nagłe urwanie rozmowy nie może oznaczać
 utraty całej sesji. Jeśli brak narzędzia zapisu, podaj Markdown obu artefaktów do zapisania i ich nazwy, jasno informując,
 że pliki nie zostały zapisane. Nie deklaruj fikcyjnego zapisu.
 
@@ -109,6 +114,29 @@ sprawy i zgłoszenie nowej krzywdy. Przypisz każdy nowy epizod i skutek do pism
 świadome wyłączenie przez autora. Nie pomijaj krzywdy tylko dlatego, że wymaga innego pisma.
 Podstawy, terminy, uprawnienia i nazwy czynności sprawdzaj w aktualnych źródłach urzędowych
 przed ich użyciem; ta tabela kieruje pracą, nie zastępuje analizy konkretnego postępowania.
+
+## Pisma w `output/` i wersje
+
+- **Bez placeholderów** (`⬛`, `[UZUPEŁNIJ]`, `[DO …]`) w piśmie oddawanym autorowi. Niepewną daną
+  formalną (data, e-mail, załączniki, adresat) wpisz w wersji najbardziej prawdopodobnej (np. data =
+  planowany dzień wysyłki albo dzisiejsza) i dopytaj; korekta trafia do kolejnej wersji. Luki
+  **faktów** nie zapełniaj domysłem: fragment bez odpowiedzi pomiń w piśmie, zostaje w relacji
+  i na liście pytań otwartych.
+- Każda nowa informacja dotycząca niezłożonego pisma daje `vN+1`: snapshot `.md` w `drafty/<pismo>/`
+  (tylko Markdown, wszystkie wersje) i jeden DOCX pisma w `legal/output/` z redline sesji
+  (`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”). Poprzedni DOCX tego pisma usuń z `legal/output/`
+  dopiero po sprawdzeniu nowego pliku.
+- **Edycja autora ma pierwszeństwo.** Sesja zaczyna się akceptacją zmian w DOCX z `legal/output/` i snapshotem
+  `.md`, więc ręczne zmiany autora (usunięta sekcja, inna data, dopisek) przechodzą do nowej wersji.
+  Nie przywracaj usuniętej przez autora treści bez jego decyzji.
+- Na prośbę „nie obciążaj mnie” pomiń w piśmie szczegóły, które mogą zostać użyte przeciw autorowi
+  (np. przyjęte leki, czynności osób bliskich), zostawiając je w relacji.
+- Dane o zdrowiu osób trzecich wpisuj do pisma tylko za wyraźną zgodą autora; bez niej zostają w relacji.
+- Skutki z relacji (lęk, unikanie, zmiany w codziennym życiu, relacje rodzinne, praca) trafiają do
+  części „Co mi to zrobiło” każdego pisma, którego dotyczą, blisko słów autora, bez uogólnień modelu.
+- Pisma towarzyszące (pismo przewodnie, uzupełnienie zeznań, wniosek) idą torem pism procesowych:
+  weryfikacja każdego przepisu i walidacja przed `.docx`. Wyjątek HARDGATE-ZOP dotyczy samego zawiadomienia.
+- Każdą zmianę pisma dopisz do `_PRZEBIEGI.md` pisma (data, ID wpisów logu, zmiany, ślad weryfikacji prawa).
 
 Przerwa nie oznacza pełnego wywiadu ani zgody na złożenie. Projekty są robocze, dopóki nie
 przejdą właściwej kontroli. Jeśli autor mówi „tylko zapisz relację, dziś bez pism”, zaktualizuj relację i log
