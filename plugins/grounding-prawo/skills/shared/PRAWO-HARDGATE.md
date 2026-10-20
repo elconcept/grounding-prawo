@@ -55,7 +55,7 @@ Dotyczy KAŻDEJ dziedziny prawa: cywilnego, karnego, pracy, administracyjnego, p
 ## ⚙️ WARSTWA STRUKTURALNA (ŹRÓDŁO-0) — API zamiast wyszukiwarki
 
 > Dodano: 2026-07-05 (AUDYT-2026-07-05a). Wzorce: prawo-pl-eli (ELI Sejm),
-> legal-cite-pl / mcp-isap (strukturalny odczyt aktu po identyfikatorze),
+> mcp-ustawy (37 aktów + kontrola dosłownego cytatu) / mcp-isap (akty spoza korpusu),
 > sententim (deterministyczna weryfikacja sygnatur), prawo-pl-saos (SAOS API).
 >
 > **Zasada:** web_search to wyszukiwarka ogólnego przeznaczenia — może trafić na
@@ -71,8 +71,9 @@ POZIOM A — konektor MCP (gdy skonfigurowany w środowisku; mapa: shared/MCP-IN
   sn_sprawdz_sygnature / cbosa_sprawdz_sygnature / kio_sprawdz_sygnature (Lex Machina) → sygnatury SN, NSA/WSA, KIO, interpretacje (sygnatura znana → baza urzędowa po repertorium)
   saos_search (Lex Machina)       → SP bieżąco; SN do 2016, TK do 2015, KIO do 2018 — zastępczo/discovery (orzeczenia-sadowe-v2 Faza 1-0)
   eurlex_lookup                   (Lex Machina, lex-eurlex)   → akty UE: status obowiązywania
-  get_act / verify_article        (mcp-isap, legal-cite-pl)  → akty Dz.U./M.P. (konektory obce)
-    ⚠️ mcp-isap zwraca metadane; treść tekstu jednolitego wyłącznie z `/text.pdf` (POZIOM B, ELI).
+  ustawy_artykul / ustawy_cytat    (mcp-ustawy, 37 aktów)   → brzmienie i cytat z indeksu według oznaczonego t.j.
+    ⚠️ Wynik MCP nie gwarantuje aktualności: sprawdź nowelizacje po dacie t.j. w ELI i w razie potrzeby pobierz aktualny tekst.
+  get_act / get_act_text          (mcp-isap, akty spoza korpusu) → metryka/tekst aktu; kontroluj wersję i aktualność w ELI.
   verify_signature / search_judgments (sententim)            → sygnatury (kontrakt FOUND/NOT_FOUND/AMBIGUOUS)
   narzędzia SAOS / KIO / EUR-Lex  (prawo-pl-saos, kio-orzeczenia-mcp, prawo-eu-eurlex)
 
