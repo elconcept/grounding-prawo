@@ -28,7 +28,7 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 | Spółki w KRS | `krs` | `get_entity`, `get_entity_full`, `get_board` | CEIDG |
 | Prawo UE, TSUE, decyzje organów ochrony danych (GDPRhub) | `eu-sparql` | `search_by_celex`, `search_by_date_range`, `search_cjeu`, `search_cjeu_by_ecli`, `search_gdprhub` | prawo krajowe |
 | 14 regulacji UE offline (RODO, AI Act, DORA, NIS2, eIDAS 2.0, CRA, DSA, DMA, Data Act, DGA, LED, ePrivacy, Cybersecurity Act i in.) | `eu-compliance` | `eu_search`, `eu_article`, `eu_compare`, `eu_check_applicability`, `eu_evidence` | akty spoza korpusu |
-| Komentarz do artykułu ustawy (32 ustawy, w tym kodeksy, Konstytucja, ustawa o Policji, UoOZP, prawa pacjenta) | baza lokalna `scripts/ustawy.py` | `art <akt> <nr> --komentarz`, `szukaj` | brzmienia urzędowego (komentarz to opracowanie) |
+| Komentarz do artykułu ustawy (37 ustaw: kodeksy, Konstytucja, ustawy ustrojowe, PPSA, koszty sądowe, prawo medyczne i konsumenckie, lokatorzy, Policja) | baza lokalna `scripts/ustawy.py` | `art <akt> <nr> --komentarz`, `szukaj` | brzmienia urzędowego (komentarz to opracowanie) |
 
 ## Struktura sądownictwa - nie myl pionów
 - Sądy powszechne: rejonowe, okręgowe, apelacyjne. Sprawy cywilne, karne, rodzinne, prawa

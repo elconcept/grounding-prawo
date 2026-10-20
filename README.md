@@ -93,20 +93,21 @@ portalu `lex`. Mapa konektorów: skill `patron-prawo-pl-zrodla`.
 
 **Baza ustaw z komentarzem** (`own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py`, SQLite FTS5, bez zależności):
 
-- teksty jednolite 15 kodeksów i Konstytucji jako git-as-law (`vendor/law/<kodeks>`, jeden commit = jedna nowelizacja
-  w dacie wejścia w życie), więc także brzmienie na wskazany dzień;
-- komentarz do każdego artykułu 32 ustaw (`vendor/law/komentarze/<ustawa>`, forki `elconcept`).
+- 37 ustaw z komentarzem do każdego artykułu (`vendor/law/<ustawa>`, forki `elconcept`): kodeksy, Konstytucja,
+  ustawy ustrojowe (sądy, SN, prokuratura, adwokatura, radcowie), PPSA, koszty sądowe, prawo medyczne, konsumenckie,
+  ochrona lokatorów, Policja, RODO i inne; lista to submoduły w `.gitmodules`;
+- przy każdym artykule dosłowne brzmienie z tekstu jednolitego wskazanego w repo (pola `tekst_jednolity`, `eli`)
+  i komentarz; nowelizacje późniejsze niż ten tekst jednolity trzeba sprawdzić w ELI.
 
 ```bash
 python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py buduj            # indeks ustawy.sqlite
-python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py art kpk 168a --komentarz
-python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py art kk 148 --na-dzien 2019-06-01   # wymaga pełnej historii
+python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py art uopl 11 --komentarz
 python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py szukaj "obrona konieczna" --akt kk
 python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py cytat kk 148 "Kto zabija człowieka"
 ```
 
 Serwer MCP tej bazy (`ustawy_mcp.py`, narzędzia `akty`, `szukaj`, `artykul`, `cytat`) ma zastąpić konektory `cite` i
-`isap`; wdrożenie: `deploy/mcp-ustawy/` (obraz klonuje akty według `.gitmodules`, kodeksy z pełną historią). Orzeczenia
+`isap`; wdrożenie: `deploy/mcp-ustawy/` (obraz klonuje ustawy według `.gitmodules`). Orzeczenia
 SAOS i NSA ma obsługiwać jeden wrapper `elconcept/mcp-prawo-wrapper`. Do przełączenia portalu `lex` reguły pluginu
 korzystają z `cite`, `isap`, `saos` i `nsa`. Akty spoza korpusu: ELI (`api.sejm.gov.pl`).
 

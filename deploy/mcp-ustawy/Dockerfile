@@ -1,6 +1,6 @@
 # Serwer MCP "ustawy": baza ustaw z komentarzem (zastępuje mcp-cite i mcp-isap).
-# Kontekst budowania: korzeń repo grounding-prawo. Repozytoria aktów są klonowane przy budowie według
-# .gitmodules (vendor/law/*): kodeksy git-as-law z pełną historią (brzmienie na dzień), komentarze płytko.
+# Kontekst budowania: korzeń repo grounding-prawo. Repozytoria ustaw z komentarzem są klonowane przy budowie
+# według .gitmodules (vendor/law/*), więc lista aktów jest jedna: submoduły repo.
 FROM python:3.12-slim
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates \
     && rm -rf /var/lib/apt/lists/* \

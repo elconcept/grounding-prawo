@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 """Przeszukiwalna baza ustaw z komentarzem - lokalnie, SQLite FTS5, bez zależności spoza biblioteki standardowej.
 
-Źródła (submoduły repo grounding-prawo):
-  vendor/law/<kodeks>/            git-as-law: aktualny tekst jednolity, jeden commit = jedna nowelizacja
-                                  w dacie wejścia w życie (historia brzmień przez git)
-  vendor/law/komentarze/<ustawa>/ komentarz do każdego artykułu (rozdziały *-rozdzial.md)
+Źródło: submoduły vendor/law/<ustawa> repo grounding-prawo (lista w .gitmodules). Każde repo zawiera komentarz
+do każdego artykułu ustawy: dosłowne brzmienie przepisu przeniesione z tekstu jednolitego (sekcja
+„Brzmienie przepisu”) i komentarz. Podstawę tekstu (Dz.U., ELI) podaje 00-wprowadzenie.md.
 
-    python ustawy.py buduj [--law DIR] [--db PLIK]       # indeks z obu źródeł
-    python ustawy.py akty                                 # lista aktów, skróty, stan tekstu
-    python ustawy.py art kk 148 [--komentarz] [--na-dzien 2024-05-01]
+    python ustawy.py buduj [--law DIR] [--db PLIK]       # indeks ze wszystkich repozytoriów w DIR
+    python ustawy.py akty                                 # lista aktów, skróty, podstawa tekstu
+    python ustawy.py art kk 148 [--komentarz]
     python ustawy.py szukaj "obrona konieczna" [--akt kk] [--zakres przepisy|komentarze] [--limit 10]
     python ustawy.py cytat kpk 168a "dowodu nie można uznać"   # czy fragment stoi w brzmieniu artykułu
 
-Brzmienie przepisu pochodzi z tekstu git-as-law (stan: data ostatniego commitu). Gdy akt nie ma tekstu
-git-as-law, brzmienie pochodzi z komentarza i jest oznaczone `zrodlo=komentarz` z datą opracowania;
-takie brzmienie wymaga potwierdzenia w ELI (api.sejm.gov.pl) przed cytatem w piśmie.
-Komentarz jest opracowaniem, nie źródłem prawa: cytuj go jako komentarz, a nie jako treść przepisu.
+Brzmienie ma stan tekstu jednolitego wskazanego w polu `tekst_jednolity`. Późniejszych nowelizacji baza nie
+zawiera: przed cytatem w piśmie sprawdź w ELI (api.sejm.gov.pl, pole `eli`), czy po tym tekście jednolitym
+akt się zmienił. Komentarz jest opracowaniem, nie źródłem prawa: cytuj go jako komentarz.
 """
 from __future__ import annotations
 
@@ -32,22 +30,32 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_LAW = os.environ.get("USTAWY_LAW_DIR") or os.path.normpath(os.path.join(HERE, "../../../vendor/law"))
 DEFAULT_DB = os.environ.get("USTAWY_DB") or os.path.join(os.getcwd(), "ustawy.sqlite")
 
-# skróty -> katalog aktu; katalog git-as-law i katalog komentarza mogą się różnić
+# skróty -> katalog aktu (nazwa repozytorium)
 ALIASES = {
-    "kc": "kodeks-cywilny", "kk": "kodeks-karny", "kks": "kodeks-karny-skarbowy", "kkw": "kodeks-karny-wykonawczy",
-    "km": "kodeks-morski", "kpa": "kodeks-postepowania-administracyjnego", "kpc": "kodeks-postepowania-cywilnego",
-    "kpk": "kodeks-postepowania-karnego", "kpw": "kodeks-postepowania-w-sprawach-o-wykroczenia", "kp": "kodeks-pracy",
-    "kro": "kodeks-rodzinny-i-opiekunczy", "ksh": "kodeks-spolek-handlowych", "kw": "kodeks-wykroczen",
-    "kodeks-wyborczy": "kodeks-wyborczy", "konstytucja": "konstytucja-rp", "krp": "konstytucja-rp",
-    "uodo": "o-ochronie-danych-osobowych", "uozp": "o-ochronie-zdrowia-psychicznego",
-    "uoozp": "o-ochronie-zdrowia-psychicznego", "upp": "o-prawach-pacjenta-i-rzeczniku-praw-pacjenta",
-    "udl": "o-dzialalnosci-leczniczej", "ustawa-o-policji": "o-policji", "udip": "o-dostepie-do-informacji-publicznej",
-    "prd": "prawo-o-ruchu-drogowym", "pusp": "prawo-o-ustroju-sadow-powszechnych", "pop": "prawo-o-prokuraturze",
-    "upps": "o-pomocy-spolecznej", "uppd": "o-przeciwdzialaniu-przemocy-domowej",
+    "kc": "kodeks-cywilny", "kk": "kodeks-karny", "kpa": "kodeks-postepowania-administracyjnego",
+    "kpc": "kodeks-postepowania-cywilnego", "kpk": "kodeks-postepowania-karnego",
+    "kpw": "kodeks-postepowania-w-sprawach-o-wykroczenia", "kpsw": "kodeks-postepowania-w-sprawach-o-wykroczenia",
+    "kro": "kodeks-rodzinny-i-opiekunczy", "kw": "kodeks-wykroczen",
+    "konstytucja": "konstytucja-rzeczypospolitej-polskiej", "krp": "konstytucja-rzeczypospolitej-polskiej",
+    "ppsa": "prawo-o-postepowaniu-przed-sadami-administracyjnymi", "pusa": "prawo-o-ustroju-sadow-administracyjnych",
+    "usp": "prawo-o-ustroju-sadow-powszechnych", "pusp": "prawo-o-ustroju-sadow-powszechnych",
+    "usn": "o-sadzie-najwyzszym", "pop": "prawo-o-prokuraturze", "pa": "prawo-o-adwokaturze",
+    "urp": "o-radcach-prawnych", "uksc": "o-kosztach-sadowych-w-sprawach-cywilnych",
+    "uops": "odpowiedzialnosci-podmiotow-zbiorowych-za-czyny-zabronione-pod-grozba-kary",
+    "uokik": "o-ochronie-konkurencji-i-konsumentow", "uokk": "o-ochronie-konkurencji-i-konsumentow",
+    "upk": "o-prawach-konsumenta", "uopl": "o-ochronie-praw-lokatorow",
+    "udui": "o-dzialalnosci-ubezpieczeniowej-i-reasekuracyjnej", "uodo": "o-ochronie-danych-osobowych",
+    "uozp": "o-ochronie-zdrowia-psychicznego", "uoozp": "o-ochronie-zdrowia-psychicznego",
+    "upp": "o-prawach-pacjenta-i-rzeczniku-praw-pacjenta", "udl": "o-dzialalnosci-leczniczej",
+    "uzl": "o-zawodach-lekarza-i-lekarza-dentysty", "pf": "prawo-farmaceutyczne",
+    "uswiadczeniach": "o-swiadczeniach-opieki-zdrowotnej-finansowanych-ze-srodkow-publicznych",
+    "uop": "o-policji", "ustawa-o-policji": "o-policji", "udip": "o-dostepie-do-informacji-publicznej",
+    "ukrs": "o-krajowym-rejestrze-sadowym", "uos": "o-oplacie-skarbowej", "usd": "o-podatku-od-spadkow-i-darowizn",
+    "ups": "o-pomocy-spolecznej", "upps": "o-pomocy-spolecznej", "uppd": "o-przeciwdzialaniu-przemocy-domowej",
+    "prd": "prawo-o-ruchu-drogowym",
 }
-COMMENTARY_DIR = {"konstytucja-rp": "konstytucja-rzeczypospolitej-polskiej"}
 SUP = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
-ART_LINE = re.compile(r"^Art\.\s+(\d+[a-z]*(?:\s+[a-z]{1,3})?(?:\[\d+\]|[⁰¹²³⁴⁵⁶⁷⁸⁹]+)?)\.(?=\s|$)")
+CHAPTER = re.compile(r"\d+-rozdzial\.md$")
 
 
 def fold(s: str) -> str:
@@ -57,7 +65,7 @@ def fold(s: str) -> str:
 
 
 def norm_art(a: str) -> str:
-    """'117[1]', '117¹', '117^1', '117(1)' -> '117^1'; '43 bb' -> '43bb'; 'art. 148' -> '148'."""
+    """'117¹', '117^1', '117[1]', '117(1)' -> '117^1'; '43 bb' -> '43bb'; 'art. 148' -> '148'."""
     a = a.strip().lower()
     a = re.sub(r"^art\.?\s*", "", a).rstrip(".")
     m = re.match(r"^(\d+)\s*([a-z]*)\s*([a-z]*)\s*(?:\[(\d+)\]|\^(\d+)|\((\d+)\)|([⁰¹²³⁴⁵⁶⁷⁸⁹]+))?$", a)
@@ -73,51 +81,23 @@ def resolve_act(name: str) -> str:
     return ALIASES.get(n, n)
 
 
-def law_file(d: str) -> str | None:
-    for f in sorted(os.listdir(d)):
-        if f.endswith(".md") and f.lower() not in ("readme.md", "license.md"):
-            return os.path.join(d, f)
-    return None
-
-
-def parse_law(text: str):
-    """Tekst git-as-law -> [(art, jednostka, tekst)]. Artykuł trwa do następnego 'Art.' albo nagłówka."""
-    out, heads, cur, unit = [], [], None, ""
-    for ln in text.split("\n"):
-        if ln.startswith("#"):
-            if cur:
-                out.append(cur); cur = None
-            title = ln.lstrip("#").strip()
-            if ln.startswith("# "):
-                continue
-            if re.match(r"(?i)(rozdział|dział|część|księga|tytuł|oddział)\b", title):
-                heads = [title]
-            else:
-                heads = (heads + [title])[-2:]
-            unit = " / ".join(heads)
-            continue
-        m = ART_LINE.match(ln)
-        if m:
-            if cur:
-                out.append(cur)
-            cur = [norm_art(m.group(1)), unit, ln.rstrip()]
-            continue
-        if cur is not None:
-            cur[2] += "\n" + ln.rstrip()
-    if cur:
-        out.append(cur)
-    return [(a, u, t.strip()) for a, u, t in out]
-
-
 def parse_commentary(text: str):
-    """Rozdział komentarza -> [(art, brzmienie, komentarz)]."""
-    out = []
-    parts = re.split(r"^### Art\.\s*(.+?)\s*$", text, flags=re.M)
-    for i in range(1, len(parts) - 1, 2):
-        art, body = norm_art(parts[i]), parts[i + 1]
-        body = re.split(r"^#{1,4} ", body, maxsplit=1, flags=re.M)[0]
+    """Rozdział komentarza -> [(art, jednostka, brzmienie, komentarz)]."""
+    out, unit = [], ""
+    parts = re.split(r"^(#{3,4} .+?)\s*$", text, flags=re.M)
+    art = None
+    for chunk in parts:
+        if chunk.startswith("#### "):
+            unit = chunk[5:].strip()
+            continue
+        if chunk.startswith("### "):
+            m = re.match(r"### Art\.\s*(.+)$", chunk)
+            art = norm_art(m.group(1)) if m else None
+            continue
+        if not art:
+            continue
         quote, rest, in_q = [], [], False
-        for ln in body.split("\n"):
+        for ln in chunk.split("\n"):
             if ln.strip().startswith("**Brzmienie przepisu"):
                 in_q = True
                 continue
@@ -127,12 +107,39 @@ def parse_commentary(text: str):
             if ln.strip() or rest:
                 in_q = False if ln.strip() else in_q
                 rest.append(ln)
-        out.append((art, "\n".join(quote).strip(), "\n".join(rest).strip()))
+        out.append((art, unit, "\n".join(quote).strip(), "\n".join(rest).strip()))
+        art = None
     return out
 
 
-def git(repo: str, *args: str) -> str:
-    return subprocess.run(["git", "-C", repo, *args], capture_output=True, text=True, check=True).stdout.strip()
+def act_meta(path: str, name: str) -> dict:
+    """Tytuł, podstawa tekstu (tekst jednolity) i ELI z 00-wprowadzenie.md / README.md."""
+    meta = {"tytul": name, "tekst_jednolity": None, "eli": None}
+    for fn in ("00-wprowadzenie.md", "README.md", "INDEX.md"):
+        p = os.path.join(path, fn)
+        if not os.path.isfile(p):
+            continue
+        t = open(p, encoding="utf-8").read()
+        if meta["tytul"] == name:
+            first = t.split("\n", 1)[0].lstrip("# ").strip()
+            first = re.sub(r"^INDEX\s*\u2014\s*", "", first)
+            meta["tytul"] = re.sub(r"^Komentarz do (ustawy|Konstytucji)",
+                                   lambda m: "Ustawa" if m.group(1) == "ustawy" else "Konstytucja", first)
+        m = re.search(r"tekst jednolity[^\n]*?(Dz\.\s?U\.\s*\d{4}\s*poz\.\s*\d+)", t)
+        if m and not meta["tekst_jednolity"]:
+            meta["tekst_jednolity"] = re.sub(r"\s+", " ", m.group(1))
+        m = re.search(r"api\.sejm\.gov\.pl/eli/acts/([A-Z]+/\d{4}/\d+)", t)
+        if m and not meta["eli"]:
+            meta["eli"] = m.group(1)
+    return meta
+
+
+def git_date(repo: str) -> str:
+    try:
+        return subprocess.run(["git", "-C", repo, "log", "-1", "--format=%cs"], capture_output=True,
+                              text=True, check=True).stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return ""
 
 
 def build(law: str, db: str) -> int:
@@ -141,146 +148,78 @@ def build(law: str, db: str) -> int:
         os.remove(tmp)
     con = sqlite3.connect(tmp)
     con.executescript("""
-        CREATE TABLE akty (akt TEXT PRIMARY KEY, tytul TEXT, tekst_jednolity TEXT, stan_na TEXT, commit_sha TEXT,
-                           zrodlo_tekstu TEXT, komentarz TEXT, komentarz_stan TEXT);
-        CREATE TABLE artykuly (akt TEXT, art TEXT, jednostka TEXT, tekst TEXT, zrodlo TEXT, PRIMARY KEY (akt, art));
-        CREATE TABLE komentarze (akt TEXT, art TEXT, brzmienie TEXT, komentarz TEXT, plik TEXT);
+        CREATE TABLE akty (akt TEXT PRIMARY KEY, tytul TEXT, tekst_jednolity TEXT, eli TEXT, opracowanie TEXT);
+        CREATE TABLE artykuly (akt TEXT, art TEXT, jednostka TEXT, brzmienie TEXT, komentarz TEXT, plik TEXT,
+                               PRIMARY KEY (akt, art));
         CREATE VIRTUAL TABLE fts USING fts5(akt UNINDEXED, art UNINDEXED, rodzaj UNINDEXED, zlozony, tokenize='unicode61');
     """)
-    acts = 0
+    acts = arts = 0
     for d in sorted(os.listdir(law)):
         p = os.path.join(law, d)
-        if d == "komentarze" or not os.path.isdir(p):
-            continue
-        f = law_file(p)
-        if not f:
-            continue
-        text = open(f, encoding="utf-8").read()
-        first = text.split("\n", 1)[0].lstrip("# ").strip()
-        try:
-            sha, date = git(p, "log", "-1", "--format=%H %cs").split()
-        except (subprocess.CalledProcessError, ValueError, FileNotFoundError):
-            sha, date = "", ""
-        readme = os.path.join(p, "README.md")
-        title = d
-        if os.path.isfile(readme):
-            title = re.split(r"\s+\u2014\s+|\s+-\s+", open(readme, encoding="utf-8").readline().lstrip("# ").strip())[0]
-        con.execute("INSERT INTO akty VALUES (?,?,?,?,?,?,?,?)", (d, title, first, date, sha, "git-as-law", None, None))
-        for art, unit, body in parse_law(text):
-            con.execute("INSERT OR IGNORE INTO artykuly VALUES (?,?,?,?,?)", (d, art, unit, body, "git-as-law"))
-            con.execute("INSERT INTO fts VALUES (?,?,?,?)", (d, art, "przepis", fold(body)))
-        acts += 1
-    kroot = os.path.join(law, "komentarze")
-    rev = {v: k for k, v in COMMENTARY_DIR.items()}
-    for d in sorted(os.listdir(kroot)) if os.path.isdir(kroot) else []:
-        p = os.path.join(kroot, d)
         if not os.path.isdir(p):
             continue
-        akt = rev.get(d, d)
-        idx = os.path.join(p, "INDEX.md")
-        title = open(idx, encoding="utf-8").readline().lstrip("# ").replace("INDEX \u2014 ", "").strip() if os.path.isfile(idx) else d
-        title = re.sub(r"^Komentarz do (ustawy|Konstytucji)", lambda m: "Ustawa" if m.group(1) == "ustawy" else "Konstytucja", title)
-        try:
-            kdate = git(p, "log", "-1", "--format=%cs")
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            kdate = ""
-        row = con.execute("SELECT akt FROM akty WHERE akt=?", (akt,)).fetchone()
-        if row:
-            con.execute("UPDATE akty SET tytul=?, komentarz=?, komentarz_stan=? WHERE akt=?", (title, d, kdate, akt))
-        else:
-            con.execute("INSERT INTO akty VALUES (?,?,?,?,?,?,?,?)", (akt, title, None, kdate, None, "komentarz", d, kdate))
-            acts += 1
-        for fn in sorted(os.listdir(p)):
-            if not re.match(r"\d+-rozdzial\.md$", fn):
-                continue
-            for art, quote, comm in parse_commentary(open(os.path.join(p, fn), encoding="utf-8").read()):
-                con.execute("INSERT INTO komentarze VALUES (?,?,?,?,?)", (akt, art, quote, comm, f"{d}/{fn}"))
-                con.execute("INSERT INTO fts VALUES (?,?,?,?)", (akt, art, "komentarz", fold(comm)))
-                if not row and quote:  # akt bez git-as-law: brzmienie z komentarza, oznaczone
-                    con.execute("INSERT OR IGNORE INTO artykuly VALUES (?,?,?,?,?)", (akt, art, "", quote, "komentarz"))
-                    con.execute("INSERT INTO fts VALUES (?,?,?,?)", (akt, art, "przepis", fold(quote)))
-    n_art = con.execute("SELECT count(*) FROM artykuly").fetchone()[0]
-    n_kom = con.execute("SELECT count(*) FROM komentarze").fetchone()[0]
+        chapters = sorted(f for f in os.listdir(p) if CHAPTER.match(f))
+        if not chapters:
+            continue
+        m = act_meta(p, d)
+        con.execute("INSERT INTO akty VALUES (?,?,?,?,?)", (d, m["tytul"], m["tekst_jednolity"], m["eli"], git_date(p)))
+        acts += 1
+        for fn in chapters:
+            for art, unit, quote, comm in parse_commentary(open(os.path.join(p, fn), encoding="utf-8").read()):
+                cur = con.execute("INSERT OR IGNORE INTO artykuly VALUES (?,?,?,?,?,?)",
+                                  (d, art, unit, quote, comm, f"{d}/{fn}"))
+                if cur.rowcount:
+                    arts += 1
+                    con.execute("INSERT INTO fts VALUES (?,?,?,?)", (d, art, "przepis", fold(quote)))
+                    con.execute("INSERT INTO fts VALUES (?,?,?,?)", (d, art, "komentarz", fold(comm)))
     con.commit()
     con.close()
-    if acts == 0 or n_art == 0:
+    if acts == 0 or arts == 0:
         os.remove(tmp)
-        print(f"BŁĄD: pusty indeks (akty {acts}, artykuły {n_art}) - sprawdź {law}", file=sys.stderr)
+        print(f"BŁĄD: pusty indeks (akty {acts}, artykuły {arts}) - sprawdź {law}", file=sys.stderr)
         return 20
     os.replace(tmp, db)
-    print(f"indeks: {acts} aktów, {n_art} artykułów, {n_kom} komentarzy -> {db}")
+    print(f"indeks: {acts} aktów, {arts} artykułów z brzmieniem i komentarzem -> {db}")
     return 0
 
 
 class Baza:
-    def __init__(self, db: str = DEFAULT_DB, law: str = DEFAULT_LAW):
+    def __init__(self, db: str = DEFAULT_DB):
         if not os.path.exists(db):
             raise FileNotFoundError(f"brak indeksu {db} - uruchom: python ustawy.py buduj")
         self.con = sqlite3.connect(db, check_same_thread=False)
         self.con.row_factory = sqlite3.Row
-        self.law = law
 
     def akty(self) -> list[dict]:
-        rows = self.con.execute("SELECT a.*, (SELECT count(*) FROM artykuly WHERE akt=a.akt) n_art, "
-                                "(SELECT count(*) FROM komentarze WHERE akt=a.akt) n_kom FROM akty a ORDER BY akt")
         skroty = {}
         for k, v in ALIASES.items():
             skroty.setdefault(v, []).append(k)
+        rows = self.con.execute("SELECT a.*, (SELECT count(*) FROM artykuly WHERE akt=a.akt) n_art FROM akty a ORDER BY akt")
         return [dict(r, skroty=skroty.get(r["akt"], [])) for r in rows]
 
-    def _meta(self, akt: str) -> dict | None:
-        r = self.con.execute("SELECT * FROM akty WHERE akt=?", (akt,)).fetchone()
-        return dict(r) if r else None
-
-    def artykul(self, akt: str, art: str, komentarz: bool = False, na_dzien: str | None = None) -> dict:
+    def artykul(self, akt: str, art: str, komentarz: bool = False) -> dict:
         akt, art = resolve_act(akt), norm_art(art)
-        meta = self._meta(akt)
+        meta = self.con.execute("SELECT * FROM akty WHERE akt=?", (akt,)).fetchone()
         if not meta:
-            return {"status": "OUT_OF_SCOPE", "akt": akt, "powod": "akt spoza korpusu; sprawdź ELI api.sejm.gov.pl"}
-        out = {"akt": akt, "art": art, "tytul": meta["tytul"], "tekst_jednolity": meta["tekst_jednolity"]}
-        if na_dzien:
-            out.update(self._wersja(akt, art, na_dzien))
-        else:
-            r = self.con.execute("SELECT * FROM artykuly WHERE akt=? AND art=?", (akt, art)).fetchone()
-            if not r:
-                return dict(out, status="NOT_FOUND", powod=f"brak art. {art} w {akt}")
-            out.update(status="FOUND", jednostka=r["jednostka"], tekst=r["tekst"], zrodlo=r["zrodlo"],
-                       stan_na=meta["stan_na"], commit=meta["commit_sha"])
-            if r["zrodlo"] == "komentarz":
-                out["uwaga"] = "brzmienie z komentarza (stan opracowania); potwierdź w ELI przed cytatem"
+            return {"status": "OUT_OF_SCOPE", "akt": akt, "powod": "akt spoza bazy; brzmienie z ELI (api.sejm.gov.pl)"}
+        out = {"akt": akt, "art": art, "tytul": meta["tytul"], "tekst_jednolity": meta["tekst_jednolity"],
+               "eli": meta["eli"]}
+        r = self.con.execute("SELECT * FROM artykuly WHERE akt=? AND art=?", (akt, art)).fetchone()
+        if not r:
+            return dict(out, status="NOT_FOUND", powod=f"brak art. {art} w bazie aktu {akt}")
+        out.update(status="FOUND", jednostka=r["jednostka"], tekst=r["brzmienie"], plik=r["plik"],
+                   uwaga="brzmienie według wskazanego tekstu jednolitego; nowelizacje późniejsze sprawdź w ELI")
         if komentarz:
-            ks = self.con.execute("SELECT komentarz, plik FROM komentarze WHERE akt=? AND art=?", (akt, art)).fetchall()
-            out["komentarz"] = [{"tekst": k["komentarz"], "plik": k["plik"]} for k in ks] or None
+            out["komentarz"] = r["komentarz"]
         return out
-
-    def _wersja(self, akt: str, art: str, na_dzien: str) -> dict:
-        repo = os.path.join(self.law, akt)
-        f = law_file(repo) if os.path.isdir(repo) else None
-        if not f:
-            return {"status": "NOT_CHECKED", "powod": "brak historii git-as-law dla tego aktu"}
-        try:
-            if git(repo, "rev-parse", "--is-shallow-repository") == "true":
-                return {"status": "NOT_CHECKED", "powod": "płytki klon bez historii nowelizacji; pobierz historię: "
-                        f"git -C {repo} fetch --unshallow"}
-            sha = git(repo, "rev-list", "-1", f"--before={na_dzien} 23:59:59", "HEAD")
-            if not sha:
-                return {"status": "NOT_FOUND", "powod": f"brak wersji obowiązującej {na_dzien} w historii repo"}
-            when = git(repo, "log", "-1", "--format=%cs %s", sha)
-            text = git(repo, "show", f"{sha}:{os.path.relpath(f, repo)}")
-        except subprocess.CalledProcessError as exc:
-            return {"status": "NOT_CHECKED", "powod": "historia niedostępna (płytki klon?): " + exc.stderr.strip()[:200]}
-        for a, unit, body in parse_law(text):
-            if a == art:
-                return {"status": "FOUND", "na_dzien": na_dzien, "wersja": when, "commit": sha, "jednostka": unit,
-                        "tekst": body, "zrodlo": "git-as-law"}
-        return {"status": "NOT_FOUND", "na_dzien": na_dzien, "wersja": when, "powod": "artykułu nie było w tej wersji"}
 
     def szukaj(self, q: str, akt: str | None = None, zakres: str | None = None, limit: int = 10) -> list[dict]:
         words = [w for w in re.findall(r"\w+", fold(q)) if w]
         if not words:
             return []
         # odmiana: dla słów od 6 liter ucinamy 2 znaki końcówki i szukamy prefiksu
-        terms = ['"' + (w[:-2] if len(w) >= 6 else w) + '"' + ("*" if len(w) >= 4 else "") for w in words]
+        stems = [w[:-2] if len(w) >= 6 else w for w in words]
+        terms = ['"' + s + '"' + ("*" if len(w) >= 4 else "") for s, w in zip(stems, words)]
         sql = "SELECT akt, art, rodzaj, bm25(fts) s FROM fts WHERE fts MATCH ?"
         args: list = [" ".join(terms)]
         if akt:
@@ -290,33 +229,31 @@ class Baza:
         sql += " ORDER BY s LIMIT ?"; args.append(int(limit))
         out = []
         for r in self.con.execute(sql, args):
-            if r["rodzaj"] == "przepis":
-                t = self.con.execute("SELECT tekst FROM artykuly WHERE akt=? AND art=?", (r["akt"], r["art"])).fetchone()
-            else:
-                t = self.con.execute("SELECT komentarz tekst FROM komentarze WHERE akt=? AND art=?", (r["akt"], r["art"])).fetchone()
-            text = t["tekst"] if t else ""
-            out.append({"akt": r["akt"], "art": r["art"], "rodzaj": r["rodzaj"], "fragment": snippet(text, words)})
+            t = self.con.execute("SELECT brzmienie, komentarz FROM artykuly WHERE akt=? AND art=?", (r["akt"], r["art"])).fetchone()
+            text = (t["brzmienie"] if r["rodzaj"] == "przepis" else t["komentarz"]) if t else ""
+            out.append({"akt": r["akt"], "art": r["art"], "rodzaj": r["rodzaj"], "fragment": snippet(text, stems)})
         return out
 
-    def cytat(self, akt: str, art: str, fragment: str, na_dzien: str | None = None) -> dict:
-        a = self.artykul(akt, art, na_dzien=na_dzien)
+    def cytat(self, akt: str, art: str, fragment: str) -> dict:
+        a = self.artykul(akt, art)
         if a.get("status") != "FOUND":
             return dict(a, wynik="NOT_CHECKED")
         hay, needle = squash(a["tekst"]), squash(fragment)
         ok = bool(needle) and needle in hay
-        return {"wynik": "FOUND" if ok else "NOT_FOUND", "akt": a["akt"], "art": a["art"], "zrodlo": a.get("zrodlo"),
-                "stan_na": a.get("stan_na") or a.get("wersja"), "tekst": a["tekst"],
-                "uwaga": a.get("uwaga") or ("fragment nie występuje dosłownie w brzmieniu artykułu" if not ok else None)}
+        return {"wynik": "FOUND" if ok else "NOT_FOUND", "akt": a["akt"], "art": a["art"],
+                "tekst_jednolity": a["tekst_jednolity"], "eli": a["eli"], "tekst": a["tekst"],
+                "uwaga": a["uwaga"] if ok else "fragment nie występuje dosłownie w brzmieniu artykułu"}
 
 
 def squash(s: str) -> str:
-    s = s.replace("\u00a0", " ").replace("\u201e", '"').replace("\u201d", '"').replace("\u201c", '"').replace("\u2013", "-").replace("\u2014", "-")
+    s = s.replace(" ", " ").replace("„", '"').replace("”", '"').replace("“", '"')
+    s = s.replace("\u2013", "-").replace("\u2014", "-")
     return re.sub(r"\s+", " ", s).strip().lower()
 
 
-def snippet(text: str, words: list[str], width: int = 220) -> str:
+def snippet(text: str, stems: list[str], width: int = 220) -> str:
     f = fold(text)
-    pos = min((f.find(w[:-2] if len(w) >= 6 else w) for w in words if (w[:-2] if len(w) >= 6 else w) in f), default=0)
+    pos = min((f.find(s) for s in stems if s in f), default=0)
     start = max(0, pos - width // 3)
     s = text[start:start + width].replace("\n", " ")
     return ("…" if start else "") + s + ("…" if start + width < len(text) else "")
@@ -329,17 +266,17 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("buduj")
     sub.add_parser("akty")
-    p = sub.add_parser("art"); p.add_argument("akt"); p.add_argument("nr"); p.add_argument("--komentarz", action="store_true"); p.add_argument("--na-dzien")
+    p = sub.add_parser("art"); p.add_argument("akt"); p.add_argument("nr"); p.add_argument("--komentarz", action="store_true")
     p = sub.add_parser("szukaj"); p.add_argument("q"); p.add_argument("--akt"); p.add_argument("--zakres", choices=["przepisy", "komentarze"]); p.add_argument("--limit", type=int, default=10)
-    p = sub.add_parser("cytat"); p.add_argument("akt"); p.add_argument("nr"); p.add_argument("fragment"); p.add_argument("--na-dzien")
+    p = sub.add_parser("cytat"); p.add_argument("akt"); p.add_argument("nr"); p.add_argument("fragment")
     a = ap.parse_args(argv)
     if a.cmd == "buduj":
         return build(a.law, a.db)
-    b = Baza(a.db, a.law)
+    b = Baza(a.db)
     res = {"akty": lambda: b.akty(),
-           "art": lambda: b.artykul(a.akt, a.nr, a.komentarz, a.na_dzien),
+           "art": lambda: b.artykul(a.akt, a.nr, a.komentarz),
            "szukaj": lambda: b.szukaj(a.q, a.akt, a.zakres, a.limit),
-           "cytat": lambda: b.cytat(a.akt, a.nr, a.fragment, a.na_dzien)}[a.cmd]()
+           "cytat": lambda: b.cytat(a.akt, a.nr, a.fragment)}[a.cmd]()
     print(json.dumps(res, ensure_ascii=False, indent=2))
     return 0
 

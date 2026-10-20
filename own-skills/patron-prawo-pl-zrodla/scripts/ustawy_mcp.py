@@ -4,8 +4,7 @@
     python ustawy_mcp.py                       # stdio
     python ustawy_mcp.py --http --port 8080    # Streamable HTTP pod /mcp (+ GET /healthz)
 
-Indeks: zmienna USTAWY_DB (plik SQLite z `ustawy.py buduj`), historia brzmień: USTAWY_LAW_DIR (repo git-as-law).
-Wymaga pakietu `mcp>=2,<3`.
+Indeks: zmienna USTAWY_DB (plik SQLite z `ustawy.py buduj`). Wymaga pakietu `mcp>=2,<3`.
 """
 from __future__ import annotations
 
@@ -20,13 +19,13 @@ from mcp.types import ToolAnnotations  # noqa: E402
 
 import ustawy  # noqa: E402
 
-INSTRUCTIONS = """Baza polskich ustaw: aktualny tekst jednolity kodeksów i Konstytucji (git-as-law, historia nowelizacji)
-oraz komentarz do każdego artykułu 32 ustaw. Kolejność: `ustawy_szukaj` (zagadnienie, gdy nie znasz artykułu) ->
-`ustawy_artykul` (pełne brzmienie, stan_na, ewentualnie komentarz lub brzmienie na dzień) -> `ustawy_cytat`
-(czy fragment, który chcesz zacytować, stoi w brzmieniu). Cytuj wyłącznie pole `tekst` ze statusem FOUND; zawsze
-podaj tekst jednolity i stan_na. `zrodlo=komentarz` oznacza brzmienie z opracowania: potwierdź w ELI
-(api.sejm.gov.pl) przed cytatem w piśmie. OUT_OF_SCOPE: aktu nie ma w korpusie, szukaj w ELI. Komentarz to
-opracowanie, nie źródło prawa."""
+INSTRUCTIONS = """Baza polskich ustaw: dosłowne brzmienie każdego artykułu według wskazanego tekstu jednolitego
+i komentarz do każdego artykułu (37 ustaw: kodeksy, Konstytucja, ustawy ustrojowe, medyczne, konsumenckie i inne).
+Kolejność: `ustawy_szukaj` (zagadnienie, gdy nie znasz artykułu) -> `ustawy_artykul` (pełne brzmienie, tekst_jednolity,
+eli, ewentualnie komentarz) -> `ustawy_cytat` (czy fragment, który chcesz zacytować, stoi w brzmieniu). Cytuj wyłącznie
+pole `tekst` ze statusem FOUND i podaj tekst jednolity. Nowelizacji późniejszych niż ten tekst jednolity baza nie zawiera:
+przed cytatem w piśmie sprawdź w ELI (api.sejm.gov.pl, pole `eli`). OUT_OF_SCOPE: aktu nie ma w bazie, szukaj w ELI.
+Komentarz to opracowanie, nie źródło prawa."""
 
 RO = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
 server = MCPServer("ustawy", instructions=INSTRUCTIONS)
@@ -36,13 +35,13 @@ _baza: ustawy.Baza | None = None
 def baza() -> ustawy.Baza:
     global _baza
     if _baza is None:
-        _baza = ustawy.Baza(os.environ.get("USTAWY_DB", ustawy.DEFAULT_DB), os.environ.get("USTAWY_LAW_DIR", ustawy.DEFAULT_LAW))
+        _baza = ustawy.Baza(os.environ.get("USTAWY_DB", ustawy.DEFAULT_DB))
     return _baza
 
 
 @server.tool(annotations=RO)
 def akty() -> list[dict]:
-    """Lista aktów w korpusie: identyfikator, skróty (kk, kpk, kpc...), tekst jednolity, stan_na, czy jest komentarz."""
+    """Lista aktów w bazie: identyfikator, skróty (kk, kpk, kpc, uopl...), tekst jednolity, ELI, liczba artykułów."""
     return baza().akty()
 
 
@@ -55,17 +54,17 @@ def szukaj(q: str, akt: str | None = None, zakres: str | None = None, limit: int
 
 
 @server.tool(annotations=RO)
-def artykul(akt: str, art: str, komentarz: bool = False, na_dzien: str | None = None) -> dict:
-    """Pełne brzmienie artykułu (np. akt='kpc', art='117^1' albo '117[1]'). na_dzien=RRRR-MM-DD zwraca brzmienie
-    obowiązujące tego dnia z historii nowelizacji; komentarz=True dołącza komentarz do artykułu."""
-    return baza().artykul(akt, art, komentarz, na_dzien)
+def artykul(akt: str, art: str, komentarz: bool = False) -> dict:
+    """Pełne brzmienie artykułu (np. akt='kpc', art='117^1' albo '117¹'), tekst jednolity i ELI aktu.
+    komentarz=True dołącza komentarz do artykułu."""
+    return baza().artykul(akt, art, komentarz)
 
 
 @server.tool(annotations=RO)
-def cytat(akt: str, art: str, fragment: str, na_dzien: str | None = None) -> dict:
+def cytat(akt: str, art: str, fragment: str) -> dict:
     """Czy fragment występuje dosłownie (bez różnic w odstępach i cudzysłowach) w brzmieniu artykułu.
     Wynik FOUND / NOT_FOUND / NOT_CHECKED."""
-    return baza().cytat(akt, art, fragment, na_dzien)
+    return baza().cytat(akt, art, fragment)
 
 
 def main() -> None:
