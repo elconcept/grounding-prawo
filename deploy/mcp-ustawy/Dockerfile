@@ -6,9 +6,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends git ca-certific
     && rm -rf /var/lib/apt/lists/* \
     && pip install --no-cache-dir "mcp>=2,<3" "uvicorn>=0.30" "starlette>=0.37"
 WORKDIR /app
-COPY .gitmodules /app/.gitmodules
-COPY own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py own-skills/patron-prawo-pl-zrodla/scripts/ustawy_mcp.py /app/
-COPY deploy/mcp-ustawy/clone_law.py /app/
+# Na Synology pliki repo maja ACL (w obrazie 770 root:root) - bez --chmod USER 1029 nie przeczyta skryptow.
+COPY --chmod=0644 .gitmodules /app/.gitmodules
+COPY --chmod=0644 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py own-skills/patron-prawo-pl-zrodla/scripts/ustawy_mcp.py /app/
+COPY --chmod=0644 deploy/mcp-ustawy/clone_law.py /app/
 # Zmiana LAW_REFRESH (np. data) wymusza ponowne pobranie aktów przy przebudowie.
 ARG LAW_REFRESH=0
 RUN echo "law refresh ${LAW_REFRESH}" \
