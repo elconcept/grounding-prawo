@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo upadłościowe — t.j. [Dz.U. 2026 poz. 913](https://api.sejm.gov.pl/eli/acts/DU/2026/913/text.pdf) (ELI DU/2026/913; akt bazowy DU/2003/535), s. 85–99 i 108–111
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prup/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2003/535 → DU/2026/913, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prup/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2003/535 → DU/2026/913, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** [DU/2026/1206](https://api.sejm.gov.pl/eli/acts/DU/2026/1206/text.pdf) art. 7 — **art. 452 ust. 1 i art. 456 ust. 1** w nowym brzmieniu **od 11.01.2027** (art. 57 nowelizacji); do tej daty stosuj brzmienie z t.j. → `references/insolvency/wersje-i-przepisy-przejsciowe.md`. Art. 440 ust. 2 pkt 1 w brzmieniu nadanym DU/2026/340 (od 31.03.2026) — ujęty w t.j.
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prup.py article 440 --verify-online`. Akty sektorowe (Prawo bankowe, ustawa o BFG, ustawa o listach zastawnych, ustawa o obligacjach, ustawa o działalności ubezpieczeniowej, rozp. 575/2013) odczytuj osobno z ELI/EUR-Lex — nie z pamięci. Upadłość konsumencka (art. 491¹–491²⁴) → `mod-PrUpad-konsument-workflow`.
 

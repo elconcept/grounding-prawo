@@ -4,7 +4,7 @@ Plik uzupełniony 09.10.2026 w repo abogada: `SKILL.md` (także w upstreamie IUR
 niego, ale pliku nigdy nie opublikowano. Treść napisana od nowa.
 
 **Źródło brzmień:** Kodeks postępowania karnego, t.j. Dz.U. 2026 poz. 490 (ELI `DU/2026/490`,
-najnowszy t.j. według ISAP 09.10.2026), odczyt z PDF t.j. Przed użyciem w piśmie sprawdź, czy nie ma
+najnowszy t.j. według ELI 09.10.2026), odczyt z PDF t.j. Przed użyciem w piśmie sprawdź, czy nie ma
 nowszego tekstu jednolitego (procedura w `SKILL.md`). Sygnatur orzeczeń tu nie ma - bierz je
 wyłącznie z SAOS przez `saos_cite_check`.
 

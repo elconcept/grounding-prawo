@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo restrukturyzacyjne — t.j. [Dz.U. 2026 poz. 533](https://api.sejm.gov.pl/eli/acts/DU/2026/533/text.pdf) (ELI DU/2026/533; akt bazowy DU/2015/978), s. 35–40
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2015/978 → DU/2026/533, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2015/978 → DU/2026/533, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** brak. Wprowadzenie do wyliczenia art. 140 ust. 1 w brzmieniu DU/2025/1085 — ujęte w t.j.
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prrestr.py article 141 --verify-online`. Akty UE, do których odsyła dział (rozp. KE 651/2014 — definicje MŚP i grupy; rozp. Rady 659/1999 — decyzje KE), oraz aktualne wytyczne KE odczytaj z EUR-Lex przed zastosowaniem; kurs EUR — średni kurs NBP z dnia złożenia planu (148), nie z pamięci.
 

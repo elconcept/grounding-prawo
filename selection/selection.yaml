@@ -75,7 +75,7 @@ keep:
   - {name: patron-analiza-akt-karnych, merge_into: analiza-sadowa-v6, typ: "sześciopunktowa analiza akt sprawy karnej: zarzut, dowody, wyroki, apelacja, kasacja, wznowienie", from: own, why: "analiza akt karnych"}
   - {name: patron-skan-dokumentu, merge_into: odczyt-dokumentow, typ: "skan dokumentu z niepewnego źródła: ukryte polecenia, znaki niewidoczne, homoglify, niebezpieczne elementy PDF", from: own, why: "deterministyczny skan przychodzących dokumentów pod kątem prompt injection"}
   - {name: patron-identyfikatory-pl, merge_into: citation-grounding-pl, typ: "sumy kontrolne PESEL/NIP/REGON, format KRS, ekstrakcja sygnatur, CELEX, ELI, stron i ról procesowych", from: own, why: "walidacja PESEL/NIP/KRS, ekstrakcja sygnatur"}
-  - {name: patron-prawo-pl-zrodla, from: own, why: "kolejność źródeł i konektorów MCP", description: "Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ISAP, cite), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło."}
+  - {name: patron-prawo-pl-zrodla, from: own, why: "kolejność źródeł i konektorów MCP", description: "Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ustawy, Repertorium), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło."}
   - {name: pozew-cywilny, from: own, fold_into: pisma-procesowe-v3, typ: "pozew w postępowaniu cywilnym", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
   - {name: odpowiedz-na-pozew, from: own, fold_into: pisma-procesowe-v3, typ: "odpowiedź na pozew", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
   - {name: apelacja-karna, from: own, fold_into: pisma-procesowe-v3, typ: "apelacja od wyroku w postępowaniu karnym", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
@@ -84,7 +84,7 @@ keep:
   - {name: zarzuty-do-opinii-bieglego, from: own, fold_into: pisma-procesowe-v3, typ: "zarzuty do opinii biegłego", why: "moduł typu pisma w pisma-procesowe-v3 (modules/typy/)"}
 drop:
   - {name: profil-postepowan-wlasnych, why: "scalony w shared/ZASADY-PLUGINU.md (sekcja profilu): prowadnik i tak wczytywał go zawsze, a jako plik shared obowiązuje także skille wywołane bez prowadnika", archive: true}
-  - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ISAP)", archive: true}
+  - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ELI)", archive: true}
   - {name: opendataloader-pdf, why: "scalony w odczyt-dokumentow (references/opendataloader-pdf.md)"}
   - {name: humanizer-pl, why: "scalony w pisz-po-polsku"}
   - {name: naturalne-pisanie, why: "scalony w pisz-po-polsku (vendor/naturalne-pisanie zostaje jako źródło)"}

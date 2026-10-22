@@ -11,7 +11,7 @@ Tryby:
       cytaty z bloku <CITATIONS> [{"ref","doc_id","page","quote"}] wg doc_id
   verify_citations.py ODPOWIEDZ.md --tabular --source umowa.pdf
       cytaty [[page:N||quote:...]] z przegladu tabelarycznego
-  verify_citations.py ODPOWIEDZ.md --quotes --source wynik_saos.txt --source wynik_isap.txt
+  verify_citations.py ODPOWIEDZ.md --quotes --source wynik_saos.txt --source wynik_ustawy.txt
       cytaty w blockquote (> ...) i cudzyslowach wzgledem wynikow narzedzi MCP
   verify_citations.py --quote "tekst cytatu" --source plik.txt
       pojedynczy cytat

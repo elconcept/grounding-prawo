@@ -11,7 +11,7 @@ Testy: `test_normalizacja.mjs` (offline, na prawdziwych odpowiedziach z `fixture
 ✅ **Zweryfikowane w tej sesji, realnym testem:**
 - Serwer poprawnie implementuje protokół MCP (stdio) — prawdziwy klient MCP
   (`@modelcontextprotocol/sdk` Client) połączył się, wykonał handshake,
-  zobaczył narzędzie `isap_lookup` przez `tools/list`, wywołał je przez
+  zobaczył narzędzie `repertorium_szukaj_repertorium` przez `tools/list`, wywołał je przez
   `tools/call` i poprawnie odebrał odpowiedź. Patrz `../test_protokol.mjs`.
 - Funkcja normalizująca odpowiedź (`normalizujOdpowiedzELI`) do schematu
   FOUND/NOT_FOUND/AMBIGUOUS/ERROR z `shared/SCHEMAT-ODPOWIEDZI-MCP.md —
@@ -51,7 +51,7 @@ cd shared/tools/mcp-servers/isap-eli-example
 npm install
 node test_normalizacja.mjs      # test bez sieci — powinien przejść zawsze
 node ../test_protokol.mjs      # test protokołu MCP — przejdzie, ale
-                                 # isap_lookup zwróci ERROR bez dostępu do
+                                 # repertorium_szukaj_repertorium zwróci ERROR bez dostępu do
                                  # api.sejm.gov.pl (tak jak w tym środowisku)
 ```
 
@@ -69,7 +69,7 @@ W `claude_desktop_config.json` (lub analogicznym pliku konfiguracyjnym MCP):
 }
 ```
 Po podłączeniu, `shared/MCP-INTEGRACJA.md` (KROK 1) wykryje narzędzie
-`isap_lookup` jako dostępny connector i router (od wersji 3.16, po naprawie
+`repertorium_szukaj_repertorium` jako dostępny connector i router (od wersji 3.16, po naprawie
 F-12 — patrz `orzeczenia-sadowe-v2` i `analizator-przepisow-v2`) użyje go
 przed `web_search`/`web_fetch`.
 

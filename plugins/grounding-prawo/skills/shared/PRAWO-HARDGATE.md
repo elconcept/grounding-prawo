@@ -55,7 +55,7 @@ Dotyczy KAŻDEJ dziedziny prawa: cywilnego, karnego, pracy, administracyjnego, p
 ## ⚙️ WARSTWA STRUKTURALNA (ŹRÓDŁO-0) — API zamiast wyszukiwarki
 
 > Dodano: 2026-07-05 (AUDYT-2026-07-05a). Wzorce: prawo-pl-eli (ELI Sejm),
-> legal-cite-pl / mcp-isap (strukturalny odczyt aktu po identyfikatorze),
+> legal-cite-pl / ustawy (MCP) (strukturalny odczyt aktu po identyfikatorze),
 > sententim (deterministyczna weryfikacja sygnatur), prawo-pl-saos (SAOS API).
 >
 > **Zasada:** web_search to wyszukiwarka ogólnego przeznaczenia — może trafić na
@@ -67,12 +67,12 @@ Dotyczy KAŻDEJ dziedziny prawa: cywilnego, karnego, pracy, administracyjnego, p
 
 ```
 POZIOM A — konektor MCP (gdy skonfigurowany w środowisku; mapa: shared/MCP-INTEGRACJA.md):
-  isap_lookup (eli | query)       (Lex Machina, lex-isap)     → akty Dz.U./M.P.: status + aktualny t.j.
+  repertorium_szukaj_repertorium (eli | query)       (Lex Machina, lex-isap)     → akty Dz.U./M.P.: status + aktualny t.j.
   sn_sprawdz_sygnature / cbosa_sprawdz_sygnature / kio_sprawdz_sygnature (Lex Machina) → sygnatury SN, NSA/WSA, KIO, interpretacje (sygnatura znana → baza urzędowa po repertorium)
   saos_search (Lex Machina)       → SP bieżąco; SN do 2016, TK do 2015, KIO do 2018 — zastępczo/discovery (orzeczenia-sadowe-v2 Faza 1-0)
   eurlex_lookup                   (Lex Machina, lex-eurlex)   → akty UE: status obowiązywania
-  get_act / verify_article        (mcp-isap, legal-cite-pl)  → akty Dz.U./M.P. (konektory obce)
-    ⚠️ mcp-isap zwraca metadane; treść tekstu jednolitego wyłącznie z `/text.pdf` (POZIOM B, ELI).
+  repertorium_szukaj_repertorium / verify_article        (ustawy (MCP), legal-cite-pl)  → akty Dz.U./M.P. (konektory obce)
+    ⚠️ ustawy (MCP) zwraca metadane; treść tekstu jednolitego wyłącznie z `/text.pdf` (POZIOM B, ELI).
   verify_signature / search_judgments (sententim)            → sygnatury (kontrakt FOUND/NOT_FOUND/AMBIGUOUS)
   narzędzia SAOS / KIO / EUR-Lex  (prawo-pl-saos, kio-orzeczenia-mcp, prawo-eu-eurlex)
 
@@ -302,7 +302,7 @@ KROK 2: Weryfikacja online — sekwencja ŹRÓDEŁ (zatrzymaj się na pierwszym 
        adresy przed połączeniem. Obowiązuje sekwencja DWUKROKOWA B-1 → B-2,
        patrz sekcja "OGRANICZENIE ŚRODOWISKA" wyżej. Gdy B-2 zwraca blokadę
        robots → sekcja "🟨 KOTWICA URZĘDOWA", NIE improwizacja statusu.
-    Konektor MCP (isap_lookup z `eli` — Lex Machina; albo get_act / verify_article / verify_signature) — gdy dostępny;
+    Konektor MCP (repertorium_szukaj_repertorium z `eli` — Lex Machina; albo repertorium_szukaj_repertorium / verify_article / verify_signature) — gdy dostępny;
     ⛔ `tekst_jednolity_nieaktualny` → powołuj `aktualny_tekst_jednolity`; brzmienie artykułu nadal z tekstu (MCP go nie zwraca),
     lub [B-1 web_search → B-2 web_fetch]: https://api.sejm.gov.pl/eli/acts/DU/{rok}/{poz}[/references|/text.html]
     lub [B-1 → B-2]: https://eli.gov.pl/eli/DU/{rok}/{poz} (RZĄD 1, patrz HIERARCHIA-ZRODEL)

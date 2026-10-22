@@ -24,8 +24,8 @@ wskaż zweryfikowaną drogę złożenia. Niepewność właściwości nie blokuje
 - Wytyczne: https://www.gov.pl/web/po-ostroleka/jak-zlozyc-zawiadomienie-o-przestepstwie (odczyt
   09.10.2026; na podstawie opracowania Biura Kryminalnego KGP „Jak złożyć zawiadomienie o przestępstwie?”).
 - Kodeks postępowania karnego: tekst jednolity **Dz.U. 2026 poz. 490** (ELI `DU/2026/490`, najnowszy
-  t.j. według ISAP, sprawdzone 09.10.2026); brzmienia odczytane z PDF t.j.
-  (MCP `isap` `get_act_text` dla DU/2026/490; bez `mutool` - PyMuPDF na `pdf_url z odpowiedzi MCP`).
+  t.j. według ELI, sprawdzone 09.10.2026); brzmienia odczytane z PDF t.j.
+  (MCP `ustawy` `ustawy_artykul` dla DU/2026/490; bez `mutool` - PyMuPDF na `pdf_url z odpowiedzi MCP`).
 - Kodeks karny: t.j. **Dz.U. 2025 poz. 383** (zob. `mapa-krzywd.md`).
 
 ## Wytyczne Policji / prokuratury - najważniejsze punkty

@@ -8618,14 +8618,14 @@ na poziomie klienta (Claude Desktop/Code), poza czatem.
 
 Napisano `shared/tools/mcp-servers/isap-eli-example/isap-eli-mcp-server.js`
 — serwer MCP (Node.js, `@modelcontextprotocol/sdk` 1.29.0, transport stdio)
-udostępniający narzędzie `isap_lookup` dla Sejm ELI API.
+udostępniający narzędzie `repertorium_szukaj_repertorium` dla Sejm ELI API.
 
 **Testy wykonane (realne, nie deklaratywne):**
 - `test_normalizacja.mjs`: 3/3 przypadki (FOUND/NOT_FOUND/AMBIGUOUS) PASS,
   bez sieci.
 - `test_protokol_mcp.mjs`: **prawdziwy klient MCP** (`Client` z tego samego
   SDK) połączył się z serwerem przez `StdioClientTransport`, wykonał pełny
-  handshake protokołu, `tools/list` poprawnie zwrócił `isap_lookup`,
+  handshake protokołu, `tools/list` poprawnie zwrócił `repertorium_szukaj_repertorium`,
   `tools/call` wykonał się i zwrócił ustrukturyzowaną odpowiedź `ERROR` (bo
   środowisko nie ma dostępu do `api.sejm.gov.pl` — lista dozwolonych domen
   sieciowych nie obejmuje `.gov.pl`), **bez awarii serwera**. To dowodzi, że
@@ -11117,7 +11117,7 @@ pozostaje aktualna, bez zmian.
 ## AUDYT-2026-07-05a — WZMOCNIENIE MECHANIZMÓW WERYFIKACJI — wdrożenie wzorców z narzędzi zewnętrznych (benchmark 7 repozytoriów)
 
 **Zakres:** Wdrożenie rekomendacji z porównania systemu z 7 zewnętrznymi
-narzędziami open-source (sententim, legal-cite-pl, mcp-isap, prawo-pl-eli /
+narzędziami open-source (sententim, legal-cite-pl, ustawy (MCP), prawo-pl-eli /
 -saos / -eurlex, kio-orzeczenia-mcp, awesome-matematic-skills-pl, praxis).
 Diagnoza wyjściowa: system ma dojrzałą orkiestrację i wiedzę merytoryczną,
 ale HARD GATE realizował weryfikację najsłabszym narzędziem (web_search
@@ -11128,7 +11128,7 @@ audytowego AI Act art. 12.
 ### 1. NAPRAWY / ROZBUDOWY
 
 **(a) PRAWO-HARDGATE v2.0 — WARSTWA STRUKTURALNA (ŹRÓDŁO-0).**
-Nowa hierarchia narzędzi weryfikacji: POZIOM A (konektory MCP: get_act /
+Nowa hierarchia narzędzi weryfikacji: POZIOM A (konektory MCP: repertorium_szukaj_repertorium /
 verify_article / verify_signature, gdy skonfigurowane) → POZIOM B (web_fetch
 bezpośrednio na strukturalne API: api.sejm.gov.pl/eli — metadane,
 /references (łańcuch t.j.), /text.html; saos.org.pl/api — sygnatury;
@@ -11136,7 +11136,7 @@ EUR-Lex/CELEX — prawo UE) → POZIOM C (dotychczasowe web_search/web_fetch
 jako fallback lub do USTALENIA identyfikatora). Reguła aktualności t.j.
 przełączona z heurystycznego web_search na deterministyczny endpoint
 ELI `/references`. Procedura orzeczeń dostała KROK 0 (SAOS API / MCP przed
-wyszukiwarką). Wzorce: prawo-pl-eli, legal-cite-pl, mcp-isap.
+wyszukiwarką). Wzorce: prawo-pl-eli, legal-cite-pl, ustawy (MCP).
 
 **(b) SYGNATURY.md v1.1 — KONTRAKT WYNIKU WERYFIKACJI.**
 Deterministyczny kontrakt FOUND / NOT_FOUND / AMBIGUOUS / OUT_OF_SCOPE
@@ -11199,11 +11199,11 @@ legal-ai-audit-bundle.
 
 ### 3. ŚWIADOMIE NIEWDROŻONE (otwarte flagi)
 
-1. **Konfiguracja konektorów MCP** (sententim, mcp-isap, prawo-pl-saos,
+1. **Konfiguracja konektorów MCP** (sententim, ustawy (MCP), prawo-pl-saos,
    kio-orzeczenia-mcp) — wymaga środowiska Claude Desktop/Code z dostępem
    do `mcpServers`; PRAWO-HARDGATE jest na to gotowy (POZIOM A), do czasu
    konfiguracji działa POZIOM B (web_fetch na API).
-   **AKTUALIZACJA 2026-07-05:** mcp-isap skonfigurowany w `.mcp.json`
+   **AKTUALIZACJA 2026-07-05:** ustawy (MCP) skonfigurowany w `.mcp.json`
    w korzeniu repozytorium (Claude Code wczytuje go automatycznie —
    POZIOM A aktywny w sesjach Claude Code). Claude Desktop nadal wymaga
    ręcznego wpisu w `claude_desktop_config.json`. Pozostałe konektory
@@ -43227,7 +43227,7 @@ pełna historia w `AUDIT-JOURNAL.md`, wpisy AUDYT-2026-07-07a i 07-07b.
 | # | Flaga | Skill / dziedzina | Priorytet | Otwarta od | Opis | Wymaga |
 |---|---|---|---|---|---|---|
 | F-5 | Ustawa ESAP (Dz.U. 2026 poz. 644) skatalogowana, bez modułu dedykowanego | dr-06-podatki-finanse-publiczne-aml | niski | 2026-07-07 (próba weryfikacji 2026-08-05: BEZ ROZSTRZYGNIĘCIA — wyszukiwanie znalazło głównie materiał o obowiązkach sprawozdawczych sektora finansowego wobec ESAP, BEZ jednoznacznego potwierdzenia konkretnego zakresu zmiany w samym KSH; NIE zgadywano odpowiedzi) | Omnibus ~17 ustaw sektora finansowego (rachunkowość, KRS, fundusze emerytalne, Prawo bankowe, KSH incydentalnie, oferta publiczna, obrót instrumentami finansowymi, ubezpieczenia, BFG, biegli rewidenci) — niska aktywność tematyczna w typowych sprawach systemu. UWAGA (2026-07-15): przy okazji naprawy F-6 nie udało się jednoznacznie potwierdzić źródłowo, na czym polega dotknięcie KSH przez tę ustawę — wymaga odrębnej weryfikacji, jeśli temat stanie się aktywny | Moduł dedykowany tylko jeśli sprawy z zakresu rynku kapitałowego/nadzoru finansowego staną się aktywne; przy tej okazji też zweryfikować konkretny zakres zmiany w KSH |
-| F-8 | Żaden realny connector MCP nie jest podłączony do rozmów silnika — protokół (shared/MCP-INTEGRACJA.md) i logika klasyfikacji przetestowane w pełni, w tym od 2026-07-13h realnym serwerem referencyjnym (isap-eli-example) zweryfikowanym prawdziwym klientem MCP przez stdio, ale bez podłączenia w środowisku produkcyjnym i bez testu wobec żywego api.sejm.gov.pl | shared/MCP-INTEGRACJA.md, shared/tools/mcp-servers/isap-eli-example | średni | 2026-07-13 (zaktualizowana 2026-07-13b, 2026-07-13f, 2026-07-13h) | `test_mcp_protocol.py` (6 testów), `connector_health_check.py --self-test` (mock-serwer) — PASS. Od 2026-07-13h: `isap-eli-example/test_protokol_mcp.mjs` — prawdziwy klient MCP (`@modelcontextprotocol/sdk`) połączył się z serwerem przez stdio, wykonał handshake, `tools/list`, `tools/call` — PASS, `isap_lookup` poprawnie zwrócił ERROR przy braku dostępu sieciowego do domen .gov.pl (środowisko audytowe nie ma tego dostępu). Pozostaje: (a) wdrożenie tego lub innego connectora w środowisku developera z dostępem do api.sejm.gov.pl, (b) weryfikacja realnego kształtu odpowiedzi JSON, (c) podłączenie w klencie MCP (Claude Desktop/Code) | Developer uruchamia `npm install && node test_protokol_mcp.mjs` w `shared/tools/mcp-servers/isap-eli-example/`, potwierdza kształt odpowiedzi API, podłącza serwer w konfiguracji klienta MCP |
+| F-8 | Żaden realny connector MCP nie jest podłączony do rozmów silnika — protokół (shared/MCP-INTEGRACJA.md) i logika klasyfikacji przetestowane w pełni, w tym od 2026-07-13h realnym serwerem referencyjnym (isap-eli-example) zweryfikowanym prawdziwym klientem MCP przez stdio, ale bez podłączenia w środowisku produkcyjnym i bez testu wobec żywego api.sejm.gov.pl | shared/MCP-INTEGRACJA.md, shared/tools/mcp-servers/isap-eli-example | średni | 2026-07-13 (zaktualizowana 2026-07-13b, 2026-07-13f, 2026-07-13h) | `test_mcp_protocol.py` (6 testów), `connector_health_check.py --self-test` (mock-serwer) — PASS. Od 2026-07-13h: `isap-eli-example/test_protokol_mcp.mjs` — prawdziwy klient MCP (`@modelcontextprotocol/sdk`) połączył się z serwerem przez stdio, wykonał handshake, `tools/list`, `tools/call` — PASS, `repertorium_szukaj_repertorium` poprawnie zwrócił ERROR przy braku dostępu sieciowego do domen .gov.pl (środowisko audytowe nie ma tego dostępu). Pozostaje: (a) wdrożenie tego lub innego connectora w środowisku developera z dostępem do api.sejm.gov.pl, (b) weryfikacja realnego kształtu odpowiedzi JSON, (c) podłączenie w klencie MCP (Claude Desktop/Code) | Developer uruchamia `npm install && node test_protokol_mcp.mjs` w `shared/tools/mcp-servers/isap-eli-example/`, potwierdza kształt odpowiedzi API, podłącza serwer w konfiguracji klienta MCP |
 | F-9 | audit-trail-portal-v1 to specyfikacja + referencyjne skrypty, konwencja znacznika AUDIT_EVENT nie wdrożona w żadnym prawdziwym prompcie portalu | audit-trail-portal-v1 | niski (odpowiedzialność poza silnikiem) | 2026-07-13 (zaktualizowana 2026-07-13b) | `hash_chain_verify.py`, `append_event.py` (self-test + test integracyjny append→verify na wspólnym pliku) i `router_event_parser.py` (self-test na 4 znacznikach, 2 poprawne/2 celowo błędne) przechodzą w całości. Pozostaje: (a) wdrożenie konwencji znacznika w system promptcie portalu, (b) podłączenie parsera do realnego przepływu odpowiedzi routera, (c) polityka retencji logu | Portal implementuje konwencję znacznika + podłącza pipeline zapisu wg DOKUMENTACJA-WDROZENIOWA-2026-07-13.md, sekcja 3 |
 | F-10 | sync_dzu_eli.py nie przetestowany wobec żywego Sejm ELI API | sync-dzu-automatyczny-v1 | średni | 2026-07-13 (zaktualizowana 2026-07-13b) | Logika parsowania mapy, budowy raportu ORAZ pełny przepływ end-to-end (pobierz→porównaj→raport) przetestowane przez `mock_eli_server_test.py` wobec lokalnego mock-serwera HTTP symulującego Sejm ELI — wszystko przechodzi poprawnie. Dodano też `bootstrap_last_sync_date.py` (idempotentna inicjalizacja stanu, przetestowana). Jedyny pozostały krok: zweryfikować, czy PRAWDZIWE api.sejm.gov.pl ma dokładnie taki kształt odpowiedzi (endpoint/pola JSON) jak założono — środowisko audytowe nie ma dostępu do domen .gov.pl | Developer uruchamia sync_dzu_eli.py wobec żywego API, koryguje `pobierz_nowe_pozycje_eli()` jeśli kształt się różni |
 | F-11 | extract_api_verification_log.py zakłada kształt bloków server_tool_use/*_tool_result wg dokumentacji, nie wobec realnej odpowiedzi API | shared/tools | średni | 2026-07-13d | Logika ekstrakcji przetestowana w pełni na danych syntetycznych (self-test + test end-to-end na fixture `konwersacja_api_przyklad.json` → poprawne 2/4 dopasowania na realnym przykładowym piśmie systemu). Format bloków content[] nie był nigdy skonfrontowany z prawdziwą odpowiedzią Claude API z tego środowiska (sandbox audytowy nie wywołuje API bezpośrednio w ten sposób) | Developer zapisuje jedną prawdziwą odpowiedź API z wywołaniami web_search/web_fetch i uruchamia `extract_api_verification_log.py` wobec niej jako pierwszy test integracyjny przed produkcją |
@@ -68578,13 +68578,13 @@ które audytor ma zweryfikować, zanim wejdą do rejestru.
 
 ### 2. F-8 — konektor ELI/ISAP ZMIERZONY REALNYM PROTOKOŁEM
 
-`@matematicsolutions/mcp-isap` 1.3.0 (MIT, npm, `matematicsolutions/mcp-isap`).
+`@matematicsolutions/ustawy (MCP)` 1.3.0 (MIT, npm, `matematicsolutions/ustawy (MCP)`).
 Uruchomiony przez `npx`, rozmowa po stdio, protokół MCP **2024-11-05**:
 
 ```
-initialize  → serverInfo {name: mcp-isap, version: 1.3.0}, capabilities.tools
-tools/list  → search_acts (bez wymaganych), get_act (eli), get_act_text (eli)
-tools/call  → search_acts(title="Kodeks karny skarbowy", limit=5)
+initialize  → serverInfo {name: ustawy (MCP), version: 1.3.0}, capabilities.tools
+tools/list  → ustawy_akty (bez wymaganych), repertorium_szukaj_repertorium (eli), ustawy_artykul (eli)
+tools/call  → ustawy_akty(title="Kodeks karny skarbowy", limit=5)
               → 33 akty znalezione, 5 zwróconych, z ELI, pozycją Dz.U., typem,
                 statusem i datami — dane zgodne z niezależnym odczytem api.sejm.gov.pl
 ```
@@ -68601,7 +68601,7 @@ host go czyta, i przebieg kontrolny w tamtym środowisku.
 ### 3. ⛔ WYKRYWANIE MCP NIE MOGŁO ZADZIAŁAĆ — naprawione w `shared` 3.87
 
 `shared/MCP-INTEGRACJA.md` KROK 1 kazał szukać narzędzi „jawnie nazwanych wg wzorca
-z `KONEKTORY-REKOMENDOWANE.md` (np. `isap_lookup`, `saos_search`, `cbosa_search`,
+z `KONEKTORY-REKOMENDOWANE.md` (np. `repertorium_szukaj_repertorium`, `saos_search`, `cbosa_search`,
 `krs_lookup`, `eurlex_lookup`)". Zmierzone:
 
 1. `grep` po `KONEKTORY-REKOMENDOWANE.md`: **żadnej z tych nazw tam nie ma** —
@@ -68610,7 +68610,7 @@ z `KONEKTORY-REKOMENDOWANE.md` (np. `isap_lookup`, `saos_search`, `cbosa_search`
 2. Narzędzia MCP nie nazywają się w ten sposób. Realna postać to
    `mcp__<serwer>__<narzędzie>` — bezpośrednio obserwowalna w tej sesji
    (`mcp__memory__memory_list`) i potwierdzona pomiarem serwera ISAP
-   (`search_acts`, nie `isap_lookup`).
+   (`ustawy_akty`, nie `repertorium_szukaj_repertorium`).
 
 **Skutek, gdyby tego nie wykryto:** użytkownik instaluje konektor, a tryb MCP-FIRST
 nigdy się nie włącza; system pracuje trwale w FALLBACK-HARDGATE i nie sygnalizuje
@@ -68629,7 +68629,7 @@ ELI/ISAP jako przykład rozpoznawczy, nie kontrakt.
 | `.mcp.json` w katalogu projektu / `claude mcp add` | projekt | ❌ |
 | `.mcp.json` w katalogu pluginu albo `mcpServers` w `plugin.json` | każdy instalujący | ✅ |
 
-⚠️ **Stan repozytorium:** `.mcp.json` z `mcp-isap` leży w **korzeniu repozytorium**.
+⚠️ **Stan repozytorium:** `.mcp.json` z `ustawy` (MCP) leży w **korzeniu repozytorium**.
 Sprawdzone: żaden z 32 pluginów nie ma własnego `.mcp.json` ani klucza `mcpServers`.
 Konektor działa więc dla sesji otwieranych w sklonowanym repo, ale **nie instaluje
 się razem z pluginami z marketplace**. To nie jest wada — to konsekwencja miejsca,
@@ -68662,7 +68662,7 @@ organizacji — API GitHuba jest w tym środowisku zawężone do skonfigurowanyc
 repozytoriów (`sessions are bound to their configured repositories`).
 
 Istotne dla praktyki polskiej: `prawo-pl-mcp` (agregat: sądy, legislacja, KRS,
-interpretacje), `kio-orzeczenia-mcp`, `@matematicsolutions/mcp-isap` (npm, MIT,
+interpretacje), `kio-orzeczenia-mcp`, `@matematicsolutions/ustawy (MCP)` (npm, MIT,
 zweryfikowany protokołem w AUDYT-2026-09-27g), `legalize-mcp` (32 jurysdykcje),
 `awesome-matematic-skills-pl` (41 skilli — do osobnego porównania merytorycznego,
 nie MCP), `patron`. Pozostałe ~25 to `<kraj>-eli-mcp` dla obcych jurysdykcji.
@@ -68689,7 +68689,7 @@ z automatycznego `npm ci`, a MIT wymagałby noty i atrybucji w `NOTICE` (F-199).
 
 | Plugin | Narzędzia | Rząd |
 |---|---|---|
-| `mcp-isap-eli` | `isap_lookup`, `isap_get_act`, `isap_get_text` | RZĄD 1 |
+| `ustawy (MCP)-eli` | `repertorium_szukaj_repertorium`, `isap_get_act`, `isap_get_text` | RZĄD 1 |
 | `mcp-saos` | `saos_search`, `saos_get_judgment` | RZĄD 2A |
 | `mcp-krs` | `krs_lookup` | RZĄD 1 |
 | `mcp-wl-vat` | `wl_check_nip`, `wl_check_rachunek` | RZĄD 1 |
@@ -68704,7 +68704,7 @@ na ŻYWYM API → `connect → listTools → callTool → close` + kontrola, że
 do zamkniętego zbioru schematu. 4/4 PASS.
 
 ⭐ Trzy rzeczy, których nie ma w konektorach z półki:
-1. `mcp-isap-eli` normalizuje status ELI na cztery wartości schematu, a
+1. `ustawy (MCP)-eli` normalizuje status ELI na cztery wartości schematu, a
    „akt posiada tekst jednolity" mapuje na **`tekst_jednolity_nieaktualny`** —
    konektor sam sygnalizuje powoływanie pozycji pierwotnej przy istniejącym t.j.
    (tryb awarii z F-155/O-12). Zmierzone brzmienia statusów ELI: „obowiązujący",
@@ -68721,7 +68721,7 @@ do zamkniętego zbioru schematu. 4/4 PASS.
    `nazwisko.nazwisko`, a zmierzony kształt to `nazwisko.nazwiskoICzlon` / `imiona.imie`.
    Przy okazji ustalone: **publiczne API KRS maskuje dane osobowe** („K*******") —
    dopisane do README, żeby nikt nie uznał tego za usterkę konektora.
-2. `mcp-isap-eli` przepuszczał surowy status ELI do pola schematu, czyli wypuszczał
+2. `ustawy (MCP)-eli` przepuszczał surowy status ELI do pola schematu, czyli wypuszczał
    `"akt posiada tekst jednolity"` tam, gdzie schemat dopuszcza cztery wartości.
    Naprawione funkcją normalizującą; surowe brzmienie trafia do `status_zrodlowy`.
 
@@ -68755,7 +68755,7 @@ w `shared` ma dalej istnieć jako zbiór przykładów obok pluginów produkcyjny
 ### 7. WYDANIE
 
 Poza pakietami skilli dostarczono **cztery osobne paczki konektorów**:
-`mcp-isap-eli.zip`, `mcp-saos.zip`, `mcp-krs.zip`, `mcp-wl-vat.zip` — każda 7 plików,
+`ustawy (MCP)-eli.zip`, `mcp-saos.zip`, `mcp-krs.zip`, `mcp-wl-vat.zip` — każda 7 plików,
 gotowa do rozpakowania w drzewie rozwojowym i dopisania do `marketplace.json`.
 `shared` 3.87 → **3.88**, `audyt-systemu-v4` 6.137 → **6.138**.
 
@@ -68841,7 +68841,7 @@ hash archiwum i pięciu plików zaktualizowane w manifeście i `tools/README.md`
 `audyt-systemu-v4` 6.138 → **6.139**.
 
 Dostarczone osobno: `mcp-uodo.zip`, `mcp-eurlex.zip`, `mcp-nbp.zip` (wcześniej tego
-dnia: `mcp-isap-eli`, `mcp-saos`, `mcp-krs`, `mcp-wl-vat`).
+dnia: `ustawy (MCP)-eli`, `mcp-saos`, `mcp-krs`, `mcp-wl-vat`).
 
 **Otwarte:** F-167 (ocena O-1), F-208, F-209, F-8 (hosting HTTPS), F-94 (decyzja
 o losie `tools/mcp-servers/`), F-158(b) (EUREKA), F-197, F-203(b). Wolny numer: **F-210**.
@@ -68891,7 +68891,7 @@ asercję pozytywną. Zastąpione prawdziwymi odpowiedziami API; test SAOS pada n
 ### 3. Korekta shared 3.89
 
 `KONEKTORY-REKOMENDOWANE.md`: tabela „stan wszystkich kanałów” wskazywała 7 „konektorów
-produkcyjnych” (`mcp-isap-eli` … `mcp-nbp`), których **nie ma w repo ani w
+produkcyjnych” (`ustawy (MCP)-eli` … `mcp-nbp`), których **nie ma w repo ani w
 `marketplace.json`** → zastąpiona pomiarem treści; F-211. Kolumna „pewność kształtu
 odpowiedzi” (SAOS „Wysoka”, NBP „Najwyższa” — oba zepsute) → wynik pomiaru.
 `DOSTEP-MASZYNOWY-API.md` § SAOS: NSA/WSA = 0; kształt pól trafienia; `pageSize=1` → 200.
@@ -68926,7 +68926,7 @@ w `WERSJA ROZWOJOWA/` (T34).
 
 **Nie wykonane w tej sesji:** F-208, F-209 (merytoryka: art. 483 KSH, tajemnica obrończa —
 wymaga ELI w turze), F-167 (ocena O-1). Root `.mcp.json` wskazuje obcy
-`@matematicsolutions/mcp-isap` — sprzeczne z doktryną „własne, nie fork” (AUDYT-2026-09-26);
+`@matematicsolutions/ustawy (MCP)` — sprzeczne z doktryną „własne, nie fork” (AUDYT-2026-09-26);
 pozostawione do decyzji użytkownika.
 
 **Otwarte:** F-210, F-211, F-197 (tylko potwierdzenie na `main`), F-208, F-209, F-167, F-8,
@@ -69155,7 +69155,7 @@ faktycznym zestawem 14 narzędzi, z regułami wykrywania (`MCP-INTEGRACJA.md`), 
 (`SCHEMAT-ODPOWIEDZI-MCP.md`, `SYGNATURY.md`, `PRAWO-HARDGATE*.md`) i z odpowiedziami serwerów na żywo.
 
 **Ustalenia (odpowiedź: przed 27o — NIE w pełni):**
-1. HARDGATE (wykonywany w każdej sprawie) wymieniał wyłącznie narzędzia obce: `get_act`,
+1. HARDGATE (wykonywany w każdej sprawie) wymieniał wyłącznie narzędzia obce: `repertorium_szukaj_repertorium`,
    `verify_article`, `mcp-nsa`, `cbosa_search`; `pisma-procesowe-v3` W3 — `verify_signature`. Żadnego z nich
    nie udostępniają serwery systemu. „Jeśli dostępny `mcp-nsa` → MCP-FIRST” nie trafi w
    `mcp__plugin_audyt-systemu-v4_lex-cbosa__cbosa_sprawdz_sygnature` (nazewnictwo pluginów Claude Code —
@@ -69163,14 +69163,14 @@ faktycznym zestawem 14 narzędzi, z regułami wykrywania (`MCP-INTEGRACJA.md`), 
 2. Rozjazd kontraktów: SCHEMAT (4 statusy, bez OUT_OF_SCOPE) vs SYGNATURY (z OUT_OF_SCOPE; NOT_FOUND w
    bazie pokrywającej = „prawdopodobnie zmyślona”). CBOSA przy 0 trafieniach zwracała `NOT_FOUND` +
    `zakres: OUT_OF_SCOPE` → skill czytający `status` mógł uznać prawdziwe orzeczenie NSA za zmyślone.
-3. `isap_lookup` (shared → audyt, nigdy nie poprawiony po 27h): status ELI przepuszczany poza schemat
+3. `repertorium_szukaj_repertorium` (shared → audyt, nigdy nie poprawiony po 27h): status ELI przepuszczany poza schemat
    (KC pierwotny „akt posiada tekst jednolity”); kandydaci bez tytułu/statusu; brak odczytu po ELI —
    ŹRÓDŁO-0 HARDGATE nie miało narzędzia MCP. Zmierzone 9 wartości statusu ELI (2009 pozycji);
    pułapka: t.j. z „wygaśnięcie aktu” = zastąpiony nowszym t.j., nie akt uchylony.
 
 **Naprawy:** shared 3.94 (SCHEMAT: 5. status; MCP-INTEGRACJA: mapa 14 narzędzi + nazewnictwo hosta;
 HARDGATE/HARDGATE-ORZECZENIA: narzędzia Lex Machina pierwsze, obce alternatywą); `pisma-procesowe-v3`
-5.32 (W3); serwery: `isap_lookup` (mapowanie 9 statusów, `eli`, aktualny t.j. przez `/references` →
+5.32 (W3); serwery: `repertorium_szukaj_repertorium` (mapowanie 9 statusów, `eli`, aktualny t.j. przez `/references` →
 „Inf. o tekście jednolitym” → pierwszy „obowiązujący”: KC → DU 2026 poz. 795, tytuł potwierdzony),
 SAOS/CBOSA — `OUT_OF_SCOPE` w `status`, pole `zakres` wycofane.
 
@@ -69182,7 +69182,7 @@ F-213); żadnego naruszenia schematu.
 **Nie zweryfikowane (granica tej sesji):** realny wybór narzędzia przez model w sprawie prowadzonej
 skillem — wymaga hosta z zainstalowanymi serwerami. Kontrola po instalacji: FAZA 0E pkt 3 + pytanie
 kontrolne „zweryfikuj sygnaturę III OSK 1959/22 i status Kodeksu cywilnego Dz.U. 1964 nr 16 poz. 93” —
-oczekiwane wywołania `cbosa_sprawdz_sygnature` i `isap_lookup` z `eli`.
+oczekiwane wywołania `cbosa_sprawdz_sygnature` i `repertorium_szukaj_repertorium` z `eli`.
 
 `shared` 3.93 → **3.94**; `audyt-systemu-v4` 6.144 → **6.145**; `pisma-procesowe-v3` 5.31 → **5.32**.
 
@@ -69218,7 +69218,7 @@ mapy 07-02…09-10 (cytowane przez bieżącą mapę, inne skille lub `test_f108_
 eurlex, krs, nbp, sudop, ceidg.
 
 **Konkurencja (60 repozytoriów, strona organizacji; API GitHub przekroczony limit):** 34 serwery
-legislacji obcych jurysdykcji; 10 serwerów związanych z prawem PL: mcp-isap, mcp-saos, mcp-krs, mcp-nsa,
+legislacji obcych jurysdykcji; 10 serwerów związanych z prawem PL: ustawy (MCP), mcp-saos, mcp-krs, mcp-nsa,
 mcp-eureka, mcp-eu-sparql (zmierzone 27k), kio-orzeczenia-mcp (oficjalna baza UZP, POC 0.1.0, 6 narzędzi,
 scraping — UZP przebudował wyszukiwarkę w lipcu 2026), prawo-pl-mcp (agregator: 5 narzędzi, uruchamia
 konektory przez `npx`/`uvx`; źródła: saos, nsa, isap, krs, eureka, kio, uodo, eu-sparql, eu-compliance,
@@ -69247,7 +69247,7 @@ bez kopiowania. Każda funkcja zmierzona na żywym API przed implementacją; fix
 NIEZAMASKOWANY PESEL innej osoby — u nas maska; mój `krs_lookup` znał tylko rejestr P → fundacje/stowarzyszenia
 = NOT_FOUND (WOŚP 0000030897: P 404, S 200) — naprawione; status „wykreslony” poza schematem → „uchylony”.
 
-**ISAP (`isap_tekst`):** `text.html` obwieszczenia t.j. PUSTY (0 B) — brzmienie obowiązujące tylko w PDF;
+**ISAP (`ustawy_artykul`):** `text.html` obwieszczenia t.j. PUSTY (0 B) — brzmienie obowiązujące tylko w PDF;
 konkurencja: dla t.j. link do PDF, tekst z `text.html` aktu bazowego (KC z 1964 r.). U nas: pdfjs-dist 4.10.38
 (Apache-2.0, noty w NOTICE), automatyczne przejście do aktualnego t.j., cały artykuł, pkt 2 obwieszczenia
 („t.j. nie obejmuje”), stan prawny, akty zmieniające ogłoszone po t.j. Zmierzone: art. 118 KC przez DU/1964/93 →
@@ -69515,7 +69515,7 @@ Alternatywa rozważona i niepotrzebna: scalenie 13 raportów `references/raporty
 
 **Test poprawności (nowy `test_poprawnosci.mjs`):** treść każdej odpowiedzi porównana z niezależnym odczytem: ISAP art. 118 KC == PDF DU/2026/795 przez `pdftotext` (ELI nie ma HTML dla t.j.) i t.j. najnowszy; KRS == surowy odpis; NBP (także sobota) == ostatnia tabela A; WL == surowe API; EUREKA precyzja 10/10 i treść dokumentu == źródło (20 próbek); SAOS fraza 10/10 na pełnych tekstach, sygnatura dokładna, cytator spójny; TSUE == SPARQL Cellar; UODO data i prawomocność == nagłówek dokumentu; CEIDG == lista surowego API. Wynik: 14/15 (CBOSA: 503 bramy — F-213). `test_na_zywo` 29/29 (bez CBOSA), testy offline 11/11, protokół OK, `instaluj_serwery_mcp.py --sprawdz` OK, `dist` zgodny bajtowo.
 
-**matematicsolutions (ta sama metodyka):** `mcp-eureka` 0.2.0 — ⛔ domyślnie tryb słów (tezy 2/10), ⛔ ucięta sygnatura zwraca dokument o innej pełnej sygnaturze bez post-checku, jedna próba 40 s; `mcp-saos` 1.2.0 — fraza poprawna (10/10), ⛔ `saos_cite_check` dla III CRN 126/80: „NADAL CYTOWANY, nie wykryto fraz przełamania” (fałszywie ujemny; co najmniej II CSK 18/14 odstępuje), cite-check bez wspólnego limitu: 40 s + ⌈maxScan/4⌉ × 40 s (domyślnie 120 s, maks. 240 s); `mcp-isap` 1.3.0 — ⛔ wartości `type` w schemacie podwójnie kodowane („RozporzÄ…dzenie”) → skopiowane ze schematu dają „Brak wyników” (34 akty istnieją); treści t.j. tylko-PDF nie zwraca (komunikuje to); `mcp-krs`, `mcp-eu-sparql` — zgodne ze źródłem; `mcp-nsa` — niezmierzony (503). Żaden pakiet nie ponawia żądań. Powiązane: F-212.
+**matematicsolutions (ta sama metodyka):** `mcp-eureka` 0.2.0 — ⛔ domyślnie tryb słów (tezy 2/10), ⛔ ucięta sygnatura zwraca dokument o innej pełnej sygnaturze bez post-checku, jedna próba 40 s; `mcp-saos` 1.2.0 — fraza poprawna (10/10), ⛔ `saos_cite_check` dla III CRN 126/80: „NADAL CYTOWANY, nie wykryto fraz przełamania” (fałszywie ujemny; co najmniej II CSK 18/14 odstępuje), cite-check bez wspólnego limitu: 40 s + ⌈maxScan/4⌉ × 40 s (domyślnie 120 s, maks. 240 s); `ustawy` (MCP) 1.3.0 — ⛔ wartości `type` w schemacie podwójnie kodowane („RozporzÄ…dzenie”) → skopiowane ze schematu dają „Brak wyników” (34 akty istnieją); treści t.j. tylko-PDF nie zwraca (komunikuje to); `mcp-krs`, `mcp-eu-sparql` — zgodne ze źródłem; `mcp-nsa` — niezmierzony (503). Żaden pakiet nie ponawia żądań. Powiązane: F-212.
 
 **ZASADA 7:** pełny skill `audyt-systemu-v4` (jeden ZIP), PRE-DELIVERY-COMPLETENESS-CHECK z liczbami przed/po. `shared` bez zmian w tej rundzie (archiwum `shared/tools/mcp-servers/mcp-servers-examples.zip` — patrz niżej).
 
@@ -69565,7 +69565,7 @@ Alternatywa rozważona i niepotrzebna: scalenie 13 raportów `references/raporty
 
 **Konektor KIO — pomiar na żywym portalu (piaskownica, 2026-10-02):** `POST /Home/GetResults` działa i `Sign` filtruje dokładnie (KIO 82/18 → 1; KIO 99999/18 → 0) — wniosek F-185 „Sign nie filtruje” dotyczył `GET /Home/Search`, który w ogóle nie niesie wyników. Wady znalezione i naprawione: (1) sprawy łączone mają sygnatury rozdzielone `|` (np. „KIO 2304/23|KIO 2306/23”) — podział po `,;` dawał fałszywe OUT_OF_SCOPE dla KIO 2306/23; (2) metryka wyroku sądu ma etykietę „Sygnatura akt / Sygnatura KIO / Sposób rozstrzygnięcia” — parser zwracał puste sygnatury, identyfikator „id 8893”; (3) KIO 4983/25 ma w metryce i w treści „7 grudnia 2026” (data z przyszłości) — narzędzie oddaje datę ze źródła z `ostrzezenie_daty`; (4) 2 × 40 s > 60 s klienta — budżet wspólny; (5) `przepisy_pzp`/`zagadnienia` rozdzielane także `;`. Dodane `kio_kontrola_sadowa`: wyszukiwanie frazą sygnatury KIO w SO/SA/SN i post-check po polu „Sygnatura KIO” metryki; KIO 44/12 → SO Rzeszów I Ca 117/12 „zmienia” (potwierdzone w treści wyroku). Podstawa: art. 579 ust. 1 i art. 580 ust. 1 Pzp (t.j. Dz.U. 2026 poz. 793, bez zmian po t.j.; brzmienie z ELI). Ograniczenie jawne: baza UZP nie jest kompletna — brak trafienia = OUT_OF_SCOPE, nie dowód prawomocności.
 
-**Rewizja ekspercka — model przyczynowo-skutkowy (MOD-GRAF-PRZYCZYNOWY 1.0.0 → 1.1.0).** Ocena wobec doktryny przyczynowości i metodologii dowodowej. Braki 1.0.0: (a) test csqn traktowany jako rozstrzygający — przy przyczynowości kumulatywnej/nadmiarowej (dwie przyczyny, każda wystarczająca) dawał „NIE” dla obu i silnik zerował obie krawędzie, czyli skutek „bez przyczyny”; dodano `csqn: NESS`; (b) zaniechanie liczone jak działanie — brak testu hipotetycznego (czy działanie zgodne z obowiązkiem zapobiegłoby skutkowi); (c) w prawie karnym tylko art. 2 KK — brak obiektywnego przypisania (stworzenie/zwiększenie ryzyka i jego realizacja w skutku) i reguły art. 5 § 2 KPK dla wątpliwości; (d) brak reguł ciężaru dowodu (art. 6 KC, art. 232 KPC) i domniemania faktycznego (art. 231 KPC) jako podstawy połączeń pośrednich; (e) brak modelu wykluczeniowego — połączenie z samej kolejności lub pośrednie przechodziło bez zbadania przyczyn alternatywnych; (f) brak kontroli niezależności dowodów w bramie LUB (ten sam dokument liczony jako dwa niezależne). Brzmienia: art. 5 KPK (t.j. Dz.U. 2026 poz. 490; 5 nowelizacji po t.j. sprawdzonych — art. 5 bez zmian), art. 6 KC (Dz.U. 2026 poz. 795), art. 231–232 KPC (Dz.U. 2026 poz. 468; 4 nowelizacje sprawdzone — bez zmian) — przez `isap_tekst`. Model liczbowy wsparcia bez zmian (parytet z widgetem utrzymany).
+**Rewizja ekspercka — model przyczynowo-skutkowy (MOD-GRAF-PRZYCZYNOWY 1.0.0 → 1.1.0).** Ocena wobec doktryny przyczynowości i metodologii dowodowej. Braki 1.0.0: (a) test csqn traktowany jako rozstrzygający — przy przyczynowości kumulatywnej/nadmiarowej (dwie przyczyny, każda wystarczająca) dawał „NIE” dla obu i silnik zerował obie krawędzie, czyli skutek „bez przyczyny”; dodano `csqn: NESS`; (b) zaniechanie liczone jak działanie — brak testu hipotetycznego (czy działanie zgodne z obowiązkiem zapobiegłoby skutkowi); (c) w prawie karnym tylko art. 2 KK — brak obiektywnego przypisania (stworzenie/zwiększenie ryzyka i jego realizacja w skutku) i reguły art. 5 § 2 KPK dla wątpliwości; (d) brak reguł ciężaru dowodu (art. 6 KC, art. 232 KPC) i domniemania faktycznego (art. 231 KPC) jako podstawy połączeń pośrednich; (e) brak modelu wykluczeniowego — połączenie z samej kolejności lub pośrednie przechodziło bez zbadania przyczyn alternatywnych; (f) brak kontroli niezależności dowodów w bramie LUB (ten sam dokument liczony jako dwa niezależne). Brzmienia: art. 5 KPK (t.j. Dz.U. 2026 poz. 490; 5 nowelizacji po t.j. sprawdzonych — art. 5 bez zmian), art. 6 KC (Dz.U. 2026 poz. 795), art. 231–232 KPC (Dz.U. 2026 poz. 468; 4 nowelizacje sprawdzone — bez zmian) — przez `ustawy_artykul`. Model liczbowy wsparcia bez zmian (parytet z widgetem utrzymany).
 
 **Rewizja ekspercka — model wykluczeniowy (MET-ACH).** Wzorzec: R. J. Heuer, „Psychology of Intelligence Analysis” (1999), rozdz. 8. Braki: tylko wersje stron jako hipotezy; ocena „POTWIERDZA/WYKLUCZA” myląca zgodność z rozstrzygnięciem; liczenie niespójności bez wagi dowodu; brak odrzucania dowodów niediagnostycznych; brak analizy wrażliwości (dowody krytyczne), kamieni milowych i nakładki procesowej. Przepisany wg 8 kroków; silnik `graf_przyczynowy.py --ach` (ważona niespójność, dowody niediagnostyczne i krytyczne, hipotezy wykluczone dowodem A/B, flagi art. 6 KC / art. 5 § 2 KPK). Powiązany z grafem (§5a): hipotezy o przyczynie = węzły alternatywne.
 
@@ -69986,7 +69986,7 @@ Liczby plików bez zmian. Podbicia: DR-03 3.50 → **3.51**, DR-09 3.42 → **3.
 - Audyt: MOD-INTERLINIE `find` bez ścieżki (cwd użytkownika) → obowiązkowy korzeń; zadanie cykliczne tylko na żądanie; dziennik czytany od najnowszego wpisu (FAZA 0, 7A, prompt zadania), reguła 7A zgodna z praktyką (nowy wpis przed dotychczas najnowszym); install_precommit_hook.sh, build_ramie_kontrolne.py, ocena_transkryptow_f113.py zabezpieczone (selftesty 12/12 i 8/8). Serwery MCP zostają w audycie (funkcja konfiguracyjna).
 - Orzecznictwo: kolejność odkrywania wg zmierzonego zasięgu SAOS (SN do 2016, TK do 2015, KIO do 2018, bez NSA/WSA): znana sygnatura → rejestr urzędowy; nowsze → web_search (bez danych sprawy) + wyszukiwarki urzędowe; ze źródła wtórnego tylko sygnatura. CBOSA bez zmian: snapshot 🟨 bez awansu, brak trafień = OUT_OF_SCOPE.
 - Router: opis bez przejmowania wzmianek prawnych w pracy nad kodem; PROFIL-LEKKI z kosztami zmierzonymi (rdzeń ≈103 kB ≈28 tys. tokenów; typowa sprawa ≈221 kB ≈55-60 tys.; STEP-TRACKER faktycznie bezwarunkowy).
-- Inne: /mnt/user-data → katalog hosta (10 miejsc); Cellar po https; mcp-isap: treść t.j. z text.pdf; .claude/ bez osobistych narzędzi autora (tools/claude-dev-config); WERSJA ROZWOJOWA/claude_desktop_config.json na lokalnych serwerach; README: wymagana wersja CLI.
+- Inne: /mnt/user-data → katalog hosta (10 miejsc); Cellar po https; ustawy (MCP): treść t.j. z text.pdf; .claude/ bez osobistych narzędzi autora (tools/claude-dev-config); WERSJA ROZWOJOWA/claude_desktop_config.json na lokalnych serwerach; README: wymagana wersja CLI.
 - Uwagi niepotwierdzone: „żaden skill produkcyjny nie zależy od audytu” (router wymaga audytu, serwery MCP są w audycie); błąd `dependencies` w marketplace.json (CLI 2.1.296 przechodzi walidację); 59 plików wykonywalnych (STB 26.09: 52).
 - Wersje: audyt-systemu-v4 6.218, shared 3.99.28, orzeczenia-sadowe-v2 2.28, prawny-router-v3 3.71, analizator-dowodow-v3 5.16.23, analiza-sadowa-v6 6.16, pisma-procesowe-v3 5.39, przewodnik-prawny-v2 2.11.
 
@@ -70606,7 +70606,7 @@ T2: 0 rozbieżności w 16 dziedzinach.
 ## AUDYT-2026-10-04k — ZGŁOSZENIE #83: polskie litery w Dz.U./M.P. 2000–2009 naprawione w obu ścieżkach, konwerter dla użytkownika, test T46 (6.170)
 
 ### 1. ŹRÓDŁO ZLECENIA
-Użytkownik przekazał zgłoszenie #83 (autor: PolskiAgentW, repozytorium `eli2md` / `dziennik-ustaw-2000-2011-md`; w treści zaznaczone, że przygotowane z użyciem AI): `isap_tekst` czyta z PDF polskie litery zapisane w kodach Mac Central European, opisane w PDF jako Mac Roman — „Za∏àcznik” zamiast „Załącznik”, „noÊników” zamiast „nośników”, przez co `szukaj` nie znajduje fraz. Dodatkowo polecenie: dołożyć konwerter dla użytkownika, żeby w podglądzie czcionka była prawidłowa.
+Użytkownik przekazał zgłoszenie #83 (autor: PolskiAgentW, repozytorium `eli2md` / `dziennik-ustaw-2000-2011-md`; w treści zaznaczone, że przygotowane z użyciem AI): `ustawy_artykul` czyta z PDF polskie litery zapisane w kodach Mac Central European, opisane w PDF jako Mac Roman — „Za∏àcznik” zamiast „Załącznik”, „noÊników” zamiast „nośników”, przez co `szukaj` nie znajduje fraz. Dodatkowo polecenie: dołożyć konwerter dla użytkownika, żeby w podglądzie czcionka była prawidłowa.
 
 ### 2. CO JEST W ZAKRESIE SKILLI (w odróżnieniu od F-230)
 Oba pliki wskazane w zgłoszeniu leżą w drzewie skilli, więc poprawka była wykonalna tutaj:
@@ -70884,8 +70884,8 @@ Liczby plików bez zmian (prawo-polskie-v2 8, audyt 189). Podbicia: prawo-polski
 - Ochrona przyrody 2026/1315: obwieszczenie z 4.09.2026 potwierdza objęcie zmian 426, 737 i 912 — ustalenie z 12b było trafne.
 - Wersje: audyt-systemu-v4 6.224, dr-03 3.64, dr-05 3.36, prawo-polskie-v2 6.61, shared 3.99.33.
 
-## AUDYT-2026-10-12d — isap_tekst: odczyt PDF t.j. jak RAG aplikacji (6.225)
-- Pomiar wyjściowy (wspólny benchmark z legal-cite-pl, 14 aktów, 6247 art.): `isap_tekst` 5092 zgodnych, 445 z błędną treścią, 532 brakujących — przypisy w treści, nagłówki z indeksem górnym i zakresy nierozpoznane, artykuły drukowane dwukrotnie sklejone.
+## AUDYT-2026-10-12d — ustawy_artykul: odczyt PDF t.j. jak RAG aplikacji (6.225)
+- Pomiar wyjściowy (wspólny benchmark z legal-cite-pl, 14 aktów, 6247 art.): `ustawy_artykul` 5092 zgodnych, 445 z błędną treścią, 532 brakujących — przypisy w treści, nagłówki z indeksem górnym i zakresy nierozpoznane, artykuły drukowane dwukrotnie sklejone.
 - Zmiana: `wspolne/akt-pdf.mjs` (generowany: `npm run build:akt-pdf` w app/lex-runtime) + `tekstZPdf`/`artykulObowiazujacy` w serwerze. Różnice pdf.js 4.10 vs 6.x (elementy „Art”+„.”, „1 )”, „(uchylony) 9)”, „Art. 10. 8)”) usunięte we wspólnym kodzie; serwer zostaje na pdfjs-dist 4.10 (Node ≥ 18).
 - Wynik: 6023 zgodne, 8 błędów (2 to literówki wzorca HTML), 36 braków (te same odmawia legal-cite; 34 to KP 238–241³⁰).
 - Wersje: audyt-systemu-v4 6.225, mcpb 1.3.5.

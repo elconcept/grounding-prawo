@@ -100,7 +100,7 @@ portalu `lex`. Mapa konektorów: skill `patron-prawo-pl-zrodla`.
   jednolity jako punkt kontrolny i jeden commit na nowelizację w dacie wejścia w życie; z nich pochodzi brzmienie
   kodeksów (`zrodlo: git-as-law`, `stan_na`, `ostatnia_zmiana`), komentarz z `vendor/law`;
 - pozostałe ustawy: brzmienie z tekstu jednolitego wskazanego w repo komentarza (`zrodlo: komentarz`,
-  `tekst_jednolity`, `eli`); nowelizacje po tym tekście jednolitym, a dla kodeksów po `stan_na`, sprawdza się w ISAP.
+  `tekst_jednolity`, `eli`); nowelizacje po tym tekście jednolitym, a dla kodeksów po `stan_na`, sprawdza się w urzędowym ELI (api.sejm.gov.pl).
 
 ```bash
 python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py buduj            # indeks ustawy.sqlite
@@ -112,8 +112,8 @@ python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py cytat kk 148 "Kto za
 Serwer MCP tej bazy (`ustawy_mcp.py`, narzędzia `akty`, `szukaj`, `artykul`, `cytat`) zastępuje konektor `cite`
 (wycofany); wdrożenie: `deploy/mcp-ustawy/` (obraz klonuje `vendor/law` płytko i `vendor/law-git` z historią commitów
 według `.gitmodules`), po przebudowie dodaj go do portalu `lex` jako `ustawy`. Orzeczenia SAOS i NSA ma obsługiwać
-jeden wrapper `elconcept/mcp-prawo-wrapper`. MCP `isap` nie zwraca treści PDF: przy `text_unavailable_use_pdf` podaje
-adresy plików, które model pobiera i czyta przez `pdftotext` (`shared/MOD-TEKST-JEDNOLITY.md`).
+jeden wrapper `elconcept/mcp-prawo-wrapper`. Gdy obowiązujący tekst jednolity jest tylko w PDF, model pobiera plik spod urzędowego ELI i czyta go przez
+`pdftotext` (`shared/MOD-TEKST-JEDNOLITY.md`).
 
 ## Utrzymanie
 

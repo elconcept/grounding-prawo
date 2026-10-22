@@ -33,9 +33,9 @@ kwalifikację, zachowując pełny opis i jawną lukę w analizie poza pismem.
 
 
 - Kodeks karny: tekst jednolity **Dz.U. 2025 poz. 383** (ELI `DU/2025/383`; najnowszy t.j. według
-  ISAP, sprawdzone 09.10.2026), brzmienia z bazy `mcp/cache/kodeks/kodeks_karny.md` (wersja od
-  21.07.2026). Ślad: MCP `isap` (`search_acts`, tytuł „Kodeks karny”).
-- Przepis spoza katalogu: najpierw MCP `isap` (`get_act_text` dla ELI t.j.; wyszukaj „Art. N.”)`
+  ELI, sprawdzone 09.10.2026), brzmienia z bazy `mcp/cache/kodeks/kodeks_karny.md` (wersja od
+  21.07.2026). Ślad: MCP `ustawy` (`ustawy_akty`, tytuł „Kodeks karny”).
+- Przepis spoza katalogu: najpierw MCP `ustawy` (`ustawy_artykul` dla ELI t.j.; wyszukaj „Art. N.”)`
   (PDF z adresu w odpowiedzi MCP pobierz `curl` i odczytaj przez `pdftotext -layout`, `shared/MOD-TEKST-JEDNOLITY.md`). Bez weryfikacji
   przepis nie trafia do pisma.
 - Wykroczenia (Kodeks wykroczeń): katalog jeszcze ich nie obejmuje - zob. TODO.
@@ -97,6 +97,6 @@ razem”: według uchwały 7 sędziów SN z 25.02.2016, I KZP 20/15, wymaga jedn
 brak jednej z nich nie wyklucza pożycia. Zob. `hardgate-spojnosc.md`, „Pozorne sprzeczności”.
 
 ## Poza dotychczasowym katalogiem — sprawdzaj zależnie od sprawy
-- Kodeks wykroczeń (t.j. do ustalenia w ISAP): szkoda w mieniu do progu wykroczenia, złośliwe niepokojenie, nieobyczajny wybryk.
+- Kodeks wykroczeń (t.j. do ustalenia w ELI): szkoda w mieniu do progu wykroczenia, złośliwe niepokojenie, nieobyczajny wybryk.
 - Ustawa o Policji / środki przymusu bezpośredniego - jako kontekst do art. 231 (nie do listy przepisów karnych).
 - Kategorie specyficzne dla spraw z repo (monitoring, psychiatria, toksykologia) z teczek `00_sprawy/`.

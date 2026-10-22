@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony)
 **Źródło:** Prawo upadłościowe — t.j. [Dz.U. 2026 poz. 913](https://api.sejm.gov.pl/eli/acts/DU/2026/913/text.pdf) (ELI DU/2026/913); odesłania do Prawa restrukturyzacyjnego — t.j. [Dz.U. 2026 poz. 533](https://api.sejm.gov.pl/eli/acts/DU/2026/533/text.pdf) (ELI DU/2026/533)
-**Weryfikacja:** snapshoty PDF 04.10.2026 (SHA-256 zgodne z `references/{prup,prrestr}/metadata.json`); oba t.j. „obowiązuje” wg ELI 08.10.2026 ✅ [VER: isap_lookup DU/2003/535 → DU/2026/913; DU/2015/978 → DU/2026/533, 2026-10-08]
+**Weryfikacja:** snapshoty PDF 04.10.2026 (SHA-256 zgodne z `references/{prup,prrestr}/metadata.json`); oba t.j. „obowiązuje” wg ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2003/535 → DU/2026/913; DU/2015/978 → DU/2026/533, 2026-10-08]
 **Zmiany po t.j.:** PrUp — brak w tym zakresie; PrRestr — DU/2026/1206 (art. 4 ust. 2 pkt 4, od 11.01.2027) i DU/2026/176 (art. 156 ust. 5 pkt 4, od 18.02.2027) — sprawdź, gdy układ stosuje te przepisy odpowiednio.
 **ZASADA:** przed powołaniem odczytaj przepisy: `python3 scripts/prup.py article NUMER --verify-online`, `python3 scripts/prrestr.py article NUMER`; reżim nowelizacji 2025/1085 — `references/insolvency/wersje-i-przepisy-przejsciowe.md`.
 

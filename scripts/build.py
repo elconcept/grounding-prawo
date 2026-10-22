@@ -392,6 +392,32 @@ def strip_bundle_rules():
     return n
 
 
+ISAP_TOOL_RULES = [  # ISAP wycofany (2026-10-22): nazwy narzędzi -> ustawy/Repertorium; oficjalne strony ELI zostają
+    (r"mcp__(?:mcp-)?isap__search_acts|isap_search_acts|\bsearch_acts\b", "ustawy_akty"),
+    (r"isap_lookup", "repertorium_szukaj_repertorium"),
+    (r"isap_tekst|\bget_act_text\b", "ustawy_artykul"),
+    (r"\bget_act\b", "repertorium_szukaj_repertorium"),
+    (r"`mcp-isap`", "`ustawy` (MCP)"),
+    (r"\bmcp-isap\b", "ustawy (MCP)"),
+]
+def retire_isap_tools():
+    """Podmiana nazw narzędzi ISAP we wszystkich promptach .md pluginu (idempotentna; po patchach).
+    Oficjalne strony ELI (isap.sejm.gov.pl, api.sejm.gov.pl) zostają - to źródła publikacji, nie konektor."""
+    for root, dirs, files in os.walk(SKILLS):
+        for name in files:
+            if not name.endswith(".md"):
+                continue
+            p = os.path.join(root, name)
+            with open(p, encoding="utf-8") as fh:
+                text = fh.read()
+            new = text
+            for pat, rep in ISAP_TOOL_RULES:
+                new = re.sub(pat, rep, new)
+            if new != text:
+                with open(p, "w", encoding="utf-8") as fh:
+                    fh.write(new)
+
+
 def remove_patch_leftovers():
     for root, _, fs in os.walk(SKILLS):
         for f in fs:
@@ -506,7 +532,7 @@ def add_session_protocol():
             "(`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i "
             "wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). "
             "Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, "
-            "po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.\n")
+            "po którym szukasz dalej w `ustawy`, `saos`, `nsa`, `uodo`, `eu-sparql`.\n")
         if name == "prawny-router-v3":
             directive += "\nNajpierw wybierz cel według `shared/SCIEZKI-PRACY.md`; to jedyny punkt wejścia pluginu.\n"
         open(path, "w", encoding="utf-8").write(text[:fm.end()] + directive + text[fm.end():])
@@ -607,6 +633,7 @@ def main():
             print("patch", p)
 
     remove_patch_leftovers()
+    retire_isap_tools()
     fold(sel)
     print("scalone moduły: pliki z poprawionymi odwołaniami:", merge(sel))
     print("usunięte bloki reguł pakietów:", strip_bundle_rules())

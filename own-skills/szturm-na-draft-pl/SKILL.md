@@ -176,7 +176,7 @@ Uruchamiaj wszystkie soczewki wg [references/soczewki.md](references/soczewki.md
 do `RUN/ustalenia/<NN>_<soczewka>.json` - nie osobny raport.
 
 - **E1 zawsze i najpierw.** Deterministyczne: cytaty z akt dosłownie, sygnatura i data **z treści
-  orzeczenia** (metadane SAOS bywają błędne), przepis z obowiązującego t.j. (MCP `isap` (tekst jednolity)).
+  orzeczenia** (metadane SAOS bywają błędne), przepis z obowiązującego t.j. (MCP `ustawy` (tekst jednolity)).
   Konektor offline → wynik oznaczony jako niezweryfikowany; → ustalenie `DOWOD` „NIEPEWNE - źródło
   niedostępne”, nigdy „OK”.
 - **E3 niezależnie.** Soczewki IZOLOWANE (sędzia, przeciwnik) dostają sam draft i tezę - bez akt,

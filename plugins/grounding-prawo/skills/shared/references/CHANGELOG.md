@@ -12,7 +12,7 @@
 
 - 3.99.29 (2026-10-10c, AUDYT-2026-10-10c): DOSTEP-MASZYNOWY-API §sn.pl: konektor SN otwiera przeglądarkę użytkownika (Edge/Chrome), weryfikację przechodzi człowiek, bez podmiany User-Agenta.
 
-- 3.99.28 (2026-10-10b, AUDYT-2026-10-10b): Kolejność odkrywania orzeczeń wg zmierzonego zasięgu SAOS (SN do 2016, TK do 2015, KIO do 2018): znana sygnatura → rejestr urzędowy; nowsze → web_search (zapytanie bez danych sprawy) + wyszukiwarki urzędowe; DOSTEP-MASZYNOWY-API bez obchodzenia WAF/robots.txt (sn.pl: sesja użytkownika); Cellar po https; mcp-isap: treść t.j. tylko z text.pdf; ścieżki /mnt/user-data neutralne względem hosta; check_widget_no_ai_egress.py.
+- 3.99.28 (2026-10-10b, AUDYT-2026-10-10b): Kolejność odkrywania orzeczeń wg zmierzonego zasięgu SAOS (SN do 2016, TK do 2015, KIO do 2018): znana sygnatura → rejestr urzędowy; nowsze → web_search (zapytanie bez danych sprawy) + wyszukiwarki urzędowe; DOSTEP-MASZYNOWY-API bez obchodzenia WAF/robots.txt (sn.pl: sesja użytkownika); Cellar po https; ustawy (MCP): treść t.j. tylko z text.pdf; ścieżki /mnt/user-data neutralne względem hosta; check_widget_no_ai_egress.py.
 
 - 3.99.27 (2026-10-09g, AUDYT-2026-10-09g): ORKA-BAS-VIII: ustawa zmieniająca upol 2024/1757 jest z 19.11.2024 (było „z 12.07.2024”). ELI 2026-10-09.
 
@@ -70,12 +70,12 @@
 
 - 3.96 (2026-09-27r, AUDYT-2026-09-27r): MCP-INTEGRACJA: narzędzia UODO; KONEKTORY: UODO w tabelach kanałów i porównania.
 
-- 3.95 (2026-09-27q, AUDYT-2026-09-27q): MCP-INTEGRACJA: mapa +4 narzędzia (isap_tekst, eurlex_tsue, krs_reprezentacja, saos_cytator); KONEKTORY: porównanie — luki zamknięte.
+- 3.95 (2026-09-27q, AUDYT-2026-09-27q): MCP-INTEGRACJA: mapa +4 narzędzia (ustawy_artykul, eurlex_tsue, krs_reprezentacja, saos_cytator); KONEKTORY: porównanie — luki zamknięte.
 
 ## 3.94 — 2026-09-27o — AUDYT-2026-09-27o: czy skille wywołają serwery MCP po instalacji
 
 - `PRAWO-HARDGATE.md` POZIOM A / ŹRÓDŁO-0 i `PRAWO-HARDGATE-ORZECZENIA.md` KROK 0/0A wymieniały
-  WYŁĄCZNIE narzędzia obce (`get_act`, `verify_article`, `mcp-nsa`, `cbosa_search`) — żadnego z nich nie
+  WYŁĄCZNIE narzędzia obce (`repertorium_szukaj_repertorium`, `verify_article`, `mcp-nsa`, `cbosa_search`) — żadnego z nich nie
   ma w `audyt-systemu-v4/mcp-servers/`. Reguła „jeśli dostępny `mcp-nsa` → MCP-FIRST” nie trafiłaby
   nigdy w `mcp__plugin_audyt-systemu-v4_lex-cbosa__cbosa_sprawdz_sygnature`. Teraz: narzędzia Lex Machina
   jako pierwszy wybór, obce jako alternatywa.
@@ -143,7 +143,7 @@ ale suita nie jest uruchamiana na `main` (F-197). Oba pola zsynchronizowane.
   Test mutacyjny: nowy test SAOS pada na kodzie 1.0.0.
 
 `KONEKTORY-REKOMENDOWANE.md`: tabela „stan wszystkich kanałów” (3.89) wskazywała 7 „konektorów
-produkcyjnych” (`mcp-isap-eli` … `mcp-nbp`), których nie ma w repozytorium ani w
+produkcyjnych” (`ustawy (MCP)-eli` … `mcp-nbp`), których nie ma w repozytorium ani w
 `marketplace.json` (F-211) — zastąpiona pomiarem treści; kolumna „pewność kształtu” zastąpiona
 wynikiem pomiaru. `DOSTEP-MASZYNOWY-API.md` § SAOS: NSA/WSA = 0, kształt pól trafienia.
 Archiwum `mcp-servers-examples.zip`: 42 → 50 plików, hashe w `PORTABILITY-MANIFEST.md`.
@@ -188,10 +188,10 @@ co wygląda jak awaria API. Ten sam serwer, to samo zapytanie: bez `env` → ERR
 z `env` → AMBIGUOUS/33. Reguła dopisana do `KONEKTORY-REKOMENDOWANE.md`.
 
 ⚠️ **Korekta wydania 3.87.** Tamten wpis twierdził, że „narzędzia MCP nie nazywają
-się w ten sposób" (o `isap_lookup` i pokrewnych). Twierdzenie było **za szerokie
-i niezmierzone wobec własnych serwerów** — `isap_lookup` to faktyczna nazwa
+się w ten sposób" (o `repertorium_szukaj_repertorium` i pokrewnych). Twierdzenie było **za szerokie
+i niezmierzone wobec własnych serwerów** — `repertorium_szukaj_repertorium` to faktyczna nazwa
 z `registerTool()` w `isap-eli-example`. Prawdziwa przyczyna awarii wykrywania jest
-inna: w hoście narzędzie widać jako `mcp__<serwer>__isap_lookup`, więc szukanie
+inna: w hoście narzędzie widać jako `mcp__<serwer>__repertorium_szukaj_repertorium`, więc szukanie
 samej nazwy własnej nie trafi. `MCP-INTEGRACJA.md` poprawione na (a) wiszące
 odesłanie, (b) nazwa istnieje, (c) brak prefiksu jako faktyczna przyczyna.
 
@@ -203,7 +203,7 @@ tam konieczny transport zdalny HTTPS; oba oznaczone ⚠️ [dokumentacja, nie po
 ## 3.87 — 2026-09-27g — AUDYT-2026-09-27g: wykrywanie MCP naprawione (nie mogło działać)
 
 ⛔ `MCP-INTEGRACJA.md` KROK 1 kazał szukać narzędzi „nazwanych wg wzorca
-z `KONEKTORY-REKOMENDOWANE.md` (np. `isap_lookup`, `saos_search`, `cbosa_search`,
+z `KONEKTORY-REKOMENDOWANE.md` (np. `repertorium_szukaj_repertorium`, `saos_search`, `cbosa_search`,
 `krs_lookup`, `eurlex_lookup`)". Zmierzone: (a) tych nazw nigdy nie było
 w `KONEKTORY-REKOMENDOWANE.md` — odesłanie prowadziło do nieistniejącej konwencji;
 (b) narzędzia MCP nie nazywają się w ten sposób. Tryb MCP-FIRST nie włączyłby się
@@ -212,8 +212,8 @@ w FALLBACK-HARDGATE, nie sygnalizując tego.
 
 **Naprawa:** wykrywanie po KSZTAŁCIE nazwy (`mcp__<serwer>__<narzędzie>`) i po
 ZDOLNOŚCI narzędzia, z jawnym zakazem zgadywania nazw własnych. Dodana tabela
-zmierzonego serwera ELI/ISAP (`@matematicsolutions/mcp-isap` 1.3.0: `search_acts`,
-`get_act`, `get_act_text`; protokół 2024-11-05 zweryfikowany `initialize` +
+zmierzonego serwera ELI/ISAP (`@matematicsolutions/ustawy (MCP)` 1.3.0: `ustawy_akty`,
+`repertorium_szukaj_repertorium`, `ustawy_artykul`; protokół 2024-11-05 zweryfikowany `initialize` +
 `tools/list` + `tools/call`).
 
 `KONEKTORY-REKOMENDOWANE.md`: nowa sekcja „gdzie się konfiguruje serwer MCP" —
@@ -785,7 +785,7 @@ takiego (nie punktowo do jednego modułu) — dotyczy KAŻDEGO cytatu z
 orzeczenia, przepisu LUB dowolnej innej strony internetowej.
 Poprzednia wersja 2.0 (2026-07-05) — WARSTWA STRUKTURALNA (ŹRÓDŁO-0):
 deterministyczne API (ELI Sejm / SAOS / CELLAR) i konektory MCP przed web_search.
-Wzorce: prawo-pl-eli, legal-cite-pl, mcp-isap, sententim (AUDYT-2026-07-05a).
+Wzorce: prawo-pl-eli, legal-cite-pl, ustawy (MCP), sententim (AUDYT-2026-07-05a).
 
 ---
 

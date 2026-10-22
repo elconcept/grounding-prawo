@@ -24,7 +24,7 @@ Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `sh
 
 ## Repertorium - pierwsze źródło w każdym zadaniu prawnym
 
-Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `ustawy`, `saos`, `nsa`, `uodo`, `eu-sparql`.
 
 # Szturm na draft
 
@@ -184,7 +184,7 @@ Uruchamiaj wszystkie soczewki wg [references/soczewki.md](references/soczewki.md
 do `RUN/ustalenia/<NN>_<soczewka>.json` - nie osobny raport.
 
 - **E1 zawsze i najpierw.** Deterministyczne: cytaty z akt dosłownie, sygnatura i data **z treści
-  orzeczenia** (metadane SAOS bywają błędne), przepis z obowiązującego t.j. (MCP `isap` (tekst jednolity)).
+  orzeczenia** (metadane SAOS bywają błędne), przepis z obowiązującego t.j. (MCP `ustawy` (tekst jednolity)).
   Konektor offline → wynik oznaczony jako niezweryfikowany; → ustalenie `DOWOD` „NIEPEWNE - źródło
   niedostępne”, nigdy „OK”.
 - **E3 niezależnie.** Soczewki IZOLOWANE (sędzia, przeciwnik) dostają sam draft i tezę - bez akt,

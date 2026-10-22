@@ -4,7 +4,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo upadłościowe — t.j. [Dz.U. 2026 poz. 913](https://api.sejm.gov.pl/eli/acts/DU/2026/913/text.pdf) (ELI DU/2026/913; akt bazowy DU/2003/535), s. 99–108
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prup/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2003/535 → DU/2026/913, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prup/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2003/535 → DU/2026/913, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** brak.
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prup.py article 491^15 --verify-online`. Wskaźniki GUS (491⁹, 491¹¹ᵃ, 491¹⁶ ust. 2e, 491¹⁸ ust. 3) ustalaj z publikacji Prezesa GUS za właściwy kwartał — nie z pamięci. Układ konsumencki na zgromadzeniu wierzycieli (art. 491²⁵–491³⁸, tytuł VI) → `mod-PrUpad-postepowania-odrebne-426-491-38`.
 

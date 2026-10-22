@@ -8,7 +8,7 @@
 >   - `shared/MOD-LANCUCH-DOWODOWY.md` (rachunek łańcucha szeregowego i dowodów równoległych)
 > **Silnik:** `shared/tools/graf_przyczynowy.py` (raport MD / JSON / Mermaid, `--selftest`); ten sam model liczbowy
 > w widgecie (blok ENGINE) — parytet pilnuje T42 w `audyt-systemu-v4`.
-> ⛔ HARD GATE: przepisy przez ELI (MCP `isap_tekst`), orzecznictwo przez MCP `saos_search` / `cbosa_szukaj` — nigdy z pamięci.
+> ⛔ HARD GATE: przepisy przez ELI (MCP `ustawy_artykul`), orzecznictwo przez MCP `saos_search` / `cbosa_szukaj` — nigdy z pamięci.
 
 ---
 

@@ -1,5 +1,5 @@
 # mcp-ustawy - baza ustaw z komentarzem (Streamable HTTP /mcp, port 8080, bezstanowy). Stack Portainera "mcp-ustawy".
-# Zastępuje mcp-cite i mcp-isap. Port na hoście 8412 (LAN: http://10.0.10.201:8412/mcp). Z internetu: tunel
+# Zastępuje mcp-cite. Port na hoście 8412 (LAN: http://10.0.10.201:8412/mcp). Z internetu: tunel
 # cloudflared (sieć cf_mcp_ustawy) i portal lex jako serwer "ustawy".
 # Kontekst budowania: katalog repo grounding-prawo na NAS. Przebudowa pobiera świeże brzmienia ustaw.
 services:

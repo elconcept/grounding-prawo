@@ -1,7 +1,7 @@
 default_dr:
   etap: A
   wejscie: '`prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`'
-  wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci)
+  wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ELI, nie z pamięci)
   dalej:
   - analizator-przepisow-v2
   - orzeczenia-sadowe-v2
@@ -83,7 +83,7 @@ skills:
   analizator-przepisow-v2:
     etap: A
     wejscie: wskazany moduł DR albo przepis z dokumentu
-    wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ISAP)
+    wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ELI)
     dalej:
     - orzeczenia-sadowe-v2
     - szturm-na-draft-pl

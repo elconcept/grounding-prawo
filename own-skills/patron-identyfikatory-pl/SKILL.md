@@ -22,8 +22,8 @@ python3 scripts/pl_entities.py extract umowa.txt --all     # także numery z bł
   w KRS: `mcp__krs__get_entity` albo `mcp__krs__get_board` (numer z typu `KRS`).
 - **Powołane orzeczenia:** podtyp `SYGNATURA` wskazuje bazę: `SN`, `SAD_POWSZECHNY`, `TK`, `KIO` →
   `mcp__saos__search_by_case`; `NSA`, `WSA` → `mcp__nsa__search_by_case`.
-- **Akty:** `DZ_U` (Dz.U. 2018 poz. 1000), `ELI`, `CELEX` (np. 32016R0679) → `mcp__isap__get_act`,
-  `mcp__eu-sparql__search_by_celex`.
+- **Akty:** `DZ_U` (Dz.U. 2018 poz. 1000), `ELI`, `CELEX` (np. 32016R0679) →
+  `repertorium_szukaj_repertorium` (ELI, tekst jednolity), `mcp__eu-sparql__search_by_celex`.
 
 ## Algorytmy
 
