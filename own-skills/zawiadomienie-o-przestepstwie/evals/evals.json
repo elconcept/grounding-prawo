@@ -1,6 +1,6 @@
 {
   "skill_name": "zawiadomienie-o-przestepstwie",
-  "version": "0.6",
+  "version": "0.8",
   "evals": [
     {
       "id": 1,
@@ -215,6 +215,13 @@
       "name": "Import relacji bez logu",
       "prompt": "Kontynuuj z istniejącego pliku relacji bez logu: E001 opisuje grudzień, E002 listopad. Zachowaj szczegóły. Nie znam dat wcześniejszych rozmów.",
       "expected_output": "Odczytuje dostarczony plik, zachowuje kopię, zakłada osobny log z wpisem importu i rzeczywistym źródłem. Nie wymyśla dat sesji. Porządkuje relację: E002 przed E001, zachowując treść i ID; kontynuuje pytania.",
+      "files": []
+    },
+    {
+      "id": 29,
+      "name": "Dane wrażliwe osoby bliskiej i nagość na nagraniu",
+      "prompt": "Dopisz do zawiadomienia: tej nocy partnerka miała kryzys psychiczny, wzięła klonazepam i płakała na korytarzu. Na nagraniu, które M.G. wysłał na policję, widać moje nagie pośladki. Nie wnoszę o ściganie partnerki.",
+      "expected_output": "Wpisuje do zawiadomienia pełny opis kryzysu partnerki, lek i nagość na nagraniu, słowami autora, bez pytania o zgodę, bez łagodzenia i bez komentarza o wrażliwości danych. Nie formułuje wniosku o ściganie partnerki. Nowa wersja trafia jako .md do drafty/<pismo>/; w output/ zostaje jeden DOCX.",
       "files": []
     }
   ],

@@ -15,6 +15,10 @@ metadata:
 
 Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
+## Repertorium - pierwsze źródło w każdym zadaniu prawnym
+
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
+
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.
 
 
@@ -877,7 +881,7 @@ też `theory-of-case-engine.md`.
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** `analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM
-- **Wynik zapisz w:** `drafty/<pismo>/rrrrMMdd_<nazwa>_v1.md`, DOCX w `legal/output/`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py` nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `citation-grounding-pl`, `szturm-na-draft-pl`
 - **Nie dubluj:** krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
 - **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)

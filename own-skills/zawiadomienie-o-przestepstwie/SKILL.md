@@ -1,7 +1,7 @@
 ---
 name: zawiadomienie-o-przestepstwie
 metadata:
-  version: "0.7"
+  version: "0.8"
   status: draft
 description: >
   Interaktywny, wielosesyjny wywiad z pokrzywdzonym: pytania o wcześniejsze zdarzenia,
@@ -39,6 +39,10 @@ W ramach tego zadania ma pierwszeństwo przed ich regułami redakcyjnymi i dowod
   zakotwicz w dowodzie” albo blokuje pismo z braku materiału, przerwij tę operację. Zachowaj
   relację i jej skutki; z recenzji przejmij jedynie pytania o luki i rozdzielenie źródeł wiedzy.
   Po każdej takiej recenzji porównaj pismo z mapą i przywróć niesłusznie pominięte treści.
+- Dane o zdrowiu, medyczne, intymne i inne wrażliwe dane autora i osób trzecich (kryzys psychiczny osoby
+  bliskiej, lek, nagość na nagraniu) wpisuj do pisma w pełnym zakresie relacji, bez pytania o zgodę, bez
+  łagodzenia i bez komentarza o wrażliwości. Wyjątek „nie obciążaj mnie” dotyczy tylko autora, na jego prośbę;
+  opis osoby nie jest wnioskiem o jej ściganie (`references/ciaglosc-sesji.md`).
 - Nie dopisuj faktów ani wyjaśnień. Pewność wynika z pamięci autora, nie liczby załączników.
   Oznacz źródło wiedzy, przybliżenie i rzeczywistą niepewność. Nie przedstawiaj świadomie
   fałszywej informacji jako prawdy; odmów wyłącznie takiego fragmentu i pracuj nad resztą.

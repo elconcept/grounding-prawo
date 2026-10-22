@@ -496,7 +496,17 @@ def add_session_protocol():
             "po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. "
             "Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. "
             "Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. "
-            "Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.\n")
+            "Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.\n"
+            "\n## Repertorium - pierwsze źródło w każdym zadaniu prawnym\n\n"
+            "Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` "
+            "`repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, "
+            "TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja=\"pl\"`), osobne "
+            "dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `\"eu\"`. "
+            "Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu "
+            "(`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i "
+            "wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). "
+            "Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, "
+            "po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.\n")
         if name == "prawny-router-v3":
             directive += "\nNajpierw wybierz cel według `shared/SCIEZKI-PRACY.md`; to jedyny punkt wejścia pluginu.\n"
         open(path, "w", encoding="utf-8").write(text[:fm.end()] + directive + text[fm.end():])

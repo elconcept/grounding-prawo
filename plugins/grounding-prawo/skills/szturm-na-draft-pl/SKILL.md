@@ -22,6 +22,10 @@ metadata:
 
 Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
+## Repertorium - pierwsze źródło w każdym zadaniu prawnym
+
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
+
 # Szturm na draft
 
 ## WYJĄTEK: ZAWIADOMIENIE — recenzja rozszerzająca zamiast ataku
@@ -37,6 +41,8 @@ relacja: nowe szczegóły, krzywdy, skutki, inne osoby, działania i zaniechania
 prokuratury i funkcjonariuszy oraz możliwe dodatkowe kwalifikacje. Nie wystarcza brak
 skreśleń ani raport „OK”. Pytaj, rozwijaj, wracaj po odpowiedziach i włączaj je do pisma.
 Hipotezy recenzenta pozostają pytaniami do czasu uzyskania relacji i sprawdzenia prawa.
+Żadna rola nie usuwa ani nie łagodzi danych o zdrowiu, intymnych i innych wrażliwych danych autora i osób
+trzecich; uwaga „zbyt wrażliwe”, „zbędny szczegół intymny” albo „brak zgody osoby trzeciej” nie jest ustaleniem.
 
 W tym trybie mandaty z `references/soczewki.md`, izolacja „sam draft”, profil MAX, kryterium
 wyjścia E8 i format ustaleń/syntezy są zastąpione regułami ZOP-R. Każda rola otrzymuje pierwotną
@@ -69,7 +75,8 @@ Pliki pisma i cykl sesji: `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem
    sesji jako zmiany śledzone Worda, przy każdej komentarz `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
    DECYZJA_AUTORA ma etykietę „DECYZJA AUTORA”; autor odrzuca ją w Wordzie, inaczej przyjmie ją następna sesja.
    Poprzedni DOCX tego pisma usuń z `legal/output/` dopiero po weryfikacji nowego. W `drafty/` nie ma DOCX,
-   w `legal/output/` nie ma MD. Nie produkuj drugiego, czystego DOCX.
+   w `legal/output/` nie ma MD. Nie produkuj drugiego, czystego DOCX. Rundy pętli E8 dają tylko kolejne
+   snapshoty `.md` w `drafty/<pismo>/` i redline'y w `RUN/`; do `legal/output/` trafia wyłącznie redline ostatniej rundy.
    **Bez PDF** - PDF robi prawnik po własnej korekcie.
 4. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie. Pytania do autora
    (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane) padają w trakcie pętli E8, a raport pokazuje tylko
@@ -245,6 +252,7 @@ python3 $SZ/weryfikuj_wynik.py --redline RUN/runda<r>.docx \
     --edits RUN/edits.PISMO.redline.json [edits z wcześniejszych rund] \
     --katalog legal/output --drafty <sprawa>/drafty/<pismo>
 # po ostatniej rundzie: cp RUN/runda<r>.docx legal/output/<wersja>.docx, weryfikacja kopii (cmp), usunięcie poprzedniego DOCX pisma
+python3 -I <skills>/shared/format-pisma/wersja_pisma.py sprawdz --output legal/output   # PASS: jeden DOCX pisma, bez MD
 ```
 
 - Poprawki formatu (`fix_format.py`) nie są zmianami śledzonymi - idą osobno, na bazie przed adeu, a każda

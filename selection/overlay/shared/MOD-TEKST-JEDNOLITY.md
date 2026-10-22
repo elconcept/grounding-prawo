@@ -4,11 +4,19 @@
 > §4, żeby tę samą procedurę stosowały rodzina `iura`, moduły DR, `shared/ISAP-METRYKI-AKTOW.md`
 > i `shared/AKTY-PRAWNE-MASTER.md`. Czytaj przed każdym dosłownym cytatem przepisu.
 
-## Najkrótsza ścieżka: `cite_verify_article`
-Portal MCP ma narzędzia `cite_list_acts` i `cite_verify_article` (serwer `mcp-cite`): zwracają dosłowne brzmienie
-cytowanego artykułu z **obowiązującego tekstu jednolitego** (także gdy jest tylko w PDF), z kontrolami wierności i
-informacją o nowelizacjach po dacie t.j. Zacznij od nich przy każdym dosłownym cytacie przepisu. Gdy narzędzie odmówi
-albo akt jest poza jego zakresem, przejdź na procedurę poniżej (`isap_*`).
+## Kolejność źródeł brzmienia
+
+0. **Repertorium** (`repertorium_szukaj_repertorium`, portal `lex`): opisz zagadnienie; trafienia wskażą akt, artykuł
+   i najnowsze obwieszczenie tekstu jednolitego (`document_id: eli:DU/rrrr/poz`). To krok wyszukania, nie cytat.
+1. **Baza `ustawy`** (gdy portal ją udostępnia; narzędzia `artykul`, `cytat`, `szukaj`). Kodeksy i Konstytucja
+   (`zrodlo: git-as-law`): tekst jednolity i każda późniejsza nowelizacja jako osobny commit, gałąź główna = stan
+   prawny na dzień `stan_na`. To brzmienie obowiązujące, nie „tekst jednolity do sprawdzenia”: cytuj je ze stanem
+   na `stan_na` i sprawdź w ISAP tylko akty zmieniające wchodzące w życie po tej dacie (`isap_search_acts`, tytuł
+   „o zmianie ustawy - <Kodeks>”, rok, oraz nowe obwieszczenie). Ustawy z `zrodlo: komentarz` mają brzmienie
+   tekstu jednolitego z pola `tekst_jednolity`; nowelizacje po nim sprawdź tak samo.
+2. **ISAP** (`isap_*`, procedura poniżej): akt spoza bazy `ustawy`, nowelizacja po `stan_na`, spór o brzmienie.
+
+Konektor `cite` (`cite_verify_article`, `cite_list_acts`) nie działa i nie obejmował części kodeksów: nie wołaj go.
 
 ## Problem
 Sejm ELI serwuje pod HTML **tekst ogłoszony**, czyli brzmienie z dnia ogłoszenia, a nie stan
@@ -46,8 +54,18 @@ ELI nie cytuj z pamięci, wylistuj je na bieżąco.
 
 **Szczebel 1 - PDF obowiązującego tekstu jednolitego (jedyny dowód brzmienia na dziś).**
 PDF-y ISAP mają warstwę tekstu, OCR jest zbędny. Wywołaj MCP `isap_get_act_text` na ELI aktualnego tekstu
-jednolitego (z `search_text: "Art. 118."`). Gdy zwróci `text_unavailable_use_pdf`, przeczytaj `pdf_url` z odpowiedzi
-natywnym `Read` (parametr `pages`) albo WebFetch - to wciąż szczebel 1: liczy się źródło, nie narzędzie.
+jednolitego (z `search_text: "Art. 118."`). MCP `isap` nie zwraca treści PDF: przy `text_unavailable_use_pdf`
+podaje adresy plików. Pobierz „PDF (tekst jednolity)” (zapasowo „PDF (domyślny)”) i odczytaj tekst lokalnie:
+
+```bash
+mkdir -p <sprawa>/_robocze/isap
+curl -sSL -o <sprawa>/_robocze/isap/DU_2025_383.pdf "https://api.sejm.gov.pl/eli/acts/DU/2025/383/text/T/D20250383L.pdf"
+pdftotext -layout <sprawa>/_robocze/isap/DU_2025_383.pdf <sprawa>/_robocze/isap/DU_2025_383.txt
+```
+
+Artykuł znajdź w pliku `.txt` (numer linii), a brzmienie przeczytaj w całości narzędziem odczytu pliku od nagłówka
+artykułu do następnego; cytat bierz z tego odczytu, nie z wyniku wyszukiwania. Bez powłoki: MCP `ocr`
+(`ocr_parse_document` z treścią PDF). To wciąż szczebel 1: liczy się źródło, nie narzędzie.
 
 Cytowalne wyłącznie przy `status: FOUND` **i** `text_version: tekst_jednolity` **i**
 `status_obowiazywania: obowiazuje`. `status: AMBIGUOUS` z `tekst_ogloszony_istnieje_nowszy_jednolity`

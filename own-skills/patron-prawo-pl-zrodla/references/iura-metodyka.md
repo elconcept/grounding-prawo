@@ -79,7 +79,7 @@ z tekstem jednolitym tylko w PDF, drabinka trzech szczebli, warunek cytowalnośc
 modułem **`shared/MOD-TEKST-JEDNOLITY.md`** - przeczytaj go przed każdym cytatem przepisu.
 
 Skrót: HTML z Sejm ELI to tekst ogłoszony; gdy `get_act_text` zwraca `text_unavailable_use_pdf`,
-przeczytaj `pdf_url` z odpowiedzi (natywny `Read` z `pages` albo WebFetch; `shared/MOD-TEKST-JEDNOLITY.md`). Cytowalne wyłącznie przy `FOUND` +
+pobierz PDF z adresu w odpowiedzi (`curl`) i odczytaj przez `pdftotext -layout` (`shared/MOD-TEKST-JEDNOLITY.md`, szczebel 1); MCP `isap` nie zwraca treści PDF. Cytowalne wyłącznie przy `FOUND` +
 `tekst_jednolity` + `obowiazuje`; przy spornym brzmieniu szczebel 1 albo przyznanie braku.
 
 ---

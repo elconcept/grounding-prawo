@@ -29,7 +29,7 @@ Cytuj wyłącznie wtedy, gdy `structuredContent.text_version` = `tekst_jednolity
 
 Dla głównych kodeksów `get_act_text` na obowiązującym tekście jednolitym zwróci `text_unavailable_use_pdf` — to **sytuacja typowa**, nie awaria: świeże obwieszczenia publikowane są wyłącznie w PDF. **Nie schodź wtedy do starszego tekstu jednolitego** — sięgnij po PDF:
 
-Narzędzie `isap_get_act_text` z `search_text: "Art. N."`; przy `text_unavailable_use_pdf` przeczytaj `pdf_url` z odpowiedzi (natywny `Read` z `pages` albo WebFetch).
+Narzędzie `isap_get_act_text` z `search_text: "Art. N."`; przy `text_unavailable_use_pdf` pobierz PDF tekstu jednolitego z adresu w odpowiedzi (`curl`) i odczytaj go przez `pdftotext -layout` (`shared/MOD-TEKST-JEDNOLITY.md`, szczebel 1).
 
 PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`), sekcja 4.
 

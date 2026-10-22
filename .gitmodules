@@ -193,3 +193,48 @@
 [submodule "vendor/law/prawo-o-ustroju-sadow-powszechnych"]
 	path = vendor/law/prawo-o-ustroju-sadow-powszechnych
 	url = https://github.com/elconcept/prawo-o-ustroju-sadow-powszechnych.git
+[submodule "vendor/law-git/kodeks-cywilny"]
+	path = vendor/law-git/kodeks-cywilny
+	url = https://github.com/kbchojnacki/kodeks-cywilny.git
+[submodule "vendor/law-git/kodeks-karny"]
+	path = vendor/law-git/kodeks-karny
+	url = https://github.com/kbchojnacki/kodeks-karny.git
+[submodule "vendor/law-git/kodeks-karny-skarbowy"]
+	path = vendor/law-git/kodeks-karny-skarbowy
+	url = https://github.com/kbchojnacki/kodeks-karny-skarbowy.git
+[submodule "vendor/law-git/kodeks-karny-wykonawczy"]
+	path = vendor/law-git/kodeks-karny-wykonawczy
+	url = https://github.com/kbchojnacki/kodeks-karny-wykonawczy.git
+[submodule "vendor/law-git/kodeks-morski"]
+	path = vendor/law-git/kodeks-morski
+	url = https://github.com/kbchojnacki/kodeks-morski.git
+[submodule "vendor/law-git/kodeks-postepowania-administracyjnego"]
+	path = vendor/law-git/kodeks-postepowania-administracyjnego
+	url = https://github.com/kbchojnacki/kodeks-postepowania-administracyjnego.git
+[submodule "vendor/law-git/kodeks-postepowania-cywilnego"]
+	path = vendor/law-git/kodeks-postepowania-cywilnego
+	url = https://github.com/kbchojnacki/kodeks-postepowania-cywilnego.git
+[submodule "vendor/law-git/kodeks-postepowania-karnego"]
+	path = vendor/law-git/kodeks-postepowania-karnego
+	url = https://github.com/kbchojnacki/kodeks-postepowania-karnego.git
+[submodule "vendor/law-git/kodeks-postepowania-w-sprawach-o-wykroczenia"]
+	path = vendor/law-git/kodeks-postepowania-w-sprawach-o-wykroczenia
+	url = https://github.com/kbchojnacki/kodeks-postepowania-w-sprawach-o-wykroczenia.git
+[submodule "vendor/law-git/kodeks-pracy"]
+	path = vendor/law-git/kodeks-pracy
+	url = https://github.com/kbchojnacki/kodeks-pracy.git
+[submodule "vendor/law-git/kodeks-rodzinny-i-opiekunczy"]
+	path = vendor/law-git/kodeks-rodzinny-i-opiekunczy
+	url = https://github.com/kbchojnacki/kodeks-rodzinny-i-opiekunczy.git
+[submodule "vendor/law-git/kodeks-spolek-handlowych"]
+	path = vendor/law-git/kodeks-spolek-handlowych
+	url = https://github.com/kbchojnacki/kodeks-spolek-handlowych.git
+[submodule "vendor/law-git/kodeks-wyborczy"]
+	path = vendor/law-git/kodeks-wyborczy
+	url = https://github.com/kbchojnacki/kodeks-wyborczy.git
+[submodule "vendor/law-git/kodeks-wykroczen"]
+	path = vendor/law-git/kodeks-wykroczen
+	url = https://github.com/kbchojnacki/kodeks-wykroczen.git
+[submodule "vendor/law-git/konstytucja-rp"]
+	path = vendor/law-git/konstytucja-rp
+	url = https://github.com/kbchojnacki/konstytucja-rp.git

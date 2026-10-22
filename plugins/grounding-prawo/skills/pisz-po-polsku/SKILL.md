@@ -7,6 +7,10 @@ description: 'Redakcja tekstów po polsku: naturalnie, konkretnie, bez manier st
 
 Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
+## Repertorium - pierwsze źródło w każdym zadaniu prawnym
+
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
+
 # Pisz po polsku
 
 ## Zawiadomienie pokrzywdzonego — pełnia opisu
@@ -35,6 +39,7 @@ brak zmiany jest prawidłowym wynikiem redakcji. Nie obiecuj niewykrywalności d
 - Nie humanizuj przez celowe błędy, literówki ani przypadkowe kolokwializmy.
 - Nie zastępuj naturalnego słowa rzadszym synonimem dla pozornej różnorodności.
 - Nie ruszaj petitum, zarzutów, wniosków dowodowych ani ustaleń faktycznych w piśmie. Redagujesz uzasadnienie i opis, nie stanowisko.
+- W zawiadomieniu o przestępstwie nie usuwaj, nie łagodź i nie uogólniaj danych o zdrowiu, intymnych ani innych wrażliwych danych autora i osób trzecich (`shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`).
 
 Przy redakcji pisma wczytaj `shared/STYLE.md`; jego rejestr formalny doprecyzowuje poniższe tryby.
 
@@ -74,7 +79,7 @@ Pochodzenie: humanizer-pl (MIT, MateMatic), naturalne-pisanie (elconcept), pisz-
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
-- **Wynik zapisz w:** nowa wersja `drafty/<pismo>/..._vN+1` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** nowa wersja `drafty/<pismo>/..._vN+1.md` (tylko MD); DOCX dopiero redline końca sesji (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `redline-docx-pl`, `szturm-na-draft-pl`
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

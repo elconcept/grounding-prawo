@@ -23,7 +23,9 @@ Wyniki i źródła przekazuj dalej; istniejących odczytów, ekstrakcji i kontro
 
 ## Otwarcie sprawy
 
-1. Ustal katalog teczki w `legal/sprawy/` (dopasuj sygnaturę do nazwy katalogu; przy wątpliwości zapytaj jednym pytaniem).
+1. Ustal katalog teczki w `legal/sprawy/` (dopasuj sygnaturę, numer procedury, organ i nazwiska do nazwy katalogu oraz do
+   notatek `sprawy/` w Basic Memory). Przy wątpliwości zapytaj jednym pytaniem: 2-3 kandydatów i opcja „nowa teczka”
+   (`shared/ARTEFAKTY-SPRAWY.md`, „Teczka sprawy”). Do odpowiedzi nie zapisuj pisma.
 2. Przeczytaj w tej kolejności: `analiza/_brief.md`, `_wiedza.md` teczki (lekcje z poprzednich pism obowiązują),
    `analiza/_dokumenty.md`, ostatnie wpisy `_PRZEBIEGI.md`.
 3. Basic Memory, projekt `legal`: odczytaj notatkę teczki w `sprawy/<katalog>/` (`type: sprawa`; znajdź ją `search_notes` po nazwie katalogu albo sygnaturze). Brak teczki: załóż ją teraz
@@ -37,12 +39,14 @@ Wyniki i źródła przekazuj dalej; istniejących odczytów, ekstrakcji i kontro
 
 Presja terminu nie zwalnia z tej ścieżki; skraca tylko liczbę iteracji.
 
-1. Kontekst jak przy otwarciu sprawy. Dokumenty, na które pismo odpowiada, przeczytaj w całości.
+1. Kontekst jak przy otwarciu sprawy, z ustaloną teczką. Dokumenty, na które pismo odpowiada, przeczytaj w całości.
+   Zagadnienie pisma najpierw w Repertorium (`repertorium_szukaj_repertorium`), zanim powołasz przepis lub orzeczenie.
 2. Generator: `pisma-procesowe-v3` (typ pisma), `pisma-proste-v2` (wezwania, wnioski, krótkie odpowiedzi),
    `zawiadomienie-o-przestepstwie` albo `rodo-dsar-pl`.
 3. Przepisy i orzeczenia wyłącznie ze źródeł według `patron-prawo-pl-zrodla`; termin przez `kalkulatory-procesowe-pl`.
 4. Format: `shared/FORMAT-PISMA.md`; pliki według `shared/ARTEFAKTY-SPRAWY.md` (wersje MD w `drafty/<pismo>/`, jeden DOCX w
-   `legal/output/`). Telefon i e-mail nadawcy: zapytaj, jeśli nie są znane.
+   `legal/output/`: `shared/format-pisma/wersja_pisma.py nowe`, kolejne wersje `start` + `redline`, na końcu `sprawdz`).
+   Telefon i e-mail nadawcy: zapytaj, jeśli nie są znane.
 5. Redakcja według `shared/STYLE.md`: teza i najmocniejszy fakt na początku punktu, każda myśl raz, stanowisko strony bez
    przejmowania wersji organu.
 6. Kontrola: `szturm-na-draft-pl` na gotowej wersji.

@@ -19,6 +19,10 @@ metadata:
 
 Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
 
+## Repertorium - pierwsze źródło w każdym zadaniu prawnym
+
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
+
 # Redline DOCX po polsku
 
 Wrapper nad **adeu** (MIT, Dealfluence Oy) - dwukierunkowy konwerter miedzy `.docx`
@@ -57,6 +61,28 @@ Przed wykonaniem każdej operacji ustal tier i zastosuj regułę:
 | **R - Read-only** | `extract` (czytanie .docx), `skan_placeholder.py`, `memo_negocjacyjne.py` (pisza tylko nowe pliki raportu/memo) | Bez potwierdzenia. Wykonaj od razu. |
 | **M - Mutating** | `apply`, `diff`, `apply --live` | Pokaż użytkownikowi proponowane zmiany. Czekaj na potwierdzenie słowne. |
 | **D - Destructive** | `sanitize --accept-all` (akceptuje wszystkie zmiany nieodwracalnie) | Użytkownik musi wpisać dosłownie: **"potwierdzam"** zanim wykonasz. |
+
+Tiery M i D chronią cudzy dokument i plik wysyłany na zewnątrz. **Własne pismo autora w teczce sprawy**
+(DOCX z `legal/output/`) ma uzgodniony cykl bez tych potwierdzeń: `accept-all` na kopii w `_robocze/` na
+początku sesji i `apply` nowej wersji na tę kopię na końcu (`shared/ARTEFAKTY-SPRAWY.md`).
+
+## Własne pismo w teczce: redline między wersjami
+
+Skille pism (`pisma-proste-v2`, `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`, `rodo-dsar-pl`,
+`szturm-na-draft-pl`) prowadzą pismo jako wersje Markdown w `<sprawa>/drafty/<pismo>/` i jeden DOCX w
+`legal/output/`. Ten skill jest ich silnikiem; polecenia opakowuje `shared/format-pisma/wersja_pisma.py`:
+
+```bash
+W=<skills>/shared/format-pisma/wersja_pisma.py
+python3 -I $W start   --docx legal/output/<plik>_vN.docx --robocze <sprawa>/_robocze --md <sprawa>/drafty/<pismo>/<plik>_vN.md
+python3 -I $W redline --baza <sprawa>/_robocze/<plik>_vN_baza.docx --md <sprawa>/drafty/<pismo>/<plik>_vK.md --output legal/output
+python3 -I $W sprawdz --output legal/output
+```
+
+`redline` renderuje wersję MD, nakłada jej tekst na bazę (`adeu apply` z plikiem tekstowym; przy przesuniętych
+wyróżnieniach zapasowo edycje akapitów w JSON), sprawdza `w:ins`/`w:del`/`w:delText` i zgodność tekstu po
+`accept-all`, zapisuje jeden DOCX i usuwa poprzednie DOCX i MD tego pisma z `output/`. Wynik bez zmian
+śledzonych to etap NIEZAKOŃCZONY. Nowy render DOCX z MD (renderer, pandoc) nigdy nie zastępuje redline.
 
 ---
 
@@ -296,8 +322,8 @@ Decyzja o jakimkolwiek wpieciu nalezy do WM.
 
 ## MOST - miejsce w przepływie grounding-prawo
 
-- **Wejście z:** draft `.docx` i lista zmian
-- **Wynik zapisz w:** REDLINE w `_robocze/`; kopia z zatwierdzonymi zmianami jako kolejna wersja (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wejście z:** DOCX pisma z `legal/output/` i nowa wersja MD z `drafty/<pismo>/` (cykl własnego pisma) albo cudzy `.docx` i lista zmian
+- **Wynik zapisz w:** własne pismo - jeden DOCX z redline sesji w `legal/output/` (`shared/format-pisma/wersja_pisma.py redline`); cudzy dokument - REDLINE w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `szturm-na-draft-pl`
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

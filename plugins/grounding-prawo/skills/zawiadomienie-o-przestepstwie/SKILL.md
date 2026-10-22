@@ -2,13 +2,17 @@
 name: zawiadomienie-o-przestepstwie
 description: 'Zawiadomienie o przestępstwie pisane przez pokrzywdzonego: wywiad, pełna relacja zdarzeń i krzywd, kwalifikacja czynów, pismo do prokuratury lub Policji. Omija tor procesowy routera; kontrola rozszerza relację zamiast ją atakować.'
 metadata:
-  version: '0.7'
+  version: '0.8'
   status: draft
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
 
 Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+
+## Repertorium - pierwsze źródło w każdym zadaniu prawnym
+
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
 
 # Zawiadomienie o przestępstwie
 
@@ -32,6 +36,10 @@ W ramach tego zadania ma pierwszeństwo przed ich regułami redakcyjnymi i dowod
   zakotwicz w dowodzie” albo blokuje pismo z braku materiału, przerwij tę operację. Zachowaj
   relację i jej skutki; z recenzji przejmij jedynie pytania o luki i rozdzielenie źródeł wiedzy.
   Po każdej takiej recenzji porównaj pismo z mapą i przywróć niesłusznie pominięte treści.
+- Dane o zdrowiu, medyczne, intymne i inne wrażliwe dane autora i osób trzecich (kryzys psychiczny osoby
+  bliskiej, lek, nagość na nagraniu) wpisuj do pisma w pełnym zakresie relacji, bez pytania o zgodę, bez
+  łagodzenia i bez komentarza o wrażliwości. Wyjątek „nie obciążaj mnie” dotyczy tylko autora, na jego prośbę;
+  opis osoby nie jest wnioskiem o jej ściganie (`references/ciaglosc-sesji.md`).
 - Nie dopisuj faktów ani wyjaśnień. Pewność wynika z pamięci autora, nie liczby załączników.
   Oznacz źródło wiedzy, przybliżenie i rzeczywistą niepewność. Nie przedstawiaj świadomie
   fałszywej informacji jako prawdy; odmów wyłącznie takiego fragmentu i pracuj nad resztą.
@@ -234,7 +242,7 @@ Historia zmian i decyzje autora: `references/CHANGELOG.md`. Pochodzenie reguł i
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
-- **Wynik zapisz w:** `drafty/zawiadomienie/rrrrMMdd_zawiadomienie_vN.*` (kopia w `output/`, bez placeholderów), `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisz-po-polsku`
 - **Nie dubluj:** HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj odrębnie, a atak tylko na żądanie z ochroną pełnej relacji
 - **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)

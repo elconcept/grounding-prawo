@@ -11,6 +11,21 @@ Pismo istnieje w dwóch miejscach i w dwóch formatach:
 - `<sprawa>/drafty/<pismo>/` - wyłącznie Markdown: kolejne wersje `_v1`, `_v2`, `_v3`... (historia, nic nie jest nadpisywane);
 - `legal/output/` - wyłącznie DOCX: dokładnie jeden plik dla każdego pisma, dokument roboczy autora.
 
+`legal/output/` nie jest miejscem pracy ani historii. Wersja `.md` zapisana w `output/` albo drugi DOCX tego samego
+pisma (np. `_v1.docx` obok `_v2.docx`) to błąd do naprawy w tym samym przebiegu, nie stan przejściowy.
+
+## Teczka sprawy - ustal przed pierwszym zapisem
+
+Zanim zapiszesz pierwszy plik pisma, wskaż teczkę: `ls legal/sprawy/`, notatki Basic Memory (`legal`, `sprawy/`,
+`relacje/<autor>/` z rejestrem pism) i sygnatury lub numery z treści pisma (np. numer procedury, sygnatura,
+organ). Pismo dotyczące sprawy, która ma teczkę, idzie do jej `drafty/<pismo>/`, także gdy jest pismem do innego
+organu (np. wniosek do MOPS o dane z procedury, na którą powołuje się sprawa karna).
+
+Gdy teczka nie wynika jednoznacznie z materiału, zapytaj autora przed zapisem (narzędzie pytań interaktywnych,
+jeśli jest): podaj 2-3 najbardziej prawdopodobne teczki z uzasadnieniem w jednym zdaniu i opcję „nowa teczka”
+z proponowaną nazwą katalogu. Do odpowiedzi nie zapisuj niczego w `legal/output/` ani w `legal/` poza `_robocze/`.
+Nowa teczka powstaje dopiero po decyzji autora; jej nazwę wpisz do rejestru pism w Basic Memory.
+
 ## Rodzaje plików
 
 | Rodzaj | Gdzie | Zasada |
@@ -55,16 +70,39 @@ Każda sesja pracy nad istniejącym pismem (redakcja, szturm, kontrola z poprawk
 2. **Snapshot.** Pełny tekst zaakceptowanej kopii (ze wszystkimi zmianami wprowadzonymi przez autora
    ręcznie) zapisz jako `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` z numerem o jeden wyższym od
    ostatniej wersji w katalogu. Porównaj zapis z ekstrakcją DOCX; snapshot jest bazą całej sesji.
-3. **Praca** odbywa się na snapshot i kopiach w `_robocze/`. Kolejne rundy (np. pętla szturmu) nakładają
-   swoje zmiany na redline z poprzedniej rundy, a nie na nową bazę.
-4. **Redline.** Sesja kończy się jednym DOCX: zaakceptowana kopia z kroku 1 i wszystkie zmiany sesji jako
-   zmiany śledzone (`w:ins`/`w:del`) z komentarzem przy każdej. Zweryfikuj strukturę pliku, a nie komunikat
-   narzędzia. Zapisz go w `legal/output/rrrrMMdd_<nazwa>_vN.docx` (`vN` = numer snapshotu) i dopiero po
-   sprawdzeniu nowego pliku usuń z `legal/output/` poprzedni DOCX tego samego pisma. Jeżeli śledzenia zmian
-   nie da się utworzyć, etap jest NIEZAKOŃCZONY, a poprzedni DOCX zostaje.
+3. **Praca** odbywa się na snapshot i kopiach w `_robocze/`. Każda runda pętli doskonalenia (szturm, soczewka,
+   odpowiedź autora) zapisuje kolejną wersję wyłącznie jako `drafty/<pismo>/rrrrMMdd_<nazwa>_vN+1.md`.
+   Runda nie tworzy DOCX: redline powstaje z bazy sesji, więc pokazuje wszystkie zmiany od jej początku.
+4. **Redline.** Sesja (albo jej przerwanie, gdy autor ma przejrzeć zmiany) kończy się jednym DOCX: baza z kroku 1
+   i wszystkie zmiany sesji jako zmiany śledzone (`w:ins`/`w:del`). Plik ma nazwę ostatniej wersji MD
+   (`legal/output/rrrrMMdd_<nazwa>_vN.docx`); poprzedni DOCX tego pisma znika po weryfikacji nowego. Jeżeli
+   śledzenia zmian nie da się utworzyć, etap jest NIEZAKOŃCZONY, a poprzedni DOCX zostaje. DOCX bez `w:ins`
+   ani `w:del`, wygenerowany od nowa z MD (renderer, pandoc), nie jest redline, nawet gdy powstał „po akceptacji”.
 
 Nowe pismo: pierwszą treść zapisz jako `drafty/<pismo>/rrrrMMdd_<nazwa>_v1.md`, a wygenerowany z niej DOCX
 (bez śledzenia zmian) jako jedyny DOCX pisma w `legal/output/`.
+
+### Polecenia (skrypt `shared/format-pisma/wersja_pisma.py`, silnik `redline-docx-pl`)
+
+Skrypt wykonuje kroki 1, 4 i weryfikację; pomiń go tylko wtedy, gdy nie działa, i opisz przyczynę.
+`<S>` to katalog `shared/` zainstalowanego pluginu.
+
+```bash
+# nowe pismo: v1.md -> jedyny DOCX w output (renderer, bez sidecara)
+python3 -I <S>/format-pisma/wersja_pisma.py nowe --md <sprawa>/drafty/<pismo>/<plik>_v1.md --output legal/output
+# krok 1: baza sesji w _robocze/ (accept-all) i różnice ostatniej wersji MD względem DOCX = zmiany autora
+python3 -I <S>/format-pisma/wersja_pisma.py start --docx legal/output/<plik>_vN.docx --robocze <sprawa>/_robocze \
+        --md <sprawa>/drafty/<pismo>/<plik>_vN.md
+# krok 4: ostatnia wersja MD nałożona na bazę jako zmiany śledzone; usuwa poprzednie DOCX i MD pisma z output
+python3 -I <S>/format-pisma/wersja_pisma.py redline --baza <sprawa>/_robocze/<plik>_vN_baza.docx \
+        --md <sprawa>/drafty/<pismo>/<plik>_vK.md --output legal/output
+# bramka końcowa katalogu output (kod 1 = naruszenie, napraw przed odpowiedzią)
+python3 -I <S>/format-pisma/wersja_pisma.py sprawdz --output legal/output
+```
+
+Zmiany autora wypisane przez `start` przenieś do snapshotu `vN+1.md` przed dalszą pracą. Autor zmian śledzonych
+to autor pisma (`podpis` z metryki), nie nazwa konta. Przyjęcie zmian na początku sesji i nałożenie wersji na
+kopię w `_robocze/` to kroki cyklu własnego pisma: nie wymagają potwierdzenia z tierów `redline-docx-pl`.
 
 Stan końcowy dla jednego pisma: w `<sprawa>/drafty/<pismo>/` wszystkie wersje `.md` i żadnego DOCX;
 w `legal/output/` dokładnie jeden DOCX tego pisma i żadnego `.md`. Nie naruszaj innych pism, załączników
@@ -82,5 +120,7 @@ ani dokumentów dostarczonych przez autora.
 1. Esencja z `_robocze/` jest w plikach inkrementalnych (ustalenia, decyzje, pytania, stan kotwic).
 2. Nowe pliki poza `_robocze/`: snapshot `.md` w `drafty/<pismo>/` i jedyny DOCX pisma z redline sesji w
    `legal/output/` (+ ewentualnie nowy plik inkrementalny z uzasadnieniem). Poprzedni DOCX tego pisma usunięty.
+   `wersja_pisma.py sprawdz --output legal/output` daje `PASS`; w odpowiedzi podaj liczbę `w:ins`/`w:del`
+   z wyniku `redline`, a nie słowo „redline” bez liczb.
 3. `_PRZEBIEGI.md` ma wpis przebiegu; lekcje o ogólnej wartości trafiły do `_wiedza.md`.
 4. Sprawa bez folderu (rozmowa bez plików): wynik w odpowiedzi, a pliki zakładaj dopiero na prośbę użytkownika.
