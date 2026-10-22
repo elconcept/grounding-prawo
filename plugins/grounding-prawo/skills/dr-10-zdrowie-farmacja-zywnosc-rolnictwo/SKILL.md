@@ -1,6 +1,6 @@
 ---
 name: dr-10-zdrowie-farmacja-zywnosc-rolnictwo
-description: 'Moduł wewnętrzny DR-10: prawa pacjenta, działalność lecznicza, zawód lekarza. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-10: prawa pacjenta, działalność lecznicza, zawód lekarza. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.54'
   dependencies: '{"requires": ["shared"]}'

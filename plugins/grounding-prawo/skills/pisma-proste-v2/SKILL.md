@@ -1,6 +1,6 @@
 ---
 name: pisma-proste-v2
-description: 'Proste pisma prawne i urzędowe: wezwania, wnioski, odpowiedzi i krótsze dokumenty; kompletność danych, aktualna weryfikacja prawa i walidacja przed wygenerowaniem pliku.'
+description: 'Proste pisma i wnioski o jednym wątku: wezwania, sprzeciwy, zażalenia, zwolnienia, interpretacje. Używaj przy krótkim piśmie lub wniosku.'
 metadata:
   version: '2.32'
   type: executive-pisma

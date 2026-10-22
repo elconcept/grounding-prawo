@@ -1,6 +1,6 @@
 ---
 name: shared
-description: Biblioteka wspólnych reguł i bramek pluginu (źródła, cytaty, pamięć, format pism). Wczytywana przez inne skille; nie wywołuj bezpośrednio.
+description: Wspólne reguły i bramki pluginu. Wczytywana przez skille; nie wywołuj bezpośrednio.
 metadata:
   version: 3.99.39
   type: library

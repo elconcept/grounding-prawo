@@ -1,6 +1,6 @@
 ---
 name: orzeczenia-sadowe-v2
-description: 'Research orzecznictwa: wyszukiwanie, weryfikacja sygnatur i tez, porównanie orzeczeń, dobór do argumentacji. Moduł: rozbiór wyroku na sentencję, ratio i obiter.'
+description: 'Orzecznictwo: wyszukiwanie, weryfikacja sygnatur i tez, dobór do argumentacji, rozbiór na ratio i obiter. Używaj przy szukaniu i cytowaniu wyroków.'
 metadata:
   version: '2.32'
   type: executive-analiza

@@ -1,6 +1,6 @@
 ---
 name: pisma-procesowe-v3
-description: 'Zaawansowane pisma procesowe: pozwy, odpowiedzi, apelacje, zażalenia i inne pisma wymagające strategii, faktów, dowodów, weryfikacji prawa i finalnej walidacji dokumentu.'
+description: Pozew, odpowiedź na pozew, apelacja, zażalenie i inne pisma wymagające strategii, dowodów i weryfikacji prawa. Używaj przy tworzeniu lub przebudowie pisma procesowego.
 metadata:
   version: '5.44'
   type: executive-pisma

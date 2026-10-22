@@ -1,6 +1,6 @@
 ---
 name: rodo-dsar-pl
-description: 'Żądania z art. 15-22 RODO: dostęp, sprostowanie, usunięcie, ograniczenie, sprzeciw; terminy i podstawy odmowy. Używaj do przygotowania własnego żądania wobec administratora i oceny jego odpowiedzi.'
+description: 'Żądania z art. 15-22 RODO: dostęp, sprostowanie, usunięcie, ograniczenie, sprzeciw; terminy i odmowa. Używaj przy własnym żądaniu wobec administratora i ocenie odpowiedzi.'
 license: Apache-2.0
 allowed-tools:
 - Read

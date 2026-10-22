@@ -1,6 +1,6 @@
 ---
 name: kalkulatory-procesowe-pl
-description: 'Obliczenia procesowe z kartą do zatwierdzenia: terminy (KC, KPC, KPK, KPW), opłaty sądowe, przedawnienie, odsetki, WPS. Każdy krok ma podstawę prawną; niepewna reguła zatrzymuje wynik.'
+description: Terminy, opłaty sądowe, przedawnienie, odsetki i WPS z kartą do zatwierdzenia i podstawą prawną każdego kroku. Używaj przy liczeniu terminu lub opłaty.
 license: Apache-2.0
 allowed-tools:
 - Read

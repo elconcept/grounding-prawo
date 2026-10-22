@@ -1,6 +1,6 @@
 ---
 name: prawny-router-v3
-description: 'Punkt wejścia do pracy prawnej: otwiera sprawę (teczka, Basic Memory), kwalifikuje problem i wybiera ścieżkę: analiza akt, nowe pismo, kontrola pisma, zawiadomienie, źródła prawa, umowa, RODO. Używaj zawsze przy analizie prawnej, piśmie lub ocenie materiału prawnego.'
+description: 'Punkt wejścia do pracy prawnej: otwiera sprawę i wybiera ścieżkę (analiza akt, pismo, kontrola, zawiadomienie, źródła, umowa, RODO). Używaj zawsze przy sprawie prawnej, piśmie lub ocenie materiału.'
 metadata:
   version: '3.71'
   type: orchestration

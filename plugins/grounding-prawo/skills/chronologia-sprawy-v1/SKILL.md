@@ -1,6 +1,6 @@
 ---
 name: chronologia-sprawy-v1
-description: 'Chronologia sprawy z dokumentów: oś czasu per wątek, klasy pewności, proweniencja, sprzeczności dat i opisów. Moduł: zestawienie stanowisk stron z mechaniczną kontrolą pliku, strony i cytatu.'
+description: 'Chronologia sprawy: oś czasu per wątek, klasy pewności, proweniencja, sprzeczności dat. Używaj przy ustalaniu kolejności zdarzeń i stanowisk stron.'
 metadata:
   version: '1.18'
   type: executive-chronologia

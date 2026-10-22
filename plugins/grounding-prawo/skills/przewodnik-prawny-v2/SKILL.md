@@ -1,6 +1,6 @@
 ---
 name: przewodnik-prawny-v2
-description: 'Moduł wewnętrzny routera: fallback, gdy problemu nie da się jeszcze zakwalifikować. Wywoływany przez prawny-router-v3.'
+description: Fallback routera, gdy problemu nie da się zakwalifikować. Moduł wewnętrzny; nie wywołuj bezpośrednio.
 metadata:
   version: '2.11'
   type: ux-guide

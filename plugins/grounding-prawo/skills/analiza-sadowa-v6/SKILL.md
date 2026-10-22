@@ -1,6 +1,6 @@
 ---
 name: analiza-sadowa-v6
-description: 'Wieloprzebiegowa analiza akt, pism, wyroków i dowodów: mapa faktów, kwalifikacja prawna, analiza adversarialna, weryfikacja i ocena szans. Moduł: analiza akt sprawy karnej (zarzut, dowody, wyroki, apelacja, kasacja).'
+description: 'Analiza akt, pism i wyroków: mapa faktów, kwalifikacja, analiza adversarialna i ocena szans. Używaj przy analizie sprawy karnej, apelacji i kasacji.'
 metadata:
   version: '6.17'
   type: executive-analiza

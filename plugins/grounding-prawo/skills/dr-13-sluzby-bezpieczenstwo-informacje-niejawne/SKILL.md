@@ -1,6 +1,6 @@
 ---
 name: dr-13-sluzby-bezpieczenstwo-informacje-niejawne
-description: 'Moduł wewnętrzny DR-13: Policja i inne służby, uprawnienia funkcjonariuszy. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-13: Policja i służby, uprawnienia funkcjonariuszy. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.18'
   dependencies: '{"requires": ["shared"]}'

@@ -1,6 +1,6 @@
 ---
 name: analizator-umow-v1
-description: 'Analiza, redakcja i negocjacja umów: ryzyka klauzul, lista kontrolna 41 kategorii, przegląd według playbooka, najem, B2B/B2C, RODO w umowach.'
+description: 'Analiza, redakcja i negocjacja umów: ryzyka klauzul, przegląd według playbooka, najem, B2B, RODO. Używaj przy ocenie lub tworzeniu umowy.'
 metadata:
   version: '1.50'
   type: executive-umowy

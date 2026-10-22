@@ -1,6 +1,6 @@
 ---
 name: szturm-na-draft-pl
-description: 'Kontrola i poprawa pisma w pętli do stanu GOTOWE: soczewki w osobnych przebiegach (cytaty, subsumpcja, atak przeciwnika, debata, pierwsze wrażenie sędziego, wierność analizie, ocena 1-5, polszczyzna). Używaj przy: sprawdź pismo, kontrola, co powie druga strona, jak to przeczyta sąd.'
+description: 'Kontrola pisma w pętli do GOTOWE: cytaty, subsumpcja, atak przeciwnika, debata, pierwsze wrażenie sędziego, ocena. Używaj przy: sprawdź pismo, co powie druga strona, jak przeczyta sąd.'
 license: MIT
 allowed-tools:
 - Bash

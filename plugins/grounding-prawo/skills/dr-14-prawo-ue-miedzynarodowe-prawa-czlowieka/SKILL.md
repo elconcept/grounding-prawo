@@ -1,6 +1,6 @@
 ---
 name: dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka
-description: 'Moduł wewnętrzny DR-14: prawo UE, TSUE, EKPC i ETPC. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-14: prawo UE, TSUE, EKPC, ETPC. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.15'
   dependencies: '{"requires": ["shared"]}'

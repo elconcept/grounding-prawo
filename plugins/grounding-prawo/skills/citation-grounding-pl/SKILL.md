@@ -1,6 +1,6 @@
 ---
 name: citation-grounding-pl
-description: 'Mechaniczna weryfikacja cytatów i identyfikatorów: ekstrakcja wszystkich powołań, sprawdzenie cytatu w źródle (ISTNIENIE, TREŚĆ, FRAGMENT), format [N] z blokiem CITATIONS, sumy PESEL, NIP i REGON. Używaj przed użyciem cytatu w piśmie.'
+description: 'Weryfikacja cytatów i identyfikatorów: istnienie, treść i fragment w źródle, format [N], sumy PESEL/NIP/REGON. Używaj przed użyciem cytatu lub sygnatury w piśmie.'
 license: Apache-2.0
 allowed-tools:
 - Bash

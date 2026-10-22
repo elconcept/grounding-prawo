@@ -1,6 +1,6 @@
 ---
 name: zawiadomienie-o-przestepstwie
-description: 'Zawiadomienie o przestępstwie pisane przez pokrzywdzonego: wywiad, pełna relacja zdarzeń i krzywd, kwalifikacja czynów, pismo do prokuratury lub Policji. Omija tor procesowy routera; kontrola rozszerza relację zamiast ją atakować.'
+description: 'Zawiadomienie o przestępstwie pokrzywdzonego: wywiad, pełna relacja zdarzeń i krzywd, kwalifikacja, pismo do prokuratury lub Policji. Używaj przy zgłoszeniu przestępstwa.'
 metadata:
   version: '0.8'
   status: draft

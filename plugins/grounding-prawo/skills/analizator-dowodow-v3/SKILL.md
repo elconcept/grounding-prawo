@@ -1,6 +1,6 @@
 ---
 name: analizator-dowodow-v3
-description: 'Ocena dowodów, dokumentów, zeznań i akt: siła dowodowa, hierarchia A-D, pokrycie przesłanek, sprzeczności, terminy procesowe i analiza śledcza. Przy zawiadomieniu o przestępstwie: mapa osób, ról i zachowań oraz pytania rozszerzające; relacja pokrzywdzonego nie wymaga dowodu.'
+description: 'Ocena dowodów, zeznań i dokumentów: siła dowodowa (A-D), sprzeczności, pokrycie przesłanek, terminy. Używaj przy ocenie materiału i sprzecznych relacji.'
 metadata:
   version: 5.16.23
   type: executive-analiza

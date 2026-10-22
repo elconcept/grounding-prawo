@@ -1,6 +1,6 @@
 ---
 name: analizator-przepisow-v2
-description: 'Analiza przepisów prawa polskiego: brzmienie aktualne i historyczne, przesłanki, wykładnia, orzecznictwo, zbieg norm, nowelizacje i vacatio legis.'
+description: 'Analiza przepisu: brzmienie obowiązujące i historyczne, przesłanki, wykładnia, orzecznictwo, nowelizacje. Używaj przy pytaniu o artykuł lub wykładnię.'
 metadata:
   version: '2.12'
   type: executive-analiza

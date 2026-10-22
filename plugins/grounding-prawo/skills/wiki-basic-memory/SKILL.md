@@ -1,6 +1,6 @@
 ---
 name: wiki-basic-memory
-description: 'Wiki spraw w Basic Memory: ingest PDF strona po stronie przez model (Markdown do Basic Memory, PDF do R2), pytania i syntezy, kontrola jakości (odnośniki, duplikaty, sprzeczności, luki).'
+description: 'Wiki sprawy w Basic Memory: ingest PDF, pytania, syntezy, kontrola jakości notatek. Używaj przy dodawaniu dokumentów do wiki i pracy na notatkach sprawy.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową

@@ -1,6 +1,6 @@
 ---
 name: przesluchanie-swiadkow-v2-min90
-description: 'Przygotowanie przesłuchania świadków: analiza akt i dowodów, cele dowodowe, sprzeczności, pytania główne i kontrolne oraz rozbudowane zestawy pytań do świadków.'
+description: 'Przygotowanie przesłuchania: cele dowodowe, sprzeczności, pytania główne i kontrolne, impeachment. Używaj przed rozprawą i przy ocenie wiarygodności zeznań.'
 metadata:
   version: '3.32'
   type: legal-skill

@@ -1,6 +1,6 @@
 ---
 name: case-risk
-description: 'Ocena ryzyk sprawy: dowodowe, proceduralne, medyczne, interwencji Policji i ZRM, karnoprocesowe, cywilne, nadmierne twierdzenia, czas. Moduły: czynność medyczna bez zgody (art. 192 k.k.) i hospitalizacja psychiatryczna (UoOZP).'
+description: 'Ryzyka sprawy: dowodowe, proceduralne, medyczne, Policja/ZRM, karne i cywilne. Używaj przy ocenie szans i planowaniu zarzutów; moduły art. 192 k.k. i UoOZP.'
 metadata:
   argument-hint: <kwestia / zarzut / dokument do oceny ryzyka>
 ---
