@@ -10,6 +10,13 @@ import sys
 import yaml
 
 
+# humanizer-pl jest niezmodyfikowanym upstreamem: jego frontmatter zawiera pola
+# spoza minimalnego zestawu Agent Skills (wersja, atrybucja, polityki hosta).
+VERBATIM_UPSTREAM = {'humanizer-pl'}
+UPSTREAM_FIELDS = {'version', 'attribution', 'compatibility', 'data-residency',
+                   'requires-human-approval', 'pii-egress'}
+
+
 def validate(root):
     errors = []
     def check(ok, message):
@@ -62,7 +69,8 @@ def validate(root):
             check(fm.get('name') == label and len(label) <= 64 and bool(re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', label)), f'{label}: invalid name')
             desc = fm.get('description')
             check(isinstance(desc, str) and 0 < len(desc) <= 1024 and '<' not in desc and '>' not in desc, f'{label}: invalid description')
-            check(not set(fm) - {'name', 'description', 'license', 'allowed-tools', 'metadata'}, f'{label}: nonportable frontmatter (including invocation blockers)')
+            check(not set(fm) - {'name', 'description', 'license', 'allowed-tools', 'metadata'} - (UPSTREAM_FIELDS if label in VERBATIM_UPSTREAM else set()),
+                  f'{label}: nonportable frontmatter (including invocation blockers)')
             meta = fm.get('metadata', {})
             check(isinstance(meta, dict) and all(isinstance(v, str) for v in meta.values()), f'{label}: metadata values must be strings')
             dependencies = json.loads(meta.get('dependencies', '{}'))

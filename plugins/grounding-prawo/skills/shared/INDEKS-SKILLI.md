@@ -38,9 +38,9 @@ Opis pochodzi z pola `why` selekcji lub frontmatter skilla.
 | [`kalkulatory-procesowe-pl`](../kalkulatory-procesowe-pl/SKILL.md) | opłata, WPS, odsetki, przedawnienie w pozwach cywilnych | `awe:dokumenty` | wywoływany |
 | [`redline-docx-pl`](../redline-docx-pl/SKILL.md) | Track Changes; sanitize metadanych jest jawną komendą, nie domyślną operacją | `awe:dokumenty` | wywoływany |
 | [`rodo-dsar-pl`](../rodo-dsar-pl/SKILL.md) | żądania dostępu, sprostowania, usunięcia własnych danych | `awe:ochrona-danych` | wywoływany |
-| [`humanizer-pl`](../humanizer-pl/SKILL.md) | skuteczne usuwanie wzorców AI (emdash, struktura zdań, slop); pisz-po-polsku okazał się niewystarczający; treść bez wstrzykiwań protokołu (22.10.2026) | `own` | wywoływany |
+| [`humanizer-pl`](../humanizer-pl/SKILL.md) | drugi, obowiązkowy etap redakcji po pisz-po-polsku; niezmodyfikowany upstream 1.5.1 (22.10.2026) | `own` | wywoływany |
 | [`patron-przeglad-tabelaryczny`](../patron-przeglad-tabelaryczny/SKILL.md) | tabelaryczny przegląd dokumentów (z pipeline Patrona); do wzbogacenia o klauzule/kolumny pod Twoje sprawy | `own` | wywoływany |
-| [`pisz-po-polsku`](../pisz-po-polsku/SKILL.md) | skill redakcji: scala moduł poza pluginem + moduł poza pluginem (humanizer-pl dla agresywnego usuwania wzorców AI); treść bez wstrzykiwań protokołu (22.10.2026) | `own` | wywoływany |
+| [`pisz-po-polsku`](../pisz-po-polsku/SKILL.md) | autorski skill redakcji: pierwszy obowiązkowy etap przed humanizer-pl; scala moduł poza pluginem + moduł poza pluginem (22.10.2026) | `own` | wywoływany |
 | [`szturm-na-draft-pl`](../szturm-na-draft-pl/SKILL.md) | główny mechanizm wielokrotnej kontroli pisma; WYMAGA przebudowy (profil S/M/L i limit rund) - propozycja diffu, nie zastosowana | `own` | wywoływany |
 | [`case-risk`](../case-risk/SKILL.md) | ryzyka dowodowe, medyczne, UoOZP, art. 192 kk; skrojony pod Twoje sprawy | `own` | wywoływany |
 | [`patron-prawo-pl-zrodla`](../patron-prawo-pl-zrodla/SKILL.md) | kolejność źródeł i konektorów MCP | `own` | wywoływany |

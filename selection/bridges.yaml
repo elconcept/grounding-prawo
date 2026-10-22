@@ -179,17 +179,18 @@ skills:
     nie_dubluj: pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli
   pisz-po-polsku:
     etap: C
-    wejscie: pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
+    wejscie: pismo po kontroli merytorycznej (pierwszy szlif; nie zmienia faktów, cytatów ani sygnatur)
     wynik: nowa wersja `drafty/<pismo>/..._vN+1.md` (tylko MD); DOCX dopiero redline końca sesji
     dalej:
+    - humanizer-pl
     - redline-docx-pl
     - szturm-na-draft-pl
   humanizer-pl:
     etap: C
-    wejscie: tekst po wygenerowaniu przez AI z charakterystycznymi wzorcami (emdash, struktura zdań, slop)
+    wejscie: tekst po obowiązkowym `pisz-po-polsku` (drugi etap redakcji, niezmodyfikowany upstream)
     wynik: nowa wersja tekstu z usuniętymi wzorcami AI (emdash -> lacznik, naturalna struktura zdań)
     dalej:
-    - pisz-po-polsku
+    - redline-docx-pl
     - szturm-na-draft-pl
   redline-docx-pl:
     etap: C

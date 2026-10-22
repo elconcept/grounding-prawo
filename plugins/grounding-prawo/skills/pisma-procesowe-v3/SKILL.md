@@ -825,6 +825,9 @@ view shared/STRATEGIA-PROCESOWA.md                (⛔ OBOWIĄZKOWE — zawsze p
 > COURT-SIMULATION + LEGAL-QUALITY-GATE), W3.7 (PEER-REVIEW + POST-VALIDATION
 > + UWAGI-REDAKCYJNE), generowanie .docx i ST-FINAL:
 >
+> ⛔ PRZED generowaniem .docx: obowiązkowa redakcja w kolejności `pisz-po-polsku`, potem `humanizer-pl`
+> (niezmodyfikowany upstream). Brak któregokolwiek etapu albo zamiana kolejności = pismo nie jest GOTOWE.
+>
 > `view pisma-procesowe-v3/references/W3-WERYFIKACJA.md`
 >
 > Wygląd pliku (.docx, bez PDF) dla każdego typu pisma: `view shared/FORMAT-PISMA.md` - Georgia 10 pt,

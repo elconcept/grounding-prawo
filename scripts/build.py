@@ -189,6 +189,9 @@ def qualify_paths(sel):
 # (rejestr prawniczy psuje instrukcję stylu; decyzja właściciela 22.10.2026).
 NO_PROTOCOL_INJECTION = {"humanizer-pl", "pisz-po-polsku"}
 
+# humanizer-pl jest niezmodyfikowanym upstreamem: build nie przepisuje jego treści.
+VERBATIM_SKILLS = {"humanizer-pl"}
+
 
 def add_bridges(sel):
     """Dopisuje do każdego skilla sekcję MOST z selection/bridges.yaml: skąd wejście, gdzie wynik, co dalej."""
@@ -527,6 +530,19 @@ def migrate_document_references():
             open(path, "w", encoding="utf-8").write(text)
 
 
+def restore_verbatim(sel):
+    """Przywraca skille z VERBATIM_SKILLS 1:1 ze źródła po wszystkich transformacjach builda."""
+    restored = []
+    for e in sel["keep"]:
+        if e["name"] not in VERBATIM_SKILLS:
+            continue
+        dst = os.path.join(SKILLS, e["name"])
+        shutil.rmtree(dst, ignore_errors=True)
+        shutil.copytree(source(e), dst, ignore=IGNORE)
+        restored.append(e["name"])
+    return restored
+
+
 def add_session_protocol():
     for name in os.listdir(SKILLS):
         path = os.path.join(SKILLS, name, "SKILL.md")
@@ -678,6 +694,7 @@ def main():
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
         normalize_skill(sm, e)
 
+    print("przywrócone bez zmian z upstreamu:", restore_verbatim(sel))
     generate_skill_index(sel)
     bundle_claude_commands_and_hooks()
 

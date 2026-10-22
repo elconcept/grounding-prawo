@@ -134,8 +134,10 @@ UP-6: KAŻDA sprawa → CN-GATE przed analizą (shared/MOD-CN-GATE.md) i REM-GAT
 - **Dane osobowe:** pracujemy na oryginałach, bez ograniczeń „nie do chmury”; dane zostają w treści.
 - **Typy pism:** pozew, odpowiedź na pozew, apelacja karna, zażalenie na postanowienie prokuratora, zarzuty do opinii biegłego
   obsługuje `pisma-procesowe-v3` przez `modules/typy/`. Zawiadomienie o przestępstwie: wyjątek poniżej.
-- **Po wygenerowaniu pisma:** zaproponuj `szturm-na-draft-pl` (profil MAX, bez tańszych wariantów) i `pisz-po-polsku` do redakcji.
+- **Po wygenerowaniu pisma:** obowiązkowa redakcja w kolejności `pisz-po-polsku`, potem `humanizer-pl`
+  (niezmodyfikowany upstream), oraz `szturm-na-draft-pl` (profil MAX, bez tańszych wariantów).
   Pełna ścieżka kontroli jest zawsze; nie proponuj lżejszej.
+  Kolejności redakcji nie wolno zamieniać ani pomijać etapu.
 - **Moduły dziedzinowe wyłączone w tym pluginie:** praca/ZUS (DR-04), podatki (DR-06), zamówienia (DR-07), samorząd (DR-08),
   budownictwo/środowisko (DR-09), compliance (DR-15). Gdy sprawa ich wymaga, powiedz o tym wprost i nie wymyślaj ścieżki.
 

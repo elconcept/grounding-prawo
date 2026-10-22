@@ -99,13 +99,17 @@ Wnioskodawca:     Jan Kowalski
   może sam sprawdzić po sygnaturze, wystarczy wskazać. Nie powtarzaj adresu innego sądu, gdy jest taki sam jak adresata.
 - Nie upraszczaj stanowiska strony do wersji organu: gdy strona kwestionuje podstawę czynności, nie pisz,
   że czynność nastąpiła „na zgłoszenie o X” jako o jej przyczynie; opisz, co organ zrobił i co powiedział.
-- Kontrola przed wydaniem treści: `pisz-po-polsku` (z bramką `audyt_po_przepisaniu.py`),
-  `szturm-na-draft-pl/modules/pierwsze-wrazenie-sedziego-pl`, przy tezie spornej `szturm-na-draft-pl/modules/atak-przeciwnika-pl`.
+- Kontrola przed wydaniem treści jest dwuetapowa i obowiązkowa, w tej kolejności:
+  1. `pisz-po-polsku` - szlif językowy (z bramką `audyt_po_przepisaniu.py`),
+  2. `humanizer-pl` - niezmodyfikowany upstream usuwający resztki wzorców AI.
+  Potem `szturm-na-draft-pl/modules/pierwsze-wrazenie-sedziego-pl`, a przy tezie spornej `szturm-na-draft-pl/modules/atak-przeciwnika-pl`.
+  Nie wolno pominąć żadnego etapu ani zamienić kolejności.
 
 ## Kontrola przed wydaniem
 
-1. Renderer przeszedł bez błędu; ostrzeżenie o wyróżnieniach rozpatrzone.
-2. Telefon i e-mail nadawcy podane albo potwierdzone przez użytkownika jako nieznane.
-3. W `drafty/<pismo>/` są tylko wersje `.md`, w `legal/output/` jeden `.docx` pisma; nie ma PDF
+1. Pismo przeszło obowiązkowo `pisz-po-polsku`, a potem `humanizer-pl` (ta kolejność); żaden etap nie został pominięty.
+2. Renderer przeszedł bez błędu; ostrzeżenie o wyróżnieniach rozpatrzone.
+3. Telefon i e-mail nadawcy podane albo potwierdzone przez użytkownika jako nieznane.
+4. W `drafty/<pismo>/` są tylko wersje `.md`, w `legal/output/` jeden `.docx` pisma; nie ma PDF
    (`wersja_pisma.py sprawdz --output legal/output` = `PASS`).
-4. Treść mieści się w zakładanej objętości; podpis nie zostaje sam na stronie.
+5. Treść mieści się w zakładanej objętości; podpis nie zostaje sam na stronie.

@@ -50,6 +50,11 @@ W `legal/output/` jest dokładnie jeden DOCX każdego pisma i nic poza DOCX. Ses
 niezaakceptowanych zmian w tym DOCX i snapshotu MD, a kończy zmianami tej sesji jako redline w DOCX
 (`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”).
 
+Każde pismo przed wydaniem przechodzi obowiązkowo przez dwa skille redakcyjne, w tej kolejności:
+najpierw `pisz-po-polsku` (szlif językowy i bramka `audyt_po_przepisaniu.py`), potem `humanizer-pl`
+(niezmodyfikowany upstream usuwający wzorce AI). Pominięcie etapu albo zamiana kolejności jest błędem
+procesu; wyjątek wymaga wyraźnego polecenia użytkownika i adnotacji w `_PRZEBIEGI.md`.
+
 Wiedza wielosprawowa, teczka sprawy w wiki i lekcje do doskonalenia pism: Basic Memory, projekt `legal`
 (protokół odczytu i zapisu: `shared/BASIC-MEMORY.md`), a lekcje jednej sprawy także `_wiedza.md` w teczce.
 
