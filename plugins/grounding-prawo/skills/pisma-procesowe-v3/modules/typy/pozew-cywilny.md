@@ -48,24 +48,24 @@ Jeśli użytkownik nie poda wszystkich danych, oznacz brakujące jako „…" (w
 
 ## Faza 1: Badanie prawne (OBOWIĄZKOWE)
 
-Po zebraniu stanu faktycznego, ZANIM zaczniesz pisać pozew, MUSISZ przeprowadzić badanie prawne przy użyciu konektorów **ISAP** (legislacja) i **SAOS** (orzecznictwo). To nie jest opcjonalne — pozew bez aktualnych podstaw prawnych i orzecznictwa jest bezwartościowy.
+Po zebraniu stanu faktycznego, ZANIM zaczniesz pisać pozew, MUSISZ przeprowadzić badanie prawne przy użyciu konektorów **ustawy/Repertorium** (legislacja) i **SAOS** (orzecznictwo). To nie jest opcjonalne — pozew bez aktualnych podstaw prawnych i orzecznictwa jest bezwartościowy.
 
-> **Zanim wywołasz cokolwiek — przeczytaj `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`).** Te API są **polowe, nie semantyczne**: opisowe zdanie zwraca zero wyników. ISAP domyślnie serwuje **tekst ogłoszony** (brzmienie pierwotne), więc brzmienie na dziś wymaga przejścia przez tekst jednolity.
+> **Zanim wywołasz cokolwiek — przeczytaj `shared/MOD-TEKST-JEDNOLITY.md` i `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`).** Te API są **polowe, nie semantyczne**: opisowe zdanie zwraca zero wyników. Brzmienie na dziś ustalasz przez `ustawy` (tekst jednolity wskazany w odpowiedzi), a nowelizacje po jego dacie sprawdzasz w urzędowym ELI.
 
 ### Strategia wyszukiwania:
 
 Wykonaj **równoległe** zapytania (dobierz do typu sprawy):
 
-**ISAP — przepisy** (`search_acts` → `get_act` → `get_act_text`), zawsze. Procedura na każdy potrzebny akt:
+**Przepisy — `ustawy` + Repertorium**, zawsze. Procedura na każdy potrzebny akt:
 
 ```
-search_acts(title: "Kodeks cywilny", publisher: "DU")
-  → get_act(eli) → weź NAJNOWSZY consolidated_text_eli
-  → get_act_text(eli: <jednolity>, search_text: "Art. 471.")
-  → cytuj tylko gdy text_version = tekst_jednolity i in_force = IN_FORCE
+ustawy_akty (znajdź akt, jego tekst_jednolity i eli)
+  → ustawy_artykul(akt, art)
+  → ustawy_cytat(akt, art, fragment)  → kontrola dosłowności
+  → nowelizacje po dacie t.j. → urzędowe ELI (api.sejm.gov.pl) / Repertorium
 ```
 
-Numery artykułów poniżej to **hipotezy do sprawdzenia**, nie gotowa podstawa prawna — potwierdź każdy tekstem z `get_act_text`:
+Numery artykułów poniżej to **hipotezy do sprawdzenia**, nie gotowa podstawa prawna — potwierdź każdy tekstem z `ustawy_artykul`:
 - Przepisy materialnoprawne stanowiące podstawę roszczenia (np. art. 471 KC dla odpowiedzialności kontraktowej, art. 415 KC dla deliktowej, art. 405/410 KC dla bezpodstawnego wzbogacenia)
 - Przepisy procesowe: art. 126, 187 KPC (wymogi formalne), art. 189 KPC (jeśli powództwo o ustalenie)
 - Przepisy szczególne właściwe dla danej dziedziny (prawo bankowe, ustawa o ochronie konsumentów, prawo pracy, kodeks spółek handlowych, itp.)
@@ -73,15 +73,15 @@ Numery artykułów poniżej to **hipotezy do sprawdzenia**, nie gotowa podstawa 
 - Przepisy o przedawnieniu (art. 117-125 KC)
 - Przepisy o właściwości sądu (art. 16-17, 27-39 KPC)
 
-ISAP **nie ma** parametru `in_force_as_of` — jego rolę pełni przejście na najnowszy tekst jednolity (`consolidated_text_eli`, lista od najnowszego).
+Akt spoza korpusu `ustawy`: ustal ELI przez Repertorium i odczytaj tekst jednolity z urzędowego ELI; bez tego oznacz brzmienie jako niezweryfikowane.
 
-Dla głównych kodeksów `get_act_text` na obowiązującym tekście jednolitym zwróci `text_unavailable_use_pdf` — to **sytuacja typowa**, nie awaria: świeże obwieszczenia publikowane są wyłącznie w PDF. **Nie schodź wtedy do starszego tekstu jednolitego** — sięgnij po PDF:
+Gdy obowiązujący tekst jednolity jest tylko w PDF, przeczytaj `pdf_url` z odpowiedzi natywnym `Read` (parametr `pages`) albo WebFetch:
 
 ```bash
-# MCP isap: get_act_text(<ELI tekstu jednolitego>), potem wyszukaj "Art. N."
+# ustawy: ustawy_artykul(<akt>, <art>); Repertorium: repertorium_szukaj_repertorium(q=<akt>) → ELI tekstu jednolitego
 ```
 
-PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`), sekcja 4.
+PDF-y urzędowych tekstów jednolitych mają warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy tekstu jednolitego brak albo ELI nie daje tekstu obowiązującego — przyznaj, że brzmienie jest niezweryfikowane; nie podstawiaj aktu bazowego. Pełna procedura: `shared/MOD-TEKST-JEDNOLITY.md`.
 
 **Nie zgaduj brzmienia z samego linku do PDF i nie podstawiaj aktu bazowego** (KC/KPC z 1964 r.) jako brzmienia obowiązującego.
 
@@ -690,7 +690,7 @@ Po wygenerowaniu pozwu, przeprowadź samoweryfikację:
 - [ ] Każda przesłanka normy prawnej jest zaadresowana w subsumpcji
 - [ ] Każde twierdzenie faktyczne ma dowód
 - [ ] Powołano aktualne orzecznictwo (SAOS; sygnatury i daty zweryfikowane w źródle, citator sprawdzony)
-- [ ] Powołano aktualne przepisy (ISAP; `text_version = tekst_jednolity`, `in_force = IN_FORCE`, ELI podany)
+- [ ] Powołano aktualne przepisy (`ustawy_artykul` + `ustawy_cytat`; tekst jednolity i ELI podane, nowelizacje sprawdzone w urzędowym ELI)
 - [ ] Odniesiono się do przedawnienia
 - [ ] Odniesiono się do właściwości sądu
 - [ ] Poprawnie obliczono opłatę sądową
@@ -708,7 +708,7 @@ Po wygenerowaniu pozwu, przeprowadź samoweryfikację:
 
 1. **Nie ograniczaj długości** — pozew ma być tak długi, jak wymaga sprawa. Profesjonalne pozwy mają regularnie 30-80 stron.
 
-2. **Zawsze potwierdzaj źródłem** — pamięć wolno użyć tylko do postawienia hipotezy (który artykuł, która ustawa, jaka linia orzecznicza). Treść przepisu musi pochodzić z ISAP `get_act_text` na **tekście jednolitym**, sygnatura — z SAOS `search`/`search_by_case`, a jej aktualność — z `saos_cite_check`. Podawaj rzeczywiste sygnatury, daty, ELI i status aktu.
+2. **Zawsze potwierdzaj źródłem** — pamięć wolno użyć tylko do postawienia hipotezy (który artykuł, która ustawa, jaka linia orzecznicza). Treść przepisu musi pochodzić z `ustawy_artykul` na **tekście jednolitym** (dosłowność: `ustawy_cytat`, nowelizacje: urzędowe ELI), sygnatura — z SAOS `search`/`search_by_case`, a jej aktualność — z `saos_cite_check`. Podawaj rzeczywiste sygnatury, daty, ELI i status aktu.
 
 3. **Subsumpcja jest obowiązkowa** — nie wystarczy napisać „roszczenie jest zasadne na podstawie art. X". Musisz rozbić normę na przesłanki i udowodnić każdą z osobna.
 

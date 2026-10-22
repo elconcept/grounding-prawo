@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo upadłościowe — t.j. [Dz.U. 2026 poz. 913](https://api.sejm.gov.pl/eli/acts/DU/2026/913/text.pdf) (ELI DU/2026/913; akt bazowy DU/2003/535), s. 74–85
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prup/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2003/535 → DU/2026/913, 2026-10-08]; rozporządzenie (UE) 2015/848 w sprawie postępowania upadłościowego — „obowiązuje” ✅ [VER: eurlex_lookup CELEX 32015R0848, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prup/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2003/535 → DU/2026/913, 2026-10-08]; rozporządzenie (UE) 2015/848 w sprawie postępowania upadłościowego — „obowiązuje” ✅ [VER: eurlex_lookup CELEX 32015R0848, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** brak.
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prup.py article 425e --verify-online`. Część druga PrUp ustępuje umowie międzynarodowej i prawu organizacji międzynarodowej (art. 378 ust. 1) — przy elemencie unijnym najpierw ustal zakres rozporządzenia 2015/848; jego treść odczytaj z EUR-Lex, nie z pamięci. Upadłość dewelopera: dołącz aktualną ustawę o ochronie nabywcy (Dz.U. 2024 poz. 695 ze zm., wskazaną w art. 425a). Likwidacja masy (art. 306–334) → `mod-PrUpad-syndyk-likwidacja`.
 

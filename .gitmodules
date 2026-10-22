@@ -40,9 +40,6 @@
 [submodule "vendor/mcp/mcp-ip-rotator"]
 	path = vendor/mcp/mcp-ip-rotator
 	url = https://github.com/elconcept/mcp-ip-rotator.git
-[submodule "vendor/mcp/mcp-isap"]
-	path = vendor/mcp/mcp-isap
-	url = https://github.com/elconcept/mcp-isap.git
 [submodule "vendor/mcp/mcp-krs"]
 	path = vendor/mcp/mcp-krs
 	url = https://github.com/elconcept/mcp-krs.git

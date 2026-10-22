@@ -1,11 +1,11 @@
 # Plan pełnego pokrycia PrUp i PrRestr (moduły klasy A)
 
-⚠️ Źródło jedyne: urzędowe t.j. z `references/{prup,prrestr}/sources/*.pdf` (SHA-256 w `metadata.json`) + online ELI przed zamknięciem modułu. Nic z pamięci; przepis spoza tych aktów — tylko po odczycie w ELI (`isap_tekst`).
+⚠️ Źródło jedyne: urzędowe t.j. z `references/{prup,prrestr}/sources/*.pdf` (SHA-256 w `metadata.json`) + online ELI przed zamknięciem modułu. Nic z pamięci; przepis spoza tych aktów — tylko po odczycie w ELI (`ustawy_artykul`).
 
 ## Poziom A / COV-ART — definicja ukończenia modułu
 
 ```
-□ nagłówek: Status, Źródło (ELI t.j.), Weryfikacja (data + hash snapshotu + isap_lookup), zmiany po t.j., ZASADA
+□ nagłówek: Status, Źródło (ELI t.j.), Weryfikacja (data + hash snapshotu + repertorium_szukaj_repertorium), zmiany po t.j., ZASADA
 □ FAZA 0 — INTAKE (pytania rozstrzygające tryb i przesłanki)
 □ MAPA ARTYKUŁÓW (zakres → treść → sekcja; uchylone wymienione)
 □ każdy artykuł TEKST_W_TJ z zakresu modułu omówiony: reguła, przesłanki, skutek, liczby i terminy z tekstu

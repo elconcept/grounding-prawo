@@ -7,7 +7,7 @@ diff -ruN a/prawny-router-v3/SKILL.md b/prawny-router-v3/SKILL.md
  
 +## KONFIGURACJA PLUGINU grounding-prawo (nadrzędna wobec ogólnych zapisów poniżej)
 +
-+- **Źródła prawa:** najpierw konektory MCP z portalu `lex.xlap.pl/mcp` (ISAP, SAOS z lokalnym dumpem, NSA/CBOSA, KRS, UODO,
++- **Źródła prawa:** najpierw konektory MCP z portalu `lex.xlap.pl/mcp` (ustawy, Repertorium, SAOS z lokalnym dumpem, NSA/CBOSA, KRS, UODO,
 +  EUR-Lex/SPARQL). `web_search`/`web_fetch` tylko gdy konektor nie pokrywa źródła. Granice pokrycia podawaj wprost.
 +  Brak cache lokalnego: nie ma już skilla `lexcache`.
 +- **Dane osobowe:** pracujemy na oryginałach, bez ograniczeń „nie do chmury”; dane zostają w treści.

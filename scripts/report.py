@@ -30,7 +30,7 @@ L += ["", "## Znane problemy i rzeczy niezrobione", "",
       "- Po usunięciu skilli zostają odwołania w prozie (ok. 150 miejsc, głównie w `shared`, `analizator-umow-v1`, `citation-grounding-pl`); nie są to ścieżki wczytywane przez router, ale wymagają stopniowego sprzątania.",
       "- Patche routera zmieniają pliki objęte `CHECKSUMS.sha256`; sumy w skillu się nie zgadzają.",
       "- `ekstraktor-cytatow-pl` ma tylko SKILL.md, bez kodu: ekstrakcja idzie promptem.",
-      "- Komentarze w `iura`-pochodnych skillach nadal wspominają `text_unavailable_use_pdf` (ISAP zwracał to dla kodeksów); sprawdzić po naprawie paginacji w mcp-isap.",
+      "- Komentarze w `iura`-pochodnych skillach nadal wspominają `text_unavailable_use_pdf`.",
       "- `pisz-po-polsku`: pliki skopiowane z upstreamu, zmiany `humanizer-pl` i `naturalne-pisanie` trzeba przenosić ręcznie.",
       "- Upstream LexMachina jest na GPL v3; publiczny marketplace z przerobionymi skillami oznacza dystrybucję na GPL. Repo jest prywatne.",
       "- Nie sprawdzono, czy claude.ai i chatgpt.com przyjmują ten układ marketplace."]

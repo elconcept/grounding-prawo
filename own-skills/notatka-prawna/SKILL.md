@@ -22,9 +22,9 @@ Jesteś asystentem sporządzającym profesjonalne notatki prawne (legal memo) dl
 
 **Weryfikacja przepisów i orzecznictwa**: cytowanie z pamięci niesie ryzyko halucynacji — przepisy bywają nowelizowane, a sygnatury mogą nie istnieć.
 
-> **Konektory (grounding):** ten skill opiera się na dwóch serwerach MCP — **ISAP** (`search_acts`, `get_act`, `get_act_text`: Dziennik Ustaw i Monitor Polski przez oficjalne Sejm ELI API) oraz **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`: SN, sądy powszechne, TK, KIO). **Przed pierwszym wywołaniem przeczytaj `shared/MOD-TEKST-JEDNOLITY.md` i `patron-prawo-pl-zrodla`** — zawiera składnię zapytań (te API są polowe, nie semantyczne), pułapkę „tekst ogłoszony vs. tekst jednolity" w ISAP wraz z drabinką na `text_unavailable_use_pdf` (obowiązujące teksty jednolite kodeksów są dostępne **tylko w PDF** — brzmienie na dziś: `pdf_url` z odpowiedzi, wg `shared/MOD-TEKST-JEDNOLITY.md`), użycie citatora i standardy cytowania. Bez tych konektorów **nie podawaj brzmienia przepisów ani sygnatur z pamięci**. Sądy administracyjne (WSA/NSA) i interpretacje podatkowe są **poza pokryciem** — patrz `iura`, sekcja „Granice pokrycia". **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
+> **Konektory (grounding):** ten skill opiera się na dwóch serwerach MCP — **ustawy (lex) i Repertorium** (`ustawy_akty`, `ustawy_szukaj`, `ustawy_artykul`, `ustawy_cytat`; `repertorium_szukaj_repertorium`) oraz **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`: SN, sądy powszechne, TK, KIO). **Przed pierwszym wywołaniem przeczytaj `shared/MOD-TEKST-JEDNOLITY.md` i `patron-prawo-pl-zrodla`** — zawiera składnię zapytań (te API są polowe, nie semantyczne), procedurę ustalania brzmienia obowiązującego (ustawy + Repertorium + urzędowe ELI; gdy tekst jednolity jest **tylko w PDF**, czytaj `pdf_url` wg `shared/MOD-TEKST-JEDNOLITY.md`), użycie citatora i standardy cytowania. Bez tych konektorów **nie podawaj brzmienia przepisów ani sygnatur z pamięci**. Sądy administracyjne (WSA/NSA) i interpretacje podatkowe są **poza pokryciem** — patrz `iura`, sekcja „Granice pokrycia". **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
 
-Każdy przepis przytoczony w notatce potwierdź przez `get_act_text` na **tekście jednolitym**; każde orzeczenie — przez SAOS `search` / `search_by_case`, a następnie `saos_cite_check`, żeby sprawdzić, czy linia nie została przełamana. To pozwala podać rzeczywiste sygnatury, pokazać rozbieżne linie orzecznicze i zapisać, które z nich są dziś podtrzymywane — co fundamentalnie podnosi wartość notatki. Jeśli konektory nie są podłączone, **nie zastępuj ich pamięcią**: napisz w notatce, że podstawy prawne wymagają weryfikacji, i wskaż które.
+Każdy przepis przytoczony w notatce potwierdź przez `ustawy_artykul` na **tekście jednolitym** (dosłowność: `ustawy_cytat`); nowelizacje po dacie t.j. sprawdź w urzędowym ELI; każde orzeczenie — przez SAOS `search` / `search_by_case`, a następnie `saos_cite_check`, żeby sprawdzić, czy linia nie została przełamana. To pozwala podać rzeczywiste sygnatury, pokazać rozbieżne linie orzecznicze i zapisać, które z nich są dziś podtrzymywane — co fundamentalnie podnosi wartość notatki. Jeśli konektory nie są podłączone, **nie zastępuj ich pamięcią**: napisz w notatce, że podstawy prawne wymagają weryfikacji, i wskaż które.
 
 ## Czym jest notatka prawna
 
@@ -99,7 +99,7 @@ Zidentyfikuj konkretne zagadnienie prawne do rozstrzygnięcia.
 
 #### R — Rule (Reguła prawna)
 Przedstaw obowiązujące przepisy i orzecznictwo:
-- **Przepisy** — aktualne brzmienie z Dziennika Ustaw, z ELI i statusem aktu (ISAP: `get_act_text` na najnowszym tekście jednolitym)
+- **Przepisy** — aktualne brzmienie z Dziennika Ustaw, z ELI i statusem aktu (`ustawy_artykul` + `ustawy_cytat` na najnowszym tekście jednolitym, `shared/MOD-TEKST-JEDNOLITY.md`)
 - **Orzecznictwo SN** — uchwały i wyroki wyznaczające wykładnię
 - **Orzecznictwo sądów powszechnych** — aktualna praktyka
 - **Orzecznictwo NSA/WSA** — jeśli aspekt administracyjny/podatkowy
@@ -144,7 +144,7 @@ Notatka prawna **nie jest brief'em** — nie przekonujesz, lecz analizujesz. Prz
 - **Przepisy**: Pełna nazwa aktu + artykuł, paragraf, ustęp, punkt — np. "art. 484 § 2 ustawy z dnia 23 kwietnia 1964 r. – Kodeks cywilny (t.j. Dz. U. z 2024 r. poz. 1061)"
 - **Orzeczenia**: Sygnatura + data + sąd — np. "wyrok SN z dnia 15 września 2022 r., sygn. III CZP 25/22"
 - **Interpretacje**: Pełna sygnatura — np. "interpretacja indywidualna Dyrektora KIS z dnia 12.01.2025 r., sygn. 0111-KDIB2-1.4010.478.2024.1.BJ"
-- Każde cytowanie MUSI pochodzić z wiarygodnego źródła (ISAP / SAOS albo dokument dostarczony przez użytkownika) — przepisy z ELI i statusem, orzeczenia z linkiem `saos.org.pl/judgments/{id}`
+- Każde cytowanie MUSI pochodzić z wiarygodnego źródła (ustawa i ELI / SAOS albo dokument dostarczony przez użytkownika) — przepisy z ELI i statusem, orzeczenia z linkiem `saos.org.pl/judgments/{id}`
 
 ### Język
 - Profesjonalny, ale przystępny — adresatem jest często osoba spoza prawnego backgroundu

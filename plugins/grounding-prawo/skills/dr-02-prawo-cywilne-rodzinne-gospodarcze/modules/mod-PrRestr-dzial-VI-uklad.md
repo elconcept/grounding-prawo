@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo restrukturyzacyjne — t.j. [Dz.U. 2026 poz. 533](https://api.sejm.gov.pl/eli/acts/DU/2026/533/text.pdf) (ELI DU/2026/533; akt bazowy DU/2015/978), s. 40–48
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2015/978 → DU/2026/533, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2015/978 → DU/2026/533, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** [DU/2026/176](https://api.sejm.gov.pl/eli/acts/DU/2026/176/text.pdf) art. 24 — **art. 156 ust. 5 pkt 4** (oznaczenie akcji na okaziciela / imiennych) **uchylony od 18.02.2027**; t.j. zawiera oba warianty pkt 4 (odnośniki 31–32). Liczne jednostki (150 ust. 1 pkt 4 i ust. 3, 151 ust. 2, 155 ust. 4, 161, 161a, 162 ust. 2, 163 ust. 3, 164, 165, 165a, 175 ust. 4) w brzmieniu nowelizacji DU/2025/1085 (od 23.08.2025) — ujęte w t.j.; dla spraw sprzed tej daty → przepisy przejściowe w `mod-PrRestr-zrodla-i-wersje`.
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prrestr.py article 161a --verify-online`. Większości przy głosowaniu i cram-down — art. 119 (→ `mod-PrRestr-dzial-IV-uczestnicy-wierzyciele`).
 

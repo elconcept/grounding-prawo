@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo restrukturyzacyjne — t.j. [Dz.U. 2026 poz. 533](https://api.sejm.gov.pl/eli/acts/DU/2026/533/text.pdf) (ELI DU/2026/533; akt bazowy DU/2015/978), s. 9–21
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2015/978 → DU/2026/533, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2015/978 → DU/2026/533, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** brak (późniejsze nowelizacje dotyczą art. 4 i 156 → `references/insolvency/wersje-i-przepisy-przejsciowe.md`). Art. 26a dodany przez DU/2025/1170 (od 09.09.2025) — ujęty w t.j.
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prrestr.py article 55 --verify-online`. **Podstawa wynagrodzenia** (art. 42 ust. 3, 55 ust. 3) = przeciętne miesięczne wynagrodzenie w sektorze przedsiębiorstw bez nagród z zysku w **III kwartale roku poprzedniego** — wartość pobierz z komunikatu Prezesa GUS, nie z pamięci. Nie licz wynagrodzenia według przepisów PrUp o syndyku.
 

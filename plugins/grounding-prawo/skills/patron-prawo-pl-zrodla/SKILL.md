@@ -1,6 +1,6 @@
 ---
 name: patron-prawo-pl-zrodla
-description: 'Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ISAP, cite), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło.'
+description: 'Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ustawy, Repertorium), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -9,12 +9,12 @@ Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `sh
 
 ## Repertorium - pierwsze źródło w każdym zadaniu prawnym
 
-Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `ustawy`, `saos`, `nsa`, `uodo`, `eu-sparql`.
 
 # Źródła prawa PL i UE
 
 Konektory działają przez portal MCP (`lex.xlap.pl/mcp`, plik `.mcp.json` pluginu). Narzędzia mają w hoście
-nazwy z prefiksem portalu (np. `isap_get_act_text`, `nsa_search`); poniżej podano samą nazwę narzędzia.
+nazwy z prefiksem portalu (np. `ustawy_artykul`, `nsa_search`); poniżej podano samą nazwę narzędzia.
 Składnia zapytań, drabinka do tekstu jednolitego, pokrycie czasowe i standardy cytowania: `references/iura-metodyka.md`
 oraz `shared/MOD-TEKST-JEDNOLITY.md`. Pełna ścieżka pracy nad sprawą: skill `prawny-router-v3` (mapa celów `shared/SCIEZKI-PRACY.md`).
 
@@ -32,11 +32,11 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 | **Zawsze pierwsze:** semantyczne rozpoznanie ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK, decyzji UODO, PL i UE | `repertorium` | `szukaj_repertorium` (`jurysdykcja` `pl`/`eu`, kilka zapytań: zagadnienie, każda teza) | potwierdzenia kompletnego, aktualnego brzmienia cytatu |
 | Orzeczenia SN, sądów powszechnych, TK, KIO | `saos` | `search`, `search_by_case`, `get_judgment`, `saos_cite_check` | WSA i NSA - brak orzecznictwa administracyjnego (podatki, UODO, decyzje organów) |
 | Orzeczenia NSA i 16 WSA (CBOSA): administracja, podatki, cła, ochrona danych | `nsa` | `search`, `search_by_case`, `get_judgment` | sądy powszechne, SN |
-| Akty prawne PL (Dz.U., M.P., od 1918 r.), status, nowelizacje | `isap` | `search_acts`, `get_act`, `get_act_text` (przy `text_unavailable_use_pdf` adresy PDF: pobierz `curl`, odczytaj `pdftotext`) | treści PDF w odpowiedzi MCP, orzecznictwo, komentarze |
+| Akty prawne PL (Dz.U., M.P., od 1918 r.), status, nowelizacje | `ustawy` | `ustawy_akty`, `repertorium_szukaj_repertorium`, `ustawy_artykul` (przy `text_unavailable_use_pdf` adresy PDF: pobierz `curl`, odczytaj `pdftotext`) | treści PDF w odpowiedzi MCP, orzecznictwo, komentarze |
 | Spółki w KRS | `krs` | `get_entity`, `get_entity_full`, `get_board` | CEIDG |
 | Prawo UE, TSUE, decyzje organów ochrony danych (GDPRhub) | `eu-sparql` | `search_by_celex`, `search_by_date_range`, `search_cjeu`, `search_cjeu_by_ecli`, `search_gdprhub` | prawo krajowe |
 | 14 regulacji UE offline (RODO, AI Act, DORA, NIS2, eIDAS 2.0, CRA, DSA, DMA, Data Act, DGA, LED, ePrivacy, Cybersecurity Act i in.) | `eu-compliance` | `eu_search`, `eu_article`, `eu_compare`, `eu_check_applicability`, `eu_evidence` | akty spoza korpusu |
-| Brzmienie artykułu i komentarz: kodeksy i Konstytucja z git-as-law (tekst jednolity + każda nowelizacja, stan na dzień `stan_na`), pozostałe ustawy z komentarza według tekstu jednolitego | serwer `ustawy` (gdy jest w portalu) albo lokalnie `scripts/ustawy.py` | `artykul`, `cytat`, `szukaj` (`art <akt> <nr> --komentarz`) | nowelizacji wchodzących w życie po `stan_na` (sprawdź w `isap`); komentarz to opracowanie |
+| Brzmienie artykułu i komentarz: kodeksy i Konstytucja z git-as-law (tekst jednolity + każda nowelizacja, stan na dzień `stan_na`), pozostałe ustawy z komentarza według tekstu jednolitego | serwer `ustawy` (gdy jest w portalu) albo lokalnie `scripts/ustawy.py` | `artykul`, `cytat`, `szukaj` (`art <akt> <nr> --komentarz`) | nowelizacji wchodzących w życie po `stan_na` (sprawdź w `ustawy`); komentarz to opracowanie |
 
 ## Struktura sądownictwa - nie myl pionów
 - Sądy powszechne: rejonowe, okręgowe, apelacyjne. Sprawy cywilne, karne, rodzinne, prawa
@@ -54,8 +54,8 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
   bazy. Pion rozpoznasz skryptem `pl_entities.py extract` (skill `citation-grounding-pl`, moduł `citation-grounding-pl/modules/patron-identyfikatory-pl`).
 - **Czy wyrok „żyje”:** `saos_cite_check` - późniejsze orzeczenia cytujące sygnaturę. Przeczytaj,
   w jakim kontekście ją przywołują (aprobata, krytyka, odmienny pogląd).
-- **Treść przepisu:** `isap` `search_acts` (fragment tytułu, rok, status) → `get_act` (ELI,
-  np. `DU/2018/1000`: status obowiązywania, wejście w życie, linki do tekstu) → `get_act_text`
+- **Treść przepisu:** `ustawy` `ustawy_akty` (fragment tytułu, rok, status) → `repertorium_szukaj_repertorium` (ELI,
+  np. `DU/2018/1000`: status obowiązywania, wejście w życie, linki do tekstu) → `ustawy_artykul`
   stronami (`page`, aż `has_more=false`) do szukanego artykułu. Sprawdź, czy akt obowiązuje
   i czy to tekst jednolity.
 - **Prawo UE:** artykuł z 14 regulacji → `eu_article` (dosłowny tekst offline) zamiast pamięci;
@@ -91,7 +91,7 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 
 ## Format odwołań
 - Akt: pełna nazwa + (Dz.U. ROK poz. NUMER) przy pierwszym przywołaniu, dalej skrót
-  („art. 6 ust. 1 lit. f RODO”, „art. 415 k.c.”). ELI z wyniku `isap` jako referencja.
+  („art. 6 ust. 1 lit. f RODO”, „art. 415 k.c.”). ELI z wyniku `ustawy` jako referencja.
 - Orzeczenie: „wyrok NSA z 12.05.2026 r., III OSK 1377/23” + link.
 - Akt UE: „rozporządzenie 2016/679 (RODO)” + link EUR-Lex.
 - Daty w treści: DD.MM.RRRR r.

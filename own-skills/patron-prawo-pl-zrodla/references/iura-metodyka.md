@@ -1,8 +1,8 @@
-# Metodyka researchu SAOS + ISAP (z pluginu IURA)
+# Metodyka researchu SAOS + ELI (z pluginu IURA)
 
 > Referencja skilla `patron-prawo-pl-zrodla`: składnia zapytań, drabinka do obowiązującego tekstu jednolitego,
 > pokrycie czasowe źródeł, metodyka i standardy cytowania. Narzędzia w portalu MCP mają prefiks
-> (np. `isap_search_acts`, `saos-chatgpt-bridge_search`); nazwy poniżej są skrócone do nazwy narzędzia.
+> (np. `ustawy_akty`, `saos-chatgpt-bridge_search`); nazwy poniżej są skrócone do nazwy narzędzia.
 > Przykłady dotyczą pism (kary umowne, cofnięcie pozwu, zamówienia publiczne) - traktuj je jako wzorzec
 > przejścia od pytania do wywołań, nie jako zasób treści prawnej.
 
@@ -10,7 +10,7 @@
 
 Jesteś ekspertem od badań prawnych w polskim systemie prawnym. Grounding opierasz na dwóch publicznych konektorach MCP:
 
-- **ISAP** (`@matematicsolutions/mcp-isap`) — legislacja: Dziennik Ustaw + Monitor Polski od 1918 r., 96 000+ aktów, przez oficjalne **Sejm ELI API** (`api.sejm.gov.pl/eli`). Klucz cytowalności: **ELI** (`DU/2018/1000`).
+- **Akty (ustawy + ELI)** — legislacja: Dziennik Ustaw + Monitor Polski od 1918 r., 96 000+ aktów, przez oficjalne **Sejm ELI API** (`api.sejm.gov.pl/eli`). Klucz cytowalności: **ELI** (`DU/2018/1000`).
 - **SAOS** (`@matematicsolutions/mcp-saos`) — orzecznictwo: sądy powszechne, Sąd Najwyższy, Trybunał Konstytucyjny, KIO, przez API `saos.org.pl` (Fundacja ePaństwo).
 
 
@@ -18,12 +18,12 @@ Jesteś ekspertem od badań prawnych w polskim systemie prawnym. Grounding opier
 
 ## 1. ZASADA FUNDAMENTALNA — pamięć proponuje, narzędzie potwierdza
 
-SAOS i ISAP to wyszukiwarki **kluczowe/polowe**, nie semantyczne — żeby cokolwiek znaleźć, musisz najpierw z wiedzy własnej postawić hipotezę: *która ustawa*, *który artykuł*, *która sygnatura*, *jaki fragment tytułu*.
+SAOS i ELI to wyszukiwarki **kluczowe/polowe**, nie semantyczne — żeby cokolwiek znaleźć, musisz najpierw z wiedzy własnej postawić hipotezę: *która ustawa*, *który artykuł*, *która sygnatura*, *jaki fragment tytułu*.
 
 **WOLNO:** użyć pamięci do zbudowania **klucza wyszukiwania** (np. „to raczej art. 203 KPC", „to ustawa o ochronie danych osobowych z 2018 r.").
 
 **ZAKAZANE — bez wyjątków:**
-- Podać **treść** przepisu, której nie zwrócił `get_act_text`.
+- Podać **treść** przepisu, której nie zwrócił `ustawy_artykul`.
 - Podać **numer artykułu jako podstawę prawną pisma**, jeśli hipoteza nie została potwierdzona tekstem aktu.
 - Podać **sygnaturę orzeczenia**, której nie zwrócił `search` / `search_by_case` z SAOS.
 - Przypisać sądowi tezę, której nie widziałeś w `get_judgment`.
@@ -37,49 +37,21 @@ Lepiej „nie znalazłem" niż wymyślona informacja prawna.
 
 ## 2. Paradygmat zapytań — zapytania polowe, nie semantyczne
 
-SAOS i ISAP używają wyszukiwania **semantycznego** nie obsługują - używają **dopasowania tekstowego po polach**. Długie zdanie opisowe zwraca **zero wyników**.
+SAOS i ELI używają wyszukiwania **semantycznego** nie obsługują - używają **dopasowania tekstowego po polach**. Długie zdanie opisowe zwraca **zero wyników**.
 
-### ISAP — `search_acts`
+### Akty — `ustawy` i Repertorium
 
-Szukasz **aktu**, nie zagadnienia. Pole `title` to **fragment tytułu z polską fleksją**.
+Szukasz **aktu**, nie zagadnienia. `ustawy_akty` podaje akty z bazy (37 ustaw z komentarzem) z `tekst_jednolity` i `eli`;
+akt spoza tej bazy: `repertorium_szukaj_repertorium` (ELI, tekst jednolity). Pole tytułu z polską fleksją, nie opis sprawy.
 
-| ❌ Źle | ✅ Dobrze |
-|---|---|
-| `title: "odpowiedzialność za wady w umowie o świadczenie usług"` | `title: "Kodeks cywilny"` |
-| `title: "przedawnienie roszczeń z umowy sprzedaży"` | `title: "ochronie danych osobowych", year: 2018` |
-| `title: "jak rozwiązać umowę najmu"` | `title: "ochronie praw lokatorów"` |
-
-Parametry: `title`, `year` (**liczba**, nie tekst), `publisher` (`DU` \| `MP`), `type` (`Ustawa`, `Rozporządzenie`, `Obwieszczenie`, `Uchwała`, `Umowa międzynarodowa`, `Konstytucja`, `Postanowienie`), `in_force` (**boolean**), `limit` (1–50).
-
-### SAOS — `search`
-
-Szukasz **orzeczenia**. Trzy różne pola, trzy różne składnie — nie mieszaj.
-
-| Pole | Składnia | Przykład |
-|---|---|---|
-| `legalBase` | **numer artykułu, tak jak cytują sądy** — **działa tylko dla `courtType: "COMMON"`** (sprawdzone: przy `SUPREME` zwraca pusto, SN nie ma tego pola zindeksowanego) | `"art. 415 kc"`, `"art. 203 kpc"`, `"art. 6 RODO"` |
-| `all` | **fraza pełnotekstowa z uzasadnienia**, 2–5 słów | `"rażąco niska cena"`, `"zrzeczenie się roszczenia"` |
-| `caseNumber` | sygnatura | `"III CZP 6/21"` |
-| `referencedRegulation` | nazwa aktu | `"ustawa o ochronie danych osobowych"` |
-
-| ❌ Źle | ✅ Dobrze |
-|---|---|
-| `all: "czy kara umowna za naruszenie poufności w NDA jest dopuszczalna"` | `all: "kara umowna"` + (dla COMMON) `legalBase: "art. 483 kc"` |
-| `all: "standard należytej staranności w stosunkach profesjonalnych"` | `all: "należyta staranność"` |
-| `legalBase: "art. 415 kc"` + `courtType: "SUPREME"` | dla SN: `all: "bezprawność"` — `legalBase` w SN nie działa |
-
-**Wyszukuj wyczerpująco**: ta sama kwestia przez `legalBase` (kotwica normatywna) **i** przez `all` (jak sądy o tym mówią). Jeśli pusto — skróć frazę, zdejmij końcówki fleksyjne z rzadkich słów, spróbuj synonimu z języka orzeczniczego.
-
----
-
-## 4. ISAP: która to wersja tekstu — czytaj ZANIM zacytujesz
+## 4. ELI: która to wersja tekstu — czytaj ZANIM zacytujesz
 
 Procedura dojścia do obowiązującego brzmienia (tekst ogłoszony a tekst jednolity, kodeksy
 z tekstem jednolitym tylko w PDF, drabinka trzech szczebli, warunek cytowalności) jest wspólnym
 modułem **`shared/MOD-TEKST-JEDNOLITY.md`** - przeczytaj go przed każdym cytatem przepisu.
 
-Skrót: HTML z Sejm ELI to tekst ogłoszony; gdy `get_act_text` zwraca `text_unavailable_use_pdf`,
-pobierz PDF z adresu w odpowiedzi (`curl`) i odczytaj przez `pdftotext -layout` (`shared/MOD-TEKST-JEDNOLITY.md`, szczebel 1); MCP `isap` nie zwraca treści PDF. Cytowalne wyłącznie przy `FOUND` +
+Skrót: HTML z Sejm ELI to tekst ogłoszony; gdy `ustawy_artykul` zwraca `text_unavailable_use_pdf`,
+pobierz PDF z adresu w odpowiedzi (`curl`) i odczytaj przez `pdftotext -layout` (`shared/MOD-TEKST-JEDNOLITY.md`, szczebel 1); MCP `ustawy` nie zwraca treści PDF. Cytowalne wyłącznie przy `FOUND` +
 `tekst_jednolity` + `obowiazuje`; przy spornym brzmieniu szczebel 1 albo przyznanie braku.
 
 ---
@@ -151,16 +123,16 @@ Dawne `Search_IP` nie ma zamiennika w tym zestawie. Sygnatury typu `0111-KDIB2-1
 Poza zakresem tego skilla. Konektor `eu-sparql` obejmuje EUR-Lex i CJEU (nie ETPC) — patrz skill `eu-legal-memo`.
 
 ### Aktualności legislacyjne
-Brak konektora. `WebSearch` jest dopuszczalny jako **orientacyjny** — oznacz jako źródło nieurzędowe i potwierdź akt przez `search_acts`, zanim cokolwiek zacytujesz.
+Brak konektora. `WebSearch` jest dopuszczalny jako **orientacyjny** — oznacz jako źródło nieurzędowe i potwierdź akt przez `ustawy_akty`, zanim cokolwiek zacytujesz.
 
 ---
 
 ## 8. Metodologia researchu
 
 1. **Postaw hipotezę normatywną** (pamięć): która ustawa, który artykuł.
-2. **Znajdź akt** — `search_acts` po fragmencie tytułu (+ `year`, `publisher`, `in_force: true`).
-3. **Ustal wersję** — `get_act` → **pierwszy** (najnowszy) wpis `consolidated_text_eli`; albo od razu `search_acts(..., type: "Obwieszczenie")`.
-4. **Potwierdź brzmienie** — `get_act_text` z `search_text: "Art. N."`, sprawdź `text_version`. Przy `text_unavailable_use_pdf` przejdź na **szczebel 1 drabinki z sekcji 4** (odczyt `pdf_url`) — nie kończ na akcie bazowym i nie poprzestawaj na starszym tekście jednolitym.
+2. **Znajdź akt** — `ustawy_akty` po fragmencie tytułu (+ `year`, `publisher`, `in_force: true`).
+3. **Ustal wersję** — `repertorium_szukaj_repertorium` → **pierwszy** (najnowszy) wpis `consolidated_text_eli`; albo od razu `ustawy_akty(..., type: "Obwieszczenie")`.
+4. **Potwierdź brzmienie** — `ustawy_artykul` z `search_text: "Art. N."`, sprawdź `text_version`. Przy `text_unavailable_use_pdf` przejdź na **szczebel 1 drabinki z sekcji 4** (odczyt `pdf_url`) — nie kończ na akcie bazowym i nie poprzestawaj na starszym tekście jednolitym.
 5. **Wykładnia SN** — SAOS `search`, `courtType: "SUPREME"`, **`all` z krótką frazą** (`legalBase` w SN nie działa). Pamiętaj: baza kończy się na 2016 r. — zaznacz to.
 6. **Praktyka sądowa (źródło aktualne)** — SAOS `search`, `courtType: "COMMON"`, `legalBase: "art. N kc"` **oraz** `all` z frazą. To jest twoje główne źródło stanu bieżącego.
 7. **Citator** — `saos_cite_check` na każdej sygnaturze, którą zamierzasz zacytować.
@@ -175,39 +147,39 @@ Brak konektora. `WebSearch` jest dopuszczalny jako **orientacyjny** — oznacz j
 
 ## 9. Przykłady — od pytania do wywołań
 
-> W każdym przykładzie krok „`get_act_text` na tekście jednolitym" zwróci dla kodeksów `text_unavailable_use_pdf` — to **normalny bieg rzeczy**, nie awaria. Wtedy: odczyt `pdf_url` z odpowiedzi (sekcja 4, szczebel 1). Nigdy nie cofaj się do aktu bazowego.
+> W każdym przykładzie krok „`ustawy_artykul` na tekście jednolitym" zwróci dla kodeksów `text_unavailable_use_pdf` — to **normalny bieg rzeczy**, nie awaria. Wtedy: odczyt `pdf_url` z odpowiedzi (sekcja 4, szczebel 1). Nigdy nie cofaj się do aktu bazowego.
 
 ### Przykład 1: Kary umowne w NDA
-1. `search_acts(title: "Kodeks cywilny", publisher: "DU")` → ELI aktu bazowego
-2. `get_act(eli)` → najnowszy `consolidated_text_eli`
-3. `get_act_text(eli: <jednolity>, search_text: "Art. 483.")` → brzmienie
+1. `ustawy_akty(tytuł: "Kodeks cywilny")` → ELI aktu bazowego
+2. `ELI z `ustawy_akty` / Repertorium` → najnowszy `consolidated_text_eli`
+3. `ustawy_artykul(eli: <jednolity>, search_text: "Art. 483.")` → brzmienie
 4. `search(courtType: "COMMON", legalBase: "art. 483 kc", all: "kara umowna")` — źródło aktualne
 5. `search(courtType: "SUPREME", all: "kara umowna")` — wykładnia SN, **do 2016 r.**; zaznacz granicę
 6. `saos_cite_check(caseNumber: <wybrana sygnatura>)`
 
 ### Przykład 2: Limit odpowiedzialności w umowie B2B
-1. `get_act_text(eli: <KC t.j. z HTML>, search_text: "Art. 473.")`
+1. `ustawy_artykul(eli: <KC t.j. z HTML>, search_text: "Art. 473.")`
 2. `search(courtType: "COMMON", legalBase: "art. 473 kc")`
 3. `search(courtType: "COMMON", all: "ograniczenie odpowiedzialności wina umyślna")`
 4. `search(courtType: "SUPREME", all: "wyłączenie odpowiedzialności wina umyślna")` — do 2016 r.
 
 ### Przykład 3: Przeniesienie praw autorskich bez pól eksploatacji
-1. `search_acts(title: "prawie autorskim", publisher: "DU", in_force: true)`
-2. `get_act` → `consolidated_text_eli` → `get_act_text(search_text: "Art. 41.")`
+1. `ustawy_akty(title: "prawie autorskim", publisher: "DU", in_force: true)`
+2. `repertorium_szukaj_repertorium` → `consolidated_text_eli` → `ustawy_artykul(search_text: "Art. 41.")`
 3. `search(courtType: "COMMON", all: "pola eksploatacji")` — stan bieżący
 4. `search(courtType: "SUPREME", all: "pola eksploatacji")` — do 2016 r.
 
 ### Przykład 4: Cofnięcie pozwu ze zrzeczeniem się roszczenia
-1. `search_acts(title: "Kodeks postępowania cywilnego", publisher: "DU")`
-2. `get_act` → `consolidated_text_eli` → `get_act_text(search_text: "Art. 203.")`
+1. `ustawy_akty(tytuł: "Kodeks postępowania cywilnego")`
+2. `repertorium_szukaj_repertorium` → `consolidated_text_eli` → `ustawy_artykul(search_text: "Art. 203.")`
 3. `search(courtType: "COMMON", legalBase: "art. 203 kpc", all: "zrzeczenie się roszczenia")` — sprawdzone, zwraca orzeczenia z 2026 r.
 
 ### Przykład 5: Rażąco niska cena w zamówieniu publicznym
-1. `search_acts(title: "zamówień publicznych", publisher: "DU", in_force: true)`
+1. `ustawy_akty(title: "zamówień publicznych", publisher: "DU", in_force: true)`
 2. `search(courtType: "NATIONAL_APPEAL_CHAMBER", all: "rażąco niska cena", pageSize: 50)` — **uwaga: najnowsze orzeczenie KIO, jakie zwracają zapytania, pochodzi z 2018 r.** Sprawdź w treści, której ustawy PZP dotyczy, powiedz to użytkownikowi i po nowszą praktykę odeślij do UZP.
 
 ### Przykład 6: Spór podatkowy (przykład na granicę pokrycia)
-1. `search_acts(title: "podatku dochodowym od osób prawnych", publisher: "DU", in_force: true)` → przepis ✔
+1. `ustawy_akty(title: "podatku dochodowym od osób prawnych", publisher: "DU", in_force: true)` → przepis ✔
 2. Orzecznictwo NSA/WSA → **brak w SAOS**; jeśli konektor `nsa` niepodłączony, powiedz to i odeślij do `orzeczenia.nsa.gov.pl`
 3. Interpretacje podatkowe → **brak odpowiednika**; odeślij do `eureka.mf.gov.pl`
 
@@ -218,7 +190,7 @@ Brak konektora. `WebSearch` jest dopuszczalny jako **orientacyjny** — oznacz j
 1. Przeczytaj dokument i zrozum konstrukcję.
 2. Wypisz **WSZYSTKIE** kwestie prawne — nie pomijaj żadnej istotnej.
 3. Dla każdej kwestii postaw hipotezę normatywną i **wywołaj narzędzia** — ZANIM napiszesz choćby zdanie analizy.
-4. Dla spornych klauzul: przepis (ISAP) + wykładnia SN + praktyka sądów powszechnych + `saos_cite_check`.
+4. Dla spornych klauzul: przepis (ELI) + wykładnia SN + praktyka sądów powszechnych + `saos_cite_check`.
 5. Dopiero na podstawie wyników pisz analizę.
 6. Kwestie, których nie dało się zweryfikować (WSA/NSA, podatki), oznacz jako **niezweryfikowane** — osobną adnotacją, nie w tekście głównym jako pewnik.
 
@@ -255,8 +227,8 @@ Cytowania bierzesz z `structuredContent.citations` każdego konektora i wplatasz
 - rozszerz `courtType` (być może to sąd powszechny, nie SN),
 - jeśli sygnatura nie istnieje w SAOS — może to sąd administracyjny (nieindeksowany) albo orzeczenie nieopublikowane. **Powiedz to**, nie zgaduj.
 
-**Pusto w ISAP:**
-- `not_found` przy `search_text` — sprawdź pisownię **z polskimi znakami** („postępowania", nie „postepowania"); ISAP jest na to wrażliwy,
+**Pusto w ELI:**
+- `not_found` przy `search_text` — sprawdź pisownię **z polskimi znakami** („postępowania", nie „postepowania"); ELI jest na to wrażliwy,
 - `invalid_args` — zły **typ** parametru (`year` musi być liczbą, `in_force` booleanem); popraw i powtórz,
 - `invalid_eli` — wymagany format `DU/2018/1000` / `MP/2024/123` / `WDU20180001000`,
 - `text_unavailable_use_pdf` — treści nie ma w HTML; **przeczytaj `pdf_url` z odpowiedzi** (§4, szczebel 1), nie zgaduj i nie poprzestawaj na linku,
@@ -280,7 +252,7 @@ Pełny obraz rozbieżności to jedna z najcenniejszych rzeczy, jakie możesz da�
 
 ## 14. Higiena danych
 
-- SAOS i ISAP są **stateless, bez cache** — każde wywołanie idzie do upstream. Nie zakładaj ciągłości między wywołaniami.
+- SAOS i ELI są **stateless, bez cache** — każde wywołanie idzie do upstream. Nie zakładaj ciągłości między wywołaniami.
 - Treść urzędowa jest **integralna** — nie parafrazuj, nie „poprawiaj języka".
 - Orzeczenia zawierają dane osobowe (anonimizacja SAOS bywa niepełna) — przy przekazywaniu fragmentów na zewnątrz stosuj zasady RODO.
 

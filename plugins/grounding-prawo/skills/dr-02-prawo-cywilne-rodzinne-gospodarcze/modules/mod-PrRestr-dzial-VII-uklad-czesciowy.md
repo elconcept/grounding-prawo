@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo restrukturyzacyjne — t.j. [Dz.U. 2026 poz. 533](https://api.sejm.gov.pl/eli/acts/DU/2026/533/text.pdf) (ELI DU/2026/533; akt bazowy DU/2015/978), s. 48–49
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2015/978 → DU/2026/533, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2015/978 → DU/2026/533, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** brak. Art. 180 ust. 5 dodany i art. 186 uchylony przez DU/2025/1085 — ujęte w t.j.; dla spraw sprzed 23.08.2025 → `mod-PrRestr-zrodla-i-wersje`.
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prrestr.py article 183 --verify-online`. Układ częściowy — **tylko w PZU i PPU** (182 ust. 1). Większości — art. 119 (art. 186 uchylony).
 

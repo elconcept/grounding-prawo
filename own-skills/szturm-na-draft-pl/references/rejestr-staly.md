@@ -57,7 +57,7 @@ Pytania do autora (tylko DECYZJA_AUTORA i DOWOD):
 
 ```markdown
 ## Tura N - grounding <DOKUMENT> (<data>)
-Przepisy: <art. …> - ✅ t.j. <ELI> (MCP isap, pobrano <data>) | ❌ <…>
+Przepisy: <art. …> - ✅ t.j. <ELI> (ustawy/ELI, pobrano <data>) | ❌ <…>
 Orzecznictwo: <sygn.> - data i skład z treści (<źródło>, cache <data>) | NIEPEWNE: <konektor offline, brak cache>
 Cytaty z akt: <k> sprawdzonych, <m> 🔴 (-> S-ID)
 Blokady: <co zostało otwarte i dlaczego>

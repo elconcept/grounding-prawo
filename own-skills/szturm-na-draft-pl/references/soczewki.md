@@ -43,7 +43,7 @@ Jeżeli środowisko ma subagentów, soczewki E3 uruchamiaj równolegle, każdą 
 | `citation-grounding-pl` (`node <skille>/citation-grounding-pl/scripts/ground-citations.mjs`) | cytaty + źródła z akt | cytat istnieje dosłownie (ISTNIENIE/TREŚĆ/FRAGMENT) | CYTAT | 🔴 gdy cytat przypisany karcie, na której go nie ma |
 | `patron-weryfikacja-cytatow` (`python3 <skille>/patron-weryfikacja-cytatow/scripts/verify_citations.py`) | pismo + `--source` karty akt `.md` | cytaty z akt i załączników, liczby narzędzi | CYTAT, FAKT_BEZ_ZRODLA | liczby „z raportu narzędzia” muszą być w załączniku |
 | MCP `saos` (lex.xlap.pl/mcp, lokalny dump) | sygnatury z ekstraktora | sygnatura istnieje; **data i skład z treści orzeczenia**, nie z metadanych | SYGNATURA | metadane SAOS potrafią mieć złą datę - źródłem jest treść |
-| MCP `isap` (lex.xlap.pl/mcp) (`shared/MOD-TEKST-JEDNOLITY.md`) | powołane przepisy | brzmienie obowiązujące | PRZEPIS | cytowalne tylko FOUND + tekst_jednolity + obowiązuje |
+| MCP `ustawy` (lex.xlap.pl/mcp) (`shared/MOD-TEKST-JEDNOLITY.md`) | powołane przepisy | brzmienie obowiązujące | PRZEPIS | cytowalne tylko FOUND + tekst_jednolity + obowiązuje |
 | `patron-identyfikatory-pl` (`pl_entities.py extract`) | `.clean.md` | PESEL/NIP/REGON sumy, format sygnatur | SYGNATURA | tani, zawsze |
 
 Wynik E1 jest binarny. 🔴 z E1 blokuje wysyłkę, dopóki E8 nie potwierdzi naprawy ponownym przebiegiem.
@@ -106,7 +106,7 @@ terminy), `chronologia-sprawy-v1` (tylko gdy oś czasu jest sporna), `patron-pis
 |---|---|---|
 | CYTAT | citation-grounding, patron-weryfikacja-cytatow | AUTO (🔴 z dowodem E1) |
 | SYGNATURA | mcp-saos, patron-identyfikatory | AUTO (🔴 z dowodem E1, data z treści) |
-| PRZEPIS | MCP isap | AUTO (🔴 z dowodem E1, t.j.) |
+| PRZEPIS | MCP ustawy | AUTO (🔴 z dowodem E1, t.j.) |
 | FAKT_BEZ_ZRODLA | patron-weryfikacja-cytatow, analizator-dowodow, MOD-ATAK D4 | REDAKCJA (dodać źródło albo nazwać wiedzę strony) |
 | SPRZECZNOSC | analizator-dowodow, adversarial, fidelity | REDAKCJA, gdy akta rozstrzygają; DECYZJA_AUTORA, gdy dotyka faktu klienta |
 | LOGIKA | atak-przeciwnika, pierwsze-wrażenie, MOD-ATAK D1/D2 | REDAKCJA |

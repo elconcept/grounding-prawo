@@ -339,9 +339,9 @@ def uwaga(meta) -> str:
         return (f"brzmienie obowiązujące według repozytorium git-as-law: tekst jednolity {meta['tekst_jednolity']} "
                 f"z naniesionymi nowelizacjami, ostatnia w dniu {meta['stan_na']} ({meta['ostatnia_zmiana']}). "
                 f"Cytuj jako stan na {meta['stan_na']}; nowelizację albo nowy tekst jednolity wchodzący w życie po tej "
-                "dacie sprawdź w isap_search_acts.")
+                "dacie sprawdź w ustawy_akty.")
     return (f"brzmienie z komentarza opartego na tekście jednolitym {meta['tekst_jednolity']}; nowelizacje wchodzące "
-            "w życie po tym tekście jednolitym sprawdź w isap_search_acts (pole eli).")
+            "w życie po tym tekście jednolitym sprawdź w ustawy_akty (pole eli).")
 
 
 def squash(s: str) -> str:

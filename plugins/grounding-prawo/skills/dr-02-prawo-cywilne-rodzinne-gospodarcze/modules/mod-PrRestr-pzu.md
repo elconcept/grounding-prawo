@@ -2,7 +2,7 @@
 
 **Status:** moduł klasy kancelaryjnej — poziom A / COV-ART (każdy obowiązujący artykuł z zakresu omówiony; uchylone oznaczone)
 **Źródło:** Prawo restrukturyzacyjne — t.j. [Dz.U. 2026 poz. 533](https://api.sejm.gov.pl/eli/acts/DU/2026/533/text.pdf) (ELI DU/2026/533; akt bazowy DU/2015/978), s. 54–60
-**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: isap_lookup DU/2015/978 → DU/2026/533, 2026-10-08]
+**Weryfikacja:** snapshot PDF 04.10.2026 (SHA-256 zgodny z `references/prrestr/metadata.json`); status t.j. „obowiązuje” potwierdzony w ELI 08.10.2026 ✅ [VER: repertorium_szukaj_repertorium DU/2015/978 → DU/2026/533, 2026-10-08]
 **Zmiany po t.j. w tym zakresie:** brak (późniejsze nowelizacje dotyczą art. 4 i 156 → `references/insolvency/wersje-i-przepisy-przejsciowe.md`).
 **ZASADA:** przed powołaniem odczytaj przepis: `python3 scripts/prrestr.py article 226a --verify-online`. PZU — tylko gdy sporne wierzytelności uprawniające do głosu **≤ 15%** (art. 3 ust. 2 pkt 2). Odróżniaj trzy daty: **dzień układowy** (211), **obwieszczenie o ustaleniu dnia układowego** (226a), **złożenie wniosku o zatwierdzenie** (219).
 

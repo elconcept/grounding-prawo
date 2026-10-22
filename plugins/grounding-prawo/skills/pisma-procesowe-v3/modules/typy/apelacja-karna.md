@@ -34,21 +34,21 @@ Zanim zaczniesz pisać, ustal z użytkownikiem następujące dane. Nie generuj a
 
 ## KROK 1 — Wyszukaj podstawy prawne
 
-> **Konektory (grounding):** ten skill opiera się na dwóch serwerach MCP — **ISAP** (`search_acts`, `get_act`, `get_act_text`: Dziennik Ustaw i Monitor Polski przez oficjalne Sejm ELI API) oraz **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`: SN, sądy powszechne, TK, KIO). **Przed pierwszym wywołaniem przeczytaj `shared/MOD-TEKST-JEDNOLITY.md` i `patron-prawo-pl-zrodla`** — zawiera składnię zapytań (te API są polowe, nie semantyczne), pułapkę „tekst ogłoszony vs. tekst jednolity" w ISAP wraz z drabinką na `text_unavailable_use_pdf` (obowiązujące teksty jednolite kodeksów są dostępne **tylko w PDF** — brzmienie na dziś: `pdf_url` z odpowiedzi, wg `shared/MOD-TEKST-JEDNOLITY.md`), użycie citatora i standardy cytowania. Bez tych konektorów **nie podawaj brzmienia przepisów ani sygnatur z pamięci**. Sądy administracyjne (WSA/NSA) i interpretacje podatkowe są **poza pokryciem** — patrz `iura (poza pluginem)`, sekcja „Granice pokrycia". **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
+> **Konektory (grounding):** ten skill opiera się na dwóch serwerach MCP — **ustawy (lex) i Repertorium** (`ustawy_akty`, `ustawy_szukaj`, `ustawy_artykul`, `ustawy_cytat`; `repertorium_szukaj_repertorium`) oraz **SAOS** (`search`, `search_by_case`, `get_judgment`, `saos_cite_check`: SN, sądy powszechne, TK, KIO). **Przed pierwszym wywołaniem przeczytaj `shared/MOD-TEKST-JEDNOLITY.md` i `patron-prawo-pl-zrodla`** — zawiera składnię zapytań (te API są polowe, nie semantyczne), procedurę ustalania brzmienia obowiązującego (ustawy + Repertorium + urzędowe ELI; gdy tekst jednolity jest **tylko w PDF**, czytaj `pdf_url` wg `shared/MOD-TEKST-JEDNOLITY.md`), użycie citatora i standardy cytowania. Bez tych konektorów **nie podawaj brzmienia przepisów ani sygnatur z pamięci**. Sądy administracyjne (WSA/NSA) i interpretacje podatkowe są **poza pokryciem** — patrz `iura (poza pluginem)`, sekcja „Granice pokrycia". **Pokrycie czasowe SAOS jest nierówne (sprawdzone 11.09.2026):** sądy powszechne — do 2026 r.; SN — tylko do czerwca 2016 r.; TK — do grudnia 2015 r.; KIO — do 2018 r. Nie przedstawiaj orzecznictwa SN/TK z tej bazy jako „aktualnej linii" — podaj granicę czasową i odeślij do `sn.pl` / `trybunal.gov.pl`.
 
 OBOWIĄZKOWE: przed napisaniem apelacji ZAWSZE użyj konektorów, aby pozyskać aktualne i relewantne:
 
-### Przepisy (ISAP: `search_acts` → `get_act` → `get_act_text`)
+### Przepisy (ustawy: `ustawy_akty` → `ustawy_artykul`)
 
-Procedura na każdy kodeks: `search_acts(title: "Kodeks postępowania karnego", publisher: "DU")` → `get_act(eli)` → weź **najnowszy** `consolidated_text_eli` → `get_act_text(eli: <jednolity>, search_text: "Art. 438.")`. Cytuj tylko przy `text_version = tekst_jednolity` i `in_force = IN_FORCE`; ISAP domyślnie serwuje **tekst ogłoszony**, czyli brzmienie pierwotne.
+Procedura na każdy kodeks: `ustawy_akty` (znajdź akt i wskazany w odpowiedzi `tekst_jednolity` oraz `eli`) → `ustawy_artykul(akt, art)`; dosłowność sprawdź przez `ustawy_cytat(akt, art, fragment)`. Cytuj tylko brzmienie z tekstu jednolitego wskazanego w odpowiedzi; nowelizacje po tej dacie sprawdź w urzędowym ELI (`api.sejm.gov.pl`) albo Repertorium.
 
-Dla głównych kodeksów `get_act_text` na obowiązującym tekście jednolitym zwróci `text_unavailable_use_pdf` — to **sytuacja typowa**, nie awaria: świeże obwieszczenia publikowane są wyłącznie w PDF. **Nie schodź wtedy do starszego tekstu jednolitego** — sięgnij po PDF:
+Akt spoza korpusu `ustawy`: ustal ELI przez Repertorium i odczytaj tekst jednolity z urzędowego ELI; bez tego oznacz brzmienie jako niezweryfikowane. Gdy obowiązujący tekst jednolity jest tylko w PDF, przeczytaj `pdf_url` z odpowiedzi natywnym `Read` (parametr `pages`) albo WebFetch:
 
 ```bash
-# MCP isap: get_act_text(<ELI tekstu jednolitego>), potem wyszukaj "Art. N."
+# ustawy: ustawy_artykul(<akt>, <art>); Repertorium: repertorium_szukaj_repertorium(q=<akt>) → ELI tekstu jednolitego
 ```
 
-PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`), sekcja 4.
+PDF-y urzędowych tekstów jednolitych mają warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy tekst jednolitego brak albo ELI nie daje tekstu obowiązującego — przyznaj, że brzmienie jest niezweryfikowane; nie podstawiaj aktu bazowego. Pełna procedura: `shared/MOD-TEKST-JEDNOLITY.md`.
 
 Zweryfikuj brzmienie kluczowych przepisów k.p.k. i k.k./k.k.s. relewantnych dla sprawy:
 - Przepisy o apelacji: art. 425, 427, 428, 437, 438, 439, 444-449a k.p.k.
@@ -602,4 +602,4 @@ Po wygenerowaniu apelacji zweryfikuj:
 
 ## Uwaga końcowa
 
-Powyższe mechanizmy argumentacyjne, wzorce formułowań i orzecznictwo stanowią zestaw narzędzi referencyjnych. W konkretnej apelacji dobieraj je odpowiednio do stanu faktycznego i zarzutów. ZAWSZE weryfikuj i uzupełniaj orzecznictwo przez SAOS (`search` z `courtType`), a przepisy przez ISAP (`get_act_text` na tekście jednolitym). **Każdą sygnaturę z powyższej listy przepuść przez `saos_cite_check` przed użyciem** — powyższe orzeczenia stanowią punkt wyjścia, ale linie orzecznicze ewoluują i bywają przełamywane.
+Powyższe mechanizmy argumentacyjne, wzorce formułowań i orzecznictwo stanowią zestaw narzędzi referencyjnych. W konkretnej apelacji dobieraj je odpowiednio do stanu faktycznego i zarzutów. ZAWSZE weryfikuj i uzupełniaj orzecznictwo przez SAOS (`search` z `courtType`), a przepisy przez `ustawy_artykul` na tekście jednolitym (`shared/MOD-TEKST-JEDNOLITY.md`). **Każdą sygnaturę z powyższej listy przepuść przez `saos_cite_check` przed użyciem** — powyższe orzeczenia stanowią punkt wyjścia, ale linie orzecznicze ewoluują i bywają przełamywane.

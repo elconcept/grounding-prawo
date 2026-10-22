@@ -30,7 +30,7 @@ nie na posiadaniu własnego kodu integracyjnego jako takiego.
 ## REJESTR KONKRETNYCH SERWERÓW MCP — POZIOM A (dodany 2026-09-10, F-173)
 
 > ⛔ **Po co ten rozdział.** `shared/PRAWO-HARDGATE.md` definiuje POZIOM A
-> (konektor MCP) jako najsilniejszy kanał weryfikacji i wymienia `mcp-isap`,
+> (konektor MCP) jako najsilniejszy kanał weryfikacji i wymienia `ustawy` (MCP),
 > `legal-cite-pl`, `sententim` i `prawo-pl-saos` jako **wzorce**. Do 2026-09-10
 > system nie wskazywał ani jednego konkretnego, publicznego serwera — POZIOM A
 > był deklaracją, a cała weryfikacja szła faktycznie POZIOMEM B/C. Tabela wyżej
@@ -50,7 +50,7 @@ nie na posiadaniu własnego kodu integracyjnego jako takiego.
 
 | Projekt | Zakres | Narzędzia / uwagi | Źródło danych (RZĄD) |
 |---|---|---|---|
-| `matematicsolutions/mcp-isap` | Dz.U. + M.P., Sejm ELI | `search_acts`, `get_act`, `get_act_text`; każde cytowanie niesie identyfikator ELI | api.sejm.gov.pl (RZĄD 1) |
+| `matematicsolutions/ustawy (MCP)` | Dz.U. + M.P., Sejm ELI | `ustawy_akty`, `repertorium_szukaj_repertorium`, `ustawy_artykul`; każde cytowanie niesie identyfikator ELI | api.sejm.gov.pl (RZĄD 1) |
 | `matematicsolutions/mcp-saos` | sądy powszechne, SN, TK, KIO | `search`, `get_judgment`, `search_by_case` | SAOS (RZĄD 3 — agregator akademicki) |
 | `matematicsolutions/mcp-nsa` | NSA + 16 WSA | `search`, `get_judgment`, `search_by_case` | CBOSA (RZĄD 2A) |
 | `matematicsolutions/mcp-krs` | rejestr przedsiębiorców | `get_entity`, `get_entity_full`, `get_board` — obsługa KROK 0D / PODMIOT-GATE | KRS MS (RZĄD 2A) |
@@ -65,7 +65,7 @@ nie na posiadaniu własnego kodu integracyjnego jako takiego.
 
 | Bramka / krok | Konektor rozstrzygający | Co zastępuje |
 |---|---|---|
-| `PRAWO-HARDGATE` REGUŁA AKTUALNOŚCI (łańcuch t.j.) | `mcp-isap` / `pl-law-mcp` / `sejm-mcp` | `web_fetch` na `/eli/acts/.../references` |
+| `PRAWO-HARDGATE` REGUŁA AKTUALNOŚCI (łańcuch t.j.) | `ustawy` (MCP) / `pl-law-mcp` / `sejm-mcp` | `web_fetch` na `/eli/acts/.../references` |
 | `PRAWO-HARDGATE` brzmienie jednostki | `legal-cite-pl` / `law-scrapper-mcp` | ręczne cięcie PDF-a t.j. |
 | `SYGNATURY` V-SYG-1…4, kontrakt FOUND/NOT_FOUND/AMBIGUOUS | `mcp-saos` / `mcp-nsa`; dla NSA/WSA bez MCP → V-SYG-0.7 DIRECT-CBOSA | SAOS/API lub ręczne HTML; direct CBOSA nie wymaga zewnętrznego MCP |
 | KROK 0D / `PRE-W2` status podmiotu ⬛ | `mcp-krs` | `api-krs.ms.gov.pl` przez kanał kodu |
@@ -190,7 +190,7 @@ ma z niego korzystać:
 | **`.mcp.json` w katalogu pluginu** albo klucz `mcpServers` w `.claude-plugin/plugin.json` | każdy, kto zainstaluje plugin | ✅ **tak** |
 
 ⚠️ **Stan repozytorium Lex Machina na 2026-09-27g:** `.mcp.json` z serwerem
-`mcp-isap` leży w **korzeniu repozytorium**, a nie w żadnym pluginie. Działa więc
+`ustawy` (MCP) leży w **korzeniu repozytorium**, a nie w żadnym pluginie. Działa więc
 dla sesji otwieranych w sklonowanym repo, ale **NIE instaluje się razem z pluginami
 z marketplace** — użytkownik, który zainstaluje skille, nie dostanie tego konektora.
 Przeniesienie go do pluginu `shared` sprawiłoby, że wędruje z instalacją.
@@ -222,13 +222,13 @@ pliku z wbudowanymi zależnościami (629 KB; Claude Code nie instaluje zależno�
 
 ### Zmierzony konektor ELI/ISAP
 
-`@matematicsolutions/mcp-isap` 1.3.0 (MIT, npm) — protokół MCP 2024-11-05
+`@matematicsolutions/ustawy (MCP)` 1.3.0 (MIT, npm) — protokół MCP 2024-11-05
 zweryfikowany realnie 2026-09-27g: `initialize` → `tools/list` → `tools/call`.
-Narzędzia: `search_acts`, `get_act`, `get_act_text`. Źródło danych:
+Narzędzia: `ustawy_akty`, `repertorium_szukaj_repertorium`, `ustawy_artykul`. Źródło danych:
 api.sejm.gov.pl/eli — **ten sam publikator, który HIERARCHIA-ZRODEL traktuje jako
 RZĄD 1**, więc wynik tego konektora nie obniża rzędu źródła; nadal jednak
 obowiązuje reguła, że treść merytoryczną czyta się przez HARD GATE
-(`get_act_text` albo `/text.pdf`), a nie z samej metryki.
+(`ustawy_artykul` albo `/text.pdf`), a nie z samej metryki.
 
 ### ⭐ Serwer w pluginie — mechanika (2026-09-27h)
 
@@ -282,7 +282,7 @@ czy konfiguracja przekazuje `env`. To ta sama klasa błędu co F-151/F-162
 ### ✅ Status własnego konektora ISAP (zmierzony 2026-09-27h)
 
 `audyt-systemu-v4/mcp-servers/isap-eli-example/` — 132 linie na oficjalnym SDK
-(`McpServer` + `StdioServerTransport`), narzędzie `isap_lookup`.
+(`McpServer` + `StdioServerTransport`), narzędzie `repertorium_szukaj_repertorium`.
 
 ⛔ **Wykryty i naprawiony błąd:** budował adres
 `…/eli/acts/DU/search?title=…` → **HTTP 404**. Zmierzony poprawny endpoint:
@@ -294,7 +294,7 @@ zmieniony z „NIE zostało przetestowane wobec żywego API" na przetestowane.
 Po poprawce, pełny cykl `connect → listTools → callTool → close` na żywym API:
 zapytanie „Kodeks karny skarbowy" → `AMBIGUOUS`, 33 kandydatów, pierwsi
 `DU 2026 poz. 901` i `DU 2025 poz. 633` — zgodne z niezależnym odczytem ELI
-i z obcym serwerem `@matematicsolutions/mcp-isap`.
+i z obcym serwerem `@matematicsolutions/ustawy (MCP)`.
 
 ⚠️ `AMBIGUOUS` przy 33 trafieniach jest zachowaniem **zgodnym z projektem**
 (`>1 trafienie = AMBIGUOUS`, zakaz zgadywania). Jeśli konektor ma być użyteczny
@@ -303,15 +303,15 @@ rozwój, nie naprawa.
 
 **Wniosek dla wyboru między swoim a obcym serwerem:** własny serwer tego
 repozytorium jest sprawny i pokrywa ten sam kanał RZĘDU 1, więc klonowanie obcego
-serwera nie jest konieczne. Obcy (`@matematicsolutions/mcp-isap`, MIT) daje więcej
-narzędzi od razu (`search_acts`, `get_act`, `get_act_text`) — jeśli miałby być
+serwera nie jest konieczne. Obcy (`@matematicsolutions/ustawy (MCP)`, MIT) daje więcej
+narzędzi od razu (`ustawy_akty`, `repertorium_szukaj_repertorium`, `ustawy_artykul`) — jeśli miałby być
 forkowany, MIT na to pozwala, ale wymaga zachowania noty licencyjnej i dopisania
 atrybucji w `NOTICE` (precedens: F-199 dla materiału Apache-2.0).
 
 ### ⭐ STAN WSZYSTKICH KANAŁÓW — pomiar TREŚCI 2026-09-27j (zastępuje tabelę z 27h)
 
 ⛔ **Korekta 3.90.** Tabela z 27h (shared 3.89) wskazywała jako „konektory produkcyjne” siedem
-pluginów (`mcp-isap-eli`, `mcp-saos`, `mcp-krs`, `mcp-wl-vat`, `mcp-uodo`, `mcp-eurlex`,
+pluginów (`ustawy (MCP)-eli`, `mcp-saos`, `mcp-krs`, `mcp-wl-vat`, `mcp-uodo`, `mcp-eurlex`,
 `mcp-nbp`), których **nie ma w repozytorium ani w `marketplace.json`** (sprawdzone 27j) —
 powstały w sesji 27h/27i i nie zostały wgrane (F-211). Kolumna „Pomiar” mierzyła wyłącznie kod
 HTTP: SAOS z „✅ 200” zwracał same `null`. Obecnie jedynym zmierzonym kodem w repo są przykłady
@@ -347,7 +347,7 @@ Paczki npm `@matematicsolutions/*` (MIT) uruchomione przez protokół MCP obok p
 |---|---|---|---|
 | SAOS (`mcp-saos` 1.2.0) | ⭐ **`saos_cite_check`** (cytator: późniejsze orzeczenia powołujące sygnaturę); filtry `judgeName`, `referencedRegulation` | — (NSA/WSA: obie strony poprawnie) | 27q: `saos_cytator` (ścisłe dopasowanie sygnatury w treści, wykluczenie fałszywych trafień) — ⚠️ wzorce niezmierzone na żywo (SAOS w przerwie) |
 | EUR-Lex (`mcp-eu-sparql` 1.2.0) | ⭐ **TSUE** (`search_cjeu`, `search_cjeu_by_ecli`), zakres dat, GDPRhub | status obowiązywania, data końca, tytuł PL | 31995L0046 → u nich bez „uchylona”; 27q: `eurlex_tsue` — dodatkowo po SYGNATURZE sprawy (C-131/12), której oni nie wyszukują |
-| ISAP (`mcp-isap` 1.3.0) | ⭐ `get_act`, `get_act_text` (treść, wyszukiwanie w akcie, odesłanie do PDF), filtr `in_force` | — w przykładzie (mapowanie statusu było w pluginie 27h — F-211) | KC `DU/1964/93` → u nich „Stan: IN_FORCE” przy istniejącym t.j.; treść t.j. u nich tylko jako link do PDF (text.html t.j. pusty) — 27q: `isap_tekst` zwraca obowiązujące brzmienie z PDF |
+| ISAP (`ustawy` (MCP) 1.3.0) | ⭐ `repertorium_szukaj_repertorium`, `ustawy_artykul` (treść, wyszukiwanie w akcie, odesłanie do PDF), filtr `in_force` | — w przykładzie (mapowanie statusu było w pluginie 27h — F-211) | KC `DU/1964/93` → u nich „Stan: IN_FORCE” przy istniejącym t.j.; treść t.j. u nich tylko jako link do PDF (text.html t.j. pusty) — 27q: `ustawy_artykul` zwraca obowiązujące brzmienie z PDF |
 | KRS (`mcp-krs` 1.1.1) | `get_board` | 27q: `krs_reprezentacja` + rejestr S | u nich pole `nazwa` zamiast `nazwaOrganu` (organ nigdy niewidoczny); PESEL z wolnego tekstu prokury przekazywany bez maski (ORLEN) — u nas maskowany; fundacje (rejestr S) — u nas FOUND |
 | NSA/CBOSA (`mcp-nsa` 1.3.0; `cbosa-mcp` z ChatGPT) | istnieją | ⭐ `cbosa-example` 1.0.0 (27m): port parsera referencyjnego `orzeczenia-sadowe-v2` — exact-match, near-match odrzucany, paginacja z kontrolą licznika, fail-closed | ⛔ korekta 27m: 503 z 27k to BRAMA sandboxa Claude („upstream connect error”), nie CBOSA — z tego środowiska żadnego konektora CBOSA nie da się zmierzyć (F-213). `mcp-nsa`: `rejectUnauthorized: false`. `cbosa-mcp` (ChatGPT, Python): TLS poprawny, ale parser nie wyciąga Sygnatury/Daty/Sądu nawet z własnej próbki, próbki wymyślone (126/391 B), brak exact-match, błąd paginacji |
 | UODO (w agregatorze `prawo-pl-mcp`; repozytorium niepubliczne) | istnieje | 27r: `uodo-example` — prawomocność z OSTATNIEGO zdarzenia (data ogłoszenia zawsze „nonfinal”), post-check sygnatury (wyszukiwarka prefiksowa) | ich kodu nie da się sprawdzić (GitHub 404, brak w PyPI) |

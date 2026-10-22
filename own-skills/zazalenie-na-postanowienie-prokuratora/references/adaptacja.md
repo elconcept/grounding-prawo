@@ -65,7 +65,7 @@ Sygnatury orzeczeń - wyłącznie z SAOS przez `saos_cite_check`.
 
 - Art. 231 § 1: przekroczenie uprawnień lub niedopełnienie obowiązków na szkodę interesu
   publicznego lub prywatnego. Typowa odmowa: „działał w granicach prawa”. Odpowiedź: przepis
-  określający granice uprawnień (ustawa o Policji, akty wykonawcze - zweryfikuj w ISAP) i fakty
+  określający granice uprawnień (ustawa o Policji, akty wykonawcze - zweryfikuj w ELI) i fakty
   pokazujące ich przekroczenie.
 - Art. 271 § 1: poświadczenie nieprawdy w dokumencie (notatka, protokół) co do okoliczności
   mającej znaczenie prawne. Wskaż konkretne zdanie dokumentu i dowód przeciwny.

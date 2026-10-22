@@ -11,37 +11,37 @@
 
 Skill generuje pismo procesowe strony powodowej o cofnięcie pozwu wraz ze zrzeczeniem się roszczenia, przeznaczone do złożenia w sądzie cywilnym. Pismo jest generowane w formacie `.docx` zgodnie ze standardami polskiej praktyki procesowej.
 
-> **Wymagane narzędzia:** skill wymaga konektora MCP **ISAP** (`search_acts`, `get_act`, `get_act_text` — Dziennik Ustaw przez Sejm ELI API) do weryfikacji aktualnego brzmienia KPC. Pomocniczo **SAOS** (`search`) dla praktyki orzeczniczej. Bez ISAP **nie generuj pisma** — ryzyko powołania się na nieaktualne lub nieistniejące przepisy. Instalacja: `Codex mcp add isap -s user -- npx -y @matematicsolutions/mcp-isap`. Składnia zapytań i pułapki ISAP: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`).
+> **Wymagane narzędzia:** skill wymaga konektora MCP **ustawy + Repertorium** (`ustawy_akty`, `repertorium_szukaj_repertorium`, `ustawy_artykul` — Dziennik Ustaw przez Sejm ELI API) do weryfikacji aktualnego brzmienia KPC. Pomocniczo **SAOS** (`search`) dla praktyki orzeczniczej. Bez ELI **nie generuj pisma** — ryzyko powołania się na nieaktualne lub nieistniejące przepisy. Instalacja: `Codex mcp add isap -s user -- npx -y @matematicsolutions/ustawy`. Składnia zapytań i pułapki ELI: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`).
 
 ---
 
 ## ZASADA FUNDAMENTALNA: Weryfikacja podstaw prawnych przed generowaniem
 
-**ZAWSZE przed napisaniem pisma pobierz aktualny tekst KPC z ISAP.** ISAP **nie ma** parametru `in_force_as_of` i domyślnie serwuje **tekst ogłoszony** (brzmienie pierwotne z 1964 r.) — obowiązuje procedura trzykrokowa:
+**ZAWSZE przed napisaniem pisma pobierz aktualny tekst KPC z ELI.** ELI **nie ma** parametru `in_force_as_of` i domyślnie serwuje **tekst ogłoszony** (brzmienie pierwotne z 1964 r.) — obowiązuje procedura trzykrokowa:
 
 ```
-1. search_acts(title: "Kodeks postępowania cywilnego", publisher: "DU")
-2. get_act(eli: <akt bazowy>)  → weź NAJNOWSZY consolidated_text_eli
-3. get_act_text(eli: <tekst jednolity>, search_text: "Art. 203.")
+1. ustawy_akty(tytuł: "Kodeks postępowania cywilnego")
+2. repertorium_szukaj_repertorium(eli: <akt bazowy>)  → weź NAJNOWSZY consolidated_text_eli
+3. ustawy_artykul(eli: <tekst jednolity>, search_text: "Art. 203.")
 ```
 
 Cytuj wyłącznie wtedy, gdy `structuredContent.text_version` = `tekst_jednolity` **i** `in_force` = `IN_FORCE`. Każdy inny wariant to materiał historyczny.
 
-Dla głównych kodeksów `get_act_text` na obowiązującym tekście jednolitym zwróci `text_unavailable_use_pdf` — to **sytuacja typowa**, nie awaria: świeże obwieszczenia publikowane są wyłącznie w PDF. **Nie schodź wtedy do starszego tekstu jednolitego** — sięgnij po PDF:
+Dla głównych kodeksów `ustawy_artykul` na obowiązującym tekście jednolitym zwróci `text_unavailable_use_pdf` — to **sytuacja typowa**, nie awaria: świeże obwieszczenia publikowane są wyłącznie w PDF. **Nie schodź wtedy do starszego tekstu jednolitego** — sięgnij po PDF:
 
-Narzędzie `isap_get_act_text` z `search_text: "Art. N."`; przy `text_unavailable_use_pdf` pobierz PDF tekstu jednolitego z adresu w odpowiedzi (`curl`) i odczytaj go przez `pdftotext -layout` (`shared/MOD-TEKST-JEDNOLITY.md`, szczebel 1).
+Narzędzie `ustawy_artykul` z `search_text: "Art. N."`; przy `text_unavailable_use_pdf` pobierz PDF tekstu jednolitego z adresu w odpowiedzi (`curl`) i odczytaj go przez `pdftotext -layout` (`shared/MOD-TEKST-JEDNOLITY.md`, szczebel 1).
 
-PDF-y ISAP mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`), sekcja 4.
+PDF-y ELI mają prawdziwą warstwę tekstu, więc to zwraca brzmienie **obowiązujące dziś**. Cytuj tylko przy `status: FOUND` + `text_version: tekst_jednolity` + `status_obowiazywania: obowiazuje`; `status: AMBIGUOUS` oznacza, że trafiłeś na akt bazowy (brzmienie pierwotne) — powtórz z ELI z pola `uzyj_zamiast`. Cytat dosłowny zweryfikuj wzrokowo w PDF (ekstrakcja gubi pojedyncze spacje; w `--find` podawaj zwykłe `Art. 205.`, nie `Art. 205¹.`). Gdy PDF niedostępny — plan B to starszy tekst jednolity z HTML, zacytowany z **wyraźną datą** i adnotacją o późniejszych nowelizacjach. Pełna drabinka: `patron-prawo-pl-zrodla` (referencja `iura-metodyka.md`), sekcja 4.
 
 **Nigdy nie zgaduj brzmienia z samego linku do PDF i nigdy nie podstawiaj aktu bazowego** (KPC z 1964 r.) jako brzmienia obowiązującego.
 
 Zweryfikuj tak brzmienie przepisów dotyczących:
 
-1. **Cofnięcia pozwu i zrzeczenia się roszczenia** — `get_act_text(search_text: "Art. 203.")`, a dla umorzenia `search_text: "Art. 355."`
-2. **Wymogów formalnych pisma procesowego** — `get_act_text(search_text: "Art. 126.")`
-3. **Doręczenia odpisu pisma pełnomocnikowi strony przeciwnej** — `get_act_text(search_text: "Art. 132.")`
+1. **Cofnięcia pozwu i zrzeczenia się roszczenia** — `ustawy_artykul(search_text: "Art. 203.")`, a dla umorzenia `search_text: "Art. 355."`
+2. **Wymogów formalnych pisma procesowego** — `ustawy_artykul(search_text: "Art. 126.")`
+3. **Doręczenia odpisu pisma pełnomocnikowi strony przeciwnej** — `ustawy_artykul(search_text: "Art. 132.")`
 
-Numery artykułów powyżej to **hipotezy do sprawdzenia**, nie podstawa prawna pisma: dopiero tekst zwrócony przez `get_act_text` potwierdza, że przepis brzmi tak, jak zakładasz, i nie został przeniesiony ani uchylony. Pisownia w `search_text` musi mieć polskie znaki — ISAP jest na to wrażliwy.
+Numery artykułów powyżej to **hipotezy do sprawdzenia**, nie podstawa prawna pisma: dopiero tekst zwrócony przez `ustawy_artykul` potwierdza, że przepis brzmi tak, jak zakładasz, i nie został przeniesiony ani uchylony. Pisownia w `search_text` musi mieć polskie znaki — ELI jest na to wrażliwy.
 
 Opcjonalnie (praktyka orzecznicza kosztów przy cofnięciu): SAOS `search(courtType: "COMMON", legalBase: "art. 203 kpc", all: "zrzeczenie się roszczenia")` — sprawdzone, zwraca orzeczenia z 2026 r. W SN `legalBase` nie działa, a pokrycie SAOS dla SN kończy się na 2016 r.
 
@@ -133,7 +133,7 @@ adres dla doręczeń:
 
 Każdy element (imię, adres, identyfikator, e-mail, dane pełnomocnika, adres do doręczeń) umieszczaj w **osobnym wierszu** z wcięciem. Fraza „reprezentowany przez:" poprzedza dane pełnomocnika. Fraza „adres dla doręczeń:" poprzedza adres do korespondencji.
 
-Oznaczenie stron musi być zgodne z wymogami formalnymi pisma procesowego wynikającymi z przepisów KPC (zweryfikuj przez `get_act_text` na tekście jednolitym KPC, `search_text: "Art. 126."`).
+Oznaczenie stron musi być zgodne z wymogami formalnymi pisma procesowego wynikającymi z przepisów KPC (zweryfikuj przez `ustawy_artykul` na tekście jednolitym KPC, `search_text: "Art. 126."`).
 
 ### 4. SYGNATURA AKT
 
@@ -170,7 +170,7 @@ Funkcja: Wskazuje przyczynę czynności procesowej. Sąd bada, czy cofnięcie po
 **c) Oświadczenie o cofnięciu pozwu ze zrzeczeniem się roszczenia** — rdzeń pisma:
 > „…niniejszym cofam Pozew wraz z zrzeczeniem się roszczenia dochodzonego w niniejszej sprawie, …"
 
-Funkcja: Jest to czynność dyspozytywna strony powodowej — połączenie cofnięcia pozwu z zrzeczeniem się roszczenia ma kluczowe znaczenie procesowe, ponieważ eliminuje konieczność uzyskania zgody strony pozwanej na cofnięcie (zweryfikuj aktualne brzmienie przez `get_act_text` na tekście jednolitym KPC, `search_text: "Art. 203."`). Bez zrzeczenia się roszczenia, po rozpoczęciu rozprawy wymagana jest zgoda pozwanego.
+Funkcja: Jest to czynność dyspozytywna strony powodowej — połączenie cofnięcia pozwu z zrzeczeniem się roszczenia ma kluczowe znaczenie procesowe, ponieważ eliminuje konieczność uzyskania zgody strony pozwanej na cofnięcie (zweryfikuj aktualne brzmienie przez `ustawy_artykul` na tekście jednolitym KPC, `search_text: "Art. 203."`). Bez zrzeczenia się roszczenia, po rozpoczęciu rozprawy wymagana jest zgoda pozwanego.
 
 **d) Rozstrzygnięcie o kosztach** — opcjonalne, ale rekomendowane:
 > „…jak również zrzekam się roszczeń dotyczących zwrotu przez Stronę Pozwaną kosztów procesu i zastępstwa procesowego."
@@ -232,11 +232,11 @@ Strona działa we własnym imieniu — brak frazy o pełnomocnictwie. W kosztach
 W związku z [PRZYCZYNA COFNIĘCIA, np. „zawarciem w dniu [DATA] r. ugody ze Stroną Pozwaną, dotyczącej ..."], niniejszym cofam Pozew wraz z zrzeczeniem się roszczenia dochodzonego w niniejszej sprawie, jak również zrzekam się roszczeń dotyczących zwrotu przez Stronę Pozwaną kosztów procesu.
 ```
 
-**WAŻNE O ETAPIE POSTĘPOWANIA:** Połączenie cofnięcia pozwu ze zrzeczeniem się roszczenia jest kluczowe procesowo — eliminuje wymóg zgody pozwanego niezależnie od etapu postępowania. Jeśli jednak użytkownik chce cofnąć pozew **bez** zrzeczenia się roszczenia, poinformuj go, że po rozpoczęciu rozprawy wymagana będzie zgoda pozwanego (zweryfikuj aktualne brzmienie przez `get_act_text`, `search_text: "Art. 203."`). Skill domyślnie generuje wariant **ze** zrzeczeniem się roszczenia — chyba że użytkownik wyraźnie poprosi o inny wariant.
+**WAŻNE O ETAPIE POSTĘPOWANIA:** Połączenie cofnięcia pozwu ze zrzeczeniem się roszczenia jest kluczowe procesowo — eliminuje wymóg zgody pozwanego niezależnie od etapu postępowania. Jeśli jednak użytkownik chce cofnąć pozew **bez** zrzeczenia się roszczenia, poinformuj go, że po rozpoczęciu rozprawy wymagana będzie zgoda pozwanego (zweryfikuj aktualne brzmienie przez `ustawy_artykul`, `search_text: "Art. 203."`). Skill domyślnie generuje wariant **ze** zrzeczeniem się roszczenia — chyba że użytkownik wyraźnie poprosi o inny wariant.
 
 ### 7. OŚWIADCZENIE O DORĘCZENIU
 
-Osobny akapit zawierający oświadczenie o wysłaniu odpisu pisma stronie przeciwnej lub jej pełnomocnikowi. Konkretny artykuł KPC zweryfikuj przez `get_act_text` na tekście jednolitym KPC (`search_text: "Art. 132."`, ewentualnie `"operator pocztowy"`). Nie wpisuj artykułu z pamięci — hipoteza wolno, cytat dopiero po potwierdzeniu tekstem.
+Osobny akapit zawierający oświadczenie o wysłaniu odpisu pisma stronie przeciwnej lub jej pełnomocnikowi. Konkretny artykuł KPC zweryfikuj przez `ustawy_artykul` na tekście jednolitym KPC (`search_text: "Art. 132."`, ewentualnie `"operator pocztowy"`). Nie wpisuj artykułu z pamięci — hipoteza wolno, cytat dopiero po potwierdzeniu tekstem.
 
 Wybierz odpowiedni wariant oświadczenia o doręczeniu w zależności od okoliczności:
 
@@ -318,16 +318,16 @@ Po zebraniu danych i weryfikacji podstaw prawnych, wygeneruj pismo w formacie `.
 ## Schemat wywoływania narzędzi — podsumowanie
 
 ```
-1. search_acts(title: "Kodeks postępowania cywilnego", publisher: "DU")
+1. ustawy_akty(tytuł: "Kodeks postępowania cywilnego")
    → ELI aktu bazowego
 
-2. get_act(eli: <akt bazowy>)
+2. repertorium_szukaj_repertorium(eli: <akt bazowy>)
    → NAJNOWSZY consolidated_text_eli (obwieszczenie z tekstem jednolitym)
 
-3. get_act_text(eli: <jednolity>, search_text: "Art. 203.")     → cofnięcie + zrzeczenie
-   get_act_text(eli: <jednolity>, search_text: "Art. 355.")     → umorzenie postępowania
-   get_act_text(eli: <jednolity>, search_text: "Art. 126.")     → wymogi formalne pisma
-   get_act_text(eli: <jednolity>, search_text: "Art. 132.")     → doręczenie odpisu
+3. ustawy_artykul(eli: <jednolity>, search_text: "Art. 203.")     → cofnięcie + zrzeczenie
+   ustawy_artykul(eli: <jednolity>, search_text: "Art. 355.")     → umorzenie postępowania
+   ustawy_artykul(eli: <jednolity>, search_text: "Art. 126.")     → wymogi formalne pisma
+   ustawy_artykul(eli: <jednolity>, search_text: "Art. 132.")     → doręczenie odpisu
    → za każdym razem sprawdź text_version = tekst_jednolity oraz in_force = IN_FORCE
 
 4. (opcjonalnie) saos: search(courtType: "COMMON", legalBase: "art. 203 kpc")
@@ -337,7 +337,7 @@ Po zebraniu danych i weryfikacji podstaw prawnych, wygeneruj pismo w formacie `.
 6. Wygeneruj .docx zgodnie ze strukturą powyżej
 ```
 
-**NIGDY nie wpisuj numerów artykułów z pamięci jako podstawy prawnej.** Pamięć wolno użyć tylko do postawienia hipotezy, który artykuł sprawdzić — treść przepisu w piśmie musi pochodzić z `get_act_text` na tekście jednolitym.
+**NIGDY nie wpisuj numerów artykułów z pamięci jako podstawy prawnej.** Pamięć wolno użyć tylko do postawienia hipotezy, który artykuł sprawdzić — treść przepisu w piśmie musi pochodzić z `ustawy_artykul` na tekście jednolitym.
 
 ---
 
@@ -345,15 +345,15 @@ Po zebraniu danych i weryfikacji podstaw prawnych, wygeneruj pismo w formacie `.
 
 Przed zapisaniem finalnego pliku sprawdź:
 
-- [ ] Pobrano tekst jednolity KPC z ISAP i potwierdzono brzmienie każdego powołanego artykułu (`text_version = tekst_jednolity`, `in_force = IN_FORCE`)
+- [ ] Pobrano tekst jednolity KPC z ELI i potwierdzono brzmienie każdego powołanego artykułu (`text_version = tekst_jednolity`, `in_force = IN_FORCE`)
 - [ ] Wszystkie pola wymagane zostały uzupełnione danymi od użytkownika
 - [ ] Struktura pisma jest zgodna z wzorcem (9 elementów w prawidłowej kolejności)
 - [ ] Treść merytoryczna stanowi zwięzłe, ciągłe oświadczenie procesowe (jedno nieprzerwane zdanie)
 - [ ] Schemat argumentacji zachowany: legitymacja → przyczyna → oświadczenie o cofnięciu → koszty
 - [ ] Użyto odpowiedniego wariantu frazy (A–E) dopasowanego do okoliczności
 - [ ] Wielkie litery dla ról procesowych: „Strona Powodowa", „Strona Pozwana", „Pozew"
-- [ ] Numery artykułów KPC potwierdzone tekstem z `get_act_text`, nie wpisane z pamięci
-- [ ] W piśmie podano adres publikacyjny KPC z ELI/`display_address` zwróconym przez ISAP
+- [ ] Numery artykułów KPC potwierdzone tekstem z `ustawy_artykul`, nie wpisane z pamięci
+- [ ] W piśmie podano adres publikacyjny KPC z ELI/`display_address` zwróconym przez ELI
 - [ ] Oświadczenie o doręczeniu jest spójne z okolicznościami (pełnomocnik vs. strona, załączniki vs. brak, poczta vs. elektronicznie)
 - [ ] Formatowanie .docx jest zgodne z wytycznymi
 - [ ] Polskie znaki diakrytyczne wyświetlają się poprawnie

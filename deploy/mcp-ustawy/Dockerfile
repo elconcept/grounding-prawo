@@ -1,4 +1,4 @@
-# Serwer MCP "ustawy": baza ustaw z komentarzem (zastępuje mcp-cite i mcp-isap).
+# Serwer MCP "ustawy": baza ustaw z komentarzem (zastępuje mcp-cite).
 # Kontekst budowania: korzeń repo grounding-prawo. Repozytoria ustaw z komentarzem są klonowane przy budowie
 # według .gitmodules (vendor/law/* komentarze, vendor/law-git/* kodeksy git-as-law), więc lista aktów jest jedna: submoduły repo.
 FROM python:3.12-slim

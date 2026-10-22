@@ -45,18 +45,18 @@ KROKIEM 1-detekcja), **wypisz faktyczną listę narzędzi dostępnych w tej rozm
 i sprawdź, czy któreś pochodzi z serwera MCP.
 
 ⛔ **POPRAWKA 2026-09-27h — poprzednia reguła NIE MOGŁA ZADZIAŁAĆ.** Kazała szukać
-narzędzi „nazwanych wg wzorca z `KONEKTORY-REKOMENDOWANE.md` (np. `isap_lookup`,
+narzędzi „nazwanych wg wzorca z `KONEKTORY-REKOMENDOWANE.md` (np. `repertorium_szukaj_repertorium`,
 `saos_search`, `cbosa_search`, `krs_lookup`, `eurlex_lookup`)". Zmierzone:
 
 - (a) tych nazw **nie ma w `KONEKTORY-REKOMENDOWANE.md`** — odesłanie prowadziło do
   konwencji, której ten plik nigdy nie zawierał (jego tabela operuje kategoriami
   funkcjonalnymi, nie nazwami narzędzi);
-- (b) nazwa `isap_lookup` **istnieje** — to `registerTool("isap_lookup", …)`
+- (b) nazwa `repertorium_szukaj_repertorium` **istnieje** — to `registerTool("repertorium_szukaj_repertorium", …)`
   w `audyt-systemu-v4/mcp-servers/` (`isap-eli-example`). ⚠️ Korekta wobec wydania 3.87,
   które twierdziło, że „narzędzia MCP nie nazywają się w ten sposób" — twierdzenie
   było za szerokie i niezmierzone wobec własnych serwerów tego repozytorium;
 - (c) **czego brakowało i co jest faktyczną przyczyną awarii wykrywania:** w hoście
-  narzędzie serwera nie nazywa się `isap_lookup`, lecz `mcp__<serwer>__isap_lookup`.
+  narzędzie serwera nie nazywa się `repertorium_szukaj_repertorium`, lecz `mcp__<serwer>__repertorium_szukaj_repertorium`.
   Szukanie samej nazwy własnej nie trafi, choćby nazwa była poprawna.
 
 Skutek, gdyby tego nie wykryto: tryb MCP-FIRST nie włączyłby się nawet przy poprawnie
@@ -69,7 +69,7 @@ wiedząc o tym (bramka samoraportująca — rodzina F-119).
 Narzędzie pochodzi z MCP, gdy jego nazwa ma postać:
     mcp__<nazwa-serwera>__<nazwa-narzędzia>
 Przykłady zmierzone w środowisku: mcp__memory__memory_list,
-    mcp__mcp-isap__search_acts
+    ustawy_akty
 ⛔ NIE zgaduj nazw narzędzi. Wypisz te, które SĄ, i dopasuj po ZDOLNOŚCI
    (co narzędzie robi wg swojego opisu), nie po nazwie własnej.
 ```
@@ -83,9 +83,9 @@ narzędzia. **Rozpoznawaj narzędzie, gdy nazwa KOŃCZY SIĘ nazwą z tabeli** (
 
 | Narzędzie (sufiks) | Zdolność | Krok HARDGATE | Status → decyzja |
 |---|---|---|---|
-| `isap_lookup` (`eli`: DU/RRRR/PPP) | akt Dz.U./M.P. po ELI; status; **aktualny t.j.** | ŹRÓDŁO-0 (`PRAWO-HARDGATE.md`) | FOUND+`obowiazuje` → MCP-VERIFIED metryki; `tekst_jednolity_nieaktualny` → powołuj `result.aktualny_tekst_jednolity` |
-| `isap_tekst` (`eli`, `artykul` / `szukaj`) | **obowiązujące brzmienie** artykułu z PDF aktualnego t.j. (automatyczne przejście z pozycji pierwotnej); pkt 2 obwieszczenia („t.j. nie obejmuje”); akty zmieniające ogłoszone po t.j. | ŹRÓDŁO-0 — TREŚĆ przepisu | `wersja_tekstu` = `tekst_jednolity` + brak `zmiany_po_tj` → brzmienie do cytowania dosłownie; `tekst_ogloszony` → brzmienie z dnia ogłoszenia, nie stan obecny; indeksy górne jako `Art. N[k]` |
-| `isap_lookup` (`query`: tytuł) | identyfikacja aktu po tytule | ŹRÓDŁO-1 (zamiast web_search) | AMBIGUOUS → wybierz kandydata po tytule i statusie, potem `eli` |
+| `repertorium_szukaj_repertorium` (`eli`: DU/RRRR/PPP) | akt Dz.U./M.P. po ELI; status; **aktualny t.j.** | ŹRÓDŁO-0 (`PRAWO-HARDGATE.md`) | FOUND+`obowiazuje` → MCP-VERIFIED metryki; `tekst_jednolity_nieaktualny` → powołuj `result.aktualny_tekst_jednolity` |
+| `ustawy_artykul` (`eli`, `artykul` / `szukaj`) | **obowiązujące brzmienie** artykułu z PDF aktualnego t.j. (automatyczne przejście z pozycji pierwotnej); pkt 2 obwieszczenia („t.j. nie obejmuje”); akty zmieniające ogłoszone po t.j. | ŹRÓDŁO-0 — TREŚĆ przepisu | `wersja_tekstu` = `tekst_jednolity` + brak `zmiany_po_tj` → brzmienie do cytowania dosłownie; `tekst_ogloszony` → brzmienie z dnia ogłoszenia, nie stan obecny; indeksy górne jako `Art. N[k]` |
+| `repertorium_szukaj_repertorium` (`query`: tytuł) | identyfikacja aktu po tytule | ŹRÓDŁO-1 (zamiast web_search) | AMBIGUOUS → wybierz kandydata po tytule i statusie, potem `eli` |
 | `saos_search` (`sygnatura`) | istnienie sygnatury: SP (bieżąco), SN do 2016, TK do 2015, KIO do 2018 | `PRAWO-HARDGATE-ORZECZENIA.md` KROK 0 (SAOS) | kontrakt SYGNATURY; NSA/WSA oraz SN/TK/KIO spoza zasięgu → OUT_OF_SCOPE (nie „zmyślona”) |
 | `saos_cytator` (`sygnatura`) | późniejsze orzeczenia cytujące (fraza w cudzysłowie, pełne treści) + sygnały odstąpienia w TYM SAMYM zdaniu, z kierunkiem (cytowane orzeczenie jako przedmiot vs aktor odstąpienia) | ocena aktualności linii orzeczniczej | KANDYDACI; próba 27t: 6/6 trafień z sygnałem prawdziwych; ⚠️ SN po 2016 i TK po 2015 niewidoczne — brak sygnału nie wyklucza zmiany linii |
 | `cbosa_sprawdz_sygnature` | istnienie sygnatury NSA/WSA (exact-match, fail-closed) | KROK 0A pkt 1 (MCP-FIRST) | FOUND = snapshot 🟨 bez awansu; OUT_OF_SCOPE → KROK 0A pkt 2 |
@@ -102,25 +102,25 @@ narzędzia. **Rozpoznawaj narzędzie, gdy nazwa KOŃCZY SIĘ nazwą z tabeli** (
 | `sudop_szukaj_pomocy` / `sudop_odbierz_wynik` | pomoc publiczna / de minimis | analiza pomocy | ERROR/`PENDING` ≠ brak pomocy |
 | `ceidg_szukaj_firmy` | JDG w CEIDG (wymaga klucza) | PODMIOT-GATE | bez klucza ERROR = kanał niedostępny |
 
-Konektory obce (`mcp-isap`, `mcp-nsa`, `legal-cite-pl`, …) — dopasowanie po zdolności jak wyżej;
+Konektory obce (`ustawy` (MCP), `mcp-nsa`, `legal-cite-pl`, …) — dopasowanie po zdolności jak wyżej;
 nazwy z tabeli mają pierwszeństwo, bo ich zachowanie jest zmierzone (`test_na_zywo.mjs`, walidator
 schematu).
 
-**Zmierzone 2026-09-27g/h — serwery ELI/ISAP** (`@matematicsolutions/mcp-isap` 1.3.0,
+**Zmierzone 2026-09-27g/h — serwery ELI/ISAP** (`@matematicsolutions/ustawy (MCP)` 1.3.0,
 protokół MCP 2024-11-05, `initialize` + `tools/list` + `tools/call` wykonane
 realnie, źródło danych: api.sejm.gov.pl/eli — ten sam publikator, co RZĄD 1):
 
 | Narzędzie | Wymagane argumenty | Zdolność |
 |---|---|---|
-| `search_acts` | — (np. `title`, `limit`) | wyszukanie aktu po tytule; zwraca ELI, pozycję Dz.U., typ, status, daty |
-| `get_act` | `eli` (np. `DU/2018/1000`) | metryka aktu po identyfikatorze ELI |
-| `get_act_text` | `eli` | tekst aktu stronami po 5000 znaków |
+| `ustawy_akty` | — (np. `title`, `limit`) | wyszukanie aktu po tytule; zwraca ELI, pozycję Dz.U., typ, status, daty |
+| `repertorium_szukaj_repertorium` | `eli` (np. `DU/2018/1000`) | metryka aktu po identyfikatorze ELI |
+| `ustawy_artykul` | `eli` | tekst aktu stronami po 5000 znaków |
 
 **Serwer własny repozytorium** (`audyt-systemu-v4/mcp-servers/isap-eli-example/`,
-zmierzony 2026-09-27h): jedno narzędzie `isap_lookup` (arg `query`), zwraca schemat
+zmierzony 2026-09-27h): jedno narzędzie `repertorium_szukaj_repertorium` (arg `query`), zwraca schemat
 FOUND / NOT_FOUND / AMBIGUOUS / ERROR wg `SCHEMAT-ODPOWIEDZI-MCP.md` (wzorzec cienkiej warstwy
 normalizującej dla dewelopera: `shared/tools/przyklad-adapter-normalizujacy.md` — ilustracja, nie serwer). W hoście:
-`mcp__<nazwa-serwera-z-konfiguracji>__isap_lookup`.
+`mcp__<nazwa-serwera-z-konfiguracji>__repertorium_szukaj_repertorium`.
 
 ⚠️ Tabela jest **przykładem zmierzonym**, nie kontraktem: inny serwer ELI wystawi
 inne nazwy. Reguła obowiązująca to dopasowanie po zdolności, tabela służy do

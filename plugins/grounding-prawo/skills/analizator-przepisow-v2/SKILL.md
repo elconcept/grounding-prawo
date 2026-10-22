@@ -15,7 +15,7 @@ Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `sh
 
 ## Repertorium - pierwsze źródło w każdym zadaniu prawnym
 
-Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `isap`, `saos`, `nsa`, `uodo`, `eu-sparql`.
+Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `ustawy`, `saos`, `nsa`, `uodo`, `eu-sparql`.
 
 > **Universal runtime:** przed wykonaniem zastosuj kanoniczny `shared/UNIVERSAL-RUNTIME-ADAPTER.md` z osobnego skilla `shared`. Lokalna sekcja adaptera poniżej jedynie go doprecyzowuje.
 
@@ -639,7 +639,7 @@ Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprec
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** wskazany moduł DR albo przepis z dokumentu
-- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ISAP) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ELI) (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `orzeczenia-sadowe-v2`, `szturm-na-draft-pl`, `pisma-procesowe-v3`
 - **Nie dubluj:** brzmienie przepisu bierz wg `shared/MOD-TEKST-JEDNOLITY.md`, nie z pamięci
 - **Basic Memory (`legal`):** czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce, nowe fakty z akt zgłoś do ingestu (protokół: `shared/BASIC-MEMORY.md`)
