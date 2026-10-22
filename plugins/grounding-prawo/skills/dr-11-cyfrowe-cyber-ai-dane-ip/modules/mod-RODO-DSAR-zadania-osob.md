@@ -97,4 +97,3 @@ Draft: potwierdzenie wpływu, rozstrzygnięcie per żądanie, działania podjęt
 | Katalog praw i roszczenie art. 82 | `mod-RODO-szczegolowy.md` |
 | Skarga osoby do UODO (druga strona lustra) | `mod-UODO-postepowanie-ochrona-danych.md` |
 | Skąd wiadomo, gdzie są dane (RCP) | `mod-RODO-RCP-DPA-rejestr-powierzenie.md` |
-| Anonimizacja kopii dokumentów | KROK 0A routera (anonimizer) |

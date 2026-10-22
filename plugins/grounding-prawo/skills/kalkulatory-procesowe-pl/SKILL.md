@@ -9,9 +9,7 @@ metadata:
   author: Wiesław Mazur / MateMatic
   version: 1.0.0
   companion_skills: terminy-procesowe-pl, sejm-eli-mcp (konektor)
-  data-residency: local
   requires-human-approval: 'true'
-  pii-egress: none
   attribution: '{"source": "crankshift/lawpowers", "license": "MIT", "relationship": "pattern-only", "note": "Dekompozycja na 4 kalkulatory i protokół „fetch przed obliczeniem”. Treść, tabele i rachunki napisane od zera na tekstach UKSC/KC/KPC; przy okazji poprawione 4 nieaktualne wartości źródła, m.in. limit opłaty stosunkowej po noweli z 2025 r.\n"}'
 ---
 
@@ -144,7 +142,7 @@ skilla bez rachunku i podstaw prawnych.
 - Tagi pewności wg fundamentu weryfikacyjnego: **zweryfikowane** (przepis
   lub stawka sprawdzone w sesji, z datą) / **[DO SPRAWDZENIA]** (blokuje
   zatwierdzenie karty).
-- Skill działa lokalnie na danych sprawy (RODO-safe); jedyny ruch na
+- Dane sprawy zostają w katalogu sprawy; jedyny ruch na
   zewnątrz to odpytanie publicznych źródeł (ISAP/ELI, NBP, Monitor Polski)
   o treść przepisów i wysokość stóp.
 

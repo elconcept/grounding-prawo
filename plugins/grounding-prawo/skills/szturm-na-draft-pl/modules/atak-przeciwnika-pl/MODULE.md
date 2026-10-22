@@ -52,17 +52,9 @@ Pisz precyzyjnie, formalnie, bez zmiękczania wniosków. Jeśli coś jest słabe
 
 ## Kiedy ten skill, a kiedy pełna debata
 
-To jest JEDNOPRZEBIEGOWY, tani atak - niższy szczebel gradientu kosztu.
-
-| Szczebel | Narzędzie | Koszt | Kiedy |
-|---|---|---|---|
-| 1 | zwykła odpowiedź | minimalny | pytanie rutynowe, notatka robocza |
-| 2 | **atak-przeciwnika-pl (ten skill)** | niski, jeden przebieg | sparing pisma, przygotowanie do rozprawy, wstępny filtr |
-| 3 | adversarial-legal-review-pl | wysoki, cztery role | deliverable wysokiej stawki przed wysłaniem do klienta lub sądu |
-
-O wyborze szczebla decyduje `legal-request-router-pl (poza pluginem)`. Praktyczna reguła: jeśli po ataku
-jednoprzebiegowym padły dwa lub więcej filarów tezy, a stawka jest wysoka - eskaluj do
-pełnej debaty. Jeden przebieg nie zastąpi syntezy i kontroli końcowej verifiera.
+To jest JEDNOPRZEBIEGOWY atak, ale nie tańsza alternatywa dla pełnej debaty. W `szturm-na-draft-pl`
+uruchamiasz go zawsze razem z `adversarial-legal-review-pl`: ten lens daje szybki, surowy atak,
+a debata dokłada syntezę i kontrolę końcową verifiera. Jeden przebieg nie zastępuje drugiej soczewki.
 
 ## Co dostarcza użytkownik
 
@@ -172,8 +164,8 @@ przeciwnika bez przeglądu i zatwierdzenia przez pełnomocnika.
 
 ## Companion skills
 
-- `adversarial-legal-review-pl` - wyższy szczebel: pełna debata builder/attacker/
-  synthesizer/verifier dla spraw wysokiej stawki
+- `adversarial-legal-review-pl` - pełny cykl: debata builder/attacker/synthesizer/
+  verifier z syntezą i kontrolą końcową
 - `citation-grounding-pl` - mechaniczna weryfikacja cytatów i sygnatur wskazanych
   w ataku jako wątpliwe
 
@@ -183,6 +175,6 @@ Adaptacja i przekład skilla `opposing-counsel-review` autorstwa Larissy Meredit
 (lawvable/awesome-legal-skills, licencja Apache-2.0 zadeklarowana we frontmatterze
 autorki). Zachowano rolę pełnomocnika przeciwnika i sześciosekcyjną strukturę wyniku.
 Dodano od zera: osadzenie w polskiej procedurze cywilnej (ciężar dowodu, prekluzja,
-wymogi apelacji), pozycjonowanie na gradiencie kosztu względem adversarial-legal-review-pl,
+wymogi apelacji), rola uzupełniająca wobec adversarial-legal-review-pl,
 tagi pewności i bramkę człowieka zgodne z fundamentem weryfikacyjnym MateMatic.
 

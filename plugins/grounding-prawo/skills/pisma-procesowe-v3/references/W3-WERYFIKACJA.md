@@ -360,5 +360,4 @@ view shared/FORMAT-PISMA.md → python3 -I shared/format-pisma/render_pismo.py <
 
 present_files (dopiero gdy ST-FINAL = FINAL, albo po świadomej zgodzie „a")
 
-view shared/raport-sytuacyjny-integracja.md → propozycja Raportu Sytuacyjnego
 ```

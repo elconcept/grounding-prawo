@@ -11,7 +11,7 @@ metadata:
   outputs: '["treść modułu wczytana do kontekstu skilla wywołującego (nie generuje samodzielnego outputu)"]'
   confidence: n/a
   escalation: '["plik kanoniczny nieznaleziony/uszkodzony → skill wywołujący MUSI zatrzymać się i zgłosić błąd, nie kontynuować z pamięci"]'
-  limitations: '["ZNANE ODSTĘPSTWO od zasady ''shared = warstwa bazowa bez zależności zwrotnych'', zweryfikowane ręcznie 2026-07-04 (FAZA 2E audyt-systemu-v4): 4 pliki zawierają instrukcję `view` wprost do konkretnego skilla nadrzędnego — MOD-METODY-BADAWCZE.md → analizator-dowodow-v3/SKILL.md; PRE-W2-VERIFICATION-GATE.md i MOD-IDENTYFIKACJA-STRONY-UMOWY.md → pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md; MOD-MAPA-PRZEPISOW.md → analizator-przepisow-v2/SKILL.md; raport-sytuacyjny-integracja.md → raport-sytuacyjny-v2/SKILL.md. (poza pluginem) NIE scalone/wydzielone w tej sesji — pole `dependencies.requires` zostawione jako [] (zgodnie z zasadą architektoniczną), ODSTĘPSTWO opisane tu jawnie, żeby FAZA 2E w trybie deklarowanym go NIE zgubiła. Decyzja architektoniczna (uznać jako świadomy wzorzec ''plik-most'' czy wydzielić poza shared/) pozostaje OTWARTA — do następnego audytu.", "rozmiar (176 plików — stan 2026-10-09f po przeniesieniu 15 plików z jednym konsumentem do skilli; 190
+  limitations: '["ZNANE ODSTĘPSTWO od zasady ''shared = warstwa bazowa bez zależności zwrotnych'', zweryfikowane ręcznie 2026-07-04 (FAZA 2E audyt-systemu-v4): 4 pliki zawierają instrukcję `view` wprost do konkretnego skilla nadrzędnego — MOD-METODY-BADAWCZE.md → analizator-dowodow-v3/SKILL.md; PRE-W2-VERIFICATION-GATE.md i MOD-IDENTYFIKACJA-STRONY-UMOWY.md → pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md; MOD-MAPA-PRZEPISOW.md → analizator-przepisow-v2/SKILL.md. NIE scalone/wydzielone w tej sesji — pole `dependencies.requires` zostawione jako [] (zgodnie z zasadą architektoniczną), ODSTĘPSTWO opisane tu jawnie, żeby FAZA 2E w trybie deklarowanym go NIE zgubiła. Decyzja architektoniczna (uznać jako świadomy wzorzec ''plik-most'' czy wydzielić poza shared/) pozostaje OTWARTA — do następnego audytu.", "rozmiar (176 plików — stan 2026-10-09f po przeniesieniu 15 plików z jednym konsumentem do skilli; 190
     — stan 2026-10-04b po usunięciu 7 reliktów, F-225; wcześniej 197 — stan 2026-10-01b, z .claude-plugin/plugin.json) — każda zmiana pliku kanonicznego ma potencjalnie systemowy promień rażenia; edytować tylko przez audyt-systemu-v4 z pełną weryfikacją CHECKLIST-DEDUP.md"]'
   required_modules: '[]'
   changelog: 'Wersja bieżąca: 3.99.39 (2026-10-17b, AUDYT-2026-10-17b): MOD-DLUGIE-PISMO 1.1.0 — do 30 części (pismo ponad 65 000 tokenów), rozmiar części zależny od modelu (lokalny ok. 2 strony), DP-1b (ponad 30 części: osobne dokumenty), DP-1c (część ucięta: zwięźlej), DP-6 (numer punktu zachowany w pliku).
@@ -95,7 +95,6 @@ Nie jest samodzielnym skillem — pełni rolę biblioteki referencji.
 | `LEGAL-STATUS-LOCK.md` | Weryfikacja statusów aktów LSL-1..6 — wywoływany przez MOD-WALIDACJA_v2 (Blok J) |
 | `terminy.md` | Tabela terminów zawitych i przedawnień (KPC, KPK, KPW, KPA, KP, PPSA) |
 | `FAKTY_v2.md`                        | Weryfikacja zgodności faktycznej pisma ze źródłem (MOD-FAKTY) |
-| `raport-sytuacyjny-integracja.md` | Sekwencja wywołania widgetu Raportu Sytuacyjnego v2 |
 | `MOD-STEP-TRACKER.md` | ⛔ Śledzenie kroków i raportowanie pominięć — inicjowany w KROK 0-TRACKER routera; każde pominięcie = obowiązek poinformowania użytkownika + czekanie na decyzję |
 | `MOD-REJESTR-POKRYCIA-JEDNOSTEK.md` | ⛔ Rejestr plikowy (RPK) pokrycia zbiorów ≥10 ponumerowanych jednostek (kazusy, dokumenty, świadkowie...) w sesji wieloturowej — inicjowany PRZED podziałem na partie, commit po KAŻDEJ partii, obowiązkowy odczyt po kompaktowaniu; zapobiega cichemu pominięciu pojedynczych jednostek |
 | `MOD-OS-CZASU-PRZESLANEK.md` | ⛔ Bramka rozjazdu czasowego (OŚ-GATE) — wyzwalacz MECHANICZNY: ≥2 daty w stanie faktycznym. Siatka interwałów n(n−1)/2, punkty przełączenia, tablica CHWIL OCENY przesłanek i tablica cezur reżimowych. Zamyka wzorzec „przesłanka oceniona na datę zdarzenia zamiast na chwilę wskazaną przez prawo" (KAZUS 111). Blok wyjściowy widoczny w odpowiedzi; tablice NIE są źródłem prawa (dodane 2026-08-31, F-142) |
@@ -127,7 +126,6 @@ Wszystkie pliki są kanoniczne — nie istnieją stuby ani kopie w innych lokali
 | `tools/walidator_cytowan.py` | Deterministyczna bramka: sprawdza, czy każde powołanie w gotowym piśmie ma odpowiadający log web_fetch. Pełny opis: `tools/README.md`. ✅ **F-206 ZAMKNIĘTA 2026-09-26d** — przywrócony bajt-w-bajt z historii git repozytorium (usunięty z drzewa rozwojowego mergem `d3385b9`, 2026-08-27; odzyskany z równoległej migawki stabilnej sprzed jej osobnego usunięcia w `6dbe7a0`, 2026-09-08 — potwierdzona identyczność treści `diff`), usunięty wraz z 7 innymi narzędziami; zweryfikowany na fixture'ach `tools/przyklady/` (4/4 przypadki zgodne z opisem w `tools/README.md`). 3.99.20 (zgł. #89, PR #95): domena urzędowa po hoście URL-a (https, host = domena albo subdomena, także `result_urls`), nie podciąg; zgodność po pełnym identyfikatorze cytatu (Dz.U. rok+pozycja / ELI / WDU, sygnatura całością, artykuł z § i kodeksem); `--self-test` 14 przypadków. Testy: `tools/test_walidator_cytowan.py` (unittest, offline) |
 | `tools/extract_api_verification_log.py` | Buduje `sesja.json` (log zdarzeń weryfikacji) z surowej konwersacji API; wejście dla `walidator_cytowan.py`. ✅ Przywrócony 2026-09-26d (F-206), `--self-test` PASS (2/2 zdarzenia poprawnie wydobyte) |
 | `tools/export_gate.py` | Łączy `extract_api_verification_log.py` + `walidator_cytowan.py` w jedną bramkę eksportu (exit 1 = zablokuj eksport). ✅ Przywrócony 2026-09-26d (F-206), `--self-test` PASS |
-| `tools/append_event.py` + `tools/hash_chain_verify.py` + `tools/router_event_parser.py` | Log audytowy hash-chain: zapis zdarzenia, weryfikacja integralności łańcucha, parsowanie znaczników. Referencyjne dla developera portalu (`shared/AUDIT-TRAIL-SPEC.md`). ✅ Przywrócone 2026-09-26d (F-206) — dodatkowo znalezione jako NIEOBECNE poza zakresem pierwotnego opisu F-206 w `WARN-OTWARTE.md` (ten sam commit usuwający, ta sama data). Zweryfikowane end-to-end: `append_event.py` zapisał 3-wpisowy łańcuch, `hash_chain_verify.py` potwierdził integralność, a po ręcznym spreparowaniu naruszenia (zmiana `payload` we wpisie seq=2) poprawnie wykrył pierwszy niezgodny wpis |
 | `ORKA-BAS-001-125.json` | Dane maszynowe leksykonu ORKA (125 rekordów `id/haslo/modul/definicja`; 41 bez odpowiednika w `orka-bas-leksykon/*.md`) — wskazany z `ORKA-BAS-LEKSYKON.md` (2026-10-04b, F-225) |
 | `tools/test_mcp_protocol.py` + `tools/connector_health_check.py` | Klasyfikacja odpowiedzi connectora MCP (testy jednostkowe) + health-check dostępności connectorów. Referencyjne, poza LLM (`shared/MCP-INTEGRACJA.md`). ✅ Przywrócone 2026-09-26d (F-206) — jak wyżej, poza pierwotnym zakresem F-206. `test_mcp_protocol.py`: 6/6 testów PASS (`python3 -m unittest test_mcp_protocol`). `connector_health_check.py --self-test`: PASS |
 
@@ -152,14 +150,11 @@ view shared/INTAKE-GAP.md
 view shared/POST-VALIDATION.md
 view shared/terminy.md
 view shared/FAKTY_v2.md
-view shared/raport-sytuacyjny-integracja.md
 ```
 
 Nie wczytuj wszystkich naraz — tylko te potrzebne dla danego kroku.
 
-> **Uwaga:** `raport-sytuacyjny-integracja.md` jest wywoływany przez `prawny-router-v3`
-> opisowo (punkty self-check [A]/[B]/[C]). Skille dziedzinowe nie wywołują go przez `view` —
-> logika wyzwalania jest w routerze. `FAKTY_v2.md` jest wbudowany bezpośrednio w `pisma-procesowe-v3`
+> **Uwaga:** `FAKTY_v2.md` jest wbudowany bezpośrednio w `pisma-procesowe-v3`
 > i `pisma-proste-v2` (sekcje MOD-FAKTY / M-FAKTY) — wywołanie przez `view` możliwe gdy potrzebna
 > jest pełna wersja modułu.
 
@@ -207,7 +202,7 @@ Nie wczytuj wszystkich naraz — tylko te potrzebne dla danego kroku.
 | `MOD-DLUGIE-PISMO.md` | Pismo ponad jedną odpowiedź: części według planu (DP-1–DP-5), ciąg dalszy i zmiany sekcji w potoku W2–W3, umowa z części po AU-HYBRID/AU-STRIP |
 | `MOD-WIDGET-IO.md` | ⭐ Obligatoryjny pasek Import/Export dla widgetów analitycznych — matryca per skill, wzorzec HTML/CSS/JS, reguły IO-1–IO-8 |
 | `MOD-KARTA-DOWODU.md` | ⛔ Karta dowodowa i graf faktów — pisma-procesowe-v3 W1.2c-PRE (po SD-SKAN, przed macierzą MT1); MOD-METODY-BADAWCZE (analizator-dowodow-v3 nie ma bloku B2 — deklaracja usunięta 2026-10-09) |
-| Przeniesione z `shared/` 2026-10-09 (jedyny konsument) | `pisma-procesowe-v3/modules/`: MOD-AUDIT-BUNDLE, MOD-DOKTRYNA, MOD-ELIMINACJA-TEZ, MOD-BUDOWA-ARGUMENTU, MOD-KOSZT-ODPOWIEDZI, MOD-MIKROPODSUMOWANIA, MOD-SKUTEK-PROCESOWY, MOD-STRESS-TEST; `prawny-router-v3/references/`: KANCELARIA-WORKFLOW, SOCIAL-SECURITY-LAW-STANDARD, DISCIPLINARY-PROCEEDINGS-STANDARD, JUDICIARY-LEGAL-STANDARD; `orzeczenia-sadowe-v2/references/`: ORZECZENIA-OUTPUT-SCHEMA; `analizator-umow-v1/scripts/`: kontrakt_rachunek.py + test (T39) |
+| Przeniesione z `shared/` 2026-10-09 (jedyny konsument) | `pisma-procesowe-v3/modules/`: MOD-AUDIT-BUNDLE, MOD-DOKTRYNA, MOD-ELIMINACJA-TEZ, MOD-BUDOWA-ARGUMENTU, MOD-KOSZT-ODPOWIEDZI, MOD-MIKROPODSUMOWANIA, MOD-SKUTEK-PROCESOWY, MOD-STRESS-TEST; `prawny-router-v3/references/`: SOCIAL-SECURITY-LAW-STANDARD, DISCIPLINARY-PROCEEDINGS-STANDARD, JUDICIARY-LEGAL-STANDARD; `orzeczenia-sadowe-v2/references/`: ORZECZENIA-OUTPUT-SCHEMA; `analizator-umow-v1/scripts/`: kontrakt_rachunek.py + test (T39) |
 
 ### Obowiązkowe wywołania dla generatorów pism
 

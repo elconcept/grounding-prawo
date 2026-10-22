@@ -69,3 +69,5 @@ Pipeline Konwerter (istnieje Python script w `_vault-management/scripts/`):
 - Batch > 10 PDF → zapytaj Wiesława przed startem
 - Idempotencja: jeśli `.md` już istnieje w output i checksumma PDF nie zmieniona → skip
 
+Reguły pracy z dokumentem — integralność, dane wrażliwe, operacje nieodwracalne, zakaz wysyłki bez decyzji autora — są w
+`shared/ZASADY-PLUGINU.md`; nie powtarzaj ich tutaj.

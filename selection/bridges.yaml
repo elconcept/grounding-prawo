@@ -187,7 +187,7 @@ skills:
     - szturm-na-draft-pl
   humanizer-pl:
     etap: C
-    wejscie: tekst po obowiązkowym `pisz-po-polsku` (drugi etap redakcji, niezmodyfikowany upstream)
+    wejscie: tekst po obowiązkowym `pisz-po-polsku` (drugi etap redakcji)
     wynik: nowa wersja tekstu z usuniętymi wzorcami AI (emdash -> lacznik, naturalna struktura zdań)
     dalej:
     - redline-docx-pl

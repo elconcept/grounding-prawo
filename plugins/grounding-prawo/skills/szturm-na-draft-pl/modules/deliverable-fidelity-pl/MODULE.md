@@ -91,8 +91,8 @@ tez jest przemilczeniem).
 pominietych ustalen dolaczona do raportu. Inaczej **PASS**.
 
 Wagi i progi sa wypisane wprost celowo: audytor odtwarza werdykt z samych liczb
-w raporcie, bez pytania modelu o uzasadnienie. To wymog rejestrowania zdarzen
-z art. 12 AI Act sprowadzony do arytmetyki - argument wprost pod PATRONa. Te same
+w raporcie, bez pytania modelu o uzasadnienie. To wymog przejrzystosci werdyktu:
+kazdy odtworzy wynik z liczb, bez pytania modelu o uzasadnienie. Te same
 trzy kroki (krytyczne -> score wazony -> prog warunkowy) stosuje
 `adversarial-legal-review-pl` dla filarow tezy; roznia sie tylko wagi, bo inna materia.
 
@@ -124,14 +124,6 @@ Werdykt: FAIL - NIE wysylaj. Dodaj F3 do podsumowania, wzmocnij F2 do faktycznej
   bo usypia czujnosc. Kontrola wyrywkowa LLM ma to lapac.
 - **Skrypt mowi co obecne, model mowi czy wiernie.** Nie ufaj samemu matchowi slow - i nie kaz modelowi
   liczyc obecnosci, od tego jest skrypt.
-
-## Ochrona danych (RODO)
-
-
-## Integracja z AI Act
-
-Weryfikacja wiernosci to dowod, ze nadzor czlowieka (art. 14) dostaje pelen obraz - deliverable nie ukrywa
-przed decydentem ustalen, ktore analiza wykryla. Raport wiernosci wkladaj do `legal-ai-audit-bundle (poza pluginem)`.
 
 ## Atrybucja
 

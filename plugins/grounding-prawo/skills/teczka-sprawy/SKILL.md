@@ -1,6 +1,6 @@
 ---
 name: teczka-sprawy
-description: 'Teczka sprawy: spis dokumentów, brief, spis treści i podsumowanie kancelaryjne do DOCX. Używaj przy porządkowaniu akt i przygotowaniu teczki.'
+description: 'Teczka sprawy: spis dokumentów, brief, spis treści i podsumowanie sprawy do DOCX. Używaj przy porządkowaniu akt i przygotowaniu teczki.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową

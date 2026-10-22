@@ -15,7 +15,6 @@ tylko trzy rzeczy domenowe.
 - **Silnik** `ground-citations.mjs` - mechanika string-match + gradient + kalibracja.
 - **Doktryna** `gradient-weryfikacji.md` - poziomy, macierz `claim_type`, reguła kalibracji.
 - **Statusy** i format raportu.
-- **Reguła RODO** (lokalnie), integracja z AI Act art. 12/14.
 
 ## Co podmieniasz per domena (3 rzeczy)
 

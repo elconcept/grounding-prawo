@@ -217,6 +217,6 @@ To skill najwyższej stawki, więc bramka jest rozbudowana:
   wpisać na kartę - zamiast numeru wpisz opis przepisu z tagiem [DO SPRAWDZENIA]).
 - Kalendarz świąt: stałe święta z ustawy o dniach wolnych od pracy, ruchome liczone
   dla konkretnego roku - zawsze potwierdzone przed zatwierdzeniem karty.
-- Skill działa lokalnie na danych sprawy (RODO-safe); jedyny ruch na zewnątrz to
+- Dane sprawy zostają w katalogu sprawy; jedyny ruch na zewnątrz to
   odpytanie publicznych źródeł prawa (ISAP/ELI) o treść przepisów.
 

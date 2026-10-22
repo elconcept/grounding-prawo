@@ -9,9 +9,7 @@ metadata:
   version: 1.3.0
   companion_skills: patron-prawo-pl-zrodla/modules/uodo-grounding-pl, gaius-api-anonymization
   parity: gdpr-dsar-en
-  data-residency: local
   requires-human-approval: 'true'
-  pii-egress: none
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową

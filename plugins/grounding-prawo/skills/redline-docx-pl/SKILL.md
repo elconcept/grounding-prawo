@@ -10,9 +10,7 @@ allowed-tools:
 metadata:
   attribution: '[{"source": "dealfluence/adeu", "url": "https://github.com/dealfluence/adeu", "license": "MIT", "relationship": "dependency", "note": "Silnik konwersji i aplikacji zmian, wolany przez uvx. Skill go opakowuje, nie wywodzi sie z jego kodu.\n"}, {"source": "evolsb/legal-redline-tools", "url": "https://github.com/evolsb/legal-redline-tools", "license": "MIT", "relationship": "pattern-only", "note": "Wzorce memo negocjacyjnego (tier/rationale/walkaway/precedent) i skanera placeholderow. Oba skrypty napisane od zera pod realia polskie.\n"}, {"source": "genspark-ai/genoffice", "url": "https://github.com/genspark-ai/genoffice", "license": "Apache-2.0", "relationship": "vendored", "note": "packages/docx-engine wendorowany do vendor/docx-engine (commit 8f52328, Apache-2.0). Silnik round-trip po bajtach. Zmierzony 2026-08-05 (round-trip, sledzone zmiany, tabele), NIE wpiety w workflow skilla - sledzonych zmian nie robi poprawnie na sciezce blokowej. Szczegoly i wykaz zmian w vendor/docx-engine/NOTICE
     i README.md.\n"}]'
-  data-residency: local
   requires-human-approval: 'true'
-  pii-egress: none
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -30,7 +28,7 @@ a Markdown (CriticMarkup), z aplikacja zmian z powrotem do `.docx`. Robi to,
 czego `python-docx` NIE potrafi: wstrzykuje **natywne Word Track Changes**
 (`w:ins`/`w:del`) i komentarze, zachowujac formatowanie, fonty i marginesy.
 
-Cala praca lokalnie (uvx, brak chmury). Silnik testowany na polskim .docx 2026-05-22
+Konwersja przez `uvx`. Silnik testowany na polskim .docx 2026-05-22
 (extract/apply/sanitize - patrz [THIRD_PARTY_INSPIRATIONS.md](THIRD_PARTY_INSPIRATIONS.md)).
 
 ## Wymagania

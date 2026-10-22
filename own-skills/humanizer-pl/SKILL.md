@@ -2,15 +2,13 @@
 name: humanizer-pl
 version: 1.5.1
 description: |
-  Usuwa wzorce AI-slop z polskiego tekstu - sprawia, ze czyta sie naturalnie i ludzko.
-  Polska adaptacja blader/humanizer (MIT). Uzywaj do edycji/przegladu polskich tresci:
-  artykuly, aktualnosci, posty LinkedIn, maile, scenariusze, copy stron, dokumentacja.
-  Wykrywa: inflacje znaczeniowa, slop-slownictwo PL, imieslowy pozornej glebi,
-  vague attributions, naduzycie em-dash, regule trojki, hedging, artefakty czatbota,
-  kalki anglicyzmow, pisownie sprzed reformy RJP 2026, monotonny rytm i skladnie
-  rzeczownikowa. Minimalna ingerencja: zmienia slowa, nie tresc - bramka po
-  przepisaniu (skrypt stdlib) pilnuje dat, kwot, przepisow, sygnatur, cytatow, sily
-  normy, pewnosci i terminow prawnych. Umowy i pisma: tryb rejestru prawniczego.
+  Redaguje polski tekst, zeby brzmial naturalnie i ludzko: usuwa wzorce AI-slop
+  (inflacja znaczeniowa, slop-slownictwo, imieslowy pozornej glebi, kalki, rytm
+  i skladnia typowa dla modeli). Drugi, obowiazkowy etap redakcji pisma po
+  `pisz-po-polsku`. Minimalna ingerencja: zmienia slowa, nie tresc - zachowuje
+  fakty, cytaty, kwoty, daty, przepisy, sygnatury, terminy i sile twierdzen;
+  bramka po przepisaniu pilnuje tych elementow. Uzywaj przy redakcji pism,
+  analiz, notatek i kazdego tekstu prawnego.
 license: MIT
 attribution:
   - source: blader/humanizer
@@ -36,9 +34,7 @@ allowed-tools:
   - Grep
   - Glob
   - AskUserQuestion
-data-residency: local
 requires-human-approval: false
-pii-egress: none
 ---
 
 # humanizer-pl: usuwanie wzorcow AI ze slop polskiego tekstu

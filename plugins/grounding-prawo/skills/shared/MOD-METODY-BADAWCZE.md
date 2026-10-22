@@ -29,7 +29,7 @@ proceduralnej). System może:
   eksperckiego (patrz §5).
 
 Wynik zastosowania metody zasila: checklistę priorytetów (`MOD-PRIORYTETY-ASPEKTOW.md`),
-mapę ryzyk w `raport-sytuacyjny-v2 (poza pluginem)`, oraz argumentację w `MOD-WARIANTY-POZWU.md`.
+mapę ryzyk w dashboardzie sprawy oraz argumentację w `MOD-WARIANTY-POZWU.md`.
 
 ---
 
@@ -189,7 +189,7 @@ KRYTERIUM AUTO-DOBORU:
              lub SPORNE dotyczące DATY (nie samego faktu) → auto-aktywacja.
 INTEGRACJA:  Rozszerza chronologia-sprawy-v1 (nie zastępuje) — dodaje warstwę
              analityczną "luki logiczne w sekwencji" do istniejącego indeksu
-             sprzeczności dat. Wyjście zasila MET-FTL-tab w raport-sytuacyjny-v2 (poza pluginem).
+             sprzeczności dat. Wyjście zasila MET-FTL-tab w dashboardzie sprawy.
 ```
 
 ### MET-NET — Analiza sieci powiązań (network analysis)
@@ -216,7 +216,7 @@ KRYTERIUM AUTO-DOBORU:
              w różnych rolach w różnych dokumentach → auto-aktywacja.
 INTEGRACJA:  Wejście: MP1-ekstrakcja (lista podmiotów). Wyjście: diagram
              przez Visualizer (read_me: diagram) + wpis do mapy ryzyk
-             raport-sytuacyjny-v2 (poza pluginem) jeśli wykryto niespójność roli.
+             dashboard sprawy, jeśli wykryto niespójność roli.
 MODEL WYKONANIA: DWUETAPOWY (§1a).
 PROCEDURA SZKICU (KROK A):
              1. Wypisz podmioty (≥3) z MP1-ekstrakcja.
@@ -296,7 +296,7 @@ KRYTERIUM AUTO-DOBORU:
 INTEGRACJA:  Wejście: MP1-ekstrakcja + chronologia-sprawy-v1 (zdarzenia
              przedsporne). Wyjście: zasila W1.2 (teza centralna) w
              pisma-procesowe-v3 jako kontekst wzmacniający narrację oraz
-             sekcję "Stan faktyczny" w raport-sytuacyjny-v2 (poza pluginem).
+             sekcję "Stan faktyczny" w dashboardzie sprawy.
 ```
 
 ### MET-PT — Process Tracing (śledzenie mechanizmu przyczynowego)
@@ -337,7 +337,7 @@ INTEGRACJA:  Wejście: chronologia-sprawy-v1 (bezsporna kolejność) + MD4-pokry
              etapy oznaczone "TYLKO KORELACJA".
              ⛔ 2026-10-01b: do tej wersji ani pisma-procesowe-v3, ani
              chronologia-sprawy-v1, ani analizator-dowodow-v3 nie wczytywały
-             tego pliku — MET-PT był osiągalny tylko z raport-sytuacyjny-v2 (poza pluginem).
+             tego pliku — MET-PT był osiągalny tylko z dashboardu sprawy.
              Teraz wynik MET-PT to atrybut `dowod` każdej krawędzi w
              shared/MOD-GRAF-PRZYCZYNOWY.md (BEZPOSREDNI / POSREDNI /
              KORELACJA), wywoływanym z MP13 §13.2a i z TRYBU C chronologii —
@@ -371,9 +371,9 @@ KRYTERIUM AUTO-DOBORU:
              ≥1 fakt kluczowy dla roszczenia głównego (z MOD-PRIORYTETY-
              ASPEKTOW, aspekty_glowne) ma w materiale tylko źródła pochodzące
              od jednej strony (status B lub C w SOURCE-STATUS-MATRIX,
-             raport-sytuacyjny-v2 (poza pluginem)) → auto-aktywacja.
-INTEGRACJA:  Wejście: SOURCE-STATUS-MATRIX (raport-sytuacyjny-v2 (poza pluginem)) + MD4-pokrycie.
-             Wyjście: zasila "Luki dowodowe" w raport-sytuacyjny-v2 (poza pluginem) oraz
+             dashboard sprawy) → auto-aktywacja.
+INTEGRACJA:  Wejście: SOURCE-STATUS-MATRIX (dashboard sprawy) + MD4-pokrycie.
+             Wyjście: zasila "Luki dowodowe" w dashboardzie sprawy oraz
              listę wniosków dowodowych w W2.2 ([WNIOSKI DOWODOWE]) w
              pisma-procesowe-v3.
 ```

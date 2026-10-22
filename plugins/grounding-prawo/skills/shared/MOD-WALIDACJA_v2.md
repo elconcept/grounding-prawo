@@ -317,13 +317,6 @@ Po zakończeniu walidacji i generowaniu dokumentu (.docx/.pdf) ZAWSZE wyświetl:
 "✅ Pismo zostało wygenerowane i zwalidowane.
 
 📋 Czy chcesz teraz sporządzić Raport Sytuacyjny Sprawy?
-Raport podsumuje: strony, żądania, dowody, terminy, ryzyka i kolejne kroki —
-w formie interaktywnego widgetu gotowego do wydruku lub edycji.
-
-Wpisz 'raport' lub kliknij aby uruchomić."
-
-→ Na potwierdzenie: wywołaj raport-sytuacyjny-v2 (poza pluginem) natychmiast.
-→ Raport generuje się automatycznie z danych rozmowy (bez ponownego podawania).
 ```
 
 ```

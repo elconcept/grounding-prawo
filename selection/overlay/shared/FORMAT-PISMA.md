@@ -101,7 +101,7 @@ Wnioskodawca:     Jan Kowalski
   że czynność nastąpiła „na zgłoszenie o X” jako o jej przyczynie; opisz, co organ zrobił i co powiedział.
 - Kontrola przed wydaniem treści jest dwuetapowa i obowiązkowa, w tej kolejności:
   1. `pisz-po-polsku` - szlif językowy (z bramką `audyt_po_przepisaniu.py`),
-  2. `humanizer-pl` - niezmodyfikowany upstream usuwający resztki wzorców AI.
+  2. `humanizer-pl` - usuwa resztki wzorców AI.
   Potem `pierwsze-wrazenie-sedziego-pl`, a przy tezie spornej `atak-przeciwnika-pl`.
   Nie wolno pominąć żadnego etapu ani zamienić kolejności.
 

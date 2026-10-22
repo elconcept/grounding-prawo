@@ -52,7 +52,7 @@ niezaakceptowanych zmian w tym DOCX i snapshotu MD, a kończy zmianami tej sesji
 
 Każde pismo przed wydaniem przechodzi obowiązkowo przez dwa skille redakcyjne, w tej kolejności:
 najpierw `pisz-po-polsku` (szlif językowy i bramka `audyt_po_przepisaniu.py`), potem `humanizer-pl`
-(niezmodyfikowany upstream usuwający wzorce AI). Pominięcie etapu albo zamiana kolejności jest błędem
+(usuwający resztki wzorców AI). Pominięcie etapu albo zamiana kolejności jest błędem
 procesu; wyjątek wymaga wyraźnego polecenia użytkownika i adnotacji w `_PRZEBIEGI.md`.
 
 Wiedza wielosprawowa, teczka sprawy w wiki i lekcje do doskonalenia pism: Basic Memory, projekt `legal`
@@ -74,11 +74,11 @@ to przesłanki do sprawdzenia, nie fakty.
 
 ## KONFIGURACJA PLUGINU: profil postępowań własnych
 
-> Szkic do akceptacji właściciela: zasady wynikają z jego wytycznych i analiz doradczych.
-
-Osoba prowadzi własne sprawy (karne i wykroczeniowe, działania Policji i prokuratury, hospitalizacja
-psychiatryczna, pozew przeciw szpitalowi, najem, RODO). Każde pismo ma wysoką stawkę i ma być wolne od błędów.
-Profil zawęża zachowanie routera i bramki kosztu innych skilli.
+Osoba prowadzi własne sprawy: karne i wykroczeniowe, działania Policji i prokuratury (zatrzymanie,
+przymus bezpośredni, przekroczenie uprawnień), hospitalizacja psychiatryczna i czynności medyczne bez
+zgody, pozew przeciw szpitalowi, najem i odpowiedzialność zarządcy nieruchomości (kaucje, rozliczenia,
+odszkodowania), RODO. Każde pismo ma wysoką stawkę i ma być wolne od błędów. Profil wyłącza bramki
+kosztu i skróty innych skilli: pełna ścieżka obowiązuje zawsze.
 
 **Wyjątek dla zawiadomienia pokrzywdzonego.** Przed regułami 1, 2, 6 i 9 stosuj `zawiadomienie-o-przestepstwie`
 oraz `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`. Pełna kontrola oznacza tu pełnię i wierność relacji, nie tor
@@ -88,8 +88,8 @@ różnica z protokołem nie są krytyczną uwagą blokującą pismo. We własnym
 nazwij oddzielnie. Weryfikacja prawa i rzeczywistych cytatów pozostaje; nie przenoś jej progu na krzywdę autora.
 
 1. **Pełna ścieżka zawsze.** Nie proponuj tańszej ścieżki, nie klasyfikuj pisma jako mniej istotnego,
-   nie pomijaj kontroli z powodu kosztu tokenów ani liczby pauz. Dotyczy bramek S/M/L, ścieżki
-   "odpowiedź bezpośrednia" i warunków uruchamiania debaty zależnych od stawki.
+   nie pomijaj kontroli z powodu kosztu tokenów ani liczby pauz. Nie istnieje skrócona ścieżka
+   ani warunek uruchomienia debaty zależny od stawki - zestaw kontroli jest zawsze ten sam.
 2. **Soczewki w osobnych przebiegach.** Kontrole pisma (cytaty, atak przeciwnika, pierwsze wrażenie
    sędziego, subsumpcja, debata, ponowny grounding po poprawkach) uruchamiaj jako oddzielne przebiegi,
    najlepiej w osobnych kontekstach. Wynik "OK" jednej nie zwalnia z następnej.

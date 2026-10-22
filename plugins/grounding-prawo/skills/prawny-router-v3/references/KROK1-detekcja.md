@@ -197,13 +197,13 @@ V5 — Dopiero po V1+V2+V3+V4 → KROK 2
 
 ---
 
-## KROK 1C — CENTRALNE JĄDRO KANCELARYJNE
+## KROK 1C — CENTRALNE JĄDRO PROCESOWE
 
 Po detekcji trybu i przed przekazaniem sprawy do skilla dziedzinowego — wczytaj zależnie od potrzeby:
 
 ```text
 Zawsze dla pism / strategii / akt / terminów / ryzyka / dowodów:
-  view prawny-router-v3/references/KANCELARIA-WORKFLOW.md
+  view shared/SCIEZKI-PRACY.md
   view shared/TRYBY-PROCESOWE.md
   view shared/RISK-ASSESSMENT.md
 

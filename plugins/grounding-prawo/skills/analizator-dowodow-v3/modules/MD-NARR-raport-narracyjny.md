@@ -21,9 +21,8 @@ i listę braków informacyjnych z odsyłaczami.
 TAK, gdy użytkownik WYRAŹNIE:
   - prosi o "wersję szczegółową" / "pełny raport" / "więcej szczegółów"
   - prosi o format "do przeczytania" / "dokument" / "plik" (nie tylko widget)
-  - chce przekazać analizę osobie trzeciej (np. innemu prawnikowi, klientowi
-    w wersji PRAWNIK — nie mylić z raport-klienta-v1 (poza pluginem), który jest uproszczony
-    dla LAIK)
+  - chce przekazać analizę osobie trzeciej (np. innemu prawnikowi lub klientowi
+    w wersji PRAWNIK)
   - explicite mówi "jak LexAlpha" / "format ciągłego tekstu" / "z nawigacją
     do sekcji"
 

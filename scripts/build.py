@@ -189,7 +189,7 @@ def qualify_paths(sel):
 # (rejestr prawniczy psuje instrukcję stylu; decyzja właściciela 22.10.2026).
 NO_PROTOCOL_INJECTION = {"humanizer-pl", "pisz-po-polsku"}
 
-# humanizer-pl jest niezmodyfikowanym upstreamem: build nie przepisuje jego treści.
+# humanizer-pl zachowuje własną treść: build nie przepisuje jego wnętrza.
 VERBATIM_SKILLS = {"humanizer-pl"}
 
 
@@ -694,7 +694,13 @@ def main():
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
         normalize_skill(sm, e)
 
+    import retire_layers
+    retire_layers.apply(SKILLS)
+    print("usunięta warstwa kancelaryjna, raportowa, audytowa i local-first")
+
     print("przywrócone bez zmian z upstreamu:", restore_verbatim(sel))
+    retire_layers.strip_restored_host_rules(SKILLS)
+    print("zdjęte bloki governance z przywróconych skilli: humanizer-pl")
     generate_skill_index(sel)
     bundle_claude_commands_and_hooks()
 

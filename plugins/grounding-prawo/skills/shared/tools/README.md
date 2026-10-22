@@ -195,21 +195,18 @@ mergem `d3385b9` (2026-08-27), a `shared/SKILL.md` je mimo to opisywał — stą
 flaga F-206 (jej pierwotny opis mylnie wskazywał inny commit, `ec3f530b`, który
 tylko wymienił ZIP-y binarne).
 
-Przy naprawie okazało się, że **ten sam commit usunął też 5 dalszych narzędzi**,
+Przy naprawie okazało się, że **ten sam commit usunął też 2 dalsze narzędzia**,
 nigdzie w rejestrze F-206 niewymienionych, choć wciąż opisanych jako „ACTIVE"
-w `shared/DEPENDENCY-GRAPH.md`, `shared/AUDIT-TRAIL-SPEC.md` i
-`shared/MCP-INTEGRACJA.md`: `append_event.py`, `hash_chain_verify.py`,
-`router_event_parser.py` (log audytowy hash-chain), oraz `test_mcp_protocol.py`,
-`connector_health_check.py` (testy/health-check connectorów MCP). Wszystkie 8
-przywrócono bajt-w-bajt z rodzica tego commitu (klon repozytorium, dostęp
-odczytu) i zweryfikowano funkcjonalnie:
+w `shared/DEPENDENCY-GRAPH.md` i `shared/MCP-INTEGRACJA.md`:
+`test_mcp_protocol.py`, `connector_health_check.py` (testy/health-check
+connectorów MCP). Wszystkie 5 przywrócono bajt-w-bajt z rodzica tego commitu
+(klon repozytorium, dostęp odczytu) i zweryfikowano funkcjonalnie:
 
 | Narzędzie | Weryfikacja | Wynik |
 |---|---|---|
 | `walidator_cytowan.py` | 4 przypadki z `przyklady/` (jak w tabeli wyżej) | ✅ 4/4 zgodne z opisem |
 | `extract_api_verification_log.py` | `--self-test` | ✅ PASS |
 | `export_gate.py` | `--self-test` | ✅ PASS |
-| `append_event.py` + `hash_chain_verify.py` | end-to-end: zapis 3-wpisowego łańcucha, weryfikacja OK, potem ręcznie spreparowane naruszenie (zmieniony `payload` we wpisie seq=2) → poprawnie wykryte jako pierwszy niezgodny wpis | ✅ obie ścieżki poprawne |
 | `router_event_parser.py` | `--self-test` | ✅ PASS |
 | `test_mcp_protocol.py` | `python3 -m unittest test_mcp_protocol` | ✅ 6/6 PASS |
 | `connector_health_check.py` | `--self-test` | ✅ PASS |

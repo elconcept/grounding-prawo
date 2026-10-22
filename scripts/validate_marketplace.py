@@ -10,8 +10,8 @@ import sys
 import yaml
 
 
-# humanizer-pl jest niezmodyfikowanym upstreamem: jego frontmatter zawiera pola
-# spoza minimalnego zestawu Agent Skills (wersja, atrybucja, polityki hosta).
+# humanizer-pl zachowuje mechanikę upstreamu: jego frontmatter zawiera pola
+# spoza minimalnego zestawu Agent Skills (wersja, atrybucja).
 VERBATIM_UPSTREAM = {'humanizer-pl'}
 UPSTREAM_FIELDS = {'version', 'attribution', 'compatibility', 'data-residency',
                    'requires-human-approval', 'pii-egress'}

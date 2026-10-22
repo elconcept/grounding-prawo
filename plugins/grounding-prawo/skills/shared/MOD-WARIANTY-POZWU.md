@@ -60,7 +60,7 @@ WARIANT [X]: [nazwa krótka]
                  istnieje. Jeśli brak takiego kandydata, podstawa = ⚠️
                  najgłębszy dostępny kandydat + adnotacja "wymaga sprawdzenia
                  w W3/analizator-przepisow-v2"]
-  Ryzyko:       [P1/P2/P3 — zgodnie z konwencją raport-sytuacyjny-v2 (poza pluginem)
+  Ryzyko:       [P1/P2/P3 — zgodnie z konwencją P1/P2/P3
                  PROCESS-RISK-MAP. PODNIEŚ o jeden poziom (np. P2→P1), jeśli
                  WSZYSCY kandydaci z mapa_przepisow dla aspektu_glowne tego
                  wariantu mają zgodność=SPRZECZNA — sygnał, że podstawa
@@ -167,7 +167,7 @@ Czy rama jest poprawna? Mogę przejść do redakcji pisma (W2)?
 □ Czy warunek aktywacji §1 sprawdzony — jeśli NIE, ten krok pominięty
   (brak wpływu na resztę W1)?
 □ Czy każdy wariant ma pole "Ryzyko" zgodne z PROCESS-RISK-MAP
-  (raport-sytuacyjny-v2 (poza pluginem)), nie wymyślone ad hoc?
+  nie wymyślone ad hoc?
 □ Czy "Koszt" i "Szansa" nie zawierają liczb z pamięci — tylko ⚠️ lub opis
   jakościowy?
 □ Czy styl_sugerowany przypisany wg tabeli §3, nie zapytany osobno?

@@ -18,7 +18,7 @@ Uzycie:
   python fetch_eurlex.py --celex 32016R0679 --lang EN    # RODO, jezyk EN
   python fetch_eurlex.py --celex 32024R1689 --out outputs/custom
 
-Kontrakt meta.json (zgodny z citation-grounding-pl + legal-ai-audit-bundle):
+Kontrakt meta.json (zgodny z citation-grounding-pl):
   {
     "celex": "32024R1689",
     "typ": "rozporzadzenie|dyrektywa|decyzja|...",

@@ -501,13 +501,7 @@ Brak dokumentów:
    📌 Złóż w [sąd/urząd] — adres: [adres]
    📌 Zachowaj potwierdzenie złożenia
    📌 Termin: do [data]"
-3. Zaproponuj Raport Sytuacyjny jeśli sprawa złożona:
-   view shared/raport-sytuacyjny-integracja.md
-4. PRAWNIK — zaproponuj raport dla klienta:
-   "Czy wygenerować raport statusu sprawy dla klienta?
-   → Powiedz 'raport dla klienta' żebym przygotował dokument zewnętrzny."
-   (wywołuje raport-klienta-v1 (poza pluginem) po potwierdzeniu)
-5. → KROK I (co dalej?)
+3. → KROK I (co dalej?)
 ```
 
 ---
@@ -766,11 +760,6 @@ Przesłuchanie świadka
      zachowanie świadka żebyś mógł/a ćwiczyć."
   → view przesluchanie-swiadkow-v2-min90/SKILL.md → KROK H → KROK I
 
-Raport sytuacyjny sprawy
-  → "Tworzę przegląd całej sprawy — co wiadomo, co brakuje,
-     co pilne."
-  → view raport-sytuacyjny-v2/SKILL.md (poza pluginem) → widget → KROK I
-
 Q&A / pytania użytkownika
   → KROK Q — bez wywołania zewnętrznego skilla
   → Po sesji Q&A: KROK I z propozycją modułu
@@ -878,7 +867,6 @@ Obliczanie terminu zawitego   → terminy.md          → KROK G (razem z HARDGA
 Zbieranie danych do pisma     → INTAKE-GAP.md        → KROK D.2
 Weryfikacja faktów pisma      → FAKTY_v2.md          → KROK D.3
 Po wygenerowaniu pisma        → HYBRID-VALIDATION.md → KROK D.4 (przed present_files)
-Raport sytuacyjny             → raport-sytuacyjny-integracja.md → KROK D.4, KROK I
 Analiza strategiczna (prawnik)→ STRATEGIA-PROCESOWA.md → KROK I (tryb PRAWNIK)
 Ocena ryzyk procesowych       → RISK-ASSESSMENT.md   → KROK I (tryb PRAWNIK)
 Metodologia dowodowa          → DOWODY-METODOLOGIA.md → KROK A (analizator dowodów)

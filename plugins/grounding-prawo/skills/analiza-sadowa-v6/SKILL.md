@@ -772,34 +772,9 @@ PRZEJŚCIE IV — AUTOKOREKTA
 > KOLEJNOŚĆ JEST BEZWZGLĘDNA. Każdy krok w osobnej wiadomości.
 
 ```
-WIADOMOŚĆ 6 — WIDGET RAPORTU SYTUACYJNEGO [OBOWIĄZKOWY]
+WIADOMOŚĆ 6 — OFERTA PISMA PROCESOWEGO
 
-Wykonaj natychmiast po §11 raportu końcowego, bez pytania o zgodę.
-
-SEKWENCJA:
-  1. view shared/raport-sytuacyjny-integracja.md
-     (tylko jeśli nie wczytano w tej sesji)
-
-  2. Zbuduj blueprint JSON ze schematu w raport-sytuacyjny-v2/SKILL.md (poza pluginem)
-     → dane wyłącznie z rozmowy / dokumentów; pola nieznane → null
-     → tryb: "A" (po pełnej analizie)
-
-  3. show_widget(path="raport-sytuacyjny-v2/assets/widget-raport-sytuacyjny.html (poza pluginem)",
-                 data=BLUEPRINT) — bez kodu; host wstawia dane i pasek IO.
-     Host bez pola `data`: raport-sytuacyjny-v2/SKILL.md (poza pluginem) § WIDGET — WYKONANIE BEZ POLA `data`.
-
-  Poprzedź widgetem komunikat:
-  "Poniżej aktualny raport sytuacyjny sprawy —
-   możesz uzupełnić brakujące dane lub skorygować automatycznie rozpoznane informacje."
-
-WYJĄTEK: pomiń wiadomość 6 tylko gdy użytkownik zadał jedno pytanie
-         bez dokumentów i bez stanu faktycznego sprawy.
-
----
-
-WIADOMOŚĆ 7 — OFERTA PISMA PROCESOWEGO
-
-Po widgecie (lub gdy wyjątek powyżej — bezpośrednio po raporcie):
+Po raporcie końcowym:
 
   LAIK:    "Czy chcesz żebym napisał pismo na podstawie tej analizy?"
   PRAWNIK: "Czy wygenerować dokument procesowy? (.docx / .pdf)"
