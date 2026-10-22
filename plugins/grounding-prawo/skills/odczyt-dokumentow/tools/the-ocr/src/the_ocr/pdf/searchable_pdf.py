@@ -22,9 +22,7 @@ from pathlib import Path
 from ..models import OCRDocument
 from .ocr_words import write_engine_sidecar
 
-# Dotted module name, not a file path: a frozen (PyInstaller) build has no
-# .py files on disk, only the bundled modules.
-_PLUGIN = "the_ocr.pdf.ocrmypdf_plugin"
+_PLUGIN = Path(__file__).with_name("ocrmypdf_plugin.py")
 
 LAYER_MODES = ("force", "redo", "skip")
 
@@ -36,26 +34,14 @@ def build_document_searchable_pdf(
     *,
     mode: str = "force",
     optimize: int = 1,
-    clean_final: bool = False,
-    pdfa: bool = False,
 ) -> None:
-    """Graft the provider text layer onto ``src`` pages, writing ``dst``.
-
-    ``optimize`` is OCRmyPDF's ``--optimize`` (0-3), ``clean_final`` its
-    ``--clean-final`` (unpaper-cleaned page images in the output; ``force``
-    only, since OCRmyPDF refuses it with ``redo`` and ``skip`` keeps text
-    pages untouched) and ``pdfa`` selects ``--output-type pdfa``.
-    """
+    """Graft the provider text layer onto ``src`` pages, writing ``dst``."""
     import ocrmypdf
     import pymupdf
     from ocrmypdf.exceptions import ExitCode
 
     if mode not in LAYER_MODES:
         raise ValueError(f"unknown text-layer mode '{mode}'; expected one of {', '.join(LAYER_MODES)}")
-    if optimize not in (0, 1, 2, 3):
-        raise ValueError(f"optimize must be 0-3, got {optimize}")
-    if clean_final and mode != "force":
-        raise ValueError("--clean-final needs the force text-layer mode (--layer force)")
     with pymupdf.open(src) as pdf:
         if len(pdf) != len(document.pages):
             raise ValueError(
@@ -69,10 +55,9 @@ def build_document_searchable_pdf(
             dst,
             plugins=[_PLUGIN],
             mode=mode,
-            output_type="pdfa" if pdfa else "pdf",
+            output_type="pdf",
             pdf_renderer="fpdf2",
             optimize=optimize,
-            clean_final=clean_final,
             progress_bar=False,
             language=["pol"],
             the_ocr_words=sidecar,

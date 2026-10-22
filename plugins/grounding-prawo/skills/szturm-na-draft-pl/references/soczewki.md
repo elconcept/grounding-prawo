@@ -84,6 +84,7 @@ i propozycją zdania uprzedzającego, które X obala - nie zdania, które X przy
 | Soczewka | Narzędzie | Klasa, typowa naprawa |
 |---|---|---|
 | `marko-pl-content` | werdykt + lista zarzutów `plik:linia`; `python3 <skille>/szturm-na-draft-pl/modules/marko-pl-content/scripts/skan_pisowni.py` (kandydaci, nie werdykty) | STYL 🟡/🟢 AUTO |
+| `humanizer-pl` | `scripts/metryki_stylu.py` (#30 tasiemce > 40 słów, #34 klamry, pauzy, podkreślenia) | STYL; tasiemiec w uzasadnieniu -> REDAKCJA (podział), w petitum -> tylko informacja |
 | format .docx | `uv run scripts/fix_format.py draft.docx` | FORMAT: tekst w stylu nagłówka, podkreślenia w tekście ciągłym, puste nagłówki |
 
 Typografia pauz (—) i inne konwencje zmieniaj tylko wtedy, gdy `decyzje_autora` nie rozstrzyga ich

@@ -185,13 +185,18 @@ def qualify_paths(sel):
     return fixed, missing
 
 
+# Skille redakcyjne zachowują treść upstream bez wstrzykiwań protokołu i MOST
+# (rejestr prawniczy psuje instrukcję stylu; decyzja właściciela 22.10.2026).
+NO_PROTOCOL_INJECTION = {"humanizer-pl", "pisz-po-polsku"}
+
+
 def add_bridges(sel):
     """Dopisuje do każdego skilla sekcję MOST z selection/bridges.yaml: skąd wejście, gdzie wynik, co dalej."""
     bridges = yaml.safe_load(open(os.path.join(ROOT, "selection/bridges.yaml"), encoding="utf-8"))
     keep = {e["name"] for e in sel["keep"] if is_top(e)}
     errors = []
     for name in sorted(keep):
-        if name in ("shared", "audyt-systemu-v4"):
+        if name in ("shared", "audyt-systemu-v4") or name in NO_PROTOCOL_INJECTION:
             continue
         b = bridges["skills"].get(name) or (bridges["default_dr"] if name.startswith("dr-") else None)
         if not b:
@@ -257,6 +262,20 @@ def fold(sel):
         open(sm, "w", encoding="utf-8").write(t)
 
 
+def _dump_frontmatter(data):
+    """Czytelny YAML: wieloliniowy opis jako blok |, pozostałe pola przez safe_dump."""
+    lines = []
+    for key, value in data.items():
+        if key == "description" and isinstance(value, str) and "\n" in value:
+            lines.append("description: |")
+            for line in value.rstrip("\n").split("\n"):
+                lines.append(("  " + line).rstrip())
+        else:
+            lines.append(yaml.safe_dump({key: value}, allow_unicode=True, sort_keys=False,
+                                        width=1000).rstrip("\n"))
+    return "\n".join(lines) + "\n"
+
+
 def normalize_skill(sm, entry):
     """Emit portable skill metadata; preserve upstream annotations as strings."""
     fm, text, match = frontmatter(sm)
@@ -277,7 +296,7 @@ def normalize_skill(sm, entry):
     if metadata:
         portable["metadata"] = metadata
     open(sm, "w", encoding="utf-8").write(
-        "---\n" + yaml.safe_dump(portable, allow_unicode=True, sort_keys=False, width=1000)
+        "---\n" + _dump_frontmatter(portable)
         + "---\n" + text[match.end():])
     agent = os.path.join(os.path.dirname(sm), "agents/openai.yaml")
     if os.path.isfile(agent):
@@ -511,7 +530,7 @@ def migrate_document_references():
 def add_session_protocol():
     for name in os.listdir(SKILLS):
         path = os.path.join(SKILLS, name, "SKILL.md")
-        if not os.path.isfile(path) or name in ("shared", "audyt-systemu-v4"):
+        if not os.path.isfile(path) or name in ("shared", "audyt-systemu-v4") or name in NO_PROTOCOL_INJECTION:
             continue
         text = open(path, encoding="utf-8").read()
         fm = re.match(r"---\n.*?\n---\n", text, re.S)

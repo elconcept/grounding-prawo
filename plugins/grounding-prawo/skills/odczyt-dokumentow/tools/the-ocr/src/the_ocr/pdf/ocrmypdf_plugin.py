@@ -1,6 +1,6 @@
 """OCRmyPDF engine plugin: provider OCR results instead of Tesseract.
 
-Loaded via ``ocrmypdf.ocr(..., plugins=["the_ocr.pdf.ocrmypdf_plugin"])`` with
+Loaded via ``ocrmypdf.ocr(..., plugins=[ocrmypdf_plugin.py])`` with
 ``the_ocr_words=<sidecar.json>`` (see :mod:`the_ocr.pdf.ocr_words`). The
 engine serves precomputed provider word geometry page by page through the
 official ``OcrEngine.generate_ocr`` API, so OCRmyPDF's own fpdf2 renderer
@@ -14,9 +14,15 @@ indexes it with the ``page_number`` OCRmyPDF provides.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
-from the_ocr.pdf.ocr_words import build_page_tree, page_text, read_image_size
+# Script plugins load as standalone modules (no parent package), so make the
+# absolute import below work from a source checkout too. Installed copies of
+# the_ocr resolve without this.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from the_ocr.pdf.ocr_words import build_page_tree, page_text, read_image_size  # noqa: E402
 
 from ocrmypdf import hookimpl
 from ocrmypdf.pluginspec import OcrEngine, OcrOptions, OrientationConfidence

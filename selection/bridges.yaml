@@ -184,6 +184,13 @@ skills:
     dalej:
     - redline-docx-pl
     - szturm-na-draft-pl
+  humanizer-pl:
+    etap: C
+    wejscie: tekst po wygenerowaniu przez AI z charakterystycznymi wzorcami (emdash, struktura zdań, slop)
+    wynik: nowa wersja tekstu z usuniętymi wzorcami AI (emdash -> lacznik, naturalna struktura zdań)
+    dalej:
+    - pisz-po-polsku
+    - szturm-na-draft-pl
   redline-docx-pl:
     etap: C
     wejscie: DOCX pisma z `legal/output/` i nowa wersja MD z `drafty/<pismo>/` (cykl własnego pisma) albo cudzy `.docx` i lista zmian

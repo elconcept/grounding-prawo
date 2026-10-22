@@ -56,10 +56,11 @@ keep:
   - {name: klauzule-kontraktowe-pl, merge_into: analizator-umow-v1, typ: "lista kontrolna 41 kategorii klauzul (CUAD PL/UE) i przegląd umowy wg playbooka", from: "awe:dokumenty", why: "umowa zarządzania najmem"}
   - {name: rodo-dsar-pl, from: "awe:ochrona-danych", why: "żądania dostępu, sprostowania, usunięcia własnych danych", description: "Żądania z art. 15-22 RODO: dostęp, sprostowanie, usunięcie, ograniczenie, sprzeciw; terminy i podstawy odmowy. Używaj do przygotowania własnego żądania wobec administratora i oceny jego odpowiedzi."}
   - {name: marko-pl-content, merge_into: szturm-na-draft-pl, typ: "soczewka: surowa recenzja polszczyzny i formy (skan pisowni); przy zawiadomieniu zachowuje emocje i skutki", from: "awe:jakosc-tresci", why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
+  - {name: humanizer-pl, from: own, why: "skuteczne usuwanie wzorców AI (emdash, struktura zdań, slop); pisz-po-polsku okazał się niewystarczający; treść bez wstrzykiwań protokołu (22.10.2026)"}
   - {name: ocena-outputu-pl, merge_into: szturm-na-draft-pl, typ: "soczewka: karta ocen 1-5 (poprawność, kompletność, jasność, jurysdykcja, ugruntowanie)", from: "awe:fundament-weryfikacyjny", why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: patron-weryfikacja-cytatow, merge_into: citation-grounding-pl, typ: "format cytowania [N] + blok CITATIONS i mechaniczna weryfikacja cytatów z dokumentów i wyników MCP", from: "own", why: "używany przez szturm-na-draft-pl jako soczewka/skrypt; zostaje do czasu przebudowy szturmu, potem do ponownej oceny"}
   - {name: patron-przeglad-tabelaryczny, from: own, why: "tabelaryczny przegląd dokumentów (z pipeline Patrona); do wzbogacenia o klauzule/kolumny pod Twoje sprawy", description: "Masowa ekstrakcja danych z wielu dokumentów do tabeli: kolumna po kolumnie, cytat i strona w komórce, flaga ryzyka, eksport CSV lub Excel."}
-  - {name: pisz-po-polsku, from: own, why: "JEDEN skill redakcji: scala humanizer-pl + naturalne-pisanie + patron-pisz-po-ludzku (pliki skopiowane do own-skills, zmiany upstreamu trzeba przenosić ręcznie)", description: "Redakcja tekstów po polsku: naturalnie, konkretnie, bez manier stylu AI, z zachowaniem faktów, cytatów, przepisów i sygnatur. Nie zmienia petitum, zarzutów ani ustaleń faktycznych."}
+  - {name: pisz-po-polsku, from: own, why: "skill redakcji: scala naturalne-pisanie + patron-pisz-po-ludzku (humanizer-pl dla agresywnego usuwania wzorców AI); treść bez wstrzykiwań protokołu (22.10.2026)"}
   # --- wiedza z pluginu IURA scalona w moduły (nie osobne skille) ---
   - {name: cofniecie-pozwu-ze-zrzeczeniem-roszczenia, from: own, fold_into: pisma-procesowe-v3, typ: "cofnięcie pozwu ze zrzeczeniem się roszczenia", why: "IURA: moduł typu pisma"}
   - {name: wniosek-o-rozprawe-zdalna, from: own, fold_into: pisma-procesowe-v3, typ: "wniosek o rozprawę w trybie zdalnym", why: "IURA: moduł typu pisma (cywilne, karne)"}
@@ -86,7 +87,6 @@ drop:
   - {name: profil-postepowan-wlasnych, why: "scalony w shared/ZASADY-PLUGINU.md (sekcja profilu): prowadnik i tak wczytywał go zawsze, a jako plik shared obowiązuje także skille wywołane bez prowadnika", archive: true}
   - {name: iura, why: "zastąpiona przez MCP lex.xlap.pl (SAOS lokalny dump, ELI)", archive: true}
   - {name: opendataloader-pdf, why: "scalony w odczyt-dokumentow (references/opendataloader-pdf.md)"}
-  - {name: humanizer-pl, why: "scalony w pisz-po-polsku"}
   - {name: naturalne-pisanie, why: "scalony w pisz-po-polsku (vendor/naturalne-pisanie zostaje jako źródło)"}
   - {name: patron-pisz-po-ludzku, why: "scalony w pisz-po-polsku", archive: true}
   - {name: dr-04-prawo-pracy-zus-swiadczenia, why: "poza profilem spraw (decyzja właściciela)"}
