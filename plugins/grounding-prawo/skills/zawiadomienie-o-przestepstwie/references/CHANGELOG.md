@@ -57,6 +57,18 @@
 - Rejestr pism: nowe wersje niezłożonych projektów, uzupełnienia i wnioski po złożeniu,
   osobne zgłoszenia nowych krzywd; dobór do rzeczywistego etapu sprawy.
 
+## 0.8 - 2026-10-22 (decyzja właściciela: dane wrażliwe, wersje pism)
+
+- Odwraca wpis z 0.7 „dane o zdrowiu osób trzecich tylko za zgodą”: dane o zdrowiu, medyczne, intymne
+  i inne wrażliwe dane osób trzecich i autora trafiają do zawiadomienia w pełnym zakresie relacji, bez pytania
+  o zgodę, łagodzenia i komentarza. Wyjątek „nie obciążaj mnie” tylko dla autora, na jego prośbę. Opis osoby
+  nie jest wnioskiem o jej ściganie. Zmiany: `ciaglosc-sesji.md`, `wywiad.md` (przemoc seksualna: ostrożność
+  dotyczy tempa pytań, nie treści pisma), `SKILL.md`, `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`; eval 29.
+  Źródło: `INBOX/20261022_ZADANIE_zawiadomienie_dane_wrazliwe_osob_trzecich.md`.
+- Wersje pisma: każda nowa informacja daje kolejną wersję `.md` w `drafty/<pismo>/` teczki; w `output/` jeden DOCX
+  z redline od bazy sesji (`shared/format-pisma/wersja_pisma.py`). Zastępuje „jedna wersja w `output/`, usunięcie
+  po `cmp`” z 0.7.
+
 ## 0.7 — 2026-10-18 (decyzje autorki z sesji relacji N.C.)
 
 - Basic Memory jako baza danych relacji: `legal`, `relacje/<autor-slug>/` (relacja, log, rejestr,

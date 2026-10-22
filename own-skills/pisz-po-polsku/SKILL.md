@@ -31,6 +31,7 @@ brak zmiany jest prawidłowym wynikiem redakcji. Nie obiecuj niewykrywalności d
 - Nie humanizuj przez celowe błędy, literówki ani przypadkowe kolokwializmy.
 - Nie zastępuj naturalnego słowa rzadszym synonimem dla pozornej różnorodności.
 - Nie ruszaj petitum, zarzutów, wniosków dowodowych ani ustaleń faktycznych w piśmie. Redagujesz uzasadnienie i opis, nie stanowisko.
+- W zawiadomieniu o przestępstwie nie usuwaj, nie łagodź i nie uogólniaj danych o zdrowiu, intymnych ani innych wrażliwych danych autora i osób trzecich (`shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`).
 
 Przy redakcji pisma wczytaj `shared/STYLE.md`; jego rejestr formalny doprecyzowuje poniższe tryby.
 

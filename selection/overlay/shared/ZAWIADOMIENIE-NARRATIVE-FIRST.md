@@ -29,6 +29,11 @@ weryfikacja dowodów należą do organów. Nie zamieniaj zawiadomienia w warunek
 - Dowody to osobna mapa tropów dla organu. Pusta mapa nie obniża statusu narracji i nie
   blokuje żadnej wersji. O zabezpieczenie zanikającego śladu pytaj dla ochrony materiału,
   nie dla sprawdzania, czy wolno autorowi opisać krzywdę.
+- Dane o zdrowiu, dane medyczne, intymne i inne wrażliwe dane autora oraz osób trzecich wchodzą do
+  zawiadomienia w pełnym zakresie relacji i materiału. Żaden skill ani soczewka (redakcja, polszczyzna,
+  pierwsze wrażenie, szturm, RODO) nie usuwa ich, nie łagodzi, nie uogólnia i nie pyta o zgodę na ich wpisanie.
+  Wyjątek „nie obciążaj mnie” dotyczy tylko autora i tylko na jego prośbę (`zawiadomienie-o-przestepstwie`,
+  `references/ciaglosc-sesji.md`). Opis zachowania osoby trzeciej nie jest wnioskiem o jej ściganie.
 - Kontrola modelu dotyczy wierności: dopiski, zmiana źródła wiedzy, ukryta niepewność lub
   udawany cytat wymagają korekty. Świadomy fałsz wskazany przez autora nie może stać się
   faktem; odmowa dotyczy tego fragmentu, nie całej relacji. Niepewność nie jest fałszem.

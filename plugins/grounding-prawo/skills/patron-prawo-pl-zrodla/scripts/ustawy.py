@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """Przeszukiwalna baza ustaw z komentarzem - lokalnie, SQLite FTS5, bez zależności spoza biblioteki standardowej.
 
-Źródło: submoduły vendor/law/<ustawa> repo grounding-prawo (lista w .gitmodules). Każde repo zawiera komentarz
-do każdego artykułu ustawy: dosłowne brzmienie przepisu przeniesione z tekstu jednolitego (sekcja
-„Brzmienie przepisu”) i komentarz. Podstawę tekstu (Dz.U., ELI) podaje 00-wprowadzenie.md.
+Źródła (submoduły repo grounding-prawo, lista w .gitmodules):
+- vendor/law-git/<kodeks> - kodeksy i Konstytucja „git as law”: tekst jednolity jako punkt kontrolny, potem jeden
+  commit na każdą nowelizację w dacie wejścia w życie; gałąź main = stan prawny na dzień ostatniej naniesionej zmiany.
+  Z tych repozytoriów pochodzi brzmienie kodeksów (pole `zrodlo: git-as-law`, `stan_na`, `ostatnia_zmiana`).
+- vendor/law/<ustawa> - komentarz do każdego artykułu (sekcja „Brzmienie przepisu” i komentarz) według tekstu
+  jednolitego z 00-wprowadzenie.md. Dla ustaw spoza law-git brzmienie pochodzi stąd (`zrodlo: komentarz`).
 
-    python ustawy.py buduj [--law DIR] [--db PLIK]       # indeks ze wszystkich repozytoriów w DIR
+    python ustawy.py buduj [--law DIR] [--law-git DIR] [--db PLIK]   # indeks ze wszystkich repozytoriów
     python ustawy.py akty                                 # lista aktów, skróty, podstawa tekstu
     python ustawy.py art kk 148 [--komentarz]
     python ustawy.py szukaj "obrona konieczna" [--akt kk] [--zakres przepisy|komentarze] [--limit 10]
     python ustawy.py cytat kpk 168a "dowodu nie można uznać"   # czy fragment stoi w brzmieniu artykułu
 
-Brzmienie ma stan tekstu jednolitego wskazanego w polu `tekst_jednolity`. Późniejszych nowelizacji baza nie
-zawiera: przed cytatem w piśmie sprawdź w ELI (api.sejm.gov.pl, pole `eli`), czy po tym tekście jednolitym
-akt się zmienił. Komentarz jest opracowaniem, nie źródłem prawa: cytuj go jako komentarz.
+Stan brzmienia podaje pole `uwaga`: dla git-as-law data ostatniej naniesionej nowelizacji, dla komentarza tekst
+jednolity, na którym oparto opracowanie. Komentarz jest opracowaniem, nie źródłem prawa: cytuj go jako komentarz.
 """
 from __future__ import annotations
 
@@ -28,6 +30,12 @@ import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_LAW = os.environ.get("USTAWY_LAW_DIR") or os.path.normpath(os.path.join(HERE, "../../../vendor/law"))
+DEFAULT_LAW_GIT = os.environ.get("USTAWY_LAW_GIT_DIR") or os.path.normpath(os.path.join(HERE, "../../../vendor/law-git"))
+# repozytorium git-as-law -> identyfikator aktu (nazwa repozytorium komentarza)
+GIT_ACT = {"konstytucja-rp": "konstytucja-rzeczypospolitej-polskiej"}
+AMEND = re.compile(r"^(\d{4}-\d{2}-\d{2}) \u2014 (\S+?):?\s(.*)$")
+CHECKPOINT = re.compile(r"^Punkt kontrolny \u2014 tekst jednolity (.+)$")
+ART_LINE = re.compile(r"^Art\.\s+(\d+[a-z]*(?:\[\d+\])?)\.\s*(.*)$")
 DEFAULT_DB = os.environ.get("USTAWY_DB") or os.path.join(os.getcwd(), "ustawy.sqlite")
 
 # skróty -> katalog aktu (nazwa repozytorium)
@@ -53,6 +61,8 @@ ALIASES = {
     "ukrs": "o-krajowym-rejestrze-sadowym", "uos": "o-oplacie-skarbowej", "usd": "o-podatku-od-spadkow-i-darowizn",
     "ups": "o-pomocy-spolecznej", "upps": "o-pomocy-spolecznej", "uppd": "o-przeciwdzialaniu-przemocy-domowej",
     "prd": "prawo-o-ruchu-drogowym",
+    "kks": "kodeks-karny-skarbowy", "kkw": "kodeks-karny-wykonawczy", "km": "kodeks-morski",
+    "kp": "kodeks-pracy", "ksh": "kodeks-spolek-handlowych", "kwyb": "kodeks-wyborczy",
 }
 SUP = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
 CHAPTER = re.compile(r"\d+-rozdzial\.md$")
@@ -142,13 +152,85 @@ def git_date(repo: str) -> str:
         return ""
 
 
-def build(law: str, db: str) -> int:
+def git_law_meta(repo: str) -> dict:
+    """Stan repozytorium git-as-law: ostatnia naniesiona nowelizacja i ostatni punkt kontrolny (tekst jednolity)."""
+    try:
+        log = subprocess.run(["git", "-C", repo, "log", "--format=%s"], capture_output=True, text=True,
+                             check=True).stdout.splitlines()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        log = []
+    meta = {"stan_na": None, "ostatnia_zmiana": None, "tekst_jednolity": None}
+    for subj in log:
+        m = AMEND.match(subj)
+        if m and not meta["stan_na"]:
+            meta["stan_na"], meta["ostatnia_zmiana"] = m.group(1), f"{m.group(2)}: {m.group(3)}"
+        c = CHECKPOINT.match(subj)
+        if c and not meta["tekst_jednolity"]:
+            meta["tekst_jednolity"] = c.group(1).strip()
+        if meta["stan_na"] and meta["tekst_jednolity"]:
+            break
+    return meta
+
+
+def parse_git_law(text: str):
+    """Plik kodeksu git-as-law -> [(art, jednostka, brzmienie)]; jednostka = ostatni nagłówek rozdziału."""
+    out, unit, art, buf = [], "", None, []
+
+    def flush():
+        if art:
+            out.append((art, unit, "\n\n".join(p for p in "\n".join(buf).split("\n\n") if p.strip()).strip()))
+
+    for ln in text.split("\n"):
+        if ln.startswith("## "):
+            flush(); art, buf = None, []
+            unit = ln[3:].strip()
+            continue
+        m = ART_LINE.match(ln)
+        if m:
+            flush()
+            art, buf = norm_art(m.group(1)), [ln]
+            continue
+        if art is not None:
+            buf.append(ln)
+    flush()
+    return out
+
+
+def build_git(con, law_git: str) -> tuple[int, int]:
+    acts = arts = 0
+    if not os.path.isdir(law_git):
+        return 0, 0
+    for d in sorted(os.listdir(law_git)):
+        p = os.path.join(law_git, d)
+        files = sorted(f for f in os.listdir(p) if f.endswith(".md") and f.upper() != "README.MD") if os.path.isdir(p) else []
+        if len(files) != 1:
+            continue
+        akt = GIT_ACT.get(d, d)
+        gm = git_law_meta(p)
+        text = open(os.path.join(p, files[0]), encoding="utf-8").read()
+        head = text.split("\n", 1)[0].lstrip("# ").strip()
+        if not con.execute("SELECT 1 FROM akty WHERE akt=?", (akt,)).fetchone():
+            con.execute("INSERT INTO akty (akt, tytul) VALUES (?, ?)", (akt, head))
+        con.execute("UPDATE akty SET zrodlo='git-as-law', stan_na=?, ostatnia_zmiana=?, tekst_jednolity=?, "
+                    "opracowanie=? WHERE akt=?", (gm["stan_na"], gm["ostatnia_zmiana"],
+                                                  gm["tekst_jednolity"] or head, git_date(p), akt))
+        acts += 1
+        for art, unit, quote in parse_git_law(text):
+            old = con.execute("SELECT komentarz FROM artykuly WHERE akt=? AND art=?", (akt, art)).fetchone()
+            con.execute("INSERT OR REPLACE INTO artykuly VALUES (?,?,?,?,?,?)",
+                        (akt, art, unit, quote, old["komentarz"] if old else "", f"{d}/{files[0]}"))
+            arts += 0 if old else 1
+    return acts, arts
+
+
+def build(law: str, db: str, law_git: str = DEFAULT_LAW_GIT) -> int:
     tmp = db + ".tmp"
     if os.path.exists(tmp):
         os.remove(tmp)
     con = sqlite3.connect(tmp)
     con.executescript("""
-        CREATE TABLE akty (akt TEXT PRIMARY KEY, tytul TEXT, tekst_jednolity TEXT, eli TEXT, opracowanie TEXT);
+        CREATE TABLE akty (akt TEXT PRIMARY KEY, tytul TEXT, tekst_jednolity TEXT, eli TEXT, opracowanie TEXT,
+                           zrodlo TEXT DEFAULT 'komentarz', stan_na TEXT, ostatnia_zmiana TEXT);
         CREATE TABLE artykuly (akt TEXT, art TEXT, jednostka TEXT, brzmienie TEXT, komentarz TEXT, plik TEXT,
                                PRIMARY KEY (akt, art));
         CREATE VIRTUAL TABLE fts USING fts5(akt UNINDEXED, art UNINDEXED, rodzaj UNINDEXED, zlozony, tokenize='unicode61');
@@ -162,7 +244,8 @@ def build(law: str, db: str) -> int:
         if not chapters:
             continue
         m = act_meta(p, d)
-        con.execute("INSERT INTO akty VALUES (?,?,?,?,?)", (d, m["tytul"], m["tekst_jednolity"], m["eli"], git_date(p)))
+        con.execute("INSERT INTO akty (akt, tytul, tekst_jednolity, eli, opracowanie) VALUES (?,?,?,?,?)",
+                    (d, m["tytul"], m["tekst_jednolity"], m["eli"], git_date(p)))
         acts += 1
         for fn in chapters:
             for art, unit, quote, comm in parse_commentary(open(os.path.join(p, fn), encoding="utf-8").read()):
@@ -170,16 +253,22 @@ def build(law: str, db: str) -> int:
                                   (d, art, unit, quote, comm, f"{d}/{fn}"))
                 if cur.rowcount:
                     arts += 1
-                    con.execute("INSERT INTO fts VALUES (?,?,?,?)", (d, art, "przepis", fold(quote)))
                     con.execute("INSERT INTO fts VALUES (?,?,?,?)", (d, art, "komentarz", fold(comm)))
+    con.row_factory = sqlite3.Row
+    gacts, garts = build_git(con, law_git)
+    arts += garts
+    # indeks przepisów po złożeniu obu źródeł (brzmienie git-as-law zastępuje brzmienie z komentarza)
+    for r in con.execute("SELECT akt, art, brzmienie FROM artykuly").fetchall():
+        con.execute("INSERT INTO fts VALUES (?,?,?,?)", (r["akt"], r["art"], "przepis", fold(r["brzmienie"])))
     con.commit()
+    acts = con.execute("SELECT count(*) FROM akty").fetchone()[0]
     con.close()
     if acts == 0 or arts == 0:
         os.remove(tmp)
         print(f"BŁĄD: pusty indeks (akty {acts}, artykuły {arts}) - sprawdź {law}", file=sys.stderr)
         return 20
     os.replace(tmp, db)
-    print(f"indeks: {acts} aktów, {arts} artykułów z brzmieniem i komentarzem -> {db}")
+    print(f"indeks: {acts} aktów ({gacts} z brzmieniem git-as-law), {arts} artykułów -> {db}")
     return 0
 
 
@@ -203,12 +292,12 @@ class Baza:
         if not meta:
             return {"status": "OUT_OF_SCOPE", "akt": akt, "powod": "akt spoza bazy; brzmienie z ELI (api.sejm.gov.pl)"}
         out = {"akt": akt, "art": art, "tytul": meta["tytul"], "tekst_jednolity": meta["tekst_jednolity"],
-               "eli": meta["eli"]}
+               "eli": meta["eli"], "zrodlo": meta["zrodlo"], "stan_na": meta["stan_na"],
+               "ostatnia_zmiana": meta["ostatnia_zmiana"]}
         r = self.con.execute("SELECT * FROM artykuly WHERE akt=? AND art=?", (akt, art)).fetchone()
         if not r:
             return dict(out, status="NOT_FOUND", powod=f"brak art. {art} w bazie aktu {akt}")
-        out.update(status="FOUND", jednostka=r["jednostka"], tekst=r["brzmienie"], plik=r["plik"],
-                   uwaga="brzmienie według wskazanego tekstu jednolitego; nowelizacje późniejsze sprawdź w ELI")
+        out.update(status="FOUND", jednostka=r["jednostka"], tekst=r["brzmienie"], plik=r["plik"], uwaga=uwaga(meta))
         if komentarz:
             out["komentarz"] = r["komentarz"]
         return out
@@ -245,6 +334,16 @@ class Baza:
                 "uwaga": a["uwaga"] if ok else "fragment nie występuje dosłownie w brzmieniu artykułu"}
 
 
+def uwaga(meta) -> str:
+    if meta["zrodlo"] == "git-as-law":
+        return (f"brzmienie obowiązujące według repozytorium git-as-law: tekst jednolity {meta['tekst_jednolity']} "
+                f"z naniesionymi nowelizacjami, ostatnia w dniu {meta['stan_na']} ({meta['ostatnia_zmiana']}). "
+                f"Cytuj jako stan na {meta['stan_na']}; nowelizację albo nowy tekst jednolity wchodzący w życie po tej "
+                "dacie sprawdź w isap_search_acts.")
+    return (f"brzmienie z komentarza opartego na tekście jednolitym {meta['tekst_jednolity']}; nowelizacje wchodzące "
+            "w życie po tym tekście jednolitym sprawdź w isap_search_acts (pole eli).")
+
+
 def squash(s: str) -> str:
     s = s.replace(" ", " ").replace("„", '"').replace("”", '"').replace("“", '"')
     s = s.replace("\u2013", "-").replace("\u2014", "-")
@@ -263,6 +362,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--db", default=DEFAULT_DB)
     ap.add_argument("--law", default=DEFAULT_LAW)
+    ap.add_argument("--law-git", default=DEFAULT_LAW_GIT)
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("buduj")
     sub.add_parser("akty")
@@ -271,7 +371,7 @@ def main(argv=None) -> int:
     p = sub.add_parser("cytat"); p.add_argument("akt"); p.add_argument("nr"); p.add_argument("fragment")
     a = ap.parse_args(argv)
     if a.cmd == "buduj":
-        return build(a.law, a.db)
+        return build(a.law, a.db, a.law_git)
     b = Baza(a.db)
     res = {"akty": lambda: b.akty(),
            "art": lambda: b.artykul(a.akt, a.nr, a.komentarz),

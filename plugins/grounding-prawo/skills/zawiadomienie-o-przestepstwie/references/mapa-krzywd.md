@@ -36,7 +36,7 @@ kwalifikację, zachowując pełny opis i jawną lukę w analizie poza pismem.
   ISAP, sprawdzone 09.10.2026), brzmienia z bazy `mcp/cache/kodeks/kodeks_karny.md` (wersja od
   21.07.2026). Ślad: MCP `isap` (`search_acts`, tytuł „Kodeks karny”).
 - Przepis spoza katalogu: najpierw MCP `isap` (`get_act_text` dla ELI t.j.; wyszukaj „Art. N.”)`
-  (bez `mutool`: PDF z `pdf_url` odpowiedzi MCP czytaj natywnym `Read`). Bez weryfikacji
+  (PDF z adresu w odpowiedzi MCP pobierz `curl` i odczytaj przez `pdftotext -layout`, `shared/MOD-TEKST-JEDNOLITY.md`). Bez weryfikacji
   przepis nie trafia do pisma.
 - Wykroczenia (Kodeks wykroczeń): katalog jeszcze ich nie obejmuje - zob. TODO.
 

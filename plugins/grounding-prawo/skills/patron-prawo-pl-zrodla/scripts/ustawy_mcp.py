@@ -19,13 +19,14 @@ from mcp.types import ToolAnnotations  # noqa: E402
 
 import ustawy  # noqa: E402
 
-INSTRUCTIONS = """Baza polskich ustaw: dosłowne brzmienie każdego artykułu według wskazanego tekstu jednolitego
-i komentarz do każdego artykułu (37 ustaw: kodeksy, Konstytucja, ustawy ustrojowe, medyczne, konsumenckie i inne).
-Kolejność: `ustawy_szukaj` (zagadnienie, gdy nie znasz artykułu) -> `ustawy_artykul` (pełne brzmienie, tekst_jednolity,
-eli, ewentualnie komentarz) -> `ustawy_cytat` (czy fragment, który chcesz zacytować, stoi w brzmieniu). Cytuj wyłącznie
-pole `tekst` ze statusem FOUND i podaj tekst jednolity. Nowelizacji późniejszych niż ten tekst jednolity baza nie zawiera:
-przed cytatem w piśmie sprawdź w ELI (api.sejm.gov.pl, pole `eli`). OUT_OF_SCOPE: aktu nie ma w bazie, szukaj w ELI.
-Komentarz to opracowanie, nie źródło prawa."""
+INSTRUCTIONS = """Baza polskich ustaw: dosłowne brzmienie artykułu i komentarz do każdego artykułu.
+Kodeksy i Konstytucja (kk, kpk, kc, kpc, kpa, kp, kro, kw, kpw, kks, kkw, ksh, km, kodeks wyborczy) mają brzmienie
+z repozytoriów git-as-law: tekst jednolity i każda późniejsza nowelizacja jako osobny commit (`zrodlo: git-as-law`,
+`stan_na` = dzień wejścia w życie ostatniej naniesionej zmiany). Pozostałe ustawy: brzmienie z komentarza według
+tekstu jednolitego (`zrodlo: komentarz`).
+Kolejność: `szukaj` (zagadnienie, gdy nie znasz artykułu) -> `artykul` (pełne brzmienie, stan, ewentualnie komentarz)
+-> `cytat` (czy fragment, który chcesz zacytować, stoi w brzmieniu). Cytuj wyłącznie pole `tekst` ze statusem FOUND
+i podaj stan z pola `uwaga`. OUT_OF_SCOPE: aktu nie ma w bazie, szukaj w ISAP. Komentarz to opracowanie, nie źródło prawa."""
 
 RO = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
 server = MCPServer("ustawy", instructions=INSTRUCTIONS)
@@ -41,7 +42,7 @@ def baza() -> ustawy.Baza:
 
 @server.tool(annotations=RO)
 def akty() -> list[dict]:
-    """Lista aktów w bazie: identyfikator, skróty (kk, kpk, kpc, uopl...), tekst jednolity, ELI, liczba artykułów."""
+    """Lista aktów: identyfikator, skróty (kk, kpk, kpc, uopl...), źródło brzmienia, stan na dzień, tekst jednolity, ELI, liczba artykułów."""
     return baza().akty()
 
 
@@ -55,7 +56,7 @@ def szukaj(q: str, akt: str | None = None, zakres: str | None = None, limit: int
 
 @server.tool(annotations=RO)
 def artykul(akt: str, art: str, komentarz: bool = False) -> dict:
-    """Pełne brzmienie artykułu (np. akt='kpc', art='117^1' albo '117¹'), tekst jednolity i ELI aktu.
+    """Pełne brzmienie artykułu (np. akt='kpc', art='117^1' albo '117¹'), źródło, stan na dzień i ELI aktu.
     komentarz=True dołącza komentarz do artykułu."""
     return baza().artykul(akt, art, komentarz)
 

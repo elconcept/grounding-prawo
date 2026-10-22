@@ -122,16 +122,23 @@ przed ich użyciem; ta tabela kieruje pracą, nie zastępuje analizy konkretnego
   planowany dzień wysyłki albo dzisiejsza) i dopytaj; korekta trafia do kolejnej wersji. Luki
   **faktów** nie zapełniaj domysłem: fragment bez odpowiedzi pomiń w piśmie, zostaje w relacji
   i na liście pytań otwartych.
-- Każda nowa informacja dotycząca niezłożonego pisma daje `vN+1`: snapshot `.md` w `drafty/<pismo>/`
-  (tylko Markdown, wszystkie wersje) i jeden DOCX pisma w `legal/output/` z redline sesji
-  (`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”). Poprzedni DOCX tego pisma usuń z `legal/output/`
-  dopiero po sprawdzeniu nowego pliku.
+- Każda nowa informacja dotycząca niezłożonego pisma daje `vN+1.md` w `drafty/<pismo>/` teczki (tylko Markdown,
+  wszystkie wersje). DOCX w `legal/output/` jest jeden: gdy autor ma przejrzeć zmiany albo sesja się kończy,
+  `shared/format-pisma/wersja_pisma.py redline` nakłada ostatnią wersję na bazę sesji jako zmiany śledzone
+  i usuwa poprzedni DOCX (`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”). Nie renderuj każdej wersji
+  do `output/` i nie kładź tam `.md`.
 - **Edycja autora ma pierwszeństwo.** Sesja zaczyna się akceptacją zmian w DOCX z `legal/output/` i snapshotem
   `.md`, więc ręczne zmiany autora (usunięta sekcja, inna data, dopisek) przechodzą do nowej wersji.
   Nie przywracaj usuniętej przez autora treści bez jego decyzji.
-- Na prośbę „nie obciążaj mnie” pomiń w piśmie szczegóły, które mogą zostać użyte przeciw autorowi
-  (np. przyjęte leki, czynności osób bliskich), zostawiając je w relacji.
-- Dane o zdrowiu osób trzecich wpisuj do pisma tylko za wyraźną zgodą autora; bez niej zostają w relacji.
+- Dane o zdrowiu, dane medyczne, intymne i inne wrażliwe dane osób trzecich (np. kryzys psychiczny osoby
+  bliskiej, przyjmowany lek, nagość na nagraniu) wpisuj do zawiadomienia w pełnym zakresie, w jakim podał je
+  autor albo wynikają z materiału: bez pytania o zgodę, bez łagodzenia, bez uogólnienia i bez komentarza o ich
+  wrażliwości. Zawiadomienie musi być szczegółowe; pominięcie zachowania osoby bliskiej czyni relację nierzetelną.
+  Opisanie zachowania osoby nie jest wnioskiem o jej ściganie: o wniosku i o kręgu osób, wobec których go
+  składa, decyduje autor osobno (decyzja właściciela z 22.10.2026).
+- Wyjątek „nie obciążaj mnie” dotyczy wyłącznie autora i działa tylko na jego wyraźną prośbę: pomiń wtedy
+  w piśmie szczegóły, które mogą zostać użyte przeciw niemu, zostawiając je w relacji. Nie rozciągaj go na
+  osoby trzecie ani nie stosuj z własnej inicjatywy.
 - Skutki z relacji (lęk, unikanie, zmiany w codziennym życiu, relacje rodzinne, praca) trafiają do
   części „Co mi to zrobiło” każdego pisma, którego dotyczą, blisko słów autora, bez uogólnień modelu.
 - Pisma towarzyszące (pismo przewodnie, uzupełnienie zeznań, wniosek) idą torem pism procesowych:

@@ -1,0 +1,31 @@
+--- a/redline-docx-pl/SKILL.md
++++ b/redline-docx-pl/SKILL.md
+@@ -72,6 +72,28 @@
+ | **M - Mutating** | `apply`, `diff`, `apply --live` | Pokaż użytkownikowi proponowane zmiany. Czekaj na potwierdzenie słowne. |
+ | **D - Destructive** | `sanitize --accept-all` (akceptuje wszystkie zmiany nieodwracalnie) | Użytkownik musi wpisać dosłownie: **"potwierdzam"** zanim wykonasz. |
+ 
++Tiery M i D chronią cudzy dokument i plik wysyłany na zewnątrz. **Własne pismo autora w teczce sprawy**
++(DOCX z `legal/output/`) ma uzgodniony cykl bez tych potwierdzeń: `accept-all` na kopii w `_robocze/` na
++początku sesji i `apply` nowej wersji na tę kopię na końcu (`shared/ARTEFAKTY-SPRAWY.md`).
++
++## Własne pismo w teczce: redline między wersjami
++
++Skille pism (`pisma-proste-v2`, `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`, `rodo-dsar-pl`,
++`szturm-na-draft-pl`) prowadzą pismo jako wersje Markdown w `<sprawa>/drafty/<pismo>/` i jeden DOCX w
++`legal/output/`. Ten skill jest ich silnikiem; polecenia opakowuje `shared/format-pisma/wersja_pisma.py`:
++
++```bash
++W=<skills>/shared/format-pisma/wersja_pisma.py
++python3 -I $W start   --docx legal/output/<plik>_vN.docx --robocze <sprawa>/_robocze --md <sprawa>/drafty/<pismo>/<plik>_vN.md
++python3 -I $W redline --baza <sprawa>/_robocze/<plik>_vN_baza.docx --md <sprawa>/drafty/<pismo>/<plik>_vK.md --output legal/output
++python3 -I $W sprawdz --output legal/output
++```
++
++`redline` renderuje wersję MD, nakłada jej tekst na bazę (`adeu apply` z plikiem tekstowym; przy przesuniętych
++wyróżnieniach zapasowo edycje akapitów w JSON), sprawdza `w:ins`/`w:del`/`w:delText` i zgodność tekstu po
++`accept-all`, zapisuje jeden DOCX i usuwa poprzednie DOCX i MD tego pisma z `output/`. Wynik bez zmian
++śledzonych to etap NIEZAKOŃCZONY. Nowy render DOCX z MD (renderer, pandoc) nigdy nie zastępuje redline.
++
+ ---
+ 
+ ## Workflow (5 krokow)

@@ -12,19 +12,21 @@ Przed redakcją wczytaj `shared/STYLE.md`. Publikację i historię wersji prowad
 
 ## Narzędzie
 
-Pismo powstaje z pliku źródłowego `.md` przez renderer, nie przez ręczny HTML ani ad hoc DOCX:
+Pismo powstaje z pliku źródłowego `.md` przez renderer, nie przez ręczny HTML, pandoc ani ad hoc DOCX.
+Źródło `.md` (każda wersja `_vN`) leży w `<sprawa>/drafty/<pismo>/`, DOCX w `legal/output/`; obok DOCX nie ma
+sidecara `.md`. Renderer wołaj przez `shared/format-pisma/wersja_pisma.py`, który pilnuje tego podziału:
 
 ```bash
-python3 -I <skills>/shared/format-pisma/render_pismo.py drafty/<pismo>/<plik>.md
+python3 -I <skills>/shared/format-pisma/wersja_pisma.py nowe --md <sprawa>/drafty/<pismo>/<plik>_v1.md --output legal/output
 ```
 
-Artefaktem końcowym jest `.docx` ze źródłem `.md` obok (sidecar). PDF nie powstaje: użytkownik
-redaguje DOCX w Wordzie, drukuje i podpisuje. Składnię metryki i treści opisuje docstring skryptu.
+PDF nie powstaje: użytkownik redaguje DOCX w Wordzie, drukuje i podpisuje. Składnię metryki i treści opisuje
+docstring `render_pismo.py`.
 
-- Renderer nie nadpisuje istniejącego `.docx` (mógł być poprawiony ręcznie). Gdy użytkownik zmienił
-  DOCX, kolejne poprawki nanoś w tym DOCX albo uzgodnij z nim, czy wygenerować nową wersję
-  (`--nadpisz` albo nowa nazwa, np. `_v2`).
-- Zmianę w DOCX dokonaną przez użytkownika przenieś też do sidecara `.md`, żeby źródło odpowiadało plikowi.
+- Kolejna wersja istniejącego pisma nie jest nowym renderem do `output/`: powstaje jako redline na DOCX
+  z `output/` (`wersja_pisma.py start` i `redline`, cykl w `shared/ARTEFAKTY-SPRAWY.md`). Ręczne zmiany autora
+  w DOCX `start` wypisuje jako różnice; przenieś je do nowej wersji `.md` w `drafty/`.
+- `render_pismo.py --nadpisz` i ręczny render do `output/` są zakazane dla pisma, które ma już DOCX.
 - Celuj w jedną stronę przy piśmie odpowiadającym na wezwanie lub pytanie sądu: tylko odpowiedź,
   krótka podstawa i wniosek.
 
@@ -104,5 +106,6 @@ Wnioskodawca:     Jan Kowalski
 
 1. Renderer przeszedł bez błędu; ostrzeżenie o wyróżnieniach rozpatrzone.
 2. Telefon i e-mail nadawcy podane albo potwierdzone przez użytkownika jako nieznane.
-3. W folderze pisma są tylko `.md` (źródło) i `.docx`; nie ma PDF.
+3. W `drafty/<pismo>/` są tylko wersje `.md`, w `legal/output/` jeden `.docx` pisma; nie ma PDF
+   (`wersja_pisma.py sprawdz --output legal/output` = `PASS`).
 4. Treść mieści się w zakładanej objętości; podpis nie zostaje sam na stronie.

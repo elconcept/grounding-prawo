@@ -28,8 +28,8 @@ nazywaj w odpowiedzi wprost.
    Dotyczy ustaw, przepisów i orzeczeń, także gdy znasz już artykuł lub sygnaturę.
    Szukaj zagadnienia i stanu faktycznego, nie tylko dosłownej frazy.
 2. **Potem pełne brzmienie i weryfikacja:** identyfikatory trafień wykorzystaj w pozostałych MCP.
-   Przepisy: `cite_verify_article`, następnie drabinka `shared/MOD-TEKST-JEDNOLITY.md`
-   (`isap_get_act_text`, odczyt `pdf_url`). Orzeczenia: `saos`, `nsa` lub `eu-sparql`,
+   Przepisy: drabinka `shared/MOD-TEKST-JEDNOLITY.md` (baza `ustawy` ze stanem na dzień, potem
+   `isap_get_act_text`, przy PDF pobranie pliku i `pdftotext`). Orzeczenia: `saos`, `nsa` lub `eu-sparql`,
    zależnie od sądu. Odczytaj pełny potrzebny fragment, metrykę i stan prawny na właściwą datę.
    Ranking, skrót lub fragment wyniku semantycznego nie zastępuje weryfikacji źródła cytatu.
 3. **Brak trafień, brak pokrycia lub awaria Repertorium:** zapisz zapytanie i wynik/błąd,
@@ -48,7 +48,9 @@ przeczytaj `shared/ARTEFAKTY-SPRAWY.md` i `shared/FORMAT-PISMA.md`.
 W `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/` powstają kolejne wersje pisma `_v1`, `_v2`... wyłącznie w Markdown.
 W `legal/output/` jest dokładnie jeden DOCX każdego pisma i nic poza DOCX. Sesja zaczyna się od akceptacji
 niezaakceptowanych zmian w tym DOCX i snapshotu MD, a kończy zmianami tej sesji jako redline w DOCX
-(`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”).
+(`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”; polecenia: `shared/format-pisma/wersja_pisma.py`,
+silnik `redline-docx-pl`). Teczkę ustal przed pierwszym zapisem; gdy nie jest jednoznaczna, zapytaj autora,
+czy przypisać pismo do istniejącej teczki, czy założyć nową.
 
 Wiedza wielosprawowa, teczka sprawy w wiki i lekcje do doskonalenia pism: Basic Memory, projekt `legal`
 (protokół odczytu i zapisu: `shared/BASIC-MEMORY.md`), a lekcje jednej sprawy także `_wiedza.md` w teczce.
@@ -110,7 +112,9 @@ Kontrola pisma nie kończy się raportem ani kolejną wersją, która nadal ma w
 Pętla działa jak ralph loop: to samo zlecenie wraca na najnowszą wersję, aż kryterium wyjścia jest spełnione.
 
 1. **Runda:** soczewki na najnowszej wersji → wdrożenie każdej uwagi, którą model może naprawić sam →
-   nowa wersja `_vN+1` → następna runda na tej wersji, z soczewkami w świeżym kontekście.
+   nowa wersja `drafty/<pismo>/..._vN+1.md` (tylko Markdown w teczce) → następna runda na tej wersji, z soczewkami
+   w świeżym kontekście. DOCX w `legal/output/` powstaje raz, na końcu sesji, jako redline od bazy sesji
+   (`shared/ARTEFAKTY-SPRAWY.md`); runda nie dokłada DOCX ani `.md` w `output/`.
 2. **Brak informacji = pytanie teraz.** Gdy uwagi nie da się wdrożyć bez wiedzy autora (fakt, dowód,
    decyzja strategiczna, wybór między propozycjami), zadaj pytanie w trakcie pętli (narzędzie pytań
    interaktywnych, jeśli jest; inaczej pytanie w czacie i czekanie na odpowiedź). Odpowiedź wdroż

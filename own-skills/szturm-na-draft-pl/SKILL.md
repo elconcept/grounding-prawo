@@ -33,6 +33,8 @@ relacja: nowe szczegóły, krzywdy, skutki, inne osoby, działania i zaniechania
 prokuratury i funkcjonariuszy oraz możliwe dodatkowe kwalifikacje. Nie wystarcza brak
 skreśleń ani raport „OK”. Pytaj, rozwijaj, wracaj po odpowiedziach i włączaj je do pisma.
 Hipotezy recenzenta pozostają pytaniami do czasu uzyskania relacji i sprawdzenia prawa.
+Żadna rola nie usuwa ani nie łagodzi danych o zdrowiu, intymnych i innych wrażliwych danych autora i osób
+trzecich; uwaga „zbyt wrażliwe”, „zbędny szczegół intymny” albo „brak zgody osoby trzeciej” nie jest ustaleniem.
 
 W tym trybie mandaty z `references/soczewki.md`, izolacja „sam draft”, profil MAX, kryterium
 wyjścia E8 i format ustaleń/syntezy są zastąpione regułami ZOP-R. Każda rola otrzymuje pierwotną
@@ -65,7 +67,8 @@ Pliki pisma i cykl sesji: `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem
    sesji jako zmiany śledzone Worda, przy każdej komentarz `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
    DECYZJA_AUTORA ma etykietę „DECYZJA AUTORA”; autor odrzuca ją w Wordzie, inaczej przyjmie ją następna sesja.
    Poprzedni DOCX tego pisma usuń z `legal/output/` dopiero po weryfikacji nowego. W `drafty/` nie ma DOCX,
-   w `legal/output/` nie ma MD. Nie produkuj drugiego, czystego DOCX.
+   w `legal/output/` nie ma MD. Nie produkuj drugiego, czystego DOCX. Rundy pętli E8 dają tylko kolejne
+   snapshoty `.md` w `drafty/<pismo>/` i redline'y w `RUN/`; do `legal/output/` trafia wyłącznie redline ostatniej rundy.
    **Bez PDF** - PDF robi prawnik po własnej korekcie.
 4. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie. Pytania do autora
    (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane) padają w trakcie pętli E8, a raport pokazuje tylko
@@ -241,6 +244,7 @@ python3 $SZ/weryfikuj_wynik.py --redline RUN/runda<r>.docx \
     --edits RUN/edits.PISMO.redline.json [edits z wcześniejszych rund] \
     --katalog legal/output --drafty <sprawa>/drafty/<pismo>
 # po ostatniej rundzie: cp RUN/runda<r>.docx legal/output/<wersja>.docx, weryfikacja kopii (cmp), usunięcie poprzedniego DOCX pisma
+python3 -I <skills>/shared/format-pisma/wersja_pisma.py sprawdz --output legal/output   # PASS: jeden DOCX pisma, bez MD
 ```
 
 - Poprawki formatu (`fix_format.py`) nie są zmianami śledzonymi - idą osobno, na bazie przed adeu, a każda

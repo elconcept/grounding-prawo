@@ -122,7 +122,8 @@ skills:
   pisma-procesowe-v3:
     etap: B
     wejscie: '`analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM'
-    wynik: '`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.md`, DOCX w `legal/output/`, rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`
+      nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - citation-grounding-pl
@@ -131,7 +132,8 @@ skills:
   pisma-proste-v2:
     etap: B
     wejscie: 'krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`'
-    wynik: '`drafty/<pismo>/rrrrMMdd_<nazwa>_v1.*`, wpis w `_PRZEBIEGI.md`'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`
+      nowe albo redline), wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - citation-grounding-pl
@@ -139,7 +141,7 @@ skills:
   zawiadomienie-o-przestepstwie:
     etap: B
     wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
-    wynik: '`drafty/zawiadomienie/rrrrMMdd_zawiadomienie_vN.*` (kopia w `output/`, bez placeholderów), `_MAPA_KRZYWD.md`,
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`,
       wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/`'
     dalej:
     - pisz-po-polsku
@@ -148,7 +150,8 @@ skills:
   rodo-dsar-pl:
     etap: E
     wejscie: żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
-    wynik: '`drafty/dsar/rrrrMMdd_dsar_v1.*`'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna:
+      pytanie do autora), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - pisz-po-polsku
@@ -177,14 +180,15 @@ skills:
   pisz-po-polsku:
     etap: C
     wejscie: pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
-    wynik: nowa wersja `drafty/<pismo>/..._vN+1`
+    wynik: nowa wersja `drafty/<pismo>/..._vN+1.md` (tylko MD); DOCX dopiero redline końca sesji
     dalej:
     - redline-docx-pl
     - szturm-na-draft-pl
   redline-docx-pl:
     etap: C
-    wejscie: draft `.docx` i lista zmian
-    wynik: REDLINE w `_robocze/`; kopia z zatwierdzonymi zmianami jako kolejna wersja
+    wejscie: DOCX pisma z `legal/output/` i nowa wersja MD z `drafty/<pismo>/` (cykl własnego pisma) albo cudzy `.docx` i lista zmian
+    wynik: własne pismo - jeden DOCX z redline sesji w `legal/output/` (`shared/format-pisma/wersja_pisma.py redline`); cudzy dokument -
+      REDLINE w `_robocze/`
     dalej:
     - szturm-na-draft-pl
   analizator-umow-v1:

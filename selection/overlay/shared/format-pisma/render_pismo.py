@@ -2,9 +2,11 @@
 """Renderer pisma procesowego: źródło .md -> .docx.
 
 DOCX jest artefaktem końcowym (użytkownik redaguje go w Wordzie, drukuje i podpisuje); źródło .md
-zostaje obok jako sidecar. PDF nie powstaje.
+zostaje w <sprawa>/drafty/<pismo>/, DOCX trafia do legal/output/ (bez sidecara). PDF nie powstaje.
 
-Standard typograficzny: shared/FORMAT-PISMA.md. Tylko biblioteka standardowa.
+Standard typograficzny: shared/FORMAT-PISMA.md. Tylko biblioteka standardowa. W pracy nad sprawą wołaj
+wersja_pisma.py (nowe / start / redline / sprawdz), nie ten plik bezpośrednio: kolejna wersja pisma to redline
+na istniejącym DOCX, nie nowy render (shared/ARTEFAKTY-SPRAWY.md).
 
 Użycie:
     python3 -I render_pismo.py pismo.md [--out KATALOG] [--nadpisz]

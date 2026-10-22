@@ -96,8 +96,11 @@ portalu `lex`. Mapa konektorów: skill `patron-prawo-pl-zrodla`.
 - 37 ustaw z komentarzem do każdego artykułu (`vendor/law/<ustawa>`, forki `elconcept`): kodeksy, Konstytucja,
   ustawy ustrojowe (sądy, SN, prokuratura, adwokatura, radcowie), PPSA, koszty sądowe, prawo medyczne, konsumenckie,
   ochrona lokatorów, Policja, RODO i inne; lista to submoduły w `.gitmodules`;
-- przy każdym artykule dosłowne brzmienie z tekstu jednolitego wskazanego w repo (pola `tekst_jednolity`, `eli`)
-  i komentarz; nowelizacje późniejsze niż ten tekst jednolity trzeba sprawdzić w ELI.
+- 15 kodeksów i Konstytucja w formacie git-as-law (`vendor/law-git/<kodeks>`, repozytoria `kbchojnacki`): tekst
+  jednolity jako punkt kontrolny i jeden commit na nowelizację w dacie wejścia w życie; z nich pochodzi brzmienie
+  kodeksów (`zrodlo: git-as-law`, `stan_na`, `ostatnia_zmiana`), komentarz z `vendor/law`;
+- pozostałe ustawy: brzmienie z tekstu jednolitego wskazanego w repo komentarza (`zrodlo: komentarz`,
+  `tekst_jednolity`, `eli`); nowelizacje po tym tekście jednolitym, a dla kodeksów po `stan_na`, sprawdza się w ISAP.
 
 ```bash
 python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py buduj            # indeks ustawy.sqlite
@@ -106,10 +109,11 @@ python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py szukaj "obrona konie
 python3 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py cytat kk 148 "Kto zabija człowieka"
 ```
 
-Serwer MCP tej bazy (`ustawy_mcp.py`, narzędzia `akty`, `szukaj`, `artykul`, `cytat`) ma zastąpić konektory `cite` i
-`isap`; wdrożenie: `deploy/mcp-ustawy/` (obraz klonuje ustawy według `.gitmodules`). Orzeczenia
-SAOS i NSA ma obsługiwać jeden wrapper `elconcept/mcp-prawo-wrapper`. Do przełączenia portalu `lex` reguły pluginu
-korzystają z `cite`, `isap`, `saos` i `nsa`. Akty spoza korpusu: ELI (`api.sejm.gov.pl`).
+Serwer MCP tej bazy (`ustawy_mcp.py`, narzędzia `akty`, `szukaj`, `artykul`, `cytat`) zastępuje konektor `cite`
+(wycofany); wdrożenie: `deploy/mcp-ustawy/` (obraz klonuje `vendor/law` płytko i `vendor/law-git` z historią commitów
+według `.gitmodules`), po przebudowie dodaj go do portalu `lex` jako `ustawy`. Orzeczenia SAOS i NSA ma obsługiwać
+jeden wrapper `elconcept/mcp-prawo-wrapper`. MCP `isap` nie zwraca treści PDF: przy `text_unavailable_use_pdf` podaje
+adresy plików, które model pobiera i czyta przez `pdftotext` (`shared/MOD-TEKST-JEDNOLITY.md`).
 
 ## Utrzymanie
 

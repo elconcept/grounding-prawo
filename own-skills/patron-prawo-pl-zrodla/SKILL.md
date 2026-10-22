@@ -21,14 +21,14 @@ Brak trafień lub awarię odnotuj i kontynuuj właściwym konektorem.
 
 | Pytanie | Serwer | Narzędzia | Czego tu NIE ma |
 |---|---|---|---|
-| Semantyczne rozpoznanie ustaw i orzeczeń PL/UE | `repertorium` | `szukaj_repertorium` | potwierdzenia kompletnego, aktualnego brzmienia cytatu |
+| **Zawsze pierwsze:** semantyczne rozpoznanie ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK, decyzji UODO, PL i UE | `repertorium` | `szukaj_repertorium` (`jurysdykcja` `pl`/`eu`, kilka zapytań: zagadnienie, każda teza) | potwierdzenia kompletnego, aktualnego brzmienia cytatu |
 | Orzeczenia SN, sądów powszechnych, TK, KIO | `saos` | `search`, `search_by_case`, `get_judgment`, `saos_cite_check` | WSA i NSA - brak orzecznictwa administracyjnego (podatki, UODO, decyzje organów) |
 | Orzeczenia NSA i 16 WSA (CBOSA): administracja, podatki, cła, ochrona danych | `nsa` | `search`, `search_by_case`, `get_judgment` | sądy powszechne, SN |
-| Akty prawne PL (Dz.U., M.P., od 1918 r.) | `isap` | `search_acts`, `get_act`, `get_act_text` | orzecznictwo, komentarze |
+| Akty prawne PL (Dz.U., M.P., od 1918 r.), status, nowelizacje | `isap` | `search_acts`, `get_act`, `get_act_text` (przy `text_unavailable_use_pdf` adresy PDF: pobierz `curl`, odczytaj `pdftotext`) | treści PDF w odpowiedzi MCP, orzecznictwo, komentarze |
 | Spółki w KRS | `krs` | `get_entity`, `get_entity_full`, `get_board` | CEIDG |
 | Prawo UE, TSUE, decyzje organów ochrony danych (GDPRhub) | `eu-sparql` | `search_by_celex`, `search_by_date_range`, `search_cjeu`, `search_cjeu_by_ecli`, `search_gdprhub` | prawo krajowe |
 | 14 regulacji UE offline (RODO, AI Act, DORA, NIS2, eIDAS 2.0, CRA, DSA, DMA, Data Act, DGA, LED, ePrivacy, Cybersecurity Act i in.) | `eu-compliance` | `eu_search`, `eu_article`, `eu_compare`, `eu_check_applicability`, `eu_evidence` | akty spoza korpusu |
-| Komentarz do artykułu ustawy (37 ustaw: kodeksy, Konstytucja, ustawy ustrojowe, PPSA, koszty sądowe, prawo medyczne i konsumenckie, lokatorzy, Policja) | baza lokalna `scripts/ustawy.py` | `art <akt> <nr> --komentarz`, `szukaj` | brzmienia urzędowego (komentarz to opracowanie) |
+| Brzmienie artykułu i komentarz: kodeksy i Konstytucja z git-as-law (tekst jednolity + każda nowelizacja, stan na dzień `stan_na`), pozostałe ustawy z komentarza według tekstu jednolitego | serwer `ustawy` (gdy jest w portalu) albo lokalnie `scripts/ustawy.py` | `artykul`, `cytat`, `szukaj` (`art <akt> <nr> --komentarz`) | nowelizacji wchodzących w życie po `stan_na` (sprawdź w `isap`); komentarz to opracowanie |
 
 ## Struktura sądownictwa - nie myl pionów
 - Sądy powszechne: rejonowe, okręgowe, apelacyjne. Sprawy cywilne, karne, rodzinne, prawa
