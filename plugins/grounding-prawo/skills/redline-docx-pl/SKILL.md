@@ -1,6 +1,6 @@
 ---
 name: redline-docx-pl
-description: 'Redline .docx z natywnymi zmianami śledzonymi bez niszczenia formatowania: odczyt do Markdown, zmiany i komentarze, akceptacja zmian, porównanie wersji; usunięcie metadanych autora tylko na polecenie.'
+description: 'Redline .docx z natywnymi zmianami śledzonymi bez niszczenia formatowania: odczyt do Markdown, zmiany i komentarze, akceptacja zmian, porównanie wersji; usunięcie metadanych autora tylko na polecenie. Używaj przy KAŻDEJ zmianie istniejącego pisma .docx (poprawka, dopisanie, nowa wersja) - zakaz edycji przez python-docx/pandoc i zapisu nowego DOCX bez śledzenia zmian.'
 license: MIT
 allowed-tools:
 - Bash
