@@ -3,7 +3,7 @@
 Priority is information and logical structure, not pretty Markdown. The
 renderer therefore reads `block.markdown` (the structure the provider
 actually recognised) instead of the flattened `block.text`, and only
-normalises it: headings to `##`/`###`/`####`, lists to `-`/`N.`, form label/value pairs
+normalises it: headings to `###`, lists to `-`/`N.`, form label/value pairs
 to `Label: value`, tables either to field lines (label/value forms) or to a
 syntactically valid Markdown table (real data tables).
 """
@@ -113,14 +113,7 @@ def sanitize_markdown(text: str) -> str:
     text = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"\1", text)
     text = re.sub(r"__([^_\n]+)__", r"\1", text)
     text = re.sub(r"(?<![\w_])_([^_\n]+)_(?![\w_])", r"\1", text)
-    # Provider H1/H2/H3 carry relative logical hierarchy. In our output
-    # H2 is the highest level; preserve depth without ever emitting H1.
-    text = re.sub(
-        r"^(#{1,6})[ \t]+",
-        lambda match: "#" * min(4, len(match.group(1)) + 1) + " ",
-        text,
-        flags=re.MULTILINE,
-    )
+    text = re.sub(r"^#{1,6}\s+", "### ", text, flags=re.MULTILINE)
     text = re.sub(r"(?<![<(])(https?://[^\s<>()]+)", _wrap_url, text)
     text = re.sub(r"[ \t]+$", "", text, flags=re.MULTILINE)
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
@@ -141,23 +134,19 @@ class _Element:
     bbox: BBox | None
 
 
-def render_document_body(document: OCRDocument, *, document_name: str | None = None) -> str:
-    """Render each page as a self-contained, explicitly delimited section."""
-    name = document_name or document.source_name or document.doc_id
-    total_pages = len(document.pages)
+def render_document_body(document: OCRDocument) -> str:
     pages: list[str] = []
     for page in document.pages:
         elements = _merge_form_fields([_block_element(block) for block in page.blocks])
-        parts: list[str] = [f"==< {name}> (Page {page.number}/{total_pages}) >=="]
+        parts: list[str] = [f"## Page {page.number}"]
         for element in elements:
             content = element.text
             if element.kind == "text":
                 content = _semantic_list(content) or content
             if content:
                 parts.append(content)
-        parts.append("---")
         pages.append("\n\n".join(parts))
-    return "\n\n".join(pages).strip()
+    return "\n\n".join(page for page in pages if page).strip()
 
 
 def _block_element(block: OCRBlock) -> _Element:
@@ -174,7 +163,7 @@ def _block_element(block: OCRBlock) -> _Element:
 
     if block_type in HEADING_TYPES:
         body = sanitize_markdown(re.sub(r"^\s*#{1,6}\s*", "", raw)).rstrip(" :;,.!?")
-        return _Element("heading", f"## {body}" if body else "", block.bbox)
+        return _Element("heading", f"### {body}" if body else "", block.bbox)
 
     if block_type in TABLE_TYPES:
         return _Element("table", render_table(raw, block.text), block.bbox)

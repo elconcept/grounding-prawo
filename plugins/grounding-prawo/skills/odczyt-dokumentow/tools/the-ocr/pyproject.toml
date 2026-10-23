@@ -17,13 +17,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-archive = ["boto3>=1.35,<2"]
 local = ["rapidocr-onnxruntime>=1.4.4"]
 
 [project.scripts]
 the-ocr = "the_ocr.cli:main"
-the-ocr-ingest-page = "the_ocr.ingest_cli:main"
-the-ocr-archive = "the_ocr.archive_pdf:main"
 
 [dependency-groups]
 dev = ["pyinstaller>=6.0", "pytest>=8.0.0"]
