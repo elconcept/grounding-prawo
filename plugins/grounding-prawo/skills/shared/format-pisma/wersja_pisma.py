@@ -45,9 +45,9 @@ def pismo(path):
 def text(docx):
     with tempfile.TemporaryDirectory() as t:
         out = os.path.join(t, "x.md")
-        adeu("extract", docx, "-o", out)
+        adeu("extract", docx, "--page", "all", "-o", out)
         lines = open(out, encoding="utf-8").read().split("\n")
-    return "\n".join(l for l in lines if not l.startswith("> **File Path:**")).strip() + "\n"
+    return "\n".join(l for l in lines if not l.startswith("> **")).strip() + "\n"
 
 
 def changes(docx):
