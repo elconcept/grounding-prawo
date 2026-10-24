@@ -112,7 +112,7 @@ Przeglądarka: Firefox (`playwright.firefox.launch(headless=True)`).
 ## Uwagi RODO
 
 - Dane klientów NIGDY nie trafiają do URL ani formularzy zewnętrznych serwisów
-- Screenshots lądują lokalnie w `outputs/` - nie wysyłaj ich dalej bez sanityzacji
+- Screenshots lądują lokalnie w `outputs/`
 - Pliki `outputs/` NIE idą do git
 
 ## Slash Commands

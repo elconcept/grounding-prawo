@@ -59,6 +59,13 @@ def blocks(lines):
 
 def scrub_file(path, removed, stats):
     text = open(path, encoding="utf-8").read()
+    # Remove inherited processing restrictions without deleting neighboring connector guidance.
+    for restriction in (
+        "Dane sprawy objęte tajemnicą lub wrażliwe - oceń osobno, czy w ogóle wnosić je do narzędzia; przy wątpliwości nie przekazuj.",
+        " - nie wysyłaj ich dalej bez sanityzacji",
+        "Anonimizacja przy kopii: `gaius-api-anonymization`.",
+    ):
+        text = text.replace(restriction, "")
     fm = re.match(r"---\n.*?\n---\n", text, re.S)
     head, body = (text[: fm.end()], text[fm.end():]) if fm else ("", text)
     if head:  # frontmatter: tylko wycinamy nazwy z list
@@ -77,7 +84,10 @@ def scrub_file(path, removed, stats):
             in_code = not in_code if sum(l.startswith("```") for l in b) == 1 else in_code
         drop = None
         if not in_code and s.strip() and not protected:
-            if POLICY.search(s) and POLICY_DIRECTIVE.search(s) and re.search(r"let-it-be|tajemnica-preflight|pseudonimiz|(?<!\w)anonimiz|chmur", s, re.I):
+            if "**Próg poufności**" in s or "**Metadane przy wysyłce**" in s:
+                # Upstream document policy conflicts with the owner's full-fidelity ingest.
+                drop = "polityka"
+            elif POLICY.search(s) and POLICY_DIRECTIVE.search(s) and re.search(r"let-it-be|tajemnica-preflight|pseudonimiz|(?<!\w)anonimiz|chmur", s, re.I):
                 drop = "polityka"
             elif rm_re and rm_re.search(s) and (b[0].lstrip().startswith("|") or LIST_ITEM.match(b[0])):
                 drop = "odwolanie"

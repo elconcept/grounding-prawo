@@ -44,10 +44,25 @@ ingest, nie status „zweryfikowany”. Wymagaj faktycznego zapisu
 `write_note` i kontroli przez `read_note`.
 
 
+## Samowystarczalność wiki
+
+Biblioteka źródeł na serwerze jest wejściem do ingestu, nie miejscem docelowym cytowań.
+W trakcie ingestu porównaj transkrypcję z każdą stroną oryginału; po potwierdzeniu
+zapisz pełną treść w Basic Memory ze statusem weryfikacji (`stan_ingestu: pdf_reviewed`
+dla PDF). Samo istnienie sidecara ani import historycznej notatki nie potwierdza weryfikacji.
+
+Po ukończeniu ingestu odczyt, cytowanie i analiza dokumentu korzystają z zapisanej
+transkrypcji w wiki. Linki źródłowe prowadzą do jej `[[permalink]]` i strony/bloku,
+bez linków do zewnętrznych PDF, sidecarów, dysków NAS ani plików klienta. Ścieżka
+pochodzenia i hash mogą zostać technicznymi metadanymi ingestu; nie zastępują treści.
+Wiki musi pozostać użyteczna po odłączeniu biblioteki źródeł. Ponowna weryfikacja
+jest potrzebna przy nowej wersji dokumentu lub konkretnej wykrytej rozbieżności,
+nie przy każdym odczycie zweryfikowanej transkrypcji.
+
 ## Zapis w `legal` po każdym zakończonym etapie
 
 - **Dokument:** przetwarzaj pojedynczo. Sprawdź istniejący wpis po identyfikatorze źródła i ścieżce.
-  Zapisz tożsamość dokumentu, ścieżkę oryginału i Markdown, strony/segmenty, jakość odczytu i powiązania.
+  Zapisz tożsamość dokumentu, pełną transkrypcję w wiki, strony/segmenty, jakość odczytu i powiązania.
   Pełny tekst i wyciąg zapisuj według odczytanej metodyki ingestu; nie zastępuj źródła streszczeniem.
 - **Ustalenie:** wskaż dokument i stronę/blok albo autora i datę relacji. Oddziel twierdzenie strony od ustalenia,
   zachowaj sprzeczności. Przebieg postępowania zapisuj w `postepowania/`, nie tylko w recapach.
