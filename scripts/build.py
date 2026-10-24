@@ -5,6 +5,7 @@
 są nakładane na kopię, nigdy na vendor. Wynik jest generowany - nie edytuj go ręcznie,
 zmieniaj selection.yaml, own-skills/ albo patche.
 """
+import importlib.util
 import os, re, shutil, subprocess, sys, json
 import yaml
 
@@ -707,7 +708,12 @@ def main():
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
         normalize_skill(sm, e)
 
-    import retire_layers
+    module_path = os.path.join(ROOT, "scripts", "retire_layers.py")
+    spec = importlib.util.spec_from_file_location("retire_layers", module_path)
+    if spec is None or spec.loader is None:
+        raise SystemExit(f"Nie można załadować modułu: {module_path}")
+    retire_layers = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(retire_layers)
     retire_layers.apply(SKILLS)
     print("usunięta warstwa kancelaryjna, raportowa, audytowa i local-first")
 

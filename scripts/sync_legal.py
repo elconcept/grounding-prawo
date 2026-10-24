@@ -75,7 +75,14 @@ def sync(source, target):
         old.mkdir(exist_ok=True)
         for rel in hashes:
             dest = old / rel
-            if dest.is_symlink() or any(p.is_symlink() for p in dest.parents if p != old.parent):
+            parent = old
+            managed_parent_is_symlink = False
+            for part in Path(rel).parts[:-1]:
+                parent /= part
+                if parent.is_symlink():
+                    managed_parent_is_symlink = True
+                    break
+            if dest.is_symlink() or managed_parent_is_symlink:
                 raise ValueError(f'Dowiązanie w katalogu zarządzanym: {dest}')
         for rel in hashes:
             dest = old / rel
