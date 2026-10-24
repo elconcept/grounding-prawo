@@ -498,6 +498,9 @@ def bundle_documents():
     shutil.copytree(os.path.join(the_ocr, "src"), os.path.join(tool, "src"), ignore=IGNORE)
     for name in ("pyproject.toml", "README.md", "env.example"):
         shutil.copy(os.path.join(the_ocr, name), tool)
+    readme = os.path.join(tool, "README.md")
+    text = open(readme, encoding="utf-8").read()
+    open(readme, "w", encoding="utf-8").write("\n".join(line.rstrip() for line in text.splitlines()) + "\n")
     upstream = os.path.join(AWE, "dokumenty/skills/doc-intel-contract-pl")
     target = os.path.join(base, "document_contract")
     os.makedirs(os.path.join(target, "scripts"), exist_ok=True)

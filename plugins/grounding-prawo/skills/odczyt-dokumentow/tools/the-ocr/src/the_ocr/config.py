@@ -17,11 +17,43 @@ PROVIDER_NAMES = [*DEFAULT_CHAIN_ORDER, "rapidocr"]
 #: Comma-separated chain order override, e.g. ``azure,google_vision,rapidocr``.
 CHAIN_ENV_VAR = "THE_OCR_CHAIN"
 
+#: Explicit path of the .env file; skips the search in :func:`env_file`.
+ENV_FILE_VAR = "THE_OCR_ENV_FILE"
+
 
 def load_env() -> None:
-    """Load environment beside the release executable or from source cwd."""
-    env_path = runtime_directory() / ".env"
-    load_dotenv(dotenv_path=env_path, override=False)
+    """Load the first .env found by :func:`env_file`; process variables win."""
+    path = env_file()
+    if path is not None:
+        load_dotenv(dotenv_path=path, override=False)
+
+
+def env_file() -> Path | None:
+    """$THE_OCR_ENV_FILE > .env beside the release executable (source: cwd) > user config .env."""
+    configured = os.environ.get(ENV_FILE_VAR, "").strip()
+    if configured:
+        candidates = [Path(configured).expanduser()]
+    else:
+        candidates = [runtime_directory() / ".env", user_config_directory() / ".env"]
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def config_directory() -> Path:
+    """Base for relative paths in .env: the real directory of the loaded .env
+    (a symlinked .env resolves to its target), else :func:`runtime_directory`."""
+    path = env_file()
+    return path.resolve().parent if path is not None else runtime_directory()
+
+
+def user_config_directory() -> Path:
+    """%APPDATA%\\the-ocr on Windows, $XDG_CONFIG_HOME/the-ocr or ~/.config/the-ocr elsewhere."""
+    if sys.platform == "win32" and os.environ.get("APPDATA"):
+        return Path(os.environ["APPDATA"]) / "the-ocr"
+    base = os.environ.get("XDG_CONFIG_HOME", "").strip()
+    return (Path(base) if base else Path.home() / ".config") / "the-ocr"
 
 
 def runtime_directory() -> Path:
