@@ -17,15 +17,16 @@ Pismo powstaje z pliku źródłowego `.md` przez renderer, nie przez ręczny HTM
 sidecara `.md`. Renderer wołaj przez `shared/format-pisma/wersja_pisma.py`, który pilnuje tego podziału:
 
 ```bash
-python3 -I <skills>/shared/format-pisma/wersja_pisma.py nowe --md <sprawa>/drafty/<pismo>/<plik>_v1.md --output legal/output
+python3 -I <skills>/shared/format-pisma/wersja_pisma.py nowe --md <sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_v1.md --output legal/output
 ```
 
 PDF nie powstaje: użytkownik redaguje DOCX w Wordzie, drukuje i podpisuje. Składnię metryki i treści opisuje
 docstring `render_pismo.py`.
 
-- Kolejna wersja istniejącego pisma nie jest nowym renderem do `output/`: powstaje jako redline na DOCX
-  z `output/` (`wersja_pisma.py start` i `redline`, cykl w `shared/ARTEFAKTY-SPRAWY.md`). Ręczne zmiany autora
-  w DOCX `start` wypisuje jako różnice; przenieś je do nowej wersji `.md` w `drafty/`.
+- Plik pisma w `output/` ma nazwę bez daty i `_vN` (`<nazwa>.docx`) i jest jeden przez całe życie pisma.
+  Kolejna wersja nie jest nowym renderem ani nowym plikiem: to zmiany śledzone w tym samym DOCX
+  (`wersja_pisma.py start` i `redline`, cykl w `shared/ARTEFAKTY-SPRAWY.md`). Ręczne zmiany autora trafiają do
+  snapshotu `rrrrMMdd_hhmm_<nazwa>_vN.md`, który `start` zapisuje w `drafty/`.
 - `render_pismo.py --nadpisz` i ręczny render do `output/` są zakazane dla pisma, które ma już DOCX.
 - Celuj w jedną stronę przy piśmie odpowiadającym na wezwanie lub pytanie sądu: tylko odpowiedź,
   krótka podstawa i wniosek.
@@ -38,7 +39,8 @@ docstring `render_pismo.py`.
 - 12 pt: wydział, oddział lub inna podjednostka organu (`adresat_jednostka`), np. „III Wydział Karny”.
 - Tytuł pisma: wersaliki rozstrzelone, 12 pt, wyśrodkowany, bez pogrubienia; podtytuł 10 pt.
 - Cytat blokowy 9,5 pt, wcięty z obu stron. Stopka: tylko numer strony z prawej.
-- Tekst wyjustowany, interlinia ok. 1,25, odstęp 6 pt po akapicie. A4, marginesy 2-2,5 cm.
+- Tekst wyjustowany, interlinia ok. 1,25, odstęp 6 pt po akapicie. A4, lewy margines 3 cm (miejsce na wszycie do akt), pozostałe 2 cm; przy redline
+  istniejącego pisma lewy margines poniżej 3 cm podnieś do 3 cm.
 
 ## Nagłówek
 
@@ -79,8 +81,12 @@ Wnioskodawca:     Jan Kowalski
 
 ## Treść
 
-- Układ punktowy jak we wzorze: punkty `1.`, `2.` z wcięciem wiszącym, podpunkty `a)`, `b)`; kolejne
-  akapity punktu wcięte do jego tekstu.
+- Układ punktowy jak we wzorze: punkty `1.`, `2.`, podpunkty `a)`, `b)`. Numer od tekstu oddziela **jedna
+  spacja** - bez tabulatora i bez wcięcia wiszącego (szeroka przerwa między numerem a treścią to błąd, który
+  autor musi poprawiać ręcznie). Punkt ma wcięcie lewe 0,25 cm, podpunkt 0,5 cm.
+- Między punktami nie ma pustych akapitów ani łamań wiersza; odstęp daje odstęp po akapicie (6 pt).
+- Każdy tekst dopisany do istniejącego DOCX ma krój i rozmiar otoczenia (Georgia 10 pt); wstawka bez własnego
+  formatowania (np. na początku akapitu) spada do domyślnej czcionki Worda (Aptos 12 pt) - to błąd.
 - Na końcu: wniosek końcowy, podpis z prawej (linia kropkowana, imię i nazwisko), pod nim „Załączniki:”
   z numerowaną listą, jeśli są.
 - Bez emoji, symboli i znaczników Markdown w gotowym piśmie.

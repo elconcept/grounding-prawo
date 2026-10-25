@@ -242,7 +242,7 @@ Historia zmian i decyzje autora: `references/CHANGELOG.md`. Pochodzenie reguł i
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
-- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisz-po-polsku`
 - **Nie dubluj:** HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj odrębnie, a atak tylko na żądanie z ochroną pełnej relacji
 - **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)

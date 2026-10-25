@@ -61,26 +61,28 @@ Przed wykonaniem każdej operacji ustal tier i zastosuj regułę:
 | **D - Destructive** | `sanitize --accept-all` (akceptuje wszystkie zmiany nieodwracalnie) | Użytkownik musi wpisać dosłownie: **"potwierdzam"** zanim wykonasz. |
 
 Tiery M i D chronią cudzy dokument i plik wysyłany na zewnątrz. **Własne pismo autora w teczce sprawy**
-(DOCX z `legal/output/`) ma uzgodniony cykl bez tych potwierdzeń: `accept-all` na kopii w `_robocze/` na
-początku sesji i `apply` nowej wersji na tę kopię na końcu (`shared/ARTEFAKTY-SPRAWY.md`).
+(`legal/output/<nazwa>.docx`) ma uzgodniony cykl bez tych potwierdzeń: przyjęcie zmian w tym samym pliku na
+początku sesji i `apply` zmian sesji na ten sam plik na końcu (`shared/ARTEFAKTY-SPRAWY.md`).
 
-## Własne pismo w teczce: redline między wersjami
+## Własne pismo w teczce: jeden plik, zmiany śledzone
 
 Skille pism (`pisma-proste-v2`, `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`, `rodo-dsar-pl`,
-`szturm-na-draft-pl`) prowadzą pismo jako wersje Markdown w `<sprawa>/drafty/<pismo>/` i jeden DOCX w
-`legal/output/`. Ten skill jest ich silnikiem; polecenia opakowuje `shared/format-pisma/wersja_pisma.py`:
+`szturm-na-draft-pl`) prowadzą JEDEN plik pisma `legal/output/<nazwa>.docx` - bez daty, godziny i `_vN`
+w nazwie - oraz snapshoty `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md`. W `output/` nie powstają nowe
+wersje ani kopie, nic nie jest usuwane ani przemianowywane. Polecenia opakowuje `shared/format-pisma/wersja_pisma.py`:
 
 ```bash
 W=<skills>/shared/format-pisma/wersja_pisma.py
-python3 -I $W start   --docx legal/output/<plik>_vN.docx --robocze <sprawa>/_robocze --md <sprawa>/drafty/<pismo>/<plik>_vN.md
-python3 -I $W redline --baza <sprawa>/_robocze/<plik>_vN_baza.docx --md <sprawa>/drafty/<pismo>/<plik>_vK.md --output legal/output
+python3 -I $W start   --docx legal/output/<nazwa>.docx --drafty <sprawa>/drafty/<pismo>
+python3 -I $W redline --docx legal/output/<nazwa>.docx --edits <sprawa>/_robocze/<katalog>/edits.json --author "Imię Nazwisko"
 python3 -I $W sprawdz --output legal/output
 ```
 
-`redline` renderuje wersję MD, nakłada jej tekst na bazę (`adeu apply` z plikiem tekstowym; przy przesuniętych
-wyróżnieniach zapasowo edycje akapitów w JSON), sprawdza `w:ins`/`w:del`/`w:delText` i zgodność tekstu po
-`accept-all`, zapisuje jeden DOCX i usuwa poprzednie DOCX i MD tego pisma z `output/`. Wynik bez zmian
-śledzonych to etap NIEZAKOŃCZONY. Nowy render DOCX z MD (renderer, pandoc) nigdy nie zastępuje redline.
+`start` przyjmuje zmiany śledzone w pliku pisma z zachowaniem komentarzy i zapisuje snapshot. `redline` nakłada
+`edits.json` (albo pełny tekst nowej wersji: `--tekst`) na ten sam plik jako `w:ins`/`w:del`, nadaje wstawkom
+czcionkę otoczenia (wstawka na początku akapitu bez tego dostaje Aptos 12 pt), odrzuca wynik z pominiętymi edycjami
+albo z nowymi pustymi akapitami i dopiero wtedy podmienia plik. Wynik bez zmian śledzonych to etap NIEZAKOŃCZONY.
+Nowy render DOCX z MD (renderer, pandoc, python-docx) nigdy nie zastępuje redline.
 
 ---
 

@@ -40,7 +40,7 @@ telefonu ani e-maila, zapytaj użytkownika; wartość „nie posiadam” wpisuje
 
 Treść:
     akapit                      - wyjustowany, Georgia 10 pt
-    1. tekst / a) tekst         - punkt i podpunkt z wcięciem wiszącym
+    1. tekst / a) tekst         - punkt i podpunkt: numer, jedna spacja, tekst (bez tabulatora i wcięcia wiszącego)
     (wcięcie 3 spacjami)        - kolejny akapit tego samego punktu
     # NAGŁÓWEK                  - wyśrodkowany, rozstrzelone wersaliki, bez pogrubienia
     ## Nagłówek                 - do lewej, rozstrzelone wersaliki, bez pogrubienia
@@ -58,6 +58,7 @@ QUOTE = 19                  # 9,5 pt
 TITLE = 24                  # 12 pt
 LINE = 300                  # interlinia 1,25
 CM = 567                    # twips na centymetr
+LIST_IND = 144              # wcięcie punktu listy (0,25 cm); numer od tekstu oddziela jedna spacja
 LABEL_TAB = int(3.5 * CM)   # kolumna wartości metryki
 REPEATED = {"adresat", "adresat_jednostka", "metryka", "zalacznik"}
 REQUIRED = ["data", "nadawca", "nadawca_adres", "nadawca_kontakt", "adresat", "adresat_adres", "tytul", "podpis"]
@@ -170,11 +171,12 @@ def body(text, stats):
             q = " ".join(l.lstrip("> ").strip() for l in raw.splitlines())
             x.append(para(inline(q, QUOTE, stats), ind=f'<w:ind w:left="{CM}" w:right="{CM}"/>'))
         elif m := re.match(r"(\d+\.)\s+(.*)", flat, re.S):
-            x.append(para(run(m.group(1) + "\t") + inline(m.group(2), stats=stats), tabs=tab(CM),
-                          ind=f'<w:ind w:left="{CM}" w:hanging="{CM}"/>'))
+            # numer, jedna spacja, tekst: bez tabulatora i bez wcięcia wiszącego (FORMAT-PISMA, „Listy”)
+            x.append(para(run(m.group(1) + " ") + inline(m.group(2), stats=stats),
+                          ind=f'<w:ind w:left="{LIST_IND}"/>'))
         elif m := re.match(r"([a-z]\))\s+(.*)", flat, re.S):
-            x.append(para(run(m.group(1) + "\t") + inline(m.group(2), stats=stats), tabs=tab(2 * CM),
-                          ind=f'<w:ind w:left="{2 * CM}" w:hanging="{CM}"/>'))
+            x.append(para(run(m.group(1) + " ") + inline(m.group(2), stats=stats),
+                          ind=f'<w:ind w:left="{2 * LIST_IND}"/>'))
         elif raw.startswith("   "):
             x.append(para(inline(flat, stats=stats), ind=f'<w:ind w:left="{CM}"/>'))
         else:
@@ -191,8 +193,7 @@ def footer_sig(meta):
     if meta.get("zalacznik"):
         x.append(para(run("Załączniki:"), jc="left", after=0, keep=True))
         for n, z in enumerate(meta["zalacznik"], 1):
-            x.append(para(run(f"{n}.\t{z}"), jc="left", tabs=tab(CM // 2 + 113),
-                          ind=f'<w:ind w:left="{CM // 2 + 113}" w:hanging="{CM // 2 + 113}"/>', after=0))
+            x.append(para(run(f"{n}. {z}"), jc="left", after=0))
     return x
 
 
@@ -203,7 +204,7 @@ NS = ('xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" '
 def document(paragraphs):
     sect = (f'<w:sectPr><w:footerReference w:type="default" r:id="rIdF"/>'
             f'<w:pgSz w:w="11906" w:h="16838"/>'
-            f'<w:pgMar w:top="{2 * CM}" w:right="{2 * CM}" w:bottom="{2 * CM}" w:left="{int(2.5 * CM)}" '
+            f'<w:pgMar w:top="{2 * CM}" w:right="{2 * CM}" w:bottom="{2 * CM}" w:left="{3 * CM}" '
             f'w:header="708" w:footer="567" w:gutter="0"/></w:sectPr>')
     return f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document {NS}><w:body>{"".join(paragraphs)}{sect}</w:body></w:document>'
 

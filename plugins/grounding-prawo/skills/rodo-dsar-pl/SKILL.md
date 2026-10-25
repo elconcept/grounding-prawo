@@ -97,7 +97,7 @@ Parytet: `gdpr-dsar-en`.
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
-- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna: pytanie do autora), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna: pytanie do autora), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `pisz-po-polsku`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -122,7 +122,7 @@ skills:
   pisma-procesowe-v3:
     etap: B
     wejscie: '`analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM'
-    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`
       nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
@@ -132,7 +132,7 @@ skills:
   pisma-proste-v2:
     etap: B
     wejscie: 'krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`'
-    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`
       nowe albo redline), wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
@@ -141,7 +141,7 @@ skills:
   zawiadomienie-o-przestepstwie:
     etap: B
     wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
-    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`,
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`,
       wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/`'
     dalej:
     - pisz-po-polsku
@@ -150,8 +150,8 @@ skills:
   rodo-dsar-pl:
     etap: E
     wejscie: żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
-    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna:
-      pytanie do autora), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md`'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna:
+      pytanie do autora), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - pisz-po-polsku
