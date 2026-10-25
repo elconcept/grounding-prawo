@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Test dymny szturmu na syntetycznym pismie (bez danych klienta): cykl z shared/ARTEFAKTY-SPRAWY.md -
-# DOCX w output z redline autora -> accept-all -> snapshot MD -> E5/E6 -> E7 (dwie rundy) -> jeden DOCX w output.
+# output/PISMO.docx z redline autora -> accept-all -> snapshot MD -> E5/E6 -> E7 (dwie rundy) -> ten sam plik w output.
 # Wymaga: uv/uvx (adeu==1.30.0, python-docx przez uv run), python3. Sieć tylko przy pierwszym pobraniu pakietów.
 #   bash tests/smoke_test.sh [KATALOG_ROBOCZY]
 set -euo pipefail
@@ -15,12 +15,12 @@ zle() { echo "ZLE  $*"; exit 1; }
 uv run -q "$HERE/make_fixture.py" "$W/RUN/_fixture.docx"
 # poprzednia sesja zostawila w output DOCX ze zmiana sledzona autora, ktorej nikt nie zaakceptowal
 echo '[{"type":"modify","target_text":" z tej samej kamery.","new_text":" z tej samej kamery monitoringu.","comment":"autor"}]' > "$W/RUN/_autor.json"
-"${ADEU[@]}" apply "$W/RUN/_fixture.docx" "$W/RUN/_autor.json" -o "$W/output/20260101_PISMO_v1.docx" --author "Autor" >/dev/null 2>&1
-"${ADEU[@]}" accept-all "$W/output/20260101_PISMO_v1.docx" -o "$W/RUN/PISMO_v1.docx" >/dev/null 2>&1
+"${ADEU[@]}" apply "$W/RUN/_fixture.docx" "$W/RUN/_autor.json" -o "$W/output/PISMO.docx" --author "Autor" >/dev/null 2>&1
+"${ADEU[@]}" accept-all "$W/output/PISMO.docx" -o "$W/RUN/PISMO_v1.docx" >/dev/null 2>&1
 bash "$SZ/extract_all_pages.sh" "$W/RUN/PISMO_v1.docx" "$W/RUN" >/dev/null
 [ -s "$W/RUN/PISMO_v1.clean.md" ] && ok "E0 accept-all + extract" || zle "E0 extract"
-cp "$W/RUN/PISMO_v1.clean.md" "$W/drafty/PISMO/20260102_PISMO_v2.md"
-grep -q "kamery monitoringu" "$W/drafty/PISMO/20260102_PISMO_v2.md" && ok "snapshot MD zawiera zmiane autora" || zle "snapshot bez zmiany autora"
+cp "$W/RUN/PISMO_v1.clean.md" "$W/drafty/PISMO/20260102_1200_PISMO_v2.md"
+grep -q "kamery monitoringu" "$W/drafty/PISMO/20260102_1200_PISMO_v2.md" && ok "snapshot MD zawiera zmiane autora" || zle "snapshot bez zmiany autora"
 
 cp "$HERE/fixture_rejestry.json" "$W/RUN/rejestry.json"
 cp "$HERE/fixture_ustalenia.json" "$W/RUN/ustalenia/01_test.json"
@@ -84,16 +84,16 @@ echo '[{"type":"modify","target_text":"PISMO TESTOWE - STANOWISKO","new_text":"P
 ok "E7 adeu apply, dwie rundy"
 
 
-cp "$W/RUN/runda2.docx" "$W/output/20260102_PISMO_v2.docx"
-cmp -s "$W/RUN/runda2.docx" "$W/output/20260102_PISMO_v2.docx" && rm "$W/output/20260101_PISMO_v1.docx"
-python3 "$SZ/weryfikuj_wynik.py" --redline "$W/output/20260102_PISMO_v2.docx" \
+# jeden plik pisma bez wersji w nazwie: redline sesji podmienia ten sam plik, nic nie jest usuwane
+cp "$W/RUN/runda2.docx" "$W/output/PISMO.docx"
+python3 "$SZ/weryfikuj_wynik.py" --redline "$W/output/PISMO.docx" \
   --edits "$W/RUN/edits.PISMO.redline.json" "$W/RUN/edits.runda2.json" --katalog "$W/output" --drafty "$W/drafty/PISMO" \
   > "$W/RUN/weryfikacja.txt" \
   && ok "E7 struktura redline obu rund, placeholdery, brak PDF, brak DOCX w drafty" || { cat "$W/RUN/weryfikacja.txt"; zle "weryfikuj_wynik"; }
-[ "$(ls "$W/output")" = "20260102_PISMO_v2.docx" ] && ok "output: jeden DOCX pisma" || zle "output: $(ls "$W/output")"
+[ "$(ls "$W/output")" = "PISMO.docx" ] && ok "output: jeden DOCX pisma bez wersji w nazwie" || zle "output: $(ls "$W/output")"
 [ -z "$(ls "$W/drafty/PISMO" | grep -v '\.md$')" ] && ok "drafty: tylko MD" || zle "drafty: pliki inne niz MD"
 
-"${ADEU[@]}" accept-all "$W/output/20260102_PISMO_v2.docx" -o "$W/RUN/nastepna_baza.docx" >/dev/null 2>&1
+"${ADEU[@]}" accept-all "$W/output/PISMO.docx" -o "$W/RUN/nastepna_baza.docx" >/dev/null 2>&1
 bash "$SZ/extract_all_pages.sh" "$W/RUN/nastepna_baza.docx" "$W/RUN" >/dev/null
 B="$W/RUN/nastepna_baza.clean.md"
 grep -q "14 marca 2024" "$B" && ok "nastepna sesja: poprawka AUTO przyjeta" || zle "brak poprawki AUTO"

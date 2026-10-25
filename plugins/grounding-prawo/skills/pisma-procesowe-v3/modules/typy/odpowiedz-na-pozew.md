@@ -3,7 +3,7 @@
 > Moduł scalony ze skilla `odpowiedz-na-pozew` (IURA). Stosuj w W1/W2 jako wzorzec struktury i argumentacji dla tego typu pisma; bramki `pisma-procesowe-v3` obowiązują bez zmian.
 
 > **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/ARTEFAKTY-SPRAWY.md` - nowym plikiem jest
-> tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
+> tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
 > dopisuj do istniejących plików inkrementalnych (`_PRZEBIEGI.md`, `_SUBSUMPCJA*.md`, `_FINDINGS.md` …), a pliki
 > jednorazowe zostawiaj w `_robocze/` sprawy.
 

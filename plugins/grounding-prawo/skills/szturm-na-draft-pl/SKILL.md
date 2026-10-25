@@ -63,30 +63,29 @@ ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
 
 Pliki pisma i cykl sesji: `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”. W skrócie:
 
-1. **Na początku** weź jedyny DOCX pisma z `legal/output/` i przyjmij w kopii roboczej wszystkie
-   niezaakceptowane zmiany (`redline-docx-pl`, przypięty `adeu==1.30.0 accept-all`). To część zatwierdzonego
-   przebiegu: zmiany, których autor nie odrzucił w Wordzie, w tym propozycje DECYZJA_AUTORA, uznaje się za
-   przyjęte. Wejściowego DOCX nie modyfikuj w miejscu.
-2. Pełny tekst zaakceptowanej kopii zapisz jako snapshot `drafty/<pismo>/<wersja>.md`
-   (`rrrrMMdd_<nazwa>_v<N+1>`). Snapshot zawiera zmiany autora i jest bazą wszystkich rund.
-3. **Na końcu** w `legal/output/<wersja>.docx` zostaje jeden DOCX: zaakceptowana kopia i wszystkie zmiany
-   sesji jako zmiany śledzone Worda, przy każdej komentarz `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
+1. **Na początku** weź jedyny DOCX pisma `legal/output/<nazwa>.docx` (bez daty i `_vN`) i przyjmij w nim
+   wszystkie niezaakceptowane zmiany z zachowaniem komentarzy (`wersja_pisma.py start`). To część zatwierdzonego
+   przebiegu: zmiany, których autor nie odrzucił w Wordzie, w tym propozycje DECYZJA_AUTORA, uznaje się za przyjęte.
+2. `start` zapisuje pełny tekst jako snapshot `drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_v<N+1>.md`. Snapshot zawiera
+   zmiany autora i jest bazą wszystkich rund.
+3. **Na końcu** zmiany sesji trafiają do TEGO SAMEGO pliku `legal/output/<nazwa>.docx` jako zmiany śledzone Worda
+   (`wersja_pisma.py redline --edits …`), przy każdej komentarz `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
    DECYZJA_AUTORA ma etykietę „DECYZJA AUTORA”; autor odrzuca ją w Wordzie, inaczej przyjmie ją następna sesja.
-   Poprzedni DOCX tego pisma usuń z `legal/output/` dopiero po weryfikacji nowego. W `drafty/` nie ma DOCX,
-   w `legal/output/` nie ma MD. Nie produkuj drugiego, czystego DOCX. Rundy pętli E8 dają tylko kolejne
-   snapshoty `.md` w `drafty/<pismo>/` i redline'y w `RUN/`; do `legal/output/` trafia wyłącznie redline ostatniej rundy.
-   **Bez PDF** - PDF robi prawnik po własnej korekcie.
+   W `legal/output/` nie powstaje nowy plik, kopia ani wersja i nic nie jest usuwane; w `drafty/` nie ma DOCX,
+   w `legal/output/` nie ma MD. Rundy pętli E8 pracują na kopiach w `_robocze/`; do pliku pisma trafia jeden
+   redline z wynikiem ostatniej rundy. **Bez PDF** - PDF robi prawnik po własnej korekcie.
 4. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie. Pytania do autora
    (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane) padają w trakcie pętli E8, a raport pokazuje tylko
    te, na które autor jeszcze nie odpowiedział. Raport trafia jako tura do rejestru stałego sprawy i wpis
    w `drafty/<pismo>/_PRZEBIEGI.md`, nie jako nowy plik ani katalog raportów.
 
 Jeśli `redline-docx-pl` nie może utworzyć poprawnego śledzenia zmian, oznacz etap NIEZAKOŃCZONY i zostaw
-poprzedni DOCX zamiast prezentować zwykły DOCX jako redline. Redline zewnętrznego kontrahenta nie podlega
+plik pisma bez zmian zamiast prezentować zwykły DOCX jako redline. Redline zewnętrznego kontrahenta nie podlega
 automatycznej akceptacji bez osobnej decyzji użytkownika.
 
-`<wersja>` nigdy nie jest nazwą wejścia: `rrrrMMdd_<nazwa>_v<N+1>` (data sesji, numer o jeden wyższy od ostatniego
-snapshotu w `drafty/<pismo>/`; pismo bez historii = `_v1`). Wejście zostaje nietknięte do weryfikacji nowego DOCX.
+Snapshot ma nazwę `rrrrMMdd_hhmm_<nazwa>_v<N+1>` (data i godzina sesji, numer o jeden wyższy od ostatniego
+snapshotu w `drafty/<pismo>/`; pismo bez historii = `_v1`). Plik pisma w `output/` nie zmienia nazwy; `redline`
+podmienia go dopiero po weryfikacji wyniku.
 
 ## Wejście
 

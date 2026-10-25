@@ -5,7 +5,7 @@
 > Zastosowanie: sześciopunktowa analiza akt sprawy karnej: zarzut, dowody, wyroki, apelacja, kasacja, wznowienie
 
 > **Pliki przebiegu (reguła kanoniczna):** zapisuj według `shared/ARTEFAKTY-SPRAWY.md` - nowym plikiem jest
-> tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
+> tylko wersja wynikowa (`drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.*`); logi, raporty, ustalenia i recapy przebiegu
 > dopisuj do istniejących plików inkrementalnych (`_PRZEBIEGI.md`, `_SUBSUMPCJA*.md`, `_FINDINGS.md` …), a pliki
 > jednorazowe zostawiaj w `_robocze/` sprawy.
 
