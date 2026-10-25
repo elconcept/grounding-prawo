@@ -747,7 +747,7 @@ def main():
                "plugins": [{"name": "grounding-prawo", "source": {"source": "local", "path": "./plugins/grounding-prawo"},
                             "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Legal"}]},
               open(os.path.join(ROOT, ".agents/plugins/marketplace.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    shutil.copy(os.path.join(ROOT, ".mcp.json"), os.path.join(PLUGIN, ".mcp.json"))  # jedyny konektor: portal MCP
+    shutil.copy(os.path.join(ROOT, "selection/mcp.json"), os.path.join(PLUGIN, ".mcp.json"))  # jedyny konektor: portal MCP (źródło poza rootem, żeby projekt nie dublował konektora claude.ai)
     print(f"zbudowano {sum(is_top(e) for e in sel['keep'])} skilli, błędów: {len(errors)}")
     for x in errors:
         print("  BŁĄD", x)

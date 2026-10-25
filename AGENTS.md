@@ -12,7 +12,7 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 |---|---|
 | `plugins/grounding-prawo/` | **Generowane** przez `scripts/build.py`. Nie edytuj ręcznie. |
 | `selection/selection.yaml` | Źródło prawdy: które skille, skąd (`lex`, `awe:<pakiet>`, `own`, `vendor:`), opisy, scalenia (`merge_into`: cały skill jako moduł `<host>/modules/<nazwa>/MODULE.md`; `fold_into`: typ pisma lub referencja). |
-| `selection/patches/`, `selection/overlay/` | Patche na kopię upstreamu i pliki dopisane do pluginu (`shared/`). |
+| `selection/patches/`, `selection/overlay/`, `selection/mcp.json` | Patche na kopię upstreamu, pliki dopisane do pluginu (`shared/`) i konektor MCP pluginu (`lex`; build kopiuje go do `plugins/.../.mcp.json`; nie trzymaj `.mcp.json` w rootcie repo, bo duplikuje konektor `lex` z claude.ai). |
 | `own-skills/` | Skille własne (bez upstreamu). Tu się je edytuje. |
 | `vendor/` | Submoduły git: `packs/` (LexMachina, awesome-matematic-skills, legal-verify, commercial-legal, awesome-legaltech, awesome-legal-data), `docs/`, `general/`, `mcp/` (serwery MCP, działają w Dockerze za `lex.xlap.pl/mcp`), `law/` (ustawy z komentarzem do każdego artykułu) i `law-git/` (kodeksy git-as-law: commit na nowelizację, źródło brzmienia kodeksów w bazie ustaw). Tylko do odczytu - zmiany jako patch albo reguła w `build.py`. |
 | `deploy/` | Wdrożenia na NAS: `mcp-ustawy/` (serwer MCP bazy ustaw). |
