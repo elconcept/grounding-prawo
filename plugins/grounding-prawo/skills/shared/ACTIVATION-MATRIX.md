@@ -107,6 +107,8 @@ CEL: orzecznictwo jako wsparcie do budowanego pisma (W3.2)
 | Świadek + strategia | przesluchanie-swiadkow-v2-min90 | → analizator-dowodow-v3 |
 | Przepis + pismo | analizator-przepisow-v2 | → orzeczenia-sadowe-v2 → pisma-procesowe-v3 |
 | Laik bez pojęcia | przewodnik-prawny-v2 | → dowolny skill zależnie od odpowiedzi |
+| Chronologia sprawy | chronologia-sprawy-v1 | → pisma-procesowe-v3 (oś czasu i REKOMENDACJE DO PISMA jako materiał W1) |
+| Chronologia + akta | chronologia-sprawy-v1 | → analiza-sadowa-v6 |
 
 ---
 

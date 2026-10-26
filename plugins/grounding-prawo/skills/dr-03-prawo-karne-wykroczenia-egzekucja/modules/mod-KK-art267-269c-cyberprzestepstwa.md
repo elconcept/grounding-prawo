@@ -7,7 +7,7 @@ phishing), art. 190a §2 KK (podszywanie w sieci), art. 212/216 KK (zniesławien
 online), naruszenie wizerunku, fałszywe profile, procedury dowodowe dla cyberprzestępczości.
 
 **Weryfikacja:** 22.05.2026
-**Podstawa:** KK Dz.U. 2025 poz. 383 t.j. (wersja od 26.03.2025)
+**Podstawa:** KK Dz.U. 2025 poz. 383 t.j. (obecny t.j. Dz.U. 2026 poz. 1342) (wersja od 26.03.2025)
 
 ---
 
@@ -26,12 +26,12 @@ online), naruszenie wizerunku, fałszywe profile, procedury dowodowe dla cyberpr
    - Art. 269a KK (zakłócenie systemu — DDoS) → **Z URZĘDU**
    - Art. 269b KK (narzędzia hakerskie) → **Z URZĘDU**
    - Art. 287 KK (oszustwo komputerowe) → **Z URZĘDU**; wyjątek: osoba najbliższa → **na wniosek** (§3)
-     ✅ [VER: ELI DU/2025/383 text.pdf; art. 287 ma § 1–3 — „§ 4” nie istnieje; nowelizacje po t.j. bez zmian art. 287; odczyt 2026-10-04]
+     ✅ [VER: ELI DU/2025/383 (obecny t.j. Dz.U. 2026 poz. 1342) text.pdf; art. 287 ma § 1–3 — „§ 4” nie istnieje; nowelizacje po t.j. bez zmian art. 287; odczyt 2026-10-04]
 4. **JURYSDYKCJA** → cyberprzestępstwo może być popełnione z zagranicy → MLAT (pomoc prawna
    międzynarodowa) przez prokuraturę. Efekty bardzo powolne.
 5. **PLATFORMY ZAGRANICZNE** → zgłoszenie do platformy (Facebook, Google, X) nie zastępuje
    zawiadomienia o przestępstwie. Obie ścieżki mogą i powinny być równoległe.
-6. **KLAUZULA WHITE-HAT** (art. 269b §1a + art. 269c KK — Dz.U. 2025 poz. 383):
+6. **KLAUZULA WHITE-HAT** (art. 269b §1a + art. 269c KK — Dz.U. 2026 poz. 1342):
    - Art. 269b §1a: nie popełnia przestępstwa (narzędzia hakerskie) ten, kto działa wyłącznie
      w celu zabezpieczenia systemu lub opracowania metody zabezpieczenia
    - Art. 269c: nie podlega karze za art. 267 §2 (nieautoryzowany dostęp) lub art. 269a (DDoS)
@@ -41,7 +41,7 @@ online), naruszenie wizerunku, fałszywe profile, procedury dowodowe dla cyberpr
 
 ---
 
-## KATALOG PRZESTĘPSTW — PEŁNA TABELA (KK Dz.U. 2025 poz. 383)
+## KATALOG PRZESTĘPSTW — PEŁNA TABELA (KK Dz.U. 2026 poz. 1342)
 
 | Art. KK | Nazwa | Kara | Tryb ścigania |
 |---|---|---|---|
@@ -57,7 +57,9 @@ online), naruszenie wizerunku, fałszywe profile, procedury dowodowe dla cyberpr
 | 269 §1 | Dane infrastruktury krytycznej (obronność, komunikacja, administracja) — niszczenie/zmiana | Poz. wolności od **6 m-cy do 8 lat** | **Z urzędu** |
 | 269 §2 | j.w. przez niszczenie nośnika lub urządzenia | j.w. | **Z urzędu** |
 | 269a | Zakłócenie pracy systemu (DDoS) — w istotnym stopniu | Poz. wolności od **3 m-cy do 5 lat** | **Z urzędu** |
-| 269b §1 | Wytwarzanie/zbywanie/udostępnianie narzędzi hakerskich (hasła, programy, urządzenia) | Poz. wolności od **3 m-cy do 5 lat** | **Z urzędu** |
+| 269b §1 | Wytwarzanie/pozyskiwanie/zbywanie/udostępnianie narzędzi hakerskich (hasła, programy, urządzenia) przystosowanych do przestępstw z art. 165 §1 pkt 4, **267 §1–3** (od 21.07.2026, Dz.U. 2026 poz. 902; wcześniej tylko 267 §3), 268a §1 lub §2 w zw. z §1, 269 §1–2, 269a, 270 §1, 270a §1 | Poz. wolności od **3 m-cy do 5 lat** | **Z urzędu** |
+
+✅ [VER: ELI DU/2026/1342 text.pdf (t.j. KK), art. 267–269c, RZĄD 1, 2026-10-20] — zagrożenia i tryby w tabeli zgodne z t.j.
 | 269c | Klauzula white-hat — wyłączenie karalności dla art. 267 §2 i 269a | — | patrz Zasada 6 |
 | 287 §1 | Oszustwo komputerowe (phishing, ingerencja w dane w celu korzyści) | Poz. wolności od **3 m-cy do 5 lat** | **Z urzędu** (wyjątek: osoba najbliższa → wniosek, §3) |
 | 287 §2 | Mniejsza waga | Grzywna / ogr. wolności / poz. wolności do **1 roku** | **Z urzędu** |
@@ -161,6 +163,6 @@ Prywatno-skargowe (212, 216 — zniesławienie/zniewaga online):
 
 ---
 
-*Weryfikacja: 22.05.2026 | KK Dz.U. 2025 poz. 383 t.j. (wersja od 26.03.2025)*
+*Weryfikacja: 22.05.2026 | KK Dz.U. 2025 poz. 383 t.j. (obecny t.j. Dz.U. 2026 poz. 1342) (wersja od 26.03.2025)*
 *Art. 267–269c: Rozdział XXXIII KK — Przestępstwa przeciwko ochronie informacji*
 *Tryby ścigania zweryfikowane w arslege.pl i przepisy.gofin.pl — przed powołaniem weryfikuj w isap*

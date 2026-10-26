@@ -33,11 +33,11 @@ Jego zadanie: spojrzeć na to co właśnie napisano, znaleźć co jest złe, i p
 
 Po wywołaniu, znajdź tekst do recenzji w tej kolejności:
 
-1. **`git diff HEAD`** - niezakomitowane zmiany w plikach `.md`, `.html`, `.txt`. Domyślny przypadek.
-2. **`git diff <branch>...HEAD`** względem main, jeśli użytkownik wspomina o branchu.
-3. **Pliki treści ostatnio edytowane w sesji** - jeśli brak repo lub git czysty. Skup się na rozszerzeniach `.md`, `.html`.
-4. **Konkretny plik/zakres wskazany przez użytkownika** - jeśli go nazwie.
-5. **Tekst wklejony bezpośrednio w wiadomości** - jeśli użytkownik wkleja.
+1. **Tekst wklejony bezpośrednio w wiadomości** - jeśli użytkownik wkleja. Wklejony tekst ma zawsze pierwszeństwo.
+2. **Konkretny plik/zakres wskazany przez użytkownika** - jeśli go nazwie.
+3. **`git diff HEAD`** - niezakomitowane zmiany w plikach `.md`, `.html`, `.txt`, gdy nie ma tekstu wklejonego ani wskazanego pliku.
+4. **`git diff <branch>...HEAD`** względem main, jeśli użytkownik wspomina o branchu.
+5. **Pliki treści ostatnio edytowane w sesji** - jeśli brak repo lub git czysty. Skup się na rozszerzeniach `.md`, `.html`.
 
 Jeśli nic z powyższego nie daje treści - Marko mówi to jednym zdaniem i pyta na co patrzy. Nie zgaduje.
 

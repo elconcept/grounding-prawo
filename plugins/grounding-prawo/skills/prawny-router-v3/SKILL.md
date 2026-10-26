@@ -2,7 +2,7 @@
 name: prawny-router-v3
 description: 'Punkt wejścia do pracy prawnej: otwiera sprawę i wybiera ścieżkę (analiza akt, pismo, kontrola, zawiadomienie, źródła, umowa, RODO). Używaj zawsze przy sprawie prawnej, piśmie lub ocenie materiału.'
 metadata:
-  version: '3.71'
+  version: '3.73'
   type: orchestration
   status: production
   entrypoint: SKILL.md
@@ -16,7 +16,7 @@ metadata:
     ⛔ data = dzień transakcji, nie dzisiejszy; requestId z odpowiedzi zapisz do śladu weryfikacji. Parametry: shared/DOSTEP-MASZYNOWY-API.md §4. ⚠️ Poprzedni zapis ''NIEOSIĄGALNA, brak zamiennika'' był prawdziwy do 2026-09-04 i przestał być prawdziwy bez zmiany w tym pliku — statusy osiągalności odtwarzaj testem T25"]'
   limitations: '["nie zastępuje porady radcy prawnego/adwokata — patrz shared/DISCLAIMER.md (KROK 7, obowiązkowy)", "jakość i czas odpowiedzi zależą od dostępności i jakości web_search/web_fetch", "nie ingeruje w kontrolę jakości pipeline''u pisma-procesowe-v3 (tylko deleguje)"]'
   required_modules: '["shared/MCP-INTEGRACJA.md", "shared/PRAWO-HARDGATE.md", "shared/HIERARCHIA-ZRODEL.md", "shared/DOSTEP-MASZYNOWY-API.md", "shared/PORTALE-BRANZOWE-RZAD-2B.md", "shared/MOD-STEP-TRACKER.md", "shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md", "shared/MOD-KONTEKST-SESJI.md", "shared/MOD-OS-CZASU-PRZESLANEK.md", "shared/MOD-WYJATEK-GATE.md", "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md", "shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md", "shared/MOD-PORCJOWANIE-DOWODOW.md", "shared/PRE-W2-VERIFICATION-GATE.md", "shared/CP-GATE.md", "shared/DISCLAIMER.md", "references/KROK1-detekcja.md", "shared/TABELE-OPLAT.md", "references/PROFIL-LEKKI.md", "references/ZRODLA-AKTOW-FALLBACK.md", "dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md", "references/AUDYT-KLUCZA-ODPOWIEDZI.md", "shared/MOD-CN-GATE.md", "shared/MOD-REM-GATE.md", "dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md"]'
-  changelog: 'Wersja bieżąca: 3.71 (2026-10-10b, AUDYT-2026-10-10b): Opis: router przy sprawach prawnych, nie przy wzmiankach prawnych w pracy nad kodem; preferencje użytkownika w zakresie sprawy prawnej; PROFIL-LEKKI 1.3 z kosztami zmierzonymi (rdzeń ≈103 kB ≈28 tys. tokenów, typowa sprawa ≈221 kB ≈55-60 tys.); HARD-GATES-ORZECZNICTWO i ZRODLA-AKTOW-FALLBACK bez obchodzenia WAF.
+  changelog: 'Wersja bieżąca: 3.73 (2026-10-20, LEXAGENTO-P1): PROFIL-LEKKI: pełna ścieżka modułu kwalifikatora karnomaterialnego (skrót dr-03/.../ nie działał poza lex-runtime)
 
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
@@ -242,6 +242,7 @@ KROK 7  → DISCLAIMER → view shared/DISCLAIMER.md
 
 ---
 
+<!-- lex:wykonuje-aplikacja: ROUTING -->
 ## KROK 2 — ROUTING [1]–[11]
 
 ### [1] DOKUMENT / UMOWA
@@ -538,6 +539,7 @@ jawny TRYB ZDEGRADOWANY.
 
 ---
 
+<!-- lex:wykonuje-aplikacja: ROUTING -->
 ## POKRYCIE DZIEDZINOWE (wczytuj tylko gdy potrzebne)
 
 ```text

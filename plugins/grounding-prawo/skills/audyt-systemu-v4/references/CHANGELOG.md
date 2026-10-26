@@ -1,5 +1,15 @@
 # CHANGELOG — audyt-systemu-v4
 
+- 6.243 (2026-10-23, test 500 na żywo): ustawy_artykul — odnośnik „ustawy, o której mowa w odnośniku N” bierze datę wejścia w życie ustawy z odnośnika N („która weszła w życie z dniem …”), nie datę jednostki dopisaną tam po średniku. Przykład (ELI): u.ś.p. t.j. Dz.U. 2026 poz. 854, art. 17 ust. 1a–1c i 4 obowiązują od 13.04.2026 (wcześniej błędnie w brzmienia_przyszle), ust. 1d–1e od 1.01.2027. wspolne/akt-pdf.mjs wygenerowany z aplikacji, dist/lex-mcp.mjs przebudowany (--sprawdz zgodny).
+- 6.242 (2026-10-22, AUDYT-2026-10-22): mapa_dzu: nowe wiersze 2026/1372 (KW t.j.) i 2026/1362 (PSWN t.j.); 2025/734 i 2024/1571 → PREV (AUDYT-2026-10-22).
+- 6.241 (2026-10-20, LEXAGENTO-P1): repertorium_szukaj_repertorium AMBIGUOUS: akt bazowy i aktualny t.j. przed nowelizacjami (pola akt_bazowy, tekst_jednolity_aktualny); dist/lex-mcp.mjs przebudowany; pełne ścieżki w CHECKLIST-DEDUP/ALIASY
+- 6.240 (2026-10-20, AUDYT-2026-10-20d): mapa_dzu: nowe wiersze 2026/1288, 1299, 1304, 1305, 1313, 1326; 2023/2670 RE-VER (13 nowelizacji); 1354 i 1358 — treść odczytana; 2025/1705 — zmiana SIOZ
+- 6.239 (2026-10-20, AUDYT-2026-10-20c): mapa_dzu: nowe wiersze 2026/1287, 1296, 1354, 1358; 1348 — treść odczytana. Przegląd ELI 1–20.10.2026: 69 pozycji, 53 dotyczące aktów obecnych w skillach.
+
+- 6.238 (2026-10-20, AUDYT-2026-10-20b): mapa_dzu: nowe wiersze 2026/1347 i 2026/1348 (MONITORING), wiersz 2026/1342 — tekst t.j. odczytany i porównany z 2025/383; prawny-router-v3 3.72 (ROUTING oznaczony dla trybu mechanicznego, AUDYT-2026-10-20a).
+
+- 6.237 (2026-10-19a, AUDYT-2026-10-19a): mapa_dzu: KK 2025/383 → PREV, nowy wiersz 2026/1342 (TJ; tekst w ELI nieopublikowany na 2026-10-19); 2026/1290 — art. 2, 4 ust. 5, 5 i skutek dla rozp. 2016/1430; nowe wiersze 2020/823 (t.j. ustawy o prawnikach zagranicznych) i 2016/1430 (UCH); MONITORING 1290: W MOCY od 17.10.2026 (art. 1 pkt 16, 41, 42 od 1.01.2027). F-108: KK 2026/1342.
+- 6.236 (2026-10-17c, AUDYT-2026-10-17c): mapa_dzu: 2018/2548 (ORG), 2025/925 (TJ PREV), 2025/1012, 2025/1607, 2026/392 (NW, objęte t.j.), 2026/492 (TJ OK) — rozporządzenie o siedzibach i obszarach sądów; ELI 2026-10-17.
 - 6.235 (2026-10-17b, AUDYT-2026-10-17b): mapa_dzu: 2026/1306 (TJ, ochrona pokrzywdzonego i świadka, stan prawny 30.09.2026), 2026/1340 (NW, ZZ i informowanie pracowników, w życie 30.10.2026 — MONITORING); 2026/549 z adnotacją ⏳ po t.j.; 2015/21 — odesłanie do t.j. Przegląd ELI DU/2026 poz. 1301–1340.
 - 6.234 (2026-10-17a, AUDYT-2026-10-17a): mapa_dzu — KPW t.j. 2026/1336 (TJ, obwieszczenie z 2.10.2026, stan prawny 27.09.2026; obejmuje 2025/1178, 1661, 1814, 1818, 1872 i 2026/473; brak zmian po t.j. — ELI 2026-10-17), 2025/860 → PREV. Wykryte przez T15 (NEWER_TJ).
 - 6.233 (2026-10-15c, AUDYT-2026-10-15c): mapy aktów — t.j. 2026/1324 (transport kolejowy), 1335 (Prawo wodne), 1328 (odpady) w mapa_dzu (TJ + PREV) i ALIASY-NAZW-AKTOW; DU/2026/507 — tytuł i zakres w mapa_dzu, ⛔ korekta daty VAT (1.11.2028), MONITORING etapów; dr-02 3.96, dr-04 3.50, dr-06 3.99.1, dr-09 3.49, prawo-polskie-v2 6.62, shared 3.99.36; wpis w AUDIT-JOURNAL.

@@ -3,7 +3,8 @@
 **Wersja:** 2.0 | **Dodano:** 2026-07-18 | **Zaktualizowano:** 2026-08-25
 **Stan prawny modułu:** art. 255b KK obowiązuje od **23.08.2026 r.**
 **Źródło urzędowe:** ustawa z 11.06.2026 r. o zmianie ustawy – Kodeks
-karny, ogłoszona 23.07.2026 r. w Dz.U. 2026 poz. 988.
+karny, ogłoszona 23.07.2026 r. w Dz.U. 2026 poz. 988; obecnie w t.j. KK Dz.U. 2026
+poz. 1342 — brzmienie § 1–4 zgodne z modułem ✅ [VER: ELI DU/2026/1342 text.pdf, RZĄD 1, 2026-10-20].
 
 > ⛔ HARD GATE: przepis jest bardzo świeży. Przed użyciem w sprawie
 > ponownie sprawdź tekst ustawy nowelizującej i aktualny tekst KK w ELI/ISAP.
@@ -148,6 +149,6 @@ informacji, nie realizuje pełnego zespołu znamion § 1.
 ## 6. ŹRÓDŁA URZĘDOWE
 
 - ELI/ISAP: Dz.U. 2026 poz. 988 — ustawa dodająca art. 255b KK.
-- ELI/ISAP: Dz.U. 2025 poz. 383 ze zmianami — Kodeks karny.
-- ELI/ISAP: Dz.U. 2025 poz. 734 ze zmianami — Kodeks wykroczeń,
+- ELI/ISAP: Dz.U. 2026 poz. 1342 ze zmianami — Kodeks karny.
+- ELI/ISAP: Dz.U. 2026 poz. 1372 t.j. — Kodeks wykroczeń,
   w szczególności art. 107a.

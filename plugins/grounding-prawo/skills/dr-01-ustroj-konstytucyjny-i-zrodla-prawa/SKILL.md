@@ -2,7 +2,7 @@
 name: dr-01-ustroj-konstytucyjny-i-zrodla-prawa
 description: 'DR-01: Konstytucja, TK, źródła prawa, skarga konstytucyjna. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.19'
+  version: '3.20'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -86,6 +86,7 @@ Brak dedykowanych rekordów ORKA dla tej dziedziny (pojęcia konstytucyjne mają
 ugruntowane definicje doktrynalne, kazuistyka TK). Pomocniczo:
 - BAS-W31 Właściwość sądu — zasady ogólne (gdy sprawa dotyczy podziału władz/sądów)
 
+<!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (15 łącznie — ✓ 15 OK, ☐ 0 STUB)
 
   [✓] OK    mod-KRS-current-state-COV
