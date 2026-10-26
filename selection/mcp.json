@@ -2,7 +2,7 @@
   "mcpServers": {
     "lex": {
       "type": "http",
-      "url": "https://lex.xlap.pl/mcp?optimize_context=minimize_tools"
+      "url": "https://lex.xlap.pl/mcp"
     }
   }
 }
