@@ -1,0 +1,513 @@
+{
+  "command": "show",
+  "query": "Security",
+  "status_filter": "open",
+  "total": 10,
+  "summary": {
+    "by_tier": {
+      "T2": 10
+    },
+    "by_detector": {
+      "security": 10
+    },
+    "files": 4
+  },
+  "by_file": {
+    ".claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py": [
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::security::log_sensitive::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::165",
+        "tier": 2,
+        "confidence": "medium",
+        "summary": "Sensitive data may be logged",
+        "detail": {
+          "kind": "log_sensitive",
+          "severity": "medium",
+          "line": 165,
+          "content": "                        console.print(f\"[red]Token polling error: {literal(error)}[/red]\")",
+          "remediation": "Remove sensitive data from log statements"
+        }
+      },
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::security::log_sensitive::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::169",
+        "tier": 2,
+        "confidence": "medium",
+        "summary": "Sensitive data may be logged",
+        "detail": {
+          "kind": "log_sensitive",
+          "severity": "medium",
+          "line": 169,
+          "content": "                console.print(f\"[red]Token polling request error: {literal(e)}[/red]\")",
+          "remediation": "Remove sensitive data from log statements"
+        }
+      },
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::security::log_sensitive::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::198",
+        "tier": 2,
+        "confidence": "medium",
+        "summary": "Sensitive data may be logged",
+        "detail": {
+          "kind": "log_sensitive",
+          "severity": "medium",
+          "line": 198,
+          "content": "        console.print(f\"[green]Tokens saved to {literal(self.token_file)}[/green]\")",
+          "remediation": "Remove sensitive data from log statements"
+        }
+      },
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::security::log_sensitive::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::239",
+        "tier": 2,
+        "confidence": "medium",
+        "summary": "Sensitive data may be logged",
+        "detail": {
+          "kind": "log_sensitive",
+          "severity": "medium",
+          "line": 239,
+          "content": "            console.print(f\"[red]Token refresh error: {literal(e)}[/red]\")",
+          "remediation": "Remove sensitive data from log statements"
+        }
+      },
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::security::log_sensitive::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::254",
+        "tier": 2,
+        "confidence": "medium",
+        "summary": "Sensitive data may be logged",
+        "detail": {
+          "kind": "log_sensitive",
+          "severity": "medium",
+          "line": 254,
+          "content": "            console.print(\"[yellow]Access token expired, refreshing...[/yellow]\")",
+          "remediation": "Remove sensitive data from log statements"
+        }
+      },
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::security::log_sensitive::.claude/worktrees/verify-wiki-sidecar/src/basic_memory/cli/auth.py::260",
+        "tier": 2,
+        "confidence": "medium",
+        "summary": "Sensitive data may be logged",
+        "detail": {
+          "kind": "log_sensitive",
+          "severity": "medium",
+          "line": 260,
+          "content": "                console.print(\"[green]Token refreshed successfully[/green]\")",
+          "remediation": "Remove sensitive data from log statements"
+        }
+      }
+    ],
+    ".claude/worktrees/verify-wiki-sidecar/test-int/semantic/litellm_live_harness.py": [
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/test-int/semantic/litellm_live_harness.py::security::hardcoded_secret_name::.claude/worktrees/verify-wiki-sidecar/test-int/semantic/litellm_live_harness.py::139",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Hardcoded secret in variable 'api_key_env'",
+        "detail": {
+          "kind": "hardcoded_secret_name",
+          "severity": "high",
+          "line": 139,
+          "content": "                api_key_env=\"OPENAI_API_KEY\",",
+          "remediation": "Move secret to environment variable or secrets manager"
+        }
+      },
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/test-int/semantic/litellm_live_harness.py::security::hardcoded_secret_name::.claude/worktrees/verify-wiki-sidecar/test-int/semantic/litellm_live_harness.py::149",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Hardcoded secret in variable 'api_key_env'",
+        "detail": {
+          "kind": "hardcoded_secret_name",
+          "severity": "high",
+          "line": 149,
+          "content": "                api_key_env=\"COHERE_API_KEY\",",
+          "remediation": "Move secret to environment variable or secrets manager"
+        }
+      }
+    ],
+    ".claude/worktrees/verify-wiki-sidecar/benchmarks/scripts/read_load_bench.py": [
+      {
+        "id": "security::.claude/worktrees/verify-wiki-sidecar/benchmarks/scripts/read_load_bench.py::security::hardcoded_secret_name::.claude/worktrees/verify-wiki-sidecar/benchmarks/scripts/read_load_bench.py::42",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Hardcoded secret in variable '_CORPUS_SEARCH_TOKEN'",
+        "detail": {
+          "kind": "hardcoded_secret_name",
+          "severity": "high",
+          "line": 42,
+          "content": "_CORPUS_SEARCH_TOKEN = \"readloadbenchmarkmarker\"",
+          "remediation": "Move secret to environment variable or secrets manager"
+        }
+      }
+    ],
+    "own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py": [
+      {
+        "id": "security::own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py::security::hardcoded_secret_name::own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py::236",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Hardcoded secret in variable 'tokenize'",
+        "detail": {
+          "kind": "hardcoded_secret_name",
+          "severity": "high",
+          "line": 236,
+          "content": "        CREATE VIRTUAL TABLE fts USING fts5(akt UNINDEXED, art UNINDEXED, rodzaj UNINDEXED, zlozony, tokenize='unicode61');",
+          "remediation": "Move secret to environment variable or secrets manager"
+        }
+      }
+    ]
+  },
+  "total_matching": 26,
+  "hidden": {
+    "by_detector": {
+      "security": 16
+    },
+    "total": 16
+  },
+  "noise_budget": 10,
+  "noise_global_budget": 0,
+  "narrative": {
+    "phase": "first_scan",
+    "headline": "\u26a0 26 security issues \u2014 review before other cleanup. First scan complete. 1853 open issues across 3 dimensions.",
+    "dimensions": {
+      "lowest_dimensions": [
+        {
+          "name": "Abstraction fit",
+          "strict": 0.0,
+          "failing": 0,
+          "impact": 0.0,
+          "subjective": true,
+          "impact_description": "re-review to improve"
+        },
+        {
+          "name": "AI generated debt",
+          "strict": 0.0,
+          "failing": 0,
+          "impact": 0.0,
+          "subjective": true,
+          "impact_description": "re-review to improve"
+        },
+        {
+          "name": "API coherence",
+          "strict": 0.0,
+          "failing": 0,
+          "impact": 0.0,
+          "subjective": true,
+          "impact_description": "re-review to improve"
+        }
+      ],
+      "biggest_gap_dimensions": [],
+      "stagnant_dimensions": []
+    },
+    "actions": [
+      {
+        "type": "reorganize",
+        "detector": "orphaned",
+        "count": 432,
+        "description": "432 orphaned issues \u2014 delete dead files or relocate with `desloppify move`",
+        "command": "desloppify show orphaned --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 1,
+        "lane": "restructure"
+      },
+      {
+        "type": "reorganize",
+        "detector": "flat_dirs",
+        "count": 21,
+        "description": "21 flat_dirs issues \u2014 create subdirectories and use `desloppify move`",
+        "command": "desloppify show flat_dirs --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 2,
+        "lane": "restructure"
+      },
+      {
+        "type": "reorganize",
+        "detector": "facade",
+        "count": 24,
+        "description": "24 facade issues \u2014 flatten re-export facades or consolidate barrel files",
+        "command": "desloppify show facade --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 3,
+        "lane": "restructure"
+      },
+      {
+        "type": "refactor",
+        "detector": "structural",
+        "count": 248,
+        "description": "248 structural work items \u2014 review large files \u2014 split only when responsibilities are clearly separable",
+        "command": "desloppify show structural --status open",
+        "impact": 0.0,
+        "dimension": "File health",
+        "priority": 4,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "refactor",
+        "detector": "props",
+        "count": 38,
+        "description": "38 props work items \u2014 split bloated components, extract sub-components",
+        "command": "desloppify show props --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 5,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "refactor",
+        "detector": "dupes",
+        "count": 20,
+        "description": "20 dupes work items \u2014 extract shared utility or consolidate duplicates",
+        "command": "desloppify show dupes --status open",
+        "impact": 0.0,
+        "dimension": "Duplication",
+        "priority": 6,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "refactor",
+        "detector": "dict_keys",
+        "count": 46,
+        "description": "46 dict_keys work items \u2014 fix dict key mismatches \u2014 dead writes are likely dead code, schema drift suggests a typo or missed rename",
+        "command": "desloppify show dict_keys --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 7,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "refactor",
+        "detector": "test_coverage",
+        "count": 340,
+        "description": "340 test_coverage work items \u2014 review test coverage gaps \u2014 focus on critical modules with many importers first; defer test writing until code quality issues are resolved",
+        "command": "desloppify show test_coverage --status open",
+        "impact": 0.0,
+        "dimension": "Test health",
+        "priority": 8,
+        "lane": "test_coverage"
+      },
+      {
+        "type": "refactor",
+        "detector": "signature",
+        "count": 96,
+        "description": "96 signature work items \u2014 consolidate inconsistent function signatures",
+        "command": "desloppify show signature --status open",
+        "impact": 0.0,
+        "dimension": "Unknown",
+        "priority": 9,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "refactor",
+        "detector": "responsibility_cohesion",
+        "count": 133,
+        "description": "133 responsibility_cohesion work items \u2014 split modules with too many responsibilities \u2014 extract focused sub-modules",
+        "command": "desloppify show responsibility_cohesion --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 10,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "smells",
+        "count": 385,
+        "description": "385 smells issues \u2014 inspect with `desloppify next` and fix manually",
+        "command": "desloppify show smells --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 11,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "unused_enums",
+        "count": 3,
+        "description": "3 unused_enums work items \u2014 remove unused enum classes or add imports where they belong",
+        "command": "desloppify show unused_enums --status open",
+        "impact": 0.0,
+        "dimension": "Unknown",
+        "priority": 12,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "global_mutable_config",
+        "count": 21,
+        "description": "21 global_mutable_config work items \u2014 refactor module-level mutable state \u2014 use explicit init functions or dependency injection",
+        "command": "desloppify show global_mutable_config --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 13,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "security",
+        "count": 26,
+        "description": "26 security work items \u2014 review and fix security issues \u2014 prioritize by severity",
+        "command": "desloppify show security --status open",
+        "impact": 0.0,
+        "dimension": "Security",
+        "priority": 14,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "subjective_review",
+        "count": 20,
+        "description": "20 assessment requests need review \u2014 run holistic review to refresh subjective scores",
+        "command": "desloppify review --prepare",
+        "impact": 0.0,
+        "dimension": "Unknown",
+        "priority": 15,
+        "lane": "refactor_1"
+      }
+    ],
+    "strategy": {
+      "fixer_leverage": {
+        "auto_fixable_count": 0,
+        "total_count": 1873,
+        "coverage": 0.0,
+        "impact_ratio": 0.0,
+        "recommendation": "none"
+      },
+      "lanes": {
+        "restructure": {
+          "actions": [
+            1,
+            2,
+            3
+          ],
+          "file_count": 476,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        },
+        "refactor_0": {
+          "actions": [
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "file_count": 475,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        },
+        "refactor_1": {
+          "actions": [
+            15
+          ],
+          "file_count": 1,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        },
+        "test_coverage": {
+          "actions": [
+            8
+          ],
+          "file_count": 340,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        }
+      },
+      "can_parallelize": true,
+      "hint": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify."
+    },
+    "tools": {
+      "fixers": [],
+      "move": {
+        "available": true,
+        "relevant": true,
+        "reason": "432 orphaned files + 21 flat directories",
+        "usage": "desloppify move <source> <dest> [--dry-run]"
+      },
+      "plan": {
+        "command": "desloppify plan",
+        "description": "Generate prioritized markdown cleanup plan"
+      },
+      "badge": {
+        "generated": true,
+        "in_readme": false,
+        "path": "scorecard.png",
+        "recommendation": "Add to README: <img src=\"scorecard.png\" width=\"100%\">"
+      }
+    },
+    "debt": {
+      "overall_gap": 0.0,
+      "wontfix_count": 0,
+      "worst_dimension": null,
+      "worst_gap": 0.0,
+      "trend": "stable"
+    },
+    "milestone": null,
+    "primary_action": {
+      "command": "desloppify show orphaned --status open",
+      "description": "432 orphaned issues \u2014 delete dead files or relocate with `desloppify move`"
+    },
+    "why_now": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
+    "verification_step": {
+      "command": "desloppify scan",
+      "reason": "revalidate after changes"
+    },
+    "risk_flags": [],
+    "strict_target": {
+      "target": 85.0,
+      "current": 20.8,
+      "gap": 64.2,
+      "state": "below",
+      "warning": null
+    },
+    "reminders": [
+      {
+        "type": "zone_classification",
+        "message": "793 of 1298 files classified as non-production (3 config, 90 script, 700 test). Override with `desloppify zone set <file> production` if any are misclassified.",
+        "command": "desloppify zone show",
+        "priority": 2,
+        "severity": "medium"
+      }
+    ],
+    "reminder_history": {
+      "zone_classification": 2,
+      "report_scores": 1
+    }
+  },
+  "config": {
+    "target_strict_score": 85,
+    "review_max_age_days": 30,
+    "review_batch_max_files": 80,
+    "holistic_max_age_days": 30,
+    "generate_scorecard": true,
+    "badge_path": "scorecard.png",
+    "exclude": [],
+    "ignore": [],
+    "ignore_metadata": {},
+    "zone_overrides": {},
+    "review_dimensions": [],
+    "large_files_threshold": 0,
+    "props_threshold": 0,
+    "issue_noise_budget": 10,
+    "issue_noise_global_budget": 0,
+    "execution_log_max_entries": 10000,
+    "needs_rescan": false,
+    "languages": {},
+    "commit_tracking_enabled": true,
+    "commit_pr": 0,
+    "commit_default_branch": "",
+    "commit_message_template": "desloppify: {status} {count} issue(s) \u2014 {summary}",
+    "trust_plugins": false,
+    "transition_messages": {},
+    "hermes_enabled": false,
+    "hermes_models": {
+      "execute": "openrouter:x-ai/grok-4.20-beta",
+      "review": "openrouter:google/gemini-3.1-pro-preview"
+    }
+  }
+}
