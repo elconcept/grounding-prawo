@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Serwer MCP bazy ustaw z komentarzem (zastępuje konektor `cite`).
+"""Serwer MCP bazy ustaw z komentarzem (zastępuje konektory `cite` i `isap`).
 
     python ustawy_mcp.py                       # stdio
     python ustawy_mcp.py --http --port 8080    # Streamable HTTP pod /mcp (+ GET /healthz)
@@ -26,7 +26,7 @@ z repozytoriów git-as-law: tekst jednolity i każda późniejsza nowelizacja ja
 tekstu jednolitego (`zrodlo: komentarz`).
 Kolejność: `szukaj` (zagadnienie, gdy nie znasz artykułu) -> `artykul` (pełne brzmienie, stan, ewentualnie komentarz)
 -> `cytat` (czy fragment, który chcesz zacytować, stoi w brzmieniu). Cytuj wyłącznie pole `tekst` ze statusem FOUND
-i podaj stan z pola `uwaga`. OUT_OF_SCOPE: aktu nie ma w bazie, szukaj w ELI. Komentarz to opracowanie, nie źródło prawa."""
+i podaj stan z pola `uwaga`. OUT_OF_SCOPE: aktu nie ma w bazie, szukaj w ISAP. Komentarz to opracowanie, nie źródło prawa."""
 
 RO = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
 server = MCPServer("ustawy", instructions=INSTRUCTIONS)

@@ -528,17 +528,6 @@ Worst case: [kwota PLN] — klauzula: §[X]
 🔑 Priorytet: [jedna zmiana dealbreaker]
 ```
 
-### F.3 Widget statusu sprawy (po raporcie)
-
-Po zakończeniu analizy (Raport F.1 / F.1-LITE / F.2) → wczytaj i zastosuj sekwencję:
-```
-view shared/raport-sytuacyjny-integracja.md
-```
-Widget renderowany inline jako show_widget HTML — nie jako present_files.
-Dane wbudowane bezpośrednio w HTML jako literały JS.
-
----
-
 ## SKALOWANIE RAPORTU WG WARTOŚCI UMOWY
 
 ```
@@ -668,9 +657,6 @@ Terminy procesowe / zawite / przedawnienia (KPC, KP, KPA)?
 
 Weryfikacja zgodności treści dokumentu z faktami źródłowymi?
   → view shared/FAKTY_v2.md
-
-Po zakończeniu raportu F.1 / F.1-LITE / F.2 — widget statusu sprawy:
-  → view shared/raport-sytuacyjny-integracja.md
 
 Każda odpowiedź zawierająca analizę prawną (umowy, klauzule, ocena prawna)?
   → view shared/DISCLAIMER.md

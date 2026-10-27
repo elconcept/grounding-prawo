@@ -28,6 +28,10 @@ Wygląd DOCX określa `shared/FORMAT-PISMA.md`, miejsce zapisu `shared/ARTEFAKTY
 - Każdy argument raz, najsilniejszy pierwszy; słabszy argument nie może rozcieńczać mocniejszego.
 - Usuń zdania, które nic nie wnoszą: zapowiedzi, powtórzenia, streszczenia poprzednich akapitów,
   puste formuły („należy podkreślić”, „co istotne”, „nie sposób nie zauważyć”).
+- Skracaj agresywnie przy niezmienionym sensie: każdy fakt pada w piśmie raz. Treść „Stanu protokołu” nie wraca
+  w „Opuszczeniu”, opis opuszczenia nie kończy się zdaniem „protokół tego nie odnotowuje”, „Żądane uzupełnienie”
+  odsyła do okoliczności opisanych wyżej zamiast je powtarzać, a zastrzeżenia („nie wnoszę o…”) mają jedno zdanie.
+  Przed wydaniem przeczytaj całość pod kątem powtórzeń między punktami i usuń je.
 - Odsiew nigdy nie usuwa żądań, wniosków dowodowych z tezami, faktów i dat istotnych dla żądań,
   terminów, ustaleń oznaczonych w analizie jako RED ani stopnia pewności autora.
 

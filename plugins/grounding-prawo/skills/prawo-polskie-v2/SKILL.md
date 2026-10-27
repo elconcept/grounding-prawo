@@ -1,6 +1,6 @@
 ---
 name: prawo-polskie-v2
-description: 'Moduł wewnętrzny routera: wybór domeny DR dla prawa polskiego. Wywoływany przez prawny-router-v3.'
+description: Wybór domeny DR dla prawa polskiego. Moduł routera; nie wywołuj bezpośrednio.
 metadata:
   version: '6.64'
   type: domain-router

@@ -1,6 +1,6 @@
 ---
 name: teczka-sprawy
-description: Odświeża spis dokumentów teczki i składa brief, spis treści oraz podsumowanie kancelaryjne do DOCX w lokalnym katalogu sprawy.
+description: Odświeża spis dokumentów teczki i składa brief, spis treści oraz podsumowanie sprawy do DOCX w katalogu sprawy.
 ---
 
 # Teczka sprawy

@@ -1,0 +1,219 @@
+default_dr:
+  etap: A
+  wejscie: '`prawny-router-v3` albo `prawo-polskie-v2` (wybór domeny); materiał: `analiza/_brief.md`'
+  wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przepisy z potwierdzeniem w ISAP, nie z pamięci)
+  dalej:
+  - analizator-przepisow-v2
+  - orzeczenia-sadowe-v2
+  - pisma-procesowe-v3
+  nie_dubluj: domeny poza zakresem pluginu (praca, podatki, zamówienia publiczne, samorząd, budownictwo, compliance) nie mają
+    modułów - powiedz to wprost, nie zgaduj
+skills:
+  wiki-basic-memory:
+    wejscie: pytanie do wiki, synteza lub kontrola jakości
+    wynik: istniejąca notatka tematyczna, źródło Markdown w `legal/dokumenty` i recap sesji
+    dalej:
+    - analizator-dowodow-v3
+    - chronologia-sprawy-v1
+    wiki: źródła odpowiedzi, synteza, sprzeczności i wykryte braki
+  teczka-sprawy:
+    wejscie: Aktualna teczka sprawy i jej rejestr dokumentów.
+    wynik: Brief, spis treści i podsumowanie teczki w katalogu sprawy.
+    dalej:
+    - pisma-procesowe-v3
+    wiki: Zaktualizuj notatkę teczki po potwierdzeniu wygenerowanych dokumentów.
+  prawny-router-v3:
+    etap: A
+    wejscie: pytanie, akta albo draft pisma; jedyny punkt wyboru ścieżki
+    wynik: '`analiza/_brief.md` (strony, cel, żądania, terminy, wybrana domena i ścieżka)'
+    dalej:
+    - prawo-polskie-v2
+    - odczyt-dokumentow
+    - pisma-procesowe-v3
+    - analiza-sadowa-v6
+    nie_dubluj: '`przewodnik-prawny-v2` to fallback routera, nie osobna ścieżka; `prawo-polskie-v2` wywołuj przez router'
+  prawo-polskie-v2:
+    etap: A
+    wejscie: '`prawny-router-v3` (krok kwalifikacji)'
+    wynik: wskazanie modułu DR (w `analiza/_brief.md`)
+    dalej:
+    - dr-02-prawo-cywilne-rodzinne-gospodarcze
+    - dr-03-prawo-karne-wykroczenia-egzekucja
+    - dr-05-prawo-administracyjne-sadowoadministracyjne
+  przewodnik-prawny-v2:
+    etap: D
+    wejscie: router nie znalazł ścieżki albo użytkownik nie wie, jakiego pisma potrzebuje
+    wynik: wskazana ścieżka i lista potrzebnych dokumentów (w odpowiedzi)
+    dalej:
+    - prawny-router-v3
+    - pisma-proste-v2
+    - pisma-procesowe-v3
+  patron-przeglad-tabelaryczny:
+    etap: A
+    wejscie: wiele dokumentów tego samego rodzaju (umowy, korespondencja) po OCR
+    wynik: tabela CSV/Excel w `_robocze/`; esencja i flagi ryzyka w `analiza/_dokumenty.md`
+    dalej:
+    - chronologia-sprawy-v1
+    - analizator-umow-v1
+    - case-risk
+  chronologia-sprawy-v1:
+    etap: A
+    wejscie: indeks akt (`odczyt-dokumentow`) i dokumenty po OCR
+    wynik: '`analiza/_chronologia.md` (dopisywana, pozycje ze stałym ID)'
+    dalej:
+    - analizator-dowodow-v3
+    - przesluchanie-swiadkow-v2-min90
+    nie_dubluj: '`chronologia-sprawy-v1/modules/chronologia-stanowiska-pl` to mechaniczna kontrola cytat-strona i zestawienie
+      stanowisk stron; nie buduj drugiej osi czasu'
+  analizator-dowodow-v3:
+    etap: A
+    wejscie: '`analiza/_chronologia.md`, indeks akt; dla zeznań i nagrań także `przesluchanie-swiadkow-v2-min90`'
+    wynik: '`analiza/_dowody-i-przepisy.md` (siła dowodowa, sprzeczności, luki)'
+    dalej:
+    - analizator-przepisow-v2
+    - case-risk
+    - analiza-sadowa-v6
+    - szturm-na-draft-pl
+  przesluchanie-swiadkow-v2-min90:
+    etap: A
+    wejscie: '`analizator-dowodow-v3` (sprzeczności) i chronologia'
+    wynik: 'pytania do świadków: dopisek do `analiza/_dowody-i-przepisy.md`; zestawy pytań w `_robocze/`'
+    dalej:
+    - pisma-procesowe-v3
+  analizator-przepisow-v2:
+    etap: A
+    wejscie: wskazany moduł DR albo przepis z dokumentu
+    wynik: dopisek do `analiza/_dowody-i-przepisy.md` (przesłanki, brzmienie t.j. z ISAP)
+    dalej:
+    - orzeczenia-sadowe-v2
+    - szturm-na-draft-pl
+    - pisma-procesowe-v3
+    nie_dubluj: brzmienie przepisu bierz wg `shared/MOD-TEKST-JEDNOLITY.md`, nie z pamięci
+  orzeczenia-sadowe-v2:
+    etap: D
+    wejscie: teza do poparcia orzecznictwem; `patron-prawo-pl-zrodla` (wybór konektora)
+    wynik: dopisek do `analiza/_dowody-i-przepisy.md` (sygnatura z narzędzia, teza, link)
+    dalej:
+    - citation-grounding-pl
+    - pisma-procesowe-v3
+  patron-prawo-pl-zrodla:
+    etap: D
+    wejscie: każde pytanie o przepis, orzeczenie, KRS, prawo UE, interpretację
+    wynik: 'odpowiedź ze źródłem; do sprawy: dopisek do `analiza/_dowody-i-przepisy.md`'
+    dalej:
+    - orzeczenia-sadowe-v2
+    - analizator-przepisow-v2
+  analiza-sadowa-v6:
+    etap: A
+    wejscie: wyniki ścieżki A (indeks, chronologia, dowody, przepisy); może też zacząć od aktów surowych
+    wynik: '`analiza/_podsumowanie.md` (jeden raport końcowy; bez osobnych plików raportu)'
+    dalej:
+    - pisma-procesowe-v3
+    - case-risk
+    - szturm-na-draft-pl
+    nie_dubluj: to synteza; pojedyncze kroki (dowody, przepisy, chronologia) rób wyspecjalizowanymi skillami i tylko je zbieraj
+  case-risk:
+    etap: A
+    wejscie: '`analiza/_dowody-i-przepisy.md`, chronologia'
+    wynik: ryzyka w `analiza/_podsumowanie.md` (sekcja ryzyk)
+    dalej:
+    - pisma-procesowe-v3
+    - zawiadomienie-o-przestepstwie
+  pisma-procesowe-v3:
+    etap: B
+    wejscie: '`analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`
+      nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
+    dalej:
+    - kalkulatory-procesowe-pl
+    - citation-grounding-pl
+    - szturm-na-draft-pl
+    nie_dubluj: krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
+  pisma-proste-v2:
+    etap: B
+    wejscie: 'krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`
+      nowe albo redline), wpis w `_PRZEBIEGI.md`'
+    dalej:
+    - kalkulatory-procesowe-pl
+    - citation-grounding-pl
+    - szturm-na-draft-pl
+  zawiadomienie-o-przestepstwie:
+    etap: B
+    wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`,
+      wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/`'
+    dalej:
+    - pisz-po-polsku
+    nie_dubluj: 'HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj
+      odrębnie, a atak tylko na żądanie z ochroną pełnej relacji'
+  rodo-dsar-pl:
+    etap: E
+    wejscie: żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna:
+      pytanie do autora), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md`'
+    dalej:
+    - kalkulatory-procesowe-pl
+    - pisz-po-polsku
+  kalkulatory-procesowe-pl:
+    etap: B
+    wejscie: dane o roszczeniu (kwota, daty) z `analiza/_brief.md`
+    wynik: wartości (opłata, WPS, odsetki, przedawnienie) wpisane do pisma i `analiza/_dowody-i-przepisy.md`
+    dalej:
+    - pisma-procesowe-v3
+  citation-grounding-pl:
+    etap: C
+    wejscie: lista powołań (`citation-grounding-pl/modules/ekstraktor-cytatow-pl`) i tekst źródeł z MCP
+    wynik: 'wyniki ISTNIENIE/TREŚĆ/FRAGMENT: ustalenia do `drafty/<pismo>/_FINDINGS.md`'
+    dalej:
+    - szturm-na-draft-pl
+    nie_dubluj: '`citation-grounding-pl/modules/patron-weryfikacja-cytatow` sprawdza cytaty z odpowiedzi modelu i tabel (format
+      [N]); `patron-prawo-pl-zrodla/modules/uodo-grounding-pl` - decyzje UODO; ten skill - cytaty w piśmie'
+  szturm-na-draft-pl:
+    etap: C
+    wejscie: draft `.docx` z aktami; wariant domyślny pełnej kontroli (zastępuje ręczne przepuszczanie przez soczewki)
+    wynik: snapshot `drafty/<pismo>/<wersja>.md`; DOCX z redline sesji w `legal/output/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md`
+    dalej:
+    - pisz-po-polsku
+    - redline-docx-pl
+    nie_dubluj: pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli
+  pisz-po-polsku:
+    etap: C
+    wejscie: pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
+    wynik: nowa wersja `drafty/<pismo>/..._vN+1.md` (tylko MD); DOCX dopiero redline końca sesji
+    dalej:
+    - redline-docx-pl
+    - szturm-na-draft-pl
+  redline-docx-pl:
+    etap: C
+    wejscie: DOCX pisma z `legal/output/` i nowa wersja MD z `drafty/<pismo>/` (cykl własnego pisma) albo cudzy `.docx` i lista zmian
+    wynik: własne pismo - jeden DOCX z redline sesji w `legal/output/` (`shared/format-pisma/wersja_pisma.py redline`); cudzy dokument -
+      REDLINE w `_robocze/`
+    dalej:
+    - szturm-na-draft-pl
+  analizator-umow-v1:
+    etap: E
+    wejscie: umowa po OCR; `patron-przeglad-tabelaryczny` dla wielu umów
+    wynik: '`analiza/_podsumowanie.md` (ryzyka klauzul); propozycje zmian jako redline'
+    dalej:
+    - redline-docx-pl
+  odczyt-dokumentow:
+    etap: A
+    wejscie: plik lub folder dokumentów do odczytu
+    wynik: Markdown, kontrakt JSON i raport jakości w _robocze/odczyt/; rejestr dokumentów w analizie
+    dalej:
+    - chronologia-sprawy-v1
+    - analizator-dowodow-v3
+    - patron-przeglad-tabelaryczny
+    nie_dubluj: korzystaj z istniejącego wyniku dla tej samej treści i konfiguracji; OCR tylko odczyt-dokumentow, metodykę
+      ingestu czytaj w shared/BASIC-MEMORY.md
+wiki_etap:
+  A: czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce,
+    nowe fakty z akt zgłoś do ingestu
+  B: czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja,
+    ścieżka, status)
+  C: czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania,
+    lekcje w `## Lekcje`
+  D: najpierw `orzeczenia/`, `ustawy/`, `zagadnienia/`; zweryfikowane orzeczenie przydatne w innych sprawach zapisz w `orzeczenia/`
+  E: czytaj teczkę sprawy; decyzje i stan zapisz w teczce
+  S: czytaj teczkę sprawy; zapisu nie wymaga

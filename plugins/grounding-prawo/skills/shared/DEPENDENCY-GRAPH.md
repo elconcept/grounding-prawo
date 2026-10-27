@@ -98,8 +98,6 @@
 | `tools/export_gate.py` | ACTIVE (produkcyjna bramka, poza LLM) | Dodany 2026-07-13d. Łączy extract_api_verification_log.py + walidator_cytowan.py w jedno wywołanie — jedyny punkt, który portal musi wpiąć w pipeline przed present_files/eksportem |
 | `MCP-INTEGRACJA.md` + `KONEKTORY-REKOMENDOWANE.md` + `SCHEMAT-ODPOWIEDZI-MCP.md` | ACTIVE (protokół ładowany przez router) | Skonsolidowane 2026-07-13f z osobnego skilla mcp-zrodla-prawa-v1 (usunięty). Warstwa MCP jako uzupełnienie PRAWO-HARDGATE.md — patrz `required_modules` w prawny-router-v3 |
 | `tools/test_mcp_protocol.py` + `tools/connector_health_check.py` | ACTIVE (testy/narzędzia dev, poza LLM) | Skonsolidowane 2026-07-13f razem z MCP-INTEGRACJA.md. Klasyfikacja odpowiedzi connectora (6 testów jednostkowych) + health-check dostępności connectorów. ⚠️ Nieobecne na dysku 2026-08-27→2026-09-26d mimo statusu ACTIVE tutaj (usunięte tym samym mergem `d3385b9` co pliki F-206, spoza jego pierwotnie opisanego zakresu) — przywrócone 2026-09-26d, 6/6 testów i `--self-test` PASS |
-| `AUDIT-TRAIL-SPEC.md` | ACTIVE (specyfikacja, poza silnikiem) | Skonsolidowane 2026-07-13f z osobnego skilla audit-trail-portal-v1 (usunięty). Specyfikacja logu hash-chain zgodnego z art. 12 AI Act, do wdrożenia po stronie portalu |
-| `tools/hash_chain_verify.py` + `append_event.py` + `router_event_parser.py` | ACTIVE (referencyjne, poza LLM) | Skonsolidowane 2026-07-13f razem z AUDIT-TRAIL-SPEC.md. Zapis/weryfikacja/parsowanie logu hash-chain. ⚠️ Nieobecne na dysku 2026-08-27→2026-09-26d mimo statusu ACTIVE tutaj (usunięte tym samym mergem `d3385b9` co pliki F-206, spoza jego pierwotnie opisanego zakresu) — przywrócone 2026-09-26d, zweryfikowane end-to-end (zapis 3-wpisowego łańcucha + wykrycie ręcznie spreparowanego naruszenia) |
 
 
 ## Moduły orkiestratora i routingu
@@ -131,7 +129,6 @@
 
 | Plik | Status | Wywołujące skille |
 |------|--------|-------------------|
-| `raport-sytuacyjny-integracja.md` | ACTIVE | prawny-router-v3 |
 
 ---
 

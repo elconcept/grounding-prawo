@@ -1,15 +1,7 @@
 ---
 name: pisz-po-polsku
-description: 'Redakcja tekstów po polsku: naturalnie, konkretnie, bez manier stylu AI, z zachowaniem faktów, cytatów, przepisów i sygnatur. Nie zmienia petitum, zarzutów ani ustaleń faktycznych.'
+description: 'Redakcja polskiego tekstu: naturalnie, konkretnie, bez manier AI, z zachowaniem faktów, cytatów i terminów. Pierwszy z dwóch obowiązkowych etapów redakcji pisma; po nim humanizer-pl. Używaj przy pisaniu, redakcji lub gdy tekst brzmi sztucznie.'
 ---
-
-## Pamięć sesji — przed pracą i przed odpowiedzią końcową
-
-Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
-
-## Repertorium - pierwsze źródło w każdym zadaniu prawnym
-
-Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` `repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, TK i decyzji UODO): co najmniej jedno zapytanie o zagadnienie i stan faktyczny (`jurysdykcja="pl"`), osobne dla każdej tezy, zarzutu lub żądania pisma, a przy wątku unijnym (RODO, prawo UE, TSUE) także `"eu"`. Opisuj problem słowami, nie tylko numerem artykułu lub sygnaturą. Trafienia sprawdź w pełnym brzmieniu (`shared/MOD-TEKST-JEDNOLITY.md`) i w treści orzeczenia; fragment z wyniku nie jest cytatem. Zapytania i wykorzystane trafienia zapisz w śladzie przebiegu (`_PRZEBIEGI.md` albo `analiza/_dowody-i-przepisy.md`). Kontrola prawa bez zapytań do Repertorium ma wynik `NOT_CHECKED`; awaria lub brak trafień to wpis w śladzie, po którym szukasz dalej w `ustawy`, `saos`, `nsa`, `uodo`, `eu-sparql`.
 
 # Pisz po polsku
 
@@ -22,7 +14,10 @@ całej krzywdy i epizodów. Usuwaj puste powtórzenia, nie fakty, emocje i odrę
 Sama korekta językowa nie uruchamia pełnej recenzji ani nie rozszerza zlecenia na inne pisma.
 
 
-Jeden skill redakcji polskiego tekstu. Zastępuje `humanizer-pl`, `patron-pisz-po-ludzku` i `naturalne-pisanie`.
+Jeden autorski skill redakcji polskiego tekstu. Scala `patron-pisz-po-ludzku (poza pluginem)` i `naturalne-pisanie (poza pluginem)`.
+Humanizer-pl pozostaje osobnym, niezmodyfikowanym skillem z upstreamu i jest **obowiązkowym drugim etapem**
+po tym skillu: najpierw `pisz-po-polsku` (szlif językowy), potem `humanizer-pl` (usunięcie resztek wzorców AI).
+Ta kolejność dotyczy każdego pisma przed wydaniem; nie wolno jej zamieniać ani pomijać etapu.
 Poprawia sposób wypowiedzi, nigdy treść stanowiska.
 
 ## Zasada nadrzędna: minimalna potrzebna ingerencja
@@ -75,11 +70,3 @@ Przy redakcji pisma wczytaj `shared/STYLE.md`; jego rejestr formalny doprecyzowu
 | `scripts/audyt_po_przepisaniu.py`, `tests/` | bramka wierności po przepisaniu |
 
 Pochodzenie: humanizer-pl (MIT, MateMatic), naturalne-pisanie (elconcept), pisz-po-ludzku (Patron, AGPL-3.0). Zob. pliki NOTICE-*.
-
-## MOST - miejsce w przepływie grounding-prawo
-
-- **Wejście z:** pismo po kontroli merytorycznej (ostatni szlif; nie zmienia faktów, cytatów ani sygnatur)
-- **Wynik zapisz w:** nowa wersja `drafty/<pismo>/..._vN+1.md` (tylko MD); DOCX dopiero redline końca sesji (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
-- **Następny krok:** `redline-docx-pl`, `szturm-na-draft-pl`
-- **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
-- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

@@ -184,7 +184,7 @@ Tamte dwa SZUKAJĄ słabości aktywnie i agresywnie. Ten skill NEUTRALNIE raport
 także mocne strony - bez zamiaru zniszczenia tezy. Sensowna sekwencja pełnego przeglądu:
 (1) pierwsze wrażenie - jak pismo się czyta, (2) atak przeciwnika - co uderzy druga
 strona, (3) poprawa pisma przez autora, (4) `deliverable-fidelity-pl` - czy finalna
-wersja nie zgubiła ustaleń, (5) `humanizer-pl (poza pluginem)` - czy tekst nie brzmi jak AI.
+wersja nie zgubiła ustaleń, (5) `humanizer-pl` - czy tekst nie brzmi jak AI.
 
 ## Atrybucja
 

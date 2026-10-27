@@ -10,7 +10,7 @@
 
 ## Session goal
 
-**Opened with:** W korzeniu projektu legal znajdziesz plik openrouter.json z kluczem open router i endpointem prowadzacym na random free tier model - zaaktualizuj ctr proxy aby korzystal z tego endpointu tutaj i na maku, doinstaluj brakujace wyjatki w ctr (praca nad legal bedzie teraz w cowork, wiec mozna aktywowac 
+**Opened with:** W korzeniu projektu legal znajdziesz plik openrouter.json z kluczem open router i endpointem prowadzacym na random free tier model - zaaktualizuj ctr proxy aby korzystal z tego endpointu tutaj i na maku, doinstaluj brakujace wyjatki w ctr (praca nad legal bedzie teraz w cowork, wiec mozna aktywowac
 
 **Ended with:** holyclaude-legal ma cala istotna zawartosc w katalogu katalogu zamontowanym aktualnie jako `/workspace/home`, intencjonalnie chcialem to przeniesc na volume zamiast bind mountu bo bind mount trwale zmienial permissions .ssh na zbyt szerokie i sshd odmawial korzystania z niego. aktualna zawartosc naz
 

@@ -6,8 +6,8 @@
 > **Wołają go** skille, które przyjmują dokument, akta, korespondencję lub tekst
 > wklejony przez użytkownika: `prawny-router-v3`, `analizator-umow-v1`,
 > `analizator-dowodow-v3`, `analiza-sadowa-v6`, `chronologia-sprawy-v1`,
-> `pisma-procesowe-v3`, `pisma-proste-v2`, `przesluchanie-swiadkow-v2-min90`,
-> `raport-sytuacyjny-v2 (poza pluginem)`. Treści NIE kopiuje się do skilli — skill woła ten plik
+> `pisma-procesowe-v3`, `pisma-proste-v2`, `przesluchanie-swiadkow-v2-min90`.
+> Treści NIE kopiuje się do skilli — skill woła ten plik
 > (wzorzec `SELF-CHECK-ANTY-FASADA.md`, lekcja F-115: kopie dryfują przy pierwszej
 > zmianie źródła). Obecność wywołania pilnuje test **T35**.
 >

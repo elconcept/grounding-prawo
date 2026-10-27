@@ -1,6 +1,6 @@
 ---
 name: citation-grounding-pl
-description: 'Mechaniczna weryfikacja cytatów i identyfikatorów: ekstrakcja wszystkich powołań, sprawdzenie cytatu w źródle (ISTNIENIE, TREŚĆ, FRAGMENT), format [N] z blokiem CITATIONS, sumy PESEL, NIP i REGON. Używaj przed użyciem cytatu w piśmie.'
+description: 'Weryfikacja cytatów i identyfikatorów: istnienie, treść i fragment w źródle, format [N], sumy PESEL/NIP/REGON. Używaj przed użyciem cytatu lub sygnatury w piśmie.'
 license: Apache-2.0
 allowed-tools:
 - Bash
@@ -10,9 +10,7 @@ metadata:
   author: Wiesław Mazur / MateMatic
   version: 2.6.0
   companion_skills: szturm-na-draft-pl/modules/adversarial-legal-review-pl, szturm-na-draft-pl/modules/deliverable-fidelity-pl
-  data-residency: local
   requires-human-approval: 'false'
-  pii-egress: none
   attribution: '[{"source": "AnttiHero/lavern", "license": "Apache-2.0", "relationship": "pattern-only", "note": "Wzorzec mechanicznego weryfikatora grounding (v1). Kod i prompty napisane od zera.\n"}, {"source": "jeannesulzer/international-criminal-tribunals-skills", "license": "CC-BY-4.0", "relationship": "adaptation", "note": "Gradient weryfikacji ISTNIENIE/TREŚĆ/FRAGMENT (v2) to adaptacja trójstopniowego Existence/Content/Paragraph.\n"}, {"source": "john-walkoe/courtlistener_citations_mcp", "license": "MIT", "relationship": "pattern-only", "note": "Guard STRONY oparty na niezgodności nazw metodą Jaccarda (v2.1). Stop-listy własne.\n"}]'
 ---
 
@@ -230,23 +228,10 @@ Wynik: 1/5 zweryfikowane. 2 blokady (C3, C5), 1 kalibracja (C4), 1 do osądu (C2
 NIE publikuj dopóki C3 i C5 nie zostaną poprawione lub usunięte. C4 wymaga złagodzenia tezy.
 ```
 
-## Ochrona danych (RODO)
-
-- Skill działa **w całości lokalnie** - normalizacja i string-match w Node, bez wywołań sieciowych.
-  (Rozwiązywanie kotwic przez SAOS/EUR-Lex robi agent osobnym krokiem - skrypt dostaje gotowy `anchor_resolved`.)
-- Skrypt nie zapisuje logów poza katalogiem zadania.
-
-## Integracja z AI Act
-
-Mechaniczny grounding to dowód należytej staranności i element dokumentacji z art. 12 (rejestrowanie
-zdarzeń) oraz nadzoru człowieka z art. 14. Gradient dodaje wymiar **kalibracji ryzyka**: poziom
-weryfikacji per twierdzenie to ślad, jak mocno każda teza jest osadzona. Raport grounding wkładaj
-do `legal-ai-audit-bundle (poza pluginem)` obok deliverable.
-
 ## Integracja z innymi skillami
 
 - **`szturm-na-draft-pl/modules/deliverable-fidelity-pl`** pyta „czy nic nie wypadło z podsumowania"; ten skill pyta „czy to,
-  co zostało, jest prawdziwe". Komplementarne - oba przed wysłaniem high-stakes.
+  co zostało, jest prawdziwe". Komplementarne - oba przed wysłaniem pisma.
 - 🟡 `WYMAGA_OSADU` to dokładnie wejście dla warstwy paraphrase-judge (kaskada PATRON) -
   mechanika robi tani pre-filtr, osąd substancji robi człowiek lub model.
 
@@ -257,8 +242,8 @@ do `legal-ai-audit-bundle (poza pluginem)` obok deliverable.
   `_is_name_mismatch` z `john-walkoe/courtlistener_citations_mcp` (MIT, 2026). Zaadaptowano **ideę**
   (parse → porównaj nazwy stron zadeklarowane vs rozwiązane → flaguj rozbieżność); kod, stop-lista
   form prawnych PL/EU i progi napisane od zera. Logika walidacji reporterów US z tamtego repo NIE jest
-  przenoszona - żyje po stronie serwera CourtListener (wywołanie sieciowe + token), co łamie kontrakt
-  zero-cloud; z repo bierzemy tylko lokalną, jurysdykcyjnie-neutralną heurystykę nazw stron.
+  przenoszona - żyje po stronie serwera CourtListener (wywołanie sieciowe + token), co wymaga wywołania sieciowego i tokenu; z repo bierzemy tylko
+  jurysdykcyjnie-neutralną heurystykę nazw stron.
 - Kontrakt generacyjny (v2.2): trójklasa znakowania przy generacji (Zweryfikowane / Do sprawdzenia /
   Nie używać, tag przy linii, fail-closed dla klasy 3) - adaptacja „kolmiportainen varmuusmerkintä"
   z `akunikkola/claude-for-legal-finland` (MIT, [references/viittaustyyli.md](https://github.com/akunikkola/claude-for-legal-finland/blob/main/references/viittaustyyli.md)). Stamtąd też lekcja
@@ -277,7 +262,7 @@ do `legal-ai-audit-bundle (poza pluginem)` obok deliverable.
   z `jeannesulzer/international-criminal-tribunals-skills` (CC BY 4.0, Jeanne Sulzer / Impact
   Litigation Lab, 2026). Zaadaptowano **ideę gradientu i regułę kalibracji**, nie kod ani treść -
   ich biblioteka to dyscyplina promptowa pod web_fetch publicznych archiwów; tutaj to mechaniczny
-  silnik string-match pod lokalne źródła PL (RODO, zero-egress). Kod, prompty i reguły normalizacji
+  silnik string-match pod polskie źródła. Kod, prompty i reguły normalizacji
   napisane od zera pod polskie realia (cudzysłowy „…", sygnatury SN/NSA/TSUE, CELEX).
 
 

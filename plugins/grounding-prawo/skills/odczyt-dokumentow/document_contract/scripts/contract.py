@@ -1,7 +1,7 @@
 """Rdzen kontraktu Document Intelligence.
 
-Zero zaleznosci zewnetrznych (Python 3.11+ stdlib). RODO-safe, offline.
-Article I (zero-cloud), Article IV (determinizm/audyt) konstytucji projektu.
+Zero zaleznosci zewnetrznych (Python 3.11+ stdlib). Offline.
+Article I (offline), Article IV (determinizm/audyt) konstytucji projektu.
 """
 from __future__ import annotations
 

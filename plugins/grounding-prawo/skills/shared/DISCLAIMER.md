@@ -155,7 +155,6 @@ Po W3.6 — po generowaniu .docx:
 - Dodaj disclaimer: wariant LAIK/PRAWNIK JAK DOTĄD, plus OBOWIĄZKOWO
   wariant PISMO SĄDOWE (v2.1) bezpośrednio po nim — patrz sekcja wyżej
   → view shared/DISCLAIMER.md
-- view shared/raport-sytuacyjny-integracja.md → propozycja Raportu Sytuacyjnego
 ```
 
 ### pisma-proste-v2 ⚠️ Wymaga dodania

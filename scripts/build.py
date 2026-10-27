@@ -5,6 +5,7 @@
 są nakładane na kopię, nigdy na vendor. Wynik jest generowany - nie edytuj go ręcznie,
 zmieniaj selection.yaml, own-skills/ albo patche.
 """
+import importlib.util
 import os, re, shutil, subprocess, sys, json
 import yaml
 
@@ -59,6 +60,13 @@ def blocks(lines):
 
 def scrub_file(path, removed, stats):
     text = open(path, encoding="utf-8").read()
+    # Remove inherited processing restrictions without deleting neighboring connector guidance.
+    for restriction in (
+        "Dane sprawy objęte tajemnicą lub wrażliwe - oceń osobno, czy w ogóle wnosić je do narzędzia; przy wątpliwości nie przekazuj.",
+        " - nie wysyłaj ich dalej bez sanityzacji",
+        "Anonimizacja przy kopii: `gaius-api-anonymization`.",
+    ):
+        text = text.replace(restriction, "")
     fm = re.match(r"---\n.*?\n---\n", text, re.S)
     head, body = (text[: fm.end()], text[fm.end():]) if fm else ("", text)
     if head:  # frontmatter: tylko wycinamy nazwy z list
@@ -77,7 +85,10 @@ def scrub_file(path, removed, stats):
             in_code = not in_code if sum(l.startswith("```") for l in b) == 1 else in_code
         drop = None
         if not in_code and s.strip() and not protected:
-            if POLICY.search(s) and POLICY_DIRECTIVE.search(s) and re.search(r"let-it-be|tajemnica-preflight|pseudonimiz|(?<!\w)anonimiz|chmur", s, re.I):
+            if "**Próg poufności**" in s or "**Metadane przy wysyłce**" in s:
+                # Upstream document policy conflicts with the owner's full-fidelity ingest.
+                drop = "polityka"
+            elif POLICY.search(s) and POLICY_DIRECTIVE.search(s) and re.search(r"let-it-be|tajemnica-preflight|pseudonimiz|(?<!\w)anonimiz|chmur", s, re.I):
                 drop = "polityka"
             elif rm_re and rm_re.search(s) and (b[0].lstrip().startswith("|") or LIST_ITEM.match(b[0])):
                 drop = "odwolanie"
@@ -185,13 +196,21 @@ def qualify_paths(sel):
     return fixed, missing
 
 
+# Skille redakcyjne zachowują treść upstream bez wstrzykiwań protokołu i MOST
+# (rejestr prawniczy psuje instrukcję stylu; decyzja właściciela 22.10.2026).
+NO_PROTOCOL_INJECTION = {"humanizer-pl", "pisz-po-polsku"}
+
+# humanizer-pl zachowuje własną treść: build nie przepisuje jego wnętrza.
+VERBATIM_SKILLS = {"humanizer-pl"}
+
+
 def add_bridges(sel):
     """Dopisuje do każdego skilla sekcję MOST z selection/bridges.yaml: skąd wejście, gdzie wynik, co dalej."""
     bridges = yaml.safe_load(open(os.path.join(ROOT, "selection/bridges.yaml"), encoding="utf-8"))
     keep = {e["name"] for e in sel["keep"] if is_top(e)}
     errors = []
     for name in sorted(keep):
-        if name in ("shared", "audyt-systemu-v4"):
+        if name in ("shared", "audyt-systemu-v4") or name in NO_PROTOCOL_INJECTION:
             continue
         b = bridges["skills"].get(name) or (bridges["default_dr"] if name.startswith("dr-") else None)
         if not b:
@@ -257,6 +276,20 @@ def fold(sel):
         open(sm, "w", encoding="utf-8").write(t)
 
 
+def _dump_frontmatter(data):
+    """Czytelny YAML: wieloliniowy opis jako blok |, pozostałe pola przez safe_dump."""
+    lines = []
+    for key, value in data.items():
+        if key == "description" and isinstance(value, str) and "\n" in value:
+            lines.append("description: |")
+            for line in value.rstrip("\n").split("\n"):
+                lines.append(("  " + line).rstrip())
+        else:
+            lines.append(yaml.safe_dump({key: value}, allow_unicode=True, sort_keys=False,
+                                        width=1000).rstrip("\n"))
+    return "\n".join(lines) + "\n"
+
+
 def normalize_skill(sm, entry):
     """Emit portable skill metadata; preserve upstream annotations as strings."""
     fm, text, match = frontmatter(sm)
@@ -277,7 +310,7 @@ def normalize_skill(sm, entry):
     if metadata:
         portable["metadata"] = metadata
     open(sm, "w", encoding="utf-8").write(
-        "---\n" + yaml.safe_dump(portable, allow_unicode=True, sort_keys=False, width=1000)
+        "---\n" + _dump_frontmatter(portable)
         + "---\n" + text[match.end():])
     agent = os.path.join(os.path.dirname(sm), "agents/openai.yaml")
     if os.path.isfile(agent):
@@ -466,6 +499,9 @@ def bundle_documents():
     shutil.copytree(os.path.join(the_ocr, "src"), os.path.join(tool, "src"), ignore=IGNORE)
     for name in ("pyproject.toml", "README.md", "env.example"):
         shutil.copy(os.path.join(the_ocr, name), tool)
+    readme = os.path.join(tool, "README.md")
+    text = open(readme, encoding="utf-8").read()
+    open(readme, "w", encoding="utf-8").write("\n".join(line.rstrip() for line in text.splitlines()) + "\n")
     upstream = os.path.join(AWE, "dokumenty/skills/doc-intel-contract-pl")
     target = os.path.join(base, "document_contract")
     os.makedirs(os.path.join(target, "scripts"), exist_ok=True)
@@ -508,10 +544,23 @@ def migrate_document_references():
             open(path, "w", encoding="utf-8").write(text)
 
 
+def restore_verbatim(sel):
+    """Przywraca skille z VERBATIM_SKILLS 1:1 ze źródła po wszystkich transformacjach builda."""
+    restored = []
+    for e in sel["keep"]:
+        if e["name"] not in VERBATIM_SKILLS:
+            continue
+        dst = os.path.join(SKILLS, e["name"])
+        shutil.rmtree(dst, ignore_errors=True)
+        shutil.copytree(source(e), dst, ignore=IGNORE)
+        restored.append(e["name"])
+    return restored
+
+
 def add_session_protocol():
     for name in os.listdir(SKILLS):
         path = os.path.join(SKILLS, name, "SKILL.md")
-        if not os.path.isfile(path) or name in ("shared", "audyt-systemu-v4"):
+        if not os.path.isfile(path) or name in ("shared", "audyt-systemu-v4") or name in NO_PROTOCOL_INJECTION:
             continue
         text = open(path, encoding="utf-8").read()
         fm = re.match(r"---\n.*?\n---\n", text, re.S)
@@ -659,6 +708,18 @@ def main():
                 errors.append(f"{e['name']}: requires {dep}, którego nie ma w pluginie")
         normalize_skill(sm, e)
 
+    module_path = os.path.join(ROOT, "scripts", "retire_layers.py")
+    spec = importlib.util.spec_from_file_location("retire_layers", module_path)
+    if spec is None or spec.loader is None:
+        raise SystemExit(f"Nie można załadować modułu: {module_path}")
+    retire_layers = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(retire_layers)
+    retire_layers.apply(SKILLS)
+    print("usunięta warstwa kancelaryjna, raportowa, audytowa i local-first")
+
+    print("przywrócone bez zmian z upstreamu:", restore_verbatim(sel))
+    retire_layers.strip_restored_host_rules(SKILLS)
+    print("zdjęte bloki governance z przywróconych skilli: humanizer-pl")
     generate_skill_index(sel)
     bundle_claude_commands_and_hooks()
 

@@ -231,8 +231,7 @@ jako rozszerzenie pola `priorytety`:
 }
 ```
 
-Pozwala to w zakładce "Historia strategii" (raport-sytuacyjny-v2 (poza pluginem)) porównać,
-czy między wersjami zmieniła się ocena zgodności tezy dla danego przepisu
+Pozwala to porównać między wersjami, czy zmieniła się ocena zgodności tezy dla danego przepisu
 (np. po dostarczeniu nowych dokumentów NIEROZSTRZYGNIĘTA → ZGODNA).
 
 ---

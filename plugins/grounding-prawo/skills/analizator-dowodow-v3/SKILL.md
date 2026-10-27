@@ -1,12 +1,12 @@
 ---
 name: analizator-dowodow-v3
-description: 'Ocena dowodów, dokumentów, zeznań i akt: siła dowodowa, hierarchia A-D, pokrycie przesłanek, sprzeczności, terminy procesowe i analiza śledcza. Przy zawiadomieniu o przestępstwie: mapa osób, ról i zachowań oraz pytania rozszerzające; relacja pokrzywdzonego nie wymaga dowodu.'
+description: 'Ocena dowodów, zeznań i dokumentów: siła dowodowa (A-D), sprzeczności, pokrycie przesłanek, terminy. Używaj przy ocenie materiału i sprzecznych relacji.'
 metadata:
   version: 5.16.23
   type: executive-analiza
   status: production
   compatibility: web_search, bash, document_analysis
-  dependencies: '{"required": ["shared", "MOD-SKAN-DOWODOW-KOMPLETNY", "MOD-STEP-TRACKER"], "optional": ["analizator-umow-v1", "analiza-sadowa", "pisma-procesowe", "orzeczenia-sadowe", "analizator-przepisow", "chronologia-sprawy", "przesluchanie-swiadkow", "raport-sytuacyjny", "raport-klienta"]}'
+  dependencies: '{"required": ["shared", "MOD-SKAN-DOWODOW-KOMPLETNY", "MOD-STEP-TRACKER"], "optional": ["analizator-umow-v1", "analiza-sadowa", "pisma-procesowe", "orzeczenia-sadowe", "analizator-przepisow", "chronologia-sprawy", "przesluchanie-swiadkow"]}'
   validation: '{"required_gates": ["PRAWO-HARDGATE", "SD-VER-GATE-AD", "STEP-TRACKER-AD"]}'
   pipeline: '{"stages": ["AD-KROK0-BLOKADA", "AD-KROK0a-MODE", "AD-KROK0b-SDVER", "AD-KROK0c-STINIT", "AD-KROK1-INTAKE", "AD-KROK2-ROUTER", "AD-BLOKG-STRONY", "AD-BLOKJ-LAPSUSY", "AD-BLOKH-DIS", "AD-KROK3-WYKONANIE", "AD-KROK4-DASHBOARD"]}'
   changelog: 'Wersja bieżąca: 5.16.23 (2026-10-10b, AUDYT-2026-10-10b): widget-kreator: auto-fill lokalny, bez wysyłania treści rozmowy do api.anthropic.com; MD-NARR: katalog wyjściowy hosta zamiast /mnt/user-data.
@@ -776,9 +776,7 @@ Tablice do wypełnienia: `evidence[]` · `alerts_data{}` · `coverage_data[]`
 | Weryfikacja przepisu | `analizator-przepisow-v2` |
 | Chronologia wielu dok. | `chronologia-sprawy-v1` |
 | Świadkowie | `przesluchanie-swiadkow-v2` |
-| Raport stanu sprawy (widget interaktywny) | `raport-sytuacyjny-v2 (poza pluginem)` (po MD6/MP7) |
 | Wersja szczegółowa raportu jako dokument .md (DODATEK do dashboardu, na żądanie) | MD-NARR (ten skill) |
-| Raport dla klienta (zewnętrzny, LAIK/uproszczony) | `raport-klienta-v1 (poza pluginem)` |
 | Eksport .docx | HYBRID-VALIDATION → `docx` |
 
 ---

@@ -1,6 +1,6 @@
 ---
 name: dr-02-prawo-cywilne-rodzinne-gospodarcze
-description: 'Moduł wewnętrzny DR-02: prawo cywilne, rodzinne i gospodarcze, KC, KPC, KRO. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-02: prawo cywilne, rodzinne, gospodarcze (KC, KPC, KRO). Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.96'
   dependencies: '{"requires": ["shared"]}'

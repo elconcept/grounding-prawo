@@ -1,6 +1,6 @@
 ---
 name: dr-03-prawo-karne-wykroczenia-egzekucja
-description: 'Moduł wewnętrzny DR-03: prawo karne i wykroczeń, KK, KPK, KKW, KW, KPW. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-03: prawo karne i wykroczenia (KK, KPK, KKW, KW, KPW). Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.66'
   dependencies: '{"requires": ["shared"]}'

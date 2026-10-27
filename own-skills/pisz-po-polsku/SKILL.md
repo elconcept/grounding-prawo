@@ -1,6 +1,6 @@
 ---
 name: pisz-po-polsku
-description: "Pisanie i redakcja tekstów po polsku tak, by brzmiały naturalnie, konkretnie i bez manier generycznego stylu AI, z zachowaniem faktów, cytatów, przepisów, sygnatur i stopnia pewności. Używaj przy redakcji pism, notatek, relacji i opisów po polsku oraz gdy tekst brzmi sztucznie. Łączy minimalną ingerencję (naturalne-pisanie), katalog 36 wzorców AI-slop z bramką wierności po przepisaniu (humanizer-pl) i zasady z Patrona (pisz-po-ludzku). Nie zmienia petitum, zarzutów ani ustaleń faktycznych."
+description: "Redakcja polskiego tekstu: naturalnie, konkretnie, bez manier AI, z zachowaniem faktów, cytatów i terminów. Pierwszy z dwóch obowiązkowych etapów redakcji pisma; po nim humanizer-pl. Używaj przy pisaniu, redakcji lub gdy tekst brzmi sztucznie."
 ---
 
 # Pisz po polsku
@@ -14,7 +14,10 @@ całej krzywdy i epizodów. Usuwaj puste powtórzenia, nie fakty, emocje i odrę
 Sama korekta językowa nie uruchamia pełnej recenzji ani nie rozszerza zlecenia na inne pisma.
 
 
-Jeden skill redakcji polskiego tekstu. Zastępuje `humanizer-pl`, `patron-pisz-po-ludzku` i `naturalne-pisanie`.
+Jeden autorski skill redakcji polskiego tekstu. Scala `patron-pisz-po-ludzku` i `naturalne-pisanie`.
+Humanizer-pl pozostaje osobnym, niezmodyfikowanym skillem z upstreamu i jest **obowiązkowym drugim etapem**
+po tym skillu: najpierw `pisz-po-polsku` (szlif językowy), potem `humanizer-pl` (usunięcie resztek wzorców AI).
+Ta kolejność dotyczy każdego pisma przed wydaniem; nie wolno jej zamieniać ani pomijać etapu.
 Poprawia sposób wypowiedzi, nigdy treść stanowiska.
 
 ## Zasada nadrzędna: minimalna potrzebna ingerencja

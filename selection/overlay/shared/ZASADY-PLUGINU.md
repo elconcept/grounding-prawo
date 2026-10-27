@@ -45,10 +45,16 @@ semantycznym; nie zastępuje pierwszego kroku w Repertorium.
 
 Przed redakcją lub poprawianiem pisma przeczytaj `shared/STYLE.md`; przed utworzeniem plików
 przeczytaj `shared/ARTEFAKTY-SPRAWY.md` i `shared/FORMAT-PISMA.md`.
-W `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/` powstają kolejne wersje pisma `_v1`, `_v2`... wyłącznie w Markdown.
-W `legal/output/` jest dokładnie jeden DOCX każdego pisma i nic poza DOCX. Sesja zaczyna się od akceptacji
-niezaakceptowanych zmian w tym DOCX i snapshotu MD, a kończy zmianami tej sesji jako redline w DOCX
-(`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”).
+W `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/` powstają snapshoty pisma `rrrrMMdd_hhmm_<nazwa>_vN.md` (Markdown).
+W `legal/output/` jest dokładnie jeden DOCX każdego pisma, `<nazwa>.docx` bez daty i `_vN`, przez całe życie pisma:
+sesja przyjmuje w nim zmiany śledzone, zapisuje snapshot i nakłada swoje zmiany na ten sam plik jako redline.
+W `output/` nie powstają nowe wersje ani kopie i nic nie jest usuwane (`shared/ARTEFAKTY-SPRAWY.md`,
+„Cykl pracy nad pismem”; czcionka wstawek, listy i puste akapity: `shared/FORMAT-PISMA.md`).
+
+Każde pismo przed wydaniem przechodzi obowiązkowo przez dwa skille redakcyjne, w tej kolejności:
+najpierw `pisz-po-polsku` (szlif językowy i bramka `audyt_po_przepisaniu.py`), potem `humanizer-pl`
+(usuwający resztki wzorców AI). Pominięcie etapu albo zamiana kolejności jest błędem
+procesu; wyjątek wymaga wyraźnego polecenia użytkownika i adnotacji w `_PRZEBIEGI.md`.
 
 Wiedza wielosprawowa, teczka sprawy w wiki i lekcje do doskonalenia pism: Basic Memory, projekt `legal`
 (protokół odczytu i zapisu: `shared/BASIC-MEMORY.md`), a lekcje jednej sprawy także `_wiedza.md` w teczce.
@@ -69,11 +75,11 @@ to przesłanki do sprawdzenia, nie fakty.
 
 ## KONFIGURACJA PLUGINU: profil postępowań własnych
 
-> Szkic do akceptacji właściciela: zasady wynikają z jego wytycznych i analiz doradczych.
-
-Osoba prowadzi własne sprawy (karne i wykroczeniowe, działania Policji i prokuratury, hospitalizacja
-psychiatryczna, pozew przeciw szpitalowi, najem, RODO). Każde pismo ma wysoką stawkę i ma być wolne od błędów.
-Profil zawęża zachowanie routera i bramki kosztu innych skilli.
+Osoba prowadzi własne sprawy: karne i wykroczeniowe, działania Policji i prokuratury (zatrzymanie,
+przymus bezpośredni, przekroczenie uprawnień), hospitalizacja psychiatryczna i czynności medyczne bez
+zgody, pozew przeciw szpitalowi, najem i odpowiedzialność zarządcy nieruchomości (kaucje, rozliczenia,
+odszkodowania), RODO. Każde pismo ma wysoką stawkę i ma być wolne od błędów. Profil wyłącza bramki
+kosztu i skróty innych skilli: pełna ścieżka obowiązuje zawsze.
 
 **Wyjątek dla zawiadomienia pokrzywdzonego.** Przed regułami 1, 2, 6 i 9 stosuj `zawiadomienie-o-przestepstwie`
 oraz `shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`. Pełna kontrola oznacza tu pełnię i wierność relacji, nie tor
@@ -83,8 +89,8 @@ różnica z protokołem nie są krytyczną uwagą blokującą pismo. We własnym
 nazwij oddzielnie. Weryfikacja prawa i rzeczywistych cytatów pozostaje; nie przenoś jej progu na krzywdę autora.
 
 1. **Pełna ścieżka zawsze.** Nie proponuj tańszej ścieżki, nie klasyfikuj pisma jako mniej istotnego,
-   nie pomijaj kontroli z powodu kosztu tokenów ani liczby pauz. Dotyczy bramek S/M/L, ścieżki
-   "odpowiedź bezpośrednia" i warunków uruchamiania debaty zależnych od stawki.
+   nie pomijaj kontroli z powodu kosztu tokenów ani liczby pauz. Nie istnieje skrócona ścieżka
+   ani warunek uruchomienia debaty zależny od stawki - zestaw kontroli jest zawsze ten sam.
 2. **Soczewki w osobnych przebiegach.** Kontrole pisma (cytaty, atak przeciwnika, pierwsze wrażenie
    sędziego, subsumpcja, debata, ponowny grounding po poprawkach) uruchamiaj jako oddzielne przebiegi,
    najlepiej w osobnych kontekstach. Wynik "OK" jednej nie zwalnia z następnej.

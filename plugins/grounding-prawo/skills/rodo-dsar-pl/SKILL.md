@@ -1,6 +1,6 @@
 ---
 name: rodo-dsar-pl
-description: 'Żądania z art. 15-22 RODO: dostęp, sprostowanie, usunięcie, ograniczenie, sprzeciw; terminy i podstawy odmowy. Używaj do przygotowania własnego żądania wobec administratora i oceny jego odpowiedzi.'
+description: 'Żądania z art. 15-22 RODO: dostęp, sprostowanie, usunięcie, ograniczenie, sprzeciw; terminy i odmowa. Używaj przy własnym żądaniu wobec administratora i ocenie odpowiedzi.'
 license: Apache-2.0
 allowed-tools:
 - Read
@@ -9,9 +9,7 @@ metadata:
   version: 1.3.0
   companion_skills: patron-prawo-pl-zrodla/modules/uodo-grounding-pl, gaius-api-anonymization
   parity: gdpr-dsar-en
-  data-residency: local
   requires-human-approval: 'true'
-  pii-egress: none
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową
@@ -99,7 +97,7 @@ Parytet: `gdpr-dsar-en`.
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
-- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna: pytanie do autora), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna: pytanie do autora), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `pisz-po-polsku`
 - **Basic Memory (`legal`):** czytaj teczkę sprawy; decyzje i stan zapisz w teczce (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

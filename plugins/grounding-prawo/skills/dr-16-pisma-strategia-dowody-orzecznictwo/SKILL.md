@@ -1,6 +1,6 @@
 ---
 name: dr-16-pisma-strategia-dowody-orzecznictwo
-description: 'Moduł wewnętrzny DR-16: warsztat pism, strategia, dowody, orzecznictwo. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-16: warsztat pism, strategia, dowody, orzecznictwo. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.13'
   dependencies: '{"requires": ["shared"]}'

@@ -1,6 +1,6 @@
 ---
 name: dr-01-ustroj-konstytucyjny-i-zrodla-prawa
-description: 'Moduł wewnętrzny DR-01: Konstytucja, TK, źródła prawa, skarga konstytucyjna. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-01: Konstytucja, TK, źródła prawa, skarga konstytucyjna. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.19'
   dependencies: '{"requires": ["shared"]}'

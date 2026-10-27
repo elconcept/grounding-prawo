@@ -33,4 +33,4 @@ Terminologia i formuły procesowe to nie slop: „powód”, „wnoszę o”, �
 
 ---
 Źródło: Patron (MateMatic Solutions, AGPL-3.0) - `backend/src/lib/pipeline/defense.ts`
-(PISZ_PO_POLSKU_RULES, fidelity humanizer-pl (poza pluginem), ADR-0074).
+(PISZ_PO_POLSKU_RULES, fidelity humanizer-pl, ADR-0074).

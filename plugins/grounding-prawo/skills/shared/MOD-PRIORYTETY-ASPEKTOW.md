@@ -136,7 +136,7 @@ DWUETAPOWY. Struktura wiersza różni się między modelami:
 ```
 
 Checkbox = "uwzględnij wynik w raporcie/dalszej analizie" (wynik już
-istnieje, checkbox steruje TYLKO czy trafia do dashboardu/raport-sytuacyjny).
+istnieje, checkbox steruje TYLKO czy trafia do dashboardu).
 
 **MODEL DWUETAPOWY** (SLE-01/02/03 — MP6, MET-ACH, MET-NET, MET-FA) — w
 KROK 3 wykonano TYLKO procedurę szkicu (§1a):

@@ -1,6 +1,6 @@
 ---
 name: prawny-router-v3
-description: 'Punkt wejścia do pracy prawnej: otwiera sprawę (teczka, Basic Memory), kwalifikuje problem i wybiera ścieżkę: analiza akt, nowe pismo, kontrola pisma, zawiadomienie, źródła prawa, umowa, RODO. Używaj zawsze przy analizie prawnej, piśmie lub ocenie materiału prawnego.'
+description: 'Punkt wejścia do pracy prawnej: otwiera sprawę i wybiera ścieżkę (analiza akt, pismo, kontrola, zawiadomienie, źródła, umowa, RODO). Używaj zawsze przy sprawie prawnej, piśmie lub ocenie materiału.'
 metadata:
   version: '3.71'
   type: orchestration
@@ -134,8 +134,10 @@ UP-6: KAŻDA sprawa → CN-GATE przed analizą (shared/MOD-CN-GATE.md) i REM-GAT
 - **Dane osobowe:** pracujemy na oryginałach, bez ograniczeń „nie do chmury”; dane zostają w treści.
 - **Typy pism:** pozew, odpowiedź na pozew, apelacja karna, zażalenie na postanowienie prokuratora, zarzuty do opinii biegłego
   obsługuje `pisma-procesowe-v3` przez `modules/typy/`. Zawiadomienie o przestępstwie: wyjątek poniżej.
-- **Po wygenerowaniu pisma:** zaproponuj `szturm-na-draft-pl` (profil MAX, bez tańszych wariantów) i `pisz-po-polsku` do redakcji.
-  Pełna ścieżka kontroli jest zawsze; nie proponuj lżejszej.
+- **Po wygenerowaniu pisma:** obowiązkowa redakcja w kolejności `pisz-po-polsku`, potem `humanizer-pl`,
+  oraz `szturm-na-draft-pl`. Pełna ścieżka kontroli jest zawsze; nie proponuj lżejszej.
+  Redakcja nie zmienia faktów, cytatów, sygnatur ani kwalifikacji prawnej.
+  Kolejności redakcji nie wolno zamieniać ani pomijać etapu.
 - **Moduły dziedzinowe wyłączone w tym pluginie:** praca/ZUS (DR-04), podatki (DR-06), zamówienia (DR-07), samorząd (DR-08),
   budownictwo/środowisko (DR-09), compliance (DR-15). Gdy sprawa ich wymaga, powiedz o tym wprost i nie wymyślaj ścieżki.
 

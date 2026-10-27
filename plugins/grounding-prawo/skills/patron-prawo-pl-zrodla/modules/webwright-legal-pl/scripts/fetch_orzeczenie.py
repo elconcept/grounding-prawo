@@ -15,7 +15,7 @@ Uzycie:
   python fetch_orzeczenie.py --sygnatura "I CSK 100/22"
   python fetch_orzeczenie.py --sygnatura "II CSK 50/23" --out outputs/custom
 
-Kontrakt meta.json (zgodny z PATRON / citation-grounding-pl / legal-ai-audit-bundle):
+Kontrakt meta.json (zgodny z PATRON / citation-grounding-pl):
   {
     "sygnatura": "I CSK 100/22",
     "sad": "Sad Najwyzszy",

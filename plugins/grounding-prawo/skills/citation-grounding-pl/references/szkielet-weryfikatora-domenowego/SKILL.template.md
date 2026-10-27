@@ -4,7 +4,7 @@ description: >
   Mechaniczny weryfikator cytatu dla <DOMENA PRAWNA> po polsku z gradientem
   weryfikacji (ISTNIENIE / TREŚĆ / FRAGMENT). Sprawdza, czy cytat/parafraza/sygnatura
   z <typ źródła: orzeczenia KIO / decyzji UODO / aktu / ...> faktycznie istnieje
-  i czy oddaje stanowisko organu. Przeciwdziała halucynacjom, RODO-safe (lokalnie).
+  i czy oddaje stanowisko organu. Przeciwdziała halucynacjom.
   Używaj gdy: weryfikacja powołań w <typ deliverable> przed wysłaniem, "<trigger 1>",
   "<trigger 2>", "grounding <domena>", "czy AI to zmyśliło".
 metadata:

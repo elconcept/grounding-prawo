@@ -1,6 +1,6 @@
 ---
 name: dr-05-prawo-administracyjne-sadowoadministracyjne
-description: 'Moduł wewnętrzny DR-05: KPA, PPSA, skargi do WSA i NSA. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-05: KPA, PPSA, skargi do WSA i NSA. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.36'
   dependencies: '{"requires": ["shared"]}'

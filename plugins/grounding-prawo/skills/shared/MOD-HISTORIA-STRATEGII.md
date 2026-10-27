@@ -1,8 +1,7 @@
 # MOD-HISTORIA-STRATEGII — trwała historia ścieżek strategii procesowej
 
-> Status: shared canonical. Konsumowany przez `MOD-WARIANTY-POZWU.md`,
-> `MOD-PRIORYTETY-ASPEKTOW.md`, oraz zakładkę "Historia strategii" w
-> `raport-sytuacyjny-v2`.
+> Status: shared canonical. Konsumowany przez `MOD-WARIANTY-POZWU.md`
+> i `MOD-PRIORYTETY-ASPEKTOW.md`.
 
 ---
 

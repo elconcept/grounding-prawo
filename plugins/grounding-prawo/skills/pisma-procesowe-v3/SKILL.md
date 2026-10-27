@@ -1,6 +1,6 @@
 ---
 name: pisma-procesowe-v3
-description: 'Zaawansowane pisma procesowe: pozwy, odpowiedzi, apelacje, zażalenia i inne pisma wymagające strategii, faktów, dowodów, weryfikacji prawa i finalnej walidacji dokumentu.'
+description: Pozew, odpowiedź na pozew, apelacja, zażalenie i inne pisma wymagające strategii, dowodów i weryfikacji prawa. Używaj przy tworzeniu lub przebudowie pisma procesowego.
 metadata:
   version: '5.44'
   type: executive-pisma
@@ -224,18 +224,13 @@ KROK CG-1 — INFORMACJA WSTĘPNA (wyświetl użytkownikowi przed startem):
   │  → Jeśli pominięto kroki wcześniej i sprawa jest kontynuowana,        │
   │    zaleca się poinformowanie o tym fakcie teraz.                       │
   │                                                                         │
-  │ Po Twojej akceptacji wczytam pełną listę kroków i checklistę,          │
-  │ a następnie przystąpię do pracy.                                        │
-  │                                                                         │
-  │ Czy akceptujesz powyższe warunki i chcesz kontynuować?                 │
-  │  a) Tak, akceptuję — wczytaj checklistę i rozpocznij                   │
-  │  b) Nie — zakończ lub wyjaśnij wątpliwości                             │
+  │ Po tym komunikacie wczytuję checklistę i przechodzę do KROKU 0.         │
   └─────────────────────────────────────────────────────────────────────────┘
 
-  ⛔ ZAKOŃCZ ODPOWIEDŹ PO WYŚWIETLENIU CG-1. Czekaj na decyzję a/b.
-  ⛔ NIE wykonuj żadnego kroku merytorycznego przed akceptacją.
+  CG-GATE jest informacyjny. Po wyświetleniu od razu przechodzisz do CG-2:
+  autor prowadzi własne sprawy i zna pipeline, więc bramka nie zatrzymuje pracy.
 
-KROK CG-2 — PO OTRZYMANIU AKCEPTACJI „a" (WCZYTANIE CHECKLISTY):
+KROK CG-2 — WCZYTANIE CHECKLISTY (natychmiast po CG-1):
 
   Wykonaj WSZYSTKIE poniższe view() w podanej kolejności:
 
@@ -279,18 +274,14 @@ KROK CG-2 — PO OTRZYMANIU AKCEPTACJI „a" (WCZYTANIE CHECKLISTY):
 
   Następnie wykonaj KROK 0 (CP-GATE → STEP-TRACKER → routing Test A/B/C).
 
-⛔ ZAKAZ-15 (bezwzględny — nowy):
+⛔ ZAKAZ-15 (bezwzględny):
   • ZAKAZ pominięcia CG-GATE na starcie sesji.
-  • ZAKAZ rozpoczęcia jakiegokolwiek kroku merytorycznego bez akceptacji „a".
   • ZAKAZ wczytania checklisty bez wyświetlenia najpierw bloku INFORMACJA WSTĘPNA.
-  • Polecenie „zacznij pismo" / „pisz" / „generuj od razu" NIE zwalnia z CG-GATE.
+  • CG-GATE jest informacyjny: po jego wyświetleniu przechodzisz do CG-2 bez pytania o zgodę.
 ```
 
-> Wyjątek od CG-GATE: gdy użytkownik w tej samej wiadomości co trigger pisma
-> explicite napisał „pomijam informację wstępną, znam pipeline" lub podobny
-> jednoznaczny sygnał świadomości — CG-1 można zastąpić jednolinijkowym
-> potwierdzeniem wczytania checklisty i natychmiast wykonać CG-2.
-> Bez takiego sygnału: zawsze pełny CG-1 + czekanie na odpowiedź.
+> CG-GATE jest jawnym komunikatem, nie pytaniem o zgodę. Wyświetl CG-1
+> i natychmiast wykonaj CG-2.
 
 ---
 
@@ -825,6 +816,9 @@ view shared/STRATEGIA-PROCESOWA.md                (⛔ OBOWIĄZKOWE — zawsze p
 > COURT-SIMULATION + LEGAL-QUALITY-GATE), W3.7 (PEER-REVIEW + POST-VALIDATION
 > + UWAGI-REDAKCYJNE), generowanie .docx i ST-FINAL:
 >
+> ⛔ PRZED generowaniem .docx: obowiązkowa redakcja w kolejności `pisz-po-polsku`, potem `humanizer-pl`.
+> Brak któregokolwiek etapu albo zamiana kolejności = pismo nie jest GOTOWE.
+>
 > `view pisma-procesowe-v3/references/W3-WERYFIKACJA.md`
 >
 > Wygląd pliku (.docx, bez PDF) dla każdego typu pisma: `view shared/FORMAT-PISMA.md` - Georgia 10 pt,
@@ -893,7 +887,7 @@ też `theory-of-case-engine.md`.
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** `analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM
-- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py` nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py` nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `citation-grounding-pl`, `szturm-na-draft-pl`
 - **Nie dubluj:** krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
 - **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)

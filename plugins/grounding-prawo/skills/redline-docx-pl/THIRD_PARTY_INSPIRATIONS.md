@@ -241,8 +241,3 @@ Upstream mowi „reszta archiwum nietknieta". Pomiar pokazal, ze `docProps/core.
 sie zawsze: `dcterms:modified` (kontrolowalne przez `saveDocx(..., {savedAt})`) oraz
 `cp:revision`, inkrementowany bezwarunkowo i niewylaczalny opcja. Dla pisma wychodzacego
 na zewnatrz domyka to i tak `adeu sanitize`.
-
-## Powiazania
-
-- `let-it-be` - anonimizacja TRESCI (PII PL); adeu sanitize czysci METADANE pliku.
-  Dwie rozne warstwy, lancuch: let-it-be tresc -> redline -> adeu sanitize metadane.

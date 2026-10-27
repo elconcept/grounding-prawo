@@ -1,6 +1,6 @@
 ---
 name: odczyt-dokumentow
-description: 'Przyjęcie dokumentu: skan bezpieczeństwa (ukryte polecenia, znaki niewidoczne), weryfikacja podpisu PDF, odczyt do Markdown ze stronami i kontrakt JSON do cytowania. Używaj przed analizą lub ingestem dokumentu.'
+description: Odczyt dokumentu do Markdown ze stronami i kontraktem do cytowania; skan ukrytych poleceń i weryfikacja podpisu PDF. Używaj przed analizą lub ingestem każdego dokumentu.
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową

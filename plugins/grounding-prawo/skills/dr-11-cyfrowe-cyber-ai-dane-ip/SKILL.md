@@ -1,6 +1,6 @@
 ---
 name: dr-11-cyfrowe-cyber-ai-dane-ip
-description: 'Moduł wewnętrzny DR-11: RODO, dowody cyfrowe, cyberbezpieczeństwo, prawo autorskie. Wczytywany przez prawny-router-v3; nie wywołuj bezpośrednio.'
+description: 'DR-11: RODO, dowody cyfrowe, cyberbezpieczeństwo, prawo autorskie. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
   version: '3.28'
   dependencies: '{"requires": ["shared"]}'

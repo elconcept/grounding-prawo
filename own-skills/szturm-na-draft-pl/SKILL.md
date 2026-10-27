@@ -13,9 +13,7 @@ metadata:
   version: 1.5.0
   plan: dokumentacja/06-PLAN-SKILL-SZTURM-NA-DRAFT.md
   companion_skills: redline-docx-pl, ocena-outputu-pl, citation-grounding-pl, patron-weryfikacja-cytatow, ekstraktor-cytatow-pl, mcp-saos, patron-identyfikatory-pl, deliverable-fidelity-pl, analizator-dowodow-v3, pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl, adversarial-legal-review-pl, subsumpcja-pl, zarzuty-do-opinii-bieglego, marko-pl-content, pisz-po-polsku
-  data-residency: local
   requires-human-approval: 'true'
-  pii-egress: none
 ---
 
 # Szturm na draft
@@ -36,7 +34,7 @@ Hipotezy recenzenta pozostają pytaniami do czasu uzyskania relacji i sprawdzeni
 Żadna rola nie usuwa ani nie łagodzi danych o zdrowiu, intymnych i innych wrażliwych danych autora i osób
 trzecich; uwaga „zbyt wrażliwe”, „zbędny szczegół intymny” albo „brak zgody osoby trzeciej” nie jest ustaleniem.
 
-W tym trybie mandaty z `references/soczewki.md`, izolacja „sam draft”, profil MAX, kryterium
+W tym trybie mandaty z `references/soczewki.md`, izolacja „sam draft”, kryterium
 wyjścia E8 i format ustaleń/syntezy są zastąpione regułami ZOP-R. Każda rola otrzymuje pierwotną
 relację, odpowiedzi, mapę krzywd oraz jawny mandat rozszerzający; izoluj jedynie cudze wnioski.
 Nie stosuj „wygraj przeciwko tekstowi”, redukcji do najmocniejszej tezy, diagnozy wiarygodności,
@@ -49,7 +47,7 @@ ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
    kotwica, którą naprawiała jedna linia, wisi przez kilka dni. Tu wynikiem jest poprawiony .docx,
    a szturm wraca na każdą nową wersję, aż pismo jest `GOTOWE` (E8).
 2. **Duplikaty.** To samo ustalenie zgłaszają 2-4 skille, każdy inaczej. Tu jedna linia na ustalenie.
-3. **Koszt bez zysku.** Część skilli daje tylko „OK”. Tu bramka kosztu (niżej) i lista soczewek na żądanie.
+3. **Koszt bez zysku.** Część skilli daje tylko „OK”. Tu każda soczewka jest obowiązkowa i pełna, a wynikiem jest poprawione pismo, nie kolejny raport.
 4. **Rozmywanie tezy.** Recenzent dopisuje „wyjaśnienie alternatywne”, które wykluczają fakty znane
    klientowi, i pismo słabnie od środka. Tu fakty potwierdzone i decyzje autora są chronione kodem.
 
@@ -57,30 +55,29 @@ ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
 
 Pliki pisma i cykl sesji: `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”. W skrócie:
 
-1. **Na początku** weź jedyny DOCX pisma z `legal/output/` i przyjmij w kopii roboczej wszystkie
-   niezaakceptowane zmiany (`redline-docx-pl`, przypięty `adeu==1.30.0 accept-all`). To część zatwierdzonego
-   przebiegu: zmiany, których autor nie odrzucił w Wordzie, w tym propozycje DECYZJA_AUTORA, uznaje się za
-   przyjęte. Wejściowego DOCX nie modyfikuj w miejscu.
-2. Pełny tekst zaakceptowanej kopii zapisz jako snapshot `drafty/<pismo>/<wersja>.md`
-   (`rrrrMMdd_<nazwa>_v<N+1>`). Snapshot zawiera zmiany autora i jest bazą wszystkich rund.
-3. **Na końcu** w `legal/output/<wersja>.docx` zostaje jeden DOCX: zaakceptowana kopia i wszystkie zmiany
-   sesji jako zmiany śledzone Worda, przy każdej komentarz `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
+1. **Na początku** weź jedyny DOCX pisma `legal/output/<nazwa>.docx` (bez daty i `_vN`) i przyjmij w nim
+   wszystkie niezaakceptowane zmiany z zachowaniem komentarzy (`wersja_pisma.py start`). To część zatwierdzonego
+   przebiegu: zmiany, których autor nie odrzucił w Wordzie, w tym propozycje DECYZJA_AUTORA, uznaje się za przyjęte.
+2. `start` zapisuje pełny tekst jako snapshot `drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_v<N+1>.md`. Snapshot zawiera
+   zmiany autora i jest bazą wszystkich rund.
+3. **Na końcu** zmiany sesji trafiają do TEGO SAMEGO pliku `legal/output/<nazwa>.docx` jako zmiany śledzone Worda
+   (`wersja_pisma.py redline --edits …`), przy każdej komentarz `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
    DECYZJA_AUTORA ma etykietę „DECYZJA AUTORA”; autor odrzuca ją w Wordzie, inaczej przyjmie ją następna sesja.
-   Poprzedni DOCX tego pisma usuń z `legal/output/` dopiero po weryfikacji nowego. W `drafty/` nie ma DOCX,
-   w `legal/output/` nie ma MD. Nie produkuj drugiego, czystego DOCX. Rundy pętli E8 dają tylko kolejne
-   snapshoty `.md` w `drafty/<pismo>/` i redline'y w `RUN/`; do `legal/output/` trafia wyłącznie redline ostatniej rundy.
-   **Bez PDF** - PDF robi prawnik po własnej korekcie.
+   W `legal/output/` nie powstaje nowy plik, kopia ani wersja i nic nie jest usuwane; w `drafty/` nie ma DOCX,
+   w `legal/output/` nie ma MD. Rundy pętli E8 pracują na kopiach w `_robocze/`; do pliku pisma trafia jeden
+   redline z wynikiem ostatniej rundy. **Bez PDF** - PDF robi prawnik po własnej korekcie.
 4. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie. Pytania do autora
    (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane) padają w trakcie pętli E8, a raport pokazuje tylko
    te, na które autor jeszcze nie odpowiedział. Raport trafia jako tura do rejestru stałego sprawy i wpis
    w `drafty/<pismo>/_PRZEBIEGI.md`, nie jako nowy plik ani katalog raportów.
 
 Jeśli `redline-docx-pl` nie może utworzyć poprawnego śledzenia zmian, oznacz etap NIEZAKOŃCZONY i zostaw
-poprzedni DOCX zamiast prezentować zwykły DOCX jako redline. Redline zewnętrznego kontrahenta nie podlega
+plik pisma bez zmian zamiast prezentować zwykły DOCX jako redline. Redline zewnętrznego kontrahenta nie podlega
 automatycznej akceptacji bez osobnej decyzji użytkownika.
 
-`<wersja>` nigdy nie jest nazwą wejścia: `rrrrMMdd_<nazwa>_v<N+1>` (data sesji, numer o jeden wyższy od ostatniego
-snapshotu w `drafty/<pismo>/`; pismo bez historii = `_v1`). Wejście zostaje nietknięte do weryfikacji nowego DOCX.
+Snapshot ma nazwę `rrrrMMdd_hhmm_<nazwa>_v<N+1>` (data i godzina sesji, numer o jeden wyższy od ostatniego
+snapshotu w `drafty/<pismo>/`; pismo bez historii = `_v1`). Plik pisma w `output/` nie zmienia nazwy; `redline`
+podmienia go dopiero po weryfikacji wyniku.
 
 ## Wejście
 
@@ -116,7 +113,7 @@ Fakt klienta bez dokumentu (`z_akt: false`) zostaje w piśmie jako wyjaśnienia/
 fakt z akt; jeśli tekst podaje go jako fakt z akt, to ustalenie FAKT_BEZ_ZRODLA, a naprawa to nazwanie
 źródła, nie usunięcie faktu.
 
-## Profil MAX (stały, bez bramki kosztu)
+## Pełny zestaw soczewek (stały)
 
 Każde pismo dostaje pełny zestaw soczewek: E1 + `marko-pl-content` + `atak-przeciwnika-pl` + `pierwsze-wrazenie-sedziego-pl`
 + `MOD-ATAK-NA-DRAFT` + `deliverable-fidelity-pl` + E2 (spójność pełna) + E4 pełne + `adversarial-legal-review-pl`
@@ -125,7 +122,7 @@ Nie ma stawek S/M/L ani limitu rund wynikającego z kosztu. Soczewki uruchamiaj 
 kontekstach (recenzent bez wniosków poprzednich); „OK" jednej nie zwalnia z następnej.
 
 Pętla E8 trwa do stanu `GOTOWE` (kryterium niżej i w `shared/ZASADY-PLUGINU.md`, „Pętla doskonalenia pisma”), minimum 2 pełne
-przebiegi; nie ma limitu rund wynikającego z kosztu. Przerwać może tylko autor - wtedy stan `NIEGOTOWE`.
+przebiegi. Przerwać może tylko autor - wtedy stan `NIEGOTOWE`.
 Mandat każdej soczewki, jej wejście i klasy, które zgłasza: [references/soczewki.md](references/soczewki.md). Przeczytaj go przed E1.
 Soczewki są modułami tego skilla (`modules/<soczewka>/MODULE.md`, tabela „Moduły scalone” na końcu), a skrypty weryfikacji cytatów
 należą do `citation-grounding-pl`.
@@ -307,7 +304,7 @@ katalogi dowodów wpadłyby do historii) i wpis do logu sesji, jeśli repo go wy
 ## Raport dla użytkownika (odpowiedź w czacie)
 
 ```
-SZTURM <dokument(y)> | profil MAX | rundy <r> | stan GOTOWE|NIEGOTOWE
+SZTURM <dokument(y)> | rundy <r> | stan GOTOWE|NIEGOTOWE
 Ustalenia: <x> zgłoszonych → <y> po deduplikacji | WPROWADZONE <a> | DO DECYZJI <b> | PYTANIA <c> | ZABLOKOWANE <d>
 E1: cytaty <ok/✗> | sygnatury <…> | przepisy <…> | kotwice z poprzedniego przebiegu: <zdjęte/otwarte>
 Pliki: drafty/<pismo>/<wersja>.md (snapshot) | legal/output/<wersja>.docx (w:ins i / w:del d, komentarzy k) | RUN/raport_synteza.md

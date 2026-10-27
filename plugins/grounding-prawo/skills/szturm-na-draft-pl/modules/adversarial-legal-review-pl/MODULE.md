@@ -29,7 +29,7 @@ trzeci godzi, czwarty weryfikuje.
 
 To NIE jest pisanie deliverable od zera. To stress-test gotowego deliverable.
 
-## Profil właściciela: bez bramki kosztu
+## Tryb pracy: zawsze pełny cykl
 
 Każde pismo, zawiadomienie, pozew, zażalenie i istotne stanowisko jest sprawą wysokiej stawki. Uruchamiaj pełny cykl zawsze;
 nie proponuj lżejszego przeglądu i nie oceniaj, czy sprawa „zasługuje" na debatę.
@@ -54,9 +54,6 @@ przypadkowe:
 W trybie jednego modelu grającego wszystkie role izolacja jest **dyscypliną promptu**, nie
 sandboxem - roli IZOLOWANEJ wprost zabroń sięgania po źródła. Twarda izolacja przez osobne
 przebiegi jest domyślna.
-
-### 0. Bramka high-stakes
-Oceń, czy sprawa kwalifikuje (tabela wyżej). Jeśli nie - stop, zaproponuj zwykły review.
 
 ### 1. Builder - najmocniejsza wersja tezy
 Zbuduj najsilniejszą możliwą argumentację za tezą deliverable. Zbierz najlepsze przepisy,
@@ -118,42 +115,35 @@ widzianej**.
   każde niepowodzenie blokuje niezależnie od wyniku (chroni przed fałszywym cofnięciem na
   subiektywnej ocenie modelu).
 - **`v_najlepsza`:** po każdej iteracji zapamiętaj draft z najwyższym `wynik_zbiorczy`.
-- **Limit rund per stawka:** wysoka = maks. 3 rundy; tryb szybki = maks. 1.
+- **Limit rund:** brak limitu narzuconego przez koszt. Pętla kończy się na `GOTOWE` albo decyzją autora.
 
 **Decyzja o wyjściu należy do synthesizera.** Drzewo, w kolejności:
 
 1. **Czysta akceptacja** - wszyscy recenzenci zaakceptowali, 0 blokerów →
-   `zaakceptowano_na_vN`.
+   `GOTOWE` (na vN).
 2. **COFNIĘCIE PO REGRESJI (N≥2)** - `wynik_zbiorczy(vN) < wynik_zbiorczy(v_najlepsza)` →
-   odrzuć vN, przywróć `v_najlepsza`, wyjdź jako `wymuszone_wyjscie_na_v<najlepsza>_z_otwartymi`
-   z banerem „runda N pogorszyła deliverable - przywrócono najlepszą wersję".
-3. **Wczesne wyjście na plateau (N≥2)** - wynik ≥ próg (domyślnie 85), ale poprawa < 1,0
-   pkt względem poprzedniej → `zaakceptowano_wczesnie_na_vN` (nie palić tokenów na
-   marginalny zysk).
-4. **Kontynuuj** - są blokery, limit nieosiągnięty, brak regresji i plateau → kolejna runda
-   celowanych poprawek.
-5. **Wymuszone wyjście na limicie** - limit osiągnięty, blokery zostały →
-   `wymuszone_wyjscie_na_limicie` + baner z listą nierozstrzygniętych zarzutów.
+   odrzuć vN, przywróć `v_najlepsza` i próbuj innej poprawki; nie zamykaj pętli.
+3. **Stagnacja** - ta sama uwaga wraca drugą rundę z rzędu albo poprawki oscylują →
+   pokaż autorowi konflikt i poproś o rozstrzygnięcie; nie maskuj go kolejną redakcją.
+4. **Kontynuuj** - są blokery → kolejna runda celowanych poprawek na nowej wersji.
+5. **Przerwanie przez autora** - stan `NIEGOTOWE` z listą otwartych uwag i pytań;
+   nigdy „gotowe z zastrzeżeniami".
 
-Powód limitu: nieskończone polerowanie maskuje problem zamiast go rozstrzygać. Jeśli
-trzy rundy nie domknęły zarzutu, redakcja go nie domknie - spór jest merytoryczny albo
-brakuje dowodu, a to rozstrzyga prawnik, nie kolejny przebieg modelu. Licznik rund
-i stan końcowy zapisuj w raporcie (patrz Output).
+Blokery rozwiązuje się merytorycznie: brak dowodu, sporną wykładnię albo decyzję
+strategiczną rozstrzyga autor, nie kolejny przebieg modelu. Licznik rund i stan
+końcowy zapisuj w raporcie (patrz Output).
 
 ### Stany końcowe i zasada „zawsze dostarcz"
 
 **Każde zakończenie MUSI wyprodukować artefakt dla człowieka** (pełny blok recenzji albo
 markdown awaryjny). Nigdy ciche/puste wyjście. Stany końcowe:
 
-`zaakceptowano_na_vN` | `zaakceptowano_wczesnie_na_vN` | `wymuszone_wyjscie_na_v<najlepsza>`
-(regresja) | `wymuszone_wyjscie_na_limicie` | `porazka_z_fallbackiem` (np. brak danych
-źródłowych - dostarcz, co masz, plus powód).
+`GOTOWE` (na vN) | `NIEGOTOWE` (przerwane przez autora albo stagnacja) |
+`porazka_z_fallbackiem` (np. brak danych źródłowych - dostarcz, co masz, plus powód).
 
 Baner zawsze pokazuje: stan końcowy, którą wersję draftu dostarczono, jakie blokery
-zostały. **Governance:** skill produkuje rekomendację i wersje draftu; NIE wysyła
-dokumentu. Decyzja „wysłać mimo `wymuszone_wyjscie_na_limicie` z blokerami" zostaje przy
-człowieku. Transkrypt wszystkich wersji v1..vN idzie jako załącznik do paczki audytowej -
-dowód ograniczonej rewizji i ewentualnego cofnięcia (AI Act art. 12/14).
+zostały. Skill produkuje rekomendację i wersje draftu; NIE wysyła dokumentu. Decyzję
+o wysłaniu podejmuje autor.
 
 ### 4b. Funkcja werdyktu - deterministyczna, z jawnymi wagami
 
@@ -179,9 +169,8 @@ Werdykt końcowy NIE jest ogólnym osądem verifiera. Liczy się go z jawnego wz
 najwyżej **WYŚLIJ_WARUNKOWO** (odpowiednik CONDITIONAL_PASS w `deliverable-fidelity-pl`;
 lista warunków: jakie zastrzeżenia dopisać, jaki dowód uzupełnić). Inaczej **PASS**.
 
-Wagi i progi są wypisane w skillu celowo: audytor ma odtworzyć werdykt z samych liczb,
-bez pytania modelu "dlaczego". To wymóg rejestrowania zdarzeń z art. 12 AI Act
-zamieniony na arytmetykę - argument wprost pod PATRONa. Te same trzy kroki
+Wagi i progi są wypisane w skillu celowo: czytelnik ma odtworzyć werdykt z samych liczb,
+bez pytania modelu "dlaczego". Te same trzy kroki
 (A krytyczne → B score ważony → C próg warunkowy) stosuje `deliverable-fidelity-pl`;
 różnią się tylko wagi, bo inna jest materia (filary tezy vs ustalenia analizy).
 
@@ -230,17 +219,15 @@ FINDING - rozbieżność panelu (par. 8, kara umowna):
 wchodzi do tabeli synthesizera jak każdy inny: split nierozstrzygnięty = NIEPEWNE
 z wagą 0.25 w funkcji werdyktu (sekcja 4b), więc 2+ takie filary same z siebie
 ściągają wynik do WYŚLIJ_WARUNKOWO. Re-vote panelu NIE liczy się jako runda
-rewizji z sekcji 4a - limit rund per stawka dotyczy poprawek deliverable po
-verifierze, a panel ma własny, jeszcze twardszy limit: jedno głosowanie + jedno
-powtórzenie z dowodem. Eskalacja do człowieka to ten sam mechanizm, co
-`wymuszone_wyjscie_na_limicie` w drzewie wyjścia.
+rewizji z sekcji 4a - panel ma własny limit: jedno głosowanie + jedno powtórzenie
+z dowodem, niezależnie od liczby rund poprawek deliverable. Eskalacja do człowieka
+jest częścią pętli: autor rozstrzyga spór merytoryczny.
 
 ## Output
 
 ```
 ## Adversarial review - <nazwa deliverable>
 
-Stawka: WYSOKA (kwalifikuje)
 Filary tezy: 5 | Przetrwały: 2 | Osłabione: 1 | Obalone: 1 | NIEPEWNE: 1
 
 | Filar                        | Atak (siła)      | Werdykt    | Działanie                  |
@@ -264,19 +251,7 @@ obalonego, (c) uzupełnieniem dowodu dla filaru NIEPEWNEGO albo jawnym zastrzeż
 ```
 
 Pełny zapis debaty (transcript builder/attacker/synthesizer, wszystkie wersje v1..vN)
-zwróć jako załącznik do `legal-ai-audit-bundle (poza pluginem)` - to dowód kontradyktoryjnej weryfikacji
-i ograniczonej rewizji.
-
-## Ochrona danych (RODO)
-
-- Pobieranie kontr-orzecznictwa przez companion-skille (saos / eu-sparql) - publiczne źródła.
-- Skill nie zapisuje deliverable poza katalogiem sprawy.
-
-## Integracja z AI Act
-
-Kontradyktoryjna weryfikacja + jawny poziom pewności + transcript = operacjonalizacja nadzoru
-człowieka (art. 14) i dokumentacji (art. 12). Człowiek dostaje nie "gotową odpowiedź", lecz
-mapę tego, co przetrwało atak i z jaką pewnością - i na tej podstawie decyduje.
+zostaw w katalogu sprawy jako ślad kontradyktoryjnej weryfikacji.
 
 ## Różnica od matematic-expert-panel (poza pluginem)
 
@@ -316,8 +291,8 @@ wyjścia, `v_najlepsza`, plateau), poziomy dostępu recenzentów (izolowany/wzbo
 „zawsze dostarcz" ze stanami końcowymi - adaptacja clean-room z gregmos/memoforge (MIT),
 koncepcje sterowania pętlą i ról, nie prompty ani kod. Ten sam upstream, który od początku
 kredytuje bliźniak adversarial-legal-review-en; port domyka rozjazd bliźniaków. Limit 2 rund
-z v1.1.0 zastąpiony: gwarancja „nigdy gorsza wersja" pokrywa też tamten przypadek, a limit
-rund jest teraz jawnym parametrem per stawka.
+z v1.1.0 zastąpiony: gwarancja „nigdy gorsza wersja" pokrywa też tamten przypadek, a liczba
+rund nie jest ograniczona kosztem.
 
 Odsyłacz (nie derywacja): PromptDefense z Microsoft Agent Governance Toolkit (MIT) jako
 wskazanie różnicy fazy/scope. Ten skill nie adaptuje stamtąd żadnego wzorca - robi to

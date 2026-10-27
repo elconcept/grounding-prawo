@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Dokumenty dla kancelarii w teczce sprawy legal/<sprawa>/ (port teczka_kancelaria.py z abogada).
+"""Dokumenty sprawy w teczce legal/<sprawa>/ (port teczka_kancelaria.py z abogada).
 
   00_BRIEF.docx         z analiza/_brief.md (albo _brief.md w korzeniu teczki)
   01_SPIS_TRESCI.docx   z analiza/_dokumenty.md (spis dokumentów sprawy w ../dokumentacja) oraz plików w teczce

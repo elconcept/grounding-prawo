@@ -1,6 +1,6 @@
 ---
 name: pisma-proste-v2
-description: 'Proste pisma prawne i urzędowe: wezwania, wnioski, odpowiedzi i krótsze dokumenty; kompletność danych, aktualna weryfikacja prawa i walidacja przed wygenerowaniem pliku.'
+description: 'Proste pisma i wnioski o jednym wątku: wezwania, sprzeciwy, zażalenia, zwolnienia, interpretacje. Używaj przy krótkim piśmie lub wniosku.'
 metadata:
   version: '2.32'
   type: executive-pisma
@@ -500,7 +500,7 @@ Pismo proste nie może ominąć walidacji tylko dlatego, że jest krótkie.
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`
-- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_<nazwa>_vN.md` (tylko MD), jeden DOCX w `legal/output/` (`shared/format-pisma/wersja_pisma.py` nowe albo redline), wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py` nowe albo redline), wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `citation-grounding-pl`, `szturm-na-draft-pl`
 - **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

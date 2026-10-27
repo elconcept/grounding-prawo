@@ -175,7 +175,6 @@ view shared/MOD-INTRO.md                    (W2.2 — pozew/apelacja/>3str)
 view shared/MOD-KONCENTRACJA.md             (W3.4 Blok C — zawsze)
 view modules/MOD-DOKTRYNA.md                 (W2.1 — gdy doktryna w uzasadnieniu)
 view shared/MOD-TIMING.md                   (W2.1 — gdy timing istotny)
-view shared/raport-sytuacyjny-integracja.md
 view shared/MOD-WARIANTY-POZWU.md           (W1.2b, gdy aktywny)
 view shared/MOD-RED-TEAM-WLASNY.md          (W1.6, gdy aktywny)
 view shared/MOD-ATAK-NA-DRAFT.md            (W2.4, zawsze)

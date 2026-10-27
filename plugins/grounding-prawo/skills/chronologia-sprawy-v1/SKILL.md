@@ -1,6 +1,6 @@
 ---
 name: chronologia-sprawy-v1
-description: 'Chronologia sprawy z dokumentów: oś czasu per wątek, klasy pewności, proweniencja, sprzeczności dat i opisów. Moduł: zestawienie stanowisk stron z mechaniczną kontrolą pliku, strony i cytatu.'
+description: 'Chronologia sprawy: oś czasu per wątek, klasy pewności, proweniencja, sprzeczności dat. Używaj przy ustalaniu kolejności zdarzeń i stanowisk stron.'
 metadata:
   version: '1.18'
   type: executive-chronologia
@@ -777,21 +777,6 @@ ZASADY:
 ## INTEGRACJA Z INNYMI SKILLAMI
 
 ```
-→ raport-sytuacyjny-v2 (poza pluginem) [NOWE — v1.1]:
-   Po zakończeniu ekstrakcji TRYB A lub TRYB B:
-   Przekaż dane chronologii jako tablicę JSON do blueprintu raportu sytuacyjnego.
-   Format zgodny ze schematem raport-sytuacyjny-v2 (poza pluginem):
-     chronologia: [
-       { data, zdarzenie, zrodlo, status_zrodla, znaczenie_procesowe, ryzyko }
-     ]
-   Wywołanie: raport-sytuacyjny-v2 (poza pluginem) TRYB [A] odbiera tablicę automatycznie
-   z historii rozmowy. Żeby zasilić go danymi z chronologii:
-   Po KROK A4 lub B3 — dodaj do odpowiedzi gotową strukturę JSON z zakodowanymi
-   zdarzeniami, opatrzoną nagłówkiem:
-   ## DANE CHRONOLOGICZNE DLA RAPORTU SYTUACYJNEGO
-   [tablica JSON]
-   Raport sytuacyjny wyciągnie ją automatycznie przy budowie blueprintu.
-
 → analizator-dowodow-v3:
    Po ekstrakcji zdarzeń sprawdź czy daty pokrywają się z datami w dowodach
    Moduł M3c (Spójność) — uruchom jeśli wykryto sprzeczności

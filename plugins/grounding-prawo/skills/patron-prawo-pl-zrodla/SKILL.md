@@ -1,6 +1,6 @@
 ---
 name: patron-prawo-pl-zrodla
-description: 'Źródła prawa i kolejność ich użycia: Repertorium, brzmienie przepisów (ustawy, Repertorium), komentarz do artykułu, SAOS i NSA, EUR-Lex; przez przeglądarkę sn.pl, orzeczenia.ms.gov.pl, TK i akty UE po CELEX; decyzje UODO. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło.'
+description: 'Źródła prawa i kolejność użycia: Repertorium, ustawy, komentarz, SAOS/NSA, EUR-Lex, UODO, sn.pl i TK. Używaj, gdy potrzebny przepis, orzeczenie lub weryfikowalne źródło.'
 ---
 
 ## Pamięć sesji — przed pracą i przed odpowiedzią końcową

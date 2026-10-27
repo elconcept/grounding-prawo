@@ -1,0 +1,54 @@
+# Pakiety Python do pracy ze sprawami (venv repozytorium: `.venv`, instaluje bootstrap/bootstrap.py).
+# Tylko pakiety najwyższego poziomu - zależności rozwiązuje uv/pip. Binarki systemowe (ffmpeg, poppler/pdftoppm,
+# pandoc, ImageMagick, mupdf/mutool, tesseract, qpdf, ghostscript, exiftool, LibreOffice, tor) NIE są tu -
+# są w bootstrap/Brewfile, bootstrap/apt.txt i bootstrap/winget.txt. mac-ocr to pakiet npm (tylko macOS).
+# Ciężkie pakiety (docling + torch, whisper): requirements-heavy.txt (bootstrap --heavy).
+# Rozwiązywalność sprawdzana: uv pip compile --python-version 3.12 dla macOS arm64, Linux x86_64, Windows x86_64.
+
+# --- PDF: odczyt, struktura, naprawa, render ---
+pikepdf>=10.0
+pdfplumber>=0.11
+pdfminer.six>=20250506
+pypdf>=6.0
+pypdfium2>=4.30
+pymupdf>=1.26
+img2pdf>=0.6
+ocrmypdf>=16.0            # wymaga binarek tesseract + ghostscript + qpdf (bootstrap: system)
+pytesseract>=0.3
+
+# --- Konwersja dokumentów do Markdown / z Markdown ---
+markitdown[all]>=0.1.2    # PDF, DOCX, XLSX, PPTX, HTML, audio, obrazy -> Markdown
+mammoth>=1.9
+markdownify>=1.1
+Markdown>=3.7
+pypandoc>=1.15            # opakowanie binarki pandoc
+beautifulsoup4>=4.13
+lxml>=5.3
+
+# --- Office ---
+python-docx>=1.1          # redline/fix_format, generowanie briefów .docx
+python-pptx>=1.0
+openpyxl>=3.1
+xlrd>=2.0
+xlsxwriter>=3.2
+pandas>=2.2
+
+# --- Obraz, audio, wideo ---
+pillow>=11.0
+av>=14.0                  # PyAV (ffmpeg w Pythonie) - analiza klatek i ścieżek nagrań
+opencv-python-headless>=4.10
+numpy>=2.0
+pydub>=0.25
+SpeechRecognition>=3.14
+
+# --- MCP, sieć, narzędzia ---
+mcp>=1.10
+fastmcp>=2.10
+httpx>=0.28
+requests>=2.32
+playwright>=1.50          # webwright-legal-pl; przeglądarki: `playwright install chromium` (bootstrap: node)
+youtube-transcript-api>=1.0
+python-dotenv>=1.0
+PyYAML>=6.0
+rich>=13.9
+adeu==1.30.0              # redline-docx-pl / szturm-na-draft-pl - wersja przypięta (patrz redline-docx-pl)

@@ -14,7 +14,7 @@ zebrać. Ten skill jest tym front-endem: przechodzi pismo i wypisuje WSZYSTKIE o
 nie wymknęło się weryfikacji. Pominięty cytat to cytat niesprawdzony.
 
 Ekstrakcja jest **mechaniczna** (wzorce + reguły, nie LLM) - to celowe: model na etapie znajdowania
-cytatów mógłby jeden przeoczyć albo dopowiedzieć. Lokalnie, RODO-safe.
+cytatów mógłby jeden przeoczyć albo dopowiedzieć. Działa na plikach w katalogu sprawy.
 
 ## Trzy kroki (za eyecite, zlokalizowane do PL)
 
@@ -78,8 +78,8 @@ DO WERYFIKACJI: przekaż kolumnę "Cytat" do citation-grounding-pl.
   rękojmi") nie ma czego dopasować - oznacz jako `bez sygnatury, do ręcznego sprawdzenia`.
 - To nie jest weryfikacja istnienia - od tego jest citation-grounding-pl. Ten skill mówi „co jest
   cytowane", nie „czy cytat prawdziwy".
-- Wzorce pokrywają najczęstsze formaty; nietypowy zapis sygnatury może umknąć - przy audycie
-  wysokiej stawki przejrzyj też ręcznie.
+- Wzorce pokrywają najczęstsze formaty; nietypowy zapis sygnatury może umknąć - przy kontroli
+  pisma przejrzyj też ręcznie.
 
 ## Atrybucja
 

@@ -3,7 +3,7 @@
 Generowany przez [skrypt budowania](https://github.com/elconcept/grounding-prawo/blob/main/scripts/build.py) z selekcji pluginu.
 Opis pochodzi z pola `why` selekcji lub frontmatter skilla.
 
-**Skille:** 37. **Scalone moduły:** 32.
+**Skille:** 38. **Scalone moduły:** 32.
 
 | Skill | Krótki opis | Źródło | Typ |
 |---|---|---|---|
@@ -20,7 +20,7 @@ Opis pochodzi z pola `why` selekcji lub frontmatter skilla.
 | [`chronologia-sprawy-v1`](../chronologia-sprawy-v1/SKILL.md) | oś zdarzeń i niespójności między postępowaniami | `lex` | wywoływany |
 | [`orzeczenia-sadowe-v2`](../orzeczenia-sadowe-v2/SKILL.md) | ocena tez orzeczeń | `lex` | wywoływany |
 | [`pisma-procesowe-v3`](../pisma-procesowe-v3/SKILL.md) | główny generator pism | `lex` | wywoływany |
-| [`pisma-proste-v2`](../pisma-proste-v2/SKILL.md) | 21 odwołań z shared; zostaje jako część silnika, ale profil MAX wymusza pełną kontrolę (patrz shared/ZASADY-PLUGINU.md) | `lex` | wywoływany |
+| [`pisma-proste-v2`](../pisma-proste-v2/SKILL.md) | 21 odwołań z shared; zostaje jako część silnika, a pełna kontrola jest wymagana zawsze (patrz shared/ZASADY-PLUGINU.md) | `lex` | wywoływany |
 | [`przesluchanie-swiadkow-v2-min90`](../przesluchanie-swiadkow-v2-min90/SKILL.md) | pytania do świadków, sprzeczności | `lex` | wywoływany |
 | [`audyt-systemu-v4`](../audyt-systemu-v4/SKILL.md) | shared odwołuje się do niego 33x; zostaje jako biblioteka (9 MB, głównie references i mcp-servers) | `lex` | wewnętrzny |
 | [`przewodnik-prawny-v2`](../przewodnik-prawny-v2/SKILL.md) | FALLBACK routera w 5 ścieżkach; odcięcie wymagałoby przepisania routera | `lex` | wewnętrzny |
@@ -38,9 +38,10 @@ Opis pochodzi z pola `why` selekcji lub frontmatter skilla.
 | [`kalkulatory-procesowe-pl`](../kalkulatory-procesowe-pl/SKILL.md) | opłata, WPS, odsetki, przedawnienie w pozwach cywilnych | `awe:dokumenty` | wywoływany |
 | [`redline-docx-pl`](../redline-docx-pl/SKILL.md) | Track Changes; sanitize metadanych jest jawną komendą, nie domyślną operacją | `awe:dokumenty` | wywoływany |
 | [`rodo-dsar-pl`](../rodo-dsar-pl/SKILL.md) | żądania dostępu, sprostowania, usunięcia własnych danych | `awe:ochrona-danych` | wywoływany |
+| [`humanizer-pl`](../humanizer-pl/SKILL.md) | drugi, obowiązkowy etap redakcji po pisz-po-polsku; mechanika upstream 1.5.1, opis dostrojony do pism i analiz (22.10.2026) | `own` | wywoływany |
 | [`patron-przeglad-tabelaryczny`](../patron-przeglad-tabelaryczny/SKILL.md) | tabelaryczny przegląd dokumentów (z pipeline Patrona); do wzbogacenia o klauzule/kolumny pod Twoje sprawy | `own` | wywoływany |
-| [`pisz-po-polsku`](../pisz-po-polsku/SKILL.md) | JEDEN skill redakcji: scala moduł poza pluginem + moduł poza pluginem + moduł poza pluginem (pliki skopiowane do own-skills, zmiany upstreamu trzeba przenosić ręcznie) | `own` | wywoływany |
-| [`szturm-na-draft-pl`](../szturm-na-draft-pl/SKILL.md) | główny mechanizm wielokrotnej kontroli pisma; WYMAGA przebudowy (profil S/M/L i limit rund) - propozycja diffu, nie zastosowana | `own` | wywoływany |
+| [`pisz-po-polsku`](../pisz-po-polsku/SKILL.md) | autorski skill redakcji: pierwszy obowiązkowy etap przed humanizer-pl; scala moduł poza pluginem + moduł poza pluginem (22.10.2026) | `own` | wywoływany |
+| [`szturm-na-draft-pl`](../szturm-na-draft-pl/SKILL.md) | główny mechanizm wielokrotnej kontroli pisma w pętli do GOTOWE; bez bramki kosztu i bez limitu rund | `own` | wywoływany |
 | [`case-risk`](../case-risk/SKILL.md) | ryzyka dowodowe, medyczne, UoOZP, art. 192 kk; skrojony pod Twoje sprawy | `own` | wywoływany |
 | [`patron-prawo-pl-zrodla`](../patron-prawo-pl-zrodla/SKILL.md) | kolejność źródeł i konektorów MCP | `own` | wywoływany |
 | [`zawiadomienie-o-przestepstwie`](../zawiadomienie-o-przestepstwie/SKILL.md) | pisane przez pokrzywdzonego obywatela | `own` | wywoływany |
@@ -51,7 +52,7 @@ Opis pochodzi z pola `why` selekcji lub frontmatter skilla.
 |---|---|---|
 | `ingest-wiki` | `wiki-basic-memory` | pełny ingest przez narzędzia MCP basic-memory, także w klientach przeglądarkowych |
 | `ekstraktor-cytatow-pl` | `citation-grounding-pl` | znajduje wszystkie powołania przed weryfikacją; sprawdzić, czy ma działający kod |
-| `adversarial-legal-review-pl` | `szturm-na-draft-pl` | debata czterech ról; bramka kosztu do wyłączenia patchem |
+| `adversarial-legal-review-pl` | `szturm-na-draft-pl` | debata czterech ról; pełny cykl zawsze, bez bramki kosztu |
 | `atak-przeciwnika-pl` | `szturm-na-draft-pl` | osobny przebieg ataku |
 | `pierwsze-wrazenie-sedziego-pl` | `szturm-na-draft-pl` | zimna lektura |
 | `subsumpcja-pl` | `szturm-na-draft-pl` | pokrycie przesłanek faktami |

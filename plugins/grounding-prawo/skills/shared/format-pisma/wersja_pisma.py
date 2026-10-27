@@ -1,30 +1,33 @@
 #!/usr/bin/env python3
-"""Cykl wersji pisma: jeden DOCX w legal/output, wersje Markdown w teczce (shared/ARTEFAKTY-SPRAWY.md).
+"""Cykl pisma (shared/ARTEFAKTY-SPRAWY.md): JEDEN plik DOCX bez wersji w legal/output, snapshoty Markdown z wersją w teczce.
 
-    python3 -I wersja_pisma.py start   --docx legal/output/<plik>.docx --robocze <sprawa>/_robocze [--md <ostatnia>_vN.md]
-    python3 -I wersja_pisma.py redline --baza <sprawa>/_robocze/<plik>_baza.docx --md <sprawa>/drafty/<pismo>/<plik>_vN.md \
-                                       --output legal/output [--author "Imię Nazwisko"]
-    python3 -I wersja_pisma.py nowe    --md <sprawa>/drafty/<pismo>/<plik>_v1.md --output legal/output
+    python3 -I wersja_pisma.py start   --docx legal/output/<nazwa>.docx --drafty <sprawa>/drafty/<pismo> [--nazwa <nazwa>]
+    python3 -I wersja_pisma.py redline --docx legal/output/<nazwa>.docx (--edits edits.json | --tekst nowa_wersja.md) \
+                                       --author "Imię Nazwisko"
+    python3 -I wersja_pisma.py nowe    --md <sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_v1.md --output legal/output
     python3 -I wersja_pisma.py sprawdz --output legal/output [--pismo <nazwa>]
 
-start    - przyjmuje wszystkie zmiany śledzone w kopii roboczej (baza sesji), wypisuje jej tekst; z --md pokazuje różnice
-           między ostatnią wersją MD a DOCX, czyli ręczne zmiany autora do przeniesienia do nowego snapshotu.
-redline  - renderuje nową wersję MD, nakłada jej tekst na bazę jako zmiany śledzone (w:ins/w:del), sprawdza strukturę
-           i zgodność po akceptacji, zapisuje <plik>_vN.docx w legal/output i usuwa poprzednie DOCX tego pisma.
-nowe     - pierwsza wersja pisma: DOCX bez zmian śledzonych w legal/output (renderer, bez sidecara).
-sprawdz  - bramka katalogu output: brak .md, najwyżej jeden DOCX na pismo. Kod wyjścia 1 = naruszenie.
+start    - przyjmuje zmiany śledzone W TYM SAMYM pliku (komentarze zostają), ujednolica czcionkę runów i zapis list,
+           a stan pisma zapisuje jako snapshot <drafty>/rrrrMMdd_hhmm_<nazwa>_vN.md (N = ostatnia wersja + 1).
+redline  - nakłada zmiany sesji na TEN SAM plik jako zmiany śledzone (adeu apply: edits.json albo pełny tekst nowej
+           wersji), nadaje wstawkom czcionkę otoczenia, sprawdza w:ins/w:del, puste akapity i pominięte edycje,
+           dopiero potem podmienia plik. Nie tworzy nowych plików i niczego nie usuwa.
+nowe     - pierwsza wersja pisma: render MD do legal/output/<nazwa>.docx (nazwa bez daty, godziny i _vN).
+sprawdz  - bramka katalogu output: brak .md, nazwy DOCX bez daty i _vN, najwyżej jeden DOCX na pismo. Kod 1 = naruszenie.
 
-Nazwa pisma to część nazwy pliku między prefiksem daty `rrrrMMdd_` a sufiksem `_vN`. Silnik: adeu (przypięty
-w `redline-docx-pl`); zmienna ADEU nadpisuje polecenie (np. ADEU=adeu). Bez zmian śledzonych w wyniku etap jest
-NIEZAKOŃCZONY, a poprzedni DOCX zostaje.
+Silnik: adeu przypięty w `redline-docx-pl`; zmienna ADEU nadpisuje polecenie (np. ADEU=adeu).
 """
-import difflib, glob, json, os, re, shlex, shutil, subprocess, sys, tempfile, zipfile
+import datetime, glob, json, os, re, shlex, shutil, subprocess, sys, tempfile, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import render_pismo  # noqa: E402
 
-NAME = re.compile(r"^(?:\d{8}_)?(?P<pismo>.+?)(?:_v(?P<v>\d+))?(?:_\d{8})?$")
+# rrrrMMdd_ albo rrrrMMdd_hhmm_ na początku, _vN na końcu
+STAMP = re.compile(r"^\d{8}_(?:\d{4}_)?")
+VER = re.compile(r"_v(\d+)$")
+P_RE = r"<w:p[ >](?:(?!</w:p>).)*</w:p>"
+R_RE = r"<w:r(?: [^>]*)?>(?:(?!</w:r>).)*</w:r>"
 
 
 def adeu(*args, check=True):
@@ -38,61 +41,147 @@ def adeu(*args, check=True):
     return r.stdout
 
 
-def pismo(path):
-    return NAME.match(os.path.splitext(os.path.basename(path))[0]).group("pismo")
+def nazwa(path):
+    """Nazwa pisma: bez katalogu, rozszerzenia, prefiksu daty (i godziny) oraz sufiksu _vN."""
+    stem = os.path.splitext(os.path.basename(path))[0]
+    return VER.sub("", STAMP.sub("", stem))
 
 
 def text(docx):
+    """Pełny tekst DOCX (wszystkie strony adeu), bez nagłówków stron i znaczników zmian."""
     with tempfile.TemporaryDirectory() as t:
         out = os.path.join(t, "x.md")
-        adeu("extract", docx, "--page", "all", "-o", out)
+        adeu("extract", docx, "--page", "all", "--clean-view", "-o", out)
         lines = open(out, encoding="utf-8").read().split("\n")
-    return "\n".join(l for l in lines if not l.startswith("> **")).strip() + "\n"
+    s = "\n".join(l for l in lines if not l.startswith("> **")).strip()
+    s = re.sub(r"^---\n+", "", s)
+    s = re.sub(r"\n+---\n+## Footnotes\n+---\n+## Endnotes\s*$", "", s)
+    return s.strip() + "\n"
+
+
+def xml(docx):
+    return zipfile.ZipFile(docx).read("word/document.xml").decode("utf-8")
 
 
 def changes(docx):
-    x = zipfile.ZipFile(docx).read("word/document.xml").decode("utf-8")
-    return {k: len(re.findall(p, x)) for k, p in (("w:ins", r"<w:ins "), ("w:del", r"<w:del "), ("w:delText", r"<w:delText"))}
+    x = xml(docx)
+    return {k: len(re.findall(p, x)) for k, p in (("w:ins", r"<w:ins "), ("w:del", r"<w:del "),
+                                                  ("w:delText", r"<w:delText"), ("komentarze", r"<w:commentReference"))}
 
 
-def plain(t):
-    """Tekst bez znaczników wyróżnień (pogrubienie, podkreślenie, kursywa)."""
-    return re.sub(r"\*\*|__|(?<![\w*])\*(?=\S)|(?<=\S)\*(?![\w*])", "", t)
+def rewrite(docx, fn):
+    """Podmienia word/document.xml przez fn(xml) w miejscu (przez plik tymczasowy obok)."""
+    tmp = docx + ".tmp"
+    with zipfile.ZipFile(docx) as zin, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+        for it in zin.infolist():
+            data = zin.read(it.filename)
+            if it.filename == "word/document.xml":
+                data = fn(data.decode("utf-8")).encode("utf-8")
+            zout.writestr(it, data)
+    os.replace(tmp, docx)
 
 
-def edits(old, new):
-    """Zmiany akapitów jako edycje JSON adeu na czystym tekście (zapas, gdy przesunęły się wyróżnienia)."""
-    a = [plain(p) for p in old.split("\n\n") if p.strip()]
-    b = [plain(p) for p in new.split("\n\n") if p.strip()]
-    out = []
-    for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
-        if tag == "equal":
-            continue
-        if tag == "replace" and i2 - i1 == j2 - j1:
-            out += [{"type": "modify", "target_text": x, "new_text": y} for x, y in zip(a[i1:i2], b[j1:j2])]
-        elif tag in ("replace", "delete"):
-            out.append({"type": "modify", "target_text": a[i1], "new_text": "\n\n".join(b[j1:j2])})
-            out += [{"type": "modify", "target_text": x, "new_text": ""} for x in a[i1 + 1:i2]]
-        elif i1:
-            out.append({"type": "modify", "target_text": a[i1 - 1], "new_text": a[i1 - 1] + "\n\n" + "\n\n".join(b[j1:j2])})
-        else:
-            out.append({"type": "modify", "target_text": a[0], "new_text": "\n\n".join(b[j1:j2]) + "\n\n" + a[0]})
-    return out
+# ---------- operacje na XML ----------
+def accept_xml(x):
+    """Przyjęcie zmian śledzonych z zachowaniem komentarzy. Akapit z usuniętym znacznikiem i tekstem -> None."""
+    x = re.sub(r"<w:(del|moveFrom) (?:[^>/]|/(?!>))*>.*?</w:\1>", "", x, flags=re.S)
+    x = re.sub(r"<w:(ins|moveTo) (?:[^>/]|/(?!>))*>(.*?)</w:\1>", r"\2", x, flags=re.S)
+    x = re.sub(r"<w:(ins|moveTo|moveFrom) [^>]*/>", "", x)
+    x = re.sub(r"<w:(rPrChange|pPrChange|sectPrChange|tblPrChange|trPrChange|tcPrChange) (?:[^>/]|/(?!>))*>.*?</w:\1>",
+               "", x, flags=re.S)
+    bad = []
+
+    def mark(m):
+        p = m.group(0)
+        if not re.search(r"<w:pPr>.*?<w:del [^>]*/>.*?</w:pPr>", p, re.S):
+            return p
+        if "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", p)).strip():
+            bad.append(p)
+            return p
+        return ""
+    x = re.sub(P_RE, mark, x, flags=re.S)
+    return None if bad else x
 
 
-def render(md, out_dir):
-    """Renderuje MD do out_dir (renderer odmawia nadpisania, więc najpierw czyści cel)."""
-    target = os.path.join(out_dir, os.path.splitext(os.path.basename(md))[0] + ".docx")
-    if os.path.exists(target):
-        os.remove(target)
-    argv, stdout = sys.argv, sys.stdout
-    sys.argv, sys.stdout = ["render_pismo.py", md, "--out", out_dir], open(os.devnull, "w")
-    try:
-        render_pismo.main()
-    finally:
-        sys.stdout.close()
-        sys.argv, sys.stdout = argv, stdout
-    return target
+def unify_fonts(x):
+    """Run z tekstem bez w:rFonts dostaje czcionkę i rozmiar z sąsiedniego runu akapitu albo z rPr akapitu
+    (wstawka na początku akapitu nie dziedziczy formatowania i spada do domyślnej czcionki dokumentu)."""
+    def fix_p(m):
+        p = m.group(0)
+        runs = list(re.finditer(R_RE, p, flags=re.S))
+        ref = None
+        for r in runs:
+            rp = re.search(r"<w:rPr>(.*?)</w:rPr>", r.group(0), re.S)
+            if rp and "<w:rFonts" in rp.group(1) and "CommentReference" not in rp.group(1):
+                ref = rp.group(1)
+                break
+        if ref is None:
+            pp = re.search(r"<w:pPr>(?:(?!</w:pPr>).)*?<w:rPr>(.*?)</w:rPr>", p, re.S)
+            if pp and "<w:rFonts" in pp.group(1):
+                ref = pp.group(1)
+        if ref is None:
+            return p
+        base = "".join(re.findall(r"<w:rFonts[^>]*/>|<w:sz [^>]*/>|<w:szCs [^>]*/>", ref))
+        out = []
+        for r in runs:
+            s = r.group(0)
+            if "<w:t" not in s or "CommentReference" in s:
+                continue
+            rp = re.search(r"<w:rPr>(.*?)</w:rPr>", s, re.S)
+            if rp and "<w:rFonts" in rp.group(1):
+                continue
+            if rp:
+                inner = re.sub(r"<w:sz [^>]*/>|<w:szCs [^>]*/>", "", rp.group(1))
+                new = s.replace(rp.group(0), "<w:rPr>" + base + inner + "</w:rPr>", 1)
+            else:
+                new = re.sub(r"^(<w:r(?: [^>]*)?>)", lambda mm: mm.group(1) + "<w:rPr>" + base + "</w:rPr>", s, count=1)
+            out.append((r.start(), r.end(), new))
+        for a, b, new in reversed(out):
+            p = p[:a] + new + p[b:]
+        return p
+    return re.sub(P_RE, fix_p, x, flags=re.S)
+
+
+def list_space(x):
+    """„N.<tab>tekst” -> „N. tekst”: bez tabulatora i wcięcia wiszącego, numer w rozmiarze tekstu."""
+    def fix_p(m):
+        p = m.group(0)
+        if "</w:pPr>" not in p:
+            return p
+        head, rest = p.split("</w:pPr>", 1)
+        t = "".join(a if a else "\t" for a, _ in re.findall(r"<w:t[^>]*>([^<]*)</w:t>|(<w:tab/>)", rest))
+        mm = re.match(r"^\s*(\d+\.|[a-z]\))\s*\t", t)
+        if not mm:
+            return p
+        head = re.sub(r"<w:tabs>.*?</w:tabs>", "", head, flags=re.S)
+        head = re.sub(r'\s*w:hanging="\d+"', "", head)
+        rest = rest.replace("<w:tab/>", "", 1)
+        rest = re.sub(r'<w:t(?: [^>]*)?>' + re.escape(mm.group(1)) + r'\s*</w:t>',
+                      f'<w:t xml:space="preserve">{mm.group(1)} </w:t>', rest, count=1)
+        rest = re.sub(r'(<w:t xml:space="preserve">' + re.escape(mm.group(1)) + r' </w:t></w:r>)'
+                      r'(<w:r(?: [^>]*)?>(?:<w:rPr>(?:(?!</w:rPr>).)*</w:rPr>)?<w:t xml:space="preserve"> </w:t></w:r>)',
+                      r"\1", rest, count=1, flags=re.S)
+
+        def num_size(r):
+            s = r.group(0)
+            if re.search(r"<w:t[^>]*>" + re.escape(mm.group(1)) + r" </w:t>", s):
+                s = re.sub(r'<w:sz w:val="\d+"/>|<w:szCs w:val="\d+"/>', "", s)
+            return s
+        rest = re.sub(R_RE, num_size, rest, count=0, flags=re.S)
+        return head + "</w:pPr>" + rest
+    return re.sub(P_RE, fix_p, x, flags=re.S)
+
+
+def empty_paras(x):
+    return sum(1 for p in re.findall(P_RE, x, flags=re.S)
+               if not "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", p)).strip())
+
+
+def lock_of(docx):
+    """Plik blokady Worda: „~$” + nazwa bez dwóch pierwszych znaków."""
+    d, b = os.path.split(docx)
+    lock = os.path.join(d, "~$" + b[2:])
+    return [lock] if os.path.exists(lock) else []
 
 
 def arg(name, required=True):
@@ -104,97 +193,118 @@ def arg(name, required=True):
     return None
 
 
+def guard(docx):
+    if nazwa(docx) != os.path.splitext(os.path.basename(docx))[0]:
+        sys.exit(f"{docx}: plik pisma w output ma nazwę bez daty i bez _vN (ARTEFAKTY-SPRAWY); zmień nazwę przez mv")
+    if lock_of(docx) and "--mimo-blokady" not in sys.argv:
+        sys.exit(f"{docx} jest otwarty w Wordzie ({', '.join(map(os.path.basename, lock_of(docx)))}); "
+                 "poproś autora o zamknięcie pliku albo użyj --mimo-blokady")
+
+
+# ---------- polecenia ----------
 def start():
-    docx, rob = arg("--docx"), arg("--robocze")
-    os.makedirs(rob, exist_ok=True)
-    baza = os.path.join(rob, os.path.splitext(os.path.basename(docx))[0] + "_baza.docx")
+    docx, drafty = arg("--docx"), arg("--drafty")
+    guard(docx)
+    os.makedirs(drafty, exist_ok=True)
     before = changes(docx)
-    adeu("accept-all", docx, "-o", baza)
-    t = text(baza)
-    open(baza[:-5] + ".txt", "w", encoding="utf-8").write(t)
-    print(f"baza sesji: {baza} (przyjęto zmiany: w:ins {before['w:ins']}, w:del {before['w:del']})")
-    md = arg("--md", required=False)
-    if md:
-        with tempfile.TemporaryDirectory() as tmp:
-            prev = text(render(md, tmp))
-        diff = list(difflib.unified_diff(prev.split("\n"), t.split("\n"), md, baza, lineterm="", n=1))
-        print("różnice ostatniej wersji MD względem DOCX (zmiany autora do snapshotu):" if diff else
-              "DOCX odpowiada ostatniej wersji MD: snapshot = kopia tej wersji z kolejnym numerem")
-        print("\n".join(diff))
+    if before["w:ins"] or before["w:del"]:
+        x = accept_xml(xml(docx))
+        if x is None:
+            tmp = docx + ".acc.docx"
+            adeu("accept-all", docx, "-o", tmp)
+            os.replace(tmp, docx)
+            print("UWAGA: usunięty znacznik akapitu z tekstem - przyjęto przez adeu accept-all (komentarze utracone)")
+        else:
+            rewrite(docx, lambda _: x)
+    rewrite(docx, lambda s: list_space(unify_fonts(s)))
+    ver = [int(m.group(1)) for p in glob.glob(os.path.join(drafty, "*.md"))
+           if (m := VER.search(os.path.splitext(p)[0]))]
+    n = max(ver, default=0) + 1
+    nm = arg("--nazwa", required=False)
+    if not nm:
+        prev = sorted((p for p in glob.glob(os.path.join(drafty, "*_v*.md")) if VER.search(os.path.splitext(p)[0])),
+                      key=lambda p: int(VER.search(os.path.splitext(p)[0]).group(1)))
+        nm = nazwa(prev[-1]) if prev else nazwa(docx)
+    stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M")
+    snap = os.path.join(drafty, f"{stamp}_{nm}_v{n}.md")
+    open(snap, "w", encoding="utf-8").write(text(docx))
+    print(f"przyjęto zmiany w {docx} (w:ins {before['w:ins']}, w:del {before['w:del']}; "
+          f"komentarze {changes(docx)['komentarze']}); snapshot: {snap}")
 
 
 def redline():
-    baza, md, out = arg("--baza"), arg("--md"), arg("--output")
-    meta, _ = render_pismo.parse(md)
-    author = arg("--author", required=False) or meta.get("podpis") or meta.get("nadawca")
-    if not author:
-        sys.exit("podaj --author (autor zmian śledzonych); nie zostawiaj nazwy konta systemowego")
+    docx = arg("--docx")
+    guard(docx)
+    author = arg("--author")
+    edits, tekst = arg("--edits", required=False), arg("--tekst", required=False)
+    if bool(edits) == bool(tekst):
+        sys.exit("podaj dokładnie jedno: --edits edits.json albo --tekst nowa_wersja.md")
+    if changes(docx)["w:ins"] or changes(docx)["w:del"]:
+        sys.exit("plik ma nieprzyjęte zmiany śledzone: najpierw `start`")
+    empty0 = empty_paras(xml(docx))
     with tempfile.TemporaryDirectory() as tmp:
-        nowy = text(render(md, tmp))
-        txt = os.path.join(tmp, "nowy.md")
-        open(txt, "w", encoding="utf-8").write(nowy)
-        wynik = os.path.join(tmp, os.path.splitext(os.path.basename(md))[0] + "_redline.docx")
-        tryb = "tekst"
-        if adeu("apply", baza, txt, "-o", wynik, "--author", author, check=False) is None:
-            tryb = "akapity"
-            ej = os.path.join(tmp, "edits.json")
-            json.dump(edits(text(baza), nowy), open(ej, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-            adeu("apply", baza, ej, "-o", wynik, "--author", author)
+        wynik = os.path.join(tmp, "redline.docx")
+        log = adeu("apply", docx, edits or tekst, "-o", wynik, "--author", author)
+        m = re.search(r"Edits: (\d+) applied, (\d+) skipped", log or "")
+        if m and int(m.group(2)):
+            sys.exit(f"NIEZAKOŃCZONY: adeu pominął {m.group(2)} edycji (target_text nie pasuje); plik bez zmian\n{log[-1500:]}")
+        rewrite(wynik, unify_fonts)
         c = changes(wynik)
         if not (c["w:ins"] or c["w:del"]):
-            sys.exit(f"NIEZAKOŃCZONY: wynik bez zmian śledzonych ({c}); poprzedni DOCX zostaje. "
-                     "Jeśli tekst się nie zmienił, nowa wersja nie jest potrzebna.")
+            sys.exit(f"NIEZAKOŃCZONY: wynik bez zmian śledzonych ({c}); plik bez zmian")
         if c["w:del"] and not c["w:delText"]:
-            sys.exit(f"NIEZAKOŃCZONY: usunięcia poza w:delText ({c}); poprzedni DOCX zostaje")
-        acc = os.path.join(tmp, "akcept.docx")
-        adeu("accept-all", wynik, "-o", acc)
-        po, cel_txt = text(acc), nowy
-        if tryb == "akapity":
-            po, cel_txt = plain(po), plain(nowy)
-        if po.split() != cel_txt.split():
-            sys.exit("NIEZAKOŃCZONY: po akceptacji zmian tekst DOCX różni się od nowej wersji MD; poprzedni DOCX zostaje")
-        cel = os.path.join(out, os.path.splitext(os.path.basename(md))[0] + ".docx")
-        shutil.copyfile(wynik, cel)
-    if changes(cel) != c:
-        sys.exit(f"NIEZAKOŃCZONY: kopia {cel} różni się od zweryfikowanego wyniku")
-    usun = [p for p in glob.glob(os.path.join(out, "*")) if os.path.abspath(p) != os.path.abspath(cel)
-            and pismo(p) == pismo(cel) and os.path.splitext(p)[1].lower() in (".docx", ".md")]
-    for p in usun:
-        os.remove(p)
-    print(f"{cel}: w:ins {c['w:ins']}, w:del {c['w:del']}, autor „{author}”; usunięte poprzednie: "
-          + (", ".join(os.path.basename(p) for p in usun) or "brak"))
-    if tryb == "akapity":
-        print("UWAGA: zmiany naniesione akapitami na czystym tekście; zmiany samych wyróżnień (pogrubienie, "
-              "podkreślenie) nie są w DOCX - nanieś je w Wordzie albo zgłoś autorowi.")
+            sys.exit(f"NIEZAKOŃCZONY: usunięcia poza w:delText ({c}); plik bez zmian")
+        x = accept_xml(xml(wynik))
+        if x is not None and empty_paras(x) > empty0:
+            sys.exit(f"NIEZAKOŃCZONY: po akceptacji przybyło pustych akapitów ({empty0} -> {empty_paras(x)}); plik bez zmian")
+        if tekst:
+            acc = os.path.join(tmp, "akcept.docx")
+            adeu("accept-all", wynik, "-o", acc)
+            if text(acc).split() != open(tekst, encoding="utf-8").read().split():
+                sys.exit("NIEZAKOŃCZONY: po akceptacji tekst DOCX różni się od nowej wersji; plik bez zmian")
+        shutil.copyfile(wynik, docx + ".tmp")
+        os.replace(docx + ".tmp", docx)
+    print(f"{docx}: w:ins {c['w:ins']}, w:del {c['w:del']}, komentarze {c['komentarze']}, autor „{author}”")
 
 
 def nowe():
     md, out = arg("--md"), arg("--output")
     os.makedirs(out, exist_ok=True)
-    cel = os.path.join(out, os.path.splitext(os.path.basename(md))[0] + ".docx")
-    inne = [p for p in glob.glob(os.path.join(out, "*.docx")) if pismo(p) == pismo(cel)]
-    if inne:
-        sys.exit(f"pismo ma już DOCX w output ({', '.join(map(os.path.basename, inne))}): użyj start + redline")
-    print(render(md, out))
+    cel = os.path.join(out, nazwa(md) + ".docx")
+    if os.path.exists(cel):
+        sys.exit(f"{cel} już istnieje: kolejna wersja to `start` + `redline` na tym pliku")
+    with tempfile.TemporaryDirectory() as tmp:
+        argv, stdout = sys.argv, sys.stdout
+        sys.argv, sys.stdout = ["render_pismo.py", md, "--out", tmp], open(os.devnull, "w")
+        try:
+            render_pismo.main()
+        finally:
+            sys.stdout.close()
+            sys.argv, sys.stdout = argv, stdout
+        shutil.copyfile(os.path.join(tmp, os.path.splitext(os.path.basename(md))[0] + ".docx"), cel)
+    print(cel)
 
 
 def sprawdz():
     out, only = arg("--output"), arg("--pismo", required=False)
     groups, bad = {}, []
     for p in sorted(glob.glob(os.path.join(out, "*"))):
+        b = os.path.basename(p)
         ext = os.path.splitext(p)[1].lower()
-        if os.path.isdir(p) or os.path.basename(p).startswith((".", "~$")):
+        if os.path.isdir(p) or b.startswith((".", "~$", "_")):
             continue
-        if only and pismo(p) != only:
+        if only and nazwa(p) != only:
             continue
         if ext == ".md":
-            bad.append(f"MD w output (miejsce: drafty/<pismo>/ w teczce): {os.path.basename(p)}")
+            bad.append(f"MD w output (miejsce: drafty/<pismo>/ w teczce): {b}")
         elif ext == ".docx":
-            groups.setdefault(pismo(p), []).append(os.path.basename(p))
+            if nazwa(p) != os.path.splitext(b)[0]:
+                bad.append(f"DOCX z datą lub _vN w nazwie (plik pisma jest bez wersji): {b}")
+            groups.setdefault(nazwa(p), []).append(b)
     for k, v in groups.items():
         if len(v) > 1:
             bad.append(f"{len(v)} DOCX pisma „{k}” (dozwolony jeden): {', '.join(v)}")
-    print("\n".join(bad) if bad else f"PASS: {sum(map(len, groups.values()))} DOCX, każde pismo raz, bez MD")
+    print("\n".join(bad) if bad else f"PASS: {sum(map(len, groups.values()))} DOCX, każde pismo raz, bez wersji w nazwie")
     sys.exit(1 if bad else 0)
 
 

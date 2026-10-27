@@ -1,6 +1,6 @@
 ---
 name: analizator-umow-v1
-description: 'Analiza, redakcja i negocjacja umów: ryzyka klauzul, lista kontrolna 41 kategorii, przegląd według playbooka, najem, B2B/B2C, RODO w umowach.'
+description: 'Analiza, redakcja i negocjacja umów: ryzyka klauzul, przegląd według playbooka, najem, B2B, RODO. Używaj przy ocenie lub tworzeniu umowy.'
 metadata:
   version: '1.50'
   type: executive-umowy
@@ -282,7 +282,6 @@ ST-INIT: zainicjuj podzbiór REJESTRU właściwy dla wykrytego trybu:
 | Formalna walidacja pisma (bloki A–J) | **MOD-WALIDACJA** | `view shared/MOD-WALIDACJA_v2.md` |
 | Weryfikacja zgodności treści z faktami źródłowymi | **FAKTY** | `view shared/FAKTY_v2.md` |
 | Terminy procesowe KPC/KP/KPA | **terminy** | `view shared/terminy.md` |
-| Po Raporcie F — widget statusu sprawy | **raport-sytuacyjny** | `view shared/raport-sytuacyjny-integracja.md` |
 | Każda odpowiedź z analizą prawną | **DISCLAIMER** | `view shared/DISCLAIMER.md` |
 | Walidacja formatu/istnienia sygnatury sądowej | **SYGNATURY** | `view shared/SYGNATURY.md` |
 | Znaczniki VER przy przepisach/terminach/orzeczeniach | **WERYFIKACJA-ŚLAD** | `view shared/WERYFIKACJA-SLAD.md` |
@@ -559,7 +558,7 @@ na żądanie         → zawsze F.1 niezależnie od kwoty
 *             mod-shared-neg-strategia: ZOPA z BATNA + principled negotiation 4 zasady*
 *             (Fisher/Ury/Patton, Getting to Yes, Harvard Negotiation Project) — NEG.1B nowe*
 *SHARED systemowe (shared/): INTAKE-GAP · HYBRID-VALIDATION · POST-VALIDATION*
-*             MOD-WALIDACJA_v2 · FAKTY_v2 · terminy · raport-sytuacyjny-integracja*
+*             MOD-WALIDACJA_v2 · FAKTY_v2 · terminy*
 *             DISCLAIMER · SYGNATURY · WERYFIKACJA-SLAD*
 *Weryfikacja: ELI (RZĄD 1) · rejestr.uokik.gov.pl · uokik.gov.pl · eur-lex.europa.eu*
 *             sn.pl · orzeczenia.ms.gov.pl · curia.europa.eu · saos.org.pl · uodo.gov.pl · nbp.pl*
