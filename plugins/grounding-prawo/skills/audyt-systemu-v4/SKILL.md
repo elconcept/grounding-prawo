@@ -3,7 +3,7 @@ name: audyt-systemu-v4
 description: Biblioteka wewnętrzna silnika (mapy Dz.U., skrypty kontrolne). Nie wywołuj przy pracy nad sprawą.
 metadata:
   dependencies: '{"requires": ["shared"]}'
-  version: '6.235'
+  version: '6.243'
   type: governance-audit
   compatibility: host-neutral; file read/write, fresh legal-source lookup and optional archive/UI operations mapped by the runtime adapter
   entrypoint: SKILL.md
@@ -1241,4 +1241,4 @@ audyt-systemu-v4/                               ← 89 plików (stan 2026-09-09b
 
 ---
 
-*Wersja: 6.235 | Ostatnia aktualizacja: 2026-10-17 (AUDYT-2026-10-17b). Stopkę aktualizuj razem z polem `version`.*
+*Wersja: 6.243 | Ostatnia aktualizacja: 2026-10-23 (test 500 na żywo: data ustawy z odesłania odnośnika). Stopkę aktualizuj razem z polem `version`.*

@@ -2,7 +2,7 @@
 name: dr-05-prawo-administracyjne-sadowoadministracyjne
 description: 'DR-05: KPA, PPSA, skargi do WSA i NSA. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.36'
+  version: '3.37'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -95,6 +95,7 @@ Przy sprawach z tej dziedziny rozważ doładowanie (`view`) definicji:
 - BAS-W21 Informacja przetworzona (UDIP art. 3 — "szczególna istotność")
 - BAS-W29 Pełnomocnik z urzędu — prawo do sądu (art. 117 KPC)
 
+<!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (23 łącznie — ✓ 23 OK, ☐ 0 STUB)
 
   [✓] OK    mod-KPA-current-state-COV

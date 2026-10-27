@@ -84,7 +84,7 @@ CZY KIEROWCA BYŁ POD WPŁYWEM SUBSTANCJI?
 │          Kara wolnościowa jest osiągalna przez art. 37a/58 KK albo przez
 │          warunkowe zawieszenie — to inna podstawa niż sankcja przepisu
 │          i tak należy ją opisywać.
-│       ✅ [VER: ELI, Dz.U. 2025 poz. 383, art. 178a §1,
+│       ✅ [VER: ELI, Dz.U. 2025 poz. 383 (obecny t.j. Dz.U. 2026 poz. 1342), art. 178a §1,
 │          odczyt 2026-08-25]
 │       ⛔ ZNACZENIE PROCESOWE górnej granicy: 3 lata < 8 lat, więc art. 258
 │          §2 KPK (surowość kary jako samodzielna podstawa TA) NIE działa;
@@ -94,7 +94,7 @@ CZY KIEROWCA BYŁ POD WPŁYWEM SUBSTANCJI?
 │          informacyjna.
 │       + zakaz prowadzenia pojazdów obowiązkowy (min. 3 lata — art. 42 §2 KK)
 │       + świadczenie pieniężne obowiązkowe (min. 5 000 zł — art. 43a § 2 KK)
-│         ✅ [VER: ELI DU/2025/383 + DU/2025/1872 art. 2 pkt 2, odczyt 2026-10-04]:
+│         ✅ [VER: ELI DU/2025/383 (obecny t.j. Dz.U. 2026 poz. 1342) + DU/2025/1872 art. 2 pkt 2, odczyt 2026-10-04]:
 │         od 29.01.2026 katalog § 2 obejmuje także art. 177 § 2a, 178c § 1,
 │         178d; § 3 (min. 10 000 zł) — także art. 244, jeżeli czyn polegał na
 │         niezastosowaniu się do zakazu prowadzenia pojazdów mechanicznych;
@@ -110,8 +110,9 @@ CZY KIEROWCA BYŁ POD WPŁYWEM SUBSTANCJI?
 │           ─ art. 44b §2 (przepadek RÓWNOWARTOŚCI pojazdu) — UCHYLONY
 │           ─ art. 178a §5 (dawna podstawa przepadku w części szczególnej)
 │             — UCHYLONY; nie powołuj go
-│         ✅ [VER: arslege.pl/art-44b + lexlege.pl/kk/art-44b + inforlex
-│            (przypis nowelizacyjny do art. 44b), odczyt 2026-08-25]
+│         ✅ [VER: ELI DU/2026/1342 text.pdf (t.j. KK), art. 44b §1–§6, RZĄD 1,
+│            2026-10-20; §1 i §1a obejmują też art. 178c §1 pkt 2, 178d i sprawcę
+│            z art. 178 §1 lub 1a; §2–§4 uchylone]
 │         ✅ art. 44b § 6: gdy pojazd nie był wyłączną własnością
 │            sprawcy, sąd orzeka nawiązkę na rzecz Skarbu Państwa od
 │            5 000 do 500 000 zł; gdy przepadek jest niemożliwy lub niecelowy
@@ -119,6 +120,17 @@ CZY KIEROWCA BYŁ POD WPŁYWEM SUBSTANCJI?
 │           ⛔ Każda z powyższych pozycji przed użyciem w piśmie: potwierdź
 │             aktualne brzmienie w źródle urzędowym — obszar nowelizowany
 │             trzykrotnie w latach 2023–2026
+│       + CZYN SPRZED 29.01.2026 — art. 4 § 1 KK (ustawa względniejsza jako
+│         całość, in concreto): dawniej przepadek obligatoryjny przy art. 178a
+│         §1/§4 chyba że <1,5‰ (dawny art. 178a §5) i przy art. 178 §1/1a
+│         gdy >1‰ (dawny art. 178 §3); przepadek równowartości (dawny 44b §2–4)
+│         ✅ [VER: ELI DU/2025/383 (t.j. KK sprzed zmiany), RZĄD 1, 2026-10-20]
+│       + TYMCZASOWE ZAJĘCIE POJAZDU — art. 295 § 1a KPK (od 29.01.2026):
+│         Policja zajmuje pojazd tylko przy przepadku z art. 44b § 1a KK
+│         (≥1,5‰); zajęcia sprzed 29.01.2026 wobec sprawców z 1–1,5‰ upadły
+│         z mocy prawa, pojazd się zwraca, chyba że zajęcie z art. 295 § 1
+│         (art. 8 ustawy 1872)
+│         ✅ [VER: ELI DU/2025/1872 art. 3 i 8, RZĄD 1, 2026-10-20]
 │       ⚠️ Art. 178a § 4 KK → 3 miesiące–5 lat PW; art. 42 § 3
 │           w brzmieniu od 29.01.2026 przewiduje co do zasady dożywotni
 │           zakaz prowadzenia, chyba że zachodzi wyjątkowy wypadek

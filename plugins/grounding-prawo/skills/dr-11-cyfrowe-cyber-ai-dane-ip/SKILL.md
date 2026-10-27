@@ -2,7 +2,7 @@
 name: dr-11-cyfrowe-cyber-ai-dane-ip
 description: 'DR-11: RODO, dowody cyfrowe, cyberbezpieczeństwo, prawo autorskie. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.28'
+  version: '3.30'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -94,6 +94,7 @@ Przy sprawach z tej dziedziny rozważ doładowanie (`view`) definicji:
 ## DEFINICJE — shared/definicje/ (nieobecne — adnotacja audytowa 2026-06-14)
 
 Ta dziedzina nie ma dedykowanego pliku w `shared/definicje/`. Cyfrowe, cyberbezpieczeństwo, AI, dane, IP — definicje RODO (art. 4), AI Act i KSC/NIS2 są obszerne i sektorowe; pokryte wprost w modułach mod-RODO-GDPR-2016-679, mod-AI-Act, mod-KSC-NIS2 (każdy z własną sekcją definicji ustawowych). Żaden plik shared/definicje/ nie obejmuje tej dziedziny bez duplikacji treści modułowej.
+<!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (22 łącznie — ✓ 21 OK, ☐ 1 STUB [certyfikacja])
 
 ```

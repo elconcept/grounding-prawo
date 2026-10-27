@@ -2,7 +2,7 @@
 name: dr-16-pisma-strategia-dowody-orzecznictwo
 description: 'DR-16: warsztat pism, strategia, dowody, orzecznictwo. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.13'
+  version: '3.14'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -102,6 +102,7 @@ Przy redagowaniu pism rozważ doładowanie (`view`) definicji:
 - BAS-W33/W34 Kara umowna i odsetki — precyzja żądań pozwu
 - BAS-W35 Nakaz zapłaty: terminologia "sprzeciw" vs "zarzuty"
 
+<!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (11 łącznie — ✓ 11 OK, ☐ 0 STUB; 1 przeniesiony do shared/)
 
 ```

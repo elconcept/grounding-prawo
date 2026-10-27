@@ -1,5 +1,12 @@
 # CHANGELOG — dr-02-prawo-cywilne-rodzinne-gospodarcze
 
+- 3.102 (2026-10-20, LEXAGENTO-P2): MAPA-AKTOW: KPC egzekucja (skarga na czynności komornika), KC current-state (szkoda na osobie, zadośćuczynienie) - dobór modułu aktu
+- 3.101 (2026-10-20, LEXAGENTO-P1): MAPA-POKRYCIA: pełna ścieżka modułu UGN
+- 3.100 (2026-10-20, AUDYT-2026-10-20g): SKILL.md: znacznik `lex:wykonuje-aplikacja: REJESTR-MODULOW` nad rejestrem modułów — w trybie mechanicznym aplikacja podaje modelowi indeks nazw (moduły aktów dobiera z MAPA-AKTOW), w AUTO rejestr w całości
+- 3.99 (2026-10-20, AUDYT-2026-10-20d): NOWY mod-ustawa-przedsiebiorcy-zagraniczni-oddzialy-przedstawicielstwa (t.j. Dz.U. 2026 poz. 1313: art. 4, oddział art. 14–20, przedstawicielstwo art. 21–31); MAPA-AKTOW, SKILL.md (86 modułów)
+- 3.98 (2026-10-20, AUDYT-2026-10-20c): DU/2026/1296: mod-KPC-current-state-COV (zmiany po t.j. 468, art. 17 pkt 4⁶ — sąd okręgowy w sprawach z art. 54 DSA), MAPA-AKTOW UOKiK (Prezes UOKiK organem DSA).
+
+- 3.97 (2026-10-19a, AUDYT-2026-10-19a): mod-PrUpad-wniosek-ogloszenie, mod-PrRestr-odrebne-miedzynarodowe: KK t.j. 2025/383 → dopisek „obecny t.j. Dz.U. 2026 poz. 1342”.
 - 3.96 (2026-10-15c, AUDYT-2026-10-15c): MAPA-AKTOW: nowy wiersz ustawy o CEIDG (t.j. Dz.U. 2026 poz. 30; zm. 2026/734 i 2026/507 etapami: 21.04.2026, 14.10.2026, 1.11.2026, 1.11.2028); KC: ⏳ 2026/507 art. 2 — art. 860 § 3–4 od 1.11.2028 (brzmienie już w t.j. 2026/795); Prawo przedsiębiorców: 2026/507 art. 7 od 14.10.2026. mod-KSH-spolki-handlowe: spółka cywilna od 1.11.2028 (wzory w CEIDG, publikacja informacji o s.c., przejście art. 26 ustawy 507). ELI 2026-10-15.
 
 - 3.95 (2026-10-12b, AUDYT-2026-10-12b): ⛔ mod-rzeczy-znalezione-zasiedzenie 1.1: Dz.U. 2026 poz. 184 (od 19.05.2026) — art. 187 § 1 KC: 6 miesięcy od wezwania / rok od znalezienia (było rok / 2 lata); broń → Policja (art. 6); sprzęt i dokumenty wojskowe → starosta albo ŻW (art. 5 ust. 4, 4a); dokumenty z danymi osobowymi, klucze, karty, piloty → powiat i zniszczenie (art. 187 § 2 KC, art. 19 ust. 2, art. 25a); starosta miejsca zamieszkania znalazcy (art. 5 ust. 6–7); zarządca budynku — 30 dni (art. 7 ust. 1a–1b); art. 3: do rzeczy znalezionych przed 19.05.2026 przepisy dotychczasowe. kc-zobowiazania/aneks D: metryka PKE z 2026/815. ELI 2026-10-12.

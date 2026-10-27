@@ -2,7 +2,7 @@
 name: dr-12-sadownictwo-prokuratura-zawody-prawnicze
 description: 'DR-12: ustrój sądów, prokuratura, zawody prawnicze, koszty. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '4.27'
+  version: '4.30'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -266,7 +266,8 @@ Przy sprawach z tej dziedziny rozważ doładowanie (`view`) definicji:
 - BAS-W29 Pełnomocnik / obrońca z urzędu (art. 117 KPC / art. 78-81a KPK —
   obligatoryjny vs fakultatywny, kryteria ETPCz art. 6 §3 lit. c)
 
-## Moduły (13 łącznie — ✓ 13 OK, ☐ 0 STUB)
+<!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
+## Moduły (14 łącznie — ✓ 14 OK, ☐ 0 STUB)
 
 ```
 SĄDOWNICTWO I PROCEDURA:
@@ -298,6 +299,13 @@ SĄDOWNICTWO I PROCEDURA:
               Wypełnia lukę odnotowaną w CHECKLIST-DEDUP ("brak modułu
               ogólnego"). Komplementarny z mod-KPC-arbitraz-mediacja-ADR
               powyżej.
+
+SĄD WŁAŚCIWY (siedziby i obszary sądów powszechnych):
+  [✓] NOWY  mod-wlasciwosc-miejscowa-sadow-powszechnych
+              (rozporządzenie MS z 28.12.2018, t.j. Dz.U. 2026 poz. 492;
+               319 SR → SO → SA, zakres spraw, 9 miast dzielonych;
+               aplikacja: court_for_address i SĄD SPRAWY; bez aplikacji:
+               references/wlasciwosc-sadow-tj-2026-492.tsv)
 
 PROKURATURA I ORGANY OCHRONY PRAWA:
   [✓] OK    mod-PrProkuratura-organy-ochrony-prawa

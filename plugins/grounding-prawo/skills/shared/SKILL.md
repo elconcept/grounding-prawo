@@ -2,7 +2,7 @@
 name: shared
 description: Wspólne reguły i bramki pluginu. Wczytywana przez skille; nie wywołuj bezpośrednio.
 metadata:
-  version: 3.99.39
+  version: 3.99.47
   type: library
   entrypoint: SKILL.md
   compatibility: wszystkie skille prawne systemu
@@ -14,7 +14,13 @@ metadata:
   limitations: '["ZNANE ODSTĘPSTWO od zasady ''shared = warstwa bazowa bez zależności zwrotnych'', zweryfikowane ręcznie 2026-07-04 (FAZA 2E audyt-systemu-v4): 4 pliki zawierają instrukcję `view` wprost do konkretnego skilla nadrzędnego — MOD-METODY-BADAWCZE.md → analizator-dowodow-v3/SKILL.md; PRE-W2-VERIFICATION-GATE.md i MOD-IDENTYFIKACJA-STRONY-UMOWY.md → pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md; MOD-MAPA-PRZEPISOW.md → analizator-przepisow-v2/SKILL.md. NIE scalone/wydzielone w tej sesji — pole `dependencies.requires` zostawione jako [] (zgodnie z zasadą architektoniczną), ODSTĘPSTWO opisane tu jawnie, żeby FAZA 2E w trybie deklarowanym go NIE zgubiła. Decyzja architektoniczna (uznać jako świadomy wzorzec ''plik-most'' czy wydzielić poza shared/) pozostaje OTWARTA — do następnego audytu.", "rozmiar (176 plików — stan 2026-10-09f po przeniesieniu 15 plików z jednym konsumentem do skilli; 190
     — stan 2026-10-04b po usunięciu 7 reliktów, F-225; wcześniej 197 — stan 2026-10-01b, z .claude-plugin/plugin.json) — każda zmiana pliku kanonicznego ma potencjalnie systemowy promień rażenia; edytować tylko przez audyt-systemu-v4 z pełną weryfikacją CHECKLIST-DEDUP.md"]'
   required_modules: '[]'
-  changelog: 'Wersja bieżąca: 3.99.39 (2026-10-17b, AUDYT-2026-10-17b): MOD-DLUGIE-PISMO 1.1.0 — do 30 części (pismo ponad 65 000 tokenów), rozmiar części zależny od modelu (lokalny ok. 2 strony), DP-1b (ponad 30 części: osobne dokumenty), DP-1c (część ucięta: zwięźlej), DP-6 (numer punktu zachowany w pliku).
+  changelog: 'Wersja bieżąca: 3.99.47 (2026-10-22, AUDYT-2026-10-22): terminy.md — art. 45 §1 KW re-ver na t.j. Dz.U. 2026 poz. 1372.
+
+    3.99.46 (2026-10-20, LEXAGENTO-P1): UNIVERSAL-RUNTIME-ADAPTER 1.2: kontrakt query_context (skrót aktu); walidator_cytowan: ELI aktów bazowych kodeksów -> skrót, api.sejm.gov.pl jako źródło urzędowe; pełne ścieżki modułów zamiast dr-NN/.../
+
+    3.99.40 (2026-10-19a, AUDYT-2026-10-19a): KK — nowy t.j. Dz.U. 2026 poz. 1342 w LEGAL-REGISTRY, ISAP-METRYKI-AKTOW i modułach shared (tekst w ELI nieopublikowany — do publikacji 2025/383 + 2025/1818, 1872, 2026/902, 988); zapisy odczytu ze starego t.j. z dopiskiem „obecny t.j.”.
+
+    3.99.39 (2026-10-17b, AUDYT-2026-10-17b): MOD-DLUGIE-PISMO 1.1.0 — do 30 części (pismo ponad 65 000 tokenów), rozmiar części zależny od modelu (lokalny ok. 2 strony), DP-1b (ponad 30 części: osobne dokumenty), DP-1c (część ucięta: zwięźlej), DP-6 (numer punktu zachowany w pliku).
 
     3.99.38 (2026-10-17a, AUDYT-2026-10-17a): terminy.md: KPW — nowy t.j. Dz.U. 2026 poz. 1336 (obwieszczenie z 2.10.2026, ogłoszone 15.10.2026; stan prawny na 27.09.2026; obejmuje Dz.U. 2025 poz. 1178, 1661, 1814, 1818, 1872 i 2026 poz. 473; brak zmian po t.j. — ELI 2026-10-17).
 
@@ -33,12 +39,6 @@ metadata:
     3.99.22 (2026-10-08): usunięto archiwum tools/mcp-servers/mcp-servers-examples.zip (serwery MCP żyją w audyt-systemu-v4/mcp-servers/); CHECKSUMS bez wpisu
 
     3.99.21 (2026-10-07): CBOSA-ADAPTER 1.2 — sekcja „powiązane” poza kandydatami, etykieta pola w zagnieżdżonej tabeli (PR #84)
-
-    3.99.20 (2026-10-07): walidator_cytowan z PR #95 — zgodność po pełnym identyfikatorze (Dz.U. rok+pozycja/ELI/WDU, sygnatura całością, artykuł z § i kodeksem) zamiast samych liczb; domena po hoście, https także w result_urls (zgł. #89)
-
-    3.99.19 (2026-10-07): walidator_cytowan — domena urzędowa po hoście URL-a, liczby cytatu jako całe liczby i wszystkie naraz (zgł. #89); plugin.json zsynchronizowany
-
-    3.99.18 (2026-10-07): CBOSA-ADAPTER — pola „sąd" i „data orzeczenia" w dokumencie są BEST-EFFORT (null + brak_metadanych), wymagane pozostają tylko zamknięty BODY/HTML, sygnatura i sentencja; twardy wymóg sądu/daty dawał fałszywe OUT_OF_SCOPE dla realnych orzeczeń (zgł. 2026-10-07)
 
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---

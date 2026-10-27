@@ -2,7 +2,7 @@
 name: dr-03-prawo-karne-wykroczenia-egzekucja
 description: 'DR-03: prawo karne i wykroczenia (KK, KPK, KKW, KW, KPW). Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.66'
+  version: '3.73'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -123,6 +123,7 @@ Przy sprawach z tej dziedziny rozważ doładowanie (`view`) definicji:
   obrona obligatoryjna art. 79 §1 pkt 2-4 KPK (→ mod-niewidomy-prawa-prawne.md,
   mod-niepelnosprawnosc-intelektualna-gluchota.md)
 
+<!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (71 łącznie — ✓ 71 OK, ☐ 0 STUB; 1 przeniesiony do shared/)
 
   [✓] OK    mod-KK-current-state-COV
@@ -147,23 +148,23 @@ tymczasowe-aresztowanie.md` — zamyka F-23 (audyt zewnętrzny) i F-66
 (raport pokrycia KPK), obie dot. całkowitego braku pokrycia tematu
 tymczasowego aresztowania. Pełny opis: `audyt-systemu-v4/references/
 AUDIT-JOURNAL.md`.
-## ⚡ NOWY 2026-08-04: mod-podmiana-czesci-naprawa-oszustwo — na
-## żądanie użytkownika: art. 286 KK (oszustwo — z realnym wyrokiem
-## SAOS II K 282/16, mechanik zamontował używane części zamiast
-## nowych dostarczonych przez klienta), art. 284 KK (przywłaszczenie
-## oryginalnej części), ścieżka karna/cywilna
-## ⚡ NOWY 2026-08-04: mod-przerobki-modyfikacje-pojazdow — na żądanie
-## użytkownika: odblokowanie hulajnóg elektrycznych (projekt ustawy
-## MI), przyciemnianie szyb (progi VLT 75%/70%), pojazdy marki "SAM"
-## (świadectwo indywidualnego dopuszczenia, procedura TDT/starosta)
-## ⚡ NOWY 2026-08-04: mod-lincz-ochrona-swiadkow-lowcy-pedofili — na
-## żądanie użytkownika: art. 158-159 KK (lincz/odpowiedzialność
-## zbiorowa), statusy więźniów N/szczególnie chroniony, zmowa
-## milczenia (art. 233 KK), łowcy pedofili (spór doktrynalny, RPO)
-## ⚠️ 2026-07-15: naprawiono niezgodność dysk↔lista — 4 pliki istniały na
-## dysku, ale nie były wpisane poniżej: mod-KK-art291-pranie-pieniedzy,
-## mod-ustawa-fundusz-pomocy-pokrzywdzonym, mod-ustawa-narkomania,
-## mod-ustawa-odpowiedzialnosc-podmiotow-zbiorowych — dodane na końcu listy.
+> ⚡ NOWY 2026-08-04: mod-podmiana-czesci-naprawa-oszustwo — na
+> żądanie użytkownika: art. 286 KK (oszustwo — z realnym wyrokiem
+> SAOS II K 282/16, mechanik zamontował używane części zamiast
+> nowych dostarczonych przez klienta), art. 284 KK (przywłaszczenie
+> oryginalnej części), ścieżka karna/cywilna
+> ⚡ NOWY 2026-08-04: mod-przerobki-modyfikacje-pojazdow — na żądanie
+> użytkownika: odblokowanie hulajnóg elektrycznych (projekt ustawy
+> MI), przyciemnianie szyb (progi VLT 75%/70%), pojazdy marki "SAM"
+> (świadectwo indywidualnego dopuszczenia, procedura TDT/starosta)
+> ⚡ NOWY 2026-08-04: mod-lincz-ochrona-swiadkow-lowcy-pedofili — na
+> żądanie użytkownika: art. 158-159 KK (lincz/odpowiedzialność
+> zbiorowa), statusy więźniów N/szczególnie chroniony, zmowa
+> milczenia (art. 233 KK), łowcy pedofili (spór doktrynalny, RPO)
+> ⚠️ 2026-07-15: naprawiono niezgodność dysk↔lista — 4 pliki istniały na
+> dysku, ale nie były wpisane poniżej: mod-KK-art291-pranie-pieniedzy,
+> mod-ustawa-fundusz-pomocy-pokrzywdzonym, mod-ustawa-narkomania,
+> mod-ustawa-odpowiedzialnosc-podmiotow-zbiorowych — dodane na końcu listy.
 
 ```
   [✓] OK    mod-KK-KPK-framework-karne
@@ -271,7 +272,7 @@ AUDIT-JOURNAL.md`.
                komputerowe 287, zniszczenie 288, pojazd 289, paserstwo 291–293,
                kwalifikacje wartościowe 294, naprawienie szkody 295; tabela
                trybu ścigania, przedawnienie, granica z KW; brzmienie z ELI
-               DU/2025/383, żadna z 4 nowelizacji po t.j. nie zmienia art. 278–295)
+               DU/2025/383 (obecny t.j. Dz.U. 2026 poz. 1342), żadna z 4 nowelizacji po t.j. nie zmienia art. 278–295)
   [✓] OK    mod-KK-art296-naduzycie-zaufania
               (nadrobienie 2026-07-21: działanie na szkodę majątkową,
                dodany 2026-07-16)
@@ -351,7 +352,7 @@ AUDIT-JOURNAL.md`.
                przepisów art. 9, kontratypy 15-16), kary i środki karne
                (18-39, w tym katalog kar art. 18 i środków karnych art. 28),
                przedawnienie i zatarcie (45-46, TERMIN KRYTYCZNY: 1 rok),
-               stosunek do ustaw szczególnych (48). Dz.U. 2025 poz. 734 t.j.
+               stosunek do ustaw szczególnych (48). Dz.U. 2026 poz. 1372 t.j.
                ze zm. 1676/1814)
   [✓] OK    mod-KW-art119-131-przeciwko-mieniu
               (dodany 2026-07-17: Rozdz. XIV KW — kradzież/przywłaszczenie

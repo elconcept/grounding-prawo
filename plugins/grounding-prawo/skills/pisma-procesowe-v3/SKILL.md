@@ -2,7 +2,7 @@
 name: pisma-procesowe-v3
 description: Pozew, odpowiedź na pozew, apelacja, zażalenie i inne pisma wymagające strategii, dowodów i weryfikacji prawa. Używaj przy tworzeniu lub przebudowie pisma procesowego.
 metadata:
-  version: '5.44'
+  version: '5.46'
   type: executive-pisma
   status: production
   dependencies: '{"requires": ["shared"]}'
@@ -693,6 +693,10 @@ view pisma-procesowe-v3/modules/MOD-DOWODY.md     (gdy są dowody)
 view pisma-procesowe-v3/modules/MOD-OBAL.md       (gdy riposta/odpowiedź)
 view pisma-procesowe-v3/modules/MOD-OPLATY.md     (gdy pismo wszczynające)
 view pisma-procesowe-v3/modules/MOD-ADMIN.md      (gdy sprawa adm./KPA/WSA)
+view dr-12-sadownictwo-prokuratura-zawody-prawnicze/modules/mod-wlasciwosc-miejscowa-sadow-powszechnych.md
+                                                  (⛔ OBOWIĄZKOWE dla pisma do sądu bez sądu w aktach:
+                                                                     sąd i adres tylko z court_for_address albo
+                                                                     z bloku SĄD SPRAWY; nigdy z pamięci)
 view shared/ZAZALENIE-ADRESAT-GATE.md             (⛔ OBOWIĄZKOWE gdy pismo to
                                                                      zażalenie/odwołanie/sprzeciw/
                                                                      zarzuty/skarga — ustal adresata
