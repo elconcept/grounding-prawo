@@ -17,6 +17,7 @@ i kilka pism. Relacja innej osoby (np. osoby bliskiej) ma własny katalog.
 | `Log zeznań — <Autor>` | `log_zeznan` | tylko dopisywany (`edit_note` `append` albo `insert_before_section "## Relacje"`); wpis jako obserwacja `- [rodzaj] Lnnn (Exxx) [rodzaj słownie]: treść — źródło #Snnn`; korekta to nowy wpis z odnośnikiem; wpisów nie usuwa się ani nie zmienia |
 | `Rejestr pism — <Autor>` | `rejestr_pism` | obserwacje `- [Pn] pismo; ścieżka; epizody; STATUS (źródło statusu); organ; wersja relacji #status`; zmiana sekcji przy zmianie pisma |
 | `Pytania otwarte — <Autor>` | `pytania_otwarte` | bieżąca lista wszystkich otwartych pytań z ID logu; pytanie zamknięte przenieś do sekcji „Zamknięte” z ID odpowiedzi |
+| `Zgłoszenia — <Autor>` | `zgloszenia` | źródło prawdy o złożeniu: sekcja `## Złożone zawiadomienia` (wpis `- [Z001] data; organ; pismo; ścieżka; epizody E…; czyny; sygnatura; etap; źródło #Snnn`), tabela `## Zgłoszone czyny i sygnatury` (czyn, `Z-ID`, organ, sygnatura, etap, źródło), `## Postępowania przed sądem` (po odcięciu, `zgloszenia.md` §4a), `## Do ustalenia` (wzmianki bez wprost potwierdzonego złożenia). Wpisy nie są usuwane, zmiana = nowy wpis lub korekta. Zasady: `zgloszenia.md` §1–§2 |
 | `wersje/…` | `relacja_wersja` | niezmienna kopia relacji na koniec sesji, przy przerwie i przed oddaniem pism; tytuł zawiera numer wersji i datę; pełny tekst albo bezstratna łatka wsteczna (`diff -u` od nowszej wersji) z sumą kontrolną źródła |
 | `archiwum/…` | `archiwum` | dokumenty przeniesione z plików przy migracji (np. stare gałęzie pism, analizy), bez zmian treści |
 
@@ -31,7 +32,8 @@ Rodzaje wpisów logu (kategoria obserwacji): `nowy_epizod`, `szczegol`, `korekta
 2. Redakcja relacji w miejscu osi czasu.
 3. Aktualizacja pytań otwartych.
 4. Rejestr pism, gdy zmienia się pismo albo jego status.
-5. Potwierdzenie odczytem (`read_note`, co najmniej `include_content=False` i checksum).
+5. `Zgłoszenia`, gdy autor wprost mówi o złożeniu, dacie, organie, sygnaturze, etapie albo decyzji organu sądu.
+6. Potwierdzenie odczytem (`read_note`, co najmniej `include_content=False` i checksum).
 
 Odpowiedzi zbiorcze (autor wkleja listę odpowiedzi z ID) zapisuj jako osobne wpisy logu.
 Etykieta podana przez autora może nie pasować do pytania: przypisz odpowiedź po treści i zapisz to w wpisie.
@@ -51,6 +53,9 @@ nie zapisano (`references/ciaglosc-sesji.md`).
 - Kontekst: `build_context(project="legal", url="relacje/<autor-slug>/*")`.
 - Korekty i rozbieżności: `search_notes(project="legal", note_types=["log_zeznan"], categories=["korekta"])`.
 - Lokalna procedura projektu (gdy istnieje): `_metodologia/Workflow — relacja pokrzywdzonego i zawiadomienia`.
+- Zgłoszenia: `read_note` `Zgłoszenia — <Autor>`; przy braku notatki albo braku któregokolwiek z pięciu plików
+  systemu najpierw poproś o złożone zawiadomienia i dopiero potem twórz brakujące (`zgloszenia.md` §6).
+- Schemat `Schemat — zgłoszenia` w `_schemat/` (`legal`): utwórz, gdy brak, przed pierwszym zapisem zgłoszeń; kontrola `schema_validate`.
 
 ## Migracja z plików (`relacja/_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md`, `_REJESTR_PISM.md`, `wersje/`)
 

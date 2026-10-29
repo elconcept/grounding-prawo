@@ -104,7 +104,7 @@ odpowiednie projekty. Nie ograniczaj się do propozycji, że można je kiedyś n
 | Zawiadomienie niezłożone | Nowa pełna wersja każdego projektu, którego dotyczą uzupełnienia. Zachowaj poprzednią wersję; projekty bez zmian odnotuj bez sztucznego mnożenia kopii. |
 | Zawiadomienie złożone, nowe szczegóły tych samych zdarzeń | Odrębny projekt uzupełnienia do istniejącej sprawy, z odniesieniem do wcześniejszego pisma i jasnym wskazaniem nowych informacji lub korekt. Nie zastępuj złożonej wersji. |
 | Czynności sprawdzające/wyjaśniające, dochodzenie lub śledztwo | Ustal rzeczywisty tryb, organ i etap. Dobierz uzupełnienie relacji, wniosek o uzupełniające przesłuchanie, zabezpieczenie materiału lub wniosek dowodowy stosownie do potrzeb. Potoczne „wyjaśniające” nie przesądza rodzaju postępowania. |
-| Sprawa w sądzie | Sprawdź rolę autora, właściwego adresata i dopuszczalną czynność; przygotuj odpowiednie pismo/wniosek, zamiast kolejnego zawiadomienia o tych samych zdarzeniach. |
+| Sprawa w sądzie (odcięcie: zakończone postępowanie przygotowawcze, sprawa przed sądem, `zgloszenia.md` §4a) | Sprawdź rolę autora, właściwego adresata i dopuszczalną czynność; przygotuj pismo procesowe (`pisma-procesowe-v3`/`pisma-proste-v2`), zamiast kolejnego zawiadomienia o tych samych zdarzeniach. Do tego momentu uzupełnienia idą na torze zawiadomienia. |
 | Dotychczas niezgłoszone krzywdy | Porównaj faktyczny zakres wcześniejszych zgłoszeń. Przygotuj nowe zawiadomienie, jeżeli to odrębny nieobjęty nimi czyn; przy powiązanym rozszerzeniu rozważ uzupełnienie. Nowy szczegół lub nowa kwalifikacja tego samego zdarzenia nie oznaczają automatycznie nowego czynu. |
 | Odmowa, umorzenie lub inne rozstrzygnięcie | Sprawdź decyzję, doręczenie, uprawnienia i terminy; dobierz właściwą dalszą czynność, w razie potrzeby z pomocą skilla zażalenia. Nie zastępuj środka zaskarżenia mechanicznym ponownym zgłoszeniem. |
 | Status nieustalony | Zachowaj nową relację; dopytaj o status, zanim wybierzesz ostateczną formę. Przy przerwie zapisz projekt warunkowy z jawnym brakiem ustalenia, bez zakładania, że poprzednie pismo nie zostało złożone. |
@@ -114,6 +114,9 @@ sprawy i zgłoszenie nowej krzywdy. Przypisz każdy nowy epizod i skutek do pism
 świadome wyłączenie przez autora. Nie pomijaj krzywdy tylko dlatego, że wymaga innego pisma.
 Podstawy, terminy, uprawnienia i nazwy czynności sprawdzaj w aktualnych źródłach urzędowych
 przed ich użyciem; ta tabela kieruje pracą, nie zastępuje analizy konkretnego postępowania.
+
+Status „złożone” w rejestrze i w `Zgłoszenia` nadaje wyłącznie wprost potwierdzenie autora (albo dokument organu).
+Samo istnienie pliku pisma nie oznacza złożenia. Wybór pisma dla każdego epizodu według `zgloszenia.md` §5.
 
 ## Pisma w `output/` i wersje
 
@@ -141,8 +144,10 @@ przed ich użyciem; ta tabela kieruje pracą, nie zastępuje analizy konkretnego
   osoby trzecie ani nie stosuj z własnej inicjatywy.
 - Skutki z relacji (lęk, unikanie, zmiany w codziennym życiu, relacje rodzinne, praca) trafiają do
   części „Co mi to zrobiło” każdego pisma, którego dotyczą, blisko słów autora, bez uogólnień modelu.
-- Pisma towarzyszące (pismo przewodnie, uzupełnienie zeznań, wniosek) idą torem pism procesowych:
-  weryfikacja każdego przepisu i walidacja przed `.docx`. Wyjątek HARDGATE-ZOP dotyczy samego zawiadomienia.
+- Uzupełnienia i wnioski towarzyszące w postępowaniu przygotowawczym (pismo przewodnie, uzupełnienie zeznań, wniosek
+  do organu) idą **tym samym torem co zawiadomienie** (HARDGATE-ZOP, relacja, bez bramek pism procesowych); weryfikacja
+  powołanych przepisów i walidacja przed `.docx` obowiązują. Po odcięciu przed sądem (`zgloszenia.md` §4a) pisma idą
+  do pism procesowych.
 - Każdą zmianę pisma dopisz do `_PRZEBIEGI.md` pisma (data, ID wpisów logu, zmiany, ślad weryfikacji prawa).
 
 Przerwa nie oznacza pełnego wywiadu ani zgody na złożenie. Projekty są robocze, dopóki nie

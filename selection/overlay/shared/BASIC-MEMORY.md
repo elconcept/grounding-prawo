@@ -70,7 +70,7 @@ nie przy każdym odczycie zweryfikowanej transkrypcji.
 - **Pismo `sprawy/<katalog>/pisma/`:** wersja, ścieżka, runda, otwarte uwagi, pytania, wyniki kontroli i status.
 - **Orzeczenie:** zweryfikowane źródło, sygnatura i relacja do sprawy; sprawdź `orzeczenia/` przed kolejnym researchem.
 - **Relacja pokrzywdzonego / świadka `relacje/<autor-slug>/`:** relacja zdarzeń, log zeznań, rejestr pism,
-  pytania otwarte, `wersje/`, `archiwum/`. To jedyne miejsce tych danych: nie twórz ich plików w katalogu
+  zgłoszenia (złożone zawiadomienia, sygnatury), pytania otwarte, `wersje/`, `archiwum/`. To jedyne miejsce tych danych: nie twórz ich plików w katalogu
   sprawy ani w projekcie claude.ai (tam tylko pisma). Szczegóły: skill `zawiadomienie-o-przestepstwie`,
   `zawiadomienie-o-przestepstwie/references/basic-memory-relacja.md`.
 

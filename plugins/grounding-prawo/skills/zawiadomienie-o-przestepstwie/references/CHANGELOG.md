@@ -1,5 +1,15 @@
 # Historia zmian
 
+## v0.9 (2026-10-29) — zgłoszenia i odcięcie od sądu
+- Nowa notatka `Zgłoszenia — <Autor>` w Basic Memory: lista złożonych zawiadomień (tylko po wprost potwierdzonym złożeniu),
+  zgłoszonych czynów z sygnaturami i etapem, postępowań przed sądem, pozycje `Do ustalenia`. Zasady: `references/zgloszenia.md`.
+- Wejście: weryfikacja pięciu notatek systemu i `wersje/`; przy braku systemu model najpierw prosi o przesłanie wszystkich
+  złożonych zawiadomień, potem tworzy brakujące pliki.
+- Uzupełnienia i wnioski towarzyszące w postępowaniu przygotowawczym idą na torze zawiadomienia (HARDGATE-ZOP), nie
+  pism procesowych. Odcięcie: zakończone postępowanie przygotowawcze, sprawa przed sądem; od tej chwili pisma procesowe.
+- Wybór pisma per epizod: nowe zawiadomienie / uzupełnienie wskazujące `Z-ID` i sygnaturę / pismo procesowe / środek zaskarżenia.
+- Otwarte: wyjątek routera (`selection/patches/02-prawny-router-v3-zawiadomienie.patch`) nadal kieruje każdą sprawę o zawiadomienie do tego skilla, także przed sądem; wymaga osobnej zmiany patcha.
+
 ## v0.4 (2026-10-15) — integralność narracji
 - Dokończenie po przerwanej sesji Astry: przywrócone frazy wyzwalające w opisie skilla; tabela skilli pomocniczych kieruje szturm/atak/adversarial do recenzji rozszerzającej (R4a: czyny i naruszenia praw, których autor nie nazwał, także przez organy) zamiast mandatu przeciwnika.
 - Uzupełnienie po audycie `INBOX/20261010_AUDYT_SKILLI_kolizje_zawiadomienia.md`: zamknięta kolizja A2 (HYBRID/BLOCK ZERO), doprecyzowane A3 (draft a dane formalne), A6 (pochodzenie edycji/kwoty z relacji), A7 (brak repo nie blokuje). Wbrew dawnemu zaleceniu A9 „bez zmian” dodano ochronę także w punktach wejścia recenzji zgodnie z późniejszą instrukcją użytkownika.

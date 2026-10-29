@@ -79,3 +79,14 @@ Istniejący plik jest punktem wznowienia. Na koniec sesji zachowuje wersję rela
 projekty według rejestru pism: niezłożone aktualizuje, złożonych nie nadpisuje; nowe fakty
 kieruje do uzupełnienia/wniosku właściwego dla etapu albo nowego zawiadomienia. Szczegóły:
 `zawiadomienie-o-przestepstwie/references/ciaglosc-sesji.md`.
+
+## Złożenie i etap sprawy
+
+Złożone jest tylko zawiadomienie, które autor wprost potwierdził (albo potwierdził dokument organu).
+Lista złożonych zawiadomień, zgłoszonych czynów i sygnatur prowadzona jest w notatce `Zgłoszenia — <Autor>`.
+Przed utworzeniem systemu plików relacji model prosi autora o wszystkie złożone zawiadomienia.
+
+Uzupełnienia i wnioski do postępowania przygotowawczego idą tym samym torem co zawiadomienie (ten kontrakt,
+HARDGATE-ZOP). Odcięcie: zakończone postępowanie przygotowawcze i sprawa przed sądem. Od tej chwili
+obowiązują zasady pism procesowych, a zawiadomienie o tych samych zdarzeniach się nie tworzy.
+Szczegóły: `zawiadomienie-o-przestepstwie/references/zgloszenia.md`.

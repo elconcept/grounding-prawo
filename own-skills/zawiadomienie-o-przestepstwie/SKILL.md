@@ -1,7 +1,7 @@
 ---
 name: zawiadomienie-o-przestepstwie
 metadata:
-  version: "0.8"
+  version: "0.9"
   status: draft
 description: >
   Interaktywny, wielosesyjny wywiad z pokrzywdzonym: pytania o wcześniejsze zdarzenia,
@@ -9,8 +9,10 @@ description: >
   nie pamięta. Porządkuje pełną relację chronologicznie i osobno dopisuje log zeznań z każdej sesji
   w Basic Memory (projekt legal).
   Przyjmuje istniejącą relację i aktualizuje ją po nowych wspomnieniach.
-  Tworzy kolejne wersje niezłożonych zawiadomień; po złożeniu dobiera uzupełnienia, wnioski
-  i nowe zgłoszenia do zakresu krzywd i etapu sprawy. Zachowuje relację bez wymagania dowodów,
+  Tworzy kolejne wersje niezłożonych zawiadomień; prowadzi listę złożonych zawiadomień i zgłoszonych
+  czynów z sygnaturami, a po złożeniu dobiera uzupełnienia (także do postępowania przygotowawczego, na zasadach
+  zawiadomienia), wnioski i nowe zgłoszenia do zakresu krzywd i etapu sprawy. Gdy sprawa jest przed sądem,
+  przekazuje pisma do pism procesowych. Zachowuje relację bez wymagania dowodów,
   rozróżnia źródła wiedzy, pamięć i hipotezy. Używaj przy „zawiadomienie o przestępstwie”,
   „zgłosić na policję”, „opisz, co mi zrobił”, „uzupełnienie zawiadomienia”, „kontynuuj relację”,
   także gdy autor chaotycznie opowiada o krzywdzie i chce zgłoszenia organom. Nie do
@@ -50,6 +52,9 @@ W ramach tego zadania ma pierwszeństwo przed ich regułami redakcyjnymi i dowod
 Zawiadomienie omija KROK 1B, CN-GATE/REM-GATE, STEP-TRACKER (ST-FINAL), CLAIM-VALIDATION
 HYBRID-VALIDATION / BLOCK ZERO (także UP-4 przed DOCX), MOD-FAKTY, FSL/LSL
 jako bramki dopuszczenia relacji oraz pipeline `pisma-procesowe-v3` i `pisma-proste-v2`. Nie przenoś ich progów dowodowych.
+Dotyczy to zawiadomień, uzupełnień i wniosków towarzyszących w etapie przygotowawczym (`references/zgloszenia.md`, §4).
+Po odcięciu (postępowanie przygotowawcze zakończone, sprawa przed sądem, §4a) ten wyjątek nie obowiązuje i pisma
+w tej sprawie idą do pism procesowych.
 Weryfikacja prawa dotyczy kwalifikacji, trybu i informacji prawnych, nie dopuszczenia relacji.
 Przy zleconym szturmie/recenzji stosuj `shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`: celem
 jest rozwinięcie relacji, rozmiaru krzywdy, pozostałych osób i możliwych naruszeń przez organy.
@@ -104,8 +109,10 @@ W repo abogada przeczytaj dostępne `00_sprawy/<sprawa>/analiza/_brief.md` i
 ### F1–F3. Pętla wywiadu i rozszerzania kwalifikacji
 Czytaj [wywiad](references/wywiad.md) oraz [mapę krzywd](references/mapa-krzywd.md).
 Przed pierwszym pytaniem wczytaj z Basic Memory (`legal`, `relacje/<autor-slug>/`) relację,
-log zeznań, rejestr pism i pytania otwarte według [ciągłości sesji](references/ciaglosc-sesji.md)
+log zeznań, rejestr pism, listę zgłoszeń i pytania otwarte według [ciągłości sesji](references/ciaglosc-sesji.md)
 i [Basic Memory](references/basic-memory-relacja.md). Zastane pliki relacji na dysku najpierw migruj.
+Weryfikacja plików i zgłoszeń przy wejściu: [zgłoszenia](references/zgloszenia.md), §6. Brak systemu plików:
+najpierw poproś o wszystkie złożone zawiadomienia; nie twórz pustych notatek przed odpowiedzią.
 Nowa relacja zaczyna się swobodną wypowiedzią; przy wznowieniu nie każ opowiadać wszystkiego od początku.
 
 **Pętla: odpowiedź → dopisek do logu → aktualizacja chronologicznej relacji i gałęzi → jedno istotne pytanie → oczekiwanie
@@ -159,7 +166,8 @@ zapisz przepis i ślad weryfikacji albo „do sprawdzenia”; brak przepisu nie 
 
 ### F6. Redakcja i prawo
 Najpierw przypisz nowe informacje do pism i ustal ich status według
-[ciągłości sesji](references/ciaglosc-sesji.md). Szablon zawiadomienia stosuj wyłącznie do
+[ciągłości sesji](references/ciaglosc-sesji.md) oraz etap sprawy i wybór pisma według
+[zgłoszeń](references/zgloszenia.md), §3–§5. Złożone jest tylko to, co autor wprost potwierdził. Szablon zawiadomienia stosuj wyłącznie do
 zawiadomienia; dla innych pism użyj właściwej formy i zweryfikuj etap oraz uprawnienia.
 Czytaj [szablon](assets/szablon.md), [styl](references/styl.md) i [formę](references/forma.md).
 Pisz pewnie tam, gdzie autor jest pewny; przybliżone słowa oznacz jako przybliżone.
@@ -180,8 +188,8 @@ nagłówku, braku podpisu lub niesprawdzonej drodze złożenia wskaż, co jeszcz
 uzupełnienia. Nie przedstawiaj takiego pliku jako w pełni gotowego do podpisania i złożenia.
 
 ### F8. Zapis (repo abogada, `shared/ARTEFAKTY-SPRAWY.md`)
-Relację, log zeznań, rejestr pism, pytania otwarte i kopię relacji na zamknięcie sesji zapisuj
-w Basic Memory (`legal`, `relacje/<autor-slug>/`) według `references/basic-memory-relacja.md`,
+Relację, log zeznań, rejestr pism, listę zgłoszeń (`Zgłoszenia — <Autor>`), pytania otwarte i kopię relacji
+na zamknięcie sesji zapisuj w Basic Memory (`legal`, `relacje/<autor-slug>/`) według `references/basic-memory-relacja.md`,
 z odczytem potwierdzającym. Nie twórz ich jako plików w katalogu sprawy ani w projekcie claude.ai;
 pliki są formatem awaryjnym tylko bez dostępu do Basic Memory. Nie są jednorazowymi notatkami `_robocze/`.
 - Pismo: wersje `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD) i jeden
@@ -205,7 +213,7 @@ Bez wstępów i pochwał.
 
 Przy oddaniu pisma:
 1. Link do chronologicznej relacji MD, logu zeznań, wersji sesyjnej relacji oraz przygotowanych pism; krótko wskaż,
-   co przybyło i które projekty zmieniły się od poprzedniej sesji.
+   co przybyło i które projekty zmieniły się od poprzedniej sesji. Podaj zmiany w `Zgłoszenia` (złożone, sygnatury, etap).
 2. Status HARDGATE-A z lukami i decyzją autora; AUDYT-B ze znanymi różnicami lub informacją o braku materiału. Przy drafcie zaznacz, że wywiad nie został zakończony.
 3. Krótka lista: co jeszcze warto dopytać, decyzje do podjęcia (np. organ, załączniki).
 4. Informacje praktyczne poza pismem: jak złożyć, potwierdzenie, co dalej (`references/forma.md`).
@@ -219,10 +227,11 @@ Przy oddaniu pisma:
 | `zazalenie-na-postanowienie-prokuratora` | wiedza, na co patrzy prokurator i co się zaskarża po odmowie | styl uzasadnienia, zarzuty, „każde twierdzenie zakotwiczone w dowodzie” |
 | `szturm-na-draft-pl`, `adversarial-legal-review-pl`, `atak-przeciwnika-pl` | na wyraźne życzenie autora, wyłącznie w trybie recenzji rozszerzającej (`shared/ZAWIADOMIENIE-RECENZJA-ROZSZERZAJACA.md`): pominięte krzywdy, osoby i naruszenia przez organy, czyny, których autor nie nazwał (R4a), pytania i rozbudowa pisma | mandat przeciwnika, rozmywanie tez alternatywami, dopisywanie zastrzeżeń, „korygowanie” relacji autora, ciężar dowodu |
 
-Po wywiadzie w już toczącej się sprawie użyj `pisma-procesowe-v3` lub
-`zazalenie-na-postanowienie-prokuratora` do formy adekwatnego pisma. Ten skill nadal prowadzi
-relację, zapis i rozdział nowych informacji. Reguły formalne i terminowe pozostają właściwe
-dla danego pisma; pomocniczy skill nie usuwa relacji z braku dowodu ani nie restartuje wywiadu.
+Przed etapem sądowym (postępowanie przygotowawcze) użyj `zazalenie-na-postanowienie-prokuratora` tylko do
+zażalenia na rozstrzygnięcie organu; uzupełnienia i wnioski towarzyszące pozostają na torze zawiadomienia.
+Po odcięciu (sprawa przed sądem, `references/zgloszenia.md`, §4a) użyj `pisma-procesowe-v3` lub `pisma-proste-v2`
+do formy pisma. Ten skill nadal prowadzi relację, listę zgłoszeń i zapis nowych informacji. Reguły formalne
+i terminowe pozostają właściwe dla danego pisma; pomocniczy skill nie usuwa relacji z braku dowodu ani nie restartuje wywiadu.
 
 ## Pliki skilla
 
@@ -230,6 +239,7 @@ dla danego pisma; pomocniczy skill nie usuwa relacji z braku dowodu ani nie rest
 |---|---|
 | `references/ciaglosc-sesji.md` | zawsze: wejście, zapis, wznowienie, wersje pism w `output/` i dobór pism |
 | `references/basic-memory-relacja.md` | zawsze: notatki relacji w Basic Memory, kolejność zapisu, awaria, migracja plików |
+| `references/zgloszenia.md` | zawsze przy wejściu i gdy zmienia się status złożenia, sygnatura lub etap; odcięcie przed sądem |
 | `references/wywiad.md` | zawsze, od F2 |
 | `references/mapa-krzywd.md` | zawsze, w F3 (otwarty katalog pytań i historyczne punkty wyjścia do weryfikacji prawa) |
 | `references/hardgate-spojnosc.md` | gdy istnieją wcześniejsze zeznania, wyjaśnienia lub pisma; audyt nie blokuje złożenia |

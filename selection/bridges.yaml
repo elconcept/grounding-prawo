@@ -140,7 +140,7 @@ skills:
     - szturm-na-draft-pl
   zawiadomienie-o-przestepstwie:
     etap: B
-    wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera)
+    wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera w etapie przygotowawczym; sprawa przed sądem idzie do pism procesowych, `references/zgloszenia.md` §4a)
     wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`,
       wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/`'
     dalej:
