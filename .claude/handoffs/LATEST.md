@@ -1,11 +1,11 @@
 # Session Handoff
 
-- **Generated:** 2026-10-29T09:07:11.030Z
-- **Session ID:** 19a9ef64-e215-4765-8769-ac33a1025219
+- **Generated:** 2026-10-29T09:13:37.501Z
+- **Session ID:** cd56e328-3665-432c-bec4-dfb6c68debe9
 - **End reason:** other
 - **Working directory:** /workspace/synoprojects/grounding-prawo
 - **Git branch:** main
-- **Last commit:** 30c86a3 Merge pull request #71 from elconcept/upstream-bump-20261026
+- **Last commit:** dbfb47d feat(zawiadomienie): lista zgłoszeń, etap sprawy i odcięcie od pism procesowych (v0.9)
 - **Prompts this session:** 1
 
 ## Session goal
@@ -32,17 +32,19 @@ _No NOTE: lines tagged this session_
 
 ## Files touched
 
-_No file edits detected_
+- `/workspace/synoprojects/grounding-prawo/own-skills/zawiadomienie-o-przestepstwie/SKILL.md`
+- `/workspace/synoprojects/grounding-prawo/own-skills/zawiadomienie-o-przestepstwie/references/ciaglosc-sesji.md`
+- `/workspace/synoprojects/grounding-prawo/own-skills/zawiadomienie-o-przestepstwie/references/basic-memory-relacja.md`
+- `/workspace/synoprojects/grounding-prawo/own-skills/zawiadomienie-o-przestepstwie/references/zgloszenia.md`
+- `/workspace/synoprojects/grounding-prawo/selection/overlay/shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md`
+- `/workspace/synoprojects/grounding-prawo/selection/overlay/shared/BASIC-MEMORY.md`
+- `/workspace/synoprojects/grounding-prawo/selection/bridges.yaml`
+- `/workspace/synoprojects/grounding-prawo/own-skills/zawiadomienie-o-przestepstwie/references/CHANGELOG.md`
 
 ## Working tree at session end
 
 ```
-M .claude/handoff-nudge-state.json
-```
-
-```
-.claude/handoff-nudge-state.json | 4 ++++
- 1 file changed, 4 insertions(+)
+(clean)
 ```
 
 ## How to use this doc

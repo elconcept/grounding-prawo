@@ -156,7 +156,14 @@ nie jest pismem procesowym i nie przechodzi toru pism:
 - Reguła 10: ⬛ danych formalnych wolno zostawić w drafcie; ich brak nie oznacza braku dowodu krzywdy.
 - Szturm i atak tylko na żądanie autora, z mandatem ochrony relacji; format ani recenzja nie zmieniają typu pisma.
 - PRAWO-HARDGATE dotyczy używanych przepisów, trybów i terminów, nigdy dopuszczenia relacji bez dowodów.
-- Gdy to samo zdarzenie wymaga pisma w toczącym się postępowaniu (zażalenie, wniosek dowodowy): wtedy normalny tor.
+- Etap sprawy decyduje o torze. Przed wyborem sprawdź notatkę `Zgłoszenia — <Autor>` w Basic Memory
+  (`zawiadomienie-o-przestepstwie/references/zgloszenia.md`):
+  - nowe zawiadomienie, uzupełnienie zawiadomienia i wnioski towarzyszące w toczącym się postępowaniu przygotowawczym
+    (sygnatura Policji lub prokuratury) → ten wyjątek, tor zawiadomienia;
+  - zażalenie na rozstrzygnięcie organu (odmowa wszczęcia, umorzenie) → normalny tor (`zazalenie-na-postanowienie-prokuratora`);
+  - sprawa przed sądem (wniesiony akt oskarżenia, sygnatura sądowa) → wyjątek nie obowiązuje: normalny tor pism procesowych;
+    relacja i log z Basic Memory zostają źródłem faktów;
+  - etap nieznany → zapytaj o sygnaturę i etap, zanim wybierzesz tor.
 
 ## SEKWENCJA GŁÓWNA
 
