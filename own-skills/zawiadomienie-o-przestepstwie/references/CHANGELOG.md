@@ -8,7 +8,9 @@
 - Uzupełnienia i wnioski towarzyszące w postępowaniu przygotowawczym idą na torze zawiadomienia (HARDGATE-ZOP), nie
   pism procesowych. Odcięcie: zakończone postępowanie przygotowawcze, sprawa przed sądem; od tej chwili pisma procesowe.
 - Wybór pisma per epizod: nowe zawiadomienie / uzupełnienie wskazujące `Z-ID` i sygnaturę / pismo procesowe / środek zaskarżenia.
-- Otwarte: wyjątek routera (`selection/patches/02-prawny-router-v3-zawiadomienie.patch`) nadal kieruje każdą sprawę o zawiadomienie do tego skilla, także przed sądem; wymaga osobnej zmiany patcha.
+- Router (`selection/patches/02-prawny-router-v3-zawiadomienie.patch`): etap z notatki `Zgłoszenia` wybiera tor; zawiadomienie,
+  uzupełnienie i wnioski w postępowaniu przygotowawczym idą tym skillem, zażalenie na rozstrzygnięcie organu i sprawa przed sądem
+  normalnym torem pism, etap nieznany wymaga pytania o sygnaturę.
 
 ## v0.4 (2026-10-15) — integralność narracji
 - Dokończenie po przerwanej sesji Astry: przywrócone frazy wyzwalające w opisie skilla; tabela skilli pomocniczych kieruje szturm/atak/adversarial do recenzji rozszerzającej (R4a: czyny i naruszenia praw, których autor nie nazwał, także przez organy) zamiast mandatu przeciwnika.

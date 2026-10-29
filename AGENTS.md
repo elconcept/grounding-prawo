@@ -26,7 +26,11 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 2. `python3 scripts/build.py` → `python3 scripts/validate_marketplace.py` → `python3 scripts/lint_refs.py`.
 3. Commit razem ze zregenerowanym `plugins/`. Push na `main` = wydanie: manifest Claude nie ma pola `version`,
    więc klienci aktualizują się po SHA commita (przypięta wersja blokowała aktualizacje). Wersja semver jest tylko w manifeście Codex.
-4. Aktualizacja upstreamu: `git submodule update --remote vendor/packs/<nazwa>`, build, przegląd różnic w `plugins/`.
+4. Nowy host albo po `git pull`: `scripts/build-dev.sh` (submoduły na przypiętych commitach, `submodule.recurse=true`,
+   build, walidacja, lint; `--remote` podbija do upstreamu, `--no-build` tylko submoduły).
+5. Upstream: job `upstream-bump` w `.github/workflows/build-plugin.yml` codziennie podbija wszystkie dostępne submoduły,
+   otwiera PR i merguje go sam, gdy przejdą build, walidacja, lint i testy. PR otwarty = patch się nie nakłada: popraw
+   patch, przebuduj, zmerguj ręcznie.
 
 ## Zasady
 - Reguły i instrukcje, które model ma dostać przy pracy nad sprawą, wpisuj do skilli lub `shared/` pluginu,

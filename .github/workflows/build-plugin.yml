@@ -2,16 +2,20 @@ name: build-plugin
 
 # Przebudowuje plugins/grounding-prawo z selection/selection.yaml, own-skills/ i submodułów vendor/.
 # - push zmieniający selekcję, skille własne, patche lub skrypt: przebudowa i commit wyniku na main
-# - tygodniowo: podbicie przypiętych commitów upstreamu na osobnej gałęzi i PR (patche mogą się nie nałożyć,
-#   więc zmiana upstreamu nigdy nie trafia na main bez przeglądu)
+# - codziennie: podbicie wszystkich submodułów do upstreamu na osobnej gałęzi i PR; PR jest mergowany
+#   automatycznie, gdy przejdą build, walidacja, lint i testy. Przy porażce (np. patch się nie nakłada)
+#   PR zostaje otwarty z samym podbiciem vendor/ do przeglądu. Prywatne submoduły (bez dostępu dla
+#   GITHUB_TOKEN) zostają na przypiętym commicie.
 on:
   pull_request:
     branches: [main]
+    # archive/ nie wchodzi do builda; PR Dependabota nie dostaje sekretów, więc build i tak by padł
+    paths-ignore: ["archive/**"]
   push:
     branches: [main]
     paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr"]
   schedule:
-    - cron: "17 5 * * 1"
+    - cron: "17 5 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -99,33 +103,86 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GIT_TERMINAL_PROMPT: "0"
     steps:
       - uses: actions/checkout@v4
-      - run: git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
-      - run: git submodule update --remote --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
+      - name: Podbicie wszystkich submodułów
+        id: bump
+        run: |
+          set -uo pipefail
+          skipped=""
+          for p in $(git config -f .gitmodules --get-regexp '^submodule\..*\.path$' | awk '{print $2}'); do
+            git submodule update --init --remote --depth 1 -- "$p" >/dev/null 2>&1 || { skipped="$skipped $p"; echo "::warning::bez dostępu, przypięty commit zostaje: $p"; }
+          done
+          echo "skipped=${skipped# }" >> "$GITHUB_OUTPUT"
+          git diff --quiet -- vendor && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
       - name: Przypięty commit prywatnego the-ocr
+        if: steps.bump.outputs.changed == 'true'
         id: ocr-ref
         run: echo "sha=$(git rev-parse HEAD:vendor/docs/the-ocr)" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
+      - if: steps.bump.outputs.changed == 'true'
+        uses: actions/checkout@v4
         with:
           repository: elconcept/the-ocr
           ref: ${{ steps.ocr-ref.outputs.sha }}
           path: vendor/docs/the-ocr
           ssh-key: ${{ secrets.THE_OCR_READ_KEY }}
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - if: steps.bump.outputs.changed == 'true'
+        uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install pyyaml
-      - name: Build na nowym upstreamie
-        run: python3 -I scripts/build.py
-      - run: python3 -I scripts/validate_marketplace.py
-      - name: PR
+      - if: steps.bump.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - name: Build, walidacja, lint i testy na nowym upstreamie
+        if: steps.bump.outputs.changed == 'true'
+        id: check
+        continue-on-error: true
         run: |
-          git diff --quiet && git diff --cached --quiet && exit 0
-          B="upstream-bump-$(date +%Y%m%d)"
+          set -euo pipefail
+          pip install -q pyyaml
+          python3 -I scripts/build.py
+          python3 -I scripts/validate_marketplace.py
+          python3 -I scripts/lint_refs.py
+          node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
+          python3 -m unittest discover -s tests -p test_sync_legal.py
+      - name: PR i automatyczny merge
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          OK: ${{ steps.check.outcome == 'success' }}
+          SKIPPED: ${{ steps.bump.outputs.skipped }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          B="upstream-bump-$(date +%Y%m%d-%H%M)"
           git config user.name "build-plugin"; git config user.email "actions@users.noreply.github.com"
           git checkout -b "$B"
-          git add -A vendor plugins .agents
-          git commit -m "upstream: podbicie LexMachina i awesome-matematic-skills-pl"
-          git push origin "$B"
-          gh pr create --title "Upstream: nowe wersje skilli" --body "Automatyczne podbicie submodułów i przebudowa pluginu. Sprawdź diff plugins/ i patche."
+          if [ "$OK" = true ]; then
+            git add -A vendor plugins .agents
+          else
+            # nieudany build: w PR tylko podbicie vendor/, plugins/ zostaje z main
+            git checkout -- plugins .agents 2>/dev/null || true
+            git clean -fdq -- plugins .agents
+            git add -A vendor
+          fi
+          changed=$(git diff --cached --name-only -- vendor | sed 's|^|- `|; s|$|`|')
+          git commit -q -m "upstream: podbicie submodułów" -m "$changed"
+          git push -q origin "$B"
+          body="Automatyczne podbicie submodułów do upstreamu.
+
+          Zmienione:
+          $changed
+
+          Pominięte (brak dostępu, przypięty commit): ${SKIPPED:-brak}
+          Przebieg: $RUN_URL"
+          old=$(gh pr list --state open --json number,headRefName -q '.[] | select(.headRefName | startswith("upstream-bump-")) | .number')
+          url=$(gh pr create --base main --head "$B" --title "Upstream: podbicie submodułów $(date +%F)" --body "$body")
+          for n in $old; do gh pr close "$n" --delete-branch -c "Zastąpiony przez $url" || true; done
+          if [ "$OK" = true ]; then
+            # GitHub liczy mergeable asynchronicznie tuż po utworzeniu PR
+            for i in 1 2 3 4 5; do gh pr merge "$url" --merge --delete-branch && exit 0; sleep 15; done
+            exit 1
+          else
+            gh pr comment "$url" -b "Build, walidacja, lint lub testy nie przeszły na nowym upstreamie (najczęściej patch w selection/patches/ się nie nakłada). PR zawiera tylko podbicie vendor/; popraw patch, przebuduj i zmerguj ręcznie. Log: $RUN_URL"
+            exit 1
+          fi
