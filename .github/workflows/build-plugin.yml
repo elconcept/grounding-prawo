@@ -176,7 +176,12 @@ jobs:
           Pominięte (brak dostępu, przypięty commit): ${SKIPPED:-brak}
           Przebieg: $RUN_URL"
           old=$(gh pr list --state open --json number,headRefName -q '.[] | select(.headRefName | startswith("upstream-bump-")) | .number')
-          url=$(gh pr create --base main --head "$B" --title "Upstream: podbicie submodułów $(date +%F)" --body "$body")
+          if ! url=$(gh pr create --base main --head "$B" --title "Upstream: podbicie submodułów $(date +%F)" --body "$body"); then
+            # repo bez "Allow GitHub Actions to create and approve pull requests": zielony bump idzie wprost na main
+            [ "$OK" = true ] || { echo "::error::build nie przeszedł, a PR nie da się utworzyć; gałąź $B"; exit 1; }
+            git push -q origin "HEAD:main" && git push -q origin --delete "$B"
+            exit 0
+          fi
           for n in $old; do gh pr close "$n" --delete-branch -c "Zastąpiony przez $url" || true; done
           if [ "$OK" = true ]; then
             # GitHub liczy mergeable asynchronicznie tuż po utworzeniu PR

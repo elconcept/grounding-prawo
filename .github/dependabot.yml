@@ -1,0 +1,19 @@
+# Alerty bezpieczeństwa tylko dla kodu utrzymywanego tutaj. plugins/ jest generowany z vendor/,
+# vendor/ to submoduły (aktualizuje je job upstream-bump), archive/ to kosz. Wersjonowe PR wyłączone (limit 0).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directories: ["/**"]
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 0
+    exclude-paths: ["plugins/**", "vendor/**", "archive/**"]
+  - package-ecosystem: uv
+    directories: ["/**"]
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 0
+    exclude-paths: ["plugins/**", "vendor/**", "archive/**"]
+  - package-ecosystem: pip
+    directories: ["/**"]
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 0
+    exclude-paths: ["plugins/**", "vendor/**", "archive/**"]
