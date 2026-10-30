@@ -126,8 +126,16 @@ fakt z akt; jeśli tekst podaje go jako fakt z akt, to ustalenie FAKT_BEZ_ZRODLA
 Każde pismo dostaje pełny zestaw soczewek: E1 + `marko-pl-content` + `atak-przeciwnika-pl` + `pierwsze-wrazenie-sedziego-pl`
 + `MOD-ATAK-NA-DRAFT` + `deliverable-fidelity-pl` + E2 (spójność pełna) + E4 pełne + `adversarial-legal-review-pl`
 (4 role, panel rozbieżności) + `subsumpcja-pl` + `zarzuty-do-opinii-bieglego` odwrotnie (załączniki techniczne).
-Nie ma stawek S/M/L ani limitu rund wynikającego z kosztu. Soczewki uruchamiaj jako osobne przebiegi, najlepiej w osobnych
-kontekstach (recenzent bez wniosków poprzednich); „OK" jednej nie zwalnia z następnej.
+Nie ma stawek S/M/L ani limitu rund wynikającego z kosztu. „OK" jednej soczewki nie zwalnia z następnej.
+
+**Soczewki LLM wykonuje wyłącznie `scripts/lens_runner.py`** (decyzja D12): każda jako osobny proces `claude`
+(Sonnet) albo `codex` (GPT-6.1 Sol, `high`), przypisanie w `references/lens_runner.json`. Koordynator (model,
+który prowadzi szturm) nie formułuje ustaleń soczewek, nie odgrywa ich ról, nie używa do nich subagentów
+własnego hosta i nie zapisuje plików w `RUN/ustalenia/` poza soczewkami E1 (skrypty). `synteza.py` odrzuca
+(exit 3) plik ustaleń LLM bez zgodnego wpisu w `RUN/soczewki/manifest.json`. Soczewka niewykonana (brak CLI,
+błąd, niepoprawny JSON po próbie naprawy; exit 2) = stop: pokaż błąd z `RUN/soczewki/bledy/` i zapytaj
+użytkownika (ponów, inny wykonawca na jego polecenie, pomiń z adnotacją, przerwij). Brak zastępstwa.
+Host bez `claude`/`codex` (claude.ai, Cowork) nie przeprowadzi szturmu: powiedz to wprost.
 
 Pętla E8 trwa do stanu `GOTOWE` (kryterium niżej i w `shared/ZASADY-PLUGINU.md`, „Pętla doskonalenia pisma”), minimum 2 pełne
 przebiegi. Przerwać może tylko autor - wtedy stan `NIEGOTOWE`.
@@ -137,8 +145,9 @@ należą do `citation-grounding-pl`.
 
 ### Pojedyncza soczewka na żądanie
 
-Gdy użytkownik prosi o jedną kontrolę („co powie druga strona”, „jak to przeczyta sędzia”, „sprawdź cytaty”), uruchom tylko ją,
-w tej samej pętli: uwagi wdroż w nowej wersji `_vN+1` i powtórz soczewkę. Skróty: `marko` = `marko-pl-content`,
+Gdy użytkownik prosi o jedną kontrolę („co powie druga strona”, „jak to przeczyta sędzia”, „sprawdź cytaty”), uruchom tylko ją
+(E0 tylko ekstrakcja draftu, potem `lens_runner.py --lens <skrót>`). Wynikiem jest raport ustaleń, bez pętli E8
+i bez poprawiania pisma; poprawki i ponowną soczewkę wykonuj dopiero na polecenie użytkownika. Skróty: `marko` = `marko-pl-content`,
 `sedzia` = `pierwsze-wrazenie-sedziego-pl`, `atak` = `atak-przeciwnika-pl`, `debata` = `adversarial-legal-review-pl`,
 `fidelity` = `deliverable-fidelity-pl`, `ocena` = `ocena-outputu-pl`, `subsumpcja` = `subsumpcja-pl`,
 `cytaty` = `citation-grounding-pl` (ekstrakcja i weryfikacja), `styl` = `pisz-po-polsku`.
@@ -184,9 +193,14 @@ do `RUN/ustalenia/<NN>_<soczewka>.json` - nie osobny raport.
   orzeczenia** (metadane SAOS bywają błędne), przepis z obowiązującego t.j. (MCP `ustawy` (tekst jednolity)).
   Konektor offline → wynik oznaczony jako niezweryfikowany; → ustalenie `DOWOD` „NIEPEWNE - źródło
   niedostępne”, nigdy „OK”.
-- **E3 niezależnie.** Soczewki IZOLOWANE (sędzia, przeciwnik) dostają sam draft i tezę - bez akt,
-  bez cudzych ustaleń. Mając subagentów, puść je równolegle. Rolę przeciwnika dobierz do sprawy
-  (oskarżyciel publiczny, gdy pokrzywdzony nie jest oskarżycielem posiłkowym).
+- **E2-E4 (LLM) przez wykonawcę.** Izolację wymusza `lens_runner.py`: `zimna` (sędzia, przeciwnik, marko) dostaje
+  sam draft i tezę, `material` dostaje też rejestry i wskazany materiał; żadna nie widzi cudzych ustaleń.
+  ```bash
+  python3 $SZ/lens_runner.py --run RUN --draft RUN/pismo.clean.nl.txt --dokument PISMO \
+      --teza "<teza z rejestrów>" --rejestry RUN/rejestry.json --material <akta .md> --all
+  ```
+  Rolę przeciwnika dobierz do sprawy (oskarżyciel publiczny, gdy pokrzywdzony nie jest oskarżycielem
+  posiłkowym) i wpisz ją do `--teza`.
 - **E4 mierz, nie oceniaj na oko:**
   ```bash
   python3 $SZ/metryki_stylu.py RUN/pismo.clean.md RUN/ekspertyza.clean.md   # #30, #34, pauzy, podkreślenia
@@ -345,6 +359,7 @@ Bez tabel per skill i bez streszczeń raportów soczewek - one są w `RUN/ustale
 | `scripts/fix_format.py` | E4/E7: tekst w stylu nagłówka, podkreślenia, puste nagłówki (python-docx przez `uv run`) |
 | `references/recenzja-zawiadomienia.md` | tryb ZOP-R, zawsze przy recenzji zawiadomienia |
 | `references/schemat-rozszerzenia.json` | pytania i nowe gałęzie ZOP-R, osobno od edycji |
+| `scripts/lens_runner.py` | E2-E4: soczewki LLM jako osobne procesy `claude`/`codex`, izolacja, walidacja, `_proweniencja`, manifest |
 | `scripts/synteza.py` | E5/E6: schemat, deduplikacja, bramki i zakazy, edits dla adeu, raport |
 | `scripts/clean_targets.py` | E7: markdown z targetów, jednoznaczność dopasowania (używany też przez synteza.py) |
 | `scripts/weryfikuj_wynik.py` | E7/E8: struktura redline, placeholdery, brak PDF w output i DOCX w drafty |

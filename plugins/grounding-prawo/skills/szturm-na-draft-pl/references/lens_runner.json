@@ -1,0 +1,27 @@
+{
+  "_opis": "Konfiguracja scripts/lens_runner.py. Decyzja D12 (30.10.2026): soczewki LLM wyłącznie jako osobne procesy claude/codex; bez OpenRoutera, bez zastępstwa przez koordynatora. Przypisania modeli do weryfikacji benchmarkiem.",
+  "providers": {
+    "claude": {"command": "claude", "model": "sonnet", "timeout_s": 1800},
+    "codex": {"command": "codex", "model": "gpt-6.1-sol", "reasoning_effort": "high", "timeout_s": 1800}
+  },
+  "izolacja": {
+    "zimna": "Recenzent dostaje wyłącznie draft z numerami linii i tezę. Bez akt, bez rejestrów, bez cudzych ustaleń.",
+    "material": "Recenzent dostaje draft, tezę, rejestry (fakty potwierdzone, decyzje autora) i wskazany materiał dowodowy. Bez cudzych ustaleń."
+  },
+  "lenses": {
+    "pierwsze-wrazenie-sedziego-pl": {"providers": ["claude"], "izolacja": "zimna", "mandat": ["modules/pierwsze-wrazenie-sedziego-pl/MODULE.md"]},
+    "atak-przeciwnika-pl": {"providers": ["codex"], "izolacja": "zimna", "mandat": ["modules/atak-przeciwnika-pl/MODULE.md"]},
+    "atak-na-draft": {"providers": ["codex"], "izolacja": "material", "mandat": ["../shared/MOD-ATAK-NA-DRAFT.md"]},
+    "subsumpcja-pl": {"providers": ["codex"], "izolacja": "material", "mandat": ["modules/subsumpcja-pl/MODULE.md"]},
+    "adversarial-legal-review-pl": {"providers": ["claude", "codex"], "izolacja": "material", "mandat": ["modules/adversarial-legal-review-pl/MODULE.md"]},
+    "spojnosc-dowodow": {"providers": ["codex"], "izolacja": "material", "mandat": ["references/soczewki.md#E2 "]},
+    "deliverable-fidelity-pl": {"providers": ["claude"], "izolacja": "material", "mandat": ["modules/deliverable-fidelity-pl/MODULE.md"]},
+    "ocena-outputu-pl": {"providers": ["claude"], "izolacja": "material", "mandat": ["modules/ocena-outputu-pl/MODULE.md"]},
+    "marko-pl-content": {"providers": ["claude"], "izolacja": "zimna", "mandat": ["modules/marko-pl-content/MODULE.md"]}
+  },
+  "skroty": {
+    "sedzia": "pierwsze-wrazenie-sedziego-pl", "atak": "atak-przeciwnika-pl", "debata": "adversarial-legal-review-pl",
+    "subsumpcja": "subsumpcja-pl", "dowody": "spojnosc-dowodow", "fidelity": "deliverable-fidelity-pl",
+    "ocena": "ocena-outputu-pl", "marko": "marko-pl-content"
+  }
+}

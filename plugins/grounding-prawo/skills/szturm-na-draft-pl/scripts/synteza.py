@@ -408,6 +408,32 @@ def raport(grupy: list[dict], odrzucone: list[dict], rej: dict) -> str:
     return "\n".join(L) + "\n"
 
 
+def sprawdz_proweniencje(sciezki: list[Path]) -> list[str]:
+    """Plik ustaleń soczewki LLM musi pochodzić z lens_runner.py: wpis w <RUN>/soczewki/manifest.json
+    ze zgodnym sha256 pliku i istniejącą surową odpowiedzią. Pliki wyłącznie soczewek E1 (skrypty) są wolne."""
+    import hashlib
+    bledy = []
+    for p in sciezki:
+        for f in (sorted(p.glob("*.json")) if p.is_dir() else [p]):
+            dane = json.loads(f.read_text(encoding="utf-8"))
+            if isinstance(dane, dict):
+                dane = dane.get("ustalenia", [dane])
+            nazwy = {str(x).rstrip("/").rsplit("/", 1)[-1] for u in dane
+                     for x in (u.get("soczewki") or []) + [u.get("soczewka")] if x}
+            if nazwy and nazwy <= E1:
+                continue
+            run = f.parent.parent
+            mf = run / "soczewki" / "manifest.json"
+            wpisy = json.loads(mf.read_text(encoding="utf-8"))["przebiegi"] if mf.exists() else []
+            h = hashlib.sha256(f.read_bytes()).hexdigest()
+            w = next((w for w in wpisy if Path(w.get("plik", "")).name == f.name and w.get("sha256_pliku") == h), None)
+            if not w:
+                bledy.append(f"{f.name}: brak zgodnego wpisu w soczewki/manifest.json (soczewka nie z lens_runner.py albo plik zmieniony)")
+            elif not (run / w["odpowiedz"]).exists():
+                bledy.append(f"{f.name}: brak surowej odpowiedzi {w['odpowiedz']}")
+    return bledy
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("ustalenia", nargs="+", type=Path, help="pliki JSON soczewek albo katalog")
@@ -415,7 +441,20 @@ def main() -> int:
     ap.add_argument("--md", action="append", default=[], help="DOKUMENT=plik.clean.md (do sprawdzenia targetow)")
     ap.add_argument("--poprzednie", type=Path, help="ustalenia.scalone.json z poprzedniej rundy (stale ID)")
     ap.add_argument("-o", "--out", type=Path, required=True)
+    ap.add_argument("--bez-proweniencji", action="store_true",
+                    help="tylko testy na fixture: przyjmij ustalenia LLM spoza lens_runner.py")
     a = ap.parse_args()
+    if not a.bez_proweniencji:
+        try:
+            bp = sprawdz_proweniencje(a.ustalenia)
+        except (OSError, json.JSONDecodeError, KeyError) as e:
+            bp = [f"manifest lub ustalenia nieczytelne: {e}"]
+        if bp:
+            print("BLAD proweniencji (D12): ustalenia soczewek LLM tylko z lens_runner.py; nie pisz ich sam.",
+                  file=sys.stderr)
+            for b in bp:
+                print(f"  {b}", file=sys.stderr)
+            return 3
     try:
         rej = json.loads(a.rejestry.read_text(encoding="utf-8")) if a.rejestry else {}
         ustalenia = wczytaj_ustalenia(a.ustalenia)

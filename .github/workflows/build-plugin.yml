@@ -1,11 +1,12 @@
 name: build-plugin
 
 # Przebudowuje plugins/grounding-prawo z selection/selection.yaml, own-skills/ i submodułów vendor/.
-# - push zmieniający selekcję, skille własne, patche lub skrypt: przebudowa i commit wyniku na main
-# - codziennie: podbicie wszystkich submodułów do upstreamu na osobnej gałęzi i PR; PR jest mergowany
-#   automatycznie, gdy przejdą build, walidacja, lint i testy. Przy porażce (np. patch się nie nakłada)
-#   PR zostaje otwarty z samym podbiciem vendor/ do przeglądu. Prywatne submoduły (bez dostępu dla
-#   GITHUB_TOKEN) zostają na przypiętym commicie.
+# - PR i push: build, walidacja, lint, testy oraz kontrola, że commit zawiera plugins/ zgodny z buildem.
+#   CI nigdy nie commituje ani nie pushuje na main (decyzja D0, 30.10.2026): wydaniem jest tylko
+#   ręcznie zmergowany PR. Rozjazd plugins/ = błąd; przebuduj lokalnie (scripts/build.py) i dołącz wynik.
+# - codziennie: podbicie wszystkich submodułów do upstreamu na osobnej gałęzi i PR do przeglądu, bez
+#   automatycznego merge, dopóki nie działa benchmark jakości (testy A i B z _PLAN). Prywatne submoduły
+#   (bez dostępu dla GITHUB_TOKEN) zostają na przypiętym commicie.
 on:
   pull_request:
     branches: [main]
@@ -59,13 +60,16 @@ jobs:
         with: { node-version: "22" }
       - run: node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
       - run: python3 -m unittest discover -s tests -p test_sync_legal.py -v
-      - name: Commit wyniku
-        if: github.event_name != 'pull_request'
+      - name: Wykonawca soczewek szturmu (atrapy CLI)
+        run: python3 -m unittest discover -s plugins/grounding-prawo/skills/szturm-na-draft-pl/tests -p test_lens_runner.py -v
+      - name: plugins/ zgodny z buildem
         run: |
-          git config user.name "build-plugin"
-          git config user.email "actions@users.noreply.github.com"
-          git add plugins .agents
-          git diff --cached --quiet || (git commit -m "build: przebudowa pluginu z selekcji" && git push)
+          git add -N plugins .agents
+          if ! git diff --quiet -- plugins .agents; then
+            git diff --stat -- plugins .agents | tail -20
+            echo "::error::plugins/ nie odpowiada źródłom: uruchom scripts/build.py i dołącz wynik do commita"
+            exit 1
+          fi
 
       - name: Checkout legal do synchronizacji
         if: github.event_name != 'pull_request'
@@ -146,7 +150,8 @@ jobs:
           python3 -I scripts/lint_refs.py
           node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
           python3 -m unittest discover -s tests -p test_sync_legal.py
-      - name: PR i automatyczny merge
+          python3 -m unittest discover -s plugins/grounding-prawo/skills/szturm-na-draft-pl/tests -p test_lens_runner.py
+      - name: PR do przeglądu
         if: steps.bump.outputs.changed == 'true'
         env:
           OK: ${{ steps.check.outcome == 'success' }}
@@ -177,16 +182,13 @@ jobs:
           Przebieg: $RUN_URL"
           old=$(gh pr list --state open --json number,headRefName -q '.[] | select(.headRefName | startswith("upstream-bump-")) | .number')
           if ! url=$(gh pr create --base main --head "$B" --title "Upstream: podbicie submodułów $(date +%F)" --body "$body"); then
-            # repo bez "Allow GitHub Actions to create and approve pull requests": zielony bump idzie wprost na main
-            [ "$OK" = true ] || { echo "::error::build nie przeszedł, a PR nie da się utworzyć; gałąź $B"; exit 1; }
-            git push -q origin "HEAD:main" && git push -q origin --delete "$B"
-            exit 0
+            # bez uprawnienia Actions do PR: gałąź zostaje, PR otwiera człowiek; nigdy push na main
+            echo "::error::PR nie da się utworzyć; gałąź $B czeka na ręczny PR"
+            exit 1
           fi
           for n in $old; do gh pr close "$n" --delete-branch -c "Zastąpiony przez $url" || true; done
           if [ "$OK" = true ]; then
-            # GitHub liczy mergeable asynchronicznie tuż po utworzeniu PR
-            for i in 1 2 3 4 5; do gh pr merge "$url" --merge --delete-branch && exit 0; sleep 15; done
-            exit 1
+            gh pr comment "$url" -b "Build, walidacja, lint i testy techniczne przeszły. Merge ręczny po przeglądzie zmian upstreamu i benchmarku (decyzja D0). Log: $RUN_URL"
           else
             gh pr comment "$url" -b "Build, walidacja, lint lub testy nie przeszły na nowym upstreamie (najczęściej patch w selection/patches/ się nie nakłada). PR zawiera tylko podbicie vendor/; popraw patch, przebuduj i zmerguj ręcznie. Log: $RUN_URL"
             exit 1
