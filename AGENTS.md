@@ -28,9 +28,9 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
    więc klienci aktualizują się po SHA commita (przypięta wersja blokowała aktualizacje). Wersja semver jest tylko w manifeście Codex.
 4. Nowy host albo po `git pull`: `scripts/build-dev.sh` (submoduły na przypiętych commitach, `submodule.recurse=true`,
    build, walidacja, lint; `--remote` podbija do upstreamu, `--no-build` tylko submoduły).
-5. Upstream: job `upstream-bump` w `.github/workflows/build-plugin.yml` codziennie podbija wszystkie dostępne submoduły,
-   otwiera PR i merguje go sam, gdy przejdą build, walidacja, lint i testy. PR otwarty = patch się nie nakłada: popraw
-   patch, przebuduj, zmerguj ręcznie.
+5. Upstream: job `upstream-bump` w `.github/workflows/build-plugin.yml` codziennie podbija wszystkie dostępne submoduły
+   i otwiera PR do przeglądu; nie merguje go sam i nigdy nie pushuje na `main` (decyzja D0, 30.10.2026). CI nie
+   commituje wyniku builda: `plugins/` niezgodny ze źródłami = czerwony check, przebuduj lokalnie i dołącz do commita.
 
 ## Zasady
 - Reguły i instrukcje, które model ma dostać przy pracy nad sprawą, wpisuj do skilli lub `shared/` pluginu,
