@@ -92,8 +92,9 @@ nazwij oddzielnie. Weryfikacja prawa i rzeczywistych cytatów pozostaje; nie prz
    nie pomijaj kontroli z powodu kosztu tokenów ani liczby pauz. Nie istnieje skrócona ścieżka
    ani warunek uruchomienia debaty zależny od stawki - zestaw kontroli jest zawsze ten sam.
 2. **Soczewki w osobnych przebiegach.** Kontrole pisma (cytaty, atak przeciwnika, pierwsze wrażenie
-   sędziego, subsumpcja, debata, ponowny grounding po poprawkach) uruchamiaj jako oddzielne przebiegi,
-   najlepiej w osobnych kontekstach. Wynik "OK" jednej nie zwalnia z następnej.
+   sędziego, subsumpcja, debata, ponowny grounding po poprawkach) uruchamiaj jako oddzielne przebiegi.
+   Soczewki LLM wykonuje wyłącznie `szturm-na-draft-pl/scripts/lens_runner.py` jako osobne procesy
+   `claude`/`codex`; model prowadzący nie odgrywa ich sam. Wynik "OK" jednej nie zwalnia z następnej.
 3. **Oryginalne dane.** Pracuj na oryginałach: imiona, nazwiska, adresy i sygnatury zostają w treści,
    bez znaczników zastępczych i bez pytań o maskowanie.
 4. **Oryginał jest nietykalny.** Parsery i OCR tworzą nowe reprezentacje tekstowe; nigdy nie zmieniają
@@ -133,6 +134,6 @@ Pętla działa jak ralph loop: to samo zlecenie wraca na najnowszą wersję, aż
 7. **Wznowienie:** stan pętli żyje w `_FINDINGS.md` i `_PRZEBIEGI.md` pisma oraz w notatce pisma w Basic Memory,
    więc to samo zlecenie w nowej sesji kontynuuje od ostatniej wersji, nie od zera.
 
-Orkiestrator pętli: `szturm-na-draft-pl` (E8). Soczewka uruchomiona samodzielnie też podlega pętli:
-po jej uwagach nowa wersja i ponowne uruchomienie tej soczewki. Zawiadomienie pokrzywdzonego: pętla
+Orkiestrator pętli: `szturm-na-draft-pl` (E8). Soczewka uruchomiona samodzielnie na prośbę użytkownika
+(np. sama lektura sędziego) kończy się raportem ustaleń; nowa wersja i ponowna soczewka dopiero na jego polecenie. Zawiadomienie pokrzywdzonego: pętla
 trybu ZOP-R (pytania rozszerzające i rozbudowa relacji) według `szturm-na-draft-pl`.

@@ -26,7 +26,7 @@ cp "$HERE/fixture_rejestry.json" "$W/RUN/rejestry.json"
 cp "$HERE/fixture_ustalenia.json" "$W/RUN/ustalenia/01_test.json"
 set +e
 python3 "$SZ/synteza.py" "$W/RUN/ustalenia" --rejestry "$W/RUN/rejestry.json" \
-  --md PISMO="$W/RUN/PISMO_v1.clean.md" -o "$W/RUN" > "$W/RUN/synteza.log"
+  --md PISMO="$W/RUN/PISMO_v1.clean.md" -o "$W/RUN" --bez-proweniencji > "$W/RUN/synteza.log"
 rc=$?
 set -e
 [ $rc -eq 0 ] && ok "E5 synteza (exit 0)" || { cat "$W/RUN/synteza.log"; zle "E5 synteza exit $rc"; }

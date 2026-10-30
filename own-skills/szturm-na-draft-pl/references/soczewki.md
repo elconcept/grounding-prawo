@@ -30,8 +30,9 @@ Wspólne reguły dla wszystkich soczewek:
 - **Liczba w new_text** tylko z pomiarem albo źródłem w polu `dowod`.
 - Soczewka, która nic nie znalazła, zapisuje pustą listę `[]`. „OK” bez listy nie istnieje.
 
-Jeżeli środowisko ma subagentów, soczewki E3 uruchamiaj równolegle, każdą z samym jej wejściem
-(niezależność jest celem - soczewka, która widzi cudze ustalenia, powtarza je zamiast szukać).
+Soczewki LLM (E2-E4) uruchamia wyłącznie `scripts/lens_runner.py`, równolegle, każdą w osobnym procesie
+z samym jej wejściem (niezależność jest celem - soczewka, która widzi cudze ustalenia, powtarza je zamiast
+szukać). Koordynator ich nie odgrywa i nie używa do nich subagentów hosta.
 
 ---
 

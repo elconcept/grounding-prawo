@@ -345,11 +345,34 @@ Recenzja niezależna (GPT) zweryfikowana w kodzie. Przyjęte poprawki zastępuj�
     osób trzecich, treść dokumentów, wyniki weryfikacji i hipotezy; pełna treść relacji i dokumentów zostaje.
     Rejestr pochodzenia służy analizie sprzeczności, nie amerykańskim regułom dopuszczalności dowodu.
 
+## Decyzje 30.10.2026 (druga tura) i stan wykonania
+
+- **D0 (TAK, wykonane):** CI nie commituje i nie pushuje na `main`; `upstream-bump` otwiera PR bez auto-merge
+  i bez awaryjnego pushu; build sprawdza zgodność `plugins/` ze źródłami. Ochrona gałęzi `main` (wymagany PR
+  i check) do ustawienia w GitHub.
+- **D7:** `ralph-loop`, `implementation-planning`, `plan-review`, `karpathy-guidelines`, `hookify` nie wchodzą do
+  `grounding-prawo`; osobny audyt jako narzędzia deweloperskie, nie blokuje szturmu.
+- **D11:** modele bazowe Claude Sonnet i GPT-6.1 Sol (`high`); pełny test 3 powtórzenia na kazus, szybki test PR 1;
+  Terra jako konfiguracja porównawcza. Sprawy zamknięte z `legal` mogą tworzyć korpus, ale wydzielony zbiór
+  kontrolny nie jest używany przy projektowaniu skilli. Surowe akta nie są publikowane z wynikami (korpus poza
+  publicznym repo albo w prywatnym submodule; w repo tylko klucze, rubryki i wyniki).
+- **D12 (P1, przed przebudową soczewek; wykonany szkielet):** plan z 24.10 (OpenRouter, `openrouter/free`)
+  zastąpiony. `szturm-na-draft-pl/scripts/lens_runner.py` uruchamia każdą soczewkę LLM jako osobny proces
+  `claude -p` (Sonnet, bez narzędzi, ustawień i MCP) albo `codex exec` (GPT-6.1 Sol `high`, `--ignore-user-config`,
+  sandbox read-only, pusty katalog roboczy), z izolacją `zimna`/`material`, walidacją reguł `synteza.py`,
+  jedną próbą naprawy u tego samego wykonawcy, surową odpowiedzią, `_proweniencja` i manifestem; brak zastępstwa
+  (exit 2 = stop i pytanie). `synteza.py` odrzuca (exit 3) ustalenia LLM bez zgodnego wpisu w manifeście, więc
+  koordynator nie może podłożyć własnych. Przypisania w `references/lens_runner.json`: sędzia, fidelity, ocena,
+  marko → Sonnet; atak, MOD-ATAK-NA-DRAFT, subsumpcja, spójność dowodów → Sol; debata → oba niezależnie.
+  Kontrole cytatów, sygnatur i terminów zostają deterministyczne (E1). Pozostaje: blokada zapisu do
+  `RUN/ustalenia/` hookiem (druga warstwa obok manifestu), benchmark przypisań (Sonnet / Sol / Terra / dotychczasowe
+  subagenty) na tych samych pismach, limity kosztu na przebieg.
+
 ## Kolejność
 
 1. **P0**: zabezpieczenie wydań (D0).
 2. **P1**: inwentaryzacja semantyczna scaleń i build odrzucający martwe odwołania.
-3. **P1**: testy A i B oraz mały korpus C; pomiar bazowy `main` z zamrożonymi wersjami modeli, promptów i MCP.
+3. **P1**: wykonawca soczewek D12 (szkielet gotowy) i jego benchmark; testy A i B oraz mały korpus C; pomiar bazowy `main` z zamrożonymi wersjami modeli, promptów i MCP.
 4. **P1**: routing typów pism (9.1, 9.2), `pierwsze-wrazenie-sedziego` (9.3), ślad wykonania jako test.
 5. **P2**: kontrakt i normalizator MD (pkt 3), potem `stan-sprawy` z terminami i harmonogramem (pkt 2).
 6. **P2**: RODO, rejestr ryzyk, przegląd tabelaryczny, teczka (pkt 5, 1, 4, 6), każdy osobnym PR z przypadkami
@@ -365,6 +388,4 @@ Przyjęte 30.10.2026 jako robocze (rekomendacja planu i recenzji zgodna): D2 oso
 akta; D5 nowy skill RODO po stronie podmiotu; D6 teczka jako widok z BM; D9 samodzielne `pierwsze-wrazenie-sedziego`;
 D10 zawężony router i leniwe ładowanie. Otwarte:
 
-- D0: wyłączyć push na `main` z CI i auto-merge upstreamu bez testów A i B (cofa PR #76).
-- D7: gdzie są włączone `ralph-loop`, `implementation-planning`, `plan-review`, `karpathy-guidelines`, `hookify`.
-- D11: budżet benchmarku (modele, powtórzenia) i czy sprawy zamknięte mogą być materiałem korpusu.
+- D0, D7, D11, D12: rozstrzygnięte 30.10.2026 (sekcja wyżej).
