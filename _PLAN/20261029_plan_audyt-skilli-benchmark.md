@@ -278,24 +278,93 @@ plugin w obecnym kształcie nie ma przewagi i przebudowa idzie od tego, co wnosi
 
 ---
 
+## Korekta po recenzji (30.10.2026)
+
+Recenzja niezależna (GPT) zweryfikowana w kodzie. Przyjęte poprawki zastępują odpowiednie fragmenty punktów 1-11.
+
+**Potwierdzone w kodzie i dopisane do diagnozy:**
+- CI publikuje bez kontroli jakości prawnej: job `upstream-bump` scala PR sam po buildzie, walidacji, lincie
+  i 2 testach technicznych (`build-plugin.yml:149-188`), a bez uprawnienia do PR pushuje na `main`
+  (`build-plugin.yml:97`, `:182`; dodane w PR #76). Job `build` też commituje wynik na `main` (`:68`).
+- Build jest transformacją semantyczną, nie kopiowaniem: `fold()`, `merge()`, `scrub_file()` i
+  `scripts/retire_layers.py` (604 linie podmian z asercjami). Raport rozmiarów nie dowodzi równoważności.
+- `case-risk` odwołuje się do nieistniejących `civil_liability_and_litigation_risk_map.md`,
+  `criminal_liability_medical_consent_map.md`, `court_administrative_supervision_map.md`,
+  `mental_health_article_map.md` (`SKILL.md:149-152`) i do komendy `/tk-medical-consent-check`
+  (`SKILL.md:75`, także w modułach `medical-consent` i `uoozp-compliance`); `lint_refs.py` tego nie łapie.
+- Spadek jakości pism przez niewczytywanie modułów typów (H1) i omijanie soczewek (H2) to hipotezy:
+  porównanie plików pokazuje tylko, że treść istnieje, nie że jest używana.
+
+**Zmiany planu:**
+1. **P0 bezpieczeństwo wydań** (nowy pierwszy krok): bez pushu na `main` z CI; podbicie upstreamu zawsze jako PR;
+   auto-merge wyłącznie po przejściu testów A i B (niżej); job `build` zamiast commitu na `main` otwiera PR.
+   Decyzja D0.
+2. **P1 inwentaryzacja semantyczna**: `scripts/report.py` rozszerzony o bilans reguł per skill upstreamu:
+   miejsce w pluginie, punkt wywołania (opis, router, odsyłacz), reguły bez zmian / zmienione / usunięte
+   z powodem (z `scrub_file`, `retire_layers`, patchy), status testów. Osobny bilans IURA i soczewek MateMatic.
+   Build odrzuca skill, który zniknął bez wpisu `drop`, i martwe odwołanie do pliku lub komendy.
+3. **Ślad wykonania**: benchmark uruchamia `claude -p --output-format stream-json`, z którego wynika, które pliki
+   skilli i modułów faktycznie przeczytano i które narzędzia MCP wywołano. Test routingu: „apelacja karna” →
+   `prawny-router-v3` → `pisma-procesowe-v3` → odczyt `modules/typy/apelacja-karna.md` → pismo zgodne z checklistą
+   modułu. Przeniesienie tabeli typów (pkt 9.2) to naprawa, ślad to dowód.
+4. **pkt 1 `case-risk`**: rejestr bez iloczynu waga × prawdopodobieństwo jako miary szans. Pozycja: zagrożenie,
+   skutek, ustalenia za i przeciw (z kotwicą w aktach), niepewność, działania, priorytet. Usunąć martwe odwołania.
+5. **pkt 2**: osobny skill `stan-sprawy` (D2), kalkulator tylko liczy. Rejestr rozróżnia daty: sporządzenia,
+   nadania, wpływu, doręczenia, zdarzenia wyzwalającego, końca terminu; każda zmiana statusu ma dokument lub
+   potwierdzoną czynność. Przypomnienia poza sesją wymagają realnego harmonogramu (cron na NAS lub routine)
+   i kanału powiadomień; przepis `wachta-terminow` w pluginie ich nie tworzy.
+6. **pkt 3 kontrakt MD**: znacznik `==< <document_name> (Page x/y) >==` liczy strony dokumentu (wymóg właściciela).
+   Gdy jeden PDF źródłowy zawiera kilka dokumentów, frontmatter dokumentu podaje `zrodlo_pdf` i
+   `zrodlo_strony: [od, do]`, więc cytat da się odnieść do strony fizycznego pliku. Normalizator poprawia sam tylko
+   zmiany bezpieczne mechanicznie (brak `---`, format znacznika przy jednoznacznej nazwie); konflikt nazw, zbiorcze
+   `Page 1-4/4` i brak stron zgłasza do porównania z PDF. Wybór ekstraktora (`pdftotext -layout`, PyMuPDF,
+   MarkItDown, OpenDataLoader) tylko po benchmarku ekstrakcji (tabele, dwie kolumny, pieczęcie, dopiski, strony
+   mieszane), nie z góry.
+7. **pkt 5 RODO**: skill rozróżnia reżimy: RODO; ustawa z 14.12.2018 o ochronie danych osobowych przetwarzanych
+   w związku z zapobieganiem i zwalczaniem przestępczości (Policja, prokuratura); dostęp do akt z KPK/KPW;
+   dokumentacja medyczna z ustawy o prawach pacjenta. Organ i sprawa wyznaczają reżim, nie odwrotnie.
+8. **pkt 9.3 pierwsze wrażenie**: samodzielny skill-wrapper bez kopii treści (czyta moduł szturmu), kończy się
+   raportem, bez pętli i bez poprawek; w szturmie usunąć sprzeczność między „każda soczewka obowiązkowa”
+   a „pojedyncza soczewka na żądanie”.
+9. **pkt 10 pisma proste**: router zawężony do profilu i leniwe ładowanie schematu po wyborze typu; usunięcie
+   schematów spoza profilu dopiero po teście ablation, nie z góry. Skarga do UODO poza pismami prostymi.
+10. **pkt 11 benchmark**, trzy warstwy:
+    - A deterministyczne (pass/fail): MD, znaczniki stron, frontmatter, terminy, schematy BM, build, kompletność
+      modułów, martwe odwołania;
+    - B behawioralne (ze śladu wykonania): właściwy skill i moduł, kontrola cytatu wykonana, relacja zachowana,
+      brak zbędnego pełnego szturmu;
+    - C merytoryczne: rubryka, ocena parami A/B, sędzia kalibrowany na ocenach właściciela (zgodność mierzona).
+    Korpus C: 24-36 odrębnych kazusów rozłożonych na typy spraw, każdy z materiałem, kluczem, twierdzeniami
+    wymaganymi i niedopuszczalnymi oraz źródłami prawa na datę kazusu; poprawna alternatywna argumentacja nie traci
+    punktów. Konfiguracje do oceny skilli mają ten sam dostęp do MCP (C1 vs C2-C6); C0 bez MCP mierzy tylko
+    całe rozwiązanie. Ablation: `C5 minus <skill/moduł>` dla skilli, o których decydujemy. Błędy klasyfikowane
+    wagą; krytyczne (zmyślony przepis, sygnatura lub cytat; błędny termin zawity) blokują wydanie, drobne obniżają
+    wynik. Stare benchmarki LexMachina i MateMatic zostają jako osobny zestaw regresyjny. Wynik 9,16 / +0,03
+    z 15.09 nie przesądza o wartości pluginu; pokazuje brak miary na właściwym korpusie.
+11. **Pochodzenie ustaleń**: w ustaleniach wtórnych oddzielać bezpośrednie spostrzeżenia użytkownika, twierdzenia
+    osób trzecich, treść dokumentów, wyniki weryfikacji i hipotezy; pełna treść relacji i dokumentów zostaje.
+    Rejestr pochodzenia służy analizie sprzeczności, nie amerykańskim regułom dopuszczalności dowodu.
+
 ## Kolejność
 
-1. **Benchmark: korpus B1-B6 i pierwszy pomiar** (bez niego żadna z poniższych zmian nie ma miary).
-2. Pkt 9.1-9.2 (przywrócenie pisma, tabela typów): mała zmiana, bezpośredni test H1.
-3. Pkt 3 (normalizacja MD): fundament dla pkt 4, 6 i rejestru.
-4. Pkt 2 (rejestr `_stan` i terminy), potem pkt 5 i 6, które z niego korzystają.
-5. Pkt 10, 4, 1, 8, 9.3-9.4.
-6. Pkt 7 po decyzji D7.
+1. **P0**: zabezpieczenie wydań (D0).
+2. **P1**: inwentaryzacja semantyczna scaleń i build odrzucający martwe odwołania.
+3. **P1**: testy A i B oraz mały korpus C; pomiar bazowy `main` z zamrożonymi wersjami modeli, promptów i MCP.
+4. **P1**: routing typów pism (9.1, 9.2), `pierwsze-wrazenie-sedziego` (9.3), ślad wykonania jako test.
+5. **P2**: kontrakt i normalizator MD (pkt 3), potem `stan-sprawy` z terminami i harmonogramem (pkt 2).
+6. **P2**: RODO, rejestr ryzyk, przegląd tabelaryczny, teczka (pkt 5, 1, 4, 6), każdy osobnym PR z przypadkami
+   regresyjnymi; `/transkrypcja` (pkt 8).
+7. **P3**: pełny korpus, porównanie z upstreamami, ablation; usuwanie tylko elementów bez potwierdzonej wartości.
+8. Pkt 7 po decyzji D7: narzędzia deweloperskie poza pluginem prawniczym, chyba że test wykaże korzyść.
 
-Każdy krok: osobny PR, przebieg szybkiego benchmarku, wynik w opisie PR.
+Każdy krok: osobny PR, przebieg testów A i B (od P1 także szybki C), wynik w opisie PR.
 
 ## Decyzje właściciela
 
-- D2: rejestr spraw i terminów jako moduł `kalkulatory-procesowe-pl` czy osobny skill `stan-sprawy`.
-- D4: `patron-przeglad-tabelaryczny` przebudować pod akta (A) czy wycofać (B).
-- D5: RODO po stronie podmiotu jako nowy skill własny (zalecane) czy wycofać bez zastępstwa.
-- D6: teczka jako eksport z BM (zalecane) czy moduł `wiki-basic-memory`.
+Przyjęte 30.10.2026 jako robocze (rekomendacja planu i recenzji zgodna): D2 osobny `stan-sprawy`; D4 przebudowa pod
+akta; D5 nowy skill RODO po stronie podmiotu; D6 teczka jako widok z BM; D9 samodzielne `pierwsze-wrazenie-sedziego`;
+D10 zawężony router i leniwe ładowanie. Otwarte:
+
+- D0: wyłączyć push na `main` z CI i auto-merge upstreamu bez testów A i B (cofa PR #76).
 - D7: gdzie są włączone `ralph-loop`, `implementation-planning`, `plan-review`, `karpathy-guidelines`, `hookify`.
-- D9: tani tryb `pierwsze-wrazenie-sedziego` jako komenda/skill-wrapper (odstępstwo od reguły scaleń).
-- D10: które pisma proste zostają.
-- D11: budżet benchmarku (modele, liczba powtórzeń) i czy sprawy zamknięte mogą być materiałem korpusu.
+- D11: budżet benchmarku (modele, powtórzenia) i czy sprawy zamknięte mogą być materiałem korpusu.
