@@ -6,6 +6,35 @@
 
 > **Nadrzędny zakaz:** REPERTORIUM działa; nie zmieniać jego kodu, kontenera, bazy, indeksu, obrazu, osobnego endpointu, routingu ani polityk w celu „naprawy”. Zmiany w innych usługach mogą tylko bezpiecznie SKORZYSTAĆ z istniejącego REPERTORIUM po odczytowym sprawdzeniu dostępu. Nie wdrażać niczego przed testem staging i planem rollbacku.
 
+## AKTUALIZACJA IMPLEMENTACYJNA — prace po 01:05, bez merge i deploy (31.10.2026)
+
+**Ta sekcja jest nowsza niż stare wpisy o czerwonym CI USTAWY i braku adaptera PDF. Starsze PASS/FAIL tabeli poniżej są snapshotem sprzed tego postępu.**
+
+### USTAWY PR #81 — zielony build
+
+- Na gałęzi `feat/eli-local-resolver-20261031` zsynchronizowano jedynie **dwa** wygenerowane pliki `plugins/grounding-prawo/skills/patron-prawo-pl-zrodla/scripts/{ustawy.py,ustawy_mcp.py}` z odpowiadającymi `own-skills`. Porównanie znak-po-znaku potwierdziło brak innych różnic poza brakującym `akt_po_eli`. Dwa commity: `490757fe9c49ae29ced0b82951b509223c29d347`, `c4bfbfd21ddd05ba57c1497618051450e468f5d5`.
+- **GitHub Actions build-plugin SUCCESS** w nowym przebiegu `41153638658` na HEAD `c4bfbfd21ddd05ba57c1497618051450e468f5d5`. Źródło: https://github.com/elconcept/grounding-prawo/actions/runs/41153638658 . Poprzedni czerwony run `41149480617` jest historyczny, nie bieżącą blokadą.
+- **Nie scalono do main i nie wdrożono** nowego USTAWY na NAS. Zielony workflow dotyczy budowy i testów w repo, nie smoke MCP produkcyjnego.
+
+### Resolver PR #4 — prototypowa, rzeczywista integracja legal-cite bez publicznych nowych tools
+
+Na gałęzi `feat/minimalny-resolver-repertorium-20261031` dodano i podłączono:
+- `src/prawo_pl_mcp/legal_cite_pdf_adapter.py`: import oryginalnego `legal_cite.pdf_tj` w odrębnym workerze; posługuje się `_konwertuj` (eli2md), `_warstwa` (pdftotext), `przypisy_md`, `jednostki_md` i `wiernosc_pdftotext`; **przyjmuje lokalny już pobrany PDF**, kontroluje monotoniczność, brak niejednoznaczności i pojedynczy numer artykułu; zapisuje PDF, ekstrakt i raport SHA. Potwierdzenie dotyczy **pojedynczego artykułu, a nie całego aktu i jego załączników**. Kod obsługuje `na_dzien` w analizie, ale zewnętrzny publiczny resolver jeszcze nie udostępnia wersjonowania według daty.
+- `src/prawo_pl_mcp/eli_pdf_fallback.py`: cache konkretnego artykułu `eli:DU/...#art:N`; odrzuca brak raportu wierności/identyfikatora, weryfikuje SHA załączonego ekstraktu i zapisuje w lokalnym SQLite. Po zapisaniu kolejne wywołanie czyta bez browsera. Uwaga: obecna schema cache wymaga jeszcze pełnego wersjonowania po dacie i rodzaju tekstu.
+- `webwright_internal.py` udostępnia **trzeci wyłącznie wewnętrzny** tool `fetch_eli_pdf`, nie wystawiany modelowi. Wewnątrz jednej sieci Docker obsługuje ELI PDF-only tylko po lokalnym miss, gdy podano konkretny art. `browser_bridge.py` ma jawny allowlist toola.
+- `slim_resolver.py::_eli`: USTAWY → cache artykułów → oficjalne ELI metadane → gdy brak HTML i jest konkretny art., próba `legal-cite` PDF fallback. Gdy nie podano artykułu, pełen akt PDF-only **nadal nie jest rozwiązywany jako strukturalnie zweryfikowany dokument**.
+- `Dockerfile.webwright`: izolowane zależności legal-cite-pl na SHA `2c4b7bf6e2af56b42b8b87a9bdbfe93d8078c988` instalowane z `--no-deps` (unika konfliktu MCP<2 z FastMCP3), `eli2md` na SHA `9cb6a7c179a1cb4b86fe502a565784cd1132fc78`, Poppler/pdftotext, httpx, git. **Docker build obrazu NIE ODBYŁ SIĘ**; zgodność zależności jest projektem, nie potwierdzona.
+- Zaostrzono stary `pdf_ingest.py` i Webwright SN/CELEX: heurystyczny PDF daje `kandydat_pdf_zapisany`, `dokument_pelny=false`; `_promuj_pdf` SN/CELEX jest zablokowany, dopóki brak niezależnej kontroli orzeczeń/aktów UE. Tym sposobem usunięto **fałszywą ścieżkę awansu pypdf do trusted** na tych dwóch rodzajach.
+- `local_corpus.save_fragment` odrzuca zapis, gdy `len(tekst) != returnedLength` lub fragment wykracza poza `totalLength`; test regresyjny dodany.
+- Nowe testy: `tests/test_legal_cite_pdf_adapter.py`, `tests/test_eli_pdf_fallback.py`; poprawiono starsze testy statusu PDF i długości fragmentu.
+
+**Wykonana walidacja offline:** moduły Python AST 5/5 PASS, cache SHA, cache hit ELI, fragment o złej długości odrzucony, mock dwuczytnikowego adaptera PDF PASS — przeprowadzona w izolowanym procesie Pythona z kontrolowanymi bibliotekami, NIE na realnym PDF. **Pełny pytest / prawdziwe eli2md+Poppler na wejściu urzędowym / Docker build / staging MCP jeszcze NOT RUN.** Zaktualizowano workflow `.github/workflows/ci.yml` dla gałęzi, ale przy ostatnim sprawdzeniu GitHub API podawało **0 runów**; nie ogłaszać zielonego CI.
+
+**Krytyczne otwarte zadania:** weryfikacja pełnej publikacji PDF-only, poprawne wersjonowanie `na_dzien` i nowe t.j., całościowa bariera trusted dla innych metod `save_cache` (HTML może nie zawierać załączników), weryfikacja ścisłej zgodności `structuredContent.text`/chunku SAOS i NSA, polski korpus CELEX/CELLAR, parser orzeczeń SN/MS/TK, adaptery KRS/UODO/ECLI, build Webwright i prawdziwe testy źródłowe.
+
+**REPERTORIUM:** nadal nietknięte; wcześniejsza poprawka przypisania portalu Cloudflare pozostaje niezależna. Żadnego merge do main.
+
+
 ## AKTUALIZACJA — rzeczywista naprawa przypisania REPERTORIUM do Cloudflare lex (31.10.2026)
 
 **Stan PO naprawie (nowszy niż historyczne pomiary 8/56 w dalszej części dokumentu):**
