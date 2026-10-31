@@ -35,3 +35,27 @@ jobs:
         run: |
           docker run --rm --entrypoint python lex-webwright-offline:test -c \
             'from legal_cite import pdf_tj; import eli2md.pdf, eli2md.tree; import prawo_pl_mcp.webwright_internal; import prawo_pl_mcp.webwright_asgi; assert pdf_tj.wersja_pdftotext(); print("PASS: legal-cite, eli2md, Poppler, Webwright imports")'
+      - name: Real official ELI PDF through production adapter (no MCP transport)
+        run: |
+          docker run --rm -i --entrypoint python lex-webwright-offline:test - <<'PY'
+          import json
+          from prawo_pl_mcp.legal_cite_pdf_adapter import przeanalizuj_pdf_eli
+          result = przeanalizuj_pdf_eli("DU/2024/917", "23", "/data/webwright/verified")
+          report = result.get("raport") or {}
+          summary = {
+              "status": result.get("status"),
+              "pdf_sha256": result.get("pdf_sha256"),
+              "report_sha256": result.get("raport_sha256"),
+              "wierny_odczyt": report.get("wierny_odczyt"),
+              "monotoniczna_numeracja": report.get("monotoniczna_numeracja"),
+              "artykul_kompletny": result.get("artykul_kompletny"),
+              "dokument_pelny": result.get("dokument_pelny"),
+              "artykul": result.get("artykul"),
+          }
+          print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
+          assert result.get("status") == "wierny_odczyt_artykulu_z_pdf", result
+          assert result.get("artykul_kompletny") is True
+          assert result.get("dokument_pelny") is False
+          assert report.get("wierny_odczyt") is True
+          assert result.get("pdf_sha256") == "a36f110f05298013b3625985630d4cb2292e4a32271858b2f5012e8276383e06"
+          PY
