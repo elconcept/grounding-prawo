@@ -1,5 +1,18 @@
 # GLOBALNY SNAPSHOT / HAND-OFF — pełen ekosystem MCP portalu LEX
 
+## BRAMKA TESTOWA 31.10.2026 — pełne offline pytest PR #4: 119 PASS
+
+**Potwierdzony wynik:** [GitHub Actions 41193646017](https://github.com/elconcept/grounding-prawo/actions/runs/41193646017), `conclusion=success`. Niezależny publiczny GitHub runner Ubuntu odczytał dokładnie `elconcept/mcp-prawo-wrapper@82876920638b8588bcfdb00ef6b02e27f50a1a32`, zainstalował rzeczywiste zależności `fastmcp>=3.4,<4` oraz `[dev]`, wykonał `python -m pytest tests/ -q -k 'not smoke'`: **119 passed in 1.28s, zero błędów**. Raport JUnit zachowano jako Actions artifact. Workflow wyłącznie w odrębnej gałęzi repo pomocniczego `grounding-prawo`, bez merge, wdrożenia, tokenów produkcyjnych i restartów.
+
+**Limity dowodu:** 119 testów to pełen offline pytest na prawdziwym runtime FastMCP, ale bez sieciowego `smoke`, bez Dockera, bez transportu MCP/Cloudflare. Dodatkowo 20 kontroli behawioralnych w izolowanym Pythonie sprawdziło realne SQLite i integralność źródłowego PDF/raportu. Rzeczywista niezależna konwersja ELI art.23 także PASS w [Actions 41181610211](https://github.com/elconcept/grounding-prawo/actions/runs/41181610211).
+
+**Niewyjaśnione:** repo `mcp-prawo-wrapper` jest **publicznym forkiem** `matematicsolutions/prawo-pl-mcp`, a własny endpoint Actions nadal pokazuje `total_count=0`, mimo że workflow `ci.yml` istnieje w `main`. Możliwa kwestia Actions settings/aktywacji forka, lecz brak odczytu uprawnień, więc **nie przedstawiać jako potwierdzonej przyczyny**.
+
+**Dalsza niezależna bramka:** [workflow budowy obrazu Webwright bez deploy](https://github.com/elconcept/grounding-prawo/blob/docs/20261031-lex-global-handoff/.github/workflows/lex-wrapper-docker-build.yml) na dokładnym tym samym commicie; jego wynik należy weryfikować osobno, nie zakładać sukcesu.
+
+---
+
+
 ## DOPISEK KONTROLNY 31.10.2026 — historyczna data ELI + nienaruszalne cache (PR #4, bez merge)
 
 **Stan gałęzi:** `elconcept/mcp-prawo-wrapper` [draft PR #4](https://github.com/elconcept/mcp-prawo-wrapper/pull/4), zmiany wyłącznie na `feat/minimalny-resolver-repertorium-20261031`. Nie ruszano `main`, kodu REPERTORIUM ani wdrożonych serwisów.
