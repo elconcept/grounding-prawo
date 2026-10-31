@@ -302,6 +302,53 @@ class Baza:
             out["komentarz"] = r["komentarz"]
         return out
 
+    def akt_po_eli(self, eli: str, offset: int = 0, limit: int = 5000,
+                   art: str | None = None) -> dict:
+        """Bezpośredni read-only odczyt polskiego korpusu po ELI.
+
+        Wewnętrzny endpoint resolvera; NIE jest wyszukiwarką. Obsługuje tylko
+        dokładne identyfikatory publikacji. Nie odpowiada pełnemu plikowi Dz.U.
+        (brak załączników), zatem świadomie raportuje dokument_pelny=False.
+        """
+        if not re.fullmatch(r"(DU|MP)/\d{4}/\d{1,5}", eli, re.I):
+            return {"status": "INVALID_ELI", "eli": eli}
+        if type(offset) is not int or offset < 0 or type(limit) is not int or limit < 1 or limit > 20000:
+            return {"status": "INVALID_RANGE", "offset": offset, "limit": limit}
+        meta = self.con.execute("SELECT * FROM akty WHERE UPPER(eli)=UPPER(?)", (eli,)).fetchone()
+        if not meta:
+            return {"status": "OUT_OF_SCOPE", "eli": eli,
+                    "powod": "Dokładny tekst tej publikacji nie występuje w lokalnej bazie USTAWY"}
+        if art:
+            numer = norm_art(art)
+            rows = self.con.execute(
+                "SELECT art, brzmienie FROM artykuly WHERE akt=? AND art=?",
+                (meta["akt"], numer),
+            ).fetchall()
+        else:
+            rows = self.con.execute(
+                "SELECT art, brzmienie FROM artykuly WHERE akt=? ORDER BY rowid",
+                (meta["akt"],),
+            ).fetchall()
+        if not rows:
+            return {"status": "NOT_FOUND", "eli": eli, "art": art,
+                    "powod": "Brak artykułu w lokalnym korpusie"}
+        tekst = "\n\n".join(str(r["brzmienie"] or "").strip()
+                          for r in rows if str(r["brzmienie"] or "").strip())
+        total = len(tekst)
+        frag = tekst[offset:offset + limit]
+        next_offset = offset + len(frag)
+        more = next_offset < total
+        return {"status": "FOUND", "eli": meta["eli"], "akt": meta["akt"],
+                "tytul": meta["tytul"], "tekst_jednolity": meta["tekst_jednolity"],
+                "stan_na": meta["stan_na"], "zrodlo": meta["zrodlo"],
+                "art": art, "tekst": frag,
+                "totalLength": total, "returnedLength": len(frag),
+                "offset": offset, "hasMore": more,
+                "nextOffset": next_offset if more else None,
+                "dokument_pelny": False, "kompletnosc": "zaindeksowane_artykuły",
+                "uwaga": "Lokalna baza USTAWY nie gwarantuje pełnego oryginalnego Dz.U. "
+                         "z załącznikami i późniejszymi zmianami. " + uwaga(meta)}
+
     def szukaj(self, q: str, akt: str | None = None, zakres: str | None = None, limit: int = 10) -> list[dict]:
         words = [w for w in re.findall(r"\w+", fold(q)) if w]
         if not words:
