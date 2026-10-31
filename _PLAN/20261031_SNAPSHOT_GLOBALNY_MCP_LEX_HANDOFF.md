@@ -6,6 +6,33 @@
 
 > **Nadrzędny zakaz:** REPERTORIUM działa; nie zmieniać jego kodu, kontenera, bazy, indeksu, obrazu, osobnego endpointu, routingu ani polityk w celu „naprawy”. Zmiany w innych usługach mogą tylko bezpiecznie SKORZYSTAĆ z istniejącego REPERTORIUM po odczytowym sprawdzeniu dostępu. Nie wdrażać niczego przed testem staging i planem rollbacku.
 
+## AKTUALIZACJA 31.10.2026, 04:00+ — kontynuacja prac bez merge i deploy
+
+**Nowsze niż poprzednie sekcje.** Resolver PR #4: `elconcept/mcp-prawo-wrapper` branch `feat/minimalny-resolver-repertorium-20261031`. USTAWY PR #81 nadal draft, CI green [run 41153638658](https://github.com/elconcept/grounding-prawo/actions/runs/41153638658). REPERTORIUM niezmienione.
+
+### SAOS: sprawdzone realne metadane, zaostrzona bramka
+W wywołaniu przez bieżący portal `lex` SAOS `saos:166511`, `offset=0`, `limit=100`: `totalLength=7686`, `returnedLength=100`, `nextOffset=100`, `citations`; w wyniku widocznym dla Code Mode NIE BYŁO tekstu fragmentu. Nie dowodzi to automatycznie, że surowe MCP nie podaje tekstu; może odfiltrowywać go pośrednik. W `_orzeczenie` nie wystarcza już sama obecność metadanych: wymagane `len(tekst)==returnedLength==min(PAGE_CHARS,totalLength-offset)`, poprawne `offset`, `nextOffset` i `hasMore`. W przeciwnym razie `niezweryfikowany_fragment`, bez tekstu i bez zapisu cache. Dodano test metadata-only. **Do zrobienia:** niezależny test surowego JSON-RPC SAOS/NSA (nie tylko portal), ustalenie formatu pola tekstowego i poprawna paginacja bez utraty.
+
+### ELI PDF: wersjonowany cache na datę
+Publiczny `pobierz_dokument` przyjmuje opcjonalne `na_dzien=RRRR-MM-DD`. Cache zweryfikowanego artykułu PDF ma klucz `eli:DU/ROK/POZ#art:N#day:RRRR-MM-DD`. Daty różne nie dzielą cache. Jawna historyczna data nie powoduje wyświetlenia bez dowodu obecnego tekstu USTAWY jako dawnego; źródłowy worker otrzymuje tę samą datę, raport jest porównywany. **Nie jest to pełna rekonstrukcja stanu prawnego po wszystkich nowelizacjach!** `aktualnosc_prawna` nadal niezweryfikowana. Potrzebne wersje t.j. + nowelizacje z legal-cite.
+
+### KRS i UODO: pierwsze adaptery natywne w resolverze
+Dodano obsługę `krs:28860` / `KRS 0000028860` → `get_entity(krs,rejestr=P)` oraz `uodo:PublicDocument-...` → `uodo_get_decision(id)`. Odczyt stronicowany, bez awansu do trusted cache, `dokument_pelny=false` / `kompletnosc=niezweryfikowana`. Nie obsługuje jeszcze pełnego historycznego odpisu KRS (rejestr S), dokładnego wyszukiwania UODO po sygnaturze ani kontroli kompletności decyzji — wymagany dalszy etap. Dodano testy poprawnych i pustych wyników.
+
+### Staging NAS: poprawiono bezpośrednią sieć i porty
+Odczyty Portainer Docker potwierdziły współdzieloną sieć zewnętrzną `lab` w źródłach. Usunięto **wymyślony/niezweryfikowany** literalny IP `10.0.10.201` z `deploy/minimal-legal/compose.staging.yaml`. Resolver staging dołączy do `lab` i prywatnej sieci `legal_private`. Planowane URI:
+- SAOS `http://mcp-saos:8000/mcp`, NSA `http://mcp-nsa:8000/mcp`,
+- USTAWY `http://mcp-ustawy:8080/mcp` (wewnętrzny 8080, host 8412),
+- EU-SPARQL `http://mcp-eu-sparql:8000/mcp`,
+- KRS `http://mcp-krs:8000/mcp`, UODO `http://mcp-uodo:3000/mcp` (wewnętrzny 3000, host 8403).
+
+**Staging nie uruchamiano:** DNS i ruch MCP między nowymi kontenerami to nadal NOT RUN.
+
+### Testy i bramki
+- **PASS offline (izolowany proces Python z atrapami brakujących bibliotek):** AST 9 modułów/testów; ELI data/cache HIT/MISS po dacie, SAOS metadata-only odrzucane, poprawny fake chunk akceptowany, parsowanie/routing KRS/UODO i odmowa pełności. Oddzielna kontrola AST 8 plików i mock natywnych narzędzi KRS/UODO również PASS.
+- **NOT RUN:** pełny pytest na rzeczywistym FastMCP, Docker build, oficjalny ELI PDF z prawdziwym eli2md/Poppler, direct source-level SAOS/NSA, KRS/UODO E2E, Webwright MS/TK, Cloudflare 2-tool. Actions wrappera nadal 0 runów — brak zielonego CI; USTAWY #81 green.
+- Brak merge do main, brak zmiany produkcji i REPERTORIUM. Szczegółowy plan integracji legal-cite i Webwright pozostaje w fazach 3A/3B poniżej.
+
 ## AKTUALIZACJA IMPLEMENTACYJNA — prace po 01:05, bez merge i deploy (31.10.2026)
 
 **Ta sekcja jest nowsza niż stare wpisy o czerwonym CI USTAWY i braku adaptera PDF. Starsze PASS/FAIL tabeli poniżej są snapshotem sprzed tego postępu.**
