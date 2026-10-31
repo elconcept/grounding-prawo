@@ -61,6 +61,17 @@ def artykul(akt: str, art: str, komentarz: bool = False) -> dict:
     return baza().artykul(akt, art, komentarz)
 
 
+
+@server.tool(annotations=RO)
+def akt_po_eli(eli: str, offset: int = 0, limit: int = 5000, art: str | None = None) -> dict:
+    """Wewnętrzny read-only resolver ELI: exact DU/2024/917, fragment zaindeksowanych artykułów.
+
+    Nie zastępuje oryginalnej publikacji z załącznikami. Parametry offset/limit
+    pozwalają pobrać kolejne strony bez przechodzenia przez publiczną wyszukiwarkę.
+    """
+    return baza().akt_po_eli(eli, offset, limit, art)
+
+
 @server.tool(annotations=RO)
 def cytat(akt: str, art: str, fragment: str) -> dict:
     """Czy fragment występuje dosłownie (bez różnic w odstępach i cudzysłowach) w brzmieniu artykułu.
