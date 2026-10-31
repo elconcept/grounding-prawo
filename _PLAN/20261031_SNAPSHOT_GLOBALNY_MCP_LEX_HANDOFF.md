@@ -169,6 +169,69 @@ Użyto konektorów GitHub, lex, Portainer/Synology. Zmiany zapisane na osobnych 
 
 **Gate 3:** testy ELI PDF-only, CELEX/RODO PL, SN pełny PDF i wymaganych orzeczeń; brak fałszywych „verified”.
 
+### FAZA 3A — INTEGRACJA legal-cite-pl: kod, zależności, kontrakt i bramki (NIE TYLKO REKOMENDACJA)
+
+**Cel implementacyjny:** zdolność pobrania, odczytania, zweryfikowania wierności i utrwalenia **pełnego PDF ELI** (także gdy API nie ma HTML) oraz poprawnego odczytu odpowiednich artykułów i wersji obowiązujących na zadany dzień. Projekt `apiotrowski-afk/legal-cite-pl` SHA `2c4b7bf6e2af56b42b8b87a9bdbfe93d8078c988` należy *zaadaptować modułowo*, a NIE dodawać jego publicznych `verify_article`/`list_acts` do portalu (limit 2 tools).
+
+**Moduły i dokładny zakres adaptacji:**
+
+| Źródło legal-cite | Co przenieść i gdzie | Weryfikacja |
+|---|---|---|
+| `legal_cite/pdf_tj.py::odczyt` oraz `_konwertuj` | worker `pdf-legal-ingest` (biblioteka/proces wewnętrzny). Przyjmuje **już pobrane bajty/ścieżkę do PDF** z resolvera/Webwright; rezygnuje z dodatkowego HTTP GET. `eli2md@v0.6.70`, hash oryginału, wersja konwertera | SHA + reprodukowalny Markdown + liczba stron i granice art./` |
+| `pdf_tj.py::_warstwa`, `_tokeny_pdftotext`, `wiernosc_pdftotext`, `wyjasnienia_warstwy` | drugi niezależny czytnik `poppler-utils/pdftotext`; kontrola słów i ich kolejności względem `eli2md`, raport różnic | missing/swap/duplicate token => FAIL lub REVIEW, nie VERIFIED |
+| `pdf_tj.py::jednostki_md`, `przypisy_md` | strukturalny indeks `akt, wersja, artykul, paragraf, przypis, tekst`; rozróżnienie bieżących/przyszłych wariantów jednostek | poprawne numery `117^1`, `479^61`, `23`, `33` i brak zlepienia dwóch brzmień |
+| `core.py::_teksty_jednolite`, `_nowelizacje_po`, `_aktualnosc_pl` | osobny moduł **wersjonowania i aktualności**; wybór publikacji vs t.j. wg żądanej daty **przed** wyborem HTML/PDF; zmiany skuteczne i przyszłe | najnowszy t.j. PDF-only, starszy HTML, data wejścia zmian, brak fikcyjnej aktualności |
+| `core.py::_wersja_eu`, `_fetch_eu`, `extract_eu_article` | adapter CELLAR dla polskiego CELEX/RODO/AI Act, konsolidacji `0...-YYYYMMDD` i XHTML; preferowany przed przeglądarką | tekst `RODO art. 33` po polsku z właściwej wersji; EN → FAIL |
+| `testy/pdf_wiernosc.py`, `testy/wiernosc_warstwy.py`, `testy/krzyzowa.py`, `testy/awaria_html_pdf.py` | adaptacja danych testowych i negatywnych przypadków do własnego pytest/CI; nie kopiować bezrefleksyjnie wyników autorów | testy offline + real ELI w staging PASS |
+
+**Izolacja zależności:** legal-cite jest Apache-2.0, eli2md MIT (tag `v0.6.70`, pin również SHA), Poppler w dedykowanym obrazie/warstwie; źródło ma zależności od `core.py` i starszego MCP niż FastMCP 3.x wrappera. Nie kopiować całego `core.py` jako niezależnej nowej publicznej usługi bez audytu. Minimalny worker z wewnętrznym API (lub moduł uruchamiany poza procesem MCP) jest preferowany, jeśli wynik testów wykaże konflikt zależności. Nie dodaje nowych publicznych tools.
+
+**Kontrakt lokalnego magazynu:** pełny klucz `source_id + document_id + version_id + language + valid_on`, raw PDF i SHA-256, wyciąg `eli2md`, odczyt `pdftotext`, parser_version, raport różnic, kompletność oryginału, official_status, currentness_status, wersja tekstu; `pobrano_at` nigdy nie jest stanem prawnym. Nie nadpisywać wcześniejszych wersji. Ograniczyć CPU/bajty, single-flight konwersji według hasha, czas i retry. Cache **zweryfikowanych** dokumentów oddzielić od cache **kandydatów**.
+
+**Krytyczna zmiana PR #4 do wykonania PRZED jakimkolwiek E2E:** `pdf_ingest.py` obecnie uznaje za zweryfikowany PDF, gdy tekst zawiera numer CELEX lub sygnaturę — numer może pochodzić tylko z cytowanego wyroku, a tekst może być niekompletny. `save_cache` jest zbyt liberalny i pozwala oznaczyć treść jako full/verified. Na tym etapie wprowadzić stany `DOWNLOADED`, `EXTRACTED_UNVERIFIED`, `VERIFIED_FIDELITY`, `REQUIRES_OCR`, `MISMATCH`; automatycznie promować dopiero przy niezależnej kontroli ID w nagłówku/URL metadanych, pełności i wierności. Osobno rozdzielić `full_document_stored` i `current_response_is_partial`.
+
+**Rozróżnienie żądań:** `Dz.U. 2024 poz. 917` = konkretna publikacja, nie automatycznie najnowszy tekst; `artykuł na_dzien` = osobny wybór wersji i nowelizacji. Ten sam akt może mieć różne teksty jednolite, załączniki i daty wejścia poszczególnych zmian. Test spójności: HTML ELI 500, PDF 200 => pełen tekst z właściwego PDF, wierność weryfikowana; awaria ELI ≠ brak przepisu.
+
+**Przejście fazy 3A:** parser ELI PDF-only działa local-first, oryginał i raport są zapisane, błędne słowa/strony są odrzucane, a CI i integracyjny test prawdziwego ELI są zielone. NIE mylić wyniku testu autora z naszym testem.
+
+### FAZA 3B — INTEGRACJA Webwright-legal-pl z legal-cite i lokalnym resolverem
+
+**Stan faktyczny:** PR #4 zawiera już oryginalne skrypty Webwright Apache-2.0 z `matematicsolutions/awesome-matematic-skills-pl` rew. `e99b534` dla **SN** i **EUR-Lex** oraz prototyp prywatnego `webwright_internal.py` z 2 backend toolami. Nie ma rzeczywistych adapterów `orzeczenia.ms.gov.pl` ani `trybunal.gov.pl`. Skrypty źródłowe zapisują metadane, URL PDF, markdown strony i screenshot; znalezienie linku ≠ pobranie pełnego orzeczenia. PR #4 ma `pdf_ingest.py` (pypdf, heurystyka), który trzeba zastąpić/bramkować warstwą jakości.
+
+**Docelowy przepływ (odpowiedzialności bez dodatkowych tools w lex):**
+
+1. Publiczny `pobierz_dokument` otrzymuje `document_id` Repertorium lub ścisły numer/sygnaturę. Lokalne źródło (USTAWY, SAOS mirror, NSA cache, PL UE, KRS, UODO) i zweryfikowany cache są **ZAWSZE pierwsze**. Test: HIT ⇒ **zero** żądań HTTP/Playwright.
+2. MISS kieruje do konkretnego upstream, nigdy do wszystkich równocześnie: Dz.U./M.P. → oficjalny ELI HTML/PDF; CELEX/RODO → **CELLAR XHTML/XML PL** (wersja pierwotna/skonsolidowana) → ewentualnie Webwright EUR-Lex PDF; SN/MS/TK → Webwright do odkrycia i pobrania oficjalnego dokumentu; ECLI → pełne TSUE/CELLAR, nie parser aktu UE.
+3. Webwright działa jako **prywatny MCP** w Docker network, z precyzyjnymi adapterami serwisów, allowlistą domen i redirectów, limitami timeout/CPU/konkurencji, bez obchodzenia CAPTCHA/WAF. Zapisuje raw HTML/PDF, screenshot, URL finalny, sygnaturę, sąd, datę, checksum i ścieżkę artefaktów.
+4. **Te same bajty PDF** dostarcza do workera legal-cite (bez ponownego pobrania) w bezpiecznym lokalnym wolumenie. Worker rozpoznaje typ: akty ELI → strukturalne `eli2md + pdftotext`; CELEX PL → strukturalny XHTML preferowany, PDF fallback → kontrola wierności i języka; orzeczenia SN/MS/TK → **osobny parser orzeczniczy**, kontrola sygnatury **w nagłówku**, sądu, daty, sentencji i uzasadnienia, dwa niezależne odczyty tekstu; algorytm art./` nie nadaje się do wyroków.
+5. Skan bez tekstu → `REQUIRES_OCR`, oryginał pozostaje; opcjonalnie istniejący `mcp-ocr` i jawne `OCR_UNVERIFIED`, nie „urzędowy zweryfikowany tekst”. Wynik metadata/link-only → `CANDIDATE`.
+6. Przy pozytywnej kontroli `source-ID + document-ID + version + fidelity + completeness` resolver zapisuje wersjonowany dokument/fragment, SHA raw i extract, wyniki QC, strony i daty w trwałym cache, a kolejny odczyt idzie lokalnie. **SN opaque-ID nie wolno dopasować do PDF na podstawie arbitralnie podanej przez model sygnatury**; wymagane wiarygodne mapowanie ID Repertorium→dokument urzędowy.
+7. Model dostaje wyłącznie tekst z cytatami/provenance, jasne statusy, `has_more` i `next_offset`. Wszystkie istniejące serwery źródłowe nadal działają samodzielnie, a Webwright/worker nie są publicznymi narzędziami w `lex`.
+
+**Prace do wykonania w repo:**
+
+| Zakres | Lokalizacja/nowa odpowiedzialność | Stan |
+|---|---|---|
+| Interfejs 1-tool/wybór lokalnego źródła | `mcp-prawo-wrapper/src/prawo_pl_mcp/slim_resolver.py` | draft, nie E2E |
+| Cache, provenance i SHA | `local_corpus.py` | prototyp; naprawić brak wersji/QC |
+| Wewnętrzny Webwright | `webwright_internal.py` + `vendor/webwright_legal_pl` | dwa adaptery SN/EUR-Lex, bez realnych testów browser |
+| Worker legal-cite | nowy moduł/worker PDF, import z `legal_cite/pdf_tj.py`/`core.py` | **NIE ZAIMPLEMENTOWANY** |
+| Elastyczny ingest PDF | zastąpić/zaostrzyć `pdf_ingest.py`, integracja worker | prototyp nie jest bezpieczny do trusted cache |
+| MS/TK | nowe skrypty Playwright + parsery orzecznicze | **NIE ZAIMPLEMENTOWANE** |
+| CELEX PL + ECLI | ETL CELLAR po polsku + wersjonowane teksty, osobne drogi dla aktów i wyroków | **NIE ZAIMPLEMENTOWANE** |
+| Prawdziwe testy PDF/UI/CI | pytest z fixtures i staging rzeczywistych źródeł | **NOT RUN** |
+
+**Testy i kryteria odbioru:**
+
+- **ELI:** lokalne `DU/2024/917 art.23` bez API; brak → PDF-only → dwie niezależne ekstrakcje + jakościowy raport → zapisz → restart → lokalny HIT; odrębne wersje i nowelizacje.
+- **CELEX/RODO:** `RODO art.33` urzędowe PL (nigdy angielski tekst z obecnego EU-COMPLIANCE); CELLAR pierwszy fallback, EUR-Lex Webwright drugi; oznacz nieurzędowe konsolidacje; ECLI wyroku TSUE nie jest tekstem rozporządzenia.
+- **SN:** sygnatura musi być zgodna w nagłówku i metadanych, a nie tylko cytowana; pełny PDF, sentencja/uzasadnienie, strony, raw SHA i cache hit bez przeglądarki. Konflikt między `sn:opaque` i sygnaturą → bez promocji.
+- **MS/TK:** nowe adaptery, fixtures oficjalnego HTML/PDF, realne smoke kilku typów dokumentów, udokumentowane braki. Przy braku adaptera wynik `NOT_IMPLEMENTED`.
+- **Negatywne:** brak strony lub słowa, zmieniona kolejność słów, dwie kolumny, błąd PDF/redirect, WAF/CAPTCHA, skan, obca sygnatura, błędny SHA, dwie wersje artykułu, zły offset, timeout, duplikaty równoległe. Żaden nie awansuje do `VERIFIED_FIDELITY` bez dowodu.
+- **Test operacyjny:** cache hit rate, zewnętrzne wywołania na dokument, czas/CPU worker, liczba stron, odtwarzalność SHA i brak utraty `content`/`structuredContent` w łańcuchu MCP→portal→klient.
+
+**Zależności:** 1) naprawa fałszywych stanów verified, 2) źródłowe PR #81/NSA/wrapper #3 z zielonym CI, 3) wewnętrzny worker legal-cite + testy, 4) Webwright→worker→cache dla SN/UE/ELI, 5) MS/TK i CELLAR PL, 6) pokrycie KRS/UODO/ECLI w resolverze, 7) pełny staging 2-tool, 8) cutover portalu z rollbackiem. Zachować licencje i pin zależności. NIE scalać monolitu UE.
+
 ### FAZA 4 — dwa kontenery staging + testy portalu
 - Zbuduj obrazy resolver i wewnętrzny Webwright bez podmieniania produkcyjnych `latest`, z prywatną siecią, readonly mountami upstreamów oraz trwałym cache.
 - Zweryfikuj bezpośrednie MCP: resolver wystawia **1 tool**, Repertorium 1 wyszukiwawcze tool; dodatkowe serwery nie muszą być zarejestrowane jako publiczne tools.
