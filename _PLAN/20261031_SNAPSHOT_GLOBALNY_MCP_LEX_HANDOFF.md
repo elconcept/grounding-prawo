@@ -503,3 +503,51 @@ Użyto konektorów GitHub, lex, Portainer/Synology. Zmiany zapisane na osobnych 
 > Otwórz w całości `_PLAN/20261031_SNAPSHOT_GLOBALNY_MCP_LEX_HANDOFF.md` w repo `elconcept/grounding-prawo`, gałąź `docs/20261031-lex-global-handoff`. To jest nadrzędny snapshot WSZYSTKICH MCP portalu `lex`, a nie tylko PDF. Nie ufaj poprzedniej narracji bez sprawdzenia: ponownie odczytaj 8 enabled upstreamów i 56 tooli, Portainer env=3, działające REPERTORIUM poza katalogiem, dokładne SHA i statusy wszystkich PR-ów i GitHub Actions. Porównaj oryginały z kodem zmienionym i planami. Cel produktu: model w `lex` ma widzieć tylko `szukaj_repertorium` i `pobierz_dokument`, pozostałe serwery pracują wewnętrznie local-first; REPERTORIUM jest nietykalne. Katalog legalny ma być polskojęzyczny bez selektora języka. Skontroluj USTAWY #81 (czerwone CI), wrapper #3/#4 (brak CI), NSA/KRS/EU-SPARQL (zielone CI, bez staging), SAOS, UODO, BASIC-MEMORY, europejskie polskie teksty i CELEX/ECLI, jakość PDF legal-cite, Webwright SN/MS/TK, wersjonowanie oraz zawartość `content`/`structuredContent`. Najpierw sporządź macierz PASS/FAIL/NOT RUN z odnośnikami do kodu/CI. Dopiero potem wykonuj małe, testowalne poprawki na gałęziach i przygotuj staging/rollback. Nie scalaj ani nie wdrażaj przed bramkami faz 0–4. Żadnych zmian w REPERTORIUM, żadnych nowych osobnych policies/tokenów dla każdego backendu.
 
 **Stan dokumentu: snapshot gotowy; żadna z planowanych zmian portalu nie została wdrożona.**
+
+---
+
+## AKTUALIZACJA 31.10.2026 — niezależne E2E FastMCP / Docker (nowsza niż wcześniejsze statusy)
+
+**Stan po serii rzeczywistych testów GitHub-hosted:** odizolowany przepływ konkretnego artykułu ELI **INTEGRATION TESTED: PASS**. PR #4 pozostaje **OPEN / DRAFT**, bez merge do main, bez deploy, bez restartów i jakichkolwiek zmian w produkcyjnym REPERTORIUM. Ten wynik nie oznacza jeszcze pełnego **STAGING VERIFIED** ani **PRODUCTION DEPLOYED**.
+
+### Niezależna weryfikacja początkowa
+
+- Wszystkie PR-y nadal OPEN/DRAFT i niescalone: wrapper [#3](https://github.com/elconcept/mcp-prawo-wrapper/pull/3), wrapper [#4](https://github.com/elconcept/mcp-prawo-wrapper/pull/4), USTAWY [#81](https://github.com/elconcept/grounding-prawo/pull/81), NSA [#2](https://github.com/elconcept/mcp-nsa/pull/2), KRS [#2](https://github.com/elconcept/mcp-krs/pull/2), EU-SPARQL [#1](https://github.com/elconcept/mcp-eu-sparql/pull/1), EU-COMPLIANCE [#1](https://github.com/elconcept/mcp-eu-compliance/pull/1) (monolit architektonicznie wycofany). Base PR #4 nadal gałąź PR #3.
+- Zweryfikowane **oryginalne logi** [pytest 41193646017](https://github.com/elconcept/grounding-prawo/actions/runs/41193646017): 119 passed; oraz [Docker PDF 41193907258](https://github.com/elconcept/grounding-prawo/actions/runs/41193907258): prawdziwy urzędowy PDF, poprawny SHA i adapter legal-cite. Wcześniejsze negatywne opisy w tym pliku są historyczne, nie są aktualną oceną tych bramek.
+- Cloudflare GET: portal `lex-prawo` zawiera 9 upstreamów, w tym `repertorium-oauth` (`on_behalf=false`, `default_disabled=false`). GET samego serwera: `status=ready`, `authentication_status=connected`, `auth_type=oauth`, narzędzia `[szukaj_repertorium]`, ostatni udany sync `2026-10-31 09:49:58`. **Tylko administracyjna obecność/upstream**: katalog rzeczywistej sesji klienta LEX i docelowe dwa narzędzia nadal nie zostały potwierdzone. Konfiguracja Cloudflare niezmieniona.
+
+### Wykryte i naprawione błędy PR #4
+
+1. `src/prawo_pl_mcp/slim_resolver.py`: żądanie `eli:DU/2024/917`, `artykul=23` w obecności `textHTML=true` błędnie zwracało pierwszą stronę całej publikacji zamiast artykułu. Naprawa: dla konkretnego artykułu zawsze ścieżka dwuczytnikowego adaptera PDF, brak dowolnego HTML jako substytutu. Commit [a00b7e6](https://github.com/elconcept/mcp-prawo-wrapper/commit/a00b7e6ac6a54d92f2ce538e17fb83aa7019212e); nowe `tests/test_eli_html_article_precedence.py`, commit [04c9bb1](https://github.com/elconcept/mcp-prawo-wrapper/commit/04c9bb14ea89bb8665c439c5112249155f2d8dca).
+2. `src/prawo_pl_mcp/legal_cite_pdf_adapter.py`: `tempfile.NamedTemporaryFile` zapisywał PDF/raport/TXT z mode 0600, worker jako root, a resolver działał z UID 1029, dlatego `verify_report_artifact` kończył się `PermissionError`. Naprawa: nadaj 0644 tym niezmiennym artefaktom przed atomowym rename; żadnej zmiany SHA/fidelity. Commit [6e72648](https://github.com/elconcept/mcp-prawo-wrapper/commit/6e72648a14efa48fa487126233ee40b86e2cce09). Dodano `tests/test_pdf_artifact_permissions.py`, commit [07af53c](https://github.com/elconcept/mcp-prawo-wrapper/commit/07af53cd7e5e5d9c156e3211d9ff7272bb12679b).
+3. Dodano izolowany workflow `.github/workflows/lex-resolver-e2e.yml` w **`elconcept/grounding-prawo`** na gałęzi `docs/20261031-lex-global-handoff`, z dokładnie przypiętym head PR #4 `07af53cd7e5e5d9c156e3211d9ff7272bb12679b`. Ostatni commit workflow [c772505](https://github.com/elconcept/grounding-prawo/commit/c77250567e990b40ec0e3e889712e1e9fc444e67). Test pracuje na GitHub-hosted ubuntu-latest, buduje dwa nowe obrazy Docker, łączy je izolowaną siecią, prywatnym współdzielonym katalogiem artefaktów i osobnym SQLite. Niczego nie publikuje i nie deployuje.
+
+### Niezależna macierz bramek po poprawkach
+
+| Bramka | Status | Dowód |
+|---|---|---|
+| Docker build resolver i Webwright z dokładnego PR #4 | **PASS** | [Actions 41195956262](https://github.com/elconcept/grounding-prawo/actions/runs/41195956262) |
+| Offline `pytest tests/ -q -k 'not smoke'` | **122 PASS** | ten sam run, rzeczywiste FastMCP |
+| HTTP `tools/list` wewnętrznego workera | **PASS — dokładnie 3 internal tools** | ten sam run |
+| HTTP `tools/list` publicznego resolvera | **PASS — dokładnie 1 tool: pobierz_dokument** | ten sam run |
+| Cold ELI PDF-only: `DU/2024/917`, art. 23, realne legal-cite + Poppler | **PASS**, 998 znaków; `artykul_kompletny=true`, `dokument_pelny=false` | ten sam run |
+| PDF original SHA-256 | **PASS**, `a36f110f05298013b3625985630d4cb2292e4a32271858b2f5012e8276383e06` | ten sam run |
+| Shared PDF/report/text + SQLite + ponowny cache HIT | **PASS** | `fallback_pdf_zapisany_lokalnie` → `lokalny_cache_pdf` |
+| Restart resolvera, worker wyłączony, lokalny cache | **PASS** — tekst nadal 998 znaków | ten sam run |
+| Usunięcie oryginalnego PDF przy wyłączonym workerze | **PASS** — cache nie zostaje uznany za zweryfikowany, status `błąd_źródła` | ten sam run |
+| NSA draft #2 live + kompletne CBOSA | **NOT RUN** | wymaga oddzielnego staging |
+| CELLAR polski CELEX art. 33 | **NOT IMPLEMENTED / NOT RUN** | osobny priorytet |
+| Historyczne `na_dzien` | **FAIL-CLOSED, bez rekonstrukcji zmian** | nadal niegotowe |
+| Cloudflare/Access w docelowej konfiguracji dwóch narzędzi | **NOT RUN** | żadnych zmian w produkcyjnym portalu |
+| Merge do main, production deploy | **NIE WYKONANO — CELOWO** | PR #3/#4/#81/NSA nadal draft |
+
+**Historia testów diagnostycznych:** [41194859972](https://github.com/elconcept/grounding-prawo/actions/runs/41194859972) FAIL (błędna preferencja HTML), [41195110477](https://github.com/elconcept/grounding-prawo/actions/runs/41195110477) FAIL (uprawnienia 0600), [41195330020](https://github.com/elconcept/grounding-prawo/actions/runs/41195330020) FAIL diagnostyczny potwierdzający `PermissionError`, [41195594018](https://github.com/elconcept/grounding-prawo/actions/runs/41195594018) FAIL wyłącznie testowego retry po restarcie (cold/warm PASS), [41195768811](https://github.com/elconcept/grounding-prawo/actions/runs/41195768811) FAIL hostowego usunięcia PDF należącego do root (restart/cache PASS), finalny [41195956262](https://github.com/elconcept/grounding-prawo/actions/runs/41195956262) **SUCCESS** wszystkich kroków. Pierwsze pięć runów są dowodem wykrytych i zamkniętych defektów, nie aktualnym stanem gate.
+
+### Otwarte ryzyka / kolejna kolejność pracy
+
+- Cache PDF-only nadal ma klucz `eli:<publikacja>#art:<numer>#day:<dzień_parsowania>`. Przekroczenie północy może wymusić ponowne pobranie tej samej publikacji; **nie** rozwiązywać tego przez udawanie historycznego `na_dzien`. Opracować test rollover i stabilny klucz tożsamości publikacji/parsing SHA oddzielony od daty stanu prawnego.
+- Kontrola raportu i PDF po usunięciu/zmianie pliku przeszła testy jednostkowe; pełne E2E przeprowadzono dla **usunięcia PDF**. Osobna próba E2E manipulacji raportem, atomowość przy awarii i równoległe pobrania pozostają do wykonania.
+- Uprawnienia 0644 są wystarczające na izolowanym wolumenie publicznych aktów. Przed produkcją osobno ustalić UID/GID, ograniczenia uprawnień i ochronę potencjalnych dokumentów z danymi osobowymi. Zachować montowanie wolumenu tylko do odczytu u resolvera.
+- Najbliższe niezakończone etapy: NSA #2 Unicode/paginacja na staging; lokalne USTAWY #81; oficjalny polski CELLAR art. 33; wersjonowanie prawa, orzeczenia SN/MS/TK; finalny staging Cloudflare i rzeczywista klientowa ekspozycja **dokładnie dwóch** narzędzi. REPERTORIUM pozostaje niezmienione.
+
+**Uwaga do historii:** poniżej i powyżej mogą pozostać starsze sekcje o `119 passed`, `PDF NOT RUN` albo `USTAWY CI FAIL` — są to wpisy historyczne. W każdej sprzeczności obowiązuje data oraz bezpośredni HEAD/CI dowód, nie stary fragment snapshotu.
