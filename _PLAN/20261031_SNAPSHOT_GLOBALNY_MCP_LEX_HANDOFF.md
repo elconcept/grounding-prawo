@@ -1,5 +1,24 @@
 # GLOBALNY SNAPSHOT / HAND-OFF — pełen ekosystem MCP portalu LEX
 
+## DOPISEK KONTROLNY 31.10.2026 — historyczna data ELI + nienaruszalne cache (PR #4, bez merge)
+
+**Stan gałęzi:** `elconcept/mcp-prawo-wrapper` [draft PR #4](https://github.com/elconcept/mcp-prawo-wrapper/pull/4), zmiany wyłącznie na `feat/minimalny-resolver-repertorium-20261031`. Nie ruszano `main`, kodu REPERTORIUM ani wdrożonych serwisów.
+
+**Naprawa krytycznej semantyki `na_dzien`:** poprzednia implementacja dobierała bieżący PDF urzędowej publikacji `text.pdf` i zapisywała go pod kluczem `#day`, przez co mogła zasugerować nieudowodnione historyczne brzmienie artykułu. Teraz publiczny resolver, cache PDF, worker i adapter `legal-cite` **odmawiają historycznego odczytu**, dopóki nie ma wiarygodnej rekonstrukcji wersji i nowelizacji. Zwracany jest `brak_zweryfikowanego_brzmienia_na_dzien`, bez normatywnego tekstu. Data parsowania została oddzielona od `stan_prawny_na` (nieustalone). To zabezpieczenie, NIE ukończona obsługa prawa historycznego.
+
+**Dowód pochodzenia:** `eli_pdf_fallback.py` wymaga do zapisania artykułu nie tylko SHA pliku PDF i tekstu, lecz również **oryginalnego raportu JSON** `<SHA>.json`. Przy każdym cache HIT ponownie porównuje SHA źródłowego PDF i raportu JSON na wspólnym wolumenie. Usunięty lub zmieniony oryginał wyłącza cache. Wciąż obowiązuje `dokument_pelny=false` oraz `aktualnosc_prawna=niezweryfikowana`.
+
+**Paginacja:** `local_corpus.save_fragment` odrzuca brak `nextOffset` przy `hasMore=true`, niezerowy `nextOffset` przy `hasMore=false`, niespójny offset i pusty fragment z deklarowanym ciągiem dalszym; testy regresyjne dopisane.
+
+**Próba behawioralna:** na rzeczywistych czterech plikach źródłowych (Python 3.12, odizolowany `tempfile`, realne SQLite i pliki PDF/JSON) **20 kontroli PASS** po zmianach; zależności FastMCP i wynik workera zastąpiono atrapami. Nie jest to uruchomienie pełnego pytest ani integracji kontenerowej. Faktyczny test **oryginalnego** `legal-cite`/eli2md/Poppler pozostaje niezależnie potwierdzony [Actions 41181610211 SUCCESS](https://github.com/elconcept/grounding-prawo/actions/runs/41181610211), ale nadal NIE dowodzi E2E `webwright→resolver→SQLite`.
+
+**CI wrappera:** [GitHub Actions API repozytorium wrappera](https://github.com/elconcept/mcp-prawo-wrapper/actions) nadal zwraca `total_count=0`, mimo workflow `.github/workflows/ci.yml` również na `main`. Nie zgłaszać pełnego CI PASS.
+
+**Następne zadania:** odnaleźć przyczynę braku uruchomień Actions; uruchomić `pytest` w faktycznych zależnościach runtime; zbudować staging obrazu Webwright; przeprowadzić E2E i kontrolę historycznego wersjonowania. **Bez merge/deploy do czasu ukończenia bramek.**
+
+---
+
+
 **Data:** 31.10.2026 (Europe/Warsaw).  
 **Cel:** niezależny model ma skontrolować całość prac w tym oknie kontekstowym, faktyczny stan 8 MCP w `lex`, dodatkowe REPERTORIUM, proponowaną architekturę, wykonane commity/PR-y, luki, testy i bezpieczną migrację.  
 **Status:** dokument audytowy, nie wdrożenie. Dane źródłowe: odczyt `mcp__lex__portal_list_servers`, katalog `codemode.tools()`, Portainer Docker env=3, GitHub PRs/Actions, wcześniejsze read-only próby REPERTORIUM/USTAWY.
