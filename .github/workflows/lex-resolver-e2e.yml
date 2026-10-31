@@ -19,12 +19,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: elconcept/mcp-prawo-wrapper
-          ref: 82876920638b8588bcfdb00ef6b02e27f50a1a32
+          ref: 04c9bb14ea89bb8665c439c5112249155f2d8dca
           path: wrapper
           persist-credentials: false
       - name: Verify pinned source and build isolated images
         run: |
-          test "$(git -C wrapper rev-parse HEAD)" = "82876920638b8588bcfdb00ef6b02e27f50a1a32"
+          test "$(git -C wrapper rev-parse HEAD)" = "04c9bb14ea89bb8665c439c5112249155f2d8dca"
           docker build -f wrapper/deploy/minimal-legal/Dockerfile.webwright -t lex-e2e-worker:local wrapper
           docker build -f wrapper/deploy/minimal-legal/Dockerfile.resolver -t lex-e2e-resolver:local wrapper
       - name: Start isolated private MCP network and writable artifacts
@@ -45,6 +45,11 @@ jobs:
             -v "$RUNNER_TEMP/lex-e2e/cache:/data" lex-e2e-resolver:local
       - name: Install genuine MCP client
         run: python -m pip install "fastmcp>=3.4,<4"
+      - name: Run all offline pytest including new HTML regression
+        run: |
+          python -m pip install -e './wrapper[dev]'
+          cd wrapper
+          python -m pytest tests/ -q -k 'not smoke'
       - name: Check internal tools/list over Streamable HTTP
         run: |
           docker exec lex-e2e-worker python -c 'import asyncio; from fastmcp import Client; from fastmcp.client.transports import StreamableHttpTransport; async_code = """async def test():
