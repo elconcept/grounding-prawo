@@ -19,12 +19,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: elconcept/mcp-prawo-wrapper
-          ref: 04c9bb14ea89bb8665c439c5112249155f2d8dca
+          ref: 07af53cd7e5e5d9c156e3211d9ff7272bb12679b
           path: wrapper
           persist-credentials: false
       - name: Verify pinned source and build isolated images
         run: |
-          test "$(git -C wrapper rev-parse HEAD)" = "04c9bb14ea89bb8665c439c5112249155f2d8dca"
+          test "$(git -C wrapper rev-parse HEAD)" = "07af53cd7e5e5d9c156e3211d9ff7272bb12679b"
           docker build -f wrapper/deploy/minimal-legal/Dockerfile.webwright -t lex-e2e-worker:local wrapper
           docker build -f wrapper/deploy/minimal-legal/Dockerfile.resolver -t lex-e2e-resolver:local wrapper
       - name: Start isolated private MCP network and writable artifacts
