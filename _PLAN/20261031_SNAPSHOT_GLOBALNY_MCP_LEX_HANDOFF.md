@@ -6,6 +6,32 @@
 
 > **Nadrzędny zakaz:** REPERTORIUM działa; nie zmieniać jego kodu, kontenera, bazy, indeksu, obrazu, osobnego endpointu, routingu ani polityk w celu „naprawy”. Zmiany w innych usługach mogą tylko bezpiecznie SKORZYSTAĆ z istniejącego REPERTORIUM po odczytowym sprawdzeniu dostępu. Nie wdrażać niczego przed testem staging i planem rollbacku.
 
+## AKTUALIZACJA 31.10.2026 PO 08:35 — NSA PR #2: UTF-16 → Unicode, parser, testy
+
+**Najnowszy status:** wszystkie zmiany tylko w otwartych draft PR. Bez merge do main, bez deploymentu, bez zmian w produkcyjnym REPERTORIUM/SAOS/NSA i bez przełączenia portalu lex.
+
+### NSA — PR #2 i kompatybilność z resolverem
+
+- Na `elconcept/mcp-nsa` draft PR [#2](https://github.com/elconcept/mcp-nsa/pull/2), gałąź `fix/lex-nsa-chunks-20261031`, poprawiono `src/index.ts::formatJudgment`: z `String.length/slice` (jednostki UTF-16) na `Array.from(text)`, `codepoints.slice(...).join("")` i **`returnedLength=selected.length`**, by metadane i offsety odpowiadały Python `len(str)`, nie jednostkom UTF-16. Dodano regresję astralnych znaków Unicode do `test/parse.mjs`.
+- Weryfikacja **na faktycznym kodzie źródłowej funkcji `formatJudgment` z tej gałęzi**, uruchomionej jako Node JS bez deploymentu: 15 600 punktów kodowych / 16 200 jednostek UTF-16, **78 fragmentów i dokładna rekonstrukcja** całego oryginału. Pierwszy przebieg FAIL ujawnił pozostawiony `returnedLength=fragment.length`, naprawiono i drugi przebieg PASS.
+- GitHub Actions PR #2 na HEAD `386e0f12cf736f9bc9a3361f52c7ed8a643ab968`: [Build run 41181224404 SUCCESS](https://github.com/elconcept/mcp-nsa/actions/runs/41181224404), w tym `npm ci`, TypeScript build, drift, offline fixtures, conformance walidacji argumentów, dist i `tools/list` lock; [CodeQL 41181224451 SUCCESS](https://github.com/elconcept/mcp-nsa/actions/runs/41181224451). **CI nie oznacza testu live nowej wersji.**
+- Na `elconcept/mcp-prawo-wrapper` draft PR [#4](https://github.com/elconcept/mcp-prawo-wrapper/pull/4) rozszerzono `native_judgment_text.py` o format NSA `--- Treść orzeczenia (znaki A–B z C) ---`, wymagane `ID CBOSA`, dokładne metadane offset/length, dopuszczalną stopkę `Dalsza treść: get_judgment(doc_id=...)` tylko gdy `hasMore=true`, oraz `nextOffset=null` na ostatniej stronie. Nowe testy odtwarzają trzy segmenty i odrzucają nieprawidłowy ID lub trailer.
+- **Live NSA na nowej wersji NIE WYKONANO.** Produkcyjny `mcp-nsa` nadal posiada stary formatter pierwszych 2000 znaków bez metadanych native paging; nie ruszano go.
+
+### Aktualny wynik testów resolvera
+
+- **55 passed, 0 failed, 3.53 s** z aktualnym parserem NSA (wcześniej 53 PASS), uruchomione na NAS w katalogu `/tmp` z odczytanym kodem z GitHub, po podziale plików na 3 paczki z powodu systemowego limitu pojedynczego argumentu procesu. Katalog tymczasowy po teście został usunięty.
+- Ograniczenie testu: `pytest` był rzeczywisty, ale brak `fastmcp` i `pytest-asyncio` w bazowym kontenerze testowym wymagał **jawnej atrapy FastMCP i kontrolowanego hooka async**. **Nie jest to produkcyjny runtime ani pełne E2E.**
+- Niezmienny wcześniejszy dowód SAOS live: `saos:166511` odczyt 5000+2686 znaków równy 7686 znaków jednorazowego odczytu, SHA-256 `3440e0f3e5fb8db8e31dc0457963e92f72e61b642a90b1f9a679890ec2b4ba17`.
+- Wrapper GitHub Actions nadal **0 runs**, przyczyna i pełny CI gate nierozwiązane. ELI PDF: oficjalny HTTP 200 i format PDF, ale brak realnego `eli2md+Poppler` w środowisku; wcześniejsze utworzenie izolowanego kontenera testowego blokowane przed wykonaniem. **NIE OZNACZAĆ PDF E2E JAKO PASS**.
+
+### Najbliższe zadania (bez zmian produkcyjnych)
+
+1. Przeprowadzić rzeczywisty PDF-only ELI `DU/2024/917 art. 23` w **odizolowanym** workerze z przypiętym `legal-cite-pl`, `eli2md`, Poppler i mierzoną wiernością; nie instalować bibliotek w produkcyjnym MCP.
+2. Uruchomić na staging wariant NSA #2 i porównać z bezpośrednim oryginalnym dokumentem CBOSA, w tym przynajmniej dwa niezależne identyfikatory i ostatnią stronę. Nie mylić testu `formatJudgment` z testem wydobycia rzeczywistych `d.text`.
+3. Doprowadzić `mcp-prawo-wrapper` do własnego GitHub Actions green i testu prawdziwego transportu FastMCP/Streamable HTTP.
+4. Dokończyć CELLAR PL i wersjonowanie `na_dzien`; dopiero po kompletności backendów przygotować nowy katalog dwóch publicznych tools i rollback.
+
 ## AKTUALIZACJA KONTYNUACJI 31.10.2026, po 08:00 — rzeczywista rekonstrukcja SAOS i 53 testy
 
 **Zmiany zapisano wyłącznie na draft PR #4**, `elconcept/mcp-prawo-wrapper` / `feat/minimalny-resolver-repertorium-20261031`; **bez merge do main, bez deploymentu, bez zmian w REPERTORIUM**. Ta sekcja jest nowsza niż wszystkie wcześniejsze statusy w tym hand-offie.
