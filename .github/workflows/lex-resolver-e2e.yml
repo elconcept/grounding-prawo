@@ -1,0 +1,175 @@
+name: LEX — isolated FastMCP HTTP E2E (no deploy)
+on:
+  push:
+    branches:
+      - docs/20261031-lex-global-handoff
+    paths:
+      - .github/workflows/lex-resolver-e2e.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resolver-webwright-cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout immutable draft PR 4
+        uses: actions/checkout@v4
+        with:
+          repository: elconcept/mcp-prawo-wrapper
+          ref: 82876920638b8588bcfdb00ef6b02e27f50a1a32
+          path: wrapper
+          persist-credentials: false
+      - name: Verify pinned source and build isolated images
+        run: |
+          test "$(git -C wrapper rev-parse HEAD)" = "82876920638b8588bcfdb00ef6b02e27f50a1a32"
+          docker build -f wrapper/deploy/minimal-legal/Dockerfile.webwright -t lex-e2e-worker:local wrapper
+          docker build -f wrapper/deploy/minimal-legal/Dockerfile.resolver -t lex-e2e-resolver:local wrapper
+      - name: Start isolated private MCP network and writable artifacts
+        run: |
+          mkdir -p "$RUNNER_TEMP/lex-e2e/artifacts" "$RUNNER_TEMP/lex-e2e/cache"
+          chmod 0777 "$RUNNER_TEMP/lex-e2e/artifacts" "$RUNNER_TEMP/lex-e2e/cache"
+          docker network create lex-e2e-net
+          docker run -d --name lex-e2e-worker --network lex-e2e-net \
+            -e TZ=UTC -e WEBWRIGHT_DATA_DIR=/data/webwright \
+            -v "$RUNNER_TEMP/lex-e2e/artifacts:/data/webwright" lex-e2e-worker:local
+          docker run -d --name lex-e2e-resolver --network lex-e2e-net \
+            -p 127.0.0.1:8414:8000 -e TZ=UTC \
+            -e PRAWO_PL_MCP_SOURCES=saos \
+            -e PRAWO_RESOLVER_CACHE=/data/prawo-resolver.sqlite \
+            -e PRAWO_WEBWRIGHT_MCP_URL=http://lex-e2e-worker:8000/mcp \
+            -e PRAWO_WEBWRIGHT_ARTIFACTS=/data/webwright/verified \
+            -v "$RUNNER_TEMP/lex-e2e/artifacts:/data/webwright:ro" \
+            -v "$RUNNER_TEMP/lex-e2e/cache:/data" lex-e2e-resolver:local
+      - name: Install genuine MCP client
+        run: python -m pip install "fastmcp>=3.4,<4"
+      - name: Check internal tools/list over Streamable HTTP
+        run: |
+          docker exec lex-e2e-worker python -c 'import asyncio; from fastmcp import Client; from fastmcp.client.transports import StreamableHttpTransport; async_code = """async def test():
+            async with Client(StreamableHttpTransport("http://127.0.0.1:8000/mcp"), timeout=30) as c:
+              tools = await c.list_tools()
+              names = {x.name for x in tools}
+              print("INTERNAL_TOOLS", sorted(names))
+              assert names == {"fetch_celex_pl", "fetch_eli_pdf", "fetch_orzeczenie_po_sygnaturze"}
+          """; exec(async_code); asyncio.run(test())'
+      - name: Actual HTTP resolver to worker to ELI to SQLite and cold/warm cache
+        run: |
+          cat > "$RUNNER_TEMP/lex_e2e.py" <<'PY'
+          import asyncio, hashlib, json, os, pathlib, time
+          from fastmcp import Client
+          from fastmcp.client.transports import StreamableHttpTransport
+
+          ROOT = pathlib.Path(os.environ["RUNNER_TEMP"]) / "lex-e2e"
+          URL = "http://127.0.0.1:8414/mcp"
+          ARTIFACTS = ROOT / "artifacts" / "verified"
+          CACHE = ROOT / "cache" / "prawo-resolver.sqlite"
+
+          async def call():
+              async with Client(StreamableHttpTransport(URL), timeout=190) as c:
+                  names = [t.name for t in await c.list_tools()]
+                  assert names == ["pobierz_dokument"], names
+                  result = await c.call_tool(
+                      "pobierz_dokument",
+                      {"identyfikator": "eli:DU/2024/917", "artykul": "23"}
+                  )
+                  assert not getattr(result, "is_error", False), repr(result)
+                  data = getattr(result, "data", None)
+                  if not isinstance(data, dict):
+                      data = getattr(result, "structured_content", None)
+                  if isinstance(data, dict) and set(data) == {"result"}:
+                      data = data["result"]
+                  assert isinstance(data, dict), repr(result)
+                  print("PUBLIC", data.get("pochodzenie"), data.get("status"),
+                        "len", len(data.get("tekst", "")), "pdf", data.get("pdf_sha256"),
+                        "artykul_kompletny", data.get("artykul_kompletny"),
+                        "dokument_pelny", data.get("dokument_pelny"), flush=True)
+                  return data
+
+          async def main():
+              # Allow both ASGI endpoints to become available; do not hide startup failure.
+              for _ in range(45):
+                  try:
+                      from urllib.request import urlopen
+                      urlopen("http://127.0.0.1:8414/mcp", timeout=2)
+                  except Exception:
+                      pass
+                  try:
+                      first = await call()
+                      break
+                  except (ConnectionError, OSError):
+                      await asyncio.sleep(2)
+              else:
+                  raise AssertionError("Public Streamable HTTP did not start")
+              assert first["pochodzenie"] == "fallback_pdf_zapisany_lokalnie", first
+              assert first["status"] == "znaleziony", first
+              assert first["artykul_kompletny"] is True and first["dokument_pelny"] is False
+              original = first["tekst"]
+              assert len(original) >= 900, len(original)
+              assert CACHE.is_file() and CACHE.stat().st_size > 0
+              pdf = ARTIFACTS / (first["pdf_sha256"] + ".pdf")
+              assert pdf.is_file()
+              assert hashlib.sha256(pdf.read_bytes()).hexdigest() == first["pdf_sha256"]
+              reports = list(ARTIFACTS.glob("*.json"))
+              assert len(reports) >= 1
+              second = await call()
+              assert second["pochodzenie"] == "lokalny_cache_pdf", second
+              assert second["tekst"] == original
+              print("PASS cold + warm cache and provenance")
+          asyncio.run(main())
+          PY
+          python "$RUNNER_TEMP/lex_e2e.py"
+      - name: Stop worker and restart resolver; prove durable cache without worker
+        run: |
+          docker stop lex-e2e-worker
+          docker restart lex-e2e-resolver
+          python - <<'PY'
+          import asyncio, os, pathlib
+          from fastmcp import Client
+          from fastmcp.client.transports import StreamableHttpTransport
+          async def run():
+              for _ in range(20):
+                  try:
+                      async with Client(StreamableHttpTransport("http://127.0.0.1:8414/mcp"), timeout=25) as c:
+                          r = await c.call_tool("pobierz_dokument", {"identyfikator":"eli:DU/2024/917","artykul":"23"})
+                          d = r.data if isinstance(r.data,dict) else r.structured_content
+                          if set(d) == {"result"}: d=d["result"]
+                          assert d["pochodzenie"] == "lokalny_cache_pdf", d
+                          assert d["artykul_kompletny"] is True and d["dokument_pelny"] is False
+                          print("PASS restart + no-worker cache", len(d["tekst"]))
+                          return
+                  except (OSError, ConnectionError):
+                      await asyncio.sleep(1)
+              raise AssertionError("Resolver restart failure")
+          asyncio.run(run())
+          PY
+      - name: Corrupted original PDF must invalidate trusted cache
+        run: |
+          find "$RUNNER_TEMP/lex-e2e/artifacts/verified" -maxdepth 1 -name '*.pdf' -print
+          test "$(find "$RUNNER_TEMP/lex-e2e/artifacts/verified" -maxdepth 1 -name '*.pdf' | wc -l)" -eq 1
+          find "$RUNNER_TEMP/lex-e2e/artifacts/verified" -maxdepth 1 -name '*.pdf' -delete
+          python - <<'PY'
+          import asyncio
+          from fastmcp import Client
+          from fastmcp.client.transports import StreamableHttpTransport
+          async def run():
+              async with Client(StreamableHttpTransport("http://127.0.0.1:8414/mcp"), timeout=35) as c:
+                  r = await c.call_tool("pobierz_dokument", {"identyfikator":"eli:DU/2024/917","artykul":"23"})
+                  d = r.data if isinstance(r.data,dict) else r.structured_content
+                  if set(d) == {"result"}: d=d["result"]
+                  print("AFTER_TAMPER", d.get("status"), d.get("pochodzenie"))
+                  assert d.get("pochodzenie") != "lokalny_cache_pdf"
+                  assert d.get("artykul_kompletny") is not True
+          asyncio.run(run())
+          PY
+      - name: Keep diagnostic container logs on failure
+        if: failure()
+        run: |
+          docker logs lex-e2e-resolver --tail 250 || true
+          docker logs lex-e2e-worker --tail 250 || true
+      - name: Always remove isolated containers, network and volumes
+        if: always()
+        run: |
+          docker rm -f lex-e2e-resolver lex-e2e-worker 2>/dev/null || true
+          docker network rm lex-e2e-net 2>/dev/null || true
