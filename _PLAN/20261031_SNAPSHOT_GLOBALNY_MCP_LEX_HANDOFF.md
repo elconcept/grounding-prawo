@@ -1,5 +1,22 @@
 # GLOBALNY SNAPSHOT / HAND-OFF — pełen ekosystem MCP portalu LEX
 
+## BRAMKA DOCKER + PEŁNY ADAPTER ELI — SUCCESS (31.10.2026)
+
+**Najnowsza weryfikacja, bardziej kompletna niż wcześniejszy raw `legal-cite` smoke:**
+
+- [Actions 41193753259 — SUCCESS](https://github.com/elconcept/grounding-prawo/actions/runs/41193753259): pełny **docker build** `elconcept/mcp-prawo-wrapper@82876920638b8588bcfdb00ef6b02e27f50a1a32` z `deploy/minimal-legal/Dockerfile.webwright`. Przeszedł test uruchomienia kontenera/importów `legal-cite`, `eli2md`, `webwright_internal`, `webwright_asgi`, Poppler. Bez rejestru i deploymentu.
+- [Actions 41193907258 — SUCCESS](https://github.com/elconcept/grounding-prawo/actions/runs/41193907258): **prawdziwy adapter `przeanalizuj_pdf_eli("DU/2024/917","23",...)` wewnątrz zbudowanego obrazu Docker**, łącznie z realnym pobraniem urzędowego PDF `https://api.sejm.gov.pl/eli/acts/DU/2024/917/text.pdf`, oryginalnym `legal_cite.pdf_tj`, `eli2md` i `pdftotext`. Z logów GitHub:
+  - `status=wierny_odczyt_artykulu_z_pdf`, `artykul=23`, `artykul_kompletny=true`, `dokument_pelny=false`.
+  - `monotoniczna_numeracja=true`, `wierny_odczyt=true`.
+  - PDF SHA-256 `a36f110f05298013b3625985630d4cb2292e4a32271858b2f5012e8276383e06`.
+  - JSON raport SHA-256 `9f822897a1fe9b6c4124b5e2040d40e41f66d1fb1f32bbb3edde625657f20008`.
+- [Actions 41193646017 — SUCCESS](https://github.com/elconcept/grounding-prawo/actions/runs/41193646017): 119 testów offline `pytest` na rzeczywistym FastMCP i zależnościach (bez `smoke`).
+
+**Nadal niezweryfikowane:** cała ścieżka sieciowa `internal Webwright/FastMCP→resolver→shared-volume→SQLite`, rzeczywiste MCP `tools/list`/`tools/call`, Cloudflare auth, zachowanie załączników i historycznego `na_dzien`. Adapter celowo odmawia niezweryfikowanej wersji historycznej. Żaden przebieg nie zmienił REPERTORIUM, kontenerów NAS ani main. PR #4 nadal draft, wrapper repo ma `0` własnych Actions runs.
+
+---
+
+
 ## BRAMKA TESTOWA 31.10.2026 — pełne offline pytest PR #4: 119 PASS
 
 **Potwierdzony wynik:** [GitHub Actions 41193646017](https://github.com/elconcept/grounding-prawo/actions/runs/41193646017), `conclusion=success`. Niezależny publiczny GitHub runner Ubuntu odczytał dokładnie `elconcept/mcp-prawo-wrapper@82876920638b8588bcfdb00ef6b02e27f50a1a32`, zainstalował rzeczywiste zależności `fastmcp>=3.4,<4` oraz `[dev]`, wykonał `python -m pytest tests/ -q -k 'not smoke'`: **119 passed in 1.28s, zero błędów**. Raport JUnit zachowano jako Actions artifact. Workflow wyłącznie w odrębnej gałęzi repo pomocniczego `grounding-prawo`, bez merge, wdrożenia, tokenów produkcyjnych i restartów.
