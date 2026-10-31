@@ -6,6 +6,18 @@
 
 > **Nadrzędny zakaz:** REPERTORIUM działa; nie zmieniać jego kodu, kontenera, bazy, indeksu, obrazu, osobnego endpointu, routingu ani polityk w celu „naprawy”. Zmiany w innych usługach mogą tylko bezpiecznie SKORZYSTAĆ z istniejącego REPERTORIUM po odczytowym sprawdzeniu dostępu. Nie wdrażać niczego przed testem staging i planem rollbacku.
 
+## AKTUALIZACJA — rzeczywista naprawa przypisania REPERTORIUM do Cloudflare lex (31.10.2026)
+
+**Stan PO naprawie (nowszy niż historyczne pomiary 8/56 w dalszej części dokumentu):**
+
+1. **Ustalona przyczyna:** zarejestrowany serwer `repertorium-oauth` w Cloudflare MCP Servers: `https://repertorium.xlap.pl/mcp`, OAuth `connected`, status `ready`, 1 tool. Nie był przypisany do portalu `lex-prawo` (`lex.xlap.pl`), w którym znajdowało się tylko 8 serwerów. Nie było awarii kontenera ani potrzeby tworzenia nowego serwera/tokena/polityki.
+2. **Poprawka WYKONANA:** przez Cloudflare API w istniejącym `lex-prawo` dopisano serwer `{server_id: "repertorium-oauth", on_behalf: false, default_disabled: false}`. Zachowano wszystkie 8 upstreamów, ustawienia serwerów, overrides BASIC-MEMORY/UODO, nazwę/hostname, `code_mode=default_on` i polityki. Nie zmieniano REPERTORIUM, jego kontenera, URL, kodu, bazy ani sesji OAuth administratora.
+3. **Weryfikacja administracyjna PASS:** odczyt ponowny portalu przez Cloudflare API: **9 serwerów, wszystkie `ready`**, REPERTORIUM OAuth `connected`, `on_behalf=false`, 1 narzędzie. Suma potencjalnych tools: **57**, nie zmniejszono ich jeszcze, ponieważ resolver nie jest gotowy.
+4. **Aktualny konektor ChatGPT:** `portal_list_servers` w starej sesji nadal zwraca **8 serwerów i 56 tools**. Próba `portal_toggle_single_server` zwróciła sprzeczny błąd „ID not found” z listą zawierającą już nowe REPERTORIUM. Inicjowano `portal_toggle_servers`: jednorazowy link do selektora serwerów został przekazany użytkownikowi, ale **nie zakończono** interakcji. Nie publikować jednorazowego linku w repo. Użytkownik powinien włączyć REPERTORIUM w selektorze/odświeżyć grant i wtedy ponownie sprawdzić narzędzia z klienta.
+5. **Status całego zadania:** naprawione przypisanie administracyjne; **NIE POTWIERDZONO** jeszcze skutecznego `tools/call` przez bieżące połączenie `lex`. To są dwa różne kryteria odbioru. Nie deklarować pełnego E2E przed próbą narzędzia. Nie rozwiązywać problemu restartem Repertorium ani tworzeniem nowego OAuth upstream.
+
+**Nowy test odbioru:** po selektorze serwerów, `portal_list_servers` / `codemode.tools()` powinny wykazać `MCP REPERTORIUM` + narzędzie `szukaj_repertorium`, a jedno kontrolne zapytanie ma zwrócić identyfikatory. Potwierdzić osobny direct endpoint read-only i brak powtórnej upstream-autoryzacji użytkownika. Docelowe 2 tools dopiero po wdrożeniu resolvera.
+
 ## 1. Jednozdaniowy efekt docelowy
 
 **W prawnym portalu `lex` model widzi tylko dwa narzędzia: istniejące `szukaj_repertorium` (bez zmian) i nowe `pobierz_dokument` (minimalny resolver), podczas gdy wszystkie dotychczasowe MCP pozostają niezależnymi, wewnętrznymi backendami, preferując lokalne korpusy i trwały cache przed zewnętrznymi API/Playwright.**
