@@ -6,6 +6,37 @@
 
 > **Nadrzędny zakaz:** REPERTORIUM działa; nie zmieniać jego kodu, kontenera, bazy, indeksu, obrazu, osobnego endpointu, routingu ani polityk w celu „naprawy”. Zmiany w innych usługach mogą tylko bezpiecznie SKORZYSTAĆ z istniejącego REPERTORIUM po odczytowym sprawdzeniu dostępu. Nie wdrażać niczego przed testem staging i planem rollbacku.
 
+## WERYFIKACJA ZREALIZOWANA 31.10.2026 — PRAWDZIWY PDF ELI + LEGAL-CITE (PASS)
+
+**Jest to nowsza aktualizacja niż wcześniejsze wpisy „ELI PDF NOT RUN”.** Nie oznaczać już faktycznej konwersji `DU/2024/917 art.23` jako niewykonanej. Nadal nierozstrzygnięte pozostają Docker build, transport MCP, pełny stan prawny na dzień oraz konwersje innych źródeł.
+
+**Uruchomienie:** oddzielny GitHub-hosted runner Ubuntu (repo publiczne `elconcept/grounding-prawo`, gałąź `docs/20261031-lex-global-handoff`, workflow `.github/workflows/lex-eli-real-pdf.yml`). Wpis nie wymaga tokenów NAS, nie dotyka REPERTORIUM ani żadnego źródłowego MCP i nie zmienia main. [GitHub Actions run 41181610211 — SUCCESS](https://github.com/elconcept/grounding-prawo/actions/runs/41181610211), raport `lex-eli-pdf-smoke.json` jako artefakt (retencja 7 dni), [workflow](https://github.com/elconcept/grounding-prawo/blob/docs/20261031-lex-global-handoff/.github/workflows/lex-eli-real-pdf.yml).
+
+**Zweryfikowane commity użyte w rzeczywistym teście:**
+- `apiotrowski-afk/legal-cite-pl` `2c4b7bf6e2af56b42b8b87a9bdbfe93d8078c988`.
+- `PolskiAgentW/eli2md` `v0.6.70`: **commit `4fc3ce71c94cb7a7da71e85259c50fad519af3ea`**. Wcześniej podany SHA `9cb6a7c179a1cb4b86fe502a565784cd1132fc78` jest **obiektem tagu**, nie commitem; skorygowano `Dockerfile.webwright` na SHA commita w PR #4.
+- `pdfplumber 0.11.10`, `pdftotext (Poppler) 24.02.0`.
+
+**Test realnego wejścia:**
+| Wskaźnik | Wynik |
+|---|---|
+| PDF źródłowy | `https://api.sejm.gov.pl/eli/acts/DU/2024/917/text.pdf` |
+| HTTP / MIME | 200 / application/pdf |
+| Rozmiar / SHA-256 | 649753 B / `a36f110f05298013b3625985630d4cb2292e4a32271858b2f5012e8276383e06` |
+| Tekst Markdown / pdftotext | 84559 / 84699 znaków |
+| Jednostki / monotoniczność | 74 / PASS |
+| Trafienia `art.23` / niejednoznaczność | 1 / FALSE |
+| Długość odczytu art.23 | 998 znaków |
+| `wiernosc_pdftotext` | **TRUE / PASS** |
+| Niewyjaśnione słowa | **0** |
+| Mierzony czas w Python | 8,13 s |
+| Job instalacji i wykonywania / report artifact | **SUCCESS / zapisany** |
+
+**Granica znaczenia wyniku:** potwierdzono na prawdziwym źródle *funkcje konwersji i niezależnej kontroli tekstu jednego artykułu*. Nie przetestowano jeszcze w tym runnerze **modułu `prawo_pl_mcp/legal_cite_pdf_adapter.py` przez prawdziwy klient FastMCP/worker Webwright ani Round-trip w resolverze**, gwarancji kompletnego załącznika, wieloaktowej regresji, konsolidacji i `na_dzien` z nowelizacjami. Nie oznaczać tego jako E2E całego systemu.
+
+**Kontynuować:** test uruchomienia prawdziwego adaptera w obrazach na staging; wdrożyć wersjonowanie prawa i CELLAR PL; sprawdzić kompletność PDF innych aktów; wyjaśnić GitHub Actions PR #4 (0 runs). Najnowsze testy NSA PR #2 oraz 55 PASS stubowego pytest pozostają ważne.
+
+
 ## AKTUALIZACJA 31.10.2026 PO 08:35 — NSA PR #2: UTF-16 → Unicode, parser, testy
 
 **Najnowszy status:** wszystkie zmiany tylko w otwartych draft PR. Bez merge do main, bez deploymentu, bez zmian w produkcyjnym REPERTORIUM/SAOS/NSA i bez przełączenia portalu lex.
