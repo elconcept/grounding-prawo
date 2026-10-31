@@ -1,0 +1,49 @@
+name: LEX — wrapper pytest isolated (no deploy)
+on:
+  push:
+    branches:
+      - docs/20261031-lex-global-handoff
+    paths:
+      - .github/workflows/lex-wrapper-ci.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wrapper-pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out pinned public wrapper commit
+        uses: actions/checkout@v4
+        with:
+          repository: elconcept/mcp-prawo-wrapper
+          ref: 82876920638b8588bcfdb00ef6b02e27f50a1a32
+          path: wrapper
+          persist-credentials: false
+      - name: Check pinned commit
+        working-directory: wrapper
+        run: |
+          test "$(git rev-parse HEAD)" = "82876920638b8588bcfdb00ef6b02e27f50a1a32"
+          git log -1 --format='%H %s'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install actual FastMCP runtime and test extras
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e './wrapper[dev]'
+      - name: Run all offline pytest gates (no smoke)
+        working-directory: wrapper
+        run: |
+          python -m pytest tests/ -q -k 'not smoke' --junitxml=pytest-report.xml
+      - name: Preserve pytest report even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lex-wrapper-pytest-pinned-head
+          path: wrapper/pytest-report.xml
+          if-no-files-found: warn
+          retention-days: 7
