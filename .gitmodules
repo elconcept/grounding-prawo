@@ -144,7 +144,7 @@
 	url = https://github.com/elconcept/o-ochronie-danych-osobowych.git
 [submodule "vendor/law/o-ochronie-zdrowia-psychicznego"]
 	path = vendor/law/o-ochronie-zdrowia-psychicznego
-	url = https://github.com/elconcept/o-ochronie-zdrowia-psychicznego.git
+	url = https://github.com/LexaurinTheDog/Komentar-PL-OZP-535-1994.git
 [submodule "vendor/law/o-oplacie-skarbowej"]
 	path = vendor/law/o-oplacie-skarbowej
 	url = https://github.com/elconcept/o-oplacie-skarbowej.git
