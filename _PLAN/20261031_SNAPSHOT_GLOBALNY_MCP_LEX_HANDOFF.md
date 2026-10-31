@@ -6,6 +6,56 @@
 
 > **Nadrzędny zakaz:** REPERTORIUM działa; nie zmieniać jego kodu, kontenera, bazy, indeksu, obrazu, osobnego endpointu, routingu ani polityk w celu „naprawy”. Zmiany w innych usługach mogą tylko bezpiecznie SKORZYSTAĆ z istniejącego REPERTORIUM po odczytowym sprawdzeniu dostępu. Nie wdrażać niczego przed testem staging i planem rollbacku.
 
+## AKTUALIZACJA KONTYNUACJI 31.10.2026, po 08:00 — rzeczywista rekonstrukcja SAOS i 53 testy
+
+**Zmiany zapisano wyłącznie na draft PR #4**, `elconcept/mcp-prawo-wrapper` / `feat/minimalny-resolver-repertorium-20261031`; **bez merge do main, bez deploymentu, bez zmian w REPERTORIUM**. Ta sekcja jest nowsza niż wszystkie wcześniejsze statusy w tym hand-offie.
+
+### 1. SAOS: niezależny test na działającym źródłowym MCP
+
+Przez Docker/Portainer wykonano **bezpośrednie** HTTP Streamable MCP `tools/call` pod `http://mcp-saos:8000/mcp` z sieci lokalnej NAS (nie przez Cloudflare). **SAOS 1.5.0 zwraca realny fragment w `content[0].text`, ale z dekoracją tekstową, metadanymi i trailerem, a `structuredContent` zawiera wyłącznie paginację i cytowania**. Wcześniejsze rozpoznanie przez portal Code Mode (metadata-only) nie było dowodem braku źródłowego tekstu. Odkryto, że na ostatniej stronie źródło zwraca `nextOffset=null`, co wymaga odrębnej obsługi.
+
+Dodano `src/prawo_pl_mcp/native_judgment_text.py` (wąski ekstraktor) i spięto z `_orzeczenie`. Parser:
+- waliduje `totalLength`, `returnedLength`, `offset`, `hasMore`, `nextOffset` (null poprawny na końcu);
+- dla surowego SAOS rozpoznaje ściśle marker `--- Tresc (znaki A-B z C lacznie) ---`, zgodny ID w nagłówku, żądany zakres i tylko dozwoloną stopkę dla kolejnego fragmentu; **nie zapisuje nagłówków ani fragmentów instrukcji w treści**;
+- w przypadku bezpośredniego `structuredContent.text` stosuje go, gdy zgadza się dokładna długość;
+- przy rozbieżności, obcym ID, nadmiarowym trailerze lub braku tekstu odmawia cache trusted.
+
+**Test rzeczywisty PASS, źródłowe SAOS ID `166511` (V CSK 145/14):**
+
+| HTTP MCP call | Zwrócono | Wydzielono | Kontrola |
+|---|---:|---:|---|
+| offset 0, limit 5000 | 5000 | 5000 | PASS |
+| offset 5000, limit 5000 | 2686 | 2686 | PASS, `nextOffset=null` |
+| offset 0, limit 10000 | 7686 | 7686 | PASS, `nextOffset=null` |
+
+**Bezstratność:** konkatenacja 5000+2686 znaków jest równa w całości jednorazowo pobranym 7686 znakom. SHA-256 zrekonstruowanego tekstu: `3440e0f3e5fb8db8e31dc0457963e92f72e61b642a90b1f9a679890ec2b4ba17`. Próba dopisania śmieci do stopki skutecznie odrzucona.
+
+**NSA nadal blokowane:** bezpośredni `mcp-nsa` (produkcyjna starsza wersja) odpowiedział pierwszymi 2000 znaków i opisowym nagłówkiem `--- Tresc (pierwsze 2000 znakow z 13348 lacznie) ---`, **bez natywnych metadanych offset/limit**; nowa paginacja dopiero w niewdrożonym PR NSA #2. Resolver nie może odczytu pierwszych 2000 nazwać pełnym dokumentem. Nie zmieniano działającego NSA.
+
+### 2. Bezpieczeństwo ELI PDF i CELEX
+
+- `eli_pdf_fallback` przed zapisaniem wyniku do cache sprawdza SHA-256 **oryginalnego pliku PDF**, SHA wyodrębnionego artykułu, zgodność ID, `na_dzien`, wynik `wiernosc_pdftotext` i **dokładny pin kodu legal-cite**. Cache hit wymaga kompletnych metadanych raportu, nie samego `article_verified=true`.
+- Naprawiono błąd rozdzielania klucza `#art:23#day:2026-10-31`: porównywany numer artykułu to `23`, a nie `23#day:...`. Wcześniej poprawny wynik mógł być odrzucany.
+- Zasób CELEX PL: `read_eu_pl(celex, art)` wymaga **osobno zweryfikowanej jednostki** pod `celex:<ID>:pl#art:<NR>` (data źródła, wersja PL, hash pełnego dokumentu). Nie wolno zwracać pierwszej strony całego RODO z etykietą „art. 33”. Pełny akt i wyciąg artykułu mają różne metadane kompletności. Dla innych niż ELI źródeł jawnie nie stosuje się `na_dzien` bez zaimplementowanego wersjonowania.
+
+**Realny PDF ELI:** z urzędowego `https://api.sejm.gov.pl/eli/acts/DU/2024/917/text.pdf` odczyt HTTP 200 i `application/pdf`; w dostępnym środowisku nie ma `eli2md` i `pdftotext`, a utworzenie izolowanego tymczasowego kontenera do tego testu zostało zablokowane przez zabezpieczenia. **Nie ogłaszać PASS realnego legal-cite PDF ani Docker build. Żadnego nowego kontenera nie utworzono.**
+
+### 3. Testy faktycznie wykonane
+
+Na NAS w **tymczasowym katalogu bez produkcyjnych baz**, przy użyciu źródeł pobranych z PR #4, uruchomiono 13 modułów/pliki testowe: `test_local_corpus`, `test_native_judgment_text`, `test_pdf_ingest`, `test_legal_cite_pdf_adapter`, `test_eli_pdf_fallback` i `test_slim_resolver`. Środowisko nie miało zainstalowanego `fastmcp`/`pytest-asyncio`: użyto jawnych atrap klienta/puli FastMCP i kontrolowanego hooka uruchamiającego testy async przez asyncio. **53 testy PASS, 0 FAIL, 3,39 s** po poprawieniu dwóch błędów: parowania artykuł/data w kluczu ELI i braku izolacji testowego SQLite.
+
+Dla porównania: najpierw otrzymano `49 PASS / 4 FAIL`, naprawiono rzeczywisty błąd walidacji artykułu oraz zależność testów od stanu cache, po czym **powtórzono** całość i otrzymano 53 PASS. Nie oznacza to oficjalnego CI na GitHub ani testu FastMCP transport/dockera.
+
+**Nadal NOT RUN:** pełne CI wrappera (GitHub API dla repo zwraca zero runs), rzeczywisty eli2md/Poppler konwertujący PDF, build obrazu Webwright, staging dwóch kontenerów, live NSA z PR #2, aktywacja 2-tool Cloudflare. USTAWY PR #81 nadal zielony build `41153638658` bez merge.
+
+### 4. Priorytety kolejnego modelu
+
+1. Uruchomić oficjalne pełne testy pytest/CI w środowisku z zależnościami, niezależnie od zrealizowanych offline mocków; zbadać dlaczego GitHub Actions wrappera nie generuje przebiegów.
+2. Zweryfikować pinned `legal-cite-pl@2c4b7...` + `eli2md@9cb6...` + Poppler na rzeczywistym ELI PDF art. 23 i dokumentach o innej strukturze; wersjonowanie + nowelizacje + OCR i zachowanie oryginału.
+3. NSA: przetestować PR #2 na staging, zrekonstruować pełne 13348 znaków; nie zmieniać produkcyjnego serwera do zakończenia kontroli.
+4. Dokończyć CELLAR PL (nie placeholder `read_eu_pl` bez ETL), parsery orzeczeń SN/MS/TK, pełne KRS/UODO oraz Cloudflare 2 narzędzia po wcześniejszych bramkach.
+
+
 ## AKTUALIZACJA 31.10.2026, 04:00+ — kontynuacja prac bez merge i deploy
 
 **Nowsze niż poprzednie sekcje.** Resolver PR #4: `elconcept/mcp-prawo-wrapper` branch `feat/minimalny-resolver-repertorium-20261031`. USTAWY PR #81 nadal draft, CI green [run 41153638658](https://github.com/elconcept/grounding-prawo/actions/runs/41153638658). REPERTORIUM niezmienione.
