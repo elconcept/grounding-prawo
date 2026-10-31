@@ -1,0 +1,37 @@
+name: LEX — isolated Webwright image build (no deploy)
+on:
+  push:
+    branches:
+      - docs/20261031-lex-global-handoff
+    paths:
+      - .github/workflows/lex-wrapper-docker-build.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-webwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out pinned public wrapper draft
+        uses: actions/checkout@v4
+        with:
+          repository: elconcept/mcp-prawo-wrapper
+          ref: 82876920638b8588bcfdb00ef6b02e27f50a1a32
+          persist-credentials: false
+          path: wrapper
+      - name: Check SHA
+        working-directory: wrapper
+        run: |
+          test "$(git rev-parse HEAD)" = "82876920638b8588bcfdb00ef6b02e27f50a1a32"
+      - name: Docker build pinned Webwright worker (no push)
+        run: |
+          docker build --progress=plain \
+            -f wrapper/deploy/minimal-legal/Dockerfile.webwright \
+            -t lex-webwright-offline:test ./wrapper
+      - name: Import runtime and validate Poppler (no network calls)
+        run: |
+          docker run --rm --entrypoint python lex-webwright-offline:test -c \
+            'from legal_cite import pdf_tj; import eli2md.pdf, eli2md.tree; import prawo_pl_mcp.webwright_internal; import prawo_pl_mcp.webwright_asgi; assert pdf_tj.wersja_pdftotext(); print("PASS: legal-cite, eli2md, Poppler, Webwright imports")'
