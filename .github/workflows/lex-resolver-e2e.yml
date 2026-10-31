@@ -155,7 +155,9 @@ jobs:
         run: |
           find "$RUNNER_TEMP/lex-e2e/artifacts/verified" -maxdepth 1 -name '*.pdf' -print
           test "$(find "$RUNNER_TEMP/lex-e2e/artifacts/verified" -maxdepth 1 -name '*.pdf' | wc -l)" -eq 1
-          find "$RUNNER_TEMP/lex-e2e/artifacts/verified" -maxdepth 1 -name '*.pdf' -delete
+          # Wyłącznie izolowany katalog RUNNER_TEMP; PDF zapisał kontener root,
+          # dlatego użytkownik hosta nie może go usunąć bez sudo.
+          sudo find "$RUNNER_TEMP/lex-e2e/artifacts/verified" -maxdepth 1 -name '*.pdf' -delete
           python - <<'PY'
           import asyncio
           from fastmcp import Client
