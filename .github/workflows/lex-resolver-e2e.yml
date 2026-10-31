@@ -168,9 +168,27 @@ jobs:
                   assert d.get("artykul_kompletny") is not True
           asyncio.run(run())
           PY
-      - name: Keep diagnostic container logs on failure
+      - name: Keep diagnostic artifact checks and container logs on failure
         if: failure()
         run: |
+          docker exec lex-e2e-resolver python -c '
+          from pathlib import Path
+          import hashlib, os, json
+          from prawo_pl_mcp.local_corpus import verify_pdf_artifact, verify_report_artifact, load_verified_artifact
+          p=Path("/data/webwright/verified")
+          print("resolver uid", os.getuid(), "directory",p.exists(), "mode",oct(p.stat().st_mode) if p.exists() else None)
+          for f in sorted(p.glob("*")):
+            if f.suffix not in (".json",".txt",".pdf"): continue
+            print("artifact",f.name,"bytes",f.stat().st_size,"readable",os.access(f,os.R_OK))
+            if f.suffix==".pdf":print("PDF_VERIFY",verify_pdf_artifact(f.name, f.stem))
+            if f.suffix==".json":
+              data=json.loads(f.read_text())
+              print("REPORT_VERIFY",verify_report_artifact(f.stem,data),"keys",sorted(data))
+            if f.suffix==".txt" and len(f.stem)==64:
+              try:print("ARTICLE_VERIFY",len(load_verified_artifact(f.name,f.stem)))
+              except Exception as e:print("ARTICLE_ERROR",type(e).__name__)
+          '
+          docker exec lex-e2e-resolver python -c 'from pathlib import Path; p=Path("/data/prawo-resolver.sqlite");print("DB",p.exists(),p.stat().st_size if p.exists() else None)'
           docker logs lex-e2e-resolver --tail 250 || true
           docker logs lex-e2e-worker --tail 250 || true
       - name: Always remove isolated containers, network and volumes
