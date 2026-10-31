@@ -1,0 +1,96 @@
+name: LEX — real ELI PDF smoke (isolated)
+on:
+  push:
+    branches:
+      - docs/20261031-lex-global-handoff
+    paths:
+      - .github/workflows/lex-eli-real-pdf.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  official-eli-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install independent PDF readers and pinned source
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
+          python -m pip install --upgrade pip
+          python -m pip install 'httpx>=0.27,<0.29'
+          python -m pip install 'eli2md @ git+https://github.com/PolskiAgentW/eli2md@4fc3ce71c94cb7a7da71e85259c50fad519af3ea'
+          python -m pip install --no-deps 'git+https://github.com/apiotrowski-afk/legal-cite-pl@2c4b7bf6e2af56b42b8b87a9bdbfe93d8078c988'
+      - name: Convert real official ELI PDF and check fidelity of article 23
+        run: |
+          python - <<'PY'
+          import datetime, hashlib, json, pathlib, tempfile, time, traceback, urllib.request
+          report = {"status": "NOT_RUN", "eli": "DU/2024/917", "art": "23",
+                    "source": "https://api.sejm.gov.pl/eli/acts/DU/2024/917/text.pdf",
+                    "legal_cite_commit": "2c4b7bf6e2af56b42b8b87a9bdbfe93d8078c988",
+                    "eli2md_commit": "4fc3ce71c94cb7a7da71e85259c50fad519af3ea"}
+          try:
+              from legal_cite import pdf_tj as lc
+              tic = time.monotonic()
+              request = urllib.request.Request(report["source"], headers={"User-Agent": "LEX-test/1.0"})
+              with urllib.request.urlopen(request, timeout=70) as response:
+                  original = response.read(18_000_001)
+                  report["http_status"] = response.status
+                  report["content_type"] = response.headers.get("Content-Type")
+              if len(original) > 18_000_000 or not original.startswith(b"%PDF-"):
+                  raise ValueError("Not an admissible official PDF")
+              report["pdf_bytes"] = len(original)
+              report["pdf_sha256"] = hashlib.sha256(original).hexdigest()
+              with tempfile.TemporaryDirectory() as folder:
+                  root = pathlib.Path(folder)
+                  pdf = root / "original.pdf"
+                  pdf.write_bytes(original)
+                  md = lc._konwertuj(pdf, root / "parsed.md")
+                  raw = lc._warstwa(pdf, root / "pdftotext.txt")
+                  if not raw:
+                      raise ValueError("Missing independent Poppler text layer")
+                  footnotes = lc.przypisy_md(md)
+                  units, monotonic = lc.jednostki_md(md, footnotes, dzis=datetime.date(2026, 10, 31))
+                  candidates = [x for x in units if x.klucz == "23"]
+                  report.update({"converter": lc.wersja_konwertera(),
+                                "pdftotext": lc.wersja_pdftotext(),
+                                "md_chars": len(md), "raw_chars": len(raw),
+                                "unit_count": len(units), "monotonic": bool(monotonic),
+                                "article_23_count": len(candidates),
+                                "article_23_ambiguous": bool(candidates[0].niejednoznaczne) if len(candidates)==1 else None})
+                  if len(candidates) != 1 or not monotonic or candidates[0].niejednoznaczne:
+                      raise ValueError("Ambiguous / missing article 23")
+                  tokens = lc._tokeny_pdftotext(raw)
+                  mask = lc.wyjasnienia_warstwy(tokens, footnotes, "917")
+                  fidelity = lc.wiernosc_pdftotext(candidates[0], tokens, mask)
+                  report.update({"article_23_chars": len(candidates[0].czysty()),
+                                "fidelity_pass": bool(fidelity.ok),
+                                "fidelity_reason": fidelity.powod,
+                                "unexplained_tokens": fidelity.niewyjasnione[:12]})
+                  if not fidelity.ok:
+                      raise ValueError("Independent PDF text-reader fidelity mismatch")
+              report["status"] = "PASS"
+              report["elapsed_seconds"] = round(time.monotonic() - tic, 2)
+          except Exception as exc:
+              report["status"] = "FAIL"
+              report["error"] = type(exc).__name__ + ": " + str(exc)[:900]
+              report["traceback"] = traceback.format_exc()[-2800:]
+          pathlib.Path("lex-eli-pdf-smoke.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          if report["status"] != "PASS":
+              raise SystemExit(1)
+          PY
+      - name: Save small reproducible smoke report (no PDFs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lex-eli-pdf-smoke
+          path: lex-eli-pdf-smoke.json
+          if-no-files-found: warn
+          retention-days: 7
