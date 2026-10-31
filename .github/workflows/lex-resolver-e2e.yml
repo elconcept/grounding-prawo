@@ -144,7 +144,9 @@ jobs:
                           assert d["artykul_kompletny"] is True and d["dokument_pelny"] is False
                           print("PASS restart + no-worker cache", len(d["tekst"]))
                           return
-                  except (OSError, ConnectionError):
+                  except (OSError, ConnectionError, RuntimeError):
+                      # FastMCP opakowuje chwilowy ReadError podczas startu
+                      # serwera jako RuntimeError: Client failed to connect.
                       await asyncio.sleep(1)
               raise AssertionError("Resolver restart failure")
           asyncio.run(run())
