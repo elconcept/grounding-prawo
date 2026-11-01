@@ -31,6 +31,19 @@ class SyncTests(unittest.TestCase):
             sync.sync(source, target)
             self.assertEqual((target / '.agents/grounding-prawo/shared/STYLE.md').read_text(), 'nowy styl')
 
+    def test_claude_pointer_to_agents_gets_no_duplicate_block(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source, target = root / 'source', root / 'legal'
+            source.mkdir(); target.mkdir()
+            for name in ('ZASADY-PLUGINU.md', 'STYLE.md', 'ARTEFAKTY-SPRAWY.md'):
+                (source / name).write_text(name)
+            (target / 'AGENTS.md').write_text('Lokalne zasady\n')
+            (target / 'CLAUDE.md').write_text('# Projekt\n\n@AGENTS.md\n\n' + sync.BLOCK)
+            sync.sync(source, target)
+            self.assertIn(sync.START, (target / 'AGENTS.md').read_text())
+            self.assertEqual((target / 'CLAUDE.md').read_text(), '# Projekt\n\n@AGENTS.md\n')
+
     def test_bad_markers_fail_before_writing(self):
         for text in (sync.START, sync.END, sync.END + sync.START, sync.START + sync.END + sync.START + sync.END):
             with self.assertRaises(ValueError):

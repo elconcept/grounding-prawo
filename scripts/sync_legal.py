@@ -41,6 +41,19 @@ def update_pointer(text):
     return text.rstrip() + '\n\n' + BLOCK
 
 
+def imports_agents(text):
+    return any(line.strip() == '@AGENTS.md' for line in text.splitlines())
+
+
+def strip_pointer(text):
+    """CLAUDE.md that only imports AGENTS.md gets the block from AGENTS.md; avoid a duplicate."""
+    update_pointer(text)  # validates markers
+    if START not in text:
+        return text
+    a, b = text.index(START), text.index(END) + len(END)
+    return (text[:a].rstrip() + '\n' + text[b:].lstrip('\n')).rstrip() + '\n'
+
+
 def sync(source, target):
     source, target = Path(source), Path(target)
     for name in ('ZASADY-PLUGINU.md', 'STYLE.md', 'ARTEFAKTY-SPRAWY.md'):
@@ -60,7 +73,10 @@ def sync(source, target):
             '13. Publikacja i historia pism: `.agents/grounding-prawo/shared/ARTEFAKTY-SPRAWY.md`.\n'
             '    To wyjątek od zasady 5 dla zastępowanego DOCX pisma w `output/`,\n'
             '    po zapisaniu snapshotu MD zgodnie z regułą kanoniczną.\n')
-        updates[path] = update_pointer(text)
+        if name == 'CLAUDE.md' and imports_agents(text):
+            updates[path] = strip_pointer(text)
+        else:
+            updates[path] = update_pointer(text)
     # Build and validate the entire payload before touching the destination.
     with tempfile.TemporaryDirectory() as temp:
         staged = Path(temp) / 'shared'
