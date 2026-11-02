@@ -380,7 +380,12 @@ class Baza:
         for r in self.con.execute(sql, args):
             t = self.con.execute("SELECT brzmienie, komentarz FROM artykuly WHERE akt=? AND art=?", (r["akt"], r["art"])).fetchone()
             text = (t["brzmienie"] if r["rodzaj"] == "przepis" else t["komentarz"]) if t else ""
-            out.append({"akt": r["akt"], "art": r["art"], "rodzaj": r["rodzaj"], "fragment": snippet(text, stems)})
+            wynik = {"akt": r["akt"], "art": r["art"], "rodzaj": r["rodzaj"], "fragment": snippet(text, stems)}
+            if r["akt"] in ("rodo", "led", "dodo"):
+                meta = self.con.execute("SELECT * FROM akty WHERE akt=?", (r["akt"],)).fetchone()
+                wynik.update(zrodlo=meta["zrodlo"], stan_na=meta["stan_na"], eli=meta["eli"],
+                             uwaga=uwaga(meta))
+            out.append(wynik)
         return out
 
     def cytat(self, akt: str, art: str, fragment: str) -> dict:
