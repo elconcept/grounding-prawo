@@ -1,0 +1,70 @@
+name: USTAWY — RODO DODO LED git snapshots (no deploy)
+
+on:
+  push:
+    branches:
+      - feat/ochrona-danych-git-law-20261102
+    paths:
+      - deploy/mcp-ustawy/fetch_data_protection.py
+      - deploy/mcp-ustawy/Dockerfile
+      - own-skills/patron-prawo-pl-zrodla/scripts/data_protection_git.py
+      - own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py
+      - .github/workflows/ustawy-data-protection-git.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-sources-and-sqlite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pobierz tylko przypięte pliki z Git, sprawdź SHA i język
+        run: python deploy/mcp-ustawy/fetch_data_protection.py --out "${RUNNER_TEMP}/data-protection"
+      - name: Zweryfikuj liczby artykułów, źródła i izolowany indeks
+        env:
+          CORPUS_DIR: ${{ runner.temp }}/data-protection
+          TEST_DB: ${{ runner.temp }}/ustawy-test.sqlite
+        run: |
+          mkdir -p "${RUNNER_TEMP}/empty-law" "${RUNNER_TEMP}/empty-git"
+          git clone --quiet --depth 1 https://github.com/elconcept/o-ochronie-danych-osobowych.git \
+            "${RUNNER_TEMP}/empty-law/o-ochronie-danych-osobowych"
+          python own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py \
+            --law "${RUNNER_TEMP}/empty-law" \
+            --law-git "${RUNNER_TEMP}/empty-git" \
+            --ochrona-danych "${CORPUS_DIR}" \
+            --db "${TEST_DB}" buduj
+          python - <<'PY'
+          import os, sqlite3, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path("own-skills/patron-prawo-pl-zrodla/scripts").resolve()))
+          from ustawy import Baza
+          b = Baza(os.environ["TEST_DB"])
+          expected = {"rodo": 99, "led": 65, "dodo": 108}
+          con = sqlite3.connect(os.environ["TEST_DB"])
+          for act, count in expected.items():
+              n = con.execute("SELECT COUNT(*) FROM artykuly WHERE akt=?", (act,)).fetchone()[0]
+              assert n == count, (act, n, count)
+          a = b.artykul("RODO", "33")
+          assert a["status"] == "FOUND" and "naruszen" in a["tekst"].lower().replace("ń", "n")
+          assert a["eli"] == "CELEX:32016R0679"
+          assert "nie potwierdzono" in a["uwaga"].lower()
+          l = b.artykul("LED", "10")
+          assert l["status"] == "FOUND" and "danych" in l["tekst"].lower()
+          d = b.artykul("DODO", "23")
+          assert d["status"] == "FOUND" and "HISTORYCZNY" in d["uwaga"]
+          assert b.akt_po_eli("DU/2019/125", art="23")["status"] == "OUT_OF_SCOPE"
+          r = b.akt_po_eli("CELEX:32016R0679", art="33", limit=100)
+          assert r["status"] == "FOUND" and r["returnedLength"] == 100 and r["hasMore"]
+          assert all(x["status"] == "FOUND" for x in [
+            b.artykul("rodo","1"), b.artykul("rodo","99"),
+            b.artykul("led","1"), b.artykul("led","65"),
+            b.artykul("dodo","1"), b.artykul("dodo","108"),
+          ])
+          current_acts = {a["akt"] for a in b.akty()}
+          assert current_acts == set(expected) | {"o-ochronie-danych-osobowych"}, current_acts
+          assert b.artykul("uodo", "107")["status"] == "FOUND"
+          print("PASS: RODO=99, LED=65, DODO=108 + istniejąca UODO; FTS, aliasy, CELEX, DODO fail-closed")
+          PY

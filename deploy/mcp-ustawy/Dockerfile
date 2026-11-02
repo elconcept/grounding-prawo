@@ -10,13 +10,16 @@ WORKDIR /app
 COPY --chmod=0644 .gitmodules /app/.gitmodules
 COPY --chmod=0644 own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py own-skills/patron-prawo-pl-zrodla/scripts/ustawy_mcp.py /app/
 COPY --chmod=0644 deploy/mcp-ustawy/clone_law.py /app/
+COPY --chmod=0644 deploy/mcp-ustawy/fetch_data_protection.py /app/
+COPY --chmod=0644 own-skills/patron-prawo-pl-zrodla/scripts/data_protection_git.py /app/
 # Zmiana LAW_REFRESH (np. data) wymusza ponowne pobranie aktów przy przebudowie.
 ARG LAW_REFRESH=0
 RUN echo "law refresh ${LAW_REFRESH}" \
     && python /app/clone_law.py /app/.gitmodules /law /law-git \
     && git config --system --add safe.directory '*' \
-    && python /app/ustawy.py --law /law --law-git /law-git --db /app/ustawy.sqlite buduj
-ENV USTAWY_DB=/app/ustawy.sqlite USTAWY_LAW_DIR=/law USTAWY_LAW_GIT_DIR=/law-git PORT=8080
+    && python /app/fetch_data_protection.py --out /data-protection \\
+    && python /app/ustawy.py --law /law --law-git /law-git --ochrona-danych /data-protection --db /app/ustawy.sqlite buduj
+ENV USTAWY_DB=/app/ustawy.sqlite USTAWY_LAW_DIR=/law USTAWY_LAW_GIT_DIR=/law-git USTAWY_OCHRONA_DANYCH_DIR=/data-protection PORT=8080
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
   CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/healthz',timeout=3).status==200 else 1)"

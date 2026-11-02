@@ -28,6 +28,8 @@ import subprocess
 import sys
 import unicodedata
 
+from data_protection_git import build_data_protection
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_LAW = os.environ.get("USTAWY_LAW_DIR") or os.path.normpath(os.path.join(HERE, "../../../vendor/law"))
 DEFAULT_LAW_GIT = os.environ.get("USTAWY_LAW_GIT_DIR") or os.path.normpath(os.path.join(HERE, "../../../vendor/law-git"))
@@ -61,6 +63,8 @@ ALIASES = {
     "ukrs": "o-krajowym-rejestrze-sadowym", "uos": "o-oplacie-skarbowej", "usd": "o-podatku-od-spadkow-i-darowizn",
     "ups": "o-pomocy-spolecznej", "upps": "o-pomocy-spolecznej", "uppd": "o-przeciwdzialaniu-przemocy-domowej",
     "prd": "prawo-o-ruchu-drogowym",
+    "rodo": "rodo", "gdpr": "rodo", "led": "led", "dyrektywa-policyjna": "led",
+    "dodo": "dodo",
     "kks": "kodeks-karny-skarbowy", "kkw": "kodeks-karny-wykonawczy", "km": "kodeks-morski",
     "kp": "kodeks-pracy", "ksh": "kodeks-spolek-handlowych", "kwyb": "kodeks-wyborczy",
 }
@@ -223,7 +227,8 @@ def build_git(con, law_git: str) -> tuple[int, int]:
     return acts, arts
 
 
-def build(law: str, db: str, law_git: str = DEFAULT_LAW_GIT) -> int:
+def build(law: str, db: str, law_git: str = DEFAULT_LAW_GIT,
+          ochrona_danych: str | None = None) -> int:
     tmp = db + ".tmp"
     if os.path.exists(tmp):
         os.remove(tmp)
@@ -257,6 +262,9 @@ def build(law: str, db: str, law_git: str = DEFAULT_LAW_GIT) -> int:
     con.row_factory = sqlite3.Row
     gacts, garts = build_git(con, law_git)
     arts += garts
+    if ochrona_danych:
+        _new_acts, new_arts = build_data_protection(con, ochrona_danych)
+        arts += new_arts
     # indeks przepisów po złożeniu obu źródeł (brzmienie git-as-law zastępuje brzmienie z komentarza)
     for r in con.execute("SELECT akt, art, brzmienie FROM artykuly").fetchall():
         con.execute("INSERT INTO fts VALUES (?,?,?,?)", (r["akt"], r["art"], "przepis", fold(r["brzmienie"])))
@@ -310,7 +318,8 @@ class Baza:
         dokładne identyfikatory publikacji. Nie odpowiada pełnemu plikowi Dz.U.
         (brak załączników), zatem świadomie raportuje dokument_pelny=False.
         """
-        if not re.fullmatch(r"(DU|MP)/\d{4}/\d{1,5}", eli, re.I):
+        if not (re.fullmatch(r"(DU|MP)/\d{4}/\d{1,5}", eli, re.I)
+                or re.fullmatch(r"CELEX:3\d{4}[A-Z]\d{4}", eli, re.I)):
             return {"status": "INVALID_ELI", "eli": eli}
         if type(offset) is not int or offset < 0 or type(limit) is not int or limit < 1 or limit > 20000:
             return {"status": "INVALID_RANGE", "offset": offset, "limit": limit}
@@ -318,6 +327,10 @@ class Baza:
         if not meta:
             return {"status": "OUT_OF_SCOPE", "eli": eli,
                     "powod": "Dokładny tekst tej publikacji nie występuje w lokalnej bazie USTAWY"}
+        # DODO jest w korpusie jako tekst pierwotny; nie może zastępować aktualnego ELI.
+        if meta["zrodlo"] == "git-as-law-snapshot":
+            return {"status": "OUT_OF_SCOPE", "eli": eli, "powod":
+                    "Lokalny tekst DODO to historyczna wersja pierwotna; pobierz z ELI tekst aktualny."}
         if art:
             numer = norm_art(art)
             rows = self.con.execute(
@@ -367,7 +380,12 @@ class Baza:
         for r in self.con.execute(sql, args):
             t = self.con.execute("SELECT brzmienie, komentarz FROM artykuly WHERE akt=? AND art=?", (r["akt"], r["art"])).fetchone()
             text = (t["brzmienie"] if r["rodzaj"] == "przepis" else t["komentarz"]) if t else ""
-            out.append({"akt": r["akt"], "art": r["art"], "rodzaj": r["rodzaj"], "fragment": snippet(text, stems)})
+            wynik = {"akt": r["akt"], "art": r["art"], "rodzaj": r["rodzaj"], "fragment": snippet(text, stems)}
+            if r["akt"] in ("rodo", "led", "dodo"):
+                meta = self.con.execute("SELECT * FROM akty WHERE akt=?", (r["akt"],)).fetchone()
+                wynik.update(zrodlo=meta["zrodlo"], stan_na=meta["stan_na"], eli=meta["eli"],
+                             uwaga=uwaga(meta))
+            out.append(wynik)
         return out
 
     def cytat(self, akt: str, art: str, fragment: str) -> dict:
@@ -382,6 +400,14 @@ class Baza:
 
 
 def uwaga(meta) -> str:
+    if meta["zrodlo"] == "git-as-law-snapshot":
+        return ("UWAGA: HISTORYCZNY TEKST PIERWOTNY z przypiętego commita Git; "
+                "nie nadaje się do cytowania jako aktualny przepis. "
+                "Weryfikuj tekst aktualny w ELI: " + str(meta["ostatnia_zmiana"]))
+    if meta["zrodlo"] == "git-snapshot-pl":
+        return ("UWAGA: polska reprezentacja z przypiętego commita Git, wydanie "
+                + str(meta["tekst_jednolity"]) + ". Nie potwierdzono aktualności i kompletności "
+                "względem Dziennika Urzędowego UE. Zweryfikuj: " + str(meta["ostatnia_zmiana"]))
     if meta["zrodlo"] == "git-as-law":
         return (f"brzmienie obowiązujące według repozytorium git-as-law: tekst jednolity {meta['tekst_jednolity']} "
                 f"z naniesionymi nowelizacjami, ostatnia w dniu {meta['stan_na']} ({meta['ostatnia_zmiana']}). "
@@ -410,6 +436,8 @@ def main(argv=None) -> int:
     ap.add_argument("--db", default=DEFAULT_DB)
     ap.add_argument("--law", default=DEFAULT_LAW)
     ap.add_argument("--law-git", default=DEFAULT_LAW_GIT)
+    ap.add_argument("--ochrona-danych", default=os.environ.get("USTAWY_OCHRONA_DANYCH_DIR"),
+                    help="Katalog ze zweryfikowanymi plikami RODO, LED i DODO z przypiętych commitów Git")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("buduj")
     sub.add_parser("akty")
@@ -418,7 +446,7 @@ def main(argv=None) -> int:
     p = sub.add_parser("cytat"); p.add_argument("akt"); p.add_argument("nr"); p.add_argument("fragment")
     a = ap.parse_args(argv)
     if a.cmd == "buduj":
-        return build(a.law, a.db, a.law_git)
+        return build(a.law, a.db, a.law_git, a.ochrona_danych)
     b = Baza(a.db)
     res = {"akty": lambda: b.akty(),
            "art": lambda: b.artykul(a.akt, a.nr, a.komentarz),
