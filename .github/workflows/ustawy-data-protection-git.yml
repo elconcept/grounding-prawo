@@ -29,6 +29,8 @@ jobs:
           TEST_DB: ${{ runner.temp }}/ustawy-test.sqlite
         run: |
           mkdir -p "${RUNNER_TEMP}/empty-law" "${RUNNER_TEMP}/empty-git"
+          git clone --quiet --depth 1 https://github.com/elconcept/o-ochronie-danych-osobowych.git \
+            "${RUNNER_TEMP}/empty-law/o-ochronie-danych-osobowych"
           python own-skills/patron-prawo-pl-zrodla/scripts/ustawy.py \
             --law "${RUNNER_TEMP}/empty-law" \
             --law-git "${RUNNER_TEMP}/empty-git" \
@@ -61,6 +63,8 @@ jobs:
             b.artykul("led","1"), b.artykul("led","65"),
             b.artykul("dodo","1"), b.artykul("dodo","108"),
           ])
-          assert {a["akt"] for a in b.akty()} == set(expected)
-          print("PASS: RODO=99, LED=65, DODO=108; FTS, aliasy, CELEX, DODO fail-closed")
+          current_acts = {a["akt"] for a in b.akty()}
+          assert current_acts == set(expected) | {"o-ochronie-danych-osobowych"}, current_acts
+          assert b.artykul("uodo", "107")["status"] == "FOUND"
+          print("PASS: RODO=99, LED=65, DODO=108 + istniejąca UODO; FTS, aliasy, CELEX, DODO fail-closed")
           PY
