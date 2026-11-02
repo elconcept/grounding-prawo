@@ -79,10 +79,9 @@ potwierdzający. Gdy brakuje metodyki lub źródła, oznacz etap NIEZAKOŃCZONY 
 
 ## Recap w `main` — dziennik każdej sesji zmian
 
-Jedyne miejsce recapów: projekt `main`, katalog `sesje/` (podkatalogi tematyczne dozwolone). Tytuł notatki: `RRRR-MM-DD — <temat>`
-(data sesji, pełny myślnik, temat bez prefiksu „Recap” i bez identyfikatora sesji); nazwa pliku równa tytułowi.
-Identyfikator sesji (hosta albo stabilny znacznik czasu UTC z pierwszego zapisu) zapisz w metadanych notatki `session_id`,
-nie w tytule. Przy wznowieniu odszukaj istniejącą notatkę po `session_id` lub po dacie i temacie.
+Użyj jednej notatki sesji w projekcie `main`, katalog `sesje/grounding-prawo/`: tytuł `RRRR-MM-DD — <temat> — <id sesji>`.
+Użyj identyfikatora hosta, jeśli dostępny; w przeciwnym razie utwórz stabilny identyfikator przy pierwszym zapisie
+(np. znacznik czasu UTC) i zachowaj go w kolejnych aktualizacjach. Przy wznowieniu odszukaj istniejącą notatkę.
 
 Zapisz: cel użytkownika; wykonane działania; decyzje i ich przyczyny; pliki/wyniki z odnośnikami;
 kontrole faktycznie wykonane; nierozstrzygnięte kwestie; następny krok; odnośniki do notatek `legal`.
