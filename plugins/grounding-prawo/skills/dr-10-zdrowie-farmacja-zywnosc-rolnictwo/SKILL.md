@@ -2,7 +2,7 @@
 name: dr-10-zdrowie-farmacja-zywnosc-rolnictwo
 description: 'DR-10: prawa pacjenta, działalność lecznicza, zawód lekarza. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.57'
+  version: '3.58'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -204,7 +204,7 @@ WYROBY MEDYCZNE I CHEMIA:
 
 ŻYWNOŚĆ, WETERYNARIA, ROLNICTWO:
   [✓] OK    mod-ustawa-rolne-zywnosc-weterynaria
-              (bezpieczeństwo żywności Dz.U. 2023 poz. 1448 + inspekcja weterynaryjna
+              (bezpieczeństwo żywności Dz.U. 2026 poz. 1399 + inspekcja weterynaryjna
                Dz.U. 2024 poz. 12 + ARiMR/PROW + IJHARS)
   [✓] OK    mod-ustawa-bezpieczenstwo-zywnosci
   [✓] NOWY  mod-ustawa-hodowla-zdrowie-zwierzat
