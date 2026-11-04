@@ -48,14 +48,17 @@ docstring `render_pismo.py`.
                                                 Kraków, dnia 15 października 2026 r.
 Jan Kowalski                                   ← 14 pt
 ul. Przykładowa 1/2, 30-001 Kraków                     ← ulica/osiedle, kod, miasto: JEDNA linia
-tel. 600 000 000, e-mail: …                          ← jedna linia
+PESEL 80010100000                                    ← osobny wiersz (gdy podawany)
+600 000 000, jan.kowalski@example.pl                 ← telefon i e-mail BEZ etykiet „tel.”/„e-mail:”
+AE:PL-00000-00000-XXXXX-00, ePUAP: JanKowalski1      ← adres do e-doręczeń i ePUAP, gdy nadawca je ma
 
                                       Sąd Okręgowy w Krakowie   ← organ 14 pt, wyrównanie do prawej
                                             III Wydział Karny   ← podjednostka 12 pt, do prawej
                              ul. Przy Rondzie 7, 31-547 Kraków   ← 10 pt, jedna linia, do prawej
 
 Sygn. akt:        III Ko 1/26                       ← etykieta i wartość w kolumnach
-Wnioskodawca:     Jan Kowalski
+Dotyczy:          wartość dłuższa niż wiersz zawija się
+                  pod wartością, nie pod etykietą     ← wcięcie wiszące 3,5 cm
 ```
 
 - Telefon i e-mail nadawcy: wpisz, jeśli znasz je z dokumentów sprawy (wcześniejsze pisma, profil).
@@ -63,7 +66,7 @@ Wnioskodawca:     Jan Kowalski
   pustych pól. Oświadczenie o nieposiadaniu telefonu lub e-maila wpisuj tylko na polecenie użytkownika.
 - Blok adresata w całości wyrównany do prawej (Align Right), bez wcięcia.
 - Adres organu sprawdź w dokumentach sprawy albo wyszukiwaniem, nie z pamięci.
-- Podpis: imię i nazwisko autora pod miejscem na podpis; bez tytułu zawodowego i numeru wpisu.
+- Podpis: imię i nazwisko autora, bez linii kropkowanej, bez tytułu zawodowego i numeru wpisu.
 
 ## Wyróżnienia: pogrubienie i podkreślenie
 
@@ -78,6 +81,8 @@ Wnioskodawca:     Jan Kowalski
   („1. Co do zażalenia na zatrzymanie: …”) albo nagłówka `#`/`##` renderera (wersaliki, bez pogrubienia).
 - Limit orientacyjny: 1 wyróżnienie na ok. 250 słów, nie więcej niż 1 w akapicie. Renderer ostrzega
   po przekroczeniu - wtedy zostaw tylko te, bez których sędzia mógłby przeoczyć tezę.
+- Każde pismo ma dokładnie dwa podkreślenia (`__…__`): dwie najważniejsze tezy - to, co czytelnik ma
+  zapamiętać nawet po pobieżnej lekturze (key takeaway). Renderer ostrzega przy innej liczbie.
 
 ## Treść
 
@@ -87,8 +92,11 @@ Wnioskodawca:     Jan Kowalski
 - Między punktami nie ma pustych akapitów ani łamań wiersza; odstęp daje odstęp po akapicie (6 pt).
 - Każdy tekst dopisany do istniejącego DOCX ma krój i rozmiar otoczenia (Georgia 10 pt); wstawka bez własnego
   formatowania (np. na początku akapitu) spada do domyślnej czcionki Worda (Aptos 12 pt) - to błąd.
-- Na końcu: wniosek końcowy, podpis z prawej (linia kropkowana, imię i nazwisko), pod nim „Załączniki:”
-  z numerowaną listą, jeśli są.
+- Na końcu: wniosek końcowy, podpis z prawej (imię i nazwisko), pod nim „Załączniki:” z numerowaną listą,
+  jeśli są. Załącznik opisuj kilkoma słowami (rodzaj i data); jego treść czytelnik zna z dokumentu.
+- Selekcja: do pisma, wniosków dowodowych i załączników trafia tylko to, co jest naprawdę istotne dla
+  jego przedmiotu („czy to jest ważne w temacie pisma?”, nie „czy to pasuje”). Wniosek o każdy możliwy
+  dowód i wielostronicowy wywód zostają odczytane jako pieniactwo; kluczowe ustalenia toną w szczegółach.
 - Bez emoji, symboli i znaczników Markdown w gotowym piśmie.
 
 ## Redakcja i dynamika (wzory: `INBOX/III_RNs_1279_25_*` - pisma adwokata)
