@@ -2,7 +2,7 @@
 name: dr-03-prawo-karne-wykroczenia-egzekucja
 description: 'DR-03: prawo karne i wykroczenia (KK, KPK, KKW, KW, KPW). Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.73'
+  version: '3.74'
   dependencies: '{"requires": ["shared"]}'
 ---
 
