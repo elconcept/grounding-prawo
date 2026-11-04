@@ -61,28 +61,23 @@ Przed wykonaniem każdej operacji ustal tier i zastosuj regułę:
 | **D - Destructive** | `sanitize --accept-all` (akceptuje wszystkie zmiany nieodwracalnie) | Użytkownik musi wpisać dosłownie: **"potwierdzam"** zanim wykonasz. |
 
 Tiery M i D chronią cudzy dokument i plik wysyłany na zewnątrz. **Własne pismo autora w teczce sprawy**
-(`legal/output/<nazwa>.docx`) ma uzgodniony cykl bez tych potwierdzeń: przyjęcie zmian w tym samym pliku na
-początku sesji i `apply` zmian sesji na ten sam plik na końcu (`shared/ARTEFAKTY-SPRAWY.md`).
+nie używa redline (decyzja autora, 4.11.2026): każda zmiana to nowy plik `legal/output/<nazwa>/<nazwa>_vN.docx`
+bez zmian śledzonych (`shared/ARTEFAKTY-SPRAWY.md`). Ten skill zostaje dla umów i dokumentów innych autorów.
 
-## Własne pismo w teczce: jeden plik, zmiany śledzone
+## Własne pismo w teczce: wersje zamiast zmian śledzonych
 
 Skille pism (`pisma-proste-v2`, `pisma-procesowe-v3`, `zawiadomienie-o-przestepstwie`, `rodo-dsar-pl`,
-`szturm-na-draft-pl`) prowadzą JEDEN plik pisma `legal/output/<nazwa>.docx` - bez daty, godziny i `_vN`
-w nazwie - oraz snapshoty `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md`. W `output/` nie powstają nowe
-wersje ani kopie, nic nie jest usuwane ani przemianowywane. Polecenia opakowuje `shared/format-pisma/wersja_pisma.py`:
+`szturm-na-draft-pl`) prowadzą folder pisma `legal/output/<nazwa>/` z wersjami `<nazwa>_v1.docx`, `<nazwa>_v2.docx`, ...
+Silnik adeu służy tylko do naniesienia zmian w nowej wersji i ich natychmiastowego przyjęcia:
 
 ```bash
 W=<skills>/shared/format-pisma/wersja_pisma.py
-python3 -I $W start   --docx legal/output/<nazwa>.docx --drafty <sprawa>/drafty/<pismo>
-python3 -I $W redline --docx legal/output/<nazwa>.docx --edits <sprawa>/_robocze/<katalog>/edits.json --author "Imię Nazwisko"
-python3 -I $W sprawdz --output legal/output
+python3 -I $W nastepna --pismo legal/output/<nazwa>          # kopia najnowszej wersji jako _v(N+1)
+python3 -I $W zmien    --docx legal/output/<nazwa>/<nazwa>_v<N+1>.docx --edits <sprawa>/_robocze/<katalog>/edits.json
+python3 -I $W sprawdz  --output legal/output
 ```
 
-`start` przyjmuje zmiany śledzone w pliku pisma z zachowaniem komentarzy i zapisuje snapshot. `redline` nakłada
-`edits.json` (albo pełny tekst nowej wersji: `--tekst`) na ten sam plik jako `w:ins`/`w:del`, nadaje wstawkom
-czcionkę otoczenia (wstawka na początku akapitu bez tego dostaje Aptos 12 pt), odrzuca wynik z pominiętymi edycjami
-albo z nowymi pustymi akapitami i dopiero wtedy podmienia plik. Wynik bez zmian śledzonych to etap NIEZAKOŃCZONY.
-Nowy render DOCX z MD (renderer, pandoc, python-docx) nigdy nie zastępuje redline.
+Porównanie dwóch wersji dla autora (`adeu diff`) to raport w `_robocze/`, nie plik pisma.
 
 ---
 
@@ -322,8 +317,8 @@ Decyzja o jakimkolwiek wpieciu nalezy do WM.
 
 ## MOST - miejsce w przepływie grounding-prawo
 
-- **Wejście z:** DOCX pisma z `legal/output/` i nowa wersja MD z `drafty/<pismo>/` (cykl własnego pisma) albo cudzy `.docx` i lista zmian
-- **Wynik zapisz w:** własne pismo - jeden DOCX z redline sesji w `legal/output/` (`shared/format-pisma/wersja_pisma.py redline`); cudzy dokument - REDLINE w `_robocze/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wejście z:** cudzy `.docx` (umowa, dokument kontrahenta) i lista zmian; własne pismo nie używa redline (wersje `_vN`, ARTEFAKTY-SPRAWY)
+- **Wynik zapisz w:** cudzy dokument - REDLINE w `_robocze/`; własne pismo - silnik adeu dla `shared/format-pisma/wersja_pisma.py zmien` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `szturm-na-draft-pl`
 - **Basic Memory (`legal`):** czytaj lekcje teczki i notatkę pisma (stan pętli); po każdej rundzie zapisz w notatce pisma wersję, otwarte uwagi i pytania, lekcje w `## Lekcje` (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

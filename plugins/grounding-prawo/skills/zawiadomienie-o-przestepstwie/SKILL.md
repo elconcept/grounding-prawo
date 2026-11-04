@@ -187,9 +187,9 @@ Relację, log zeznań, rejestr pism, listę zgłoszeń (`Zgłoszenia — <Autor>
 na zamknięcie sesji zapisuj w Basic Memory (`legal`, `relacje/<autor-slug>/`) według `references/basic-memory-relacja.md`,
 z odczytem potwierdzającym. Nie twórz ich jako plików w katalogu sprawy ani w projekcie claude.ai;
 pliki są formatem awaryjnym tylko bez dostępu do Basic Memory. Nie są jednorazowymi notatkami `_robocze/`.
-- Pismo: wersje `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD) i jeden
-  DOCX pisma `legal/output/<nazwa>.docx` (bez daty i `_vN`), w cyklu przyjęcie zmian → snapshot MD → redline sesji w tym samym pliku,
-  zgodnie z `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”. Pismo w `legal/output/` bez placeholderów;
+- Pismo: źródło `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD) i folder
+  `legal/output/<nazwa>/` z wersjami `<nazwa>_vN.docx` i kopiami załączników; każda sesja zmian = nowa wersja
+  bez zmian śledzonych, zgodnie z `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”. Pismo w `legal/output/` bez placeholderów;
   ręczna edycja autora w DOCX ma pierwszeństwo (`references/ciaglosc-sesji.md`, „Pisma w `output/` i wersje”).
 - Pliki inkrementalne pisma (tworzone raz, potem dopisywane): `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, wynik,
   decyzje autora), `_MAPA_KRZYWD.md` (mapa wewnętrzna F5, wiersze ze stałym `#`, zmiany statusu zamiast kopii),
@@ -250,7 +250,7 @@ Historia zmian i decyzje autora: `references/CHANGELOG.md`. Pochodzenie reguł i
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera w etapie przygotowawczym; sprawa przed sądem idzie do pism procesowych, `references/zgloszenia.md` §4a)
-- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` (nowa wersja na sesję, bez placeholderów), `_MAPA_KRZYWD.md`, wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `pisz-po-polsku`
 - **Nie dubluj:** HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj odrębnie, a atak tylko na żądanie z ochroną pełnej relacji
 - **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)

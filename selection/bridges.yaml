@@ -122,8 +122,8 @@ skills:
   pisma-procesowe-v3:
     etap: B
     wejscie: '`analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM'
-    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`
-      nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` z kopiami załączników (`shared/format-pisma/wersja_pisma.py`
+      nowe albo nastepna + zmien), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - citation-grounding-pl
@@ -132,8 +132,8 @@ skills:
   pisma-proste-v2:
     etap: B
     wejscie: 'krótkie pismo: wezwanie, wniosek, odpowiedź; `prawny-router-v3`'
-    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`
-      nowe albo redline), wpis w `_PRZEBIEGI.md`'
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` z kopiami załączników (`shared/format-pisma/wersja_pisma.py`
+      nowe albo nastepna + zmien), wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - citation-grounding-pl
@@ -141,7 +141,7 @@ skills:
   zawiadomienie-o-przestepstwie:
     etap: B
     wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera w etapie przygotowawczym; sprawa przed sądem idzie do pism procesowych, `references/zgloszenia.md` §4a)
-    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) z redline sesji (bez placeholderów), `_MAPA_KRZYWD.md`,
+    wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` (nowa wersja na sesję, bez placeholderów), `_MAPA_KRZYWD.md`,
       wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/`'
     dalej:
     - pisz-po-polsku
@@ -151,7 +151,7 @@ skills:
     etap: E
     wejscie: żądanie dotyczące własnych danych (dostęp, sprostowanie, usunięcie)
     wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD) w teczce sprawy, której dotyczą dane (gdy niejednoznaczna:
-      pytanie do autora), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md`'
+      pytanie do autora), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` (`shared/format-pisma/wersja_pisma.py`), wpis w `_PRZEBIEGI.md`'
     dalej:
     - kalkulatory-procesowe-pl
     - pisz-po-polsku
@@ -172,31 +172,27 @@ skills:
   szturm-na-draft-pl:
     etap: C
     wejscie: draft `.docx` z aktami; wariant domyślny pełnej kontroli (zastępuje ręczne przepuszczanie przez soczewki)
-    wynik: snapshot `drafty/<pismo>/<wersja>.md`; DOCX z redline sesji w `legal/output/`; tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md`
+    wynik: nowa wersja `legal/output/<nazwa>/<nazwa>_vN.docx` z poprawkami sesji (bez zmian śledzonych); tura w `_SUBSUMPCJA.md` i `_PRZEBIEGI.md`
     dalej:
     - pisz-po-polsku
-    - redline-docx-pl
     nie_dubluj: pojedyncze soczewki (cytaty, sędzia, atak) uruchamiaj osobno tylko do powtórzenia jednej kontroli
   pisz-po-polsku:
     etap: C
     wejscie: pismo po kontroli merytorycznej (pierwszy szlif; nie zmienia faktów, cytatów ani sygnatur)
-    wynik: nowa wersja `drafty/<pismo>/..._vN+1.md` (tylko MD); DOCX dopiero redline końca sesji
+    wynik: poprawki do nowej wersji DOCX pisma (`wersja_pisma.py zmien` na końcu sesji)
     dalej:
     - humanizer-pl
-    - redline-docx-pl
     - szturm-na-draft-pl
   humanizer-pl:
     etap: C
     wejscie: tekst po obowiązkowym `pisz-po-polsku` (drugi etap redakcji)
     wynik: nowa wersja tekstu z usuniętymi wzorcami AI (emdash -> lacznik, naturalna struktura zdań)
     dalej:
-    - redline-docx-pl
     - szturm-na-draft-pl
   redline-docx-pl:
     etap: C
-    wejscie: DOCX pisma z `legal/output/` i nowa wersja MD z `drafty/<pismo>/` (cykl własnego pisma) albo cudzy `.docx` i lista zmian
-    wynik: własne pismo - jeden DOCX z redline sesji w `legal/output/` (`shared/format-pisma/wersja_pisma.py redline`); cudzy dokument -
-      REDLINE w `_robocze/`
+    wejscie: cudzy `.docx` (umowa, dokument kontrahenta) i lista zmian; własne pismo nie używa redline (wersje `_vN`, ARTEFAKTY-SPRAWY)
+    wynik: cudzy dokument - REDLINE w `_robocze/`; własne pismo - silnik adeu dla `shared/format-pisma/wersja_pisma.py zmien`
     dalej:
     - szturm-na-draft-pl
   analizator-umow-v1:

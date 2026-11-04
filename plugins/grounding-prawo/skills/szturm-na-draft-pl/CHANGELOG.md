@@ -1,5 +1,12 @@
 # Changelog - szturm-na-draft-pl
 
+## 1.6.0 — 2026-11-04 — wersje DOCX zamiast redline
+
+- Decyzja autora: własne pismo nie dostaje zmian śledzonych. Sesja tworzy nową wersję
+  `legal/output/<nazwa>/<nazwa>_v<N+1>.docx` (`wersja_pisma.py nastepna`), a zatwierdzone poprawki nanosi bez
+  śledzenia (`wersja_pisma.py zmien`). Poprzednie wersje zostają bez zmian.
+- DECYZJA_AUTORA wchodzi do pisma dopiero po zatwierdzeniu w pętli E8; redline rund zostaje roboczo w `RUN/`.
+
 ## 1.5.0 — 2026-10-19 — snapshot MD i jeden DOCX z redline
 
 - Cykl sesji wg `shared/ARTEFAKTY-SPRAWY.md`: akceptacja niezaakceptowanych zmian w DOCX pisma z `legal/output/`,

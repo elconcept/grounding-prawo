@@ -45,11 +45,11 @@ semantycznym; nie zastępuje pierwszego kroku w Repertorium.
 
 Przed redakcją lub poprawianiem pisma przeczytaj `shared/STYLE.md`; przed utworzeniem plików
 przeczytaj `shared/ARTEFAKTY-SPRAWY.md` i `shared/FORMAT-PISMA.md`.
-W `legal/sprawy/<katalog_sprawy>/drafty/<pismo>/` powstają snapshoty pisma `rrrrMMdd_hhmm_<nazwa>_vN.md` (Markdown).
-W `legal/output/` jest dokładnie jeden DOCX każdego pisma, `<nazwa>.docx` bez daty i `_vN`, przez całe życie pisma:
-sesja przyjmuje w nim zmiany śledzone, zapisuje snapshot i nakłada swoje zmiany na ten sam plik jako redline.
-W `output/` nie powstają nowe wersje ani kopie i nic nie jest usuwane (`shared/ARTEFAKTY-SPRAWY.md`,
-„Cykl pracy nad pismem”; czcionka wstawek, listy i puste akapity: `shared/FORMAT-PISMA.md`).
+Każde pismo ma w `legal/output/` folder `<nazwa>/` z wersjami `<nazwa>_v1.docx`, `<nazwa>_v2.docx`, ...
+i kopiami załączników. Każda zmiana pisma to nowy plik z wyższym `_vN`, bez zmian śledzonych (redline własnego
+pisma jest wycofany od 4.11.2026); starsze wersje zostają. Źródło Markdown nowego pisma leży w
+`legal/sprawy/<katalog_sprawy>/drafty/<pismo>/`, kopia bieżącej wersji w `<sprawa>/pisma/<nazwa>.docx`
+(`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”; czcionka wstawek, listy i puste akapity: `shared/FORMAT-PISMA.md`).
 
 Każde pismo przed wydaniem przechodzi obowiązkowo przez dwa skille redakcyjne, w tej kolejności:
 najpierw `pisz-po-polsku` (szlif językowy i bramka `audyt_po_przepisaniu.py`), potem `humanizer-pl`
