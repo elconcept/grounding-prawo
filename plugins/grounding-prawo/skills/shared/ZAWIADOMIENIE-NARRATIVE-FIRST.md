@@ -2,7 +2,7 @@
 
 ## Rozpoznanie i pierwszeństwo
 
-Dotyczy tworzenia, uzupełniania, recenzji, skracania, redline oraz eksportu zawiadomienia
+Dotyczy tworzenia, uzupełniania, recenzji, skracania, nowych wersji oraz eksportu zawiadomienia
 opartego na relacji pokrzywdzonego, także przeciw funkcjonariuszowi. Samo dołączenie akt,
 żądanie DOCX, „sprawdź przed złożeniem” lub uruchomienie recenzenta nie zmienia typu pisma.
 W tym zakresie ta reguła wyłącza sprzeczne instrukcje „ZAWSZE”, „BLOCK ZERO”, „ABSOLUTNIE

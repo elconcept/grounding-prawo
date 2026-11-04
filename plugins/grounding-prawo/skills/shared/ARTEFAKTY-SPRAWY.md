@@ -4,18 +4,23 @@ Reguła kanoniczna dla każdego skilla, który analizuje akta, draftuje albo kon
 Cel: mało plików, pełny ślad. Kolejny przebieg niczego nie dubluje - dopisuje do plików, które już istnieją.
 
 `<sprawa>` oznacza teczkę sprawy `legal/sprawy/<katalog_sprawy>/`. Używaj istniejącej teczki, nie zakładaj
-drugiej kopii. Wspólny katalog odbioru to `legal/output/`; nazwa pliku musi identyfikować sprawę i pismo
-(np. `II_W_1342_26_wniosek_o_sprostowanie_protokolu.docx`), aby identyczne tytuły w różnych sprawach nie nadpisywały się.
+drugiej kopii. Wspólny katalog odbioru to `legal/output/`; nazwa pisma musi identyfikować sprawę i pismo
+(np. `II_W_1342_26_wniosek_o_sprostowanie_protokolu`), aby identyczne tytuły w różnych sprawach nie nadpisywały się.
 
-Pismo istnieje w dwóch miejscach i w dwóch formatach:
-- `legal/output/<nazwa>.docx` - JEDEN plik pisma, **bez daty, godziny i `_vN` w nazwie**, przez cały czas życia pisma.
-  Każda sesja pracuje na tym samym pliku: zmiany wchodzą do niego wyłącznie jako zmiany śledzone (redline).
-  W `output/` model nie tworzy kolejnych wersji, kopii ani plików pośrednich, niczego nie usuwa i nie zmienia nazw;
-- `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` - snapshoty poprzednich stanów pisma (Markdown). Różnią się
-  nazwą dzięki prefiksowi daty i godziny (`date +%Y%m%d_%H%M`) i sufiksowi `_vN`; nic nie jest nadpisywane.
+**Wersje zamiast zmian śledzonych (decyzja autora, 4.11.2026).** Mechanizm redline dla własnego pisma jest wycofany.
+Każda zmiana pisma to nowy plik DOCX z wyższym sufiksem wersji; poprzednie wersje zostają bez zmian.
 
-Wersja `.md` w `output/`, DOCX z datą lub `_vN` w nazwie albo drugi DOCX tego samego pisma to błąd do naprawy
-w tym samym przebiegu (przeniesienie przez `mv` do `<sprawa>/_robocze/rrrrMMdd_archiwum_output/`, nie usunięcie).
+Pismo istnieje w tych miejscach:
+- `legal/output/<nazwa>/` - folder pisma. Zawiera wszystkie wersje `<nazwa>_v1.docx`, `<nazwa>_v2.docx`, ...
+  (nazwa bez daty i godziny), kopie wszystkich załączników, spis `_ZALACZNIKI.md` i raporty kontroli (`_*.md`, `_*.json`).
+  Bieżące pismo to wersja z najwyższym `N`. Złożona wersja PDF (`<nazwa>.pdf`) może leżeć obok. Żadne pismo nie leży
+  luzem w korzeniu `output/`;
+- `<sprawa>/pisma/<nazwa>.docx` - kopia bieżącej wersji w teczce sprawy, odświeżana po każdej nowej wersji;
+- `<sprawa>/drafty/<pismo>/` - źródło Markdown nowego pisma (`rrrrMMdd_hhmm_<nazwa>_v1.md`) i, opcjonalnie,
+  snapshoty tekstu kolejnych wersji (`nastepna --drafty`). Historią pisma są wersje DOCX w folderze pisma.
+
+Plik pisma luzem w `output/`, `.md` w folderze pisma (poza `_*.md`), DOCX bez `_vN` albo z nazwą innego pisma
+i niezaakceptowane zmiany śledzone w najnowszej wersji to błąd do naprawy w tym samym przebiegu.
 
 ## Teczka sprawy - ustal przed pierwszym zapisem
 
@@ -33,8 +38,8 @@ Nowa teczka powstaje dopiero po decyzji autora; jej nazwę wpisz do rejestru pis
 
 | Rodzaj | Gdzie | Zasada |
 |---|---|---|
-| **Wersja pisma (snapshot)** | `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` | Stan pisma na początku sesji, po przyjęciu zmian śledzonych i ze zmianami autora. Każda sesja dodaje jeden snapshot z podbitym `vN` i rzeczywistą godziną. Tylko MD; w `drafty/` nie ma DOCX. |
-| **DOCX pisma** | `legal/output/<nazwa>.docx` | Jeden plik na pismo przez całe jego życie, bez daty i `_vN`. Po sesji zawiera zmiany tej sesji jako zmiany śledzone. Bez sidecara `.md`, bez kopii i bez starszych wersji. |
+| **Wersja pisma (DOCX)** | `legal/output/<nazwa>/<nazwa>_vN.docx` | Każda zmiana pisma to nowy plik z `N` o jeden wyższym; starsze wersje zostają. Bez zmian śledzonych. W folderze tylko DOCX, PDF, załączniki i pliki `_*`. |
+| **Źródło i snapshot (MD)** | `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` | Źródło nowego pisma (`_v1`) i opcjonalne snapshoty tekstu kolejnych wersji. W `drafty/` nie ma DOCX. |
 | **Pliki inkrementalne** (prefiks `_`) | `drafty/<pismo>/_*.md` (dla pisma), `analiza/_*.md` (dla sprawy) | Tworzone raz, potem tylko uzupełniane dopiskiem przebiegu. Nigdy kopia, `_v2` ani nowy plik z datą. |
 | **Pliki jednorazowe** | `_robocze/` | Workspace modelu: wyciągi, JSON-y, wyniki skryptów, redline'y, notatki. Nikt ich nie czyta - model zbiera z nich esencję do plików inkrementalnych. |
 | **Wynik soczewki / skilla kontroli** | `<sprawa>/_robocze/rrrrMMdd_hhmm_<skill>_<wersja>.md` | Każdy przebieg skilla oceniającego pismo (Marko, recenzja, pierwsze wrażenie sędziego, atak przeciwnika, fidelity, karta ocen) zapisany od razu, w katalogu sprawy. `hhmm` to rzeczywisty czas zapisu (`date +%Y%m%d_%H%M`), nie szacunek. |
@@ -48,8 +53,9 @@ Nowa teczka powstaje dopiero po decyzji autora; jej nazwę wpisz do rejestru pis
 | `analiza/_chronologia.md` | oś zdarzeń z cytatem i stroną; niespójności | `chronologia-sprawy-v1`, `chronologia-sprawy-v1/modules/chronologia-stanowiska-pl` |
 | `analiza/_dowody-i-przepisy.md` | dowody, przepisy (z potwierdzeniem źródła), tezy orzeczeń | `analizator-dowodow-v3`, `analizator-przepisow-v2`, `orzeczenia-sadowe-v2` |
 | `analiza/_podsumowanie.md` | wnioski analizy i ryzyka | `analiza-sadowa-v6`, `case-risk` |
-| `drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` | snapshot pisma z początku sesji; wszystkie wersje tworzą historię | skille pism |
-| `legal/output/<nazwa>.docx` | jedyny DOCX pisma: stan z początku sesji + zmiany sesji jako zmiany śledzone | skille pism |
+| `drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` | źródło nowego pisma i snapshoty tekstu wersji | skille pism |
+| `legal/output/<nazwa>/<nazwa>_vN.docx` | kolejne wersje pisma; bieżąca = najwyższe `N` | skille pism |
+| `legal/output/<nazwa>/_ZALACZNIKI.md` + kopie załączników | spis i kopie załączników z udziału `dokumentacja` | skille pism |
 | `drafty/<pismo>/_SUBSUMPCJA.md` | rejestr stały: teza - przesłanka - dowód - kotwica (format: `szturm-na-draft-pl/references/rejestr-staly.md`) | `szturm-na-draft-pl/modules/subsumpcja-pl`, `szturm-na-draft-pl` |
 | `drafty/<pismo>/_PRZEBIEGI.md` | rejestr przebiegów: data, cel, wynik, decyzje autora, wskaźnik do `_robocze/` | każdy skill kontroli |
 | `drafty/<pismo>/_FINDINGS.md` | lista nieprawidłowości ze stałymi ID (`F-12`); pozycja zmienia status, nie jest duplikowana | skille kontroli |
@@ -65,73 +71,73 @@ pozycja ze stałym ID zmieniająca status. Brak szumu: jeden plik na rodzaj info
 
 Każda sesja pracy nad istniejącym pismem (redakcja, szturm, kontrola z poprawkami) ma ten sam przebieg:
 
-1. **Przyjęcie zmian w pliku pisma.** Weź `legal/output/<nazwa>.docx`. Niezaakceptowane zmiany śledzone (także
-   propozycje DECYZJA_AUTORA z poprzedniej sesji, których autor nie odrzucił) przyjmij **w tym samym pliku**,
-   z zachowaniem komentarzy (`wersja_pisma.py start`). Odrzucenie zmiany jest decyzją autora podejmowaną w Wordzie
-   przed sesją; model nie pyta o nie ponownie. Wyjątek: redline kontrahenta albo innego autora w cudzym dokumencie
-   wymaga osobnej decyzji użytkownika. Plik otwarty w Wordzie (`~$` obok) - poproś autora o zamknięcie.
-2. **Snapshot.** Pełny tekst pliku po kroku 1 (ze wszystkimi ręcznymi zmianami autora) zapisz jako
-   `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md`, z numerem o jeden wyższym od ostatniej wersji w katalogu
-   i rzeczywistą godziną zapisu. Robi to `start`.
-3. **Praca** odbywa się na kopiach w `_robocze/` (tekst, `edits.json`). Rundy pętli doskonalenia nie tworzą
-   plików w `output/` ani kolejnych snapshotów: snapshot opisuje stan z początku sesji.
-4. **Redline.** Zmiany sesji nakładasz na ten sam plik jako zmiany śledzone (`w:ins`/`w:del`) przez
-   `wersja_pisma.py redline` (`adeu apply`). Plik w `output/` zostaje pod tą samą nazwą. Jeżeli zmian śledzonych
-   nie da się utworzyć, etap jest NIEZAKOŃCZONY, a plik zostaje bez zmian. DOCX wygenerowany od nowa z MD
-   (renderer, pandoc, python-docx) nie jest redline i nie może zastąpić pliku pisma.
+1. **Nowa wersja.** Weź najnowszą wersję `legal/output/<nazwa>/<nazwa>_vN.docx` (z ręcznymi zmianami autora w Wordzie)
+   i utwórz `<nazwa>_v(N+1).docx` (`wersja_pisma.py nastepna`). W nowej wersji przyjmij zmiany śledzone, jeśli autor
+   je zostawił (komentarze zostają); poprzednia wersja zostaje nietknięta. Wyjątek: redline kontrahenta albo innego
+   autora w cudzym dokumencie wymaga osobnej decyzji użytkownika (`redline-docx-pl`). Plik otwarty w Wordzie
+   (`~$` obok) - poproś autora o zamknięcie.
+2. **Praca** odbywa się na kopiach w `_robocze/` (tekst, `edits.json`). Rundy pętli doskonalenia nie tworzą
+   kolejnych wersji w `output/`: jedna sesja = jedna nowa wersja.
+3. **Zmiany.** Zmiany sesji nanosisz na nową wersję bez śledzenia (`wersja_pisma.py zmien`: `adeu apply`
+   i natychmiastowe przyjęcie, kontrola pominiętych edycji, pustych akapitów i tekstu). Nowa wersja to kopia
+   poprzedniej z naniesionymi zmianami, nie nowy render z MD: render gubi ręczne zmiany autora w Wordzie.
+4. **Teczka.** Skopiuj bieżącą wersję do `<sprawa>/pisma/<nazwa>.docx`.
 
 Nowe pismo: pierwszą treść zapisz jako `drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_v1.md`, a DOCX wygenerowany z niej
-(bez śledzenia zmian) jako `legal/output/<nazwa>.docx` (`wersja_pisma.py nowe`).
+jako `legal/output/<nazwa>/<nazwa>_v1.docx` (`wersja_pisma.py nowe`). Załączniki skopiuj z udziału `dokumentacja`
+do folderu pisma i wypisz w `_ZALACZNIKI.md` (pismo bez załączników: „brak załączników”).
+
+Raport porównania wersji dla autora (gdy o niego prosi): `adeu diff` dwóch wersji do `_robocze/`; to raport,
+nie plik pisma.
 
 ### Redakcja zmian w DOCX
 
 - Wstawka ma krój i rozmiar otaczającego tekstu (Georgia 10 pt według `FORMAT-PISMA.md`). Tekst wstawiony na
   początku akapitu nie dziedziczy formatowania i spada do domyślnej czcionki dokumentu (np. Aptos 12 pt);
-  `redline` nadaje mu czcionkę z sąsiedniego runu - nie omijaj tego kroku.
+  `zmien` nadaje mu czcionkę z sąsiedniego runu - nie omijaj tego kroku.
 - Zmiany nie dodają pustych akapitów ani łamań wiersza; usunięcie akapitu usuwa też jego znacznik.
-  `redline` zatrzymuje się, gdy po akceptacji przybyło pustych akapitów.
+  `zmien` zatrzymuje się, gdy przybyło pustych akapitów.
 - Punkty listy: numer, jedna spacja, tekst (`1. tekst`, `a) tekst`) - bez tabulatora i wcięcia wiszącego.
 - Edycja dotyczy treści po etykiecie (`Stan protokołu:`, `Opuszczenie:`), żeby etykieta zachowała pogrubienie.
 
-### Polecenia (skrypt `shared/format-pisma/wersja_pisma.py`, silnik `redline-docx-pl`)
+### Polecenia (skrypt `shared/format-pisma/wersja_pisma.py`, silnik adeu z `redline-docx-pl`)
 
-Skrypt wykonuje kroki 1, 2, 4 i weryfikację; pomiń go tylko wtedy, gdy nie działa, i opisz przyczynę.
+Skrypt wykonuje kroki 1 i 3 oraz weryfikację; pomiń go tylko wtedy, gdy nie działa, i opisz przyczynę.
 `<S>` to katalog `shared/` zainstalowanego pluginu.
 
 ```bash
-# nowe pismo: v1.md -> legal/output/<nazwa>.docx (renderer, nazwa bez daty i _vN)
+# nowe pismo: v1.md -> legal/output/<nazwa>/<nazwa>_v1.docx
 python3 -I <S>/format-pisma/wersja_pisma.py nowe --md <sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_v1.md --output legal/output
-# kroki 1-2: przyjęcie zmian w pliku pisma (komentarze zostają) i snapshot rrrrMMdd_hhmm_<nazwa>_vN.md
-python3 -I <S>/format-pisma/wersja_pisma.py start --docx legal/output/<nazwa>.docx --drafty <sprawa>/drafty/<pismo>
-# krok 4: zmiany sesji jako zmiany śledzone w tym samym pliku (edits.json albo pełny tekst nowej wersji)
-python3 -I <S>/format-pisma/wersja_pisma.py redline --docx legal/output/<nazwa>.docx \
-        --edits <sprawa>/_robocze/<katalog>/edits.json --author "Imię Nazwisko"
+# krok 1: kopia najnowszej wersji jako _v(N+1), zmiany śledzone przyjęte w kopii (opcjonalnie snapshot MD)
+python3 -I <S>/format-pisma/wersja_pisma.py nastepna --pismo legal/output/<nazwa> [--drafty <sprawa>/drafty/<pismo>]
+# krok 3: zmiany sesji naniesione i przyjęte w nowej wersji (edits.json albo pełny tekst nowej wersji)
+python3 -I <S>/format-pisma/wersja_pisma.py zmien --docx legal/output/<nazwa>/<nazwa>_v<N+1>.docx \
+        --edits <sprawa>/_robocze/<katalog>/edits.json
 # bramka końcowa katalogu output (kod 1 = naruszenie, napraw przed odpowiedzią)
 python3 -I <S>/format-pisma/wersja_pisma.py sprawdz --output legal/output
 ```
 
-Autor zmian śledzonych to autor pisma (`podpis`), nie nazwa konta. Przyjęcie zmian na początku sesji i nałożenie
-zmian na plik pisma to kroki cyklu własnego pisma: nie wymagają potwierdzenia z tierów `redline-docx-pl`.
+`zmien` działa tylko na najnowszej wersji; starsze wersje są historią i się ich nie zmienia. Utworzenie wersji
+i naniesienie zmian to kroki cyklu własnego pisma: nie wymagają potwierdzenia z tierów `redline-docx-pl`.
 
-Stan końcowy dla jednego pisma: w `<sprawa>/drafty/<pismo>/` wszystkie snapshoty `.md` i żadnego DOCX;
-w `legal/output/` dokładnie jeden DOCX tego pisma, bez daty i `_vN` w nazwie, i żadnego `.md`. Nie naruszaj
-innych pism, załączników ani dokumentów dostarczonych przez autora.
+Stan końcowy dla jednego pisma: folder `legal/output/<nazwa>/` z wersjami `_v1` … `_vN`, najnowsza bez zmian
+śledzonych, załączniki obecne zgodnie z `_ZALACZNIKI.md`; kopia `_vN` w `<sprawa>/pisma/<nazwa>.docx`.
+Nie naruszaj innych pism, załączników ani dokumentów dostarczonych przez autora.
 
 ## Zakazy
 
 - Pliki logu, recapu, „summary", „issues", raportu tury poza `_robocze/` - zamiast tego dopisek do pliku inkrementalnego.
 - Katalogi `PRZEBIEG_*`, `RUN/`, `out/` w `analiza/` i `drafty/`. Katalog narzędzia: `_robocze/rrrrMMdd_<pismo>__<narzędzie>/`.
 - Kopie „(2)", `_kopia`, `__dup`, `.md.md` - duplikaty się usuwa.
-- Jakiekolwiek DOCX w `drafty/<pismo>/`, pliki `.md` w `legal/output/`, więcej niż jeden DOCX tego samego pisma w `legal/output/`
-  oraz data lub `_vN` w nazwie DOCX pisma.
-- Usuwanie, kopiowanie i zmiana nazwy pliku pisma w `legal/output/` w toku pracy; nowa wersja pisma jako nowy plik.
+- Jakiekolwiek DOCX w `drafty/<pismo>/`, pliki `.md` w folderze pisma (poza `_*.md`), pismo luzem w korzeniu
+  `legal/output/` i data w nazwie DOCX pisma.
+- Zmiany śledzone (redline) we własnym piśmie; nadpisanie, usunięcie albo zmiana nazwy wcześniejszej wersji.
 
 ## Koniec przebiegu
 
 1. Esencja z `_robocze/` jest w plikach inkrementalnych (ustalenia, decyzje, pytania, stan kotwic).
-2. Nowe pliki poza `_robocze/`: snapshot `.md` w `drafty/<pismo>/` (+ ewentualnie nowy plik inkrementalny
-   z uzasadnieniem). Plik pisma w `legal/output/` ten sam co na początku sesji, ze zmianami sesji jako redline.
-   `wersja_pisma.py sprawdz --output legal/output` daje `PASS`; w odpowiedzi podaj liczbę `w:ins`/`w:del`
-   z wyniku `redline`, a nie słowo „redline” bez liczb.
+2. Nowe pliki poza `_robocze/`: nowa wersja `<nazwa>_vN.docx` w folderze pisma (+ ewentualnie snapshot `.md`
+   i nowy plik inkrementalny z uzasadnieniem). `wersja_pisma.py sprawdz --output legal/output` daje `PASS`;
+   w odpowiedzi podaj nazwę nowej wersji i liczbę naniesionych zmian z wyniku `zmien`.
 3. `_PRZEBIEGI.md` ma wpis przebiegu; lekcje o ogólnej wartości trafiły do `_wiedza.md`.
 4. Sprawa bez folderu (rozmowa bez plików): wynik w odpowiedzi, a pliki zakładaj dopiero na prośbę użytkownika.

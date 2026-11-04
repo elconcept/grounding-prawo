@@ -1,6 +1,6 @@
 ---
 name: szturm-na-draft-pl
-description: 'Szturm na draft pisma lub ekspertyzy - jedno wywołanie zamiast ręcznego przepuszczania dokumentu przez kilkanaście skilli: cytaty, sygnatury, przepisy t.j., spójność pismo ↔ załączniki ↔ akta, niezależne soczewki (sędzia na zimno, przeciwnik, MOD-ATAK-NA-DRAFT, biegły), styl i format .docx, deterministyczna synteza z bramkami, redline Worda z komentarzami w jedynym DOCX pisma, dopisek tury do rejestru sprawy. Chroni fakty potwierdzone i decyzje autora. Dla zawiadomienia o przestępstwie tryb ZOP-R zamiast ataku: wywiad rozszerzający o pełną relację i rozmiar krzywdy, pominiętych sprawców, naruszenia praw pokrzywdzonego przez Policję i prokuraturę, dodatkowe czyny; potem rozbudowa pisma. Używaj gdy: "szturm na draft", "przepuść pismo przez wszystkie skille", "przejrzyj i nanieś poprawki", "zrób redline po przeglądzie", "kolejna runda przeglądu", "sprawdź pismo przed złożeniem", "zrób szturm zawiadomienia", "przejrzyj zawiadomienie", gdy użytkownik chce poprawionej wersji, a nie samego raportu.'
+description: 'Szturm na draft pisma lub ekspertyzy - jedno wywołanie zamiast ręcznego przepuszczania dokumentu przez kilkanaście skilli: cytaty, sygnatury, przepisy t.j., spójność pismo ↔ załączniki ↔ akta, niezależne soczewki (sędzia na zimno, przeciwnik, MOD-ATAK-NA-DRAFT, biegły), styl i format .docx, deterministyczna synteza z bramkami, nowa wersja DOCX pisma (_vN) z naniesionymi poprawkami, bez zmian śledzonych, dopisek tury do rejestru sprawy. Chroni fakty potwierdzone i decyzje autora. Dla zawiadomienia o przestępstwie tryb ZOP-R zamiast ataku: wywiad rozszerzający o pełną relację i rozmiar krzywdy, pominiętych sprawców, naruszenia praw pokrzywdzonego przez Policję i prokuraturę, dodatkowe czyny; potem rozbudowa pisma. Używaj gdy: "szturm na draft", "przepuść pismo przez wszystkie skille", "przejrzyj i nanieś poprawki", "zrób redline po przeglądzie", "kolejna runda przeglądu", "sprawdź pismo przed złożeniem", "zrób szturm zawiadomienia", "przejrzyj zawiadomienie", gdy użytkownik chce poprawionej wersji, a nie samego raportu.'
 license: MIT
 allowed-tools:
 - Bash
@@ -10,7 +10,7 @@ allowed-tools:
 - Agent
 metadata:
   author: GROUNDING-PRAWO / abogada
-  version: 1.5.0
+  version: 1.6.0
   plan: dokumentacja/06-PLAN-SKILL-SZTURM-NA-DRAFT.md
   companion_skills: redline-docx-pl, ocena-outputu-pl, citation-grounding-pl, patron-weryfikacja-cytatow, ekstraktor-cytatow-pl, mcp-saos, patron-identyfikatory-pl, deliverable-fidelity-pl, analizator-dowodow-v3, pierwsze-wrazenie-sedziego-pl, atak-przeciwnika-pl, adversarial-legal-review-pl, subsumpcja-pl, zarzuty-do-opinii-bieglego, marko-pl-content, pisz-po-polsku
   requires-human-approval: 'true'
@@ -51,39 +51,35 @@ ręcznie, jeden po drugim, mają cztery wady, które ten skill usuwa:
 4. **Rozmywanie tezy.** Recenzent dopisuje „wyjaśnienie alternatywne”, które wykluczają fakty znane
    klientowi, i pismo słabnie od środka. Tu fakty potwierdzone i decyzje autora są chronione kodem.
 
-## Wynik - snapshot MD i jeden DOCX z redline
+## Wynik - nowa wersja DOCX pisma (bez zmian śledzonych)
 
-Pliki pisma i cykl sesji: `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”. W skrócie:
+Pliki pisma i cykl sesji: `shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”. Od 4.11.2026 własne pismo
+nie dostaje redline: każda sesja tworzy nowy plik wersji. W skrócie:
 
-1. **Na początku** weź jedyny DOCX pisma `legal/output/<nazwa>.docx` (bez daty i `_vN`) i przyjmij w nim
-   wszystkie niezaakceptowane zmiany z zachowaniem komentarzy (`wersja_pisma.py start`). To część zatwierdzonego
-   przebiegu: zmiany, których autor nie odrzucił w Wordzie, w tym propozycje DECYZJA_AUTORA, uznaje się za przyjęte.
-2. `start` zapisuje pełny tekst jako snapshot `drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_v<N+1>.md`. Snapshot zawiera
-   zmiany autora i jest bazą wszystkich rund.
-3. **Na końcu** zmiany sesji trafiają do TEGO SAMEGO pliku `legal/output/<nazwa>.docx` jako zmiany śledzone Worda
-   (`wersja_pisma.py redline --edits …`), przy każdej komentarz `[S-ID | KLASA waga | NAPRAWA | soczewki] … Źródło: …`.
-   DECYZJA_AUTORA ma etykietę „DECYZJA AUTORA”; autor odrzuca ją w Wordzie, inaczej przyjmie ją następna sesja.
-   W `legal/output/` nie powstaje nowy plik, kopia ani wersja i nic nie jest usuwane; w `drafty/` nie ma DOCX,
-   w `legal/output/` nie ma MD. Rundy pętli E8 pracują na kopiach w `_robocze/`; do pliku pisma trafia jeden
-   redline z wynikiem ostatniej rundy. **Bez PDF** - PDF robi prawnik po własnej korekcie.
+1. **Na początku** weź najnowszą wersję `legal/output/<nazwa>/<nazwa>_vN.docx` i utwórz `<nazwa>_v<N+1>.docx`
+   (`wersja_pisma.py nastepna --pismo legal/output/<nazwa> --drafty <sprawa>/drafty/<pismo>`). Zmiany śledzone, które
+   autor zostawił w poprzedniej wersji, `nastepna` przyjmuje w kopii; poprzednia wersja zostaje nietknięta.
+   Snapshot MD nowej wersji jest bazą wszystkich rund.
+2. **Rundy** E7/E8 pracują na kopiach w `RUN/` (`_robocze/`). Redline rundy w `RUN/` to materiał roboczy do
+   weryfikacji, nie plik pisma.
+3. **Na końcu** poprawki AUTO i REDAKCJA oraz zmiany DECYZJA_AUTORA zatwierdzone przez autora w pętli E8 trafiają
+   do nowej wersji bez śledzenia (`wersja_pisma.py zmien --docx legal/output/<nazwa>/<nazwa>_v<N+1>.docx --edits …`).
+   Niezatwierdzone DECYZJA_AUTORA nie wchodzą do pisma: zostają w raporcie i w `_FINDINGS.md` jako pytania.
+   W `drafty/` nie ma DOCX, w folderze pisma nie ma MD. **Bez PDF** - PDF robi prawnik po własnej korekcie.
 4. Raport: ustalenie → soczewki → działanie → stan, jedna linia na ustalenie. Pytania do autora
    (DECYZJA_AUTORA, DOWOD, wstrzymane, zablokowane) padają w trakcie pętli E8, a raport pokazuje tylko
    te, na które autor jeszcze nie odpowiedział. Raport trafia jako tura do rejestru stałego sprawy i wpis
    w `drafty/<pismo>/_PRZEBIEGI.md`, nie jako nowy plik ani katalog raportów.
 
-Jeśli `redline-docx-pl` nie może utworzyć poprawnego śledzenia zmian, oznacz etap NIEZAKOŃCZONY i zostaw
-plik pisma bez zmian zamiast prezentować zwykły DOCX jako redline. Redline zewnętrznego kontrahenta nie podlega
-automatycznej akceptacji bez osobnej decyzji użytkownika.
-
-Snapshot ma nazwę `rrrrMMdd_hhmm_<nazwa>_v<N+1>` (data i godzina sesji, numer o jeden wyższy od ostatniego
-snapshotu w `drafty/<pismo>/`; pismo bez historii = `_v1`). Plik pisma w `output/` nie zmienia nazwy; `redline`
-podmienia go dopiero po weryfikacji wyniku.
+Jeśli `zmien` nie może nanieść edycji (pominięte targety, nowe puste akapity), oznacz etap NIEZAKOŃCZONY
+i usuń z nowej wersji tylko to, co nie przeszło weryfikacji - poprzednie wersje pisma zostają bez zmian.
+Redline zewnętrznego kontrahenta nie podlega automatycznej akceptacji bez osobnej decyzji użytkownika.
 
 ## Wejście
 
 | Pole | Opis | Po co |
 |---|---|---|
-| `draft` | DOCX pisma z `legal/output/` (preferowany) albo .md nowego pisma | baza redline; nie rekonstruuj .docx z PDF (redline-docx-pl, krok 0) |
+| `draft` | najnowsza wersja DOCX pisma z `legal/output/<nazwa>/` (preferowana) albo .md nowego pisma | baza nowej wersji; nie rekonstruuj .docx z PDF (redline-docx-pl, krok 0) |
 | `zalaczniki[]` | dokumenty składane razem (ekspertyza, zestawienia) | spójność między dokumentami |
 | `akta` | katalog z kartami akt w .md | źródło cytatów i faktów |
 | `teza_nadrzedna` | jedno zdanie celu procesowego | soczewki oceniają, czy tekst jej służy |
@@ -150,7 +146,7 @@ Po każdej rundzie dopisz przebieg do `drafty/<pismo>/_PRZEBIEGI.md` i notatki p
 
 ```
 E0 intake ─► E1 obiektywna ─► E2 spójność ─► E3 atak ─► E4 styl ─► E5 synteza
-   ─► E6 bramki ─► E7 redline ─► E8 ponowna kontrola (pętla) ─► E9 rejestr
+   ─► E6 bramki ─► E7 zmiany i nowa wersja ─► E8 ponowna kontrola (pętla) ─► E9 rejestr
 ```
 
 `<skille>` = katalog skilli (w repo `.Codex/skills`, w pluginie `skills/`). `SZ` = `<skille>/szturm-na-draft-pl/scripts`.
@@ -219,9 +215,9 @@ nie waga - wagę ustala klasa i skutek. Naprawę może tylko obniżyć:
 
 | Naprawa | Kiedy wolno | Co się dzieje |
 |---|---|---|
-| `AUTO` | 🔴 CYTAT/SYGNATURA/PRZEPIS z dowodem od soczewki E1, gdy źródło daje jedną poprawną wartość; 🟡/🟢 STYL/FORMAT | zmiana śledzona z komentarzem w DOCX pisma |
-| `REDAKCJA` | 🟠 bez zmiany faktów i strategii (np. usunięcie cytatu spoza protokołu z pozostawieniem argumentu, dopisanie źródła) | j.w., komentarz z uzasadnieniem |
-| `DECYZJA_AUTORA` | STRATEGIA, KOMPLETNOSC, nowe fakty klienta, zmiana konstrukcji, różne propozycje soczewek, dopisane „wyjaśnienie alternatywne” | zmiana śledzona z etykietą „DECYZJA AUTORA” (odrzucenie jednym kliknięciem; nieodrzucona zostanie przyjęta na początku następnej sesji); pytanie w pętli E8 |
+| `AUTO` | 🔴 CYTAT/SYGNATURA/PRZEPIS z dowodem od soczewki E1, gdy źródło daje jedną poprawną wartość; 🟡/🟢 STYL/FORMAT | zmiana w nowej wersji DOCX pisma, wpis w raporcie |
+| `REDAKCJA` | 🟠 bez zmiany faktów i strategii (np. usunięcie cytatu spoza protokołu z pozostawieniem argumentu, dopisanie źródła) | j.w., uzasadnienie w raporcie |
+| `DECYZJA_AUTORA` | STRATEGIA, KOMPLETNOSC, nowe fakty klienta, zmiana konstrukcji, różne propozycje soczewek, dopisane „wyjaśnienie alternatywne” | pytanie w pętli E8; do nowej wersji wchodzi tylko po zatwierdzeniu przez autora |
 | `DOWOD` | brak źródła, brak propozycji brzmienia | bez zmiany tekstu; pytanie do autora |
 
 Twarde zakazy, wymuszone w kodzie (ustalenie dostaje stan WSTRZYMANE albo ZABLOKOWANE i idzie do pytań):
@@ -243,7 +239,7 @@ adeu odrzuca **cały** pakiet, gdy jedna edycja nie trafi, więc nie idź do E7 
 Nie poprawiaj bramek ręcznie w edits.json. Jeżeli bramka zablokowała coś, co uważasz za słuszne,
 powód jest w raporcie - to pytanie do autora, nie do obejścia.
 
-### E7 - redline
+### E7 - zmiany w rundzie (robocze) i nowa wersja pisma
 
 ```bash
 A="Szturm <dd.mm.rrrr>"                         # etykieta przebiegu = autor zmian (nie nazwa konta)
@@ -254,8 +250,9 @@ uvx --from adeu==1.30.0 adeu apply RUN/baza.docx RUN/edits.PISMO.redline.json -o
 python3 $SZ/weryfikuj_wynik.py --redline RUN/runda<r>.docx \
     --edits RUN/edits.PISMO.redline.json [edits z wcześniejszych rund] \
     --katalog legal/output --drafty <sprawa>/drafty/<pismo>
-# po ostatniej rundzie: cp RUN/runda<r>.docx legal/output/<wersja>.docx, weryfikacja kopii (cmp), usunięcie poprzedniego DOCX pisma
-python3 -I <skills>/shared/format-pisma/wersja_pisma.py sprawdz --output legal/output   # PASS: jeden DOCX pisma, bez MD
+# po ostatniej rundzie: zatwierdzone edycje do nowej wersji pisma, bez śledzenia
+python3 -I <skills>/shared/format-pisma/wersja_pisma.py zmien --docx legal/output/<nazwa>/<nazwa>_v<N+1>.docx --edits RUN/edits.PISMO.json
+python3 -I <skills>/shared/format-pisma/wersja_pisma.py sprawdz --output legal/output   # PASS: folder pisma z wersjami _vN
 ```
 
 - Poprawki formatu (`fix_format.py`) nie są zmianami śledzonymi - idą osobno, na bazie przed adeu, a każda
@@ -267,9 +264,8 @@ python3 -I <skills>/shared/format-pisma/wersja_pisma.py sprawdz --output legal/o
   brak PDF w `legal/output/` i brak DOCX w `drafty/<pismo>/`.
 
 **Dlaczego tu bez potwierdzenia przed `accept-all` i `apply`** (redline-docx-pl traktuje je jako tier M i D):
-taki jest uzgodniony cykl pracy nad własnym pismem autora (`shared/ARTEFAKTY-SPRAWY.md`). accept-all działa na
-kopii, treść sprzed sesji zostaje w snapshocie MD, a każdą zmianę sesji (także DECYZJA_AUTORA, oznaczoną
-w komentarzu) da się odrzucić w Wordzie. Zgodą jest samo wywołanie szturmu. Jeżeli autor chce wysłać wynik
+taki jest uzgodniony cykl pracy nad własnym pismem autora (`shared/ARTEFAKTY-SPRAWY.md`). Zmiany trafiają do
+nowej wersji, a poprzednia wersja zostaje bez zmian; DECYZJA_AUTORA wchodzi dopiero po zatwierdzeniu. Zgodą jest samo wywołanie szturmu. Jeżeli autor chce wysłać wynik
 na zewnątrz albo dokument jest cudzy - wracają reguły redline-docx-pl (pokaż zmiany, „potwierdzam” przed
 accept-all, `sanitize --keep-markup` przed wysyłką).
 
@@ -302,14 +298,14 @@ dopóki kryterium wyjścia nie jest spełnione. Model nie oddaje autorowi wersji
 8. **Przerwanie przez autora** albo koniec sesji: stan `NIEGOTOWE` z listą otwartych ustaleń i pytań w
    `_FINDINGS.md`, `_PRZEBIEGI.md` i notatce pisma w Basic Memory. Ponowne wywołanie szturmu na tym piśmie
    czyta ten stan w E0 i kontynuuje pętlę od DOCX pisma w `legal/output/` (jak ralph loop: ten sam prompt, nowa runda).
-   Przed przerwaniem zapisz redline ostatniej zweryfikowanej rundy w `legal/output/` (wynik, krok 3).
+   Przed przerwaniem nanieś zmiany ostatniej zweryfikowanej rundy do nowej wersji w `legal/output/<nazwa>/` (wynik, krok 3).
 
 ### E9 - raport i rejestr
 
 Dopisz turę do pięciu plików rejestru stałego wg [references/rejestr-staly.md](references/rejestr-staly.md):
 LOG (tura + status), FINDINGS (pozycje `[n]`, karta ocena-outputu-pl z REWIZJĄ, zmiany w pismach,
 pytania do autora), GROUNDING, ADVERSARIAL (werdykty, ciosy i ich stan), ANEKS w `_SUBSUMPCJA.md`.
-Dopisz też przebieg do `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, snapshot i DOCX w `legal/output/`, decyzje autora, wskaźnik
+Dopisz też przebieg do `drafty/<pismo>/_PRZEBIEGI.md` (data, cel, nowa wersja `_vN` w `legal/output/<nazwa>/`, decyzje autora, wskaźnik
 do `RUN/`) i zaktualizuj Basic Memory wg `shared/BASIC-MEMORY.md`: notatka pisma (wersja, ścieżka, stan `GOTOWE`/`NIEGOTOWE`,
 otwarte ustalenia), teczka (`## Decyzje użytkownika`, `## Lekcje` - zarzuty, które wracały, i uwagi autora do formy). Pliki robocze zostają w `RUN/` (`_robocze/`); esencja jest w rejestrze - nie twórz osobnego raportu. Jeżeli sprawa jest w repozytorium git: commit
 z jawną listą plików (`git add` konkretnych ścieżek, nigdy `-A` - w repo z aktami nieśledzone

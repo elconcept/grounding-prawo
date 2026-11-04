@@ -125,13 +125,12 @@ Samo istnienie pliku pisma nie oznacza złożenia. Wybór pisma dla każdego epi
   planowany dzień wysyłki albo dzisiejsza) i dopytaj; korekta trafia do kolejnej wersji. Luki
   **faktów** nie zapełniaj domysłem: fragment bez odpowiedzi pomiń w piśmie, zostaje w relacji
   i na liście pytań otwartych.
-- Każda nowa informacja dotycząca niezłożonego pisma daje `vN+1.md` w `drafty/<pismo>/` teczki (tylko Markdown,
-  wszystkie wersje). DOCX w `legal/output/` jest jeden: gdy autor ma przejrzeć zmiany albo sesja się kończy,
-  `shared/format-pisma/wersja_pisma.py redline` nakłada ostatnią wersję na bazę sesji jako zmiany śledzone
-  i usuwa poprzedni DOCX (`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”). Nie renderuj każdej wersji
-  do `output/` i nie kładź tam `.md`.
-- **Edycja autora ma pierwszeństwo.** Sesja zaczyna się akceptacją zmian w DOCX z `legal/output/` i snapshotem
-  `.md`, więc ręczne zmiany autora (usunięta sekcja, inna data, dopisek) przechodzą do nowej wersji.
+- Robocze wersje tekstu niezłożonego pisma zostają w `drafty/<pismo>/` teczki (Markdown). Gdy autor ma przejrzeć
+  zmiany albo sesja się kończy, powstaje nowa wersja DOCX `legal/output/<nazwa>/<nazwa>_v<N+1>.docx`
+  (`shared/format-pisma/wersja_pisma.py nastepna` + `zmien`, bez zmian śledzonych); poprzednie wersje zostają
+  (`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”). Nie renderuj każdej rundy do `output/` i nie kładź tam `.md`.
+- **Edycja autora ma pierwszeństwo.** Nowa wersja jest kopią najnowszej wersji DOCX z ręcznymi zmianami autora
+  (usunięta sekcja, inna data, dopisek), więc przechodzą one do nowej wersji.
   Nie przywracaj usuniętej przez autora treści bez jego decyzji.
 - Dane o zdrowiu, dane medyczne, intymne i inne wrażliwe dane osób trzecich (np. kryzys psychiczny osoby
   bliskiej, przyjmowany lek, nagość na nagraniu) wpisuj do zawiadomienia w pełnym zakresie, w jakim podał je

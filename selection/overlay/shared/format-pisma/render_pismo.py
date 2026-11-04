@@ -19,7 +19,9 @@ Istniejącego .docx nie nadpisuje bez --nadpisz: mógł zostać już poprawiony 
     data: Kraków, dnia 15 października 2026 r.
     nadawca: Jan Kowalski
     nadawca_adres: ul. Przykładowa 1/2, 30-001 Kraków
-    nadawca_kontakt: tel. 600 000 000, e-mail: jan.kowalski@example.pl
+    nadawca_pesel: PESEL 80010100000              (opcjonalnie, osobny wiersz)
+    nadawca_kontakt: 600 000 000, jan.kowalski@example.pl
+    nadawca_doreczenia: AE:PL-00000-00000-XXXXX-00, ePUAP: JanKowalski1   (opcjonalnie)
     adresat: Sąd Okręgowy w Krakowie
     adresat_jednostka: III Wydział Karny
     adresat_adres: ul. Przy Rondzie 7, 31-547 Kraków
@@ -37,6 +39,13 @@ Blok adresata jest wyrównany do prawej: adresat 14 pt, adresat_jednostka (wydzi
 podjednostka) 12 pt, adresat_adres 10 pt w jednej linii.
 nadawca_kontakt jest obowiązkowy (art. 119 § 1 pkt 2 k.p.k./art. 126 k.p.c.): gdy nie znasz
 telefonu ani e-maila, zapytaj użytkownika; wartość „nie posiadam” wpisuje się tylko na jego polecenie.
+Blok nadawcy: nazwa; adres; PESEL w osobnym wierszu; telefon i e-mail bez etykiet „tel.”/„e-mail:”;
+adres do doręczeń elektronicznych (AE) i ePUAP w kolejnym wierszu. PESEL wpisany w nadawca_kontakt
+renderer przenosi do osobnego wiersza, a etykiety usuwa.
+Metryka (np. Sygn. akt, Dotyczy): wartość od kolumny 3,5 cm z wcięciem wiszącym - zawinięty wiersz
+zaczyna się pod wartością, nie pod etykietą.
+Podkreślenie __…__ służy wyłącznie do dwóch najważniejszych tez pisma (key takeaway); renderer ostrzega,
+gdy jest ich inna liczba.
 
 Treść:
     akapit                      - wyjustowany, Georgia 10 pt
@@ -62,6 +71,26 @@ LIST_IND = 144              # wcięcie punktu listy (0,25 cm); numer od tekstu o
 LABEL_TAB = int(3.5 * CM)   # kolumna wartości metryki
 REPEATED = {"adresat", "adresat_jednostka", "metryka", "zalacznik"}
 REQUIRED = ["data", "nadawca", "nadawca_adres", "nadawca_kontakt", "adresat", "adresat_adres", "tytul", "podpis"]
+KEY_UNDERLINES = 2          # dokładnie dwa podkreślenia: najważniejsze tezy pisma
+
+
+def sender_lines(meta):
+    """Nadawca: adres; PESEL osobno; telefon i e-mail bez etykiet; doręczenia elektroniczne osobno."""
+    kontakt = meta["nadawca_kontakt"]
+    pesel = meta.get("nadawca_pesel", "")
+    m = re.search(r"PESEL[:\s]*\d{11}", kontakt)
+    if m:
+        pesel = pesel or m.group(0)
+        kontakt = (kontakt[:m.start()] + kontakt[m.end():])
+    kontakt = re.sub(r"\b(tel\.|telefon:?|e-mail:|email:|mail:)\s*", "", kontakt, flags=re.I)
+    kontakt = re.sub(r"\s*[,|]\s*", ", ", kontakt).strip(" ,")
+    lines = [meta["nadawca_adres"]]
+    if pesel:
+        lines.append(pesel if pesel.upper().startswith("PESEL") else f"PESEL {pesel}")
+    lines.append(kontakt)
+    if meta.get("nadawca_doreczenia"):
+        lines.append(meta["nadawca_doreczenia"])
+    return lines
 
 
 def parse(src):
@@ -140,8 +169,9 @@ def tab(pos):
 def header(meta):
     x = [para(run(meta["data"]), jc="right", after=240)]
     x.append(para(run(meta["nadawca"], size=NAME), jc="left", after=0, line=240))
-    x.append(para(run(meta["nadawca_adres"]), jc="left", after=0))
-    x.append(para(run(meta["nadawca_kontakt"]), jc="left", after=360))
+    lines = sender_lines(meta)
+    for n, line in enumerate(lines):
+        x.append(para(run(line), jc="left", after=360 if n == len(lines) - 1 else 0))
     for line in meta["adresat"]:
         x.append(para(run(line, size=NAME), jc="right", after=0, line=240))
     for line in meta.get("adresat_jednostka", []):
@@ -149,7 +179,8 @@ def header(meta):
     x.append(para(run(meta["adresat_adres"]), jc="right", after=360))
     for row in meta.get("metryka", []):
         label, _, val = row.partition("|")
-        x.append(para(run(f"{label.strip()}:\t{val.strip()}"), jc="left", tabs=tab(LABEL_TAB), after=60))
+        x.append(para(run(f"{label.strip()}:\t{val.strip()}"), jc="left", tabs=tab(LABEL_TAB), after=60,
+                      ind=f'<w:ind w:left="{LABEL_TAB}" w:hanging="{LABEL_TAB}"/>'))
     x.append(para(run(meta["tytul"].upper(), size=TITLE, spacing=60), jc="center", before=360,
                   after=60 if meta.get("podtytul") else 360, keep=True))
     if meta.get("podtytul"):
@@ -188,8 +219,7 @@ def footer_sig(meta):
     x = []
     if meta.get("podpis_rola"):
         x.append(para(run(meta["podpis_rola"]), jc="right", before=480, after=0, keep=True))
-    x.append(para(run("……………………………………"), jc="right", before=0 if meta.get("podpis_rola") else 720, after=0, keep=True))
-    x.append(para(run(meta["podpis"]), jc="right", after=360))
+    x.append(para(run(meta["podpis"]), jc="right", before=0 if meta.get("podpis_rola") else 480, after=360, keep=True))
     if meta.get("zalacznik"):
         x.append(para(run("Załączniki:"), jc="left", after=0, keep=True))
         for n, z in enumerate(meta["zalacznik"], 1):
@@ -257,9 +287,12 @@ def core(title, author):
 def lint(stats, text):
     words = len(re.findall(r"\w+", text))
     limit = max(1, words // 250)
-    if len(stats) > limit:
-        print(f"UWAGA: {len(stats)} wyróżnień (pogrubienie/podkreślenie) na {words} słów; "
+    if stats.count("b") > limit:
+        print(f"UWAGA: {stats.count('b')} pogrubień na {words} słów; "
               f"limit FORMAT-PISMA to ok. {limit}. Zostaw tylko uchybienie organu lub kluczowy zarzut.", file=sys.stderr)
+    if stats.count("u") != KEY_UNDERLINES:
+        print(f"UWAGA: {stats.count('u')} podkreśleń; pismo ma mieć dokładnie {KEY_UNDERLINES} podkreślenia "
+              "najważniejszych tez (__…__).", file=sys.stderr)
 
 
 def main():

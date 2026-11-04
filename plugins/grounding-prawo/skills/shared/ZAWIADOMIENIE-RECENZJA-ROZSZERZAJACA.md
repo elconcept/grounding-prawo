@@ -88,7 +88,7 @@ podjąć; nie usuwaj z tego powodu opisu z zawiadomienia.
 pisma albo jawną decyzję autora o pominięciu. Powtórz role dla nowych gałęzi. Domykaj, gdy
 nie ma istotnych otwartych pytań po odpowiedziach i podsumowaniu do korekty, albo gdy autor
 świadomie kończy. Nie ustanawiaj maksymalnej liczby rund wywiadu. Limit technicznych przebiegów
-redline nie kończy rozmowy. Bez odpowiedzi oddaj poprawiony draft z lukami i następne pytania,
+poprawek nie kończy rozmowy. Bez odpowiedzi oddaj poprawiony draft z lukami i następne pytania,
 nie fikcyjnie kompletną relację. „Nie mam dowodów” nie kończy ani nie blokuje żadnej gałęzi.
 
 ## Role zamiast mandatów przeciwnika

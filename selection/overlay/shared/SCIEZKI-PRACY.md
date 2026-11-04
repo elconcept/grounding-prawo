@@ -44,8 +44,9 @@ Presja terminu nie zwalnia z tej ścieżki; skraca tylko liczbę iteracji.
 2. Generator: `pisma-procesowe-v3` (typ pisma), `pisma-proste-v2` (wezwania, wnioski, krótkie odpowiedzi),
    `zawiadomienie-o-przestepstwie` albo `rodo-dsar-pl`.
 3. Przepisy i orzeczenia wyłącznie ze źródeł według `patron-prawo-pl-zrodla`; termin przez `kalkulatory-procesowe-pl`.
-4. Format: `shared/FORMAT-PISMA.md`; pliki według `shared/ARTEFAKTY-SPRAWY.md` (wersje MD w `drafty/<pismo>/`, jeden DOCX w
-   `legal/output/`: `shared/format-pisma/wersja_pisma.py nowe`, kolejne wersje `start` + `redline`, na końcu `sprawdz`).
+4. Format: `shared/FORMAT-PISMA.md`; pliki według `shared/ARTEFAKTY-SPRAWY.md` (źródło MD w `drafty/<pismo>/`, wersje
+   DOCX w `legal/output/<nazwa>/`: `shared/format-pisma/wersja_pisma.py nowe`, kolejne wersje `nastepna` + `zmien`,
+   na końcu `sprawdz`).
    Telefon i e-mail nadawcy: zapytaj, jeśli nie są znane.
 5. Redakcja według `shared/STYLE.md`: teza i najmocniejszy fakt na początku punktu, każda myśl raz, stanowisko strony bez
    przejmowania wersji organu.

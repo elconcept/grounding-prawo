@@ -891,7 +891,7 @@ też `theory-of-case-engine.md`.
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** `analiza/_brief.md` i `analiza/_dowody-i-przepisy.md` (ścieżka A); typ pisma z tabeli TYPY PISM
-- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), jeden DOCX `legal/output/<nazwa>.docx` (bez daty i `_vN`) (`shared/format-pisma/wersja_pisma.py` nowe albo redline), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** `<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` z kopiami załączników (`shared/format-pisma/wersja_pisma.py` nowe albo nastepna + zmien), rejestr `_SUBSUMPCJA.md`, wpis w `_PRZEBIEGI.md` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `kalkulatory-procesowe-pl`, `citation-grounding-pl`, `szturm-na-draft-pl`
 - **Nie dubluj:** krótkie wezwania i wnioski robi `pisma-proste-v2`; zawiadomienie o przestępstwie - `zawiadomienie-o-przestepstwie`
 - **Basic Memory (`legal`):** czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja, ścieżka, status) (protokół: `shared/BASIC-MEMORY.md`)
