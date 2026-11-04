@@ -18,7 +18,8 @@ zmien     - nakłada zmiany sesji (adeu apply: edits.json albo pełny tekst nowe
 akceptuj  - przyjmuje zmiany śledzone w pliku (porządki starych redline'ów), komentarze zostają.
 najnowsza - wypisuje ścieżkę najnowszej wersji pisma.
 sprawdz   - bramka katalogu output: nic luzem w korzeniu, w folderze pisma DOCX <nazwa>_vN.docx, bez .md (poza _*.md),
-            najnowsza wersja bez zmian śledzonych, załączniki z _ZALACZNIKI.md obecne w folderze. Kod 1 = naruszenie.
+            najnowsza wersja bez zmian śledzonych, załączniki z _ZALACZNIKI.md obecne w folderze (załącznik DOCX dozwolony,
+            gdy jest w spisie). Kod 1 = naruszenie.
 
 Silnik: adeu przypięty w `redline-docx-pl`; zmienna ADEU nadpisuje polecenie (np. ADEU=adeu).
 """
@@ -343,12 +344,17 @@ def najnowsza():
     print(p)
 
 
-def zalaczniki(folder):
+def zalaczniki(folder, wymienione=None):
     """Pliki wskazane w _ZALACZNIKI.md (`nazwa` w backtickach przed „(źródło”) i ich obecność w folderze."""
     p = os.path.join(folder, "_ZALACZNIKI.md")
     if not os.path.exists(p):
         return None, []
     braki = []
+    if wymienione is not None:
+        for line in open(p, encoding="utf-8"):
+            m = re.match(r"\s*\d+\.\s.*?—\s*`([^`]+)`", line)
+            if m:
+                wymienione.add(unicodedata.normalize("NFC", m.group(1)))
     obecne = {unicodedata.normalize("NFC", f) for f in os.listdir(folder)}
     for line in open(p, encoding="utf-8"):
         m = re.match(r"\s*\d+\.\s.*?—\s*`([^`]+)`", line)
@@ -376,20 +382,22 @@ def sprawdz():
             bad.append(f"{b}/: brak DOCX pisma <nazwa>_vN.docx")
             continue
         n += 1
+        wymienione = set()
+        jest, braki = zalaczniki(p, wymienione)
         for f in os.listdir(p):
             if f.startswith((".", "~$", "_")):
                 continue
             stem, ext = os.path.splitext(f)
             if ext.lower() == ".md":
                 bad.append(f"{b}/{f}: MD w folderze pisma (miejsce: drafty/<pismo>/ w teczce)")
-            elif ext.lower() == ".docx" and stem != b and not (VER.search(stem) and VER.sub("", stem) == b):
+            elif ext.lower() == ".docx" and stem != b and not (VER.search(stem) and VER.sub("", stem) == b) \
+                    and unicodedata.normalize("NFC", f) not in wymienione:
                 bad.append(f"{b}/{f}: DOCX o nazwie innej niż {b}_vN.docx")
         if [k for k, _ in w if k == 0]:
             bad.append(f"{b}/{b}.docx: wersja bez _vN (stary układ): nadaj numer wersji")
         c = changes(w[-1][1])
         if c["w:ins"] or c["w:del"]:
             bad.append(f"{os.path.basename(w[-1][1])}: najnowsza wersja ma zmiany śledzone (w:ins {c['w:ins']}, w:del {c['w:del']})")
-        jest, braki = zalaczniki(p)
         if jest is None:
             bad.append(f"{b}/: brak _ZALACZNIKI.md (spis załączników; „brak załączników”, gdy pismo ich nie ma)")
         for z in braki:
