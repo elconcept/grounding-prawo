@@ -36,6 +36,15 @@ nazywaj w odpowiedzi wprost.
    potem kontynuuj wyszukiwanie i odczyt właściwymi MCP. Brak trafienia nie dowodzi braku przepisu
    ani orzeczenia. Serwisy bez konektora: `patron-prawo-pl-zrodla/modules/webwright-legal-pl`.
 
+4. **Każde pismo wychodzące cytuje istniejące orzeczenia lub decyzje.** Dla każdej tezy, zarzutu i żądania
+   pisma wykonaj co najmniej jedno zapytanie semantyczne w Repertorium **oraz** jedno w PrawMi
+   (`search_rulings`, `search_rulings_by_article`; przy ochronie danych `search_uodo_decisions`, także biuletyny
+   i komunikaty Prezesa UODO; przy prawie UE także `eu-sparql`). Opisuj stan faktyczny słowami („kamera w wizjerze
+   sąsiada obejmuje drzwi mieszkania”), nie tylko numer artykułu. Do pisma trafiają orzeczenia i decyzje
+   najbliższe stanowi faktycznemu, sprawdzone w pełnym tekście (`verify_ruling`, `get_ruling_text`, SAOS).
+   Zapytania, trafienia i weryfikację zapisz w śladzie źródeł pisma (`shared/BRAMKA-REDAKCJI.md`, etap `zrodla`).
+   Pismo bez zweryfikowanego orzeczenia lub decyzji wychodzi tylko na wyraźną decyzję autora.
+
 Konektory odkrywaj przez portal `lex` (`lex.xlap.pl/mcp`, `.mcp.json`), nie zgaduj nazw narzędzi.
 Mapa źródeł: `patron-prawo-pl-zrodla` i `references/iura-metodyka.md`.
 `shared/HIERARCHIA-ZRODEL.md` określa wiarygodność i weryfikację pełnego brzmienia po wyszukaniu

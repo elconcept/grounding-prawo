@@ -80,7 +80,12 @@ Umowa, regulamin, pismo procesowe, opinia prawna, uzasadnienie i projekt przepis
 - tiret jako jednostka redakcyjna wyliczenia to nie myslnik interpunkcyjny - #14 go nie zmienia;
 - konstrukcje ustawowe i formuly procesowe zostaja doslownie, nawet gdy sa ciezkie.
 
-W tym rejestrze usuwasz tylko artefakty czatbota (#20-#22), oczywisty filler (#23), typografie (#15, #17) i pisownie (#43). Reszte WSKAZUJESZ jako uwagi, nie przepisujesz. Do pelnej redakcji umow i pism uzyj narzedzia do stylu prawniczego, jesli je masz.
+W tym rejestrze usuwasz tylko artefakty czatbota (#20-#22), oczywisty filler (#23), typografie (#15, #17) i pisownie (#43). Reszte WSKAZUJESZ jako zarzuty w formacie `shared/BRAMKA-REDAKCJI.md` (`[FORMALNY]` albo `[MERYTORYCZNY]`), z kotwica w tekscie.
+
+**Uwaga nie zostaje w raporcie.** Model, ktory redaguje pismo, wdraza zarzuty formalne od razu, w tym samym przebiegu:
+tworzy kolejna wersje pisma (`_vN+1`), uruchamia etap ponownie na nowej wersji i dopiero wtedy przechodzi dalej.
+Zarzut merytoryczny (teza, dowod, dobor tresci) przedstawia autorowi do decyzji. Wyjatek od wdrozenia stanowia tylko
+formuly ustawowe, terminy zdefiniowane i cytaty doslowne; taki zarzut oznacz `[ODRZUCONY: formula ustawowa]`.
 
 ## Miejsce w procesie
 

@@ -194,6 +194,9 @@ def body(text, stats):
     for blk in blocks:
         raw = blk.rstrip()
         flat = " ".join(l.strip() for l in raw.splitlines())
+        if re.match(r"#{3,}\s", raw):
+            sys.exit(f"render_pismo: nagłówek „{raw.split()[0]}” nie jest obsługiwany (tylko # i ##); "
+                     f"zmień go w źródle, zamiast wstawiać znaczniki do DOCX: {flat[:60]}")
         if raw.startswith("# "):
             x.append(para(run(flat[2:].upper(), size=BODY + 2, spacing=40), jc="center", before=240, after=180, keep=True))
         elif raw.startswith("## "):
