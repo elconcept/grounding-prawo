@@ -174,6 +174,12 @@ ani blog kancelarii nie zastępują sprawdzenia. Nie zamykaj narracji w jednej k
 warianty lub kumulację pokaż tylko tam, gdzie uzasadniają je opisane fakty i zweryfikowane prawo.
 
 ### F7. Kontrola
+**Nowa wersja zawiadomienia zawsze rozszerza poprzednią, nigdy jej nie skraca.** Buduj ją na najnowszym DOCX
+z `output/<nazwa>/` (z ręcznymi poprawkami autora), nigdy przez ponowny render starszego MD ani konsolidacji.
+Nowe okoliczności i krzywdy dopisuj do zastanego tekstu; przebudowa stylu nie usuwa epizodu, cytatu, godziny,
+karty akt ani skutku. Po zapisie wersji uruchom `shared/scripts/retencja_pisma.py <poprzednia> <nowa>`.
+Każdą stratę przywróć. Usunięcie zostaje tylko na decyzję autora albo jako poprawka błędu i trafia do
+`_ZMIANY_vN.md` z powodem. To samo dotyczy zawiadomień i pism o naruszeniach składanych do BSWP i prokuratury.
 Porównaj pismo z każdym wierszem mapy. Usuń dopiski modelu, przywróć krzywdy utracone w redakcji,
 sprawdź źródła i pewność pamięci. Użyj [kontroli oczami prokuratora](references/oczami-prokuratora.md)
 do wykrycia pytań, nie cenzury. Sprawdź formę, aktualność użytego prawa i oba raporty z F4.

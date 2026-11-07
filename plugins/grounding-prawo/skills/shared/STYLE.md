@@ -12,8 +12,15 @@ Wygląd DOCX określa `shared/FORMAT-PISMA.md`, miejsce zapisu `shared/ARTEFAKTY
 
 - Poważny, stanowczy, formalny ton; żądania i wnioski wyrażaj wprost.
 - Stosuj precyzyjną, fachową terminologię prawniczą. Zachowuj znaczenie terminów i siłę twierdzeń.
-- Preferuj rozbudowane zdania, gdy pokazują związek przesłanek i wniosku; różnicuj rytm.
-  Zdanie nieczytelne podziel bez utraty treści. Nie rozbudowuj go pustymi zwrotami.
+- Pisz zdaniami prostymi: jedno zdanie niesie jedną tezę, okoliczność albo żądanie. Zdanie wielokrotnie
+  złożone rozbij na kilka prostych bez utraty treści; związek przesłanek i wniosku pokazuj kolejnością zdań
+  i słowem „dlatego”, nie piętrowym zdaniem. Nie rozbudowuj zdań pustymi zwrotami.
+- Nie używaj myślnika „—” ani półpauzy lub łącznika ze spacjami jako znaku interpunkcyjnego w zdaniu.
+  Półpauza zostaje tylko w zakresach bez spacji („k. 8–9”, „2025–2026”) i w urzędowym tytule aktu.
+- Dwukropek stawiaj tylko przed wyliczeniem i przed cytatem; nie rozcinaj nim zdania.
+- Każdy punkt wyliczenia zaczynaj pełnym zdaniem z orzeczeniem, nie równoważnikiem zdania.
+- Mechaniczną część tych reguł sprawdza `shared/scripts/lint_pisma.py`; całość cyklu kontroli opisuje
+  `shared/BRAMKA-REDAKCJI.md`.
 - W piśmie składanym osobiście pisz w pierwszej osobie („wnoszę”, „wskazuję”; przy wielu autorach „wnosimy”).
   W piśmie pełnomocnika zachowaj właściwą rolę i umocowanie; nie przypisuj mu doświadczeń strony.
 

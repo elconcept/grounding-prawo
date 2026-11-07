@@ -58,6 +58,10 @@ Przy redakcji pisma wczytaj `shared/STYLE.md`; jego rejestr formalny doprecyzowu
 5. **Bramka po przepisaniu** (obowiązkowa dla pism): `python3 scripts/audyt_po_przepisaniu.py <przed> <po>` sprawdza, czy nie zginęły
    daty, kwoty, przepisy, sygnatury, cytaty i siła twierdzeń. Wynik FAIL lub NEEDS_REVIEW = popraw przepisanie, nie bramkę.
 6. Po redakcji pisma wraca kontrola merytoryczna (cytaty, subsumpcja); redakcja nie zwalnia z niej.
+7. **Pismo w cyklu bramki** (`shared/BRAMKA-REDAKCJI.md`): wynik zapisz jako raport etapu `pisz-po-polsku` z sekcją
+   `## Zarzuty`. Ten skill redaguje, więc wady formalne poprawia w nowej wersji pisma od razu, a w raporcie zostawia
+   tylko zarzuty merytoryczne do decyzji autora. Przed raportem uruchom `shared/scripts/lint_pisma.py`; błąd lintu
+   to wada formalna do poprawienia, nie do opisania.
 
 ## Pliki
 
