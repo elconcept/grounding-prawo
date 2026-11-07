@@ -2,7 +2,7 @@
 name: pisma-procesowe-v3
 description: Pozew, odpowiedź na pozew, apelacja, zażalenie i inne pisma wymagające strategii, dowodów i weryfikacji prawa. Używaj przy tworzeniu lub przebudowie pisma procesowego.
 metadata:
-  version: '5.46'
+  version: '5.47'
   type: executive-pisma
   status: production
   dependencies: '{"requires": ["shared"]}'

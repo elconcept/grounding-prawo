@@ -2,7 +2,7 @@
 name: prawo-polskie-v2
 description: Wybór domeny DR dla prawa polskiego. Moduł routera; nie wywołuj bezpośrednio.
 metadata:
-  version: '6.73'
+  version: '6.74'
   type: domain-router
   status: production
   compatibility: live_web_lookup, cross_skill_file_read
