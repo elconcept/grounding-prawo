@@ -14,6 +14,7 @@ Błędy:
   E5  zdanie dłuższe niż limit słów (domyślnie 35; tekst w cudzysłowie „…” się nie liczy),
   E6  dwukropek w środku zdania, po którym zdanie biegnie dalej małą literą
       (dwukropek przed wyliczeniem, cytatem, liczbą i w metryce pisma zostaje).
+  Punkt petitum zaczynający się rzeczownikiem odczasownikowym („zakazanie”, „zasądzenie”) nie podlega E5 ani U2.
 Uwagi:
   U1  zdanie od 26 słów do limitu: do przejrzenia, czy nie rozbić,
   U2  punkt wyliczenia bez orzeczenia w pierwszych słowach (podejrzenie równoważnika zdania).
@@ -72,14 +73,17 @@ def sprawdz(t, limit=35):
         if not METRYKA.match(s):
             for m in re.finditer(rf":\s+(?=[{L}])", bez_cyt):
                 bledy.append(("E6", nr, frag(m)))
-        for z in ZDANIE.split(s):
+        # Punkt petitum („1. zakazanie…”, „nakazanie…”, „zasądzenie…”) to formuła żądania po „wnoszę o”;
+        # sąd przenosi ją do sentencji jako jedno zdanie, więc nie podlega limitowi długości ani testowi U2.
+        petitum = bool(re.match(rf"^\d+\.\s+[{L}]+(anie|enie|cie)\b", s))
+        for z in ([] if petitum else ZDANIE.split(s)):
             n = dlugosc(z)
             if n > limit:
                 bledy.append(("E5", nr, f"{n} słów: {z[:90]}…"))
             elif n > 25:
                 uwagi.append(("U1", nr, f"{n} słów: {z[:90]}…"))
         m = re.match(r"^(\d+\.|[a-z]\)|[-•])\s+(.*)", s)
-        if m:
+        if m and not petitum:
             pocz = " ".join(m.group(2).split()[:8])
             if not ORZECZENIE.search(pocz) and len(m.group(2).split()) > 2 and not m.group(2).isupper():
                 uwagi.append(("U2", nr, pocz))

@@ -13,9 +13,12 @@ Każda wersja pisma przechodzi etapy w tej kolejności. Każdy etap ocenia tę s
 2. `pisz-po-polsku`: redakcja językowa (skill `pisz-po-polsku`).
 3. `humanizer`: usunięcie wzorców AI (skill `humanizer-pl`) z bramką `audyt_po_przepisaniu.py`
    uruchomioną na tekście poprzedniej i nowej wersji tego samego formatu (MD z MD albo DOCX z DOCX).
-4. `marko`: recenzja treści (skill `marko-pl-content`); pełny werdykt i zarzuty idą też do odpowiedzi w czacie.
-5. `sedzia`: test zimnego czytelnika (skill `pierwsze-wrazenie-sedziego-pl`); przy zawiadomieniu czytelnikiem jest prokurator.
-6. `wiernosc` (tylko zawiadomienia i pisma do BSWP o naruszeniach): skill `deliverable-fidelity-pl` oraz
+   Audyt ocenia redakcję, więc przed nim usuń z obu tekstów numerację punktów i fragmenty dopisane
+   w etapie `zrodla` (nowe orzeczenia i decyzje); te sprawdza raport `zrodla`. Wynik `OK`, `PASS` albo `UWAGI`
+   przechodzi, `BLOKADA` oznacza poprawkę przepisania.
+4. `marko`: recenzja treści (skill `szturm-na-draft-pl/modules/marko-pl-content`); pełny werdykt i zarzuty idą też do odpowiedzi w czacie.
+5. `sedzia`: test zimnego czytelnika (skill `szturm-na-draft-pl/modules/pierwsze-wrazenie-sedziego-pl`); przy zawiadomieniu czytelnikiem jest prokurator.
+6. `wiernosc` (tylko zawiadomienia i pisma do BSWP o naruszeniach): skill `szturm-na-draft-pl/modules/deliverable-fidelity-pl` oraz
    `shared/scripts/retencja_pisma.py` wobec poprzedniej wersji.
 
 ## Wdrożenie natychmiast
