@@ -7,7 +7,9 @@ odesłanie do karty akt („k. 8–9”), sygnatura i kwota z poprzedniej wersji
 jeden element w wierszu, z powodem: `- k. 43 | powód: błędne folio, poprawione na k. 51–55`.
 Skrócenie pisma tylko na decyzję autora: wiersz `SKRÓCENIE: decyzja autora <data>`.
 
-    python3 retencja_pisma.py <poprzednia> <nowa> [--wyjatki _ZMIANY_vN.md] [--json]
+    python3 retencja_pisma.py <poprzednia> [<starsza> ...] <nowa> [--wyjatki _ZMIANY_vN.md ...] [--json]
+Przy kilku wcześniejszych wersjach sprawdza sumę ich elementów (treść utracona dwie wersje temu też jest stratą);
+liczbę słów porównuje z bezpośrednio poprzednią wersją. --wyjatki można podać wiele razy.
 Kod wyjścia: 0 bez strat, 1 są straty.
 """
 import json
@@ -65,11 +67,26 @@ def main():
     args = sys.argv[1:]
     if len(args) < 2:
         sys.exit(__doc__)
-    wyj = ""
-    if "--wyjatki" in args:
-        p = args[args.index("--wyjatki") + 1]
-        wyj = open(p, encoding="utf-8").read() if os.path.exists(p) else ""
-    straty, sa, sb, skr = porownaj(tekst(args[0]), tekst(args[1]), wyj)
+    wyj, pliki, i = "", [], 0
+    while i < len(args):
+        if args[i] == "--wyjatki":
+            p = args[i + 1]
+            wyj += open(p, encoding="utf-8").read() + "\n" if os.path.exists(p) else ""
+            i += 2
+        elif args[i] == "--json":
+            i += 1
+        else:
+            pliki.append(args[i])
+            i += 1
+    if len(pliki) < 2:
+        sys.exit(__doc__)
+    *poprzednie, nowa = pliki
+    t_nowa = tekst(nowa)
+    straty = []
+    for p in poprzednie:
+        s, _, _, _ = porownaj(tekst(p), t_nowa, wyj)
+        straty += [x for x in s if x not in straty]
+    _, sa, sb, skr = porownaj(tekst(poprzednie[0]), t_nowa, wyj)
     if "--json" in args:
         print(json.dumps({"straty": straty, "slowa_przed": sa, "slowa_po": sb, "skrocenie": skr}, ensure_ascii=False))
     else:

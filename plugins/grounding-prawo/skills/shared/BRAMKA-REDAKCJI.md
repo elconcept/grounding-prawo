@@ -58,7 +58,7 @@ wychodzi tylko z wierszem `BEZ ORZECZEŃ: decyzja autora <data>`.
 
 - `shared/scripts/lint_pisma.py <docx>`: myślnik, półpauza w zdaniu, dwukropek w środku zdania, zdanie ponad
   35 słów, pozostałości Markdown, placeholdery. Błąd lintu to zarzut formalny.
-- `shared/scripts/retencja_pisma.py <poprzednia> <nowa> --wyjatki _ZMIANY_vN.md`: każdy cytat, godzina, data,
-  karta akt, sygnatura i kwota poprzedniej wersji jest w nowej, a liczba słów nie maleje. Świadome usunięcie
+- `shared/scripts/retencja_pisma.py <poprzednia> [<starsze> ...] <nowa> --wyjatki _ZMIANY_vN.md`: każdy cytat, godzina, data,
+  karta akt, sygnatura i kwota każdej wcześniejszej wersji jest w nowej, a liczba słów nie maleje. Świadome usunięcie
   wpisuje się do `_ZMIANY_vN.md` z powodem.
 - `format-pisma/render_pismo.py` odrzuca nagłówki `###` i głębsze; nie wolno ich obchodzić wpisaniem znaczników do DOCX.
