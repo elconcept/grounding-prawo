@@ -71,7 +71,8 @@ def sprawdz(t, limit=35):
         for m in PLACEHOLDER.finditer(s):
             bledy.append(("E4", nr, frag(m)))
         if not METRYKA.match(s):
-            for m in re.finditer(rf":\s+(?=[{L}])", bez_cyt):
+            z_cyt = CYTAT.sub(lambda m: "Q" * len(m.group(0)), s)  # cytat po dwukropku to dozwolony cytat
+            for m in re.finditer(rf":\s+(?=[{L}])", z_cyt):
                 bledy.append(("E6", nr, frag(m)))
         # Punkt petitum („1. zakazanie…”, „nakazanie…”, „zasądzenie…”) to formuła żądania po „wnoszę o”;
         # sąd przenosi ją do sentencji jako jedno zdanie, więc nie podlega limitowi długości ani testowi U2.
