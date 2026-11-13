@@ -63,3 +63,33 @@ def test_akceptacja_zachowuje_komentarze():
          '<w:r><w:rPr><w:rStyle w:val="CommentReference"/></w:rPr><w:commentReference w:id="9"/></w:r></w:p>')
     y = wersja_pisma.accept_xml(x)
     assert 'B' not in y and '>C<' in y and 'commentReference w:id="9"' in y and '<w:ins' not in y
+
+
+def _adeu_dostepny():
+    import shutil
+    return bool(shutil.which('uvx') or shutil.which('adeu'))
+
+
+def test_redline_dlugiego_docx_na_prawdziwym_adeu(tmp_path, monkeypatch):
+    """DOCX dłuższy niż jedna syntetyczna strona adeu: text() bez banerów stron, redline --tekst przechodzi."""
+    import pytest
+    docx = pytest.importorskip('docx')
+    if not _adeu_dostepny():
+        pytest.skip('brak uvx/adeu')
+    pismo = tmp_path/'pismo.docx'
+    d = docx.Document()
+    for i in range(400):
+        d.add_paragraph(f'Akapit {i}: ' + 'tekst pisma procesowego ' * 8)
+    d.save(pismo)
+
+    s = wersja_pisma.text(str(pismo))
+    assert 'Akapit 0:' in s and 'Akapit 399:' in s
+    assert 'Page 1 of' not in s and 'Continues on page' not in s
+
+    nowa = tmp_path/'nowa.md'
+    nowa.write_text(s.replace('Akapit 399:', 'Akapit ostatni:'), encoding='utf-8')
+    monkeypatch.setattr(sys, 'argv', ['wersja_pisma.py', 'redline', '--docx', str(pismo),
+                                      '--tekst', str(nowa), '--author', 'Test'])
+    wersja_pisma.redline()
+    c = wersja_pisma.changes(str(pismo))
+    assert c['w:ins'] and c['w:del']
