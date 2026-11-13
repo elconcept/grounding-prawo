@@ -44,14 +44,7 @@ def baza() -> ustawy.Baza:
 
 @server.tool(annotations=RO)
 def przepis(akt: str, art: str, widok: Literal["oba", "tekst", "komentarz"] = "oba") -> dict:
-    """⚖️ 📜 ✧ Odczytaj ARTYKUŁ i KOMENTARZ AI z wybranych polskich aktów (git-as-law).
-
-    JEDYNE narzędzie MCP-USTAWY. Po znalezieniu numeru artykułu w Repertorium
-    podaj skrót aktu (np. 'uozp', 'kpk', 'kpc', 'kc') oraz numer (np. '23',
-    '306', '117^1'). Domyślnie zwraca oba elementy. Widok 'komentarz'
-    zwraca samą analizę stosowania przepisu; 'tekst' — samo brzmienie.
-    Komentarz pochodzi z repozytorium opracowań i nie zawiera orzecznictwa.
-    """
+    """Odczytaj ARTYKUŁ i KOMENTARZ AI z wybranych polskich aktów. Podaj skrót aktu (np. 'uozp', 'kpk', 'kpc', 'kc') oraz numer artykulu (np. '23', '306', '117^1'). Komentarz pochodzi z repozytorium opracowań i nie zawiera orzecznictwa."""
     wynik = baza().artykul(akt, art, komentarz=widok != "tekst")
     wynik["emblemat"] = "⚖️ USTAWY · 📜 PRZEPIS · ✧ KOMENTARZ"
     if widok == "komentarz":
