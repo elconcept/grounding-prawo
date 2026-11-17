@@ -1,8 +1,10 @@
 {
   "name": "grounding-prawo",
-  "owner": { "name": "elconcept" },
+  "owner": {
+    "name": "elconcept"
+  },
   "metadata": {
-    "description": "Prywatny marketplace grounding-prawo: prawo polskie z weryfikacją źródeł i kontrolą pism."
+    "description": "Publiczny marketplace Grounding Prawo: polskie prawo, weryfikacja źródeł i kontrola pism."
   },
   "plugins": [
     {
