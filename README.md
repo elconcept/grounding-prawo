@@ -1,13 +1,12 @@
-> **ARCHIWUM — rozwój przeniesiony do [`elconcept/legal`](https://github.com/elconcept/legal).**
-> Repozytorium `grounding-prawo` pozostaje wyłącznie jako historyczne źródło kodu,
-> skilli, materiałów i historii Git. Nowe zmiany należy wprowadzać w `legal`.
-> Dawne instrukcje instalacji i aktualizacji poniżej mają znaczenie archiwalne.
-
 # grounding-prawo
 
-Prywatny marketplace z jednym pluginem do prowadzenia własnych spraw według prawa polskiego (Claude Desktop, Cowork,
+Publiczny marketplace z jednym pluginem do prowadzenia własnych spraw według prawa polskiego (Claude Desktop, Cowork,
 Code; ChatGPT/Codex). Łączy silnik Lex Machina, skille weryfikacji MateMatic i skille własne. Zasada: **źródłem tezy
 o przepisie lub orzeczeniu jest narzędzie MCP albo dokument, nigdy pamięć modelu.**
+
+**Repozytorium `grounding-prawo` jest kanonicznym publicznym źródłem kodu pluginu, skilli i wydań.**
+Prywatne `elconcept/legal` jedynie instaluje plugin z tego marketplace i przechowuje sprawy, dowody oraz pisma.
+Zmiany w pluginie należy wprowadzać wyłącznie tutaj, a nie w prywatnym repozytorium.
 
 To repo służy do rozwijania pluginu. Praca nad sprawami odbywa się w repo `elconcept/legal` (`legal/AGENTS.md`,
 `legal/PRZEWODNIK.md`). Wejście do pracy prawnej: skill `prawny-router-v3`. Reguły, które model dostaje razem z
@@ -24,7 +23,7 @@ Wersja semver (tylko manifest Codex): `selection/selection.yaml`.
 | Klient | Jak |
 |---|---|
 | **Claude Code** | `claude plugin marketplace add elconcept/grounding-prawo`, potem `claude plugin install grounding-prawo@grounding-prawo` |
-| **Claude Desktop / Cowork** | Ustawienia organizacji → Plugins → dodaj marketplace z GitHub (repo `elconcept/grounding-prawo`; repo prywatne, więc wymaga autoryzacji GitHub). Po synchronizacji plugin pojawia się w katalogu konta. |
+| **Claude Desktop / Cowork** | Ustawienia organizacji → Plugins → dodaj marketplace z GitHub (repo `elconcept/grounding-prawo`; repo publiczne, bez potrzeby dostępu do prywatnego `legal`). Po synchronizacji plugin pojawia się w katalogu konta. |
 | **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo --ref main --sparse .agents/plugins --sparse plugins/grounding-prawo`, potem `codex plugin add grounding-prawo@grounding-prawo`. |
 
 Po instalacji sprawdź w **nowej rozmowie**: „Użyj prawny-router-v3 i powiedz, co potrafi plugin”. Skille z błędem
