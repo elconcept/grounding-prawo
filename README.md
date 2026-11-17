@@ -1,3 +1,8 @@
+> **ARCHIWUM — rozwój przeniesiony do [`elconcept/legal`](https://github.com/elconcept/legal).**
+> Repozytorium `grounding-prawo` pozostaje wyłącznie jako historyczne źródło kodu,
+> skilli, materiałów i historii Git. Nowe zmiany należy wprowadzać w `legal`.
+> Dawne instrukcje instalacji i aktualizacji poniżej mają znaczenie archiwalne.
+
 # grounding-prawo
 
 Prywatny marketplace z jednym pluginem do prowadzenia własnych spraw według prawa polskiego (Claude Desktop, Cowork,
