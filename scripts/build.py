@@ -564,15 +564,15 @@ def add_session_protocol():
             continue
         text = open(path, encoding="utf-8").read()
         fm = re.match(r"---\n.*?\n---\n", text, re.S)
-        directive = ("\n## Pamięć sesji — przed pracą i przed odpowiedzią końcową\n\n"
+        directive = ("\n## Pamięć (Basic Memory)\n\n"
             "Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. "
             "Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. "
             "Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint "
             "z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; "
-            "po etapach zapisuj checkpoint skillem `bm-checkpoint` (`legal/sessions/`, type: session) i sprawdź odczytem. "
-            "Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. "
-            "Nowe dokumenty i ustalenia zapisuj w `legal/` po każdym zakończonym etapie. "
-            "Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.\n"
+            "checkpoint (`bm-checkpoint`, `legal/sessions/`, type: session) tylko na prośbę użytkownika albo po kompakcji kontekstu, nigdy po każdej odpowiedzi. "
+            "Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), istotne decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. "
+            "Dokumenty i ustalenia ze spraw zapisuj w `legal/` w ramach ingestu według `shared/BASIC-MEMORY.md`. "
+            "Nie zgłaszaj zapisu bez potwierdzenia MCP.\n"
             "\n## Repertorium - pierwsze źródło w każdym zadaniu prawnym\n\n"
             "Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` "
             "`repertorium_szukaj_repertorium` (wyszukiwanie semantyczne ustaw, orzeczeń SN, sądów powszechnych, NSA/WSA, "

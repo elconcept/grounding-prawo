@@ -16,7 +16,7 @@ katalog względny wobec niego, na przykład `sprawy/nazwa_sprawy`.
 3. `scripts/teczka.py --sprawa KATALOG` składa `00_BRIEF.docx`, `01_SPIS_TRESCI.docx`
    i `02_PODSUMOWANIE.docx`. Wymaga `python-docx` oraz `pandoc`; PyMuPDF jest używane
    do ustalenia liczby stron PDF, jeśli jest dostępne.
-4. Sprawdź pliki i zaktualizuj notatkę teczki w Basic Memory oraz recap zgodnie
+4. Sprawdź pliki i zaktualizuj notatkę teczki w Basic Memory zgodnie
    z `shared/BASIC-MEMORY.md`.
 
 To składanie dokumentów lokalnych, nie ingest. Do odczytu i ingestu przez sam MCP

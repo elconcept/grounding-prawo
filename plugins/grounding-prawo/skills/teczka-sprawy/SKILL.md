@@ -3,9 +3,9 @@ name: teczka-sprawy
 description: 'Teczka sprawy: spis dokumentów, brief, spis treści i podsumowanie sprawy do DOCX. Używaj przy porządkowaniu akt i przygotowaniu teczki.'
 ---
 
-## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+## Pamięć (Basic Memory)
 
-Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; po etapach zapisuj checkpoint skillem `bm-checkpoint` (`legal/sessions/`, type: session) i sprawdź odczytem. Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal/` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; checkpoint (`bm-checkpoint`, `legal/sessions/`, type: session) tylko na prośbę użytkownika albo po kompakcji kontekstu, nigdy po każdej odpowiedzi. Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), istotne decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. Dokumenty i ustalenia ze spraw zapisuj w `legal/` w ramach ingestu według `shared/BASIC-MEMORY.md`. Nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 ## Repertorium - pierwsze źródło w każdym zadaniu prawnym
 
@@ -24,7 +24,7 @@ katalog względny wobec niego, na przykład `sprawy/nazwa_sprawy`.
 3. `scripts/teczka.py --sprawa KATALOG` składa `00_BRIEF.docx`, `01_SPIS_TRESCI.docx`
    i `02_PODSUMOWANIE.docx`. Wymaga `python-docx` oraz `pandoc`; PyMuPDF jest używane
    do ustalenia liczby stron PDF, jeśli jest dostępne.
-4. Sprawdź pliki i zaktualizuj notatkę teczki w Basic Memory oraz recap zgodnie
+4. Sprawdź pliki i zaktualizuj notatkę teczki w Basic Memory zgodnie
    z `shared/BASIC-MEMORY.md`.
 
 To składanie dokumentów lokalnych, nie ingest. Do odczytu i ingestu przez sam MCP

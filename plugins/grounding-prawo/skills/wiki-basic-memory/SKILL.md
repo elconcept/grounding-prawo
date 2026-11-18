@@ -3,9 +3,9 @@ name: wiki-basic-memory
 description: 'Wiki sprawy w Basic Memory: ingest PDF, pytania, syntezy, kontrola jakości notatek. Używaj przy dodawaniu dokumentów do wiki i pracy na notatkach sprawy.'
 ---
 
-## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+## Pamięć (Basic Memory)
 
-Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; po etapach zapisuj checkpoint skillem `bm-checkpoint` (`legal/sessions/`, type: session) i sprawdź odczytem. Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal/` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; checkpoint (`bm-checkpoint`, `legal/sessions/`, type: session) tylko na prośbę użytkownika albo po kompakcji kontekstu, nigdy po każdej odpowiedzi. Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), istotne decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. Dokumenty i ustalenia ze spraw zapisuj w `legal/` w ramach ingestu według `shared/BASIC-MEMORY.md`. Nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 ## Repertorium - pierwsze źródło w każdym zadaniu prawnym
 
@@ -31,7 +31,7 @@ Ten skill obejmuje funkcje dawnych osobnych skilli. Wczytaj moduł, gdy zadanie 
 ## MOST - miejsce w przepływie grounding-prawo
 
 - **Wejście z:** pytanie do wiki, synteza lub kontrola jakości
-- **Wynik zapisz w:** istniejąca notatka tematyczna, źródło Markdown w `legal/dokumenty` i recap sesji (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
+- **Wynik zapisz w:** istniejąca notatka tematyczna, źródło Markdown w `legal/dokumenty` (reguła: `shared/ARTEFAKTY-SPRAWY.md` - dopisuj do istniejących plików, nie twórz nowych raportów)
 - **Następny krok:** `analizator-dowodow-v3`, `chronologia-sprawy-v1`
 - **Basic Memory (`main`, `legal/`):** źródła odpowiedzi, synteza, sprzeczności i wykryte braki (protokół: `shared/BASIC-MEMORY.md`)
 - **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).

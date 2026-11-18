@@ -100,13 +100,15 @@ potwierdzający. Gdy brakuje metodyki lub źródła, oznacz etap NIEZAKOŃCZONY 
 
 Checkpoint pisz skillem `bm-checkpoint` (plugin `basic-memory-nas`): `type: session`, folder `legal/sessions/`,
 format, sekcje i metadane według tego skilla (`agent`, `session_id` hosta, `status`). Każdy checkpoint to nowa
-notatka; poprzednich nie nadpisuj. Zapisz checkpoint po istotnym etapie, przed długą operacją, po kompakcji
-kontekstu i przed odpowiedzią końcową. Nie czekaj na komendę „zamknij”.
+notatka; poprzednich nie nadpisuj. Checkpoint powstaje tylko w dwóch sytuacjach, jak w upstreamie Basic Memory:
+po kompakcji kontekstu (brief `basic-memory-nas` zastępuje hook PreCompact) i na wyraźną prośbę użytkownika
+(„checkpoint”, „podsumuj sesję”, „przekaż dalej”). Nie zapisuj checkpointu ani recapu po każdej odpowiedzi,
+po etapie ani przed odpowiedzią końcową.
 
 Treść: cel użytkownika; wykonane działania; decyzje i ich przyczyny; pliki/wyniki ze ścieżkami repozytorium;
 kontrole faktycznie wykonane; nierozstrzygnięte kwestie; następny krok; odnośniki do notatek w `legal/`.
-Checkpoint nie zastępuje zapisu ustaleń w `legal/sprawy/` ani ingestu. Decyzję autora zapisz osobno
-skillem `bm-decide` w `legal/decyzje/`.
+Checkpoint nie zastępuje zapisu ustaleń w `legal/sprawy/` ani ingestu. Istotną, trwałą decyzję autora
+(nie każdą preferencję w rozmowie) zapisz osobno skillem `bm-decide` w `legal/decyzje/`; jedna notatka na decyzję.
 
 ## Trwałe ustalenia w `legal/bm-remember/` — tylko gdy naprawdę warto
 
@@ -122,8 +124,7 @@ Zapisy tylko przez MCP (`bm_write`, `bm_edit`). Przed zmianą istniejącej notat
 zapisu sprawdź, czy już istnieje. Po zapisie wykonaj `bm_read` i sprawdź treść. Sukces to odczyt zgodny
 z zamierzeniem, nie samo wywołanie. Po zapisie notatki ze schematem uruchom `bm_schema(command="validate", identifier=...)`.
 
-W odpowiedzi końcowej podaj krótko: `Pamięć: sesja <identyfikator>; legal — zapisano <identyfikator> / bez nowych ustaleń`.
-Gdy zapis się nie udał, podaj `NIEZAPISANE` i przyczynę.
+Gdy zapis się nie udał, powiedz to wprost (`NIEZAPISANE` i przyczyna). Nie dopisuj do odpowiedzi rutynowego statusu pamięci.
 Zaległość dopisz do `_PRZEBIEGI.md` pisma lub `_robocze/pamiec-zalegle.md` w folderze sprawy, z folderem,
 identyfikatorem notatki i treścią do zapisu. Przy następnym wejściu ponów po sprawdzeniu duplikatów.
 Można kontynuować pracę merytoryczną; nie deklaruj pełnego zakończenia ingestu ani skutecznego zapisu pamięci.

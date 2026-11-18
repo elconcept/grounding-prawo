@@ -11,7 +11,7 @@ default_dr:
 skills:
   wiki-basic-memory:
     wejscie: pytanie do wiki, synteza lub kontrola jakości
-    wynik: istniejąca notatka tematyczna, źródło Markdown w `legal/dokumenty` i recap sesji
+    wynik: istniejąca notatka tematyczna, źródło Markdown w `legal/dokumenty`
     dalej:
     - analizator-dowodow-v3
     - chronologia-sprawy-v1

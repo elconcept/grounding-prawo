@@ -5,7 +5,7 @@ Nie uruchamiaj kolejek ani `wiki_ingest refresh/index` na dawnych mountach. Każ
 # Wiki oparta na źródłach w Basic Memory
 
 Model Karpathy LLM Wiki: oryginały, opracowane notatki i nawigacja tworzą odrębne
-warstwy. Projekt `legal` przechowuje źródła i wiedzę spraw, `main` — recapy sesji.
+warstwy. Źródła i wiedza spraw leżą w projekcie `main`, folder `legal/`.
 Pełna transkrypcja dokumentu pozostaje oddzielona od ustaleń, komentarzy i syntez.
 PDF rozstrzyga zgodność transkrypcji: wykonaj kontrolę stron według `wiki-basic-memory/modules/ingest-wiki`.
 
@@ -20,7 +20,7 @@ PDF rozstrzyga zgodność transkrypcji: wykonaj kontrolę stron według `wiki-ba
 4. Sprzeczność zapisz wraz z obydwoma źródłami, datami i zakresem rozbieżności.
    Rozróżniaj zmianę stanu faktycznego, wersję strony i błąd odczytu. Nie wybieraj
    jednej wersji bez podstaw. Nowa relacja grafu wymaga oparcia w treści dokumentu.
-5. Po zatwierdzeniu przez LLM wszystkich stron PDF i potwierdzeniu kopii PDF w R2 zapisz źródło Markdown oraz notatki wtórne; recap wymienia zmienione
+5. Po zatwierdzeniu przez LLM wszystkich stron PDF i potwierdzeniu kopii PDF w R2 zapisz źródło Markdown oraz notatki wtórne; w odpowiedzi wymień zmienione
    notatki, sprzeczności i zaległości. Zabroniony jest automatyczny batch ingest oraz skan folderów.
 
 ## Pytanie i synteza
@@ -34,7 +34,7 @@ materiał, ale sama nie dowodzi tezy. Brak wyników nazwij luką, nie dowodem ni
 Nowe porównanie lub ustalenie łączące kilka dokumentów zapisz jako syntezę według
 metodologii projektu. Zapisz pytanie, datę, źródła, wnioski, sprzeczności i niepewności.
 Najpierw sprawdź, czy podobna synteza istnieje; aktualizuj ją zamiast tworzyć duplikat.
-Połącz syntezę z teczką/tematem. Proste odszukanie faktu pozostaje w odpowiedzi i recapie.
+Połącz syntezę z teczką/tematem. Proste odszukanie faktu pozostaje w odpowiedzi.
 
 ## Kontrola jakości
 

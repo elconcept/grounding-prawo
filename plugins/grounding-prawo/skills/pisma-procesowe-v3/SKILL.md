@@ -11,9 +11,9 @@ metadata:
   reread_gate: 'MRG — przed każdym [CP] i każdą odpowiedzią pipeline: view CP-GATE.md + view MOD-STEP-TRACKER.md (zakaz polegania na pamięci)'
 ---
 
-## Pamięć sesji — przed pracą i przed odpowiedzią końcową
+## Pamięć (Basic Memory)
 
-Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; po etapach zapisuj checkpoint skillem `bm-checkpoint` (`legal/sessions/`, type: session) i sprawdź odczytem. Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. Nowe dokumenty i ustalenia zapisuj w `legal/` po każdym zakończonym etapie. Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.
+Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; checkpoint (`bm-checkpoint`, `legal/sessions/`, type: session) tylko na prośbę użytkownika albo po kompakcji kontekstu, nigdy po każdej odpowiedzi. Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), istotne decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. Dokumenty i ustalenia ze spraw zapisuj w `legal/` w ramach ingestu według `shared/BASIC-MEMORY.md`. Nie zgłaszaj zapisu bez potwierdzenia MCP.
 
 ## Repertorium - pierwsze źródło w każdym zadaniu prawnym
 

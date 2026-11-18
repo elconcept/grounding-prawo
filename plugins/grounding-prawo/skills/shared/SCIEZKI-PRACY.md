@@ -61,4 +61,4 @@ Presja terminu nie zwalnia z tej ścieżki; skraca tylko liczbę iteracji.
    błędy modelu). Uwagi ogólne zgłoś jako kandydatów do pluginu.
 3. Basic Memory, teczka `sprawy/<katalog>/`: `## Stan`, `## Terminy`, `## Decyzje użytkownika`, `## Lekcje`, `## Relacje`;
    notatka pisma: wersja, ścieżka pliku, wynik kontroli, status, termin i sposób złożenia. Nowe dokumenty przez `wiki-basic-memory`.
-4. Esencję z `_robocze/` przenieś do plików `_*.md`; recap sesji w `main` według `shared/BASIC-MEMORY.md`.
+4. Esencję z `_robocze/` przenieś do plików `_*.md`.
