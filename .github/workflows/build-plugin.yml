@@ -4,7 +4,7 @@ name: build-plugin
 # - PR i push: build, walidacja, lint, testy oraz kontrola, że commit zawiera plugins/ zgodny z buildem.
 #   CI nigdy nie commituje ani nie pushuje na main (decyzja D0, 30.10.2026): wydaniem jest tylko
 #   ręcznie zmergowany PR. Rozjazd plugins/ = błąd; przebuduj lokalnie (scripts/build.py) i dołącz wynik.
-# - codziennie: podbicie wszystkich submodułów do upstreamu na osobnej gałęzi i PR do przeglądu, bez
+# - ręcznie (workflow_dispatch): podbicie wszystkich submodułów do upstreamu na osobnej gałęzi i PR do przeglądu, bez
 #   automatycznego merge, dopóki nie działa benchmark jakości (testy A i B z _PLAN). Prywatne submoduły
 #   (bez dostępu dla GITHUB_TOKEN) zostają na przypiętym commicie.
 on:
@@ -15,8 +15,6 @@ on:
   push:
     branches: [main]
     paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr"]
-  schedule:
-    - cron: "17 5 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -29,7 +27,6 @@ permissions:
 
 jobs:
   build:
-    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -59,7 +56,6 @@ jobs:
         uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
-      - run: python3 -m unittest discover -s tests -p test_sync_legal.py -v
       - name: Wykonawca soczewek szturmu (atrapy CLI)
         run: python3 -m unittest discover -s plugins/grounding-prawo/skills/szturm-na-draft-pl/tests -p test_lens_runner.py -v
       - name: plugins/ zgodny z buildem
@@ -71,39 +67,8 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout legal do synchronizacji
-        if: github.event_name != 'pull_request'
-        uses: actions/checkout@v4
-        with:
-          repository: elconcept/legal
-          ref: main
-          path: legal-checkout
-          ssh-key: ${{ secrets.LEGAL_SYNC_KEY }}
-          lfs: false
-      - name: Kanoniczne reguły do legal
-        if: github.event_name != 'pull_request'
-        env:
-          GIT_LFS_SKIP_SMUDGE: '1'
-        run: |
-          set -euo pipefail
-          git -C legal-checkout worktree add -b sync/canonical "${RUNNER_TEMP}/legal-sync" HEAD
-          python3 scripts/sync_legal.py "${RUNNER_TEMP}/legal-sync"
-          cd "${RUNNER_TEMP}/legal-sync"
-          git config user.name "grounding-prawo-sync"
-          git config user.email "actions@users.noreply.github.com"
-          git add AGENTS.md CLAUDE.md .agents/grounding-prawo
-          git diff --cached --quiet && exit 0
-          git -c core.hooksPath=/dev/null commit -s -m "docs: sync canonical grounding-prawo rules"
-          # A concurrent NAS backup is rebased; a real conflict fails visibly without force-push.
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main
-            if git -c core.hooksPath=/dev/null push origin HEAD:main; then exit 0; fi
-          done
-          exit 1
-
   upstream-bump:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -149,7 +114,6 @@ jobs:
           python3 -I scripts/validate_marketplace.py
           python3 -I scripts/lint_refs.py
           node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
-          python3 -m unittest discover -s tests -p test_sync_legal.py
           python3 -m unittest discover -s plugins/grounding-prawo/skills/szturm-na-draft-pl/tests -p test_lens_runner.py
       - name: PR do przeglądu
         if: steps.bump.outputs.changed == 'true'
