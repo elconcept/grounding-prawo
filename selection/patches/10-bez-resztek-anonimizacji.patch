@@ -3,7 +3,7 @@ diff -ruN a/prawny-router-v3/CHECKSUMS.sha256 b/prawny-router-v3/CHECKSUMS.sha25
 +++ b/prawny-router-v3/CHECKSUMS.sha256	2026-10-20 02:08:17.415378831 +0200
 @@ -1,11 +1,6 @@
  a4d5b7f60e1df0bd92022e17562ffe71ae38c1405990bb68fc1b72c482d0d5a0  ./PORTABILITY-MANIFEST.md
- be039edc413976c9dc11112133e4de9a82da35601bd37278854db54423835e16  ./SKILL.md
+ 702b38232501a73b0084e42e900bef02e7c3d5e7c7e3db336b57d67acdb23e5e  ./SKILL.md
  c2d8962aca28d642fc09c4d79ac6086d5c5b8a198d365e9e062e49be489ecbdf  ./agents/openai.yaml
 -5f87e24059d9d42ef23764f0c551bc5187ea725fa0b14723f9f7268a64ec0fb4  ./anonimizer/anonimizer-skill.md
 -2635ecd95e5e3c3277d040e0cd30ae97eb2aba70876fd2329aea36eee62b3d37  ./anonimizer/assets/AnonimizerPrawny.jsx
@@ -12,14 +12,14 @@ diff -ruN a/prawny-router-v3/CHECKSUMS.sha256 b/prawny-router-v3/CHECKSUMS.sha25
 -5348f025f750504047af050dba27dd0b26d67eefc3b3b8ac80092b2350eed732  ./anonimizer/references/REGULY-ANONIMIZACJI.md
  8936b24f674a1250d999e2c2b5901374fb4240426f32bd1ae340c352a90d617d  ./assets/icon.svg
  0026370ab9ecf6a1f9859add62daa808e6abdeb985a4facca593cd9512684b33  ./references/AUDYT-KLUCZA-ODPOWIEDZI.md
- e4586ab6f006992d271444152def6227d375bead0093f030268ec4391798c415  ./references/CHANGELOG.md
+ e60709629f5cc34be35ae0d1fd815078240a224e903a6e54d58e6740274778fa  ./references/CHANGELOG.md
 @@ -15,7 +10,6 @@
- cf15b1cd09c8227ed50943e65705c11a86c4801950e5e392e9ad25037d73ed84  ./references/ISAP-METRYKI-AKTOW.md
+ 7724efb887c7d69fc1619b392c6b0f02831d11a8efbba003d599648e9e2c1ea4  ./references/ISAP-METRYKI-AKTOW.md
  95b8d3efac09e25df074c54b206fb3f367073fd4f63d6fb12a1012f56ddf843b  ./references/JUDICIARY-LEGAL-STANDARD.md
  3d4c268271cdec331258f0f8e1a93ceb76fa0b85cae7bdf0069bc1c68e74a98d  ./references/KANCELARIA-WORKFLOW.md
 -79a41073735eb34f3c1a5c5b0171729045eaf63731577984379e357b5c3bb7b7  ./references/KROK0A-anonimizer.md
- 48913b92738cbdf0e53a94e4c935c18b839f244e15e18547bb0bec73dc009118  ./references/KROK1-detekcja.md
- beaa53c47d3d15153544736fb52164e722ffd89233c54ca9c8b8fe4d0573dec5  ./references/PROFIL-LEKKI.md
+ 1bf9bb6364a4c82d52f26f3af7f12a9ab0c3a57a9ff75c2f7063f95208080049  ./references/KROK1-detekcja.md
+ cd1869da36450d760946713da201e306c919ebef5395226b2b59d59f543950aa  ./references/PROFIL-LEKKI.md
  698fdc860839861f4e8602787326b826a48ccd181ba18dd300759259bfa68026  ./references/ROUTING-BJ-BW.md
 diff -ruN a/prawny-router-v3/SKILL.md b/prawny-router-v3/SKILL.md
 --- a/prawny-router-v3/SKILL.md	2026-10-20 02:07:08.012018984 +0200
@@ -35,7 +35,7 @@ diff -ruN a/prawny-router-v3/SKILL.md b/prawny-router-v3/SKILL.md
 @@ -129,19 +128,18 @@
  W każdej sprawie prawnej, przed analizą:
  
- 1. `view shared/PRAWO-HARDGATE.md` — świeża weryfikacja każdego powołania w tej turze.
+ 1. `view JUR:weryfikacja-przepisow-kanon` — świeża weryfikacja każdego powołania w tej turze.
 -2. `view references/KROK0A-anonimizer.md` — zamknij bramkę anonimizera.
 -3. `view references/KROK1-detekcja.md` — ustal tryb i jurysdykcję.
 +2. `view references/KROK1-detekcja.md` — ustal tryb i jurysdykcję.
@@ -43,9 +43,9 @@ diff -ruN a/prawny-router-v3/SKILL.md b/prawny-router-v3/SKILL.md
     tekst: `view shared/MOD-WEJSCIE-DOKUMENTU.md` — WD-1 przed analizą, WD-2 przy każdym
     cytacie z materiału, WD-3 przed wynikiem (F-200; treści reguł nie kopiuje się — T35).
 -4. Wykonaj routing [1]–[11], wczytaj PRIMARY i wypisz ślad KROKU 3A.
--5. Przy pierwszym URL: `view shared/HIERARCHIA-ZRODEL.md`; każdy URL musi mieć RZĄD 1/2A/2B/3.
+-5. Przy pierwszym URL: `view JUR:hierarchia-zrodel`; każdy URL musi mieć RZĄD 1/2A/2B/3.
 +3. Wykonaj routing [1]–[11], wczytaj PRIMARY i wypisz ślad KROKU 3A.
-+4. Przy pierwszym URL: `view shared/HIERARCHIA-ZRODEL.md`; każdy URL musi mieć RZĄD 1/2A/2B/3.
++4. Przy pierwszym URL: `view JUR:hierarchia-zrodel`; każdy URL musi mieć RZĄD 1/2A/2B/3.
     Dla aktów polskich wykonaj też `view references/ZRODLA-AKTOW-FALLBACK.md`.
 -6. Przed wysłaniem: `view references/SELF-CHECK.md` i wykonaj inwentarz VER-GRAIN.
 -7. Ostatnim elementem odpowiedzi prawnej musi być disclaimer z `shared/DISCLAIMER.md`.
@@ -165,10 +165,10 @@ diff -ruN a/prawny-router-v3/references/PROFIL-LEKKI.md b/prawny-router-v3/refer
  R-1  prawny-router-v3/SKILL.md          — jesteś tutaj, routing i reguły
 -R-2  references/KROK0A-anonimizer.md    — bramka twarda, blokuje wszystko dalej
 -R-3  references/KROK1-detekcja.md       — tryb, jurysdykcja, hard gate
--R-4  shared/PRAWO-HARDGATE.md           — zakaz cytowania z pamięci
+-R-4  JUR:weryfikacja-przepisow-kanon           — zakaz cytowania z pamięci
 -R-5  references/SELF-CHECK.md           — przed wysłaniem odpowiedzi
 +R-2  references/KROK1-detekcja.md       — tryb, jurysdykcja, hard gate
-+R-3  shared/PRAWO-HARDGATE.md           — zakaz cytowania z pamięci
++R-3  JUR:weryfikacja-przepisow-kanon           — zakaz cytowania z pamięci
 +R-4  references/SELF-CHECK.md           — przed wysłaniem odpowiedzi
  ```
  
