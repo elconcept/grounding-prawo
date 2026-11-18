@@ -25,7 +25,7 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 
 - Repozytorium to publiczny technicznie marketplace użytkowany i rozwijany przez jednego właściciela, nie projekt kancelarii ani zespołu.
 - Pracuj wyłącznie na `main`: bez tworzenia branchy, PR-ów i worktree. Commit oraz push po zmianie źródeł i wygenerowanego pluginu; CI jest kontrolą, nie bramką zatwierdzania.
-- Prywatne `elconcept/legal` to workspace dokumentów własnych spraw oraz backup. Nie synchronizuj tam kopii skilli ani reguł z tego repozytorium; dystrybucja odbywa się przez marketplace, a edycja źródeł przez submodule `narzedzia/grounding-prawo`.
+- Prywatne `elconcept/legal` to workspace dokumentów własnych spraw oraz backup. Nie synchronizuj tam kopii skilli ani reguł z tego repozytorium; dystrybucja odbywa się przez marketplace, a edycja źródeł przez submodule `.tools/grounding-prawo`.
 - Polityka pracy w chmurze na pełnych, niezanonimizowanych dokumentach użytkownika jest przyjęta. Nie wprowadzaj z własnej inicjatywy procedur kancelaryjnych, formalnego code review, dodatkowych zatwierdzeń ani powtarzalnych ostrzeżeń o tej polityce.
 - Po zmianach w `grounding-prawo`: build i testy → commit/push na `main` → aktualizacja gitlinka i commit/push w `legal/main`. Nie commituj plików dokumentów `legal` do publicznego repozytorium pluginu.
 - GitHub Actions może testować, ale nie może modyfikować `legal`, tworzyć PR-ów lub gałęzi ani wypychać commitów.

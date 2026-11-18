@@ -145,7 +145,7 @@ oznacza odwołania poza pluginem, dopisuje mosty (`MOST`) i protokół pamięci,
 
 CI (`.github/workflows/build-plugin.yml`) po pushu na `main` sprawdza build, walidację, lint oraz testy.
 Nie publikuje commitów, nie tworzy gałęzi ani PR-ów i nie synchronizuje plików do prywatnego `legal`.
-Rozwój odbywa się na `main`, również przez submodule `narzedzia/grounding-prawo` w `legal`.
+Rozwój odbywa się na `main`, również przez submodule `.tools/grounding-prawo` w `legal`.
 Zależności `vendor/` są przypięte; inicjalizacja potrzebna do builda:
 `git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr`
 (ostatnia zależność wymaga dostępu do prywatnego repozytorium).
