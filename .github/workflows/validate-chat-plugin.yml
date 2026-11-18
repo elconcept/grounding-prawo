@@ -1,0 +1,25 @@
+name: validate-lexmachina-chat
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "plugins/lexmachina-chat/**"
+      - ".agents/plugins/marketplace.json"
+      - ".claude-plugin/marketplace.json"
+      - "scripts/validate_chat_plugin.py"
+      - ".github/workflows/validate-chat-plugin.yml"
+  workflow_dispatch:
+
+jobs:
+  validate-chat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - run: python scripts/validate_chat_plugin.py
