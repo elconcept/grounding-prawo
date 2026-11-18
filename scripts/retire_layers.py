@@ -57,7 +57,7 @@ Po detekcji trybu i przed przekazaniem sprawy do skilla dziedzinowego — wczyta
 ```text
 Zawsze dla pism / strategii / akt / terminów / ryzyka / dowodów:
   view prawny-router-v3/references/KANCELARIA-WORKFLOW.md
-  view shared/TRYBY-PROCESOWE.md
+  view JUR:tryby-procesowe
 """,
 """## KROK 1C — CENTRALNE JĄDRO PROCESOWE
 
@@ -66,7 +66,7 @@ Po detekcji trybu i przed przekazaniem sprawy do skilla dziedzinowego — wczyta
 ```text
 Zawsze dla pism / strategii / akt / terminów / ryzyka / dowodów:
   view shared/SCIEZKI-PRACY.md
-  view shared/TRYBY-PROCESOWE.md
+  view JUR:tryby-procesowe
 """)
 
     # --- pisma-procesowe-v3: bramka informacyjna bez blokowania pracy ---
