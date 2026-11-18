@@ -1,22 +1,18 @@
 name: build-plugin
 
 # Przebudowuje plugins/grounding-prawo z selection/selection.yaml, own-skills/ i submodułów vendor/.
-# - PR i push: build, walidacja, lint, testy oraz kontrola, że commit zawiera plugins/ zgodny z buildem.
+# - Push do main lub manualny start: build, walidacja, lint, testy oraz kontrola wygenerowanego plugins/.
 #   CI nie commituje ani nie pushuje; edycje i publikacje wykonuje właściciel bezpośrednio na main.
 #   Rozjazd plugins/ = błąd; przebuduj lokalnie (scripts/build.py) i dołącz wynik do commita.
 # - jednoosobowy marketplace: bez automatycznych branchy, PR-ów, worktree i zapisu do prywatnego legal.
 on:
-  pull_request:
-    branches: [main]
-    # archive/ nie wchodzi do builda; PR Dependabota nie dostaje sekretów, więc build i tak by padł
-    paths-ignore: ["archive/**"]
   push:
     branches: [main]
     paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr"]
   workflow_dispatch:
 
 concurrency:
-  group: grounding-prawo-${{ github.event.pull_request.number || github.ref }}
+  group: grounding-prawo-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
