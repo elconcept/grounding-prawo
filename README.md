@@ -143,11 +143,12 @@ Build: kopiuje skille z `vendor/` i `own-skills/`, nakłada overlay i patche, sc
 usuwa bloki wspólnych reguł pakietów MateMatic i odwołania do konektora EUREKA, czyści dawne instrukcje anonimizacji,
 oznacza odwołania poza pluginem, dopisuje mosty (`MOST`) i protokół pamięci, generuje indeks skilli, komendy i hooki.
 
-CI (`.github/workflows/build-plugin.yml`): build, walidacja, lint, test groundingu, commit wyniku na `main`, synchronizacja
-reguł `shared/` do `elconcept/legal` (`scripts/sync_legal.py`, klucz `LEGAL_SYNC_KEY`; `legal-autosync` pobiera je na NAS
-co 900 s). Co tydzień job `upstream-bump` buduje plugin na nowych wersjach LexMachina i awesome-matematic-skills i
-wypycha gałąź `upstream-bump-RRRRMMDD` i próbuje otworzyć PR; jeśli ustawienia repo nie pozwalają Actions
-tworzyć PR, job kończy się błędem po wypchnięciu gałęzi i PR otwiera człowiek.
+CI (`.github/workflows/build-plugin.yml`) po pushu na `main` sprawdza build, walidację, lint oraz testy.
+Nie publikuje commitów, nie tworzy gałęzi ani PR-ów i nie synchronizuje plików do prywatnego `legal`.
+Rozwój odbywa się na `main`, również przez submodule `narzedzia/grounding-prawo` w `legal`.
+Zależności `vendor/` są przypięte; inicjalizacja potrzebna do builda:
+`git submodule update --init --depth 1 vendor/packs/LexMachina vendor/packs/awesome-matematic-skills vendor/docs/the-ocr`
+(ostatnia zależność wymaga dostępu do prywatnego repozytorium).
 
 Historia selekcji: `_log/selekcja.md`, `_log/skill-triage.md`, `_log/source-map.md`.
 

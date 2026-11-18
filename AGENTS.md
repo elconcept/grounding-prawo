@@ -21,6 +21,15 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 | `.claude-plugin/`, `.agents/plugins/` | Manifesty marketplace (Claude Code, Codex). |
 | `.claude/skills/`, `.agents/skills/` | Skille do pracy nad repo (`fastmcp-builder`, `marketplace-installer`), nie część pluginu. |
 
+## Jednoosobowy tryb pracy
+
+- Repozytorium to publiczny technicznie marketplace użytkowany i rozwijany przez jednego właściciela, nie projekt kancelarii ani zespołu.
+- Pracuj wyłącznie na `main`: bez tworzenia branchy, PR-ów i worktree. Commit oraz push po zmianie źródeł i wygenerowanego pluginu; CI jest kontrolą, nie bramką zatwierdzania.
+- Prywatne `elconcept/legal` to workspace dokumentów własnych spraw oraz backup. Nie synchronizuj tam kopii skilli ani reguł z tego repozytorium; dystrybucja odbywa się przez marketplace, a edycja źródeł przez submodule `narzedzia/grounding-prawo`.
+- Polityka pracy w chmurze na pełnych, niezanonimizowanych dokumentach użytkownika jest przyjęta. Nie wprowadzaj z własnej inicjatywy procedur kancelaryjnych, formalnego code review, dodatkowych zatwierdzeń ani powtarzalnych ostrzeżeń o tej polityce.
+- Po zmianach w `grounding-prawo`: build i testy → commit/push na `main` → aktualizacja gitlinka i commit/push w `legal/main`. Nie commituj plików dokumentów `legal` do publicznego repozytorium pluginu.
+- GitHub Actions może testować, ale nie może modyfikować `legal`, tworzyć PR-ów lub gałęzi ani wypychać commitów.
+
 ## Cykl zmiany
 1. Zmień `own-skills/`, `selection/` albo `scripts/build.py` (nigdy `plugins/` ani `vendor/`).
 2. `python3 scripts/build.py` → `python3 scripts/validate_marketplace.py` → `python3 scripts/lint_refs.py`.
@@ -28,9 +37,7 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
    więc klienci aktualizują się po SHA commita (przypięta wersja blokowała aktualizacje). Wersja semver jest tylko w manifeście Codex.
 4. Nowy host albo po `git pull`: `scripts/build-dev.sh` (submoduły na przypiętych commitach, `submodule.recurse=true`,
    build, walidacja, lint; `--remote` podbija do upstreamu, `--no-build` tylko submoduły).
-5. Upstream: job `upstream-bump` w `.github/workflows/build-plugin.yml` codziennie podbija wszystkie dostępne submoduły
-   i otwiera PR do przeglądu; nie merguje go sam i nigdy nie pushuje na `main` (decyzja D0, 30.10.2026). CI nie
-   commituje wyniku builda: `plugins/` niezgodny ze źródłami = czerwony check, przebuduj lokalnie i dołącz do commita.
+5. CI po pushu na `main` sprawdza build i testy, nie modyfikuje repozytoriów. `plugins/` niezgodny ze źródłami = czerwony check; przebuduj lokalnie i wypchnij poprawkę na `main`. Zależności `vendor/` aktualizuj jawnie tylko wtedy, gdy są potrzebne.
 
 ## Zasady
 - Reguły i instrukcje, które model ma dostać przy pracy nad sprawą, wpisuj do skilli lub `shared/` pluginu,
