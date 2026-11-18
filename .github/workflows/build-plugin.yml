@@ -2,11 +2,9 @@ name: build-plugin
 
 # Przebudowuje plugins/grounding-prawo z selection/selection.yaml, own-skills/ i submodułów vendor/.
 # - PR i push: build, walidacja, lint, testy oraz kontrola, że commit zawiera plugins/ zgodny z buildem.
-#   CI nigdy nie commituje ani nie pushuje na main (decyzja D0, 30.10.2026): wydaniem jest tylko
-#   ręcznie zmergowany PR. Rozjazd plugins/ = błąd; przebuduj lokalnie (scripts/build.py) i dołącz wynik.
-# - codziennie: podbicie wszystkich submodułów do upstreamu na osobnej gałęzi i PR do przeglądu, bez
-#   automatycznego merge, dopóki nie działa benchmark jakości (testy A i B z _PLAN). Prywatne submoduły
-#   (bez dostępu dla GITHUB_TOKEN) zostają na przypiętym commicie.
+#   CI nie commituje ani nie pushuje; edycje i publikacje wykonuje właściciel bezpośrednio na main.
+#   Rozjazd plugins/ = błąd; przebuduj lokalnie (scripts/build.py) i dołącz wynik do commita.
+# - jednoosobowy marketplace: bez automatycznych branchy, PR-ów, worktree i zapisu do prywatnego legal.
 on:
   pull_request:
     branches: [main]
@@ -15,8 +13,6 @@ on:
   push:
     branches: [main]
     paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr"]
-  schedule:
-    - cron: "17 5 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -24,12 +20,10 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   build:
-    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -59,7 +53,6 @@ jobs:
         uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
-      - run: python3 -m unittest discover -s tests -p test_sync_legal.py -v
       - name: Wykonawca soczewek szturmu (atrapy CLI)
         run: python3 -m unittest discover -s plugins/grounding-prawo/skills/szturm-na-draft-pl/tests -p test_lens_runner.py -v
       - name: plugins/ zgodny z buildem
@@ -68,128 +61,5 @@ jobs:
           if ! git diff --quiet -- plugins .agents; then
             git diff --stat -- plugins .agents | tail -20
             echo "::error::plugins/ nie odpowiada źródłom: uruchom scripts/build.py i dołącz wynik do commita"
-            exit 1
-          fi
-
-      - name: Checkout legal do synchronizacji
-        if: github.event_name != 'pull_request'
-        uses: actions/checkout@v4
-        with:
-          repository: elconcept/legal
-          ref: main
-          path: legal-checkout
-          ssh-key: ${{ secrets.LEGAL_SYNC_KEY }}
-          lfs: false
-      - name: Kanoniczne reguły do legal
-        if: github.event_name != 'pull_request'
-        env:
-          GIT_LFS_SKIP_SMUDGE: '1'
-        run: |
-          set -euo pipefail
-          git -C legal-checkout worktree add -b sync/canonical "${RUNNER_TEMP}/legal-sync" HEAD
-          python3 scripts/sync_legal.py "${RUNNER_TEMP}/legal-sync"
-          cd "${RUNNER_TEMP}/legal-sync"
-          git config user.name "grounding-prawo-sync"
-          git config user.email "actions@users.noreply.github.com"
-          git add AGENTS.md CLAUDE.md .agents/grounding-prawo
-          git diff --cached --quiet && exit 0
-          git -c core.hooksPath=/dev/null commit -s -m "docs: sync canonical grounding-prawo rules"
-          # A concurrent NAS backup is rebased; a real conflict fails visibly without force-push.
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main
-            if git -c core.hooksPath=/dev/null push origin HEAD:main; then exit 0; fi
-          done
-          exit 1
-
-  upstream-bump:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GIT_TERMINAL_PROMPT: "0"
-    steps:
-      - uses: actions/checkout@v4
-      - name: Podbicie wszystkich submodułów
-        id: bump
-        run: |
-          set -uo pipefail
-          skipped=""
-          for p in $(git config -f .gitmodules --get-regexp '^submodule\..*\.path$' | awk '{print $2}'); do
-            git submodule update --init --remote --depth 1 -- "$p" >/dev/null 2>&1 || { skipped="$skipped $p"; echo "::warning::bez dostępu, przypięty commit zostaje: $p"; }
-          done
-          echo "skipped=${skipped# }" >> "$GITHUB_OUTPUT"
-          git diff --quiet -- vendor && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
-      - name: Przypięty commit prywatnego the-ocr
-        if: steps.bump.outputs.changed == 'true'
-        id: ocr-ref
-        run: echo "sha=$(git rev-parse HEAD:vendor/docs/the-ocr)" >> "$GITHUB_OUTPUT"
-      - if: steps.bump.outputs.changed == 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: elconcept/the-ocr
-          ref: ${{ steps.ocr-ref.outputs.sha }}
-          path: vendor/docs/the-ocr
-          ssh-key: ${{ secrets.THE_OCR_READ_KEY }}
-          persist-credentials: false
-      - if: steps.bump.outputs.changed == 'true'
-        uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-      - if: steps.bump.outputs.changed == 'true'
-        uses: actions/setup-node@v4
-        with: { node-version: "22" }
-      - name: Build, walidacja, lint i testy na nowym upstreamie
-        if: steps.bump.outputs.changed == 'true'
-        id: check
-        continue-on-error: true
-        run: |
-          set -euo pipefail
-          pip install -q pyyaml
-          python3 -I scripts/build.py
-          python3 -I scripts/validate_marketplace.py
-          python3 -I scripts/lint_refs.py
-          node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
-          python3 -m unittest discover -s tests -p test_sync_legal.py
-          python3 -m unittest discover -s plugins/grounding-prawo/skills/szturm-na-draft-pl/tests -p test_lens_runner.py
-      - name: PR do przeglądu
-        if: steps.bump.outputs.changed == 'true'
-        env:
-          OK: ${{ steps.check.outcome == 'success' }}
-          SKIPPED: ${{ steps.bump.outputs.skipped }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          set -euo pipefail
-          B="upstream-bump-$(date +%Y%m%d-%H%M)"
-          git config user.name "build-plugin"; git config user.email "actions@users.noreply.github.com"
-          git checkout -b "$B"
-          if [ "$OK" = true ]; then
-            git add -A vendor plugins .agents
-          else
-            # nieudany build: w PR tylko podbicie vendor/, plugins/ zostaje z main
-            git checkout -- plugins .agents 2>/dev/null || true
-            git clean -fdq -- plugins .agents
-            git add -A vendor
-          fi
-          changed=$(git diff --cached --name-only -- vendor | sed 's|^|- `|; s|$|`|')
-          git commit -q -m "upstream: podbicie submodułów" -m "$changed"
-          git push -q origin "$B"
-          body="Automatyczne podbicie submodułów do upstreamu.
-
-          Zmienione:
-          $changed
-
-          Pominięte (brak dostępu, przypięty commit): ${SKIPPED:-brak}
-          Przebieg: $RUN_URL"
-          old=$(gh pr list --state open --json number,headRefName -q '.[] | select(.headRefName | startswith("upstream-bump-")) | .number')
-          if ! url=$(gh pr create --base main --head "$B" --title "Upstream: podbicie submodułów $(date +%F)" --body "$body"); then
-            # bez uprawnienia Actions do PR: gałąź zostaje, PR otwiera człowiek; nigdy push na main
-            echo "::error::PR nie da się utworzyć; gałąź $B czeka na ręczny PR"
-            exit 1
-          fi
-          for n in $old; do gh pr close "$n" --delete-branch -c "Zastąpiony przez $url" || true; done
-          if [ "$OK" = true ]; then
-            gh pr comment "$url" -b "Build, walidacja, lint i testy techniczne przeszły. Merge ręczny po przeglądzie zmian upstreamu i benchmarku (decyzja D0). Log: $RUN_URL"
-          else
-            gh pr comment "$url" -b "Build, walidacja, lint lub testy nie przeszły na nowym upstreamie (najczęściej patch w selection/patches/ się nie nakłada). PR zawiera tylko podbicie vendor/; popraw patch, przebuduj i zmerguj ręcznie. Log: $RUN_URL"
             exit 1
           fi
