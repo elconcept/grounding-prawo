@@ -64,7 +64,7 @@
           + szereg podokresów BEZ LUK + znacznik na każdym wierszu?
           NIE → nie podawaj kwoty łącznej; pokaż tabelę z jawnymi ⬛.
           Procedura pełna: view shared/RATE-COMPLETENESS.md
-□ Sygnatury orzeczeń przeszły V-SYG-1/2/3/4 (shared/SYGNATURY.md)?
+□ Sygnatury orzeczeń przeszły V-SYG-1/2/3/4 (JUR:sygnatury-repertoria)?
 □ Sklasyfikowałem do [1]–[11] (lub BJ–BW)?
 □ ⛔ [11] CUDZY MATERIAŁ — czy wejściem jest klucz odpowiedzi, opinia, cudza
   analiza, notatki, wynik innego modelu lub pismo przeciwnika? TAK → PRIMARY
@@ -79,6 +79,13 @@
 □ [KROK 3A ŚLAD ROUTINGU] Wypisałem blok TRYB/PRIMARY/SECONDARY/ODRZUCONE/
   PROFIL/ODROCZONE/WERSJA ROUTERA/ROUTER-WCZYTANY zaraz po KROK 3, przed KROK 4? Jeśli
   ROUTER-WCZYTANY: NIE dla PRIMARY → dodałem nagłówek ⛔ TRYB ZDEGRADOWANY?
+□ [KONKLUZJA-GATE] Pierwsze zdanie odpowiada wprost na pytanie? Pytanie zamknięte →
+  „Tak” / „Nie” / „Tak, ale…” / „Nie, chyba że…” + podstawa (nie samo „to zależy” —
+  podaj odpowiedź dla wariantu typowego i fakt, od którego zależy zmiana)? Konkluzja
+  kategoryczna tylko, gdy rozstrzyga brzmienie przepisu; gdy rozstrzyga wykładnia
+  (np. art. 65 KC) lub orzecznictwo — warunkowa i nazwana? Nieważność / bezskuteczność
+  / wygaśnięcie tylko, gdy tak mówi przepis? Blok KROK 3A i opis bramek PO treści,
+  przed zastrzeżeniem?
 □ [ŚLAD ROUTINGU] ⛔ KONTROLA NA WYJŚCIU — nie polegaj wyłącznie na własnej
   deklaracji z KROKU 3A:
   czy GOTOWA odpowiedź zawiera treść charakterystyczną dla PRIMARY-skilla
@@ -118,7 +125,7 @@
           3. czy sprawdziłem PRZYPISY przy jednostce redakcyjnej?
              ⛔ Art. 13 ust. 2 KSCU ma dwa brzmienia obok siebie; cap to
              100 000 zł od 23.09.2025, nie 200 000 zł.
-          Którekolwiek NIE → wykonaj `view shared/TABELE-OPLAT.md` i popraw.
+          Którekolwiek NIE → wykonaj `view JUR:oplaty-sadowe` i popraw.
 □ ⛔ [PROFIL-ODROCZENIA] KONTROLA NA WYJŚCIU (dodano 2026-09-10, F-175):
   czy w GOTOWEJ odpowiedzi padł wyzwalacz zasobu zadeklarowanego w KROKU 3A jako
   ODROCZONY (pierwszy URL, pierwszy artykuł, ≥2 daty, rozstrzygnięcie, oddanie

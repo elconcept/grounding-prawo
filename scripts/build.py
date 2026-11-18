@@ -745,8 +745,11 @@ def main():
     json.dump(codex, open(os.path.join(PLUGIN, ".codex-plugin/plugin.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     os.makedirs(os.path.join(ROOT, ".agents/plugins"), exist_ok=True)
     json.dump({"name": "grounding-prawo", "interface": {"displayName": "Grounding Prawo"},
-               "plugins": [{"name": "grounding-prawo", "source": {"source": "local", "path": "./plugins/grounding-prawo"},
-                            "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Legal"}]},
+               "plugins": [
+                   {"name": "grounding-prawo", "source": {"source": "local", "path": "./plugins/grounding-prawo"},
+                    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Legal"},
+                   {"name": "lexmachina-chat", "source": {"source": "local", "path": "./plugins/lexmachina-chat"},
+                    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"}, "category": "Legal"}]},
               open(os.path.join(ROOT, ".agents/plugins/marketplace.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     shutil.copy(os.path.join(ROOT, "selection/mcp.json"), os.path.join(PLUGIN, ".mcp.json"))  # jedyny konektor: portal MCP (źródło poza rootem, żeby projekt nie dublował konektora claude.ai)
     print(f"zbudowano {sum(is_top(e) for e in sel['keep'])} skilli, błędów: {len(errors)}")

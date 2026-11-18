@@ -2,7 +2,7 @@
 name: dr-10-zdrowie-farmacja-zywnosc-rolnictwo
 description: 'DR-10: prawa pacjenta, działalność lecznicza, zawód lekarza. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.57'
+  version: '3.59'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -80,9 +80,9 @@ Przy sprawach z tej dziedziny rozważ doładowanie (`view`) definicji:
 - BAS-106 Status gołębi: drób vs zwierzęta gospodarskie (ORKA-REG-07 — tożsamość
   biologiczna ≠ tożsamość prawna; różne definicje sektorowe)
 
-## DEFINICJE — shared/definicje/ (nieobecne — adnotacja audytowa 2026-06-14)
+## DEFINICJE — prawo-polskie-v2/krajowe/shared/definicje/ (nieobecne — adnotacja audytowa 2026-06-14)
 
-Ta dziedzina nie ma dedykowanego pliku w `shared/definicje/`. Zdrowie, farmacja, żywność, rolnictwo — pojęcia dziedzinowe (świadczenie zdrowotne, podmiot leczniczy, produkt leczniczy) zdefiniowane wprost w aktach sektorowych (ustawa o działalności leczniczej, Prawo farmaceutyczne) i pokryte w modułach DR-10. Żaden plik shared/definicje/ nie obejmuje tej dziedziny.
+Ta dziedzina nie ma dedykowanego pliku w `prawo-polskie-v2/krajowe/shared/definicje/`. Zdrowie, farmacja, żywność, rolnictwo — pojęcia dziedzinowe (świadczenie zdrowotne, podmiot leczniczy, produkt leczniczy) zdefiniowane wprost w aktach sektorowych (ustawa o działalności leczniczej, Prawo farmaceutyczne) i pokryte w modułach DR-10. Żaden plik prawo-polskie-v2/krajowe/shared/definicje/ nie obejmuje tej dziedziny.
 <!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (32 łącznie — ✓ 32 OK, ☐ 0 STUB)
 
@@ -204,7 +204,7 @@ WYROBY MEDYCZNE I CHEMIA:
 
 ŻYWNOŚĆ, WETERYNARIA, ROLNICTWO:
   [✓] OK    mod-ustawa-rolne-zywnosc-weterynaria
-              (bezpieczeństwo żywności Dz.U. 2023 poz. 1448 + inspekcja weterynaryjna
+              (bezpieczeństwo żywności Dz.U. 2026 poz. 1399 + inspekcja weterynaryjna
                Dz.U. 2024 poz. 12 + ARiMR/PROW + IJHARS)
   [✓] OK    mod-ustawa-bezpieczenstwo-zywnosci
   [✓] NOWY  mod-ustawa-hodowla-zdrowie-zwierzat

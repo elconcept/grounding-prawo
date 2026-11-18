@@ -2,7 +2,7 @@
 name: dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka
 description: 'DR-14: prawo UE, TSUE, EKPC, ETPC. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.16'
+  version: '3.17'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -106,12 +106,12 @@ Ta sekcja zmienia wyłącznie wykonanie operacji technicznych. Merytoryka dziedz
 Przy sprawach z tej dziedziny rozważ doładowanie (`view`) definicji:
 - BAS-113 Płeć społeczno-kulturowa / gender (brak definicji legalnej w PL;
   Konwencja stambulska CETS 210 art. 3 lit. c)
-- mod-niewidomy-prawa-prawne.md — Konwencja ONZ o prawach osób niepełnosprawnych
+- prawo-polskie-v2/krajowe/shared/mod-niewidomy-prawa-prawne.md — Konwencja ONZ o prawach osób niepełnosprawnych
   art. 13 (dostosowania proceduralne — skuteczny dostęp do wymiaru sprawiedliwości)
 
-## DEFINICJE — shared/definicje/ (nieobecne — adnotacja audytowa 2026-06-14)
+## DEFINICJE — prawo-polskie-v2/krajowe/shared/definicje/ (nieobecne — adnotacja audytowa 2026-06-14)
 
-Ta dziedzina nie ma dedykowanego pliku w `shared/definicje/`. Prawo UE, międzynarodowe, prawa człowieka — definicje TFUE/TUE/KPP/EKPC mają charakter pierwotny (prawo traktatowe) i są pokryte wprost w modułach dziedzinowych (mod-KPP-karta-praw-podstawowych-UE, mod-EKPC-ETPC-prawa-czlowieka). Żaden plik shared/definicje/ nie obejmuje tej dziedziny.
+Ta dziedzina nie ma dedykowanego pliku w `prawo-polskie-v2/krajowe/shared/definicje/`. Prawo UE, międzynarodowe, prawa człowieka — definicje TFUE/TUE/KPP/EKPC mają charakter pierwotny (prawo traktatowe) i są pokryte wprost w modułach dziedzinowych (mod-KPP-karta-praw-podstawowych-UE, mod-EKPC-ETPC-prawa-czlowieka). Żaden plik prawo-polskie-v2/krajowe/shared/definicje/ nie obejmuje tej dziedziny.
 <!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (12 łącznie — ✓ 12 OK, ☐ 0 STUB)
 

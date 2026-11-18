@@ -80,10 +80,10 @@ Termin: 2 tygodnie na sprzeciw od nakazu zapłaty (art. 502 §1 KPC) ✅ [VER: i
 
 ---
 
-## 🔗 KOTWICA-TEKSTOWA (Text Fragment) — SCALONE do PRAWO-HARDGATE.md (2026-07-15c)
+## 🔗 KOTWICA-TEKSTOWA (Text Fragment) — SCALONE do JUR:weryfikacja-przepisow-kanon (2026-07-15c)
 
 > ⛔ **Ten mechanizm nie jest już opisany tutaj osobno.** Powstał 2026-07-15
-> niezależnie od KROK 5A w `shared/PRAWO-HARDGATE.md` (dodanego tego samego
+> niezależnie od KROK 5A w `JUR:weryfikacja-przepisow-kanon` (dodanego tego samego
 > dnia) — dwie osobne implementacje tego samego problemu w dwóch plikach
 > shared/, wykryte przez użytkownika jako duplikacja po incydencie, w którym
 > odpowiedź z modułu karnego (dr-03) nie zastosowała żadnej z nich.
@@ -91,12 +91,12 @@ Termin: 2 tygodnie na sprzeciw od nakazu zapłaty (art. 502 §1 KPC) ✅ [VER: i
 > Pełna, kanoniczna procedura (Text Fragment `#:~:text=`, KT-1→KT-4,
 > kategoryzacja RZĄD, zastrzeżenie o wsparciu przeglądarek, FALLBACK) jest
 > teraz WYŁĄCZNIE w:
-> `view shared/PRAWO-HARDGATE.md` → sekcja KROK 5A
+> `view JUR:weryfikacja-przepisow-kanon` → sekcja KROK 5A
 >
 > Ten plik (WERYFIKACJA-SLAD.md) pozostaje właściwym miejscem dla znaczników
 > ✅/⚠️ [VER/NIEWERYFIKOWANE] i GRADIENTU (ISTNIENIE/TREŚĆ/FRAGMENT) — patrz
 > sekcje niżej. KOTWICA-TEKSTOWA jest odrębnym, dodatkowym mechanizmem
-> nawigacyjnym opisanym w PRAWO-HARDGATE.md, nie zastępuje GRADIENTU.
+> nawigacyjnym opisanym w JUR:weryfikacja-przepisow-kanon, nie zastępuje GRADIENTU.
 >
 > Pełny opis scalenia: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`,
 > wpis AUDYT-2026-07-15c.
@@ -171,7 +171,7 @@ GRAD-2: Zweryfikuj na WYMAGANYM poziomie — wobec treści pobranej ze źródła
                      Dla powołania-na-poparcie: dodatkowo ustal, czy źródło W OGÓLE
                      dotyczy tej samej INSTYTUCJI/PROCEDURY co teza (nie tylko tego
                      samego działu prawa) — patrz GRAD-3b.
-          ISTNIENIE→ kontrakt FOUND/NOT_FOUND/AMBIGUOUS (shared/SYGNATURY.md)
+          ISTNIENIE→ kontrakt FOUND/NOT_FOUND/AMBIGUOUS (JUR:sygnatury-repertoria)
                      lub KROK 2B PRAWO-HARDGATE (tytuł aktu vs teza).
 
 GRAD-3: GUARD STRON (dla orzeczeń, gdy znane są strony postępowania):
@@ -254,14 +254,14 @@ ISTNIENIE. Dla TREŚĆ i FRAGMENT stosuj rozszerzenie:
 ✅ [VER: źródło, data]           — potwierdzone ISTNIENIE kotwicy (jak dotąd)
 🔗 [KOTWICA-TEKSTOWA: URL#:~:text=…] — link z Text Fragment do miejsca cytowania
                                    (TOWARZYSZY 🟢/✅, nie zastępuje — procedura
-                                   kanoniczna: shared/PRAWO-HARDGATE.md KROK 5A)
+                                   kanoniczna: JUR:weryfikacja-przepisow-kanon KROK 5A)
 🟠 [KALIBRACJA]                  — osiągnięto niższy poziom niż twierdzono → złagodź tezę
 ⚠️ [NIEWERYFIKOWANE]             — weryfikacja niemożliwa (jak dotąd)
 🔴 [BLOKADA]                     — rozbieżność kotwicy / stron / treści → usuń przed wysłaniem
 ```
 
 > ℹ️ **Status źródła przepisu (ISTNIENIE) ma czwarty wariant pośredni,**
-> `🟨 [KOTWICA-URZĘDOWA]`, definiowany wyłącznie w `shared/PRAWO-HARDGATE.md`
+> `🟨 [KOTWICA-URZĘDOWA]`, definiowany wyłącznie w `JUR:weryfikacja-przepisow-kanon`
 > (sekcja "🟨 KOTWICA URZĘDOWA"). Ten plik go NIE powiela — jeśli ślad
 > weryfikacji dotyczy przepisu ocenionego jako KOTWICA (blokada `robots.txt`
 > na RZĄD 2, warunki K-1…K-4 spełnione), przenieś status `🟨` bez zmian
@@ -514,7 +514,7 @@ Tryb awaryjny NIE oznacza pominięcia disclaimera — DISCLAIMER.md stosuje się
     ✅ [VER: źródło, data] (po narzędziu) lub ⚠️ [NIEWERYFIKOWANE] (brak dostępu).
     ⛔ ZAKAZ oznaczania VER bez wywołania web_search / web_fetch.
     ⛔ Dla FRAGMENT/orzeczeń — dołącz też 🔗 [KOTWICA-TEKSTOWA], procedura
-       kanoniczna w `shared/PRAWO-HARDGATE.md` KROK 5A (SCALONE 2026-07-15c —
+       kanoniczna w `JUR:weryfikacja-przepisow-kanon` KROK 5A (SCALONE 2026-07-15c —
        nie duplikuj tutaj), zbudowaną w tej samej odpowiedzi, z zastrzeżeniem
        o ograniczonym wsparciu przeglądarek i braku gwarancji trwałości
        dopasowania.

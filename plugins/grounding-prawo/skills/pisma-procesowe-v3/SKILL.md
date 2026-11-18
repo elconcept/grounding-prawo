@@ -2,7 +2,7 @@
 name: pisma-procesowe-v3
 description: Pozew, odpowiedź na pozew, apelacja, zażalenie i inne pisma wymagające strategii, dowodów i weryfikacji prawa. Używaj przy tworzeniu lub przebudowie pisma procesowego.
 metadata:
-  version: '5.46'
+  version: '5.50'
   type: executive-pisma
   status: production
   dependencies: '{"requires": ["shared"]}'
@@ -66,6 +66,11 @@ Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Metodolog
 > musi w nim dosłownie występować, inaczej `[CYTAT NIEZWERYFIKOWANY]`) — przy każdym
 > cytacie; WD-3 (każdy obszar kontroli jawnie zamknięty) — przed prezentacją wyniku.
 > ⛔ Treść reguł NIE jest tu kopiowana (F-115, F-200) — obecność wywołania pilnuje T35.
+
+> **Tempo i braki (2026-11-03):** pipeline działa w TRYBIE PIPELINE-SZYBKIM —
+> CP informacyjne w jednej odpowiedzi, STOP tylko na CP decyzyjnych
+> (`shared/CP-GATE.md` §3C). Brak dokumentu = BRAK-DOK: adnotacja w raporcie
+> i w pliku, jedno pytanie, bez blokady (`shared/CP-GATE.md` §3B).
 
 ## ⛔⛔⛔ HARD GATE MRG — MANDATORY-REREAD-GATE ⛔⛔⛔
 
@@ -148,6 +153,9 @@ KROK C — ST-FINAL (OBOWIĄZKOWY i BLOKUJĄCY przed KAŻDYM present_files pisma
 ⛔ INFORMACJA WARUNKOWA (sedno bramki):
   Policz kroki WYMAGANE, których status ≠ ✅ WYKONANY i ≠ — N/A
   (tj. wszystkie ⚠️ POMINIĘTY oraz ○ OCZEKUJE).
+  Krok ZAMKNIĘTY Z BRAKAMI (BRAK-DOK, shared/CP-GATE.md §3B) = wykonany;
+  nie liczy się tu, nie blokuje zapisu DRAFT. REJESTR BRAK-DOK idzie do
+  UWAG REDAKCYJNYCH pliku i do raportu końcowego.
 
   • Jeśli liczba = 0:
        STATUS PISMA = ✅ FINAL — GOTOWE DO ZŁOŻENIA.
@@ -520,12 +528,15 @@ KROK ET: Eliminacja tez i weryfikacja przepisów
 
   Rozgałęzienie:
     ⬛ FSL-D-LUKA 🔴 → ⛔ STOP: zadaj PYTANIA FSL-D; czekaj na decyzję a/b/c/d
+                       (BRAK-DOK już zgłoszony przez użytkownika = d), bez STOP)
     ⬛ FSL-D-LUKA 🟠 → kontynuuj, ale w piśmie: żądanie ewentualne + UWAGI REDAKCYJNE
     ⬛ FSL-D-LUKA 🟡 → notacja w raporcie; nie blokuje
     brak luk 🔴/🟠 → przejdź do KROK KD (karty dowodowe)
 
   ⛔ ZAKAZ-FSL-D: NIE przystępuj do KROK KD ani KROK ŁD ani KROK MT
      dopóki FSL-D-REPORT nie jest wyświetlony i luki 🔴 nie są rozwiązane.
+     Luka „rozwiązana” = także decyzja d) lub BRAK-DOK (shared/CP-GATE.md §3B):
+     CP-FSL-D = ZAMKNIĘTY Z BRAKAMI, praca idzie dalej.
      Naruszenie = błąd krytyczny pipeline — równoważny pominięciu CLAIM-VALIDATION.
 ```
 
@@ -634,7 +645,7 @@ Jeśli warunek aktywacji NIE jest spełniony — pomiń ten krok, przejdź do W1
 <!-- lex:wczytaj-gdy: KOLEJNA-TURA -->
 ## ⛔⛔⛔ PRE-W2-VERIFICATION-GATE — BRAMKA OBOWIĄZKOWA PRZED W2 ⛔⛔⛔
 
-> **Wywołaj:** `view shared/PRE-W2-VERIFICATION-GATE.md`
+> **Wywołaj:** `view JUR:pre-w2-verification-gate`
 >
 > ⛔ HARD GATE — BEZWZGLĘDNY. Wykonaj PO zatwierdzeniu W1 przez użytkownika,
 > PRZED W2.1. NIE można pominąć. NIE ma wyjątków (nawet "prosta sprawa",
@@ -691,13 +702,13 @@ view shared/MOD-DLUGIE-PISMO.md                   (pismo ponad ok. 10 stron: ===
                                                                      W3 na długim projekcie: tylko ZMIANA SEKCJI)
 view pisma-procesowe-v3/modules/MOD-DOWODY.md     (gdy są dowody)
 view pisma-procesowe-v3/modules/MOD-OBAL.md       (gdy riposta/odpowiedź)
-view pisma-procesowe-v3/modules/MOD-OPLATY.md     (gdy pismo wszczynające)
+view JUR:pisma-oplaty     (gdy pismo wszczynające)
 view pisma-procesowe-v3/modules/MOD-ADMIN.md      (gdy sprawa adm./KPA/WSA)
 view dr-12-sadownictwo-prokuratura-zawody-prawnicze/modules/mod-wlasciwosc-miejscowa-sadow-powszechnych.md
                                                   (⛔ OBOWIĄZKOWE dla pisma do sądu bez sądu w aktach:
                                                                      sąd i adres tylko z court_for_address albo
                                                                      z bloku SĄD SPRAWY; nigdy z pamięci)
-view shared/ZAZALENIE-ADRESAT-GATE.md             (⛔ OBOWIĄZKOWE gdy pismo to
+view JUR:zazalenie-adresat-gate             (⛔ OBOWIĄZKOWE gdy pismo to
                                                                      zażalenie/odwołanie/sprzeciw/
                                                                      zarzuty/skarga — ustal adresata
                                                                      PRZED redakcją nagłówka pisma,
@@ -716,7 +727,7 @@ view modules/MOD-DOKTRYNA.md                       (gdy uzasadnienie powołuje
           • dowody [W] powołuj RAZ z listą tez, nie per teza oddzielnie
           • tabela D×T z MT4 wchodzi do treści pisma jako sekcja widoczna dla sądu
           • MT5-MANDATE-ALL-EVIDENCE: sprawdź N_pismo ≥ 0.7 × N_macierzy po redakcji W2
-view shared/MOD-IDENTYFIKACJA-STRONY-UMOWY.md
+view JUR:identyfikacja-strony-umowy
                                                                     (⛔ OBOWIĄZKOWE gdy: rozbieżne
                                                                      identyfikatory stron w dokumentach
                                                                      (różne KRS/NIP/nazwa); błędny PESEL;
@@ -724,7 +735,7 @@ view shared/MOD-IDENTYFIKACJA-STRONY-UMOWY.md
                                                                      ISU-1→ISU-5 przed W1.3;
                                                                      ⛔ gdy PESEL w aktach i znana data
                                                                      ur. lub płeć — wykonaj ISU-PESEL P1→P6)
-view pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md
+view JUR:pisma-pracodawca-rzeczywisty
                                                                     (⛔ OBOWIĄZKOWE gdy: w materiale
                                                                      widoczne są ≥2 podmioty / różne KRS
                                                                      na umowach / zmiana nazwy pracodawcy /
@@ -810,7 +821,7 @@ view shared/STRATEGIA-PROCESOWA.md                (⛔ OBOWIĄZKOWE — zawsze p
 > NIE → powtórz wywołanie zanim W3.1.
 >
 > Szczegóły procedury P1–P4, formaty raportu POD-1/2/3/S1/S2, ZAKAZ-7:
-> `view pisma-procesowe-v3/references/W3-PODMIOT-GATE.md`
+> `view JUR:pisma-w3-podmiot-gate`
 
 ### W3.1–W3.7 + Finalizacja
 

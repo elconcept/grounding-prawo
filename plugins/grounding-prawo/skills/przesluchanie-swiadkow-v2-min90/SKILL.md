@@ -2,7 +2,7 @@
 name: przesluchanie-swiadkow-v2-min90
 description: 'Przygotowanie przesłuchania: cele dowodowe, sprzeczności, pytania główne i kontrolne, impeachment. Używaj przed rozprawą i przy ocenie wiarygodności zeznań.'
 metadata:
-  version: '3.32'
+  version: '3.33'
   type: legal-skill
   domain: litigation-witness-examination
   status: production
@@ -14,7 +14,7 @@ metadata:
   dependencies: '{"required": ["shared", "analizator-dowodow-v3", "MOD-SKAN-DOWODOW-KOMPLETNY", "MOD-REJESTR-ZALACZNIKOW-CHECKPOINT", "MOD-STEP-TRACKER", "MOD-ATAK-NA-SWIADKA"], "optional": ["chronologia-sprawy-v1", "analiza-sadowa-v6", "MOD-KONTEKST-SESJI", "MOD-PRIORYTETY-ASPEKTOW", "MOD-SELEKCJA-DOWODOW", "MOD-MAPA-PRZEPISOW"]}'
   validation: '{"required_gates": ["SD-VER-GATE-WITNESS", "PRAWO-HARDGATE", "PRIOR-TESTIMONY-GATE", "WITNESS-TYPE-GATE", "INTAKE-COMPLETENESS-GATE", "QUESTION-ADMISSIBILITY-GATE", "WITNESS-SCORING", "WITNESS-INTELLIGENCE", "FACT-EVIDENCE-MAPPING", "MODEL-SELECTION-GATE", "CROSS-EXAMINATION-GATE", "TEXT-FIRST-UI-GATE", "HARDGATE-SD-01", "HARDGATE-SD-02", "RZ-SHOW-GATE", "STEP-TRACKER-WITNESS", "PRZESLANKI-GATE", "FORMALNA-ZGODNOSC-GATE"]}'
   pipeline: '{"stages": ["PRE-W1a-SD-VER", "PRE-W1a.4-RZ-SHOW", "KROK-PRE-W1-INTELLIGENCE", "KROK-0-KONTEKST", "W1-INTAKE", "W1-SUPPLEMENT", "W2-THESES-AND-MODEL", "CHECKPOINT-W2", "W3-QUESTIONS", "W4-REHEARSAL", "W5-BINDER", "W6-LIVE-DIRECT"]}'
-  changelog: 'Wersja bieżąca: 3.32 (2026-10-06): PRAWO-HARDGATE-WITNESS: sn.pl wyszukiwarka-orzeczen, link = karta
+  changelog: 'Wersja bieżąca: 3.33 (2026-10-06): PRAWO-HARDGATE-WITNESS: sn.pl wyszukiwarka-orzeczen, link = karta
 
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
@@ -52,7 +52,7 @@ Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Metodolog
 > Skill może zawierać przepisy KPC, KPK, KW, KPA o dopuszczalności dowodów i pytań,
 > terminy zawite, podstawy impeachmentu oraz sygnatury orzeczeń o regułach dowodowych.
 > Przed podaniem jakiegokolwiek przepisu, artykułu lub sygnatury:
-> `view shared/PRAWO-HARDGATE.md`
+> `view JUR:weryfikacja-przepisow-kanon`
 
 > ⛔ **[WEJŚCIE-DOKUMENTU] — bramka materiału wejściowego (F-200; odtworzone 2026-09-27d, F-207).**
 > Gdy w tej turze użytkownik dostarczył dokument, akta, korespondencję lub wklejony tekst:
@@ -1314,7 +1314,7 @@ Podtyp RYZYKO-ODPOWIEDŹ.
 
 ```
 ⛔ HARDGATE — przed podaniem jakiejkolwiek podstawy prawnej:
-  view shared/PRAWO-HARDGATE.md
+  view JUR:weryfikacja-przepisow-kanon
 
 Podstawy wymagające weryfikacji online (przykłady — nie wyczerpująca lista):
   KPC: pytania sugestywne (art. 271), zakaz zeznań co do faktów objętych tajemnicą

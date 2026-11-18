@@ -185,7 +185,7 @@ REKOMENDACJA: □ Skarga UODO  □ Pozew cywilny  □ Oba  □ Wezwanie przedsą
 | Naruszenie wizerunku + IP | `dr-11-cyfrowe-cyber-ai-dane-ip/modules/mod-PrAut-wlasnosc-intelektualna-IP.md` |
 | Analiza szans procesowych | `analiza-sadowa-v6` |
 | Orzecznictwo TSUE / sądy polskie | `orzeczenia-sadowe-v2` |
-| Redakcja/audyt: polityka prywatności, RCP/RCO, IOD, naruszenia (procedura wewnętrzna), archiwizacja/retencja, regulamin pracy/wynagradzania/ZFŚS/monitoringu | `analizator-umow-v1` → `mod-J21-rodo-archiwizacja-regulaminy.md` (J21) |
+| Redakcja/audyt: polityka prywatności, RCP/RCO, IOD, naruszenia (procedura wewnętrzna), archiwizacja/retencja, regulamin pracy/wynagradzania/ZFŚS/monitoringu | `analizator-umow-v1` → `prawo-polskie-v2/krajowe/analizator-umow-v1/references/mod-J21-rodo-archiwizacja-regulaminy.md` (J21) |
 
 *RODO (UE) 2016/679 → eur-lex.europa.eu*
 *Ustawa o ODO (Dz.U. 2019 poz. 1781 — weryfikuj aktualny t.j. w ELI (RZĄD 1))*

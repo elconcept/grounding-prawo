@@ -2,12 +2,12 @@
 name: prawo-polskie-v2
 description: Wybór domeny DR dla prawa polskiego. Moduł routera; nie wywołuj bezpośrednio.
 metadata:
-  version: '6.73'
+  version: '6.81'
   type: domain-router
   status: production
   compatibility: live_web_lookup, cross_skill_file_read
   dependencies: '{"requires": ["shared"]}'
-  changelog: 'Wersja bieżąca: 6.73 (2026-10-22, AUDYT-2026-10-22): ROUTING-MAP: KW t.j. Dz.U. 2026 poz. 1372, PSWN t.j. Dz.U. 2026 poz. 1362
+  changelog: 'Wersja bieżąca: 6.81 (2026-10-22, AUDYT-2026-10-22): ROUTING-MAP: KW t.j. Dz.U. 2026 poz. 1372, PSWN t.j. Dz.U. 2026 poz. 1362
 
     6.72 (2026-10-20, PROBE-2026-10-21): routing błyskawiczny DR-02: uprowadzenie / wywiezienie dziecka za granicę (z DR-14 przy elemencie zagranicznym)
 
@@ -72,7 +72,7 @@ jeśli ten plik zostanie kiedykolwiek wywołany bezpośrednio, z pominięciem
 routera (np. błąd w innym skillu) — potraktuj to jako naruszenie UP-1 i
 najpierw wczytaj `prawny-router-v3/SKILL.md` zanim przejdziesz dalej.
 
-## ⛔ DECYZJA ZAPISANA — ZAKRES `shared/PRAWO-HARDGATE.md` W TYM SKILLU
+## ⛔ DECYZJA ZAPISANA — ZAKRES `prawo-polskie-v2/krajowe/shared/PRAWO-HARDGATE.md` W TYM SKILLU
 
 *(zapisana 2026-08-23g, flaga F-123 w `audyt-systemu-v4`. Powód zapisania, nie
 tylko podjęcia: pomiar `grep -rl PRAWO-HARDGATE` wykazał tu ZERO odesłań i
@@ -96,7 +96,7 @@ weryfikacji w Rzędzie 1/2 jest naruszeniem tego reżimu.
 ⛔ **Wyzwalacz zmiany decyzji.** Jeżeli do któregokolwiek pliku tego skilla
 trafi kiedykolwiek twierdzenie o TREŚCI prawa — przesłanka, termin, właściwość
 sądu, skutek procesowy, cokolwiek poza nazwą aktu, jego numerem i wskazaniem
-modułu — decyzja wygasa z automatu i `view shared/PRAWO-HARDGATE.md`
+modułu — decyzja wygasa z automatu i `view prawo-polskie-v2/krajowe/shared/PRAWO-HARDGATE.md`
 staje się obowiązkowe. Zakres „tylko routing" jest warunkiem tej decyzji, nie
 jej trwałą cechą.
 
@@ -152,11 +152,17 @@ view dr-[XX]-[Nazwa]/modules/mod-[akt].md
 ```
 
 ## Weryfikacja
-- Teksty aktów: kanon E-1…E-5 (`shared/HIERARCHIA-ZRODEL.md`) — E-1 api.sejm.gov.pl/eli | eli.gov.pl; E-2 isap.sejm.gov.pl jako adres dla człowieka; E-3 LEX/Legalis; E-4 ArsLege
+- Teksty aktów: kanon E-1…E-5 (`prawo-polskie-v2/krajowe/shared/HIERARCHIA-ZRODEL.md`) — E-1 api.sejm.gov.pl/eli | eli.gov.pl; E-2 isap.sejm.gov.pl jako adres dla człowieka; E-3 LEX/Legalis; E-4 ArsLege
 - Prawo UE: eur-lex.europa.eu
 - Orzeczenia: orzeczenia.ms.gov.pl | sn.pl | nsa.gov.pl
 
 ---
+
+## Pakiet jurysdykcji PL
+
+- `JURYSDYKCJA.md` — dostawca jurysdykcji (język, waluta, dostawcy komponentów aplikacji) i klucze `JUR:` treści krajowej.
+- `krajowe/` — moduły prawa polskiego wskazywane kluczami ze skilli wykonawczych i shared.
+- `mcp-servers/` i `.mcp.json` — konektory MCP prawa polskiego (ISAP/ELI, SN, SAOS, CBOSA, KRS, biała lista VAT, CEIDG, NBP i in.); w Claude Code z pluginem `prawo-polskie-v2` startują same, instalacja w Claude Desktop: `mcp-servers/instaluj_serwery_mcp.py` (audyt, pozycja 14).
 
 ## Protokół integracji DR → prawo-polskie → audyt
 
@@ -193,7 +199,7 @@ F-102(C), dwa źródła prawdy o wersji zawsze się rozjeżdżają (ta stopka ni
 „5.2" przy `version: 6.1`, rozjazd o dziewięć wersji, usunięty 2026-08-23g).*
 
 *Ostatnia zmiana treści: 2026-08-23g — zapisana decyzja o zakresie
-`shared/PRAWO-HARDGATE.md` w tym skillu (F-123). Wcześniej: 2026-07-02,
+`prawo-polskie-v2/krajowe/shared/PRAWO-HARDGATE.md` w tym skillu (F-123). Wcześniej: 2026-07-02,
 WARN-28 zamknięty — ABW/AW to nowy t.j. tej samej ustawy z 2002 r., nie
 reforma; sync ROUTING-MAP.*
 

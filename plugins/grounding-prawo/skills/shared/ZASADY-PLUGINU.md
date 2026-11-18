@@ -47,7 +47,7 @@ nazywaj w odpowiedzi wprost.
 
 Konektory odkrywaj przez portal `lex` (`lex.xlap.pl/mcp`, `.mcp.json`), nie zgaduj nazw narzędzi.
 Mapa źródeł: `patron-prawo-pl-zrodla` i `patron-prawo-pl-zrodla/references/iura-metodyka.md`.
-`shared/HIERARCHIA-ZRODEL.md` określa wiarygodność i weryfikację pełnego brzmienia po wyszukaniu
+`shared/HIERARCHIA-ZRODEL.md` (brak w pluginie) określa wiarygodność i weryfikację pełnego brzmienia po wyszukaniu
 semantycznym; nie zastępuje pierwszego kroku w Repertorium.
 
 ## Pisma: styl i miejsce zapisu

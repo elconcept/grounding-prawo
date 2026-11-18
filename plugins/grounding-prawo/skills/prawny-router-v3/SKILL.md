@@ -2,7 +2,7 @@
 name: prawny-router-v3
 description: 'Punkt wejścia do pracy prawnej: otwiera sprawę i wybiera ścieżkę (analiza akt, pismo, kontrola, zawiadomienie, źródła, umowa, RODO). Używaj zawsze przy sprawie prawnej, piśmie lub ocenie materiału.'
 metadata:
-  version: '3.73'
+  version: '3.76'
   type: orchestration
   status: production
   entrypoint: SKILL.md
@@ -15,8 +15,8 @@ metadata:
     nie kontynuuj cicho", "sprawa transgraniczna / prawo obce → pomiń prawo-polskie-v2 i ISAP, ale NIE pomijaj weryfikacji — view shared/MIEDZYNARODOWE-GATES.md + shared/HIERARCHIA-ZRODEL-MIEDZYNARODOWE.md, kanał RZĘDU 1 przełączony na depozytariusza/EUR-Lex/bazy organów; pozostałe zasady HG aktywne (UP-5)", "użytkownik zagubiony / brak klasyfikacji → [7] FALLBACK, nie zgadywanie dziedziny", "podmiot (spółka/organ/sąd) oznaczony ⬛ [DO WERYFIKACJI] i brak dostępu do rejestru (KRS/CEIDG) → STOP, poinformuj użytkownika, ZAKAZ generowania pisma z podmiotem w statusie ⬛. ⚠️ Wcześniej sprawdź shared/DOSTEP-MASZYNOWY-API.md §4: KRS działa bez klucza przez api-krs.ms.gov.pl (odpis JSON jest ZANONIMIZOWANY względem PDF), a CEIDG zwraca 401 bez tokenu — to nie jest brak dostępu do rejestru", "weryfikacja rachunku kontrahenta (biała lista VAT) → ✅ OSIĄGALNA maszynowo od 2026-09-13c (F-157b): wl-api.mf.gov.pl, bez klucza, /api/search/nip/{NIP}?date=RRRR-MM-DD oraz /api/search/nip-bank-account/ {NIP}/{26_CYFR}?date=...
     ⛔ data = dzień transakcji, nie dzisiejszy; requestId z odpowiedzi zapisz do śladu weryfikacji. Parametry: shared/DOSTEP-MASZYNOWY-API.md §4. ⚠️ Poprzedni zapis ''NIEOSIĄGALNA, brak zamiennika'' był prawdziwy do 2026-09-04 i przestał być prawdziwy bez zmiany w tym pliku — statusy osiągalności odtwarzaj testem T25"]'
   limitations: '["nie zastępuje porady radcy prawnego/adwokata — patrz shared/DISCLAIMER.md (KROK 7, obowiązkowy)", "jakość i czas odpowiedzi zależą od dostępności i jakości web_search/web_fetch", "nie ingeruje w kontrolę jakości pipeline''u pisma-procesowe-v3 (tylko deleguje)"]'
-  required_modules: '["shared/MCP-INTEGRACJA.md", "shared/PRAWO-HARDGATE.md", "shared/HIERARCHIA-ZRODEL.md", "shared/DOSTEP-MASZYNOWY-API.md", "shared/PORTALE-BRANZOWE-RZAD-2B.md", "shared/MOD-STEP-TRACKER.md", "shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md", "shared/MOD-KONTEKST-SESJI.md", "shared/MOD-OS-CZASU-PRZESLANEK.md", "shared/MOD-WYJATEK-GATE.md", "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md", "shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md", "shared/MOD-PORCJOWANIE-DOWODOW.md", "shared/PRE-W2-VERIFICATION-GATE.md", "shared/CP-GATE.md", "shared/DISCLAIMER.md", "references/KROK1-detekcja.md", "shared/TABELE-OPLAT.md", "references/PROFIL-LEKKI.md", "references/ZRODLA-AKTOW-FALLBACK.md", "dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md", "references/AUDYT-KLUCZA-ODPOWIEDZI.md", "shared/MOD-CN-GATE.md", "shared/MOD-REM-GATE.md", "dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md"]'
-  changelog: 'Wersja bieżąca: 3.73 (2026-10-20, LEXAGENTO-P1): PROFIL-LEKKI: pełna ścieżka modułu kwalifikatora karnomaterialnego (skrót dr-03/.../ nie działał poza lex-runtime)
+  required_modules: '["shared/MCP-INTEGRACJA.md", "JUR:weryfikacja-przepisow-kanon", "JUR:hierarchia-zrodel", "shared/DOSTEP-MASZYNOWY-API.md", "JUR:portale-branzowe", "shared/MOD-STEP-TRACKER.md", "shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md", "shared/MOD-KONTEKST-SESJI.md", "shared/MOD-OS-CZASU-PRZESLANEK.md", "shared/MOD-WYJATEK-GATE.md", "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md", "shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md", "shared/MOD-PORCJOWANIE-DOWODOW.md", "JUR:pre-w2-verification-gate", "shared/CP-GATE.md", "shared/DISCLAIMER.md", "references/KROK1-detekcja.md", "JUR:oplaty-sadowe", "references/PROFIL-LEKKI.md", "references/ZRODLA-AKTOW-FALLBACK.md", "dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md", "references/AUDYT-KLUCZA-ODPOWIEDZI.md", "shared/MOD-CN-GATE.md", "shared/MOD-REM-GATE.md", "dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md"]'
+  changelog: 'Wersja bieżąca: 3.76 (2026-10-20, LEXAGENTO-P1): PROFIL-LEKKI: pełna ścieżka modułu kwalifikatora karnomaterialnego (skrót dr-03/.../ nie działał poza lex-runtime)
 
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
@@ -35,13 +35,13 @@ Najpierw wybierz cel według `shared/SCIEZKI-PRACY.md`; to jedyny punkt wejścia
 
 W każdej sprawie prawnej, przed analizą:
 
-1. `view shared/PRAWO-HARDGATE.md` — świeża weryfikacja każdego powołania w tej turze.
+1. `view JUR:weryfikacja-przepisow-kanon` — świeża weryfikacja każdego powołania w tej turze.
 2. `view references/KROK1-detekcja.md` — ustal tryb i jurysdykcję.
    Gdy w tej turze użytkownik dostarczył dokument, akta, korespondencję lub wklejony
    tekst: `view shared/MOD-WEJSCIE-DOKUMENTU.md` — WD-1 przed analizą, WD-2 przy każdym
    cytacie z materiału, WD-3 przed wynikiem (F-200; treści reguł nie kopiuje się — T35).
 3. Wykonaj routing [1]–[11], wczytaj PRIMARY i wypisz ślad KROKU 3A.
-4. Przy pierwszym URL: `view shared/HIERARCHIA-ZRODEL.md`; każdy URL musi mieć RZĄD 1/2A/2B/3.
+4. Przy pierwszym URL: `view JUR:hierarchia-zrodel`; każdy URL musi mieć RZĄD 1/2A/2B/3.
    Dla aktów polskich wykonaj też `view references/ZRODLA-AKTOW-FALLBACK.md`.
 5. Przed wysłaniem: `view references/SELF-CHECK.md` i wykonaj inwentarz VER-GRAIN.
 6. Ostatnim elementem odpowiedzi prawnej musi być disclaimer z `shared/DISCLAIMER.md`.
@@ -92,8 +92,6 @@ w plikach systemu są **adresami logicznymi** — nie odczytuj ich dosłownie.
 Zapamiętaj mapę `skill → katalog` na sesję. Nazwa skilla w odwołaniu musi występować
 w `dependencies.requires`; w przeciwnym razie zgłoś błąd ścieżki.
 
----
-
 # Router Prawny v3 — Spis Treści i Sekwencja Główna
 
 ## PREFERENCJE UŻYTKOWNIKA (aktywne w całej sprawie prawnej obsługiwanej przez router)
@@ -103,7 +101,7 @@ bez sprawy prawnej (np. praca nad kodem z wzmianką o licencji lub RODO).
 
 ```
 UP-1: router→v3 ZAWSZE pierwszy (przed jakimkolwiek skillem dziedzinowym) — każda jurysdykcja
-UP-2: ELI PIERWSZY — kanon E-1…E-5 (shared/HIERARCHIA-ZRODEL.md):
+UP-2: ELI PIERWSZY — kanon E-1…E-5 (JUR:hierarchia-zrodel):
       E-1 ELI (api.sejm.gov.pl/eli kanałem kodu → eli.gov.pl) — brzmienie, t.j., status;
       E-2 ISAP — wyłącznie adres dla człowieka i pomocnicza identyfikacja;
       E-3 LEX / Legalis → E-4 ArsLege — gdy aktu nie da się pobrać z RZĘDU 1
@@ -195,7 +193,7 @@ KROK 0D → [STATUS PODMIOTÓW — OZNACZENIE ⬛] → obowiązkowy gdy w materi
           ⛔ Każdy podmiot niebędący osobą prywatną = natychmiast ⬛ [DO WERYFIKACJI]
           ⛔ Status ⬛ utrzymuje się aż do faktycznego web_search/web_fetch w tej sesji
           ⛔ ZAKAZ wstawiania danych ⬛ do pisma / argumentacji bez weryfikacji
-          Szczegóły + STATUS-LIFECYCLE: view shared/PRE-W2-VERIFICATION-GATE.md (PRE-W2.0)
+          Szczegóły + STATUS-LIFECYCLE: view JUR:pre-w2-verification-gate (PRE-W2.0)
           Wyjątki (NIE oznaczaj): imię/nazwisko, adres, PESEL osoby fizycznej
 KROK 1  → [DETEKCJA TRYBU + HARD GATE] → view references/KROK1-detekcja.md
 KROK 2  → [ROUTING [1]–[11]] → poniżej w tym pliku
@@ -230,6 +228,11 @@ KROK 3A → [ŚLAD ROUTINGU — OBOWIĄZKOWY]
           pominięciem karanym jako uchybienie (patrz F-113 zakres (a)).
           `ROUTER-WCZYTANY: TAK` wymaga faktycznego odczytu w tej turze;
           kontrolę antyfasadową wykonaj z `references/SELF-CHECK.md`.
+          📍 MIEJSCE W ODPOWIEDZI: blok sporządzasz po KROK 3, ale w GOTOWEJ
+          odpowiedzi umieszczasz go PO treści merytorycznej, przed zastrzeżeniem
+          (disclaimer pozostaje ostatni) — odpowiedź zaczyna się od konkluzji
+          (KONKLUZJA-GATE). Wyjątek: nagłówek ⛔ TRYB ZDEGRADOWANY zostaje na
+          początku. Opis wykonanych bramek: zwięźle, w tym samym końcowym bloku.
 KROK 4  → Wykonaj analizę / zbierz dane
 KROK 5  → Sprawdź TYP WYJŚCIA → SEKWENCJA END-TO-END → poniżej
 KROK 5B → [EXPORT KONTEKSTU] → po KROK 5 jeśli sesja zawierała KROK 3B
@@ -258,6 +261,7 @@ KROK 7  → DISCLAIMER → view shared/DISCLAIMER.md
 → SECONDARY: `orzeczenia-sadowe-v2` · FALLBACK: `przewodnik-prawny-v2`
 → „Na umowie zlecenie / o pracę / o dzieło” to podstawa zatrudnienia osoby, nie umowa do analizy → [10].
 → [1] wchodzi, gdy umowa jest przedmiotem pracy: analiza, sprawdzenie, napisanie, negocjacje, podpisanie, klauzule, zapisy. Umowa jako tło sporu („brak zgodności towaru z umową”, „deweloper nie wykonał umowy”, „umowa międzynarodowa”) → [10].
+→ ⛔ Dostarczony dokument z kategorii [1] (umowa, aneks, porozumienie, ugoda, regulamin, OWU, statut, uchwała organu spółki, pełnomocnictwo, polityka RODO, procedura, oferta, oświadczenie woli, testament — plik lub wklejony tekst) przy innym PRIMARY ([2] wezwanie lub pismo przeciwnika, [3]/[4] pismo, [6], [7] „co mam zrobić”, [10]) → `analizator-umow-v1` jako SECONDARY obowiązkowo, co najmniej w zakresie CAL-GATE (kontrola relacji między postanowieniami całego dokumentu). Ocena takiego dokumentu punkt po punkcie bez CAL-GATE = uchybienie.
 
 ### [2] AKTA / WYROK / ANALIZA SZANS
 `wyrok / nakaz zapłaty / wezwanie / pismo przeciwnika / "przeanalizuj wyrok" / "przeanalizuj orzeczenie" / "przeanalizuj postanowienie" / "analiza wyroku" / "analiza postanowienia" / "oceń wyrok" / "oceń postanowienie" / "jakie mam szanse" / "oceń szanse" / "szanse wygrania" / analiza akt / analiza pozycji`
@@ -328,8 +332,6 @@ Przy nakładaniu się skilli: `view shared/ACTIVATION-MATRIX.md`.
 
 **Zasada odciążenia routera:** Router NIE jest bazą prawa materialnego — tylko orkiestruje.
 Nie dubluj treści modułów dziedzinowych w routerze.
-
----
 
 ## KROK 5–6 — SEKWENCJA END-TO-END
 
@@ -454,8 +456,6 @@ przepisu" i nic nie mówi o „nie zaniż środka naprawczego". Zmierzone
 w partii P4 — obszar rubryki wart 35 pkt niedopracowany, bo droga główna
 została poprawnie zamknięta.
 
----
-
 ## REGUŁY NADRZĘDNE
 
 - **Reguła 1 — wejście:** router jest pierwszym krokiem; wczytaj PRIMARY przed analizą.
@@ -469,7 +469,7 @@ została poprawnie zamknięta.
 - **Reguła 7B — menu:** pytanie o możliwości → przewodnik, KROK M.
 - **Reguła 7C — Q&A:** pytania użytkownika → przewodnik, KROK Q.
 - **Reguła 8 — termin:** termin zawity sprawdź przed pozostałymi kwestiami.
-- **Reguła 9 — trwałość HARD GATE:** każda tura podlega `shared/PRAWO-HARDGATE.md`.
+- **Reguła 9 — trwałość HARD GATE:** każda tura podlega `JUR:weryfikacja-przepisow-kanon`.
 - **Reguła 10 — walidacja:** przed generowaniem wykonaj HYBRID-VALIDATION; zero ⬛ przed oddaniem.
 - **Reguła 11 — dostawa:** `present_files` po walidacji, przed disclaimerem.
 - **Reguła 11a — kroki:** wykonaj ST-INIT i blokujące ST-FINAL z `shared/MOD-STEP-TRACKER.md`.
@@ -480,7 +480,7 @@ została poprawnie zamknięta.
 - **Reguła 12d — próba przed znacznikiem (REM-0):** ⛔ ZANIM oznaczysz powołanie ⚠️ [NIEWERYFIKOWANE] — spróbuj je pobrać, DWUKANAŁOWO: `bash_tool`/`curl` ORAZ `web_search`→`web_fetch`. Kanały mają różne listy dozwolonych domen, więc HTTP 403 w jednym nie dowodzi niczego o drugim (`ohchr.org`: curl 403, web_fetch pełny tekst RZĘDU 1). Znacznik dopuszczalny wyłącznie po porażce w OBU kanałach, zapisanej z kanałem i kodem — „brak dostępu" bez kodu nie jest zapisem porażki, tylko zapisem, że nie wiadomo, czy próbowano. Trzecie wystąpienie tej klasy błędu w tym systemie (F-151, F-162, F-164).
 - **Reguła 14 — ślad weryfikacji:** wykonaj `shared/WERYFIKACJA-SLAD.md`.
 - **Reguła 14a — forma znacznika ✅ (AF-7):** znacznik `✅ [VER]` bez trzech pól — kanału odczytu, identyfikatora aktu lub orzeczenia oraz daty odczytu W TEJ turze — jest NIEWAŻNY i czyta się go jak `⚠️ [NIEWERYFIKOWANE]`. Reguła jest składniowa i sprawdzalna z zewnątrz bez dostępu do logów. Zmierzone: w arkuszu testowym 24 gołe „✅ [VER]", z pięciu sprawdzonych dwa fałszywe (F-169).
-- **Reguła 15 — sygnatury:** wykonaj `shared/SYGNATURY.md` oraz standard istnienia orzeczenia
+- **Reguła 15 — sygnatury:** wykonaj `JUR:sygnatury-repertoria` oraz standard istnienia orzeczenia
   (statusy ✅ ISTNIEJE + TREŚĆ / 🟧 ISTNIEJE, TREŚĆ NIEODCZYTANA / ⚠️ NIEPOTWIERDZONE, zakaz łączenia
   sygnatury i daty z różnych rekordów): `view prawny-router-v3/references/HARD-GATES-ORZECZNICTWO.md`.
 - **Reguła 16 — disclaimer:** wykonaj KROK 7.
@@ -493,7 +493,7 @@ została poprawnie zamknięta.
   `view prawny-router-v3/references/ROUTING-OPPONENT-ANALYSIS-V9.md` (słabości, riposta) oraz
   `view prawny-router-v3/references/ROUTING-CONTRADICTION-INTELLIGENCE-V10.md` (sprzeczności, przyznania).
 - **Reguła 18 — PRE-W2:** przed W2 każdego pisma wczytaj
-  `shared/PRE-W2-VERIFICATION-GATE.md`; zweryfikuj online sąd, organ i podmioty.
+  `JUR:pre-w2-verification-gate`; zweryfikuj online sąd, organ i podmioty.
 - **Reguła 19 — strategia:** dla pisma z ≥2 ścieżkami lub anomalią podmiotową wczytaj
   `shared/MOD-STRATEGIA-WYBOR.md` przed W1.3.
 - **Reguła 20 — checkpointy:** wykonuj `shared/CP-GATE.md`; po STOP zakończ turę.
@@ -518,8 +518,6 @@ została poprawnie zamknięta.
 - **Reguła 27 — audyt klucza:** werdykt „PEŁNA ZGODNOŚĆ” jest dozwolony wyłącznie przy
   `P=N`, `O=0`, `U=0` i rachunku `P + O + U = N`.
 
----
-
 ## SELF-CHECK (przed każdą odpowiedzią)
 
 Wykonaj w całości: `view prawny-router-v3/references/SELF-CHECK.md`.
@@ -533,6 +531,12 @@ Bramki blokujące:
 - VER-GRAIN i właściwe reguły warunkowe wykonane;
 - aktywne checkpointy, PRE-W2, RPK i ST-FINAL zamknięte;
 - przy ≥2 datach w stanie faktycznym blok OŚ-GATE jest WIDOCZNY w odpowiedzi przed konkluzją;
+- KONKLUZJA-GATE: pierwsze zdanie odpowiada wprost na pytanie — przy pytaniu zamkniętym
+  („czy…”, „czy można…”, „czy przysługuje…”, „czy obejmuje…”) zaczyna się od „Tak”, „Nie”
+  albo „Tak, ale…/Nie, chyba że…” z podstawą; „to zależy” tylko z odpowiedzią dla wariantu
+  typowego i jednym zdaniem, od jakiego faktu zależy zmiana; konkluzja warunkowa (nazwana),
+  gdy rozstrzyga wykładnia lub orzecznictwo, a nie sam przepis; skutek prawny (nieważność,
+  bezskuteczność, wygaśnięcie) tylko w brzmieniu przepisu;
 - disclaimer jest ostatnim elementem odpowiedzi prawnej.
 
 Niespełnienie któregokolwiek punktu → STOP; wykonaj brakujący krok albo uruchom
@@ -549,9 +553,7 @@ jawny TRYB ZDEGRADOWANY.
 <!-- lex:wykonuje-aplikacja: ROUTING -->
 ## POKRYCIE DZIEDZINOWE (wczytuj tylko gdy potrzebne)
 
-```text
-view prawny-router-v3/references/pokrycie-dziedzinowe.md
-```
+`view prawny-router-v3/references/pokrycie-dziedzinowe.md`
 
 Tylko gdy: pytanie o dostępność modułu, audyt systemu, budowanie kombinacji multi-skill.
 

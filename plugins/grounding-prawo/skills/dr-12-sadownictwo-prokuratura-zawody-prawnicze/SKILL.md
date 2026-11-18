@@ -2,7 +2,7 @@
 name: dr-12-sadownictwo-prokuratura-zawody-prawnicze
 description: 'DR-12: ustrój sądów, prokuratura, zawody prawnicze, koszty. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '4.30'
+  version: '4.32'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -253,9 +253,9 @@ LEKCJA: bramka kompletności listy — przed każdym wnioskiem „N z 24” zest
 podtabelę z aktualną listą izb NRA, a nie z poprzednią wersją podtabeli.
 ```
 
-## DEFINICJE — shared/definicje/
+## DEFINICJE — prawo-polskie-v2/krajowe/shared/definicje/
 
-- `definicje/DEF-INTERES-WLASNY-WYLACZENIA.md` — ⚠️ NOWE: pełnomocnik —
+- `prawo-polskie-v2/krajowe/shared/definicje/DEF-INTERES-WLASNY-WYLACZENIA.md` — ⚠️ NOWE: pełnomocnik —
   konflikt interesów i interes własny (zakaz reprezentowania sprzecznych
   interesów, skutek: odpowiedzialność dyscyplinarna ≠ automatyczna nieważność
   postępowania, art. 379 KPC), pełnomocnik jako świadek w tej samej sprawie

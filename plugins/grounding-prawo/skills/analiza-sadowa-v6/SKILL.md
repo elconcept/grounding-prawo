@@ -2,12 +2,12 @@
 name: analiza-sadowa-v6
 description: 'Analiza akt, pism i wyroków: mapa faktów, kwalifikacja, analiza adversarialna i ocena szans. Używaj przy analizie sprawy karnej, apelacji i kasacji.'
 metadata:
-  version: '6.17'
+  version: '6.20'
   type: executive-analiza
   status: production
   compatibility: live_web_lookup, file_read, cross_skill_file_read, optional_interactive_ui
   dependencies: '{"requires": ["shared"]}'
-  changelog: 'Wersja bieżąca: 6.17 (2026-10-15b, AUDYT-2026-10-15b): Przejście II krok 8 — przesłanka związku przyczynowego badana przez shared/MOD-GRAF-PRZYCZYNOWY.md (nie sama kolejność dat).
+  changelog: 'Wersja bieżąca: 6.20 (2026-10-15b, AUDYT-2026-10-15b): Przejście II krok 8 — przesłanka związku przyczynowego badana przez shared/MOD-GRAF-PRZYCZYNOWY.md (nie sama kolejność dat).
 
     Pełna historia: references/CHANGELOG.md (ZASADA 15).'
 ---
@@ -60,7 +60,7 @@ analiza-sadowa-v6/
 │   ├── WERYFIKACJA-DOWODOW.md            ← Rozszerzony protokół dwukrotnej weryfikacji
 │   ├── moduly-spec.md                    ← fallback: wszystkie moduły (awaryjny)
 │   ├── orzecznictwo.md                   ← weryfikacja i cytowanie orzeczeń
-│   ├── koszty-terminy.md                 ← KSCU, terminy KPC/KPK/KPW/KPA/KP
+│   ├── JUR:analiza-koszty-terminy                 ← KSCU, terminy KPC/KPK/KPW/KPA/KP
 │   └── engines/
 │       ├── adversarial-litigation-analysis-v9.md
 │       ├── contradiction-case-analysis-v10.md
@@ -85,8 +85,8 @@ FALLBACK), a nie ten plik — ale dla kogoś czytającego wyłącznie ten skill:
   25 dziedzin MX), analiza śledcza (profilowanie, VSA, HUMINT), lub gdy
   wyjściem ma być graf/macierz, nie executive summary.
 - Terminy procesowe i hierarchia orzecznictwa: **oba skille korzystają z tych
-  samych plików kanonicznych** `shared/terminy.md` i
-  `shared/ORZECZENIA-HIERARCHIA.md` (patrz `references/koszty-terminy.md` i
+  samych plików kanonicznych** `JUR:terminy-procesowe` i
+  `JUR:orzecznictwo-hierarchia` (patrz `JUR:analiza-koszty-terminy` i
   `references/orzecznictwo.md` w tym skillu) — żadna z dwóch implementacji
   nie utrzymuje już własnej, potencjalnie rozbieżnej kopii tych tabel.
 - Gdy zapytanie pasuje do obu → router ładuje `analiza-sadowa-v6` jako
@@ -110,8 +110,14 @@ FALLBACK), a nie ten plik — ale dla kogoś czytającego wyłącznie ten skill:
 ```
 SD-GATE-0: Czy w wiadomości wzmianka o aktach/pismach/dowodach/dokumentach
   BEZ faktycznie wgranego pliku?
-  TAK → ⛔ STOP. "Wskazujesz na dokumenty, których nie wykryłem.
-         Wgraj akta/pisma przed uruchomieniem analizy." Czekaj. Nie wyświetlaj komunikatu startowego.
+  TAK → SD-GATE-0-INFO (bez STOP — shared/CP-GATE.md §3B BRAK-DOK):
+         "⚠️ Wskazujesz na dokumenty, których nie wykryłem: [lista]. Analizuję to,
+          co jest w materiale; ustalenia oparte na brakujących dokumentach oznaczam
+          „według informacji strony”. Wgraj je, jeśli je masz — uwzględnię je."
+         Brakujące pozycje → REJESTR BRAK-DOK w raporcie (sekcja braków materiału).
+         Kontynuuj do SD-INW i Przejścia I.
+  Brak JAKIEGOKOLWIEK materiału (ani pliku, ani opisu stanu faktycznego) → jedno pytanie
+  o materiał; to nie jest BRAK-DOK, tylko brak przedmiotu analizy.
 
 SD-INW: Zinwentaryzuj WSZYSTKIE pliki.
   ZIP → rozpakowuj i inwentaryzuj zawartość.
@@ -182,7 +188,7 @@ Moduły specjalne: błędy pełnomocnika, groźba bezprawna, nagrania, terminy, 
 ## ⛔ HARD GATE — ZAKAZ CYTOWANIA PRAWA I ORZECZEŃ Z PAMIĘCI
 
 > Przed podaniem jakiegokolwiek przepisu, artykułu, terminu lub sygnatury orzeczenia:
-> `view shared/PRAWO-HARDGATE.md`
+> `view JUR:weryfikacja-przepisow-kanon`
 > Jeśli źródło niedostępne → oznacz `⚠️ [NIEWERYFIKOWANE]` i kontynuuj bez treści przepisu.
 
 > ⛔ **[WEJŚCIE-DOKUMENTU] — bramka materiału wejściowego (F-200; odtworzone 2026-09-27d, F-207).**
@@ -562,6 +568,40 @@ GATE: RAPORT KOŃCOWY ZATWIERDZONY: TAK / NIE [blokada jeśli NIE]
 
 ---
 
+## PISMO PRZECIWNIKA / WEZWANIE — LISTA PP (⛔ każde pismo strony przeciwnej)
+
+**Wyzwalacz mechaniczny:** w materiale jest pismo strony przeciwnej albo jej pełnomocnika —
+wezwanie do zapłaty lub zaniechania, pozew, odpowiedź, sprzeciw, pismo przygotowawcze,
+nota obciążeniowa, wypowiedzenie. Każdy punkt PP wykonaj; profil LEKKI tego nie zwalnia.
+
+```
+PP-1 FAKTY — dla każdego żądania: co, kiedy, kto, w jaki sposób. Brak opisu zdarzenia
+     → zarzut braku podstawy faktycznej; ciężar dowodu po stronie żądającego (art. 6 KC,
+     weryfikuj w ELI).
+PP-2 KONSTRUKCJA — czy instytucja działa tak, jak pismo twierdzi: skutek wynika z przepisu
+     i umowy, nie z deklaracji nadawcy (np. kara umowna nie jest „nakładana” jednostronnie
+     — należy się tylko za wykazane niewykonanie zobowiązania; wypowiedzenie, odsetki,
+     potrącenie — przesłanki z przepisu).
+PP-3 RACHUNEK — każda kwota rozłożona na składniki; liczba sankcji = liczba wykazanych
+     zdarzeń, nie liczba przytoczonych punktów umowy; ta sama sankcja w innym punkcie
+     tego samego dokumentu za to samo zachowanie (CAL-GATE b) → argument o miarkowaniu.
+PP-4 POWOŁANE PRZEPISY — każdy przepis powołany w piśmie przeciwnika zweryfikuj w ELI
+     i sprawdź, czy mówi to, co pismo mu przypisuje; błędne powołanie nazwij wprost.
+PP-5 WŁAŚCIWOŚĆ, TRYB, TERMINY — jaki sąd i tryb dla tego roszczenia (np. sprawa z zakresu
+     prawa pracy → sąd pracy), termin z pisma a termin z ustawy, przedawnienie.
+PP-6 NADAWCA — status podmiotu i reprezentacja w KRS / CEIDG (KROK 0D: ⬛ do weryfikacji
+     narzędziem), pełnomocnictwo i jego zakres.
+PP-7 PODSTAWA UMOWNA — pismo opiera się na umowie, porozumieniu lub regulaminie →
+     analizator-umow-v1, CAL-GATE na całym dokumencie (relacje między postanowieniami).
+PP-8 ORZECZNICTWO — SN oraz sądy powszechne (SAOS, sądy apelacyjne i okręgowe), w sprawach
+     administracyjnych CBOSA; źródło niedostępne (captcha, HTTP 403) nie kończy
+     wyszukiwania — następne źródło i jawna informacja, które zawiodło.
+WYNIK — tabela „Zarzuty wobec pisma”: | Element pisma | Zarzut | Podstawa | Siła |.
+     Punkt bez zarzutu → jedno zdanie „sprawdzono PP-n: bez zarzutu”, nigdy pominięcie.
+```
+
+---
+
 ## TRYBY PRACY
 
 ### TRYB A — Analiza tekstowa (domyślny)
@@ -796,7 +836,7 @@ Po raporcie końcowym:
 | Odwołanie od wypowiedzenia | — | — | — | — | 21 dni ⚠ |
 
 ⚠ KP art. 264 §1 — termin ZAWITY; roszczenie wygasa bezpowrotnie.
-Pełne tabele: references/koszty-terminy.md
+Pełne tabele: JUR:analiza-koszty-terminy
 
 ---
 
@@ -821,7 +861,7 @@ Procedura: references/orzecznictwo.md
 | Moduły A+F łącznie | MOD-A.md + MOD-F.md |
 | Fallback | references/moduly-spec.md |
 | Orzecznictwo | references/orzecznictwo.md |
-| Koszty i terminy | references/koszty-terminy.md |
+| Koszty i terminy | JUR:analiza-koszty-terminy |
 | Mapa całego skilla | references/BLUEPRINT-SCHEMA.md |
 | Widget | show_widget HTML vanilla JS — TYLKO na żądanie |
 | Sprawa ≥10 dokumentów (model kontynentalny) | PRZEBIEG-1-ekstrakcja.md → PRZEBIEG-2-strukturalna.md → PRZEBIEG-3-predykcja.md |
@@ -848,11 +888,11 @@ Hard gate: nie przygotowuj repliki, odpowiedzi, apelacji bez V10 w Przejściu II
 
 Gdy wynik analizy służy do pisma, strategii lub decyzji terminowej:
 
-view shared/TRYBY-PROCESOWE.md
+view JUR:tryby-procesowe
 view shared/RISK-ASSESSMENT.md
-view shared/TERM-CALC.md
+view JUR:liczenie-terminow
 view shared/DOWODY-METODOLOGIA.md
-view shared/PREKLUZJA-DOWODOWA.md
+view JUR:prekluzja-dowodowa
 view shared/STRATEGIA-PROCESOWA.md
 view shared/QUALITY-CHECK.md
 

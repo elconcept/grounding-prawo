@@ -36,7 +36,11 @@ BLOK 0.2 — Sprawdź czy MOD-FAKTY (FAKTY_v2.md) został uruchomiony dla tego p
 
 BLOK 0.3 — Wynik MOD-FAKTY:
   ✅ Brak ⛔ FIKCJA i ⛔ BRAK ŹRÓDŁA → zamknij Block Zero, przejdź do Fazy 1
-  ⛔ Wykryto FIKCJA lub BRAK ŹRÓDŁA  → BLOKADA FINALIZACJI
+  ⚠️ BRAK ŹRÓDŁA wyłącznie z powodu BRAK-DOK, zaakceptowany przez użytkownika
+     lub oznaczony „według informacji strony” (CP-GATE §3B)
+     → zamknij Block Zero; plik DRAFT zapisz z sekcją „UWAGI REDAKCYJNE —
+       dokumenty do uzupełnienia”. Nie blokuj zapisu pliku.
+  ⛔ Wykryto FIKCJA lub inny BRAK ŹRÓDŁA  → BLOKADA FINALIZACJI
     → Wyświetl komunikat blokady z listą elementów do uzupełnienia
     → Czekaj na dane od użytkownika
     → Po uzupełnieniu: wróć do BLOK 0.2
@@ -83,7 +87,7 @@ Na podstawie typu pisma — czy użytkownik nie pominął:
 □ Czy żądanie jest precyzyjne i wykonalne przez sąd/organ?
 □ Czy termin do złożenia pisma nie jest zagrożony?
 □ Czy podstawa prawna po weryfikacji online nadal pasuje?
-□ Czy zapis każdego powołania aktu jest zgodny z shared/FORMAT-CYTOWANIA.md (F1–F9)?
+□ Czy zapis każdego powołania aktu jest zgodny z JUR:format-cytowania (F1–F9)?
   Narzędzie, gdy dostępne: walidator_cytowan.py --document PLIK --format (kod 3 = popraw przed .docx)
 ```
 

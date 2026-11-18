@@ -1,0 +1,14 @@
+--- a/audyt-systemu-v4/SKILL.md
++++ b/audyt-systemu-v4/SKILL.md
+@@ -1290,3 +1290,3 @@
+ > `dist/lex-mcp.mjs`, manifest rozszerzenia MCPB, instalator, skrypt budowy, README) — łącznie **192 pliki** (6.144: +`mcp-servers/LICENSE`). Drzewo niżej nie
+-> rozpisuje `mcp-servers/` — opis w `mcp-servers/README.md`. Licznik w pierwszej linii drzewa jest
++> rozpisuje `mcp-servers/` — opis w `mcp-servers/README.md` (brak w pluginie). Licznik w pierwszej linii drzewa jest
+ > historyczny (stan 2026-09-09b).
+--- a/audyt-systemu-v4/references/migracja-jurysdykcji/PLAN-I-MAPA.md
++++ b/audyt-systemu-v4/references/migracja-jurysdykcji/PLAN-I-MAPA.md
+@@ -605,3 +605,3 @@
+ | MIESZANY | `shared/tools/README.md` | 28% | źródła i bazy 9, identyfikatory 9, akty i przepisy 7, organy 2 |  |
+-| MIESZANY | `shared/AUDIT-TRAIL-SPEC.md` | 28% | akty i przepisy 3, identyfikatory 2 |  |
++| MIESZANY | `shared/AUDIT-TRAIL-SPEC.md` (brak w pluginie) | 28% | akty i przepisy 3, identyfikatory 2 |  |
+ | MIESZANY | `shared/MOD-WYJATEK-GATE.md` | 28% | typy umów 6, źródła i bazy 3, akty i przepisy 2 |  |

@@ -152,7 +152,7 @@ zakazu prowadzenia pojazdów mechanicznych orzeczonego w związku ze skazaniem z
         + zakaz prowadzenia min. 3 lata (art. 42 §2 KK)
   ⛔ Znaczenie procesowe: 3 lata < 8 lat → art. 258 §2 KPK nie działa;
      3 lata > 1 rok → art. 259 §3 KPK też nie działa
-✅ [VER: ELI — Dz.U. 2025 poz. 734, art. 19, 24 §1a i 87 §1;
+✅ [VER: ELI — Dz.U. 2025 poz. 734, art. 19, 24 §1a i 87 §1 (re-ver t.j. Dz.U. 2026 poz. 1372, 2026-10-31: bez zmian w tym zakresie);
    Dz.U. 2025 poz. 383 (obecny t.j. Dz.U. 2026 poz. 1342), art. 178a §1 — odczyt 2026-08-25]
 ```
 
@@ -214,7 +214,7 @@ REKOMENDACJA: □ Warunkowe umorzenie  □ Mediacja  □ Obrona na rozprawie  �
 | Analiza akt karnych / szanse | `analiza-sadowa-v6` |
 | Ocena dowodów / nagrań | `analizator-dowodow-v3` |
 | Orzecznictwo SN karne | `orzeczenia-sadowe-v2` |
-| Przesłuchanie na rozprawie | `shared/PRZESLUCHANIE-SWIADKOW-KPC.md` + skill `przesluchanie-swiadkow-v2-min90` |
+| Przesłuchanie na rozprawie | `prawo-polskie-v2/krajowe/shared/PRZESLUCHANIE-SWIADKOW-KPC.md` + skill `przesluchanie-swiadkow-v2-min90` |
 | Stalking / nękanie jako przestępstwo | `dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-art190a-stalking.md` |
 
 *KK (Dz.U. 2026 poz. 1342 t.j.) + KPK (Dz.U. 2026 poz. 490) + KKW (Dz.U. 2026 poz. 1307 t.j.)*

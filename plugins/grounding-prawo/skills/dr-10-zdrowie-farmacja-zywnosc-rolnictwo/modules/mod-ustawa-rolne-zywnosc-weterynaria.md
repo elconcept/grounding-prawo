@@ -1,7 +1,7 @@
 ---
 name: mod-AH-rolne-zywnosc-weterynaria
 
-**Standard jakości:** stosuj `shared/MODULE-STANDARD-POLISH-LAW.md` oraz `shared/POLISH-LAW-COMPLETENESS-MATRIX.md`.
+**Standard jakości:** stosuj `prawo-polskie-v2/krajowe/shared/MODULE-STANDARD-POLISH-LAW.md` oraz `prawo-polskie-v2/krajowe/shared/POLISH-LAW-COMPLETENESS-MATRIX.md`.
 description: |
   Moduł prawa rolnego, żywnościowego i weterynaryjnego. Stosuj przy ARiMR,
   dopłatach, kontrolach IJHARS/Sanepid/IW, produkcji żywności, HACCP, rolniczym
@@ -23,7 +23,7 @@ compatibility:
 | Prawo żywnościowe UE 178/2002 | bezpieczeństwo żywności | rozporządzenie UE, stosowane bezpośrednio |
 | Rozp. 852/2004 | higiena żywności, HACCP | rozporządzenie UE, stosowane bezpośrednio |
 | Rozp. 853/2004 | żywność pochodzenia zwierzęcego | rozporządzenie UE, stosowane bezpośrednio |
-| Ustawa o bezpieczeństwie żywności i żywienia | sanepid, produkcja, obrót | Dz.U. 2023 poz. 1448 t.j. — ⚠️ TREŚĆ SZCZEGÓŁOWA w dedykowanym module `mod-ustawa-bezpieczenstwo-zywnosci.md`, nie duplikuj tutaj |
+| Ustawa o bezpieczeństwie żywności i żywienia | sanepid, produkcja, obrót | Dz.U. 2026 poz. 1399 t.j. — ⚠️ TREŚĆ SZCZEGÓŁOWA w dedykowanym module `mod-ustawa-bezpieczenstwo-zywnosci.md`, nie duplikuj tutaj |
 | Ustawa o jakości handlowej artykułów rolno-spożywczych | IJHARS | Dz.U. 2023 poz. 1980 t.j. (obwieszczenie 2.08.2023) |
 | Ustawa o Agencji Restrukturyzacji i Modernizacji Rolnictwa (ARiMR) | struktura, zadania, finansowanie agencji | **Dz.U. 2026 poz. 942 t.j.** ✅ [VER] RZĄD 1 2026-09-10o (poprzednio 2025 poz. 1363 — wygaśnięcie aktu) t.j. (obwieszczenie 26.09.2025) |
 | Ustawa o Planie Strategicznym dla Wspólnej Polityki Rolnej na lata 2023-2027 (WPR/PROW) | dopłaty bezpośrednie, płatności obszarowe, interwencje EFRG/EFRROW, kontrole, zwroty | Dz.U. 2024 poz. 1741 t.j. (obwieszczenie 7.11.2024), zmieniona Dz.U. 2025 poz. 321 |
@@ -89,7 +89,7 @@ Matryca dowodowa: fakt → dowód → ciężar dowodu → luka
   ↓
 Dobór pisma/środka: wniosek / odwołanie / zażalenie / skarga / pozew / zawiadomienie
   ↓
-Walidacja formalna: shared/FORMAL-CHECK.md + shared/WARUNKI-SKUTECZNOSCI.md
+Walidacja formalna: prawo-polskie-v2/krajowe/shared/FORMAL-CHECK.md + shared/WARUNKI-SKUTECZNOSCI.md
   ↓
 Ocena ryzyka: shared/RISK-ASSESSMENT.md + shared/QUALITY-CHECK.md
   ↓
@@ -164,16 +164,16 @@ Przed końcową odpowiedzią sprawdź:
 □ Czy podano ryzyka przeciwnika/organu?
 □ Czy wskazano słabe punkty klienta?
 □ Czy każdy przepis i Dz.U. ma kontrolę ISAP albo oznaczenie braku weryfikacji?
-□ Czy użyto shared/MODULE-STANDARD-POLISH-LAW.md?
+□ Czy użyto prawo-polskie-v2/krajowe/shared/MODULE-STANDARD-POLISH-LAW.md?
 ```
 
 ## 8. Łącz obowiązkowo z
 
 | Potrzeba | Moduł współdzielony / skill |
 |---|---|
-| aktualność prawa | `shared/ISAP-AUDIT-PROTOCOL.md` + `shared/ISAP-METRYKI-AKTOW.md` |
+| aktualność prawa | `shared/ISAP-AUDIT-PROTOCOL.md` + `prawo-polskie-v2/krajowe/shared/ISAP-METRYKI-AKTOW.md` |
 | stan prawny w czasie | `shared/TEMPORAL-LAW-CHECK.md` |
-| braki formalne | `shared/BRAKI-FORMALNE.md` |
+| braki formalne | `prawo-polskie-v2/krajowe/shared/BRAKI-FORMALNE.md` |
 | warunki skuteczności | `shared/WARUNKI-SKUTECZNOSCI.md` |
 | dowody | `shared/DOWODY-METODOLOGIA.md` + `analizator-dowodow-v3` |
 | ryzyka | `shared/RISK-ASSESSMENT.md` |

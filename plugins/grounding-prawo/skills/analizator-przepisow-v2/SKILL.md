@@ -2,7 +2,7 @@
 name: analizator-przepisow-v2
 description: 'Analiza przepisu: brzmienie obowiązujące i historyczne, przesłanki, wykładnia, orzecznictwo, nowelizacje. Używaj przy pytaniu o artykuł lub wykładnię.'
 metadata:
-  version: '2.12'
+  version: '2.14'
   type: executive-analiza
   status: production
   compatibility: live_web_lookup, file_read, optional_interactive_ui
@@ -37,7 +37,7 @@ Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Nie zmien
 
 > ⛔ HARD GATE — ZAKAZ CYTOWANIA PRAWA I ORZECZEŃ Z PAMIĘCI
 > Przed podaniem jakiegokolwiek przepisu, artykułu, numeru Dz.U. lub sygnatury orzeczenia:
-> `view shared/PRAWO-HARDGATE.md`
+> `view JUR:weryfikacja-przepisow-kanon`
 
 > ⛔ **SELF-CHECK ANTY-FASADA — obowiązkowy przed wysłaniem odpowiedzi/pisma**
 > (podłączone 2026-08-23i, flaga F-115 — ten skill cytuje prawo, a bramki nie miał):
@@ -59,7 +59,7 @@ Profesjonalne narzędzie do analizy przepisów prawnych z widgetem wizualnym, au
 
 ## ZASADA NACZELNA
 
-> ⛔ HARDGATE — Nigdy nie cytuj przepisów z pamięci. Każdy przepis MUSI być pobrany według kanonu E-1…E-5 (`shared/HIERARCHIA-ZRODEL.md`): najpierw ELI (RZĄD 1), ISAP wyłącznie jako adres dla człowieka, LEX/Legalis → ArsLege, gdy aktu nie da się pobrać z RZĘDU 1 — procedura w `shared/PRAWO-HARDGATE.md`. Jeśli wszystkie źródła niedostępne — oznacz `⚠️ [NIEWERYFIKOWANE]` i kontynuuj bez treści przepisu.
+> ⛔ HARDGATE — Nigdy nie cytuj przepisów z pamięci. Każdy przepis MUSI być pobrany według kanonu E-1…E-5 (`JUR:hierarchia-zrodel`): najpierw ELI (RZĄD 1), ISAP wyłącznie jako adres dla człowieka, LEX/Legalis → ArsLege, gdy aktu nie da się pobrać z RZĘDU 1 — procedura w `JUR:weryfikacja-przepisow-kanon`. Jeśli wszystkie źródła niedostępne — oznacz `⚠️ [NIEWERYFIKOWANE]` i kontynuuj bez treści przepisu.
 
 ---
 
@@ -148,8 +148,8 @@ Paleta: --primary #1B3A6B, --accent #C8960C, --bg #F8F7F4, --success #16a34a, --
 > ⛔ **KANONICZNA LOKALIZACJA (od 2026-07-15):** pełna treść tej hierarchii
 > (definicje RZĄD 1/2A/2B/3, listy domen, zakaz mieszania rzędów, znaczniki
 > obowiązkowe, procedura H-1→H-4) przeniesiona do
-> `view shared/HIERARCHIA-ZRODEL.md` — plik jest teraz
-> współdzielony przez `shared/PRAWO-HARDGATE.md`, `shared/WERYFIKACJA-SLAD.md`
+> `view JUR:hierarchia-zrodel` — plik jest teraz
+> współdzielony przez `JUR:weryfikacja-przepisow-kanon`, `shared/WERYFIKACJA-SLAD.md`
 > i każdy inny skill podający linki źródłowe, nie tylko ten moduł.
 > Wczytaj ten plik PRZED podaniem jakiegokolwiek linku/URL w analizie
 > przepisu — kategoryzacja RZĄD jest OBOWIĄZKOWA dla każdego źródła,
@@ -176,7 +176,7 @@ Paleta: --primary #1B3A6B, --accent #C8960C, --bg #F8F7F4, --success #16a34a, --
    (obwieszczenia standardowo wymieniają: „uwzględnia zmiany wprowadzone
    ustawami z dnia..."). To jest punkt wyjścia — te zmiany są już wliczone,
    nie trzeba ich szukać ponownie w kroku 4A.
-4A. ⛔ KROK 2C shared/PRAWO-HARDGATE.md — OSOBNE zapytanie o WSZYSTKIE
+4A. ⛔ KROK 2C JUR:weryfikacja-przepisow-kanon — OSOBNE zapytanie o WSZYSTKIE
     akty zmieniające OPUBLIKOWANE PO dacie t.j. z kroku 1-2 (skorygowano
     2026-08-23f, po pytaniu użytkownika — NIE zatrzymuj się na pierwszej
     znalezionej nowelizacji; między t.j. a dziś mogło wejść w życie
@@ -193,6 +193,19 @@ Paleta: --primary #1B3A6B, --accent #C8960C, --bg #F8F7F4, --success #16a34a, --
 5. Sprawdź czy przepis nie został uchylony lub zmieniony
 6. Zapisz DOSŁOWNĄ treść z oficjalnego źródła
 ```
+
+### Odczyt przez MCP `ustawy_artykul` (gdy host go ma) — pola wyniku decydują
+
+Kontrakt: `view shared/MCP-INTEGRACJA.md` (wiersz `ustawy_artykul`). Skrót reguł, które ten moduł stosuje:
+
+| Wynik | Działanie |
+|---|---|
+| `confidence: deterministic`, brak `zmiany_po_tj` | brzmienie do Karty Przepisu dosłownie |
+| `brzmienia_przyszle` | Karta: brzmienie na datę analizy + „Zmiana od [data]: [treść]” (vacatio → `references/MOD-VACATIO-LEGIS.md`) |
+| `confidence: partial` / `nierozstrzygniete` | ⛔ nie wybieraj brzmienia sam: pokaż oba z odnośnikami (np. „Zdanie pierwsze … obowiązuje do …”) i datą; status ⚠️ |
+| `strony_bez_tekstu` | brak jednostki nie jest dowodem — otwórz PDF (`url_zrodlowy`) |
+| OUT_OF_SCOPE + `jeszcze_nie_obowiazuje` | „Jednostka dodana, wchodzi w życie z dniem [data]” — nie stosuj do stanu na datę analizy |
+| NOT_FOUND przy numerze z literą w indeksie (`131^1a`) | ⛔ nie podawaj art. 131 zamiast art. 131¹ᵃ; sprawdź zapis numeru i t.j. |
 
 ### Karta Przepisu
 
@@ -224,8 +237,14 @@ Stosuj gdy użytkownik chce zbadać przepis w stanie na konkretną datę przesz�
 2. W ELI ustal historię aktu: /eli/acts/DU/{rok}/{poz}/references (zmiany,
    teksty jednolite) — ISAP tylko jako link dla czytelnika
 3. Zidentyfikuj tekst jednolity obowiązujący W DNIU docelowym
-4. Pobierz historyczną wersję przepisu
-5. Oznacz wyraźnie: "STAN NA [data]" we wszystkich wynikach
+4. Pobierz historyczną wersję przepisu — MCP: `ustawy_artykul` z `eli` TEGO t.j.,
+   `artykul` i `na_dzien` = data docelowa. OUT_OF_SCOPE „nie wynika z …” = data
+   sprzed stanu prawnego t.j. → wróć do kroku 3 (starszy t.j.), nie bierz brzmienia
+   z nowszego t.j.
+5. Jednostka dodana po dacie docelowej (`jeszcze_nie_obowiazuje`, odnośnik
+   „Dodany … z dniem X”, X > data) → „w dniu [data] jednostka nie istniała”;
+   ⛔ jednostka z literą w indeksie (art. 131¹ᵃ) ≠ jednostka bazowa (art. 131)
+6. Oznacz wyraźnie: "STAN NA [data]" we wszystkich wynikach
 ```
 
 ### Raport historyczny
@@ -625,11 +644,11 @@ Zapytanie: "Czy art. 415 KC stosuje się do mojej sprawy? Stan na 1.01.2020."
 Jeżeli wynik tego skilla ma służyć do pisma, strategii procesowej, oceny ryzyka albo decyzji terminowej, wczytaj właściwe moduły shared:
 
 ```text
-view shared/TRYBY-PROCESOWE.md
+view JUR:tryby-procesowe
 view shared/RISK-ASSESSMENT.md
-view shared/TERM-CALC.md
+view JUR:liczenie-terminow
 view shared/DOWODY-METODOLOGIA.md
-view shared/PREKLUZJA-DOWODOWA.md
+view JUR:prekluzja-dowodowa
 view shared/STRATEGIA-PROCESOWA.md
 view shared/QUALITY-CHECK.md
 ```

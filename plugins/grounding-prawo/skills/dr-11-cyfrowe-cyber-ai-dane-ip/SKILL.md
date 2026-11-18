@@ -2,7 +2,7 @@
 name: dr-11-cyfrowe-cyber-ai-dane-ip
 description: 'DR-11: RODO, dowody cyfrowe, cyberbezpieczeństwo, prawo autorskie. Moduł routera; nie wywołuj bezpośrednio.'
 metadata:
-  version: '3.30'
+  version: '3.34'
   dependencies: '{"requires": ["shared"]}'
 ---
 
@@ -91,9 +91,9 @@ Przy sprawach z tej dziedziny rozważ doładowanie (`view`) definicji:
   FRIA vs DPIA (kumulacja z RODO), status polskiej ustawy wdrożeniowej
   (Komisja Rozwoju i Bezpieczeństwa AI — projekt, brak uchwalenia 06.2026)
 
-## DEFINICJE — shared/definicje/ (nieobecne — adnotacja audytowa 2026-06-14)
+## DEFINICJE — prawo-polskie-v2/krajowe/shared/definicje/ (nieobecne — adnotacja audytowa 2026-06-14)
 
-Ta dziedzina nie ma dedykowanego pliku w `shared/definicje/`. Cyfrowe, cyberbezpieczeństwo, AI, dane, IP — definicje RODO (art. 4), AI Act i KSC/NIS2 są obszerne i sektorowe; pokryte wprost w modułach mod-RODO-GDPR-2016-679, mod-AI-Act, mod-KSC-NIS2 (każdy z własną sekcją definicji ustawowych). Żaden plik shared/definicje/ nie obejmuje tej dziedziny bez duplikacji treści modułowej.
+Ta dziedzina nie ma dedykowanego pliku w `prawo-polskie-v2/krajowe/shared/definicje/`. Cyfrowe, cyberbezpieczeństwo, AI, dane, IP — definicje RODO (art. 4), AI Act i KSC/NIS2 są obszerne i sektorowe; pokryte wprost w modułach mod-RODO-GDPR-2016-679, mod-AI-Act, mod-KSC-NIS2 (każdy z własną sekcją definicji ustawowych). Żaden plik prawo-polskie-v2/krajowe/shared/definicje/ nie obejmuje tej dziedziny bez duplikacji treści modułowej.
 <!-- lex:wykonuje-aplikacja: REJESTR-MODULOW -->
 ## Moduły (22 łącznie — ✓ 21 OK, ☐ 1 STUB [certyfikacja])
 
@@ -186,6 +186,16 @@ USŁUGI CYFROWE I ELEKTRONICZNE:
 ```
 
 ---
+
+## ⛔ Pułapki (sprawdź zawsze, gdy pytanie ich dotyczy)
+
+- **Deepfake (AI Act art. 3 pkt 60):** dwa warunki łącznie — treść przypomina istniejącą osobę/przedmiot/miejsce/
+  zdarzenie **i** odbiorca mógłby ją uznać za autentyczną (test obiektywny, bez wymogu zamiaru); obowiązek ujawnienia
+  art. 50 ust. 4; zawsze wskaż wytyczne KE do art. 50 jako soft law (art. 96 ust. 1 lit. d). Szczegóły:
+  `modules/mod-AI-Act-framework.md`.
+- **„Przenosi na wszelkie pola eksploatacji”:** nie spełnia art. 41 ust. 2 PA, ale konkluzja **warunkowa** — zakres
+  może wynikać z wykładni umowy (art. 65 § 2 KC); art. 41 ust. 4 to nie „nieważność”. Szczegóły:
+  `modules/mod-PrAut-wlasnosc-intelektualna-IP.md`.
 
 ## Jak wywołać
 
