@@ -26,7 +26,7 @@ PDF rozstrzyga zgodność transkrypcji: wykonaj kontrolę stron według `wiki-ba
 ## Pytanie i synteza
 
 Zacznij od teczki i wyszukiwania istniejących notatek w `legal/dokumenty`; uzupełnij nawigację
-przez `search_notes` i `build_context`. Czytaj tylko trafne notatki i ich istotne
+przez `bm_search` i `bm_context`. Czytaj tylko trafne notatki i ich istotne
 powiązania. Dla tezy prawnej lub faktycznej wróć do dokumentu pierwotnego i konkretnej
 strony/bloku; aktualne prawo sprawdź odpowiednim MCP. Relacja grafu pomaga znaleźć
 materiał, ale sama nie dowodzi tezy. Brak wyników nazwij luką, nie dowodem nieistnienia.

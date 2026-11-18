@@ -36,7 +36,7 @@ przez użytkownika lub model wykonujący jego jawne zlecenie. Format wejściowy:
    Kopia musi zostać potwierdzona niezależnym HEAD i udokumentowana
    w notatce jako `r2://bucket/key`. Nie publikuj publicznych URL ani
    kluczy dostępu. Bez potwierdzonej kopii nie oznaczaj ingestu jako zakończony.
-6. W Basic Memory, projekt `legal`, folder `dokumenty/`: zapisz
+6. W Basic Memory, projekt `main`, folder `legal/dokumenty/`: zapisz
    **dokładną, niezmodyfikowaną treść zatwierdzonego Markdown**.
    Osobno, w dowolnej liczbie notatek wtórnych, zapisz osoby,
    postępowania, zdarzenia, lokalizacje informacji, sprzeczności

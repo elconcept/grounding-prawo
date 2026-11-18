@@ -142,7 +142,7 @@ skills:
     etap: B
     wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera w etapie przygotowawczym; sprawa przed sądem idzie do pism procesowych, `references/zgloszenia.md` §4a)
     wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` (nowa wersja na sesję, bez placeholderów), `_MAPA_KRZYWD.md`,
-      wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory `legal`, `relacje/<autor-slug>/`'
+      wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory (`main`, `legal/`), `relacje/<autor-slug>/`'
     dalej:
     - pisz-po-polsku
     nie_dubluj: 'HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj
@@ -212,7 +212,7 @@ skills:
     nie_dubluj: korzystaj z istniejącego wyniku dla tej samej treści i konfiguracji; OCR tylko odczyt-dokumentow, metodykę
       ingestu czytaj w shared/BASIC-MEMORY.md
 wiki_etap:
-  A: czytaj teczkę sprawy (`build_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce,
+  A: czytaj teczkę sprawy (`bm_context`) i notatki wiki po sygnaturze i nazwiskach; zapisz stan sprawy i terminy w teczce,
     nowe fakty z akt zgłoś do ingestu
   B: czytaj teczkę (decyzje, lekcje) i `orzeczenia/`; załóż albo zaktualizuj notatkę pisma w `sprawy/<katalog>/pisma/` (wersja,
     ścieżka, status)

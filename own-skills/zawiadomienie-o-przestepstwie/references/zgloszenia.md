@@ -91,7 +91,7 @@ Dla każdego epizodu z relacji sprawdź:
 
 Przy każdym wejściu w relację (przed pierwszym pytaniem):
 
-1. **Sprawdź pliki.** `list_directory(project="legal", dir_name="relacje/<autor-slug>")`, potem `read_note`
+1. **Sprawdź pliki.** `bm_list(project="main", path="legal/relacje/<autor-slug>")`, potem `bm_read`
    (co najmniej `include_content=False` z checksum). Oczekiwane notatki: `Relacja zdarzeń — <Autor>`,
    `Log zeznań — <Autor>`, `Rejestr pism — <Autor>`, `Pytania otwarte — <Autor>`, `Zgłoszenia — <Autor>`, katalog `wersje/`.
 2. **Brak systemu (pierwsze utworzenie).** Jeśli brakuje `Zgłoszenia` albo wszystkich notatek, **przed utworzeniem czegokolwiek**

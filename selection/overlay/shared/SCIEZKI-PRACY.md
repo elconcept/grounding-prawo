@@ -28,9 +28,9 @@ Wyniki i źródła przekazuj dalej; istniejących odczytów, ekstrakcji i kontro
    (`shared/ARTEFAKTY-SPRAWY.md`, „Teczka sprawy”). Do odpowiedzi nie zapisuj pisma.
 2. Przeczytaj w tej kolejności: `analiza/_brief.md`, `_wiedza.md` teczki (lekcje z poprzednich pism obowiązują),
    `analiza/_dokumenty.md`, ostatnie wpisy `_PRZEBIEGI.md`.
-3. Basic Memory, projekt `legal`: odczytaj notatkę teczki w `sprawy/<katalog>/` (`type: sprawa`; znajdź ją `search_notes` po nazwie katalogu albo sygnaturze). Brak teczki: załóż ją teraz
-   (`write_note`, `directory: sprawy/<katalog>`, `type: sprawa`, układ jak w `shared/BASIC-MEMORY.md`), powiąż z notatkami
-   `postepowania/` (szukaj po sygnaturze). Potem `build_context` z teczki i `search_notes` po nazwiskach. Ustalenia wiki to relacja
+3. Basic Memory, projekt `main`: odczytaj notatkę teczki w `legal/sprawy/<katalog>/` (`type: sprawa`; znajdź ją `bm_search` po nazwie katalogu albo sygnaturze). Brak teczki: załóż ją teraz
+   (`bm_write`, `directory: legal/sprawy/<katalog>`, `type: sprawa`, układ jak w `shared/BASIC-MEMORY.md`), powiąż z notatkami
+   `legal/postepowania/` (szukaj po sygnaturze). Potem `bm_context` z teczki i `bm_search` po nazwiskach. Ustalenia wiki to relacja
    do sprawdzenia w aktach, nie dowód.
 4. Odpowiedz krótko: stan sprawy z datą źródła, najbliższy termin, czego brakuje w aktach, proponowana ścieżka i pierwszy skill.
    Nie zaczynaj pisać pisma, zanim użytkownik potwierdzi cel.

@@ -22,7 +22,7 @@ Obowiązkowe są dwa osobne artefakty obok pism:
 
 Osobno prowadź pomocniczy **rejestr pism** i listę **pytań otwartych**.
 
-**Miejsce zapisu (od v0.7): Basic Memory, projekt `legal`, `relacje/<autor-slug>/`** —
+**Miejsce zapisu (od v0.7): Basic Memory, projekt `main`, `legal/relacje/<autor-slug>/`** —
 notatki, kolejność zapisu, awaria i migracja: [basic-memory-relacja](basic-memory-relacja.md).
 Nie zapisuj relacji, logu ani rejestru jako plików w katalogu sprawy ani w projekcie claude.ai;
 tam zostają tylko pisma. Pliki `relacja/_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md`, `_REJESTR_PISM.md`

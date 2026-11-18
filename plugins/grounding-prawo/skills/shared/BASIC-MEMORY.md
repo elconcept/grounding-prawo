@@ -1,28 +1,47 @@
 # Pamięć sesji i sprawy
 
-Trzy projekty pełnią odrębne role. Projekt `model-memory` jest współdzielony pomiędzy modelami, ale nie zastępuje natywnej pamięci ChatGPT ani Claude. Zawsze podawaj projekt jawnie; domyślny projekt serwera nie rozstrzyga miejsca zapisu.
+Basic Memory działa na własnym serwerze (`https://bm.xlap.pl/mcp`, OAuth) z jednym projektem `main`. Konektor
+i cykl sesji dostarcza plugin `basic-memory-nas` (`elconcept/basic-memory-plugin`): skille `bm-orient`, `bm-checkpoint`,
+`bm-decide`, `bm-remember`, schematy `session`, `decision`, `task` i brief na starcie sesji. Ten plik dokłada wyłącznie
+reguły prawnicze. Konfiguracja repozytorium (`.claude/settings.json` → `basicMemory`, `.codex/basic-memory.json`) ma
+pierwszeństwo przed przykładami poniżej. Zawsze podawaj `project` jawnie.
 
-| Projekt | Zawartość |
-|---|---|
-| `main` | **Dziennik sesji i recapów**: cel, wykonane działania, zmiany, testy, wyniki, błędy, otwarte sprawy i następny krok. Jedna aktualizowana notatka na sesję, także gdy nie ma trwałych wniosków. |
-| `model-memory` | **Kuratorowana pamięć**: krótka lista kluczowych, trwałych ustaleń i preferencji wartych zapamiętania między sesjami i modelami. Nie przechowuje zwykłych recapów, dzienników działań ani kopii materiałów źródłowych. |
-| `legal` | Dokumenty źródłowe, postępowania, zdarzenia, osoby, teczki spraw, pisma, ustalenia i ich źródła |
+| Miejsce w `main` | Zawartość | `type` |
+|---|---|---|
+| `legal/sessions/` | Checkpointy i recapy sesji: cel, działania, decyzje, wyniki, błędy, otwarte sprawy, następny krok | `session` |
+| `legal/decyzje/` | Decyzje autora z uzasadnieniem i co najmniej jedną obserwacją `- [decision] ...` | `decision` |
+| `legal/zadania/` | Zadania i terminy z `status` | `task` |
+| `legal/bm-remember/` | Krótkie, trwałe ustalenia i preferencje warte zapamiętania między sesjami i modelami | `note` |
+| `legal/sprawy/<katalog>/` | Teczki spraw, pisma, ustalenia, relacje i ich źródła | według treści |
+| `legal/dokumenty/`, `legal/postepowania/`, `legal/orzeczenia/`, `legal/relacje/<autor-slug>/` | Dokumenty źródłowe, przebieg postępowań, zweryfikowane orzeczenia, relacje autorów | według treści |
+
+Nie twórz projektów ani folderów spoza tej mapy (`checkpoints/`, `sesje/`, `model-memory`, osobny projekt `legal`).
+Pliki repozytorium `legal` (pisma, PDF, `relacje/*.md`) przywołuj zwykłym linkiem Markdown albo polem
+`source_path` we frontmatterze. `[[...]]` jest zarezerwowane dla notatek, które istnieją w Basic Memory;
+odnośnik do pliku repozytorium jako relacja grafu pozostaje nierozwiązany.
+
+Narzędzia serwera: `bm_project`, `bm_search`, `bm_find`, `bm_list`, `bm_read`, `bm_context`, `bm_write`, `bm_edit`,
+`bm_move`, `bm_delete`, `bm_schema`, `bm_man` (prefiks hosta może się różnić). Dawne nazwy (`write_note`, `read_note`,
+`search_notes`, `build_context`, `list_directory`, `list_memory_projects`) już nie istnieją.
 
 ## Dostęp i początek pracy
 
-1. Użyj dostępnego konektora Basic Memory. Gdy nie jest widoczny, wyszukaj narzędzia `basic-memory` w portalu Lex.
-   Nazwa hosta/prefix narzędzia może się różnić. `list_memory_projects` powinno potwierdzić `model-memory`, `main` i `legal`.
-2. W `model-memory` wyszukaj najważniejsze ustalenia i preferencje związane z zadaniem. W `main` przeczytaj ostatni odpowiedni recap, aby wznowić pracę. W `legal` odczytaj teczkę `sprawy/<katalog>/`, jej relacje
-   i lekcje (`read_note`, `build_context`, `search_notes` po sygnaturze). Brak teczki: utwórz przed analizą.
-3. Dla ingestu przeczytaj w `legal` `_metodologia/Metodologia ingestu` i `_metodologia/Zasady języka wiki`.
-   Jeśli nazwa nie rozwiązuje się, wyszukaj notatkę. Nie udawaj odczytu niedostępnej metodyki.
-4. Wznowienie zaczynaj od zaległych zapisów i stanu pisma. Wiki wskazuje źródła; nie zastępuje akt ani aktualnego prawa.
+1. Użyj konektora Basic Memory (Claude Code: plugin `basic-memory-nas`; ChatGPT: aplikacja Basic Memory (NAS)).
+   `bm_project(command="list")` musi pokazać projekt `main`.
+2. Przed pierwszą odpowiedzią merytoryczną wykonaj `bm-orient` albo co najmniej:
+   `bm_search(project="main", note_types=["session"], path="legal/sessions", since="3d")`, aktywne zadania
+   (`note_types=["task"]`, `filters={"status": "active"}`) i świeże decyzje. Przeczytaj najnowszy właściwy checkpoint.
+3. Dla sprawy odczytaj teczkę `legal/sprawy/<katalog>/`, jej relacje i lekcje (`bm_read`, `bm_context`,
+   `bm_search` po sygnaturze). Brak teczki: utwórz przed analizą.
+4. Dla ingestu przeczytaj metodykę ingestu i zasady języka wiki (`bm_search` po tytule). Jeśli nie istnieje,
+   nie udawaj jej odczytu.
+5. Wznowienie zaczynaj od zaległych zapisów i stanu pisma. Wiki wskazuje źródła; nie zastępuje akt ani aktualnego prawa.
 
 ## Ingest PDF — wyłącznie przez model LLM
 
 Zasady wiki (źródła, syntezy, kontrola jakości): `shared/WIKI.md`.
 
-Ingest do `legal` prowadzi wyłącznie model, wykonując po jednej stronie PDF:
+Ingest do `legal/` prowadzi wyłącznie model, wykonując po jednej stronie PDF:
 `wiki-basic-memory/modules/ingest-wiki` → `the-ocr-ingest-page` (Google Vision/Azure) → kontrola OCR i obrazu
 → ewentualnie ponowny odczyt Datalab/LlamaParse → zatwierdzenie strony.
 Nie korzystaj z `wiki_ingest` (refresh, start, extract, index) ani
@@ -34,14 +53,14 @@ całego PDF. Rozdziel dokumenty zawarte w jednym PDF na osobne notatki;
 
 Binarne PDF nie trafiają do Basic Memory: model wysyła niezmieniony PDF
 do prywatnego bucketu Cloudflare R2 (`the-ocr-archive`) i dopiero po
-potwierdzeniu kopii zapisuje Markdown jako notatkę źródłową w `legal/dokumenty`.
+potwierdzeniu kopii zapisuje Markdown jako notatkę źródłową w `main`, folder `legal/dokumenty/`.
 PDF trafia wyłącznie do R2, Markdown wyłącznie do Basic Memory.
 Notatki wtórne tworzy lub aktualizuje osobno i łączy linkami do źródła.
 `wiki_plan` pozostaje niezależnym narzędziem planowania, nie uruchamia OCR.
 
 Niedostępność OCR, obrazów lub kopii źródła w R2 oznacza przerwany
 ingest, nie status „zweryfikowany”. Wymagaj faktycznego zapisu
-`write_note` i kontroli przez `read_note`.
+`bm_write` i kontroli przez `bm_read`.
 
 
 ## Samowystarczalność wiki
@@ -59,17 +78,17 @@ Wiki musi pozostać użyteczna po odłączeniu biblioteki źródeł. Ponowna wer
 jest potrzebna przy nowej wersji dokumentu lub konkretnej wykrytej rozbieżności,
 nie przy każdym odczycie zweryfikowanej transkrypcji.
 
-## Zapis w `legal` po każdym zakończonym etapie
+## Zapis w `legal/` po każdym zakończonym etapie
 
 - **Dokument:** przetwarzaj pojedynczo. Sprawdź istniejący wpis po identyfikatorze źródła i ścieżce.
   Zapisz tożsamość dokumentu, pełną transkrypcję w wiki, strony/segmenty, jakość odczytu i powiązania.
   Pełny tekst i wyciąg zapisuj według odczytanej metodyki ingestu; nie zastępuj źródła streszczeniem.
 - **Ustalenie:** wskaż dokument i stronę/blok albo autora i datę relacji. Oddziel twierdzenie strony od ustalenia,
-  zachowaj sprzeczności. Przebieg postępowania zapisuj w `postepowania/`, nie tylko w recapach.
-- **Teczka `sprawy/<katalog>/`:** Stan, Terminy, Decyzje użytkownika, Lekcje, Pisma, Relacje.
-- **Pismo `sprawy/<katalog>/pisma/`:** wersja, ścieżka, runda, otwarte uwagi, pytania, wyniki kontroli i status.
-- **Orzeczenie:** zweryfikowane źródło, sygnatura i relacja do sprawy; sprawdź `orzeczenia/` przed kolejnym researchem.
-- **Relacja pokrzywdzonego / świadka `relacje/<autor-slug>/`:** relacja zdarzeń, log zeznań, rejestr pism,
+  zachowaj sprzeczności. Przebieg postępowania zapisuj w `legal/postepowania/`, nie tylko w recapach.
+- **Teczka `legal/sprawy/<katalog>/`:** Stan, Terminy, Decyzje użytkownika, Lekcje, Pisma, Relacje.
+- **Pismo `legal/sprawy/<katalog>/pisma/`:** wersja, ścieżka, runda, otwarte uwagi, pytania, wyniki kontroli i status.
+- **Orzeczenie:** zweryfikowane źródło, sygnatura i relacja do sprawy; sprawdź `legal/orzeczenia/` przed kolejnym researchem.
+- **Relacja pokrzywdzonego / świadka `legal/relacje/<autor-slug>/`:** relacja zdarzeń, log zeznań, rejestr pism,
   zgłoszenia (złożone zawiadomienia, sygnatury), pytania otwarte, `wersje/`, `archiwum/`. To jedyne miejsce tych danych: nie twórz ich plików w katalogu
   sprawy ani w projekcie claude.ai (tam tylko pisma). Szczegóły: skill `zawiadomienie-o-przestepstwie`,
   `zawiadomienie-o-przestepstwie/references/basic-memory-relacja.md`.
@@ -77,34 +96,41 @@ nie przy każdym odczycie zweryfikowanej transkrypcji.
 Nie kończ ingestu na „zgłoszeniu do ingestu”. Zakończenie oznacza zapis dokumentu, ustaleń i relacji oraz odczyt
 potwierdzający. Gdy brakuje metodyki lub źródła, oznacz etap NIEZAKOŃCZONY i zapisz dokładnie zaległą czynność.
 
-## Recap w `main` — dziennik każdej sesji zmian
+## Checkpoint sesji w `legal/sessions/`
 
-Jedyne miejsce recapów: projekt `main`, katalog `sesje/` (podkatalogi tematyczne dozwolone). Tytuł notatki: `RRRR-MM-DD — <temat>`
-(data sesji, pełny myślnik, temat bez prefiksu „Recap” i bez identyfikatora sesji); nazwa pliku równa tytułowi.
-Identyfikator sesji (hosta albo stabilny znacznik czasu UTC z pierwszego zapisu) zapisz w metadanych notatki `session_id`,
-nie w tytule. Przy wznowieniu odszukaj istniejącą notatkę po `session_id` lub po dacie i temacie.
+Checkpoint pisz skillem `bm-checkpoint` (plugin `basic-memory-nas`): `type: session`, folder `legal/sessions/`,
+format, sekcje i metadane według tego skilla (`agent`, `session_id` hosta, `status`). Każdy checkpoint to nowa
+notatka; poprzednich nie nadpisuj. Zapisz checkpoint po istotnym etapie, przed długą operacją, po kompakcji
+kontekstu i przed odpowiedzią końcową. Nie czekaj na komendę „zamknij”.
 
-Zapisz: cel użytkownika; wykonane działania; decyzje i ich przyczyny; pliki/wyniki z odnośnikami;
-kontrole faktycznie wykonane; nierozstrzygnięte kwestie; następny krok; odnośniki do notatek `legal`.
-Aktualizuj tę samą notatkę po istotnym etapie, przed długą operacją i przed odpowiedzią końcową.
-Nie czekaj na komendę „zamknij” ani na zakończenie aplikacji. Sam recap nie zastępuje ingestu do `legal`.
+Treść: cel użytkownika; wykonane działania; decyzje i ich przyczyny; pliki/wyniki ze ścieżkami repozytorium;
+kontrole faktycznie wykonane; nierozstrzygnięte kwestie; następny krok; odnośniki do notatek w `legal/`.
+Checkpoint nie zastępuje zapisu ustaleń w `legal/sprawy/` ani ingestu. Decyzję autora zapisz osobno
+skillem `bm-decide` w `legal/decyzje/`.
 
-## Aktualizacja `model-memory` — tylko gdy naprawdę warto zapamiętać
+## Trwałe ustalenia w `legal/bm-remember/` — tylko gdy naprawdę warto
 
-Nie zapisuj tu przebiegu sesji. Po recapowaniu w `main` oceń, czy ujawniła się **trwała, istotna informacja**, która poprawi przyszłe działania wielu modeli: np. potwierdzona preferencja autora, przyjęta zasada architektury albo decyzja o długim horyzoncie. Jeśli nie ma takiej informacji, **nie zapisuj niczego do `model-memory`**. Jeśli jest: najpierw wyszukaj istniejącą notatkę i uaktualnij krótkie ustalenie z kontekstem, zamiast tworzyć kopię recapu. Nie przenoś automatycznie całych podsumowań, logów, transkryptów czy sekretów.
+Nie zapisuj tu przebiegu sesji. Gdy sesja ujawniła trwałą, istotną informację dla przyszłej pracy (potwierdzoną
+preferencję autora, przyjętą zasadę, decyzję o długim horyzoncie), zapisz ją skillem `bm-remember`; najpierw
+wyszukaj istniejącą notatkę i uzupełnij ją zamiast tworzyć kopię. Bez takiej informacji nie zapisuj niczego.
+Nie przenoś całych podsumowań, logów, transkryptów ani sekretów.
 
 ## Potwierdzenie i awaria
 
-Zapisy tylko przez MCP (`write_note`, `edit_note`). Przed zmianą istniejącej notatki odczytaj ją; stosuj dopisek
-lub zmianę konkretnej sekcji, nie nadpisuj cudzych ustaleń. Przed ponowieniem niepewnego zapisu sprawdź, czy już istnieje.
-Po zapisie wykonaj `read_note` i sprawdź treść ostatniej zmiany. Sukces to odczyt zgodny z zamierzeniem, nie samo wywołanie.
+Zapisy tylko przez MCP (`bm_write`, `bm_edit`). Przed zmianą istniejącej notatki odczytaj ją (`bm_read`) i przekaż
+`expected_checksum`; stosuj dopisek lub zmianę sekcji, nie nadpisuj cudzych ustaleń. Przed ponowieniem niepewnego
+zapisu sprawdź, czy już istnieje. Po zapisie wykonaj `bm_read` i sprawdź treść. Sukces to odczyt zgodny
+z zamierzeniem, nie samo wywołanie. Po zapisie notatki ze schematem uruchom `bm_schema(command="validate", identifier=...)`.
 
-W odpowiedzi końcowej podaj krótko: `Pamięć: main — recap <identyfikator>; model-memory — zaktualizowano <identyfikator> / bez nowych trwałych ustaleń; legal — zapisano <identyfikator> / bez nowych ustaleń`. Gdy zapis się nie udał, podaj `NIEZAPISANE` i przyczynę.
-Zaległość dopisz do `_PRZEBIEGI.md` pisma lub `_robocze/pamiec-zalegle.md` w folderze sprawy, z projektem,
+W odpowiedzi końcowej podaj krótko: `Pamięć: sesja <identyfikator>; legal — zapisano <identyfikator> / bez nowych ustaleń`.
+Gdy zapis się nie udał, podaj `NIEZAPISANE` i przyczynę.
+Zaległość dopisz do `_PRZEBIEGI.md` pisma lub `_robocze/pamiec-zalegle.md` w folderze sprawy, z folderem,
 identyfikatorem notatki i treścią do zapisu. Przy następnym wejściu ponów po sprawdzeniu duplikatów.
 Można kontynuować pracę merytoryczną; nie deklaruj pełnego zakończenia ingestu ani skutecznego zapisu pamięci.
-Nagłe zamknięcie procesu może uniemożliwić zapis; checkpointy ograniczają tę stratę, instrukcja nie jest hookiem hosta.
 
 ## Przenośność i hooki
 
-Reguły odczytu/zapisu są konfigurowane per klient lub w pluginie. Na starcie sesji odczytaj adekwatne *trwałe ustalenia* z `model-memory` i właściwy *ostatni recap* z `main`. Po znaczącym etapie zapisz dziennik sesji do `main`; do `model-memory` dopisz wyłącznie wybrane key takeaways, jeśli wystąpiły. Każdy zapis sprawdź odczytem. Dla Claude Code można dołożyć hook z poleceniem odczytu/zapisu, ale sam plik instrukcji nie uruchamia hooka. **Wbudowana Memory ChatGPT nie może zostać przekierowana na MCP**; można ją uzupełniać o Basic Memory, o ile narzędzia są dostępne. Nie synchronizuj automatycznie całych rozmów ani sekretów.
+Claude Code: brief na starcie sesji i polecenie checkpointu po kompakcji daje hook pluginu `basic-memory-nas`;
+hook tego pluginu tylko odsyła do tego pliku. ChatGPT nie ma hooków: orientację i checkpoint wywołuje model
+albo użytkownik (`@bm-orient`, `@bm-checkpoint`). **Wbudowana Memory ChatGPT nie może zostać przekierowana na MCP.**
+Nie synchronizuj automatycznie całych rozmów ani sekretów.

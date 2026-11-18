@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Claude Code hook: inject MCP memory retrieval/checkpoint instructions.
+"""Claude Code / Codex hook: point the model at the legal memory protocol.
 
-No network calls, credentials, transcript upload, or local memory duplicates.
-Real reads/writes remain LLM tool calls to the authenticated Basic Memory MCP.
+The session brief, project mapping and post-compaction checkpoint come from the
+`basic-memory-nas` plugin. This hook adds only the legal-specific pointer and
+must stay consistent with it: one project `main`, sessions in legal/sessions.
+No network calls, credentials, transcript upload or local state.
 """
 from __future__ import annotations
 import json
@@ -14,25 +16,22 @@ def main() -> None:
         event = json.load(sys.stdin)
     except (ValueError, OSError):
         event = {}
-    name = event.get("hook_event_name", "")
+    name = event.get("hook_event_name", "") if isinstance(event, dict) else ""
     if name == "SessionStart":
         print(
-            "Basic Memory: odczytaj z model-memory tylko kuratorowane, kluczowe i trwałe ustalenia "
-            "(UUID 50c6d08c-2e2f-4c94-9afb-5d2478ae821b), a z main najnowszy "
-            "recap odpowiedni do bieżącej sesji. W legal są źródła, sprawy i notatki dowodowe. "
-            "Prowadź dziennik zmian i recapy sesji wyłącznie w main/sesje/ (tytuł: RRRR-MM-DD — <temat>). "
-            "Model-memory aktualizuj selektywnie tylko przy nowych key takeaways "
-            "przydatnych w przyszłości, nigdy automatycznie całym recapem. "
-            "Po zapisie potwierdź odczytem, nie zapisuj sekretów."
+            "Basic Memory (grounding-prawo): projekt `main`, wszystko dla spraw pod `legal/` "
+            "(checkpointy `legal/sessions/` type: session, decyzje `legal/decyzje/`, zadania `legal/zadania/`, "
+            "teczki `legal/sprawy/<katalog>/`). Przed pierwszą odpowiedzią merytoryczną zorientuj się "
+            "(`bm-orient` albo `bm_search` w `legal/sessions`), a przy pracy nad sprawą przeczytaj "
+            "`shared/BASIC-MEMORY.md`. Każdy zapis potwierdź `bm_read`; bez sekretów."
         )
     elif name == "PreCompact":
         print(
-            "Przed kompakcją zapisz/uzupełnij recap bieżącej sesji wyłącznie "
-            "w Basic Memory main/sesje/ (tytuł: RRRR-MM-DD — <temat>; działania, decyzje, wyniki, błędy, kolejny krok). "
-            "Sprawdź odczytem. Model-memory to curated key takeaways: aktualizuj "
-            "tylko jeśli sesja wnosi wartościową trwałą zasadę lub preferencję; "
-            "nie zapisuj tam dziennika. Legal zawiera fakty i źródła spraw."
+            "Przed kompakcją zapisz checkpoint skillem `bm-checkpoint`: projekt `main`, folder "
+            "`legal/sessions/`, type: session (cel, działania, decyzje, wyniki, błędy, następny krok). "
+            "Potwierdź odczytem `bm_read`."
         )
+
 
 if __name__ == "__main__":
     main()

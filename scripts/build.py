@@ -226,7 +226,7 @@ def add_bridges(sel):
         if b.get("nie_dubluj"):
             lines.append(f"- **Nie dubluj:** {b['nie_dubluj']}")
         wiki = b.get("wiki") or bridges["wiki_etap"][b["etap"]]
-        lines.append(f"- **Basic Memory (`legal`):** {wiki} (protokół: `shared/BASIC-MEMORY.md`)")
+        lines.append(f"- **Basic Memory (`main`, `legal/`):** {wiki} (protokół: `shared/BASIC-MEMORY.md`)")
         lines.append("- **Mapa ścieżek:** `shared/SCIEZKI-PRACY.md` (router).")
         sm = os.path.join(SKILLS, name, "SKILL.md")
         text = open(sm, encoding="utf-8").read().rstrip("\n")
@@ -567,10 +567,11 @@ def add_session_protocol():
         directive = ("\n## Pamięć sesji — przed pracą i przed odpowiedzią końcową\n\n"
             "Przeczytaj `shared/BASIC-MEMORY.md`, `shared/ZASADY-PLUGINU.md` oraz katalog `shared/INDEKS-SKILLI.md`. "
             "Przy redakcji pisma wczytaj `shared/STYLE.md`; przy zapisie plików `shared/ARTEFAKTY-SPRAWY.md`. "
-            "Na wejściu odczytaj kluczowe trwałe ustalenia z `model-memory`, ostatni recap z `main` i sprawę z `legal`; "
-            "po etapach zapisuj recap sesji w `main/sesje/` i sprawdź odczytem. "
-            "Do `model-memory` dodawaj wyłącznie nowe, wartościowe key takeaways; nigdy logu sesji. "
-            "Nowe dokumenty i ustalenia zapisuj w `legal` po każdym zakończonym etapie. "
+            "Basic Memory: projekt `main`, sprawy pod `legal/`. Na wejściu wykonaj `bm-orient` (ostatni checkpoint "
+            "z `legal/sessions/`, aktywne zadania, świeże decyzje) i odczytaj teczkę sprawy z `legal/sprawy/<katalog>/`; "
+            "po etapach zapisuj checkpoint skillem `bm-checkpoint` (`legal/sessions/`, type: session) i sprawdź odczytem. "
+            "Trwałe ustalenia tylko przez `bm-remember` (`legal/bm-remember/`), decyzje przez `bm-decide` (`legal/decyzje/`); nigdy logu sesji. "
+            "Nowe dokumenty i ustalenia zapisuj w `legal/` po każdym zakończonym etapie. "
             "Podaj status pamięci i identyfikator notatki; nie zgłaszaj zapisu bez potwierdzenia MCP.\n"
             "\n## Repertorium - pierwsze źródło w każdym zadaniu prawnym\n\n"
             "Zanim powołasz, ocenisz albo pominiesz przepis, orzeczenie lub kwalifikację, wywołaj przez portal `lex` "
