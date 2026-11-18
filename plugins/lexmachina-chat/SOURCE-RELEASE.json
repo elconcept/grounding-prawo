@@ -1,0 +1,22 @@
+{
+  "source_plugin_id": "plugins_6af8ea28db3081918bf9ee57421f919b",
+  "source_release_id": "pluginrel_6afdb8ff27688191aa4ce96949c98dfa",
+  "source_version": "1.0.0",
+  "source_repository": "elconcept/grounding-prawo",
+  "source_strategy": "CHAT adapted SKILL.md and runtimes taken from Plugin Creator 1.0.0; shared and unchanged supporting files inherited from the existing grounding-prawo generated source tree; two reporter skills materialized from Plugin Creator",
+  "skills": [
+    "analiza-sadowa-v6",
+    "analizator-dowodow-v3",
+    "analizator-umow-v1",
+    "audyt-systemu-v4",
+    "chat-router-akta-i-dowody",
+    "chronologia-sprawy-v1",
+    "prawny-router-v3",
+    "prawo-polskie-v2",
+    "przewodnik-prawny-v2",
+    "raport-klienta-v1",
+    "raport-sytuacyjny-v2",
+    "shared"
+  ],
+  "note": "The package is a CHAT-targeted source distribution. Plugin Creator backend 1.0.0 and static QA confirmed; complete end-to-end runtime and byte parity of inherited common support files are not claimed."
+}

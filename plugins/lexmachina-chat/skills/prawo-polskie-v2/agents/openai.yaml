@@ -1,0 +1,7 @@
+interface:
+  display_name: "Prawo polskie — fasada DR"
+  short_description: "Wybór właściwego DR z oryginalnej mapy LexMachina; wywołanie poprzez prawny-router-v3"
+policy:
+  products:
+    - CHAT
+  allow_implicit_invocation: true

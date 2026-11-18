@@ -1,0 +1,17 @@
+{
+  "source": "elconcept/LexMachina/main/Wersja rozwojowa rozpakowana/raport-klienta-v1",
+  "source_files": {
+    "PORTABILITY-MANIFEST.md": "f2935e6e60edd01ab9f8a2913d83530983955b19b9ae44823593bd78def3eb49",
+    "SKILL.md": "72a4898af4cf650fcfbabfd7cdca3b4bd89b3bb6c60ca19c012f0ecc9dfa8d17",
+    "agents/openai.yaml": "4e70d8517ed806846674476e1e4c09d40eb0603b8088e9419094c0b15be86883",
+    "assets/icon.svg": "49315dda7125ec5fc77ef5f2b96126d8b2121c6e72944b4702972e90f321d3ee",
+    "assets/widget-raport-klienta.html": "d3d247d8ea08ab5e97448ff7f473996d31b91d2e942152bd9591edd9a8392c48",
+    "references/BLUEPRINT-SCHEMA.md": "e51f3bda399d2e1a7d2faf23d09f423d56f4dd15987d4dd4c8f3b1c985974fd5",
+    "references/CHANGELOG.md": "726342953a065b9825f85c28f90baca106a4e583431bb1756bf741295ab073a1",
+    "references/jezyk-klienta.md": "02c0188d2e77515c1d4cb57c403753ed1b7bc1ebc6bad2b81e46e9686ed0faea",
+    "references/sekcje-biznesowe.md": "29f6cc31b6c715aba10915abf5c76fb6682e32f033d5d2ab84cd62045c69626c"
+  },
+  "checksum_match": "9/9",
+  "upstream_skill_version": "1.9",
+  "adapter_version": "0.9.0"
+}

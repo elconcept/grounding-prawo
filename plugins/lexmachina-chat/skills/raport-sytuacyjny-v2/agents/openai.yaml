@@ -1,0 +1,8 @@
+interface:
+  display_name: "Raport sytuacyjny v2"
+  short_description: "Stan sprawy, ryzyka i rekomendacje"
+  default_prompt: "Przygotuj raport sytuacyjny konkretnej sprawy z chronologią, źródłami, ryzykami, sprzecznościami i rekomendacjami."
+policy:
+  products:
+    - CHAT
+  allow_implicit_invocation: true

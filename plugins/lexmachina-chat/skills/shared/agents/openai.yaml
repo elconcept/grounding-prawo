@@ -1,0 +1,5 @@
+interface:
+  display_name: shared
+  short_description: Wspólne reguły LexMachina; biblioteka używana przez router, nie samodzielna analiza.
+policy:
+  allow_implicit_invocation: true

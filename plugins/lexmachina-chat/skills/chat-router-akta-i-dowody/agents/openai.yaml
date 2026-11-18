@@ -1,0 +1,7 @@
+interface:
+  display_name: Akta i Dowody — CHAT
+  short_description: Akta, dowody i chronologia
+policy:
+  products:
+  - CHAT
+  allow_implicit_invocation: true

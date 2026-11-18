@@ -15,6 +15,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Legal"
+    },
+    {
+      "name": "lexmachina-chat",
+      "source": {
+        "source": "local",
+        "path": "./plugins/lexmachina-chat"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Legal"
     }
   ]
 }

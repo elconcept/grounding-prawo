@@ -1,0 +1,7 @@
+interface:
+  display_name: "Przewodnik Prawny (CHAT)"
+  short_description: "Wewnętrzny przewodnik LAIK/PRAWNIK: prowadzenie, pytania, menu i ocena pism"
+policy:
+  products:
+    - CHAT
+  allow_implicit_invocation: true

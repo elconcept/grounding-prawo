@@ -1,0 +1,35 @@
+{
+  "source_archive": "przewodnik-prawny-v2.zip",
+  "source_archive_sha256": "26c5fae257a8bc4d79476d8ab85014bff796283ef279ee0d4fde5fc67f64cfc5",
+  "source_version": "2.11",
+  "source_file_count": 9,
+  "source_skill_sha256": "0103a2ee8c45d03d734a5cda91b7ae9132a1b6b7df0dddb00f3c998e81df9a4f",
+  "source_checksum_entries": 8,
+  "source_checksum_mismatches": [
+    "SKILL.md",
+    "agents/openai.yaml"
+  ],
+  "original_files": {
+    "CHECKSUMS.sha256": "805932506ec3f98c49991d83b66f2beeedd948c179612380f2cf90c10ed2e9cd",
+    "PORTABILITY-MANIFEST.md": "a21dd41cabeca358a363d2b3e3551aa8b53ebd664c1ffaf39c06945f1f569d8f",
+    "SKILL.md": "0103a2ee8c45d03d734a5cda91b7ae9132a1b6b7df0dddb00f3c998e81df9a4f",
+    "agents/openai.yaml": "e6a6133f8ef7d24cb3b812acce7ab9e3241a6487f25aed6f567bec50b874ac39",
+    "assets/icon.svg": "9be88f8dd4c5e658961515c71389eafd45142ffa68bcae58e8dcff57d178ed91",
+    "references/CHANGELOG.md": "f8b2b0e641485435b9581c2881c269a603dd2a066510a069c998418636e02d32",
+    "references/KROK-F.md": "d8d8712c49a563cc06a19904745cead252ee08748f0deb1b1bd534e83440a5a2",
+    "references/KROK-M.md": "afb25bfd6baeafd554328fa8507abfeab6159ee7b85faa8190355504163bde84",
+    "references/TRYB-SUROWA-ANALIZA.md": "fbbc560a7df3122faf6468bcd8bd37ebe8e1b6ebd199494d41bc8ab5b2941c30"
+  },
+  "adapted_files": {
+    "SKILL.md": "4fa5c64f5682220128f640d6a373216f807113e9faffd387279d9237bc51791a",
+    "agents/openai.yaml": "47fd20ce3adc060a1c2f66879dcc9e1e83803875e9a149170a567513696854e4",
+    "references/KROK-F.md": "5c94a48fe8a8ec0fbf7d54596146ee0499f1aa30f0627ed95ef290873db6f57a",
+    "references/KROK-M.md": "6a70114d435aead8e2051a3b411710677ccc8790bfbf069ffb620135fbcb2de4",
+    "references/TRYB-SUROWA-ANALIZA.md": "8f6aca33b6f3dc8508807bf3955242062f55f2fe9f3ff2a31f2838d3612a96eb",
+    "PORTABILITY-MANIFEST.md": "d43200cd8801d7f9cc72f4b29b122be61fc911ab9ffa861bcf4901afbe59446f"
+  },
+  "source_core_preserved": true,
+  "reference_body_preserved": true,
+  "backend_publication": "NOT_YET_PUBLISHED",
+  "e2e_with_real_cases": "NOT_CHECKED"
+}

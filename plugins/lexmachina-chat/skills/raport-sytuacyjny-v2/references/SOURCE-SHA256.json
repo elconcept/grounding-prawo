@@ -1,0 +1,13 @@
+{
+  "source": "elconcept/LexMachina/main/Wersja rozwojowa rozpakowana/raport-sytuacyjny-v2",
+  "original_files": {
+    "SKILL.md": "365f6ec04c206426c438974045dd344bf4f399806a629ce6b8bd2b18e939625a",
+    "PORTABILITY-MANIFEST.md": "f3ea9eaa543e50296513c8c3fd8ae5506aea12eb189775f99bb382cd6ab260d4",
+    "agents/openai.yaml": "64f72a9a283de348b6cade23f878b91fc93ae4ccc740de542d475fb6cf86347e",
+    "assets/icon.svg": "e9301497fa98ef56aaca7ede0857b9a18dc06c34040f0679c609a6bf49b1d38b",
+    "assets/widget-raport-sytuacyjny.html": "a1f641efca8a6aeb0b4921de13ce58a966dd1445bb086f32828fb10d02655ed6",
+    "references/CHANGELOG.md": "076d8a542c04c408077a725267a475166fb8ffd6f37eecf8bb4ebd3db8aa9949"
+  },
+  "historical_checksum": "6/6 matched",
+  "adapter_version": "0.8.0"
+}

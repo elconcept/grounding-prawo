@@ -28,8 +28,12 @@ def validate(root):
         claude = read_json(root / ".claude-plugin/marketplace.json")
         codex = read_json(root / ".agents/plugins/marketplace.json")
         check(claude['name'] == codex['name'], 'Marketplace names differ')
-        check(len(claude['plugins']) == len(codex['plugins']) == 1, 'Expected one plugin')
-        cp, op = claude['plugins'][0], codex['plugins'][0]
+        check(len(claude['plugins']) == 1 and len(codex['plugins']) == 2, 'Expected original Claude plugin and two Codex marketplace entries')
+        cp = claude['plugins'][0]
+        op = next((item for item in codex['plugins'] if item['name'] == cp['name']), None)
+        check(op is not None, 'Original plugin missing from Codex marketplace')
+        if op is None:
+            return errors
         check(cp['source'] == op['source']['path'], 'Plugin source paths differ')
         plugin = (root / cp['source']).resolve()
         check(plugin.is_relative_to(root.resolve()), 'Plugin escapes repository')
@@ -86,6 +90,32 @@ def validate(root):
                     asset = data.get('interface', {}).get(field)
                     if asset:
                         check((path.parent / asset).is_file(), f'{label}: missing {field}')
+        # Dedicated CHAT package is independently versioned; do not replace the Claude build.
+        chat_entry = next((item for item in codex['plugins'] if item['name'] == 'lexmachina-chat'), None)
+        check(chat_entry is not None, 'Missing dedicated lexmachina-chat marketplace entry')
+        if chat_entry is not None:
+            check(chat_entry['source']['source'] == 'local', 'CHAT entry must use local packaged source')
+            chat = (root / chat_entry['source']['path']).resolve()
+            check(chat.is_relative_to(root.resolve()), 'CHAT plugin escapes repository')
+            chat_manifest = read_json(chat / 'plugin.json')
+            chat_compat = read_json(chat / '.codex-plugin/plugin.json')
+            chat_source = read_json(chat / 'SOURCE-RELEASE.json')
+            check(chat_manifest.get('$schema') == 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json', 'CHAT: invalid portable manifest')
+            check(chat_manifest['name'] == chat_compat['name'] == chat_entry['name'], 'CHAT: names differ')
+            check(chat_manifest['version'] == chat_compat['version'], 'CHAT: versions differ')
+            check(bool(re.fullmatch(r'\d+\.\d+\.\d+', chat_manifest['version'])), 'CHAT: invalid semver')
+            check(not (chat / 'mcp.json').exists() and not (chat / '.mcp.json').exists(), 'CHAT: must not require MCP')
+            expected_chat = set(chat_source['skills'])
+            actual_chat = {f.parent.name for f in (chat / 'skills').glob('*/SKILL.md')}
+            check(actual_chat == expected_chat, 'CHAT: skill inventory differs from source manifest')
+            for f in (chat / 'skills').glob('*/SKILL.md'):
+                match = re.match(r'\A---\n(.*?)\n---\n', f.read_text(encoding='utf-8'), re.S)
+                check(match is not None, f'CHAT: missing frontmatter {f.parent.name}')
+                if match:
+                    data = yaml.safe_load(match[1])
+                    check(data.get('name') == f.parent.name and bool(data.get('description')), f'CHAT: wrong name/description {f.parent.name}')
+            for f in chat.rglob('*'):
+                check(not f.is_symlink(), f'CHAT: symlink {f}')
         for path in plugin.rglob('*'):
             check(not path.is_symlink(), f'Symlink in package: {path}')
     except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError) as exc:

@@ -1,0 +1,8 @@
+interface:
+  display_name: "Audyt systemu v4"
+  short_description: "Audyt skilli, źródeł i wersji"
+  default_prompt: "Przeprowadź audyt dostępnego systemu prawnych skilli i przedstaw wykryte błędy, zależności, stopień wykonania testów i plan napraw."
+policy:
+  products:
+    - CHAT
+  allow_implicit_invocation: true

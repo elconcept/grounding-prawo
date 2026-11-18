@@ -1,0 +1,8 @@
+interface:
+  display_name: "Raport klienta v1"
+  short_description: "Raport indywidualny i biznesowy"
+  default_prompt: "Przygotuj zewnętrzny raport dla klienta na podstawie przeprowadzonej analizy sprawy, bez ujawniania wewnętrznej strategii."
+policy:
+  allow_implicit_invocation: true
+  products:
+    - CHAT

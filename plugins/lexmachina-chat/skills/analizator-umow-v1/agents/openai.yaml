@@ -1,0 +1,7 @@
+interface:
+  display_name: "Analizator Umów LexMachina"
+  short_description: "Analiza, redakcja i negocjacja umów oraz klauzul w CHAT"
+policy:
+  products:
+  - CHAT
+  allow_implicit_invocation: true

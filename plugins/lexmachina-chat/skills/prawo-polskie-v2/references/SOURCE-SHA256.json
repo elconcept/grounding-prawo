@@ -1,0 +1,69 @@
+{
+  "source_zip": "prawo-polskie-v2.zip",
+  "source_zip_sha256": "fecef228fa4ce68f8b86b67c20771eefc393bcf0bdc1a831665e057c82a8e3a9",
+  "source_files": 8,
+  "source_skill_version": "6.73",
+  "source_skill_sha256": "83ca773d06c323a28369cd1f58d9a8be48f6e13534d3d1c6ee31ba991f756641",
+  "routing_map_sha256": "0365ef3542204a2ba37f53e990530ee524048181af63335cefde25e40b7e4f23",
+  "routing_map_bytes": 153866,
+  "original_checksum_manifest_sha256": "59dbcdf2e437abd0539ba7b25a5c44642d746ee32e4081147e400f93822c29ff",
+  "original_checksum_matches": [
+    "PORTABILITY-MANIFEST.md",
+    "assets/icon.svg",
+    "references/CHANGELOG.md",
+    "references/HISTORIA-ZMIAN-PLIKOW.md"
+  ],
+  "original_checksum_mismatches": [
+    {
+      "path": "ROUTING-MAP.md",
+      "manifest_sha256": "208b80face11e9f2c4e57c53c704fb5700adac5f05ef5171dcd4645933386315",
+      "actual_sha256": "0365ef3542204a2ba37f53e990530ee524048181af63335cefde25e40b7e4f23"
+    },
+    {
+      "path": "SKILL.md",
+      "manifest_sha256": "3dea9c2db3e00159ee0b2f81818da451e75e7561b78082ee9d769e7d433d5dd2",
+      "actual_sha256": "83ca773d06c323a28369cd1f58d9a8be48f6e13534d3d1c6ee31ba991f756641"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "manifest_sha256": "9534a6fc6d1ced5da09bf3de3cd8763e08a0cbe70a3b41813ce56de9f74c9015",
+      "actual_sha256": "b7369e24ebfb480a1e6361c25a1e5649967bbf7ea9778d5be8ebb66d658b14aa"
+    }
+  ],
+  "original_checksum_missing": [],
+  "source_file_sha256": {
+    "CHECKSUMS.sha256": "59dbcdf2e437abd0539ba7b25a5c44642d746ee32e4081147e400f93822c29ff",
+    "PORTABILITY-MANIFEST.md": "f1cdf3365cc65a0884824ee41adb40058b6541d2073a03b2d7b6978e1d62d5f9",
+    "ROUTING-MAP.md": "0365ef3542204a2ba37f53e990530ee524048181af63335cefde25e40b7e4f23",
+    "SKILL.md": "83ca773d06c323a28369cd1f58d9a8be48f6e13534d3d1c6ee31ba991f756641",
+    "agents/openai.yaml": "b7369e24ebfb480a1e6361c25a1e5649967bbf7ea9778d5be8ebb66d658b14aa",
+    "assets/icon.svg": "51a6923974188748638a424aa59b42b6afad2d910f910a1d43bb13ee10f3ce26",
+    "references/CHANGELOG.md": "6afc9245ddaf145480676227a67dc5de1dfd575477416ad8c6d6d826f8f14217",
+    "references/HISTORIA-ZMIAN-PLIKOW.md": "68b8052c1361e3a07733ee1fd2ad97e9169620b287e603c50b217ba4ffb57c48"
+  },
+  "approved_dr": [
+    "01",
+    "02",
+    "03",
+    "05",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "16"
+  ],
+  "out_of_bundle_dr": [
+    "04",
+    "06",
+    "07",
+    "08",
+    "09",
+    "15"
+  ],
+  "routing_reimplemented": false,
+  "routing_quick_block_sha256": "46f59df27432660ec77de5f24f7f0f6900bc3a5f64244dd6062ae0efd3103ab3",
+  "source_material_preserved": true,
+  "live_eli_verification": "NOT_CHECKED",
+  "active_chat_skill_registry": "NOT_CHECKED"
+}

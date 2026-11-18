@@ -1,0 +1,5 @@
+interface:
+  display_name: Router Prawny LexMachina
+  short_description: Wybiera ścieżkę prawną [1]–[11] i właściwe skille, zachowując bramki źródeł.
+policy:
+  allow_implicit_invocation: true
