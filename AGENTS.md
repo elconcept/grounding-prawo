@@ -11,6 +11,7 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 | Ścieżka | Rola |
 |---|---|
 | `plugins/grounding-prawo/` | **Generowane** przez `scripts/build.py`. Nie edytuj ręcznie. |
+| `plugins/lexmachina-chat/` | **Oddzielny, utrzymywany bezpośrednio** pakiet ChatGPT CHAT (12 skilli); manifesty, README i PROVENANCE. Nie jest generowany przez `scripts/build.py`. |
 | `selection/selection.yaml` | Źródło prawdy: które skille, skąd (`lex`, `awe:<pakiet>`, `own`, `vendor:`), opisy, scalenia (`merge_into`: cały skill jako moduł `<host>/modules/<nazwa>/MODULE.md`; `fold_into`: typ pisma lub referencja). |
 | `selection/patches/`, `selection/overlay/`, `selection/mcp.json` | Patche na kopię upstreamu, pliki dopisane do pluginu (`shared/`) i konektor MCP pluginu (`lex`; build kopiuje go do `plugins/.../.mcp.json`; nie trzymaj `.mcp.json` w rootcie repo, bo duplikuje konektor `lex` z claude.ai). |
 | `own-skills/` | Skille własne (bez upstreamu). Tu się je edytuje. |
@@ -31,8 +32,8 @@ pracy prawnej: `prawny-router-v3` (dawny `prowadnik-grounding-prawo` jest z nim 
 - GitHub Actions może testować, ale nie może modyfikować `legal`, tworzyć PR-ów lub gałęzi ani wypychać commitów.
 
 ## Cykl zmiany
-1. Zmień `own-skills/`, `selection/` albo `scripts/build.py` (nigdy `plugins/` ani `vendor/`).
-2. `python3 scripts/build.py` → `python3 scripts/validate_marketplace.py` → `python3 scripts/lint_refs.py`.
+1. Dla **grounding-prawo** zmieniaj `own-skills/`, `selection/` albo `scripts/build.py` (nigdy wygenerowanego `plugins/grounding-prawo/` ani `vendor/`). Dla osobnego **LEXMACHINA-CHAT** zmieniaj bezpośrednio jego adaptacje, manifesty i dokumentację w `plugins/lexmachina-chat/`; zachowaj źródła kanoniczne.
+2. `python3 scripts/build.py` → `python3 scripts/validate_marketplace.py` → `python3 scripts/lint_refs.py` (plugin generowany) oraz `python3 scripts/validate_chat_plugin.py` (odrębny pakiet CHAT).
 3. Commit razem ze zregenerowanym `plugins/`. Push na `main` = wydanie: manifest Claude nie ma pola `version`,
    więc klienci aktualizują się po SHA commita (przypięta wersja blokowała aktualizacje). Wersja semver jest tylko w manifeście Codex.
 4. Nowy host albo po `git pull`: `scripts/build-dev.sh` (submoduły na przypiętych commitach, `submodule.recurse=true`,

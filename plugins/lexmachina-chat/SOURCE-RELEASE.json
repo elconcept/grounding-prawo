@@ -18,5 +18,8 @@
     "raport-sytuacyjny-v2",
     "shared"
   ],
-  "note": "The package is a CHAT-targeted source distribution. Plugin Creator backend 1.0.0 and static QA confirmed; complete end-to-end runtime and byte parity of inherited common support files are not claimed."
+  "note": "The package is a CHAT-targeted source distribution. Plugin Creator backend 1.0.0 and static QA confirmed; complete end-to-end runtime and byte parity of inherited common support files are not claimed.",
+  "distribution_display_name": "LEXMACHINA-CHAT",
+  "distribution_id": "lexmachina-chat",
+  "distribution_version": "1.0.1"
 }

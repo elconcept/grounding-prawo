@@ -1,7 +1,7 @@
 {
   "name": "lexmachina-chat",
-  "version": "1.0.0",
-  "description": "LexMachina dla ChatGPT CHAT: analiza akt i dowodów, umowy, prawo polskie, raporty oraz audyt skilli bez obowiązkowego MCP.",
+  "version": "1.0.1",
+  "description": "LEXMACHINA-CHAT: analiza akt, dowodów, umów, chronologii i prawa polskiego; raporty i audyt w ChatGPT CHAT bez obowiązkowego MCP.",
   "author": {
     "name": "elconcept"
   },
@@ -14,12 +14,12 @@
   ],
   "skills": "./skills",
   "interface": {
-    "displayName": "LexMachina CHAT",
-    "shortDescription": "Analiza prawna w ChatGPT",
-    "longDescription": "LexMachina adaptowana do ChatGPT CHAT: praca na aktach, dowodach, umowach, raportach i audycie; źródła prawne wymagają rzeczywistej weryfikacji.",
+    "displayName": "LEXMACHINA-CHAT",
+    "shortDescription": "Analiza prawna i dowodowa w ChatGPT",
+    "longDescription": "12 skilli LexMachina zaadaptowanych do ChatGPT CHAT: analiza akt i dowodów, umowy, chronologia, raportowanie i audyt. Źródła prawne wymagają rzeczywistej weryfikacji.",
     "developerName": "elconcept",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Uruchom Akta i Dowody i pomóż mi z moim zadaniem."
+    "defaultPrompt": "Użyj LEXMACHINA-CHAT do analizy mojego problemu prawnego."
   }
 }

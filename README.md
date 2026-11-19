@@ -1,8 +1,7 @@
 # grounding-prawo
 
-Publiczny marketplace z jednym pluginem do prowadzenia własnych spraw według prawa polskiego (Claude Desktop, Cowork,
-Code; ChatGPT/Codex). Łączy silnik Lex Machina, skille weryfikacji MateMatic i skille własne. Zasada: **źródłem tezy
-o przepisie lub orzeczeniu jest narzędzie MCP albo dokument, nigdy pamięć modelu.**
+Publiczny marketplace z dwoma oddzielnymi pakietami: **`grounding-prawo`** (generowany plugin dla Claude/Codex,
+LexMachina + MateMatic + skille własne) oraz **`LEXMACHINA-CHAT`** (12 skilli LexMachina zaadaptowanych do ChatGPT CHAT). Zasada: **podstawą tezy prawnej jest rzeczywiście sprawdzone źródło, a nie pamięć modelu.**
 
 **Repozytorium `grounding-prawo` jest kanonicznym publicznym źródłem kodu pluginu, skilli i wydań.**
 Prywatne `elconcept/legal` jedynie instaluje plugin z tego marketplace i przechowuje sprawy, dowody oraz pisma.
@@ -13,29 +12,32 @@ To repo służy do rozwijania pluginu. Praca nad sprawami odbywa się w repo `el
 pluginem: `plugins/grounding-prawo/skills/shared/ZASADY-PLUGINU.md`, `SCIEZKI-PRACY.md`, `ARTEFAKTY-SPRAWY.md`,
 `FORMAT-PISMA.md`, `BASIC-MEMORY.md`.
 
-Plugin jest **generowany** - nie edytuj `plugins/grounding-prawo/` ręcznie (sekcja [Utrzymanie](#utrzymanie));
+Tylko pakiet `plugins/grounding-prawo/` jest **generowany**. Oddzielny pakiet `plugins/lexmachina-chat/`
+ma własne [README](plugins/lexmachina-chat/README.md) i [historię powstania skilli](plugins/lexmachina-chat/PROVENANCE.md);
 zasady pracy nad repo: `AGENTS.md`.
 
 ## 1. Instalacja
 
-Wersja semver (tylko manifest Codex): `selection/selection.yaml`.
+Wersja generowanego pakietu wynika z `selection/selection.yaml`; odrębny LEXMACHINA-CHAT ma wersję w swoich manifestach.
 
 | Klient | Jak |
 |---|---|
 | **Claude Code** | `claude plugin marketplace add elconcept/grounding-prawo`, potem `claude plugin install grounding-prawo@grounding-prawo` |
 | **Claude Desktop / Cowork** | Ustawienia organizacji → Plugins → dodaj marketplace z GitHub (repo `elconcept/grounding-prawo`; repo publiczne, bez potrzeby dostępu do prywatnego `legal`). Po synchronizacji plugin pojawia się w katalogu konta. |
-| **ChatGPT / Codex** | `codex plugin marketplace add elconcept/grounding-prawo --ref main --sparse .agents/plugins --sparse plugins/grounding-prawo`, potem `codex plugin add grounding-prawo@grounding-prawo`. |
+| **Codex — grounding-prawo** | `codex plugin marketplace add elconcept/grounding-prawo --ref main --sparse .agents/plugins --sparse plugins/grounding-prawo`, potem `codex plugin add grounding-prawo@grounding-prawo`. |
+| **Codex — LEXMACHINA-CHAT** | Marketplace `elconcept/grounding-prawo` z katalogiem `plugins/lexmachina-chat`, potem wybór `lexmachina-chat`. |
+| **ChatGPT CHAT — LEXMACHINA-CHAT** | Pakiet w repozytorium i wpis w marketplace nie oznaczają instalacji w koncie ChatGPT. [Opis pakietu](plugins/lexmachina-chat/README.md) rozróżnia wydanie GitHub od prywatnego pluginu źródłowego. |
 
 Po instalacji sprawdź w **nowej rozmowie**: „Użyj prawny-router-v3 i powiedz, co potrafi plugin”. Skille z błędem
 ładowania nie pojawią się na liście.
 
-Konektory ładuje `.mcp.json` pluginu: jeden serwer `lex` → `https://lex.xlap.pl/mcp` (portal Cloudflare z logowaniem
+W generowanym `grounding-prawo` konektory ładuje `.mcp.json`: jeden serwer `lex` → `https://lex.xlap.pl/mcp` (portal Cloudflare z logowaniem
 OAuth). Bez autoryzacji skille działają, ale nie mogą podawać przepisów ani sygnatur. Pełna lista kontroli instalacji:
 `_log/marketplace-validation.md`.
 
 ### Aktualizacje
 
-- Manifest pluginu nie ma pola `version`, więc każda zmiana na `main` to nowa wersja (SHA commita).
+- Manifest Claude pluginu `grounding-prawo` nie ma pola `version` i aktualizuje się według commita. LEXMACHINA-CHAT ma osobną wersję semver w `plugin.json` i `.codex-plugin/plugin.json`.
 - Claude Desktop / Cowork: aktualizacja automatyczna; nowa wersja działa w nowej rozmowie.
 - Claude Code: auto-update dla marketplace spoza Anthropic jest domyślnie wyłączony. Włącz: `/plugin` → Marketplaces →
   grounding-prawo → Enable auto-update, albo ręcznie `claude plugin update grounding-prawo@grounding-prawo`.
@@ -44,7 +46,7 @@ OAuth). Bez autoryzacji skille działają, ale nie mogą podawać przepisów ani
 
 ## 2. Co jest w pluginie
 
-**23 skille do wywołania** i 14 modułów wewnętrznych (`shared`, `prawo-polskie-v2`, `przewodnik-prawny-v2`,
+W **generowanym `grounding-prawo`**: **23 skille do wywołania** i 14 modułów wewnętrznych (`shared`, `prawo-polskie-v2`, `przewodnik-prawny-v2`,
 `audyt-systemu-v4`, DR-01…16 bez DR-04, 06-09, 15). Katalog generuje build: `skills/shared/INDEKS-SKILLI.md`.
 
 Skille robiące to samo są scalone: dawny osobny skill jest modułem skilla nadrzędnego (`<skill>/modules/<moduł>/MODULE.md`),

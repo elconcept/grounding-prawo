@@ -3,7 +3,9 @@ name: chat-router-akta-i-dowody
 description: "Wejście CHAT do przebudowywanego bundla LexMachina: deleguje decyzję routingu do oryginalnego prawny-router-v3, bez tworzenia drugiej macierzy."
 ---
 
-# Akta i Dowody — wejście do LexMachina (etap 8/8)
+# LEXMACHINA-CHAT — wejście do pakietu (1.0.1)
+
+**Identyfikator skilla** `chat-router-akta-i-dowody` pozostaje historyczny dla kompatybilności. Nazwa całego pluginu to **LEXMACHINA-CHAT**.
 
 **Jeden algorytm routingu:** dla zadania prawnego odczytaj i zastosuj `prawny-router-v3/SKILL.md`. Tylko ten skill klasyfikuje [1]–[11], ustala PRIMARY/SECONDARY/FALLBACK i stosuje wyzwalacze. Nie projektuj konkurencyjnego routera i nie ładuj całej biblioteki naraz.
 

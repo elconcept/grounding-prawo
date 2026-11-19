@@ -32,11 +32,21 @@ def main() -> int:
     source = json.loads((PKG / "SOURCE-RELEASE.json").read_text())
     check(manifest["$schema"] == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json", "invalid schema")
     check(manifest["name"] == legacy["name"] == "lexmachina-chat", "plugin identity")
-    check(manifest["version"] == legacy["version"] == "1.0.0", "version mismatch")
+    check(manifest["version"] == legacy["version"] == "1.0.1", "version mismatch")
     check(source["source_release_id"] == "pluginrel_6afdb8ff27688191aa4ce96949c98dfa", "source release")
     check(bool(re.fullmatch(r"\d+\.\d+\.\d+", manifest["version"])), "invalid semver")
+    check(manifest["extensions"]["com.openai"]["interface"]["displayName"] == "LEXMACHINA-CHAT",
+          "incorrect ChatGPT display name")
+    check(legacy["interface"]["displayName"] == "LEXMACHINA-CHAT",
+          "incorrect Codex display name")
+    check(source["source_version"] == "1.0.0" and
+          source["distribution_version"] == "1.0.1" and
+          source["distribution_display_name"] == "LEXMACHINA-CHAT", "source/distribution provenance")
+    for doc in ("README.md", "PROVENANCE.md"):
+        check((PKG / doc).is_file(), "missing documentation: " + doc)
+
     check(manifest["extensions"]["com.openai"]["interface"]["defaultPrompt"] ==
-          "Uruchom Akta i Dowody i pomóż mi z moim zadaniem.", "defaultPrompt changed")
+          "Użyj LEXMACHINA-CHAT do analizy mojego problemu prawnego.", "defaultPrompt changed")
     check(not (PKG / "mcp.json").exists() and not (PKG / ".mcp.json").exists(), "unexpected root MCP dependency")
     expected = set(source["skills"])
     actual = {f.parent.name for f in (PKG / "skills").glob("*/SKILL.md")}
