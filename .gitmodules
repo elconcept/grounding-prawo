@@ -232,3 +232,8 @@
 [submodule "vendor/law-git/konstytucja-rp"]
 	path = vendor/law-git/konstytucja-rp
 	url = https://github.com/kbchojnacki/konstytucja-rp.git
+
+# Referencyjny benchmark PL: klucze, karty, odpowiedzi, weryfikacja zrodel
+[submodule "vendor/benchmarks/lawbenchmark"]
+	path = vendor/benchmarks/lawbenchmark
+	url = https://github.com/apiotrowski-afk/lawbenchmark.git
