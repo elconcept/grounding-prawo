@@ -13,7 +13,7 @@ spec = importlib.util.spec_from_file_location('reader', SKILL/'scripts/read_docu
 reader = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(reader)
 from the_ocr.models import OCRDocument, OCRPage, OCRBlock
-from the_ocr.adapters import datalab_document, polygon_document
+from the_ocr.adapters import datalab_document, azure_document, google_vision_document
 
 
 def pdf(path, text='Sample document with evidence and source text.'):
@@ -38,16 +38,28 @@ def test_provider_contract_and_original_page_geometry(tmp_path,provider):
     if provider=='datalab':
         doc=datalab_document({'page_count':1,'json':{'children':[{'bbox':[0,0,600,800],
             'children':[{'block_type':'Text','bbox':[60,80,300,160],'html':'<p>Evidence text</p>'}]}]}},p)
+    elif provider=='azure-di':
+        # Aktualne API the-ocr: Azure prebuilt-read, bez dawnego polygon_document.
+        doc=azure_document({'pages':[{'width':600,'height':800,
+            'lines':[{'content':'Evidence text','polygon':[60,80,300,80,300,160,60,160],
+                      'spans':[{'offset':0,'length':13}]}],
+            'words':[{'content':'Evidence','polygon':[60,80,300,80,300,160,60,160],
+                      'span':{'offset':0,'length':8},'confidence':.96}]}]},p)
     else:
-        doc=polygon_document([{'width':600,'height':800,'lines':[{'text':'Evidence text',
-            'polygon':[60,80,300,80,300,160,60,160],
-            'words':[{'text':'Evidence','polygon':[60,80,300,80,300,160,60,160],'confidence':.96}]}]}],p,provider=provider)
+        vertices=[{'x':60,'y':80},{'x':300,'y':80},{'x':300,'y':160},{'x':60,'y':160}]
+        doc=google_vision_document([{'fullTextAnnotation':{'pages':[{'width':600,'height':800,
+            'blocks':[{'boundingBox':{'vertices':vertices},
+              'paragraphs':[{'words':[
+                {'symbols':[{'text':'Evidence','property':{'detectedBreak':{'type':'SPACE'}}}],
+                 'boundingBox':{'vertices':vertices},'confidence':.96},
+                {'symbols':[{'text':'text','property':{'detectedBreak':{'type':'LINE_BREAK'}}}],
+                 'boundingBox':{'vertices':vertices},'confidence':.96}]}]}]}]}}]},p)
     with patch.object(reader,'cloud_ocr',return_value=doc) as cloud:
         result=reader.convert(p,tmp_path/'out',provider,True)
     cloud.assert_called_once_with(p,provider)
     c=json.loads(Path(result['contract']).read_text())
     assert not reader.validate(c)
-    assert c['source']['engine']==provider
+    assert c['source']['engine']=={'azure-di':'azure','google-vision':'google_vision'}.get(provider,provider)
     assert c['blocks'][0]['bbox']==[.1,.1,.5,.2]
     assert c['blocks'][0]['page']==1
     if provider=='datalab': assert c['blocks'][0]['confidence'] is None
@@ -90,9 +102,9 @@ def test_docx_and_html_no_invented_pagination(tmp_path):
 
 def test_empty_page_report(tmp_path):
     p=tmp_path/'input.pdf';pdf(p)
-    doc=OCRDocument('input.pdf','hash','azure-di',(
-        OCRPage(1,600,800,(OCRBlock('b1',1,'text','Text','Text',(.1,.1,.5,.2),.99),)),
-        OCRPage(2,600,800,())))
+    doc=OCRDocument('input','azure',(
+        OCRPage(1,600,800,(OCRBlock('b1',1,'paragraph','Text','Text',(.1,.1,.5,.2),.99),)),
+        OCRPage(2,600,800,())),source_name='input.pdf')
     with patch.object(reader,'cloud_ocr',return_value=doc):
         result=reader.convert(p,tmp_path/'out',force_ocr=True)
     assert result['quality']['empty_or_unreadable_pages']==[2]
@@ -102,8 +114,9 @@ def test_empty_page_report(tmp_path):
 def test_markdown_layout_from_provider_survives(tmp_path):
     p=tmp_path/'input.pdf';pdf(p)
     table='| A | B |\n|---|---|\n| 1 | 2 |'
-    doc=OCRDocument('input.pdf','hash','datalab',(
-        OCRPage(1,600,800,(OCRBlock('b1',1,'table','A B 1 2',table,(.1,.1,.5,.2),None),)),))
+    doc=OCRDocument('input','datalab',(
+        OCRPage(1,600,800,(OCRBlock('b1',1,'table','A B 1 2',table,(.1,.1,.5,.2),None),)),),
+        source_name='input.pdf')
     with patch.object(reader,'cloud_ocr',return_value=doc):
         result=reader.convert(p,tmp_path/'out',force_ocr=True)
     assert table in Path(result['markdown']).read_text()
