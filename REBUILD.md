@@ -1,12 +1,12 @@
 # Grounding Prawo — rebuild (2026-11-23)
 
-**Status: ETAP 1 wykonany; bramka referencyjna wdrazana; zaden nowy skill nie jest zatwierdzony.**
+**Status: ETAP 1 wykonany; referencyjne suity uruchomione, testy adaptowanego pluginu do podlaczenia; zaden nowy skill nie jest zatwierdzony.**
 
 Nowa wersja ma byc budowana od zera. Poprzednia architektura generowanego `grounding-prawo` i oddzielnego `LEXMACHINA-CHAT` nie jest podstawa nowych decyzji projektowych. Istniejacy kod i archiwa to tylko material do selektywnego odczytu; historia Git pozostaje, bez kopiowania starego bundle jako nowego pluginu.
 
 ## Kanoniczne submoduly
 
-- `vendor/packs/awesome-matematic-skills` — `elconcept/awesome-matematic-skills` (fork MateMatic), pinned commit `8e916898a5ffac02c1c9fee692c6f70a13e7dd75`. Starego gitlinka nie dublujemy.
+- `vendor/packs/awesome-matematic-skills` — `matematicsolutions/awesome-matematic-skills-pl` (ORYGINALNY upstream MateMatic), pinned commit `7e15bbea11c2fb8862a965505d86a7d0de3fd92d`. Starego gitlinka nie dublujemy.
 - `vendor/benchmarks/lawbenchmark` — `apiotrowski-afk/lawbenchmark`, pinned commit `c16ae2ea9ce8ac31d9f1eee0b3acb6d230995b9b`.
 
 Tylko te submoduly sa potrzebne do referencyjnej bramki. Nie inicjalizujemy bez potrzeby pozostalych 74 katalogow vendor.
@@ -14,12 +14,13 @@ Tylko te submoduly sa potrzebne do referencyjnej bramki. Nie inicjalizujemy bez 
 ## Twarda zasada zmiany
 
 1. Przed **kazda** zmiana SKILL.md, modulu, routera, patcha, selekcji albo buildera: wykonaj komplet MateMatic (oryginalne pytest + fixtures, grounding, let-it-be, marketplace, audyt cytowan, attribution, legal accuracy, preflight, DOCX engine) i LawBenchmark (160 odpowiedzi/klucze/karty, judge comparisons, evaluation of verification layer). Zapamietaj wynik i przypiete SHA.
-2. Dodatkowo wykonaj **rzeczywisty benchmark A/B tego samego modelu**: BASE = bez nowego skilla, CANDIDATE = z nowym skladem skilli; te same pytania i ustawienia, prawnicza ocena przez niezaleznego sedziego oparta na kluczach LawBenchmark. Nie przeliczaj cudzych 160 odpowiedzi zamiast uruchomienia wlasnego pipeline.
-3. Przed modyfikacja materialu spraw i skilli zapisz wynik bazowy; po zmianie uruchom identyczny pipeline, wykryj regresje. Brak dostepu do modelu, sedziego, pelnych zrodel albo wyniku = BLOCKED, nigdy PASS.
-4. Dopiero po obu rzeczywistych przebiegach i braku regresji commit/push bezposrednio na `main`. Zero PR, branchy i worktree. Nie przenos tajnych danych spraw do tego publicznego repozytorium.
-5. Nie zadeklaruj "testy zaliczone", kiedy jedynie workflow odtworzyl historyczne karty. Publikowany LawBenchmark jest zbiorem kalibracyjnym, nie niezaleznym holdoutem.
+2. Po zbudowaniu faktycznego pluginu przez `scripts/build.py` uruchom na nim wszystkie dostepne testy komponentow, walidacje manifestow i martwych odwolan. Testy wykonane w katalogu `vendor/` nie zastępuja testu po overlayu, a workflow dziala tylko wtedy, gdy zielone sa wszystkie te zadania.
+3. Dodatkowo wykonaj **rzeczywisty benchmark A/B tego samego modelu**: BASE = bez nowego skilla, CANDIDATE = z nowym skladem skilli; te same pytania i ustawienia, prawnicza ocena przez niezaleznego sedziego oparta na kluczach LawBenchmark. Nie przeliczaj cudzych 160 odpowiedzi zamiast uruchomienia wlasnego pipeline.
+4. Przed modyfikacja materialu spraw i skilli zapisz wynik bazowy; po zmianie uruchom identyczny pipeline, wykryj regresje. Brak dostepu do modelu, sedziego, pelnych zrodel albo wyniku = BLOCKED, nigdy PASS.
+5. Dopiero po obu rzeczywistych przebiegach i braku regresji commit/push bezposrednio na `main`. Zero PR, branchy i worktree. Nie przenos tajnych danych spraw do tego publicznego repozytorium.
+6. Nie zadeklaruj "testy zaliczone", kiedy jedynie workflow odtworzyl historyczne karty. Publikowany LawBenchmark jest zbiorem kalibracyjnym, nie niezaleznym holdoutem.
 
-`.github/workflows/benchmark-gate.yml` uruchamia tylko **referencyjne, offline** czesci tych pakietow i jawnie blokuje zmiany skilli dopoki runner LIVE A/B nie zostanie rzeczywiscie podlaczony. Ten workflow nie jest jeszcze pelnym zaliczonym pipeline.
+`.github/workflows/benchmark-gate.yml` uruchamia suity upstream oraz LawBenchmark, a etap `post-overlay` po nich musi zbudowac i przetestowac dokladnie `plugins/grounding-prawo`. Do czasu podlaczenia LIVE A/B nadal nie wolno twierdzic, ze udowodniono poprawe jakosci odpowiedzi modelu.
 
 ## Zakres nowego pluginu
 

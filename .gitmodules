@@ -7,7 +7,7 @@
 	url = https://github.com/elconcept/LexMachina.git
 [submodule "vendor/packs/awesome-matematic-skills"]
 	path = vendor/packs/awesome-matematic-skills
-	url = https://github.com/elconcept/awesome-matematic-skills.git
+	url = https://github.com/matematicsolutions/awesome-matematic-skills-pl.git
 [submodule "vendor/packs/legal-verify"]
 	path = vendor/packs/legal-verify
 	url = https://github.com/elconcept/legal-verify.git
