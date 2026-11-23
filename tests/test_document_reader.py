@@ -47,13 +47,16 @@ def test_provider_contract_and_original_page_geometry(tmp_path,provider):
                       'span':{'offset':0,'length':8},'confidence':.96}]}]},p)
     else:
         vertices=[{'x':60,'y':80},{'x':300,'y':80},{'x':300,'y':160},{'x':60,'y':160}]
-        doc=google_vision_document([{'fullTextAnnotation':{'pages':[{'width':600,'height':800,
-            'blocks':[{'boundingBox':{'vertices':vertices},
-              'paragraphs':[{'words':[
-                {'symbols':[{'text':'Evidence','property':{'detectedBreak':{'type':'SPACE'}}}],
-                 'boundingBox':{'vertices':vertices},'confidence':.96},
-                {'symbols':[{'text':'text','property':{'detectedBreak':{'type':'LINE_BREAK'}}}],
-                 'boundingBox':{'vertices':vertices},'confidence':.96}]}]}]}]}}]},p)
+        bbox={'vertices':vertices}
+        words=[
+            {'symbols':[{'text':'Evidence','property':{'detectedBreak':{'type':'SPACE'}}}],
+             'boundingBox':bbox,'confidence':.96},
+            {'symbols':[{'text':'text','property':{'detectedBreak':{'type':'LINE_BREAK'}}}],
+             'boundingBox':bbox,'confidence':.96},
+        ]
+        vision_block={'boundingBox':bbox,'paragraphs':[{'words':words}]}
+        vision_page={'width':600,'height':800,'blocks':[vision_block]}
+        doc=google_vision_document([{'fullTextAnnotation':{'pages':[vision_page]}}],p)
     with patch.object(reader,'cloud_ocr',return_value=doc) as cloud:
         result=reader.convert(p,tmp_path/'out',provider,True)
     cloud.assert_called_once_with(p,provider)
