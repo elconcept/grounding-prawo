@@ -1,8 +1,7 @@
 name: Benchmark gate - MateMatic + LawBenchmark
 
-# CI validates PUBLISHED reference suites. It does NOT pretend that historical
-# LawBenchmark answers measure the candidate plugin. Live A/B is a separate,
-# mandatory pre-change gate and is fail-closed until its runner is connected.
+# Three gates: original fixtures, final BUILT plugin after overlays, and live LLM A/B.
+# Historical LawBenchmark scores NEVER measure this plugin's response quality.
 on:
   push:
     branches: [main]
@@ -166,8 +165,78 @@ jobs:
         working-directory: vendor/benchmarks/lawbenchmark
         run: git diff --exit-code -- reports/benchmark-02/src/dane.json data/
 
+  post-overlay-built:
+    name: Post-overlay - actual plugin, merged modules, DOCX, integration
+    needs: [matematic-complete, lawbenchmark-reproduction]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Exact pinned build dependencies, not every vendor submodule
+        run: git submodule update --init --depth 1 -- vendor/packs/LexMachina vendor/packs/awesome-matematic-skills
+      - name: Verify the checked out upstream SHA matches the parent gitlink
+        run: |
+          test "$(git rev-parse HEAD:vendor/packs/awesome-matematic-skills)" = "$(git -C vendor/packs/awesome-matematic-skills rev-parse HEAD)"
+          test "$(git -C vendor/packs/awesome-matematic-skills remote get-url origin)" = "https://github.com/matematicsolutions/awesome-matematic-skills-pl.git"
+      - name: Pinned private OCR source SHA
+        id: ocr-ref
+        run: echo "sha=$(git rev-parse HEAD:vendor/docs/the-ocr)" >> "$GITHUB_OUTPUT"
+      - name: The private OCR source (read-only, existing deploy key)
+        uses: actions/checkout@v4
+        with:
+          repository: elconcept/the-ocr
+          ref: ${{ steps.ocr-ref.outputs.sha }}
+          path: vendor/docs/the-ocr
+          ssh-key: ${{ secrets.THE_OCR_READ_KEY }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Actual integration-test dependencies
+        run: python -m pip install --disable-pip-version-check pytest PyYAML PyMuPDF python-docx "markitdown[docx]" pillow httpx
+      - name: Build the ACTUAL shipped plugin - includes overlay, patches and transformations
+        run: python -I scripts/build.py
+      - name: Validate the BUILT marketplace, not only upstream manifests
+        run: python -I scripts/validate_marketplace.py
+      - name: Check dead references in the BUILT plugin
+        run: python -I scripts/lint_refs.py
+      - name: Execute grounding test from the FINAL transformed plugin
+        run: node plugins/grounding-prawo/skills/citation-grounding-pl/scripts/test-grounding.mjs
+      - name: Execute original MateMatic spelling fixtures in the FINAL merged module
+        run: python -m pytest -q plugins/grounding-prawo/skills/szturm-na-draft-pl/modules/marko-pl-content/tests
+      - name: Execute the final legal-review lens runner
+        run: python -m unittest discover -s plugins/grounding-prawo/skills/szturm-na-draft-pl/tests -p test_lens_runner.py -v
+      - name: Execute overlay and document-adapter regression tests
+        run: python -m pytest -q tests/
+      - name: Installed plugin DOCX engine dependencies
+        working-directory: plugins/grounding-prawo/skills/redline-docx-pl/vendor/docx-engine
+        run: npm ci --no-audit --no-fund
+      - name: Installed plugin DOCX TypeScript typecheck
+        working-directory: plugins/grounding-prawo/skills/redline-docx-pl/vendor/docx-engine
+        run: npm run typecheck
+      - name: Installed plugin DOCX original suite after overlay
+        working-directory: plugins/grounding-prawo/skills/redline-docx-pl/vendor/docx-engine
+        run: npm test -- --reporter=verbose
+      - name: Validate the independently maintained ChatGPT CHAT bundle
+        run: python -I scripts/validate_chat_plugin.py
+      - name: Fail when the committed distributable is stale relative to the actual build
+        run: |
+          git add -N plugins .agents
+          if ! git diff --quiet -- plugins .agents; then
+            git diff --stat -- plugins .agents
+            echo "::error::Compiled plugin is not synchronized with the committed distributable. Do not publish or claim a full PASS."
+            exit 1
+          fi
+          echo "PASS: final plugin matches the pinned input sources and overlays"
+
   live-skill-hardgate:
     name: Live plugin A/B - mandatory BEFORE changes to skills
+    needs: [post-overlay-built]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -8,7 +8,7 @@ name: build-plugin
 on:
   push:
     branches: [main]
-    paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr"]
+    paths: ["selection/**", "own-skills/**", "scripts/**", ".claude-plugin/**", ".agents/**", "plugins/**", ".github/workflows/build-plugin.yml", ".gitmodules", "vendor/docs/the-ocr", "vendor/packs/awesome-matematic-skills"]
   workflow_dispatch:
 
 concurrency:
