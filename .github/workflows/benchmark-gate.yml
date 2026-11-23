@@ -1,0 +1,199 @@
+name: Benchmark gate - MateMatic + LawBenchmark
+
+# CI validates PUBLISHED reference suites. It does NOT pretend that historical
+# LawBenchmark answers measure the candidate plugin. Live A/B is a separate,
+# mandatory pre-change gate and is fail-closed until its runner is connected.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: benchmark-gate-main
+  cancel-in-progress: false
+
+jobs:
+  matematic-complete:
+    name: MateMatic - source fixtures, code, licensing, citations and DOCX
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Only the pinned MateMatic submodule
+        run: git submodule update --init --depth 3 -- vendor/packs/awesome-matematic-skills
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install --disable-pip-version-check pytest
+      - name: Fail-closed inventory of original Python fixtures
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          roots = [
+              'dokumenty/skills/akta-przeszukiwalne-pl/tests',
+              'dokumenty/skills/chronologia-stanowiska-pl/tests',
+              'dokumenty/skills/doc-intel-contract-pl/tests',
+              'governance-kancelarii/skills/kyc-kancelaria-pl/tests',
+              'jakosc-tresci/skills/humanizer-pl/tests',
+              'jakosc-tresci/skills/marko-pl-content/tests',
+          ]
+          found = {str(p) for p in Path('.').rglob('test_*.py') if '.git' not in p.parts}
+          excluded = {'dev-mcp/skills/matematic-mcp-fastmcp-instructions-pl/examples/test_instructions_drift.py'}
+          included = {p for p in found if any(p.startswith(root + '/') for root in roots)}
+          unknown = found - included - excluded
+          assert all(any(p.startswith(root + '/') for p in included) for root in roots), 'Missing fixture suite'
+          assert not unknown, f'Untested new Python test files: {sorted(unknown)}'
+          assert len(included) >= 22, f'Python test inventory shrank: {len(included)}'
+          fixtures = [p for p in Path('.').rglob('tests/fixtures/*') if p.is_file()]
+          assert len(fixtures) >= 20, f'Fixture inventory shrank: {len(fixtures)}'
+          print(f'PASS inventory: {len(included)} test files, {len(fixtures)} fixture files')
+          PY
+      - name: Original offline Python tests
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: |
+          python -m pytest -q -k "not smoke" \
+            dokumenty/skills/akta-przeszukiwalne-pl/tests \
+            dokumenty/skills/chronologia-stanowiska-pl/tests \
+            dokumenty/skills/doc-intel-contract-pl/tests \
+            governance-kancelarii/skills/kyc-kancelaria-pl/tests \
+            jakosc-tresci/skills/humanizer-pl/tests \
+            jakosc-tresci/skills/marko-pl-content/tests
+      - name: Original citation-grounding harness
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: node fundament-weryfikacyjny/skills/citation-grounding-pl/scripts/test-grounding.mjs
+      - name: Original let-it-be suite
+        working-directory: vendor/packs/awesome-matematic-skills/dokumenty/skills/let-it-be
+        run: npm test
+      - name: Original marketplace validator
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: node scripts/check-marketplace.mjs
+      - name: Original statute citation audit
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: node scripts/audyt-cytowan-ustaw.mjs
+      - name: Original preflight
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: python scripts/preflight.py
+      - name: Git history for legal-accuracy gate
+        run: git -C vendor/packs/awesome-matematic-skills fetch --deepen=3 origin main || true
+      - name: Original legal-accuracy gate (explicit base, not empty diff)
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: |
+          git rev-parse HEAD^ >/dev/null
+          python scripts/legal-accuracy-gate.py --base HEAD^
+      - name: Cross-repository attribution twin
+        run: git clone --depth 1 https://github.com/matematicsolutions/awesome-matematic-skills-en.git vendor/packs/awesome-matematic-skills-en
+      - name: Original attribution gate
+        working-directory: vendor/packs/awesome-matematic-skills
+        run: python scripts/attribution-gate.py --twin ../awesome-matematic-skills-en
+      - name: DOCX engine pinned dependencies
+        working-directory: vendor/packs/awesome-matematic-skills/dokumenty/skills/redline-docx-pl/vendor/docx-engine
+        run: npm ci --no-audit --no-fund
+      - name: DOCX TypeScript typecheck
+        working-directory: vendor/packs/awesome-matematic-skills/dokumenty/skills/redline-docx-pl/vendor/docx-engine
+        run: npm run typecheck
+      - name: DOCX original Vitest suite
+        working-directory: vendor/packs/awesome-matematic-skills/dokumenty/skills/redline-docx-pl/vendor/docx-engine
+        run: npm test -- --reporter=verbose
+
+  lawbenchmark-reproduction:
+    name: LawBenchmark - source data, scoring, judges, verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Only the pinned LawBenchmark submodule
+        run: git submodule update --init --depth 1 -- vendor/benchmarks/lawbenchmark
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Required original dependency
+        run: python -m pip install --disable-pip-version-check PyYAML
+      - name: Verify reference sample inventory (never invent missing results)
+        working-directory: vendor/benchmarks/lawbenchmark
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          assert len(list(Path('keys').glob('P*.yaml'))) == 10
+          assert len(list(Path('answers').glob('P*/*.md'))) == 160
+          assert len(list(Path('cards').glob('P*.md'))) == 160
+          assert len(list(Path('judges').glob('*.json'))) == 1319
+          assert len(list(Path('verification/reports').glob('*.json'))) == 160
+          assert len(list(Path('verification/reports').glob('*.md'))) == 160
+          print('PASS: 10 questions, 160 answers, 160 cards, 1319 judge outputs, 320 citation-check files')
+          PY
+      - name: Recalculate the published report from 160 reference cards
+        working-directory: vendor/benchmarks/lawbenchmark
+        run: python -I reports/benchmark-02/src/dane.py
+      - name: Rebuild the six linked JSONL data sets
+        working-directory: vendor/benchmarks/lawbenchmark
+        run: python -I tools/export_jsonl.py
+      - name: Independently check preserved expected totals
+        working-directory: vendor/benchmarks/lawbenchmark
+        run: |
+          python - <<'PY'
+          import json
+          v=json.load(open('reports/benchmark-02/src/dane.json',encoding='utf8'))['LICZBY']
+          assert (v['pu'],v['pu_bez_niesprawdzonych'],v['hal'],v['hal_W0'],v['hal_W1'])==(46,44,91,51,40),v
+          print('PASS: 46 correctly grounded, 44 sensitivity, 91 citation errors')
+          PY
+      - name: Recalculate all five principal LLM-judge comparisons
+        working-directory: vendor/benchmarks/lawbenchmark
+        run: |
+          for judge in argon4v101 sol61v101 gemini31v101 gemini38flashv101 astra6v101; do
+            echo "--- Judge $judge ---"
+            python -I tools/porownaj_sedziow.py "$judge"
+          done
+      - name: Re-evaluate verification layer against original reference cards
+        working-directory: vendor/benchmarks/lawbenchmark
+        run: |
+          python -I tools/verification/ewaluacja_8pytan.py \
+            P01 P04 P05 P06 P07 P08 P12 P13 \
+            --karty verification/runs/_bledy_z_kart_8pytan_2026-10-23.json \
+            --poparcie verification/runs/_poparcie_8pytan_2026-10-24c.json \
+            --md /tmp/lawbenchmark-recomputed-verification.md
+          test -s /tmp/lawbenchmark-recomputed-verification.md
+      - name: No drift in published source artifacts
+        working-directory: vendor/benchmarks/lawbenchmark
+        run: git diff --exit-code -- reports/benchmark-02/src/dane.json data/
+
+  live-skill-hardgate:
+    name: Live plugin A/B - mandatory BEFORE changes to skills
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject changes without a completed and verified live pre-change pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=$(python - <<'PY'
+          import json,os
+          with open(os.environ['GITHUB_EVENT_PATH'],encoding='utf8') as f:
+              event=json.load(f)
+          print(event.get('before') or '')
+          PY
+          )
+          if [[ -z "$BASE" || "$BASE" =~ ^0+$ ]]; then
+            BASE=$(git rev-parse HEAD^)
+          fi
+          git cat-file -e "$BASE^{commit}"
+          git diff --name-only "$BASE" HEAD > /tmp/changed-files.txt
+          echo "Changed files:"
+          cat /tmp/changed-files.txt
+          if grep -E '^(own-skills/|selection/|plugins/|scripts/build.py$|vendor/packs/awesome-matematic-skills$|vendor/benchmarks/lawbenchmark$)' /tmp/changed-files.txt; then
+            echo "::error::BLOCKED: a SKILL/pipeline change requires a completed live A/B evaluation of the EXACT model + skill pipeline and reference suite BEFORE editing, followed by a post-change run. The published LawBenchmark historical scores are NOT a live evaluation. Live runner not yet connected."
+            exit 1
+          fi
+          echo "PASS: no skill or inference-pipeline changes in this commit; live A/B not claimed."
