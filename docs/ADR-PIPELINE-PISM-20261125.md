@@ -1,0 +1,25 @@
+# ADR — odchudzenie pipeline pism i zamkniecie przebiegu
+
+Data: 2026-11-25. Status: **DECYZJE ZATWIERDZONE CO DO ZAKRESU; MIGRACJA SKILLI ZABLOKOWANA BRAMKA PRE-CHANGE**.
+Upstream MateMatic: `matematicsolutions/awesome-matematic-skills-pl@7e15bbea11c2fb8862a965505d86a7d0de3fd92d`.
+LawBenchmark: `apiotrowski-afk/lawbenchmark@c16ae2ea9ce8ac31d9f1eee0b3acb6d230995b9b`.
+
+## Zakres redakcyjnego pluginu
+
+1. Wykluczyc `kalkulatory-procesowe-pl` i scalony `terminy-procesowe-pl`. To oddzielny pipeline obliczen, nie domyslny etap kontroli pisma. Zmienic rownoczesnie `selection/selection.yaml`, `selection/bridges.yaml`, odwolania w skompilowanych skillach oraz zalezne transformacje `scripts/retire_layers.py`. Nie wystarczy skasowac pozycje w YAML.
+2. Wykluczyc `redline-docx-pl` z pluginu redakcyjnego. Edycja pliku DOCX i Track Changes to odrebna warstwa formatow/artefaktow. Zachowac w redakcji wersjonowanie i wierne przenoszenie zaakceptowanych poprawek, bez zaleznosci od tego skilla. Usunac patch `selection/patches/11-redline-wersje-wlasnego-pisma.patch` i odniesienia do redline z `retire_layers.py` i workflow tylko **w tej samej atomowej migracji**, z testami wyniku.
+3. `repertorium-zasady-pl`, `memo-z-repertorium-pl`, `saos-orzecznictwo` nie wchodza do redakcji. Odrębna warstwa weryfikacyjna przepisow i orzecznictwa używa `lex.xlap.pl/mcp`; redakcja konsumuje jej zweryfikowane wyniki. Te trzy upstream skille nie sa obecnie pozycjami `selection.keep`, nie dodawac ich. Pozostale odeslania do `orzekania` i `patron-prawo-pl-zrodla` wymagaja refaktoru interfejsu: zlecenie weryfikacji vs samodzielne badanie baz.
+4. `ekstraktor-cytatow-pl` jest juz scalony w `citation-grounding-pl/modules/ekstraktor-cytatow-pl/MODULE.md`, ale upstream zawiera TYLKO `SKILL.md` i `LICENSE`, bez skryptu. Nie nazywac tego dzialajaca deterministyczna ekstrakcja. Zapewnienie kompletnego etapu: `pismo -> lista wszystkich powolan z pozycjami -> walidacja mianownika -> citation-grounding-pl -> raport per-cytat`, z testem negatywnym na celowo pominiety cytat. Istniejacy `patron-identyfikatory-pl/scripts/pl_entities.py` jest kandydatem czesciowego reuse; sprawdzic formaty, tamze/op.cit., przepisy, pokrycie i luki przed adaptacja.
+5. `adversarial-legal-review-pl` ma juz role builder/attacker/synthesizer/verifier. `atak-przeciwnika-pl` to osobny jednostronny szesciosekcyjny atak (rdzen teorii, steelman, zarzuty, sedzia, ciosy, przemilczenia). Domyslnie NIE wywolywac obu automatycznie dla tej samej tezy: albo szybki atak jako samodzielny tryb, albo pelna debata. Dodatkowy niezalezny atak tylko dla zmiany mandatu/izolacji lub konkretnych otwartych filarow i po wykazaniu unikalnych ustalen w porownaniu A/B. Stary `szturm-na-draft-pl/SKILL.md` wymusza obecnie obie soczewki; `scripts/retire_layers.py` wpisuje jawnie zasadę dwoch krokow. To sa miejsca do zmiany w jednej migracji.
+6. `legal-ai-audit-bundle` jest przeznaczony do **domkniecia i archiwizacji**, ale aktualny `scripts/assemble-bundle.mjs` sprawdza tylko 4 sloty: `deliverable`, `slad_rozumowania`, `raport_grounding`, `log_kosztu`. Obecnosc plikow != wykonanie krokow ani poprawne zastosowanie findings. Reuse jako *wykonawca skladania paczki*, z dodatkowym manifestem etapow i walidatorem: `step_id, tool/skill_sha, input_sha256, output_sha256, status, verified_at, resolved_findings, remaining_blockers, decision`. Status `MISSING`/FAILED blokuje GOTOWE, lecz paczka diagnostyczna nadal powstaje. Artefakty robocze indeksowane wedlug etapu, bez bezwarunkowego kopiowania w kolejny katalog; nie kasowac surowych dowodow, nie modyfikowac faktow uzytkownika.
+7. Oddzielic pojęcie bramki jakości od formalnego obowiązku AI Act. Artykuly 12, 14 i 50 AI Act nie sa automatycznym nakazem sporzadzania paczki dla kazdego prywatnego pisma. Karta audytu sluzy najpierw potrzebie reprodukowalnosci i kontroli jakosci.
+
+## Bezwzgledny gate
+
+Kazda modyfikacja SKILL/selection/patch/builder nastapi osobno PO pelnym przebiegu źródlowych fixture MateMatic, historycznej reprodukcji LawBenchmark, build+test overlay oraz rzeczywistej ewaluacji odpowiedzi `model + skill`. Jedno zielone zadanie upstream nie zastępuje testu pluginu.
+
+**Stan blokera:** ostatni bieg `Benchmark gate` na SHA `e99bd0da91f5452c854ee6b84769b7452156c7df` zakończyl sie FAILURE w `post-overlay-built` na `git diff` skompilowanego `plugins/`. Ostatni bieg `build-plugin` byl rowniez FAILURE. Brak dzialajacego LIVE A/B. Zgodnie z twarda zasada nie dokonujemy jeszcze zmiany skilli bez zarejestrowanej kompletnej bramki pre-change. Osobny dokument decyzji mozna zapisac bez naruszania skilli.
+
+## Zaleznosci przed implementacja
+
+Do wyjscia z blokady: porownac wygenerowane `plugins/` z kanonicznym `selection/` i `vendor/`, rozstrzygnac rozjazdy, zacommitowac skompilowany artefakt albo przejsc na czysty artefakt CI (ale nie oba modele naraz), zbudowac rzeczywisty A/B w tym samym modelu, z mierzalnymi wynikami. Dopiero potem zmieniac kroki workflow, sprawdzajac przed i po.
