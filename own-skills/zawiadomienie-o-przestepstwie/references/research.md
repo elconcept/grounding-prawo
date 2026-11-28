@@ -24,7 +24,7 @@ Po pierwszym przebiegu refaktoru użytkownik wskazał
 `INBOX/20261010_AUDYT_SKILLI_kolizje_zawiadomienia.md`. A2 ujawnił wejście HYBRID/BLOCK ZERO
 przez router UP-4, mimo wyłączenia CLAIM-VALIDATION. A3 dotyczył znaczników danych formalnych,
 A6 źródła przenoszonej kwoty, A7 pracy bez repo. Te punkty uzasadniają kontrakt integracyjny
-`shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i wyjątki w punktach wejścia modułów.
+`hardgate-zop.md` i wyjątki w punktach wejścia modułów.
 Dawne A9 „bez zmian” nie ogranicza późniejszej instrukcji użytkownika: ochrona musi działać
 również przy ataku i syntezie. Sankcje z A1 oraz techniczne błędy formatowania A4/A5 nie były
 przedmiotem tego refaktoru i nie są tu oznaczane jako naprawione.

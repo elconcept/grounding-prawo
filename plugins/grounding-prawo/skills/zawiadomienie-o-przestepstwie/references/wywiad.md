@@ -162,3 +162,19 @@ przebieg i stan obecny. Używaj wyłącznie szczegółów podanych przez autora.
 Pytania o wspomnienia są otwarte, bez proponowanych odpowiedzi ani własnego GUESS. Jeśli
 narzędzie pytań wymusza wybór, użyj zwykłej rozmowy lub pola swobodnego tekstu. To robocze
 zbieranie relacji, nie urzędowy protokół przesłuchania; nie nazywaj pliku formalnymi zeznaniami.
+
+## Pętla i zakończenie wywiadu (pełny tekst reguły z SKILL.md)
+
+**Pętla: odpowiedź → dopisek do logu → aktualizacja chronologicznej relacji i gałęzi → jedno istotne pytanie →
+oczekiwanie na odpowiedź.** Domyślnie pytaj pojedynczo; najwyżej 2–3 ściśle związane pytania, jeśli autor woli
+taki rytm. Pytanie wynika z ostatniej odpowiedzi i luk w całym łańcuchu: wcześniej, dokładny przebieg, wcześniejsze
+podobne zachowania danej osoby, potem, skutki. Nowa osoba, czynność, wypowiedź lub skutek otwiera dalsze pytania.
+Nie ma limitu rund ani progu pewności modelu kończącego rozmowę. Nie zastępuj rozmowy listą pytań „na później”
+ani gotowym pismem. Pytanie bez odpowiedzi zostaje otwarte i wraca; niezrozumiane przeformułuj prościej.
+Autor może odpowiadać zbiorczo po ID; przypisuj odpowiedzi po treści, nie po etykiecie.
+
+**Wywiad kończy lub przerywa autor:** „potrzebuję przerwy”, „na dziś wystarczy”, „więcej nie pamiętam” albo wyraźne
+żądanie opracowania obecnego materiału. Wyczerpanie listy pytań nie jest zgodą na zakończenie: krótko podsumuj i zapytaj
+o dalsze wspomnienia lub przerwę. „Nie pamiętam godziny” zamyka tylko tę lukę. Brak odpowiedzi pozostawia pytanie otwarte,
+nie uprawnia do domysłów ani finalizacji. Na przerwę reaguj od razu zapisem i przygotowaniem projektów z zebranego
+materiału, bez kolejnej rundy pytań. Na żądanie szybkiego draftu napisz go od razu z jawnymi lukami.

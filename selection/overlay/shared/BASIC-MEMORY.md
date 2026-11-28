@@ -88,10 +88,9 @@ nie przy każdym odczycie zweryfikowanej transkrypcji.
 - **Teczka `legal/sprawy/<katalog>/`:** Stan, Terminy, Decyzje użytkownika, Lekcje, Pisma, Relacje.
 - **Pismo `legal/sprawy/<katalog>/pisma/`:** wersja, ścieżka, runda, otwarte uwagi, pytania, wyniki kontroli i status.
 - **Orzeczenie:** zweryfikowane źródło, sygnatura i relacja do sprawy; sprawdź `legal/orzeczenia/` przed kolejnym researchem.
-- **Relacja pokrzywdzonego / świadka `legal/relacje/<autor-slug>/`:** relacja zdarzeń, log zeznań, rejestr pism,
-  zgłoszenia (złożone zawiadomienia, sygnatury), pytania otwarte, `wersje/`, `archiwum/`. To jedyne miejsce tych danych: nie twórz ich plików w katalogu
-  sprawy ani w projekcie claude.ai (tam tylko pisma). Szczegóły: skill `zawiadomienie-o-przestepstwie`,
-  `zawiadomienie-o-przestepstwie/references/basic-memory-relacja.md`.
+- **Relacja pokrzywdzonego / świadka:** nie jest w Basic Memory. Relacja zdarzeń, log zeznań, rejestr pism i zgłoszenia
+  są w repozytorium `elconcept/legal`, katalog `relacje/<autor-slug>/` (nie w katalogu sprawy ani w projekcie claude.ai).
+  Szczegóły: skill `zawiadomienie-o-przestepstwie`, `references/relacje-repo.md`.
 
 Nie kończ ingestu na „zgłoszeniu do ingestu”. Zakończenie oznacza zapis dokumentu, ustaleń i relacji oraz odczyt
 potwierdzający. Gdy brakuje metodyki lub źródła, oznacz etap NIEZAKOŃCZONY i zapisz dokładnie zaległą czynność.

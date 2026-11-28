@@ -6,7 +6,7 @@ zeznania, wyjaśnienia, zawiadomienia, oświadczenia) i wiążą się z osobą l
 Wynik to lista KANDYDATÓW - model sprawdza, które są relacjami autora pisma.
 
 Użycie (z korzenia repo):
-  python3 .Codex/skills/zawiadomienie-o-przestepstwie/scripts/rejestr_relacji.py \
+  python3 scripts/rejestr_relacji.py \
       --osoba "Kaczmarczyk" [--osoba "Tomasz"] [--sygnatura II_W_1342_26] [--tresc] [--json]
 
 --tresc   szuka nazwiska także w treści sidecara (wolniej na NFS), nie tylko w ścieżce.
@@ -36,7 +36,7 @@ def korzen_repo(start: Path) -> Path:
     for p in [start, *start.parents]:
         if (p / "01_dowody").is_dir():
             return p
-    sys.exit("Nie znaleziono 01_dowody/ - uruchom z wnętrza repo abogada.")
+    sys.exit("Nie znaleziono 01_dowody/ - uruchom z wnętrza repo legal.")
 
 
 def zawiera(tekst: str, fraza: str) -> bool:

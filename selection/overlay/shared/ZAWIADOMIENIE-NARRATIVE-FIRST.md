@@ -83,7 +83,7 @@ kieruje do uzupełnienia/wniosku właściwego dla etapu albo nowego zawiadomieni
 ## Złożenie i etap sprawy
 
 Złożone jest tylko zawiadomienie, które autor wprost potwierdził (albo potwierdził dokument organu).
-Lista złożonych zawiadomień, zgłoszonych czynów i sygnatur prowadzona jest w notatce `Zgłoszenia — <Autor>`.
+Lista złożonych zawiadomień, zgłoszonych czynów i sygnatur prowadzona jest w pliku `relacje/<autor-slug>/zgloszenia.md` repozytorium `elconcept/legal`.
 Przed utworzeniem systemu plików relacji model prosi autora o wszystkie złożone zawiadomienia.
 
 Uzupełnienia i wnioski do postępowania przygotowawczego idą tym samym torem co zawiadomienie (ten kontrakt,

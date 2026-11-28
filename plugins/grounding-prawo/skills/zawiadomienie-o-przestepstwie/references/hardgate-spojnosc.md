@@ -8,7 +8,7 @@ pierwszeństwa przed relacją; audyt pomaga świadomie pokazać różnice, nie r
 
 1. Ustal dostępne złożone relacje autora i innych osób: protokoły, zeznania, wyjaśnienia,
    pisma i notatki. Nie traktuj draftu jako wcześniejszego złożonego oświadczenia.
-   W repo abogada można użyć `scripts/rejestr_relacji.py --osoba "<nazwisko>" --tresc`
+   W repo `legal` można użyć `scripts/rejestr_relacji.py --osoba "<nazwisko>" --tresc`
    (ścieżka względem folderu skilla). Skrypt daje kandydatów, nie ustala autorstwa.
    Zapytaj o brakujące wcześniejsze relacje; brak akt oznacz jako ograniczenie zakresu,
    nie przeszkodę do złożenia.

@@ -58,7 +58,10 @@ pozostają. Po skrótach i recenzji sprawdź pełne pokrycie mapy.
 
 ## Kontrola języka
 
-Wystarcza lokalna kontrola powyższych zasad; nie wymagaj niedostępnego skilla stylistycznego.
-Jeśli używasz dostępnego `pisz-po-polsku`, wybierz „Relacja pokrzywdzonego”. Żadna korekta
+Wystarcza lokalna kontrola powyższych zasad (tabela anty-wzorców wyżej). Dodatkowo usuń wzorce typowe dla
+tekstu generowanego: inflację znaczenia („kluczowy”, „istotny moment”), regułę trójki dla ozdoby, negatywne
+paralelizmy („nie tylko…, ale też…”), imiesłowy pozornej głębi, stronę bierną ukrywającą sprawcę, kalki
+z angielskiego, wypełniacze i artefakty czatbota („Oto…”, „Mam nadzieję, że…”). Zachowaj tryb relacji
+pokrzywdzonego: formuły procesowe są tu wadą. Żadna korekta
 stylistyczna nie może usunąć skutków, zmienić źródła wiedzy lub podnieść/obniżyć pewności autora.
 Zachowaj polskie cudzysłowy i naturalne zdania; nie dodawaj procesowych formuł poza potrzebną formą.

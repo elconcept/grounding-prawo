@@ -7,7 +7,7 @@ bez załączników lub zastąpienia relacji dokumentem. Zachowaj relację i popr
 Pusta lista tropów jest dopuszczalna. Historyczne przepisy poniżej wymagają sprawdzenia przed
 podaniem ich jako aktualnej informacji prawnej.
 
-Źródło wiedzy o drugim końcu procesu: `zazalenie-na-postanowienie-prokuratora` (co się zaskarża po
+Wiedza o drugim końcu procesu: `po-odmowie-i-sad.md` (co się zaskarża po
 odmowie i umorzeniu). Przepisy k.p.k.: t.j. Dz.U. 2026 poz. 490 (zob. `forma.md`).
 
 ## Na czym prokurator opiera odmowę (art. 17 § 1 k.p.k.) i co pismo daje w odpowiedzi
@@ -59,4 +59,4 @@ Inne typowe zarzuty wobec zawiadomień:
   prokuratora nadrzędnego albo nadzorującego organ, któremu złożono zawiadomienie.
 - **Art. 306 § 1** - na odmowę wszczęcia zażalenie przysługuje pokrzywdzonemu i osobie z art. 305
   § 4, jeżeli wskutek przestępstwa naruszono jej prawa; **§ 1b** - prawo przejrzenia akt przed
-  zażaleniem. Termin i dalsza ścieżka: skill `zazalenie-na-postanowienie-prokuratora`.
+  zażaleniem. Termin i dalsza ścieżka: `po-odmowie-i-sad.md`.

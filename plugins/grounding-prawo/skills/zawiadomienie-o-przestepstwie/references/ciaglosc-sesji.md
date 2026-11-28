@@ -22,12 +22,12 @@ Obowiązkowe są dwa osobne artefakty obok pism:
 
 Osobno prowadź pomocniczy **rejestr pism** i listę **pytań otwartych**.
 
-**Miejsce zapisu (od v0.7): Basic Memory, projekt `main`, `legal/relacje/<autor-slug>/`** —
-notatki, kolejność zapisu, awaria i migracja: [basic-memory-relacja](basic-memory-relacja.md).
+**Miejsce zapisu: repozytorium `elconcept/legal`, katalog `relacje/<autor-slug>/` w korzeniu projektu** —
+dostęp (GitHub, lokalna kopia, brak), pliki, kolejność zapisu, awaria i migracja: [relacje-repo](relacje-repo.md).
 Nie zapisuj relacji, logu ani rejestru jako plików w katalogu sprawy ani w projekcie claude.ai;
 tam zostają tylko pisma. Pliki `relacja/_RELACJA_ZDARZEN.md`, `_LOG_ZEZNAN.md`, `_REJESTR_PISM.md`
-i `relacja/wersje/` to format awaryjny wyłącznie wtedy, gdy na hoście nie ma żadnego dostępu do
-Basic Memory; zastane pliki tego typu migruj do bazy. Gdy autor wskazał istniejącą relację,
+i `relacja/wersje/` to stary format awaryjny: zastane pliki tego typu migruj do `relacje/<autor-slug>/`
+(`relacje-repo.md` §7). Bez dostępu do repozytorium obowiązuje §1 pkt 3 i §5 tego pliku. Gdy autor wskazał istniejącą relację,
 aktualizuj właśnie ją; przed pierwszą zmianą zachowaj kopię źródłową (wersja w `wersje/`).
 Nie nadpisuj pisma złożonego. Jedna osoba ma wspólną relację i log, nawet gdy powstaje kilka zawiadomień.
 
@@ -83,8 +83,8 @@ korekt można przenieść do logu z podaniem pochodzenia i dostępnych dat; nie 
 nie sprawdzisz zachowania treści. Następnie uporządkuj relację chronologicznie.
 
 Przy przerwie, „więcej nie pamiętam”, żądaniu draftu lub końcu sesji zapisz dodatkowo
-niezmienną kopię relacji w `relacje/<autor-slug>/wersje/` (kolejny wolny numer, także przy
-kilku sesjach tego dnia; w formacie awaryjnym `relacja/wersje/RRRRMMDD_relacja_vN.md`). Zapisuj postęp na bieżąco: nagłe urwanie rozmowy nie może oznaczać
+niezmienną kopię relacji w `relacje/<autor-slug>/wersje/` (`RRRRMMDD_relacja_vN.md`, kolejny wolny numer, także przy
+kilku sesjach tego dnia). Zapisuj postęp na bieżąco: nagłe urwanie rozmowy nie może oznaczać
 utraty całej sesji. Jeśli brak narzędzia zapisu, podaj Markdown obu artefaktów do zapisania i ich nazwy, jasno informując,
 że pliki nie zostały zapisane. Nie deklaruj fikcyjnego zapisu.
 
@@ -104,9 +104,9 @@ odpowiednie projekty. Nie ograniczaj się do propozycji, że można je kiedyś n
 | Zawiadomienie niezłożone | Nowa pełna wersja każdego projektu, którego dotyczą uzupełnienia. Zachowaj poprzednią wersję; projekty bez zmian odnotuj bez sztucznego mnożenia kopii. |
 | Zawiadomienie złożone, nowe szczegóły tych samych zdarzeń | Odrębny projekt uzupełnienia do istniejącej sprawy, z odniesieniem do wcześniejszego pisma i jasnym wskazaniem nowych informacji lub korekt. Nie zastępuj złożonej wersji. |
 | Czynności sprawdzające/wyjaśniające, dochodzenie lub śledztwo | Ustal rzeczywisty tryb, organ i etap. Dobierz uzupełnienie relacji, wniosek o uzupełniające przesłuchanie, zabezpieczenie materiału lub wniosek dowodowy stosownie do potrzeb. Potoczne „wyjaśniające” nie przesądza rodzaju postępowania. |
-| Sprawa w sądzie (odcięcie: zakończone postępowanie przygotowawcze, sprawa przed sądem, `zgloszenia.md` §4a) | Sprawdź rolę autora, właściwego adresata i dopuszczalną czynność; przygotuj pismo procesowe (`pisma-procesowe-v3`/`pisma-proste-v2`), zamiast kolejnego zawiadomienia o tych samych zdarzeniach. Do tego momentu uzupełnienia idą na torze zawiadomienia. |
+| Sprawa w sądzie (odcięcie: zakończone postępowanie przygotowawcze, sprawa przed sądem, `zgloszenia.md` §4a) | Sprawdź rolę autora, właściwego adresata i dopuszczalną czynność; przygotuj pismo procesowe (poza zakresem skilla, `po-odmowie-i-sad.md`), zamiast kolejnego zawiadomienia o tych samych zdarzeniach. Do tego momentu uzupełnienia idą na torze zawiadomienia. |
 | Dotychczas niezgłoszone krzywdy | Porównaj faktyczny zakres wcześniejszych zgłoszeń. Przygotuj nowe zawiadomienie, jeżeli to odrębny nieobjęty nimi czyn; przy powiązanym rozszerzeniu rozważ uzupełnienie. Nowy szczegół lub nowa kwalifikacja tego samego zdarzenia nie oznaczają automatycznie nowego czynu. |
-| Odmowa, umorzenie lub inne rozstrzygnięcie | Sprawdź decyzję, doręczenie, uprawnienia i terminy; dobierz właściwą dalszą czynność, w razie potrzeby z pomocą skilla zażalenia. Nie zastępuj środka zaskarżenia mechanicznym ponownym zgłoszeniem. |
+| Odmowa, umorzenie lub inne rozstrzygnięcie | Sprawdź decyzję, doręczenie, uprawnienia i terminy; dobierz właściwą dalszą czynność (scenariusze i terminy: `po-odmowie-i-sad.md`). Nie zastępuj środka zaskarżenia mechanicznym ponownym zgłoszeniem. |
 | Status nieustalony | Zachowaj nową relację; dopytaj o status, zanim wybierzesz ostateczną formę. Przy przerwie zapisz projekt warunkowy z jawnym brakiem ustalenia, bez zakładania, że poprzednie pismo nie zostało złożone. |
 
 Jedna sesja może dać kilka pism: aktualizację niezłożonego projektu, uzupełnienie istniejącej
@@ -127,8 +127,8 @@ Samo istnienie pliku pisma nie oznacza złożenia. Wybór pisma dla każdego epi
   i na liście pytań otwartych.
 - Robocze wersje tekstu niezłożonego pisma zostają w `drafty/<pismo>/` teczki (Markdown). Gdy autor ma przejrzeć
   zmiany albo sesja się kończy, powstaje nowa wersja DOCX `legal/output/<nazwa>/<nazwa>_v<N+1>.docx`
-  (`shared/format-pisma/wersja_pisma.py nastepna` + `zmien`, bez zmian śledzonych); poprzednie wersje zostają
-  (`shared/ARTEFAKTY-SPRAWY.md`, „Cykl pracy nad pismem”). Nie renderuj każdej rundy do `output/` i nie kładź tam `.md`.
+  (`scripts/wersja_pisma.py nastepna` + `zmien`, bez zmian śledzonych); poprzednie wersje zostają
+  (`artefakty-i-wersje.md`, „Cykl pracy nad pismem”). Nie renderuj każdej rundy do `output/` i nie kładź tam `.md`.
 - **Edycja autora ma pierwszeństwo.** Nowa wersja jest kopią najnowszej wersji DOCX z ręcznymi zmianami autora
   (usunięta sekcja, inna data, dopisek), więc przechodzą one do nowej wersji.
   Nie przywracaj usuniętej przez autora treści bez jego decyzji.

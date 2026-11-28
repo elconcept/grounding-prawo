@@ -97,7 +97,7 @@ Najpierw ustalę właściwy tryb i termin na podstawie tych danych i aktualnych 
 
 ### Ścieżka i ocena
 
-Router [3] → `pisma-procesowe-v3` → `pisma-procesowe-v3/modules/typy/zazalenie-na-postanowienie-prokuratora.md`. Wyjątek ZOP nie przenosi się na nowy dokument. Odczyt literalnej ścieżki samodzielnego skilla zażalenia zwrócił brak pliku, ale routing pluginu jawnie scala go w module typów; znaleziono ten moduł i nie potraktowano braku dawnej ścieżki jako blokera.
+Router [3] → `pisma-procesowe-v3` → `modules/typy/zazalenie-na-postanowienie-prokuratora.md`. Wyjątek ZOP nie przenosi się na nowy dokument. Odczyt literalnej ścieżki samodzielnego skilla zażalenia zwrócił brak pliku, ale routing pluginu jawnie scala go w module typów; znaleziono ten moduł i nie potraktowano braku dawnej ścieżki jako blokera.
 
 Test dotyczy wyłącznie wyboru ścieżki i wstępnej odpowiedzi, nie zakończenia zażalenia ani zgodności całego pipeline’u. Nie odczytano i nie wykonano wszystkich procesowych bramek, ponieważ nie zlecono realnej sprawy ani nie dostarczono postanowienia. Wyjątek nie posłużył do deklaracji, że zażalenie może pominąć swoją kontrolę prawa/terminu/dokumentu.
 

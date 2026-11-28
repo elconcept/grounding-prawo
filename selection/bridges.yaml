@@ -142,9 +142,8 @@ skills:
     etap: B
     wejscie: relacja pokrzywdzonego; materiał dowodowy tylko jako wskazówki dla organu (omija tor procesowy routera w etapie przygotowawczym; sprawa przed sądem idzie do pism procesowych, `references/zgloszenia.md` §4a)
     wynik: '`<sprawa>/drafty/<pismo>/rrrrMMdd_hhmm_<nazwa>_vN.md` (tylko MD), wersje DOCX `legal/output/<nazwa>/<nazwa>_vN.docx` (nowa wersja na sesję, bez placeholderów), `_MAPA_KRZYWD.md`,
-      wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i pytania otwarte w Basic Memory (`main`, `legal/`), `relacje/<autor-slug>/`'
-    dalej:
-    - pisz-po-polsku
+      wpis w `_PRZEBIEGI.md`; relacja, log zeznań, rejestr pism i zgłoszenia w repo `elconcept/legal`, `relacje/<autor-slug>/`'
+    dalej: []
     nie_dubluj: 'HARDGATE-ZOP: bez toru procesowego, HYBRID/BLOCK ZERO ani automatycznej recenzji; prawo i cytaty sprawdzaj
       odrębnie, a atak tylko na żądanie z ochroną pełnej relacji'
   rodo-dsar-pl:

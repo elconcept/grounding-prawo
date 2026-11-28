@@ -77,7 +77,7 @@ wskaż zweryfikowaną drogę złożenia. Niepewność właściwości nie blokuje
 |---|---|
 | Miejscowość, data | „9 października 2026 r.” |
 | Autor | imię, nazwisko, adres, telefon, e-mail (albo oświadczenie o ich nieposiadaniu). Oświadczenie o zgodzie na doręczenia elektroniczne (art. 119 § 1 pkt 2 lit. a k.p.k.) stosuj dopiero od daty wejścia w życie tego brzmienia (wg odczytu t.j. Dz.U. 2026 poz. 490 z 18.10.2026: 1.10.2029) — sprawdź przed użyciem. Bez placeholdera: brak danej = najbardziej prawdopodobna wartość i pytanie do autora (`ciaglosc-sesji.md`) |
-| Organ | pełna nazwa i adres **sprawdzone wyszukiwaniem** (jak POV-B w `pisma-proste-v2`), nie z pamięci; przy sprawie toczącej się - sygnatura |
+| Organ | pełna nazwa i adres **sprawdzone wyszukiwaniem** (wyszukaj aktualny adres organu w sieci i podaj źródło w śladzie weryfikacji), nie z pamięci; przy sprawie toczącej się - sygnatura |
 | Tytuł | „Zawiadomienie o popełnieniu przestępstwa” (wzór Policji); przy uzupełnieniu: „Uzupełnienie zawiadomienia o popełnieniu przestępstwa z dnia …” |
 | Otwarcie | według wzoru: „Zawiadamiam o popełnieniu na moją szkodę przestępstwa [potocznie: pobicia, gróźb, …] przez [osobę / nieznaną mi osobę] w dniu … w … i wnoszę o wszczęcie postępowania.” Bez „podejrzenia”, „możliwości popełnienia”, „mogło dojść” |
 | Wniosek o ściganie | **zawsze**: „Wnoszę o ściganie sprawcy (sprawców) wszystkich opisanych niżej czynów.” Przy znanych sprawcach - z nazwiskami |
@@ -120,7 +120,7 @@ prokuratora nie oznacza podważenia relacji.
 
 ## Wygląd pliku
 
-DOCX zawiadomienia (bez PDF, ze źródłem .md obok): `shared/FORMAT-PISMA.md` (Georgia 10 pt, nadawca i organ 14 pt,
+DOCX zawiadomienia (bez PDF, ze źródłem .md obok): `references/format-pisma.md` (Georgia 10 pt, nadawca i organ 14 pt,
 wydział 12 pt, adresat do prawej,
 adres w jednej linii, telefon i e-mail nadawcy, pogrubienie i podkreślenie tylko dla tez); plik generuje
-`shared/format-pisma/render_pismo.py`.
+`scripts/render_pismo.py`.

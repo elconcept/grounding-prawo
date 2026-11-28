@@ -36,7 +36,7 @@ kwalifikację, zachowując pełny opis i jawną lukę w analizie poza pismem.
   ELI, sprawdzone 09.10.2026), brzmienia z bazy `mcp/cache/kodeks/kodeks_karny.md` (wersja od
   21.07.2026). Ślad: MCP `ustawy` (`ustawy_akty`, tytuł „Kodeks karny”).
 - Przepis spoza katalogu: najpierw MCP `ustawy` (`ustawy_artykul` dla ELI t.j.; wyszukaj „Art. N.”)`
-  (PDF z adresu w odpowiedzi MCP pobierz `curl` i odczytaj przez `pdftotext -layout`, `shared/MOD-TEKST-JEDNOLITY.md`). Bez weryfikacji
+  (PDF z adresu w odpowiedzi MCP pobierz `curl` i odczytaj przez `pdftotext -layout`, `tekst-jednolity.md`). Bez weryfikacji
   przepis nie trafia do pisma.
 - Wykroczenia (Kodeks wykroczeń): katalog jeszcze ich nie obejmuje - zob. TODO.
 

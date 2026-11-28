@@ -33,7 +33,7 @@ weryfikacja dowodów należą do organów. Nie zamieniaj zawiadomienia w warunek
   zawiadomienia w pełnym zakresie relacji i materiału. Żaden skill ani soczewka (redakcja, polszczyzna,
   pierwsze wrażenie, szturm, RODO) nie usuwa ich, nie łagodzi, nie uogólnia i nie pyta o zgodę na ich wpisanie.
   Wyjątek „nie obciążaj mnie” dotyczy tylko autora i tylko na jego prośbę (`zawiadomienie-o-przestepstwie`,
-  `zawiadomienie-o-przestepstwie/references/ciaglosc-sesji.md`). Opis zachowania osoby trzeciej nie jest wnioskiem o jej ściganie.
+  `references/ciaglosc-sesji.md`). Opis zachowania osoby trzeciej nie jest wnioskiem o jej ściganie.
 - Kontrola modelu dotyczy wierności: dopiski, zmiana źródła wiedzy, ukryta niepewność lub
   udawany cytat wymagają korekty. Świadomy fałsz wskazany przez autora nie może stać się
   faktem; odmowa dotyczy tego fragmentu, nie całej relacji. Niepewność nie jest fałszem.
@@ -83,7 +83,7 @@ kieruje do uzupełnienia/wniosku właściwego dla etapu albo nowego zawiadomieni
 ## Złożenie i etap sprawy
 
 Złożone jest tylko zawiadomienie, które autor wprost potwierdził (albo potwierdził dokument organu).
-Lista złożonych zawiadomień, zgłoszonych czynów i sygnatur prowadzona jest w notatce `Zgłoszenia — <Autor>`.
+Lista złożonych zawiadomień, zgłoszonych czynów i sygnatur prowadzona jest w pliku `relacje/<autor-slug>/zgloszenia.md` repozytorium `elconcept/legal`.
 Przed utworzeniem systemu plików relacji model prosi autora o wszystkie złożone zawiadomienia.
 
 Uzupełnienia i wnioski do postępowania przygotowawczego idą tym samym torem co zawiadomienie (ten kontrakt,

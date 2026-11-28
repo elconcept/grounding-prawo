@@ -198,7 +198,8 @@ def qualify_paths(sel):
 
 # Skille redakcyjne zachowują treść upstream bez wstrzykiwań protokołu i MOST
 # (rejestr prawniczy psuje instrukcję stylu; decyzja właściciela 22.10.2026).
-NO_PROTOCOL_INJECTION = {"humanizer-pl", "pisz-po-polsku"}
+# zawiadomienie-o-przestepstwie jest samodzielne: reguły ma w references/, bez odwołań do shared/ i skilli.
+NO_PROTOCOL_INJECTION = {"humanizer-pl", "pisz-po-polsku", "zawiadomienie-o-przestepstwie"}
 
 # humanizer-pl zachowuje własną treść: build nie przepisuje jego wnętrza.
 VERBATIM_SKILLS = {"humanizer-pl"}

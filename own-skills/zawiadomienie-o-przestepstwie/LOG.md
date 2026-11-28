@@ -1,4 +1,26 @@
-# Historia zmian
+# LOG skilla `zawiadomienie-o-przestepstwie`
+
+Dziennik zmian, decyzji autora i iteracji na konkretnych zadaniach. Szczegóły iteracji zapisuj tutaj, nie w `SKILL.md`.
+Wnioski ogólne (korekty błędów) przenoś do sekcji „Gotchas” w `SKILL.md`. Wpisy sprzed 1.0 opisują stan historyczny
+(m.in. zapis w Basic Memory i odwołania do `shared/`); nie obowiązują.
+
+## v1.0 (2026-11-27) — samodzielny skill, relacje w repo `elconcept/legal`
+- Wszystkie odwołania do `shared/` i do innych skilli zastąpione kopią potrzebnych fragmentów w `references/`:
+  `hardgate-zop.md` (kontrakt NARRATIVE-FIRST), `recenzja-rozszerzajaca.md` (role bez nazw skilli), `tekst-jednolity.md`,
+  `artefakty-i-wersje.md`, `format-pisma.md`, `po-odmowie-i-sad.md` (scenariusze zażalenia A/B/C, terminy; skill nie redaguje
+  zażalenia ani pism procesowych), `kanon-i-bramki.md`. Skrypty `wersja_pisma.py` i `render_pismo.py` skopiowane do `scripts/`.
+  Kontrola języka: lokalna lista wzorców w `styl.md` zamiast `pisz-po-polsku`.
+- Basic Memory zastąpione zapisem w repo `elconcept/legal`, katalog `relacje/<autor-slug>/` (`references/relacje-repo.md`,
+  dawniej plik o nazwie z Basic Memory). Kolejność dostępu: integracja GitHub, lokalna kopia repo, w ostateczności jawna
+  informacja o ograniczeniach (brak wznowienia relacji, listy zgłoszeń i AUDYTU-B; wynik `NIEZAPISANE`).
+  Pytania otwarte według konwencji repo `legal` (`DO_DECYZJI.md`, `relacje/PYTANIA_ZAMKNIETE.md`).
+- `SKILL.md` przebudowany: zakres, reguła nadrzędna, dostęp do relacji, przebieg F0–F8, format odpowiedzi, obowiązkowa
+  sekcja „Gotchas”, tabela plików. Ciało poniżej 500 linii. Opis (893 znaki) w trybie rozkazującym, z intencjami
+  użytkownika i kontekstami wejścia; ten sam opis w `selection/selection.yaml` (build bierze go stamtąd).
+- Historia zmian przeniesiona z `references/CHANGELOG.md` do `LOG.md`. `scripts/build.py`: skill na liście
+  `NO_PROTOCOL_INJECTION` (bez doklejanej sekcji MOST z odwołaniami do `shared/` i innych skilli).
+- Poza zakresem tej zmiany: `shared/ZASADY-PLUGINU.md`, patche routera (`02`, `06`, `07`) nadal mówią o dawnych notatkach.
+
 
 ## v0.9 (2026-10-29) — zgłoszenia i odcięcie od sądu
 - Nowa notatka `Zgłoszenia — <Autor>` w Basic Memory: lista złożonych zawiadomień (tylko po wprost potwierdzonym złożeniu),
@@ -85,7 +107,7 @@
 
 - Basic Memory jako baza danych relacji: `legal`, `relacje/<autor-slug>/` (relacja, log, rejestr,
   pytania otwarte, wersje, archiwum); pliki relacji tylko awaryjnie bez dostępu do bazy; procedura
-  migracji plików. Nowy plik `references/basic-memory-relacja.md`.
+  migracji plików. Nowy plik plik o zapisie w Basic Memory (usunięty w 1.0).
 - Pełna lista pytań otwartych w każdej odpowiedzi sesji relacji; ponawianie i przeformułowanie
   pytań bez odpowiedzi; odpowiedzi zbiorcze przypisywane po treści.
 - Pisma w `output/` bez placeholderów: najbardziej prawdopodobna wartość danej formalnej i pytanie;

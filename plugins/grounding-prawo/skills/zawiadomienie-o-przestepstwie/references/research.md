@@ -12,6 +12,7 @@ również w samodzielnie dystrybuowanym folderze skilla; pełny dziennik pozosta
 | Bezpieczeństwo i instytucje | Pozycje 7, 12, 23, 36: m.in. [Niebieska Karta](https://sprawy-karne.biz.pl/niebieska-karta/), [pomoc](https://sprawy-karne.biz.pl/pomoc-dla-pokrzywdzonego/). |
 | Nowe szczegóły i audyt różnic bez automatycznej blokady | Synteza memo, pozycje 8, 10 i wcześniejszy przypadek potocznego „partnera” w hardgate-spojnosc.md. Rozdzielenie A/B jest decyzją projektową, nie cytatem z ustawy ani diagnozą traumy. |
 | Routing i aktualność prawa | Pozycje 13, 18–22, 25–26, 28–29, 32–33, 37; źródła o późniejszych środkach obrończych nie rozszerzają zakresu skilla. |
+| Zwięzły rdzeń, szczegóły w references, ocena zachowania | Instrukcje skill-creator odczytane przy refaktorze; wymagania syntezy memo. |
 
 Materiały kancelaryjne inspirują pytania, ale nie są dowodem aktualnego stanu prawa.
 Nie przejęto marketingowych twierdzeń, że pokrzywdzony „musi udowodnić” relację, ani zalecenia
@@ -23,7 +24,7 @@ Po pierwszym przebiegu refaktoru użytkownik wskazał
 `INBOX/20261010_AUDYT_SKILLI_kolizje_zawiadomienia.md`. A2 ujawnił wejście HYBRID/BLOCK ZERO
 przez router UP-4, mimo wyłączenia CLAIM-VALIDATION. A3 dotyczył znaczników danych formalnych,
 A6 źródła przenoszonej kwoty, A7 pracy bez repo. Te punkty uzasadniają kontrakt integracyjny
-`shared/ZAWIADOMIENIE-NARRATIVE-FIRST.md` i wyjątki w punktach wejścia modułów.
+`hardgate-zop.md` i wyjątki w punktach wejścia modułów.
 Dawne A9 „bez zmian” nie ogranicza późniejszej instrukcji użytkownika: ochrona musi działać
 również przy ataku i syntezie. Sankcje z A1 oraz techniczne błędy formatowania A4/A5 nie były
 przedmiotem tego refaktoru i nie są tu oznaczane jako naprawione.

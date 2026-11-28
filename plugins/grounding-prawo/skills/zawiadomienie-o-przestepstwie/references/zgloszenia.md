@@ -1,7 +1,7 @@
 # Zgłoszenia, etap sprawy i odcięcie od pism procesowych
 
-Obowiązuje od v0.9. Źródłem prawdy o tym, co zostało złożone, jest notatka `Zgłoszenia — <Autor>`
-w Basic Memory (`legal`, `relacje/<autor-slug>/`). Relacja i log opisują zdarzenia i wypowiedzi; rejestr pism
+Obowiązuje od v0.9. Źródłem prawdy o tym, co zostało złożone, jest plik `zgloszenia.md`
+w repozytorium `elconcept/legal` (`relacje/<autor-slug>/`, `references/relacje-repo.md`). Relacja i log opisują zdarzenia i wypowiedzi; rejestr pism
 opisuje wersje projektów. Zgłoszenia zapisuje tylko to, co autor wprost potwierdził.
 
 ## 1. Co liczy się jako złożone
@@ -27,7 +27,7 @@ Sekcja `Zgłoszone czyny i sygnatury`, jeden wiersz na czyn (zdarzenie + kwalifi
 |---|---|---|---|---|---|
 
 - Sygnatura wpisywana tylko z dokumentu organu/sądu albo podana przez autora z oznaczeniem źródła.
-  Brak sygnatury nie blokuje wpisu; w polu wpisz `brak` i dopisz pytanie do `Pytania otwarte`.
+  Brak sygnatury nie blokuje wpisu; w polu wpisz `brak` i dopisz pytanie do pytań otwartych (`relacje-repo.md` §2).
 - Jeden czyn może być zgłoszony w kilku zawiadomieniach — wtedy wiersz wskazuje wszystkie `Z-ID`.
 - Czyn, którego autor nie zgłosił, nie trafia do tej listy. Trafia do `Do ustalenia` albo do listy niezgłoszonych
   krzywd (`ciaglosc-sesji.md`, „Dotychczas niezgłoszone krzywdy”).
@@ -41,7 +41,7 @@ Etap ustala się dla każdego postępowania osobno, nie dla całej relacji:
 | `przygotowawczy` | postępowanie przygotowawcze, sprawdzające, dochodzenie lub śledztwo przed organem | tor zawiadomienia (§4) |
 | `wykroczeniowy` | postępowanie w sprawie o wykroczenie przed organem, przed wpływem wniosku do sądu | tor zawiadomienia (§4); tryb i organ sprawdź urzędowo |
 | `sadowy` | sprawa przed sądem (§4a) | pisma procesowe (§4a) |
-| `zakonczony` | umorzenie, odmowa, inne rozstrzygnięcie organu (data decyzji i doręczenia) | zażalenie/środek zaskarżenia wg `zazalenie-na-postanowienie-prokuratora`; nie mechaniczne ponowne zgłoszenie |
+| `zakonczony` | umorzenie, odmowa, inne rozstrzygnięcie organu (data decyzji i doręczenia) | środek zaskarżenia: scenariusze i terminy w `po-odmowie-i-sad.md`; nie mechaniczne ponowne zgłoszenie |
 | `nieustalony` | status nie wynika z materiału ani z wypowiedzi autora | dopytaj przed wyborem formy |
 
 Potoczne „wyjaśniające” nie przesądza rodzaju postępowania; ustal organ i etap z dokumentu lub z wprost podanej informacji.
@@ -50,7 +50,7 @@ Potoczne „wyjaśniające” nie przesądza rodzaju postępowania; ustal organ 
 
 Dopóki postępowanie jest przed organem, uzupełnienia, wnioski towarzyszące i nowe zawiadomienia idą **tym samym
 torem co zawiadomienie o przestępstwie** (`SKILL.md`, HARDGATE-ZOP / NARRATIVE-FIRST). Nie stosuj do nich
-pipeline'u pism procesowych (`pisma-procesowe-v3`, `pisma-proste-v2`) ani ich bramek dowodowych.
+pipeline'u pism procesowych ani ich bramek dowodowych (CLAIM-VALIDATION, BLOCK ZERO i pokrewnych).
 
 - **Uzupełnienie** do sprawy, w której zawiadomienie już złożono: odniesienie do `Z-ID` i sygnatury, tytuł
   „Uzupełnienie zawiadomienia o popełnieniu przestępstwa z dnia …” (`references/forma.md`). Nie zastępuje złożonej wersji.
@@ -65,13 +65,13 @@ Odcięcie następuje, gdy postępowanie przygotowawcze się zakończyło i spraw
 akt oskarżenia, prywatny akt oskarżenia, wniosek o ukaranie albo inne pismo wszczynające postępowanie sądowe.
 Wpis: data wpływu i sygnatura sądowa w `Zgłoszone czyny i sygnatury`, etap `sadowy`.
 
-Od odcięcia obowiązują zasady **pism procesowych** (`pisma-procesowe-v3`, a dla krótkich pism `pisma-proste-v2`):
+Od odcięcia obowiązują zasady **pism procesowych** (redakcja takiego pisma jest poza zakresem tego skilla):
 
 - zawiadomienie-o-przestepstwie **nie generuje** kolejnego zawiadomienia o tych samych zdarzeniach;
 - ustal rolę autora w tym postępowaniu (oskarżyciel posiłkowy, oskarżyciel prywatny, świadek, osoba bez roli procesowej)
   i dopuszczalną czynność; to przesądza, czy pismo w ogóle przysługuje;
 - terminy i wymogi formalne sprawdzaj w aktualnym tekście ustawy; nie przenoś progów dowodowych z relacji;
-- relacja i log w Basic Memory pozostają źródłem: nowe fakty z relacji trafiają do pisma procesowego zgodnie z rolą autora;
+- relacja i log w `relacje/<autor-slug>/` pozostają źródłem: nowe fakty z relacji trafiają do pisma procesowego zgodnie z rolą autora;
 - zasady relacji (K1–K4) nie są w tym torze obowiązujące; obowiązują reguły pism procesowych.
 
 Sprawa wraca do etapu przygotowawczego (np. zwrot sprawy, uzupełnienie postępowania): ustal to urzędowo i przywróć tor §4.
@@ -84,24 +84,24 @@ Dla każdego epizodu z relacji sprawdź:
 1. Czyn nieobjęty żadnym `Z-ID` → nowe zawiadomienie (§4), chyba że dołącza do postępowania już prowadzonego — wtedy uzupełnienie.
 2. Czyn zgłoszony, etap `przygotowawczy` lub `wykroczeniowy` → uzupełnienie wskazujące `Z-ID` i sygnaturę (§4).
 3. Czyn w sprawie `sadowy` → pismo procesowe (§4a), bez nowego zawiadomienia.
-4. Czyn `zakonczony` → środek zaskarżenia wg właściwego skilla, po sprawdzeniu decyzji i terminu.
+4. Czyn `zakonczony` → środek zaskarżenia (`po-odmowie-i-sad.md`), po sprawdzeniu decyzji i terminu.
 5. Każdy epizod ma wpis w piśmie albo jawne wyłączenie przez autora. Nie pomijaj krzywdy tylko dlatego, że wymaga innego pisma.
 
 ## 6. Wejście: weryfikacja i tworzenie systemu plików
 
 Przy każdym wejściu w relację (przed pierwszym pytaniem):
 
-1. **Sprawdź pliki.** `bm_list(project="main", path="legal/relacje/<autor-slug>")`, potem `bm_read`
-   (co najmniej `include_content=False` z checksum). Oczekiwane notatki: `Relacja zdarzeń — <Autor>`,
-   `Log zeznań — <Autor>`, `Rejestr pism — <Autor>`, `Pytania otwarte — <Autor>`, `Zgłoszenia — <Autor>`, katalog `wersje/`.
-2. **Brak systemu (pierwsze utworzenie).** Jeśli brakuje `Zgłoszenia` albo wszystkich notatek, **przed utworzeniem czegokolwiek**
+1. **Sprawdź dostęp i pliki.** Najpierw dostęp (`relacje-repo.md` §1: GitHub, potem lokalna kopia, potem informacja
+   o ograniczeniach), następnie wylistuj `relacje/<autor-slug>/` i odczytaj pliki. Oczekiwane pliki: `relacja-zdarzen.md`,
+   `log-zeznan.md`, `rejestr-pism.md`, `zgloszenia.md`, katalog `wersje/` oraz pytania otwarte autora (`relacje-repo.md` §2).
+2. **Brak systemu (pierwsze utworzenie).** Jeśli brakuje `zgloszenia.md` albo wszystkich plików, **przed utworzeniem czegokolwiek**
    poproś autora o przesłanie **wszystkich złożonych zawiadomień** (pliki, skany lub tekst) razem z potwierdzeniami nadania,
    pismami organu o wszczęciu, odmowie, wezwaniu lub zawieszeniu oraz pismami sądu, jeśli są. Napisz wprost:
    „Do założenia systemu potrzebuję wszystkich złożonych zawiadomień. Jeśli żadnego nie złożono, napisz to wprost.”
    Czekaj na odpowiedź. Wspomnienia zbieraj w rozmowie i zapisz po założeniu systemu. Brak zgłoszeń
    zapisuj tylko po wyraźnym oświadczeniu autora (`Złożone: brak — oświadczenie autora #Snnn`).
-3. **Uzupełnienie braków.** Istniejące notatki nie są nadpisywane. Brakujące utwórz według `basic-memory-relacja.md`.
-   Porównaj: każdy `Z-ID` z rejestru o statusie ZŁOŻONE ma wpis w `Zgłoszenia`; każde złożone zawiadomienie z przesłanych
+3. **Uzupełnienie braków.** Istniejące pliki nie są nadpisywane. Brakujące utwórz według `relacje-repo.md`.
+   Porównaj: każdy `Z-ID` z rejestru o statusie ZŁOŻONE ma wpis w `zgloszenia.md`; każde złożone zawiadomienie z przesłanych
    materiałów ma `Z-ID`; sygnatury z dokumentów są w liście. Rozbieżności idą do `Do ustalenia` i do pytania
    (AUDYT-B, nie blokuje).
 4. **Log i wynik.** Dopisz wpis logu `porzadkowanie` z listą: zweryfikowane, utworzone, uzupełnione, brakujące.
@@ -109,8 +109,8 @@ Przy każdym wejściu w relację (przed pierwszym pytaniem):
 
 ## 7. Zapis po zmianie zgłoszeń
 
-Po każdej wypowiedzi, która zmienia `Zgłoszenia` (złożenie, data, organ, sygnatura, etap, decyzja organu):
+Po każdej wypowiedzi, która zmienia `zgloszenia.md` (złożenie, data, organ, sygnatura, etap, decyzja organu):
 1. wpis logu (rodzaj `ustalenie_z_dokumentu` albo `szczegol`/`korekta`, z cytatem autora);
-2. aktualizacja `Zgłoszenia` (nowy `Z-ID` lub zmiana wiersza; wpisy nie są usuwane);
-3. aktualizacja `Rejestr pism` (status pisma) i `Pytania otwarte`;
-4. odczyt potwierdzający.
+2. aktualizacja `zgloszenia.md` (nowy `Z-ID` lub zmiana wiersza; wpisy nie są usuwane);
+3. aktualizacja `rejestr-pism.md` (status pisma) i pytań otwartych (`relacje-repo.md` §2);
+4. commit i odczyt potwierdzający (`relacje-repo.md` §3).
