@@ -8,6 +8,6 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "pdfjs-dist": "4.10.38",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   }
 }
